@@ -1,0 +1,75 @@
+[
+  {
+    "name":"askName",
+    "text":"Welcome to Bimbingbung! What is your name?",
+    "type":"initials",
+    "error": "validationFailName",
+    "answers":[
+      {"name":"name", "next": "askMobileNumber"}
+    ]
+
+  },
+  {
+    "name":"askMobileNumber",
+    "text":"What is your mobile number? ",
+    "type":"mobile",
+    "error": "validationFailNumber",
+    "answers":[
+      {"name":"mobileNumber", "next": "askPasswordOne"}
+    ]
+
+  },
+  {
+    "name":"askPasswordOne",
+    "text":"We need you to create a password so that I can make sure it is always you who is accessing your savings information. Reply with a password 8 letters or digits long. Dont worry I'll hide what you're typing so noone can see. ",
+    "type":"password",
+    "error": "validationFailPassword",
+    "answers":[
+      {"name":"passwordOne", "next": "askPasswordTwo"}
+    ]
+
+  },
+  {
+    "name":"askPasswordTwo",
+    "text":"Will you type it one more time so that I can check if I have saved it correctly? ",
+    "completed":"no",
+    "type":"password",
+    "error": "validationFailPasswordMatch",
+    "answers":[
+      {"name":"passwordTwo", "next":"@checkPasswordMatch"}
+    ]
+
+  },
+  {
+    "name": "validationFailName",
+    "type": "info",
+    "text": "Sorry, I don't understand that and haven't been taught how to handle it yet.",
+    "next": "askName"
+  },
+  {
+    "name": "validationFailNumber",
+    "type": "info",
+    "text": "Sorry, I don't understand that and haven't been taught how to handle it yet.",
+    "next": "askMobileNumber"
+  },
+  {
+    "name": "validationFailPassword",
+    "type": "info",
+    "text": "Invalid answer. Please enter 8 or more characters(letters/numbers/special characters(- . _ ` ~ @ # $ & *)).",
+    "next": "askPasswordOne"
+  },
+  {
+    "name": "validationFailPasswordMatch",
+    "type": "info",
+    "text": "Passwords must match.",
+    "next": "askPasswordOne"
+  },
+  {
+    "name": "infoOnboardingEnd",
+    "type": "info",
+    "text": "Thank you. That concludes the registration process."
+  }
+
+
+
+]

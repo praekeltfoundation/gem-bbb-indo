@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_profile"
+            android:title="Profile" />
+        <item
+            android:id="@+id/nav_registration"
+            android:title="Registration" />
+        <item
+            android:id="@+id/nav_savings"
+            android:title="Savings" />
+        <item
+            android:id="@+id/nav_share"
+            android:title="Share" />
+        <item
+            android:id="@+id/nav_notifications"
+            android:title="Notifications" />
+        <item
+            android:id="@+id/nav_tools"
+            android:title="Tools" />
+    </group>
+    <group android:id="@+id/nav_grp_settings"
+            android:checkableBehavior="single">
+
+        <item android:title="SETTINGS"
+            android:id="@+id/nav_settings"/>
+    </group>
+    <group android:checkableBehavior="single"
+            android:id="@+id/nav_grp_help">
+        <item android:title="HELP"
+            android:id="@+id/nav_help"/>
+    </group>
+    <group android:checkableBehavior="single"
+        android:id="@+id/nav_grp_single">
+
+        <item android:title="TERMS AND CONDITIONS"
+            android:id="@+id/nav_terms_and_conditions"/>
+    </group>
+    <group android:checkableBehavior="single"
+        android:id="@+id/nav_grp_empty">
+
+        <item android:title=""
+            android:id="@+id/nav_empty"/>
+    </group>
+
+</menu>

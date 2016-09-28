@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="fill_parent"
+    android:paddingTop="40dp"
+    android:paddingLeft="20dp"
+    android:paddingRight="20dp">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Your&apos;e registered"
+        android:id="@+id/textViewHeading"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="40dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="upload a profile picture"
+        android:id="@+id/textViewUpload"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="40dp" />
+
+
+    <com.pkmmte.view.CircularImageView
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:id="@+id/imageButtonDone"
+        android:src="@drawable/ic_launcher"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="40dp"
+        app:border="true"
+        app:border_width="1dp"
+        app:border_color="@android:color/black"
+        app:selector_stroke_width="1dp"
+        />
+
+    <Button
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="DONE"
+        android:id="@+id/buttonRegistrationDone"
+        android:layout_gravity="bottom|center_horizontal"
+        android:layout_marginTop="40dp" />
+
+    <Button
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="Deregister"
+        android:id="@+id/buttonRegistrationUndo"
+        android:layout_gravity="bottom|center_horizontal" />
+</LinearLayout>

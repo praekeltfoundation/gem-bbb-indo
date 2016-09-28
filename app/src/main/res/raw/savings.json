@@ -1,0 +1,51 @@
+[
+  {
+    "name": "savingsAskType",
+    "text": "Do you want to add to your savings or withdraw from them?",
+    "type": "choice",
+    "answers": [
+      {"name":"savingsType","value":"save","text":"Save","next":"savingsAskSaveAmount"},
+      {"name":"savingsType","value":"withdraw","text":"Withdraw","next":"savingsAskWithdrawAmount"}
+    ]
+  },
+  {
+    "name": "savingsAskSaveAmount",
+    "text": "How much do you want to add?",
+    "type": "currency",
+    "error": "savingsInfoInvalidAmount",
+    "answers": [
+      {"name":"saveAmount","value":"","text":"","next":"savingsCongratulate"}
+    ]
+  },
+  {
+    "name": "savingsInfoInvalidAmount",
+    "text": "I'm sorry, but I don't understand that. Please try again.",
+    "type": "info",
+    "next": "savingsAskSaveAmount"
+  },
+  {
+    "name": "savingsCongratulate",
+    "text": "Good job! Every bit counts.",
+    "type": "info"
+  },
+  {
+    "name": "savingsAskWithdrawAmount",
+    "text": "That's too bad. How much do you want to withdraw?",
+    "type": "currency",
+    "error": "savingsInfoWithdrawInvalidAmount",
+    "answers": [
+      {"name":"withdrawAmount","value":"","text":"","next":"savingsConsole"}
+    ]
+  },
+  {
+    "name": "savingsInfoWithdrawInvalidAmount",
+    "text": "I'm sorry, but I don't understand that. Please try again.",
+    "type": "info",
+    "next": "savingsAskWithdrawAmount"
+  },
+  {
+    "name": "savingsConsole",
+    "text": "Don't worry. Things will be better in the future. Here's a helpful tip.",
+    "type": "info"
+  }
+]
