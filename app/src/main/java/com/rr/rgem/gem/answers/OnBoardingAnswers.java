@@ -55,40 +55,27 @@ public class OnBoardingAnswers implements AnswerInterface {
         return  "";
     }
     public boolean textAnswer(ConversationNode.AnswerNode answer, String response){
-        getState().setState(JSONState.State.Correct);
-        getState().sendChallenges(activity, "You answered: " + response);
         return true;
 
     }
     public boolean mobileAnswer(ConversationNode.AnswerNode answer, String response){
-        getState().setState(JSONState.State.Correct);
-
-        getState().sendChallenges(activity, "You answered: " + response);
         return true;
 
     }
     public boolean currencyAnswer(ConversationNode.AnswerNode answer, String response){
-        getState().setState(JSONState.State.Correct);
-        getState().sendChallenges(activity, "You answered: " + response);
         return true;
     }
 
     public boolean choiceAnswer(ConversationNode.AnswerNode answer, String response){
-        getState().setState(JSONState.State.Correct);
-        getState().sendChallenges(activity, "You selected: " + response);
 
         return true;
     }
     public boolean dateAnswer(ConversationNode.AnswerNode answer, String response){
-        getState().setState(JSONState.State.Correct);
-        getState().sendChallenges(activity, "You gave the date: " + response);
         return true;
 
     }
     public boolean passwordAnswer(ConversationNode.AnswerNode answer, String response){
 
-        getState().setState(JSONState.State.Correct);
-        getState().sendChallenges(activity, "Saved");
         return true;
 
     }

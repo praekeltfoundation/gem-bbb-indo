@@ -301,12 +301,12 @@ public class LeftRightConversation extends ConversationalBase
     }
 
     public void addTextInputQuestion(long id,String title, TextView.OnEditorActionListener listener){
-        Message msg = new Message(newId(),new Date().toString(),true, Message.ResponseType.FreeForm,listener);
+        Message msg = new Message(id,new Date().toString(),true, Message.ResponseType.FreeForm,listener);
         msg.setTitle(title);
         addFreeFormQuestion(msg, "Type answer here...");
     }
     public void addMultipleChoiceQuestion(long id,String title,Map<String, View.OnClickListener> listeners){
-        MultipleChoice msg = new MultipleChoice(newId(),new Date().toString(),true, Message.ResponseType.QuickReply,listeners);
+        MultipleChoice msg = new MultipleChoice(id,new Date().toString(),true, Message.ResponseType.QuickReply,listeners);
         msg.setTitle(title);
         addQuickButtonQuestion(msg);
     }

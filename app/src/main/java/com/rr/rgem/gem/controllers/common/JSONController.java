@@ -2,16 +2,19 @@ package com.rr.rgem.gem.controllers.common;
 
 import android.content.Context;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutCompat;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
 import com.rr.rgem.gem.Persisted;
+import com.rr.rgem.gem.R;
 import com.rr.rgem.gem.answers.AnswerInterface;
 import com.rr.rgem.gem.controllers.Validation;
 import com.rr.rgem.gem.models.Answer;
@@ -28,7 +31,9 @@ import java.io.Reader;
 import java.io.StringWriter;
 import java.io.Writer;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * Created by chris on 9/26/2016.
@@ -47,6 +52,7 @@ public class JSONController {
     private Question question;
     private final AnswerInterface answerProcess;
     private final Map<String, String> responseMap = new HashMap<String, String>();
+    private Set<String> answersLoaded = new HashSet<String>();
     private Map<String, String> varMap = new HashMap<String, String>();
     private Map<String, ConvoCallback> extFnMap = new HashMap<String, ConvoCallback>();
     private ConvoCallback doneCallback;
@@ -140,8 +146,12 @@ public class JSONController {
 
     }
     private void sendSuccess(AppCompatActivity activity,ConversationNode.AnswerNode answer,TextView v){
+        String response = v.getText().toString();
+        answer.setResponse(response);
+        getState().setState(JSONState.State.Correct);
         current = getState().getNodeMap().get(getNextNode(answer.next));
-        responseMap.put(answer.name, v.getText().toString());
+        responseMap.put(answer.name, response);
+        getState().sendChallenges(activity, "You answered: " + response);
         v.setGravity(Gravity.END);
         v.setEnabled(false);
     }
@@ -180,6 +190,7 @@ public class JSONController {
                 !Validation.isEmpty(response) && Validation.isValidCurrency(response)
             && answerProcess.currencyAnswer(answer,response))
         {
+
             sendSuccess(activity,answer,v);
             return true;
         } else {
@@ -248,13 +259,14 @@ public class JSONController {
         }else if(type == ConversationNode.NodeType.password){
             return passwordAnswer(activity,answer,v);
         }
-        return false;
+        return textAnswer(activity,answer,v);
     }
+
     public void displayQuestion(final AppCompatActivity activity, final LeftRightConversation conversationView, Question question, long questionId) {
 
         final ConversationNode.AnswerNode answer = current.answers[0];
         //this.answerMap.put(questionId, answer);
-
+        boolean answerLoaded = answersLoaded.contains(answer.getName());
         if (current.type == ConversationNode.NodeType.choice) {
             Map<String, View.OnClickListener> listeners = new HashMap<String, View.OnClickListener>();
             for (final ConversationNode.AnswerNode choice: current.answers)
@@ -280,7 +292,8 @@ public class JSONController {
             if (!listeners.isEmpty()) {
                 conversationView.addMultipleChoiceQuestion(questionId, question.getText(), listeners);
                 for (final ConversationNode.AnswerNode choice: current.answers) {
-                    if (!Validation.isEmpty(choice.getResponse())) {
+                    if (!Validation.isEmpty(choice.getResponse())&& !answerLoaded) {
+                        answersLoaded.add(answer.getName());
                         JSONController.this.getState().setState(JSONState.State.Correct);
                         responseMap.put(choice.name, choice.value);
                         current = JSONController.this.getState().getNodeMap().get(getNextNode(choice.next));
@@ -306,9 +319,12 @@ public class JSONController {
                     return false;
                 }
             }, "Type password here...");
-            if(!Validation.isEmpty(answer.getResponse())){
-                TextView v = (TextView)conversationView.getViews().get(questionId);
+            if(!Validation.isEmpty(answer.getResponse()) && !answerLoaded){
+                answersLoaded.add(answer.getName());
+                LinearLayout contentHolder = (LinearLayout) conversationView.getViews().get(questionId);
+                TextView v = (TextView)contentHolder.findViewById(R.id.text);
                 v.setText(answer.getResponse());
+                v.setEnabled(false);
                 passwordAnswer(activity,answer,v);
             }
         }else {
@@ -326,13 +342,14 @@ public class JSONController {
                     return false;
                 }
             });
-            if(!Validation.isEmpty(answer.getResponse())){
-                TextView v = (TextView)conversationView.getViews().get(questionId);
+            if(!Validation.isEmpty(answer.getResponse()) && !answerLoaded){
+                answersLoaded.add(answer.getName());
+                LinearLayout contentHolder = (LinearLayout) conversationView.getViews().get(questionId);
+                TextView v = (TextView)contentHolder.findViewById(R.id.text);
                 v.setText(answer.getResponse());
-                anyTextAnswer(activity,current.type,answer,v);
+                v.setEnabled(false);
+                anyTextAnswer(activity,current.type ,answer,v);
             }
-
-
         }
 
         conversationView.scroll();
