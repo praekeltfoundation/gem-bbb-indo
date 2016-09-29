@@ -14,7 +14,7 @@ import java.util.List;
  * Created by chris on 9/14/2016.
  */
 public class Challenges {
-    List<Challenge> challenges = new ArrayList<Challenge>();
+    private List<Challenge> challenges = new ArrayList<Challenge>();
 
     public List<Challenge> getChallenges() {
         return challenges;

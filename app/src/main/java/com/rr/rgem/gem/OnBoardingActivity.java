@@ -84,7 +84,7 @@ public class OnBoardingActivity extends AppCompatActivity {
                 }
 
                 Button button1 = new Button(OnBoardingActivity.this);
-                button1.setText("Next");
+                button1.setText(R.string.challenge_next);
                 coachView.addRightView(button1, "name");
                 button1.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -131,7 +131,7 @@ public class OnBoardingActivity extends AppCompatActivity {
         final Persisted persisted = new Persisted(getSharedPreferences(Persisted.APP_PREFS,0));
 
         Button button1 = new Button(contentLayout.getContext());
-        button1.setText("Next");
+        button1.setText(R.string.challenge_next);
         coachView.addRightView(button1, "name");
 
         button1.setOnClickListener(new View.OnClickListener() {

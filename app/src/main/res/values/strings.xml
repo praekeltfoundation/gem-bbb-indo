@@ -12,4 +12,9 @@
     <string name="currency_unit">Rp</string>
     <string name="currency_side">left</string>
     <string name="action_settings"></string>
+
+    <string name="challenge_next">Next</string>
+    <string name="challenge_done">Done</string>
+    <string name="goals_not_yet">"No goals yet..."</string>
+
 </resources>

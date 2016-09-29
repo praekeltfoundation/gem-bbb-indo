@@ -21,11 +21,11 @@ import java.util.Calendar;
 public class MainActivity extends AppCompatActivity{
 
     private static String APP_PREFS = "shared_bimbingbung";
-    GEMNavigation navigation;
-    RelativeLayout contentLayout;
-    LinearLayout coachScreen;
-    LeftRightConversation conversation ;
-    LeftRightConversation coachView;
+    private GEMNavigation navigation;
+    private RelativeLayout contentLayout;
+    private LinearLayout coachScreen;
+    private LeftRightConversation conversation ;
+    private LeftRightConversation coachView;
 
     //Reminder Challenge function
      void reminderChallenge(){

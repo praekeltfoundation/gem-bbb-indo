@@ -36,20 +36,20 @@ import java.util.Map;
 public class JSONController {
 
     private Map<Long, Answer> answerMap = new HashMap<Long,Answer>();
-    private int resource;
-    ConversationNode[] conversation;
-    ConversationNode current;
+    final private int resource;
+    private ConversationNode[] conversation;
+    private ConversationNode current;
     private JSONState state;
-    long questionId = 0;
-    int challengeTracker = 0;
-    int questionTracker = 0;
-    Challenge challenge;
-    Question question;
-    final AnswerInterface answerProcess;
-    Map<String, String> responseMap = new HashMap<String, String>();
-    Map<String, String> varMap = new HashMap<String, String>();
-    Map<String, ConvoCallback> extFnMap = new HashMap<String, ConvoCallback>();
-    ConvoCallback doneCallback;
+    private long questionId = 0;
+    private int challengeTracker = 0;
+    private int questionTracker = 0;
+    private Challenge challenge;
+    private Question question;
+    private final AnswerInterface answerProcess;
+    private final Map<String, String> responseMap = new HashMap<String, String>();
+    private Map<String, String> varMap = new HashMap<String, String>();
+    private Map<String, ConvoCallback> extFnMap = new HashMap<String, ConvoCallback>();
+    private ConvoCallback doneCallback;
 
     public AnswerInterface getAnswerProcess() {
         return answerProcess;
@@ -75,7 +75,7 @@ public class JSONController {
         this.conversation = conversation;
     }
 
-    public JSONState getState() {
+    private JSONState getState() {
         return state;
     }
 
@@ -87,12 +87,12 @@ public class JSONController {
         Gson g = new Gson();
         return g.toJson(this.conversation);
     }
-    public void saveJson(){
+    private void saveJson(){
         String generated = toJson();
         if(answerProcess != null)
             answerProcess.save(generated);
     }
-    String loadJsonFromResources(Context context){
+    private String loadJsonFromResources(Context context){
         InputStream is = context.getResources().openRawResource(resource);
         Writer writer = new StringWriter();
         char[] buffer = new char[1024];
@@ -124,13 +124,13 @@ public class JSONController {
             conversation = gson.fromJson(saved,ConversationNode[].class);
         }
     }
-    public void sendErrorAnswer(AppCompatActivity activity,TextView v){
+    private void sendErrorAnswer(AppCompatActivity activity,TextView v){
         if (current.error != null && !current.error.equals(""))
         {
             getState().setState(JSONState.State.Correct);
             current = getState().getNodeMap().get(getNextNode(current.error));
             getState().sendChallenges(activity, "Invalid answer. Please enter a valid answer.");
-            v.setGravity(Gravity.RIGHT);
+            v.setGravity(Gravity.END);
             v.setEnabled(false);
         }else{
             getState().setState(JSONState.State.Incorrect);
@@ -139,13 +139,13 @@ public class JSONController {
         }
 
     }
-    public void sendSuccess(AppCompatActivity activity,ConversationNode.AnswerNode answer,TextView v){
+    private void sendSuccess(AppCompatActivity activity,ConversationNode.AnswerNode answer,TextView v){
         current = getState().getNodeMap().get(getNextNode(answer.next));
         responseMap.put(answer.name, v.getText().toString());
-        v.setGravity(Gravity.RIGHT);
+        v.setGravity(Gravity.END);
         v.setEnabled(false);
     }
-    public boolean textAnswer(AppCompatActivity activity,ConversationNode.AnswerNode answer, TextView v){
+    private boolean textAnswer(AppCompatActivity activity,ConversationNode.AnswerNode answer, TextView v){
 
         String response = v.getText().toString();
         if (
@@ -160,7 +160,7 @@ public class JSONController {
 
         return false;
     }
-    public boolean mobileAnswer(AppCompatActivity activity,ConversationNode.AnswerNode answer,TextView v){
+    private boolean mobileAnswer(AppCompatActivity activity,ConversationNode.AnswerNode answer,TextView v){
         String response = v.getText().toString();
         if (
                 !Validation.isEmpty(response) && Validation.isValidMobile(response)
@@ -173,7 +173,7 @@ public class JSONController {
         }
         return false;
     }
-    public boolean currencyAnswer(AppCompatActivity activity,ConversationNode.AnswerNode answer,TextView v){
+    private boolean currencyAnswer(AppCompatActivity activity,ConversationNode.AnswerNode answer,TextView v){
 
         String response = v.getText().toString();
         if (
@@ -197,7 +197,7 @@ public class JSONController {
         }
         return true;
     }
-    public boolean dateAnswer(AppCompatActivity activity,ConversationNode.AnswerNode answer,TextView v){
+    private boolean dateAnswer(AppCompatActivity activity,ConversationNode.AnswerNode answer,TextView v){
         String response = v.getText().toString();
 
         if(!Validation.isEmpty(response) && Validation.isValidDate(response) && answerProcess.dateAnswer(answer,response)){
@@ -208,7 +208,7 @@ public class JSONController {
         }
         return false;
     }
-    public boolean numberAnswer(AppCompatActivity activity,ConversationNode.AnswerNode answer,TextView v){
+    private boolean numberAnswer(AppCompatActivity activity,ConversationNode.AnswerNode answer,TextView v){
         String response = v.getText().toString();
 
         if(!Validation.isEmpty(response) && Validation.isValidNumber(response) && answerProcess.textAnswer(answer,response)){
@@ -219,7 +219,7 @@ public class JSONController {
         }
         return false;
     }
-    public boolean passwordAnswer(AppCompatActivity activity,ConversationNode.AnswerNode answer,TextView v){
+    private boolean passwordAnswer(AppCompatActivity activity,ConversationNode.AnswerNode answer,TextView v){
         String response = v.getText().toString();
         if(!Validation.isEmpty(response) && Validation.isValidDate(response) && answerProcess.passwordAnswer(answer,response)){
             sendSuccess(activity,answer,v);

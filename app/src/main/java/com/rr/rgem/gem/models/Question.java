@@ -9,11 +9,11 @@ import java.util.Map;
  * Created by chris on 9/14/2016.
  */
 public class Question {
-    String text;
-    String required;
-    String defaultValue;
-    String completed = "no";
-    List<Answer> answers = new ArrayList<Answer>();
+    private String text;
+    private String required;
+    private String defaultValue;
+    private String completed = "no";
+    private List<Answer> answers = new ArrayList<Answer>();
 
     public Question() {
 

@@ -100,7 +100,7 @@ public class OnBoardingAnswers implements AnswerInterface {
         if (v.getText() != "" && Validation.areMatching(PasswordOne,PasswordTwo)) {
             getState().setState(JSONState.State.Correct);
             getState().sendChallenges(activity, "Saved");
-            v.setGravity(Gravity.RIGHT);
+            v.setGravity(Gravity.END);
             v.setEnabled(false);
             return true;
         } else {

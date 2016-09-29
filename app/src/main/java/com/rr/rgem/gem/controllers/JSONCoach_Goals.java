@@ -36,16 +36,16 @@ import java.util.regex.Pattern;
  */
 public class JSONCoach_Goals extends AppCompatActivity {
 
-    Challenges challenges;
+    private Challenges challenges;
 
-    State state = State.Initiated;
-    long questionId = 0;
-    int challengeTracker = 0;
-    int questionTracker = 0;
-    Challenge goal;
-    Question question;
-    String PasswordOne;
-    String PasswordTwo;
+    private State state = State.Initiated;
+    private long questionId = 0;
+    private int challengeTracker = 0;
+    private int questionTracker = 0;
+    private Challenge goal;
+    private Question question;
+    private String PasswordOne;
+    private String PasswordTwo;
 
     public enum State {
         Initiated, Correct, Incorrect, Complete, Waiting
@@ -53,8 +53,8 @@ public class JSONCoach_Goals extends AppCompatActivity {
 
 
 
-    int resource;
-    Map<Long, Answer> answerMap = new HashMap<Long, Answer>();
+    private int resource;
+    private Map<Long, Answer> answerMap = new HashMap<Long, Answer>();
 
     String loadJsonFromResources(Context context) {
         InputStream is = context.getResources().openRawResource(resource);
@@ -94,7 +94,7 @@ public class JSONCoach_Goals extends AppCompatActivity {
         return android.util.Patterns.PHONE.matcher(phone).matches();
     }
 
-    public void sendGoals(final GoalActivity GoalActivity, LeftRightConversation conversationView, CharSequence toastMessage) {
+    private void sendGoals(final GoalActivity GoalActivity, LeftRightConversation conversationView, CharSequence toastMessage) {
         if (challenges == null)
         {
             return;

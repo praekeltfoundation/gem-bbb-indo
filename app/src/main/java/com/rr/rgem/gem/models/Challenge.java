@@ -7,9 +7,9 @@ import java.util.List;
  * Created by chris on 9/14/2016.
  */
 public class Challenge {
-    String name;
-    String completed;
-    List<Question> questions = new ArrayList<Question>();
+    private String name;
+    private String completed;
+    private List<Question> questions = new ArrayList<Question>();
 
     public String getName() {
         return name;

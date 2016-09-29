@@ -35,20 +35,18 @@ import java.util.regex.Pattern;
  */
 public class JSONCoach_Tips extends AppCompatActivity {
 
-    Tips tips;
+    private Tips tips;
+    private int resource;
+    private Map<Long, Answer> answerMap = new HashMap<Long, Answer>();
 
-
-    int resource;
-    Map<Long, Answer> answerMap = new HashMap<Long, Answer>();
-
-    State state = State.Initiated;
-    long questionId = 0;
-    int challengeTracker = 0;
-    int questionTracker = 0;
-    Tip tip;
-    Question question;
-    String PasswordOne;
-    String PasswordTwo;
+    private State state = State.Initiated;
+    private long questionId = 0;
+    private int challengeTracker = 0;
+    private int questionTracker = 0;
+    private Tip tip;
+    private Question question;
+    private String PasswordOne;
+    private String PasswordTwo;
 
     private enum State {
         Initiated, Correct, Incorrect, Complete, Waiting

@@ -7,10 +7,10 @@ import java.util.List;
  * Created by chris on 9/14/2016.
  */
 public class Answer {
-    String type;
-    String name;
-    String response;
-    List<String> values = new ArrayList<String>();
+    private String type;
+    private String name;
+    private String response;
+    private List<String> values = new ArrayList<String>();
 
     public String getType() {
         return type;

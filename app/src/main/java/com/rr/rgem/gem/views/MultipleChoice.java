@@ -12,7 +12,7 @@ import java.util.Set;
  */
 public class MultipleChoice extends Message
 {
-    Map<String, View.OnClickListener> clicks;
+    private Map<String, View.OnClickListener> clicks;
 
     public MultipleChoice(long id, String dateAndTime, boolean botMessage, ResponseType responseType, Map<String, View.OnClickListener> clicks)
     {

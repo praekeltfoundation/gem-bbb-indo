@@ -11,12 +11,12 @@ import java.util.List;
  * Created by Rudolph Jacobs on 2016-09-19.
  */
 public class Goal {
-    String name;
-    Date startDate;
-    Date endDate;
-    BigDecimal value;
-    String imageName;
-    List<Transaction> transactions;
+    private String name;
+    private Date startDate;
+    private Date endDate;
+    private BigDecimal value;
+    private String imageName;
+    private List<Transaction> transactions;
 
     public Goal() {
         this.name = "";

@@ -18,7 +18,7 @@ import android.widget.TextView;
 public class ConversationalBase {
     final RelativeLayout contentLayout;
 
-    View preview;
+    private View preview;
     private int idGen  =1;
     protected int newId(){
         return ++idGen;
@@ -134,7 +134,7 @@ public class ConversationalBase {
         contentLayout.addView(b, params);
     }
 
-    public void addToLastLeftBelow(View r,View t,CharSequence name){
+    private void addToLastLeftBelow(View r,View t,CharSequence name){
         assignId(r);
         RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(
                 ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);

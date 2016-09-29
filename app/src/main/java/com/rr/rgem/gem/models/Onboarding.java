@@ -8,7 +8,7 @@ import java.util.List;
  */
 public class Onboarding {
 
-    List<Onboard> onboarding = new ArrayList<Onboard>();
+    private List<Onboard> onboarding = new ArrayList<Onboard>();
 
     public List<Onboard> getOnboarding() {
         return onboarding;

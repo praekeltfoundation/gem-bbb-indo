@@ -37,20 +37,20 @@ import java.util.regex.Pattern;
  */
 public class JSONCoach_Onboarding extends AppCompatActivity {
 
-    Onboarding onboarding;
+    private Onboarding onboarding;
 
 
-    int resource;
-    Map<Long, Answer> answerMap = new HashMap<Long, Answer>();
+    private int resource;
+    private Map<Long, Answer> answerMap = new HashMap<Long, Answer>();
 
-    State state = State.Initiated;
-    long questionId = 0;
-    int challengeTracker = 0;
-    int questionTracker = 0;
-    Onboard onboard;
-    Question question;
-    String PasswordOne;
-    String PasswordTwo;
+    private State state = State.Initiated;
+    private long questionId = 0;
+    private int challengeTracker = 0;
+    private int questionTracker = 0;
+    private Onboard onboard;
+    private Question question;
+    private String PasswordOne;
+    private String PasswordTwo;
 
     //FireBase
     Firebase mRef;

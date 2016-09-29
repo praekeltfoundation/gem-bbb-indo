@@ -40,7 +40,7 @@ import java.util.Random;
  */
 public class LeftRightConversation extends ConversationalBase
 {
-    private HashMap<Long, View> views;
+    private final HashMap<Long, View> views;
 
     public LeftRightConversation(RelativeLayout contentLayout)
     {
@@ -72,7 +72,7 @@ public class LeftRightConversation extends ConversationalBase
         return views;
     }
 
-    public void addFreeFormQuestion(Message message, CharSequence placeholder)
+    private void addFreeFormQuestion(Message message, CharSequence placeholder)
     {
         View question = formatMessage(message);
         this.addLeftView(question, "name");
@@ -114,7 +114,7 @@ public class LeftRightConversation extends ConversationalBase
         views.put(message.getId(), question);
     }
 
-    public void addQuickButtonQuestion(MultipleChoice message)
+    private void addQuickButtonQuestion(MultipleChoice message)
     {
         View question = formatMessage(message);
         LinearLayout contentHolder = (LinearLayout) question.findViewById(R.id.contentHolder);
@@ -167,7 +167,7 @@ public class LeftRightConversation extends ConversationalBase
             LinearLayout contentHolder = (LinearLayout) question.findViewById(R.id.contentHolder);
 
             carousel.addView(question);
-            ;
+
             for (String key: message.getChoices().keySet())
             {
                 final CharSequence name = key;
@@ -225,7 +225,7 @@ public class LeftRightConversation extends ConversationalBase
     }
 
 
-    public View formatMessage(Message message)
+    private View formatMessage(Message message)
     {
         View question = LayoutInflater.from(contentLayout.getContext()).inflate(R.layout.coach_question, null);
         LinearLayout contentHolder = (LinearLayout) question.findViewById(R.id.contentHolder);
@@ -278,7 +278,7 @@ public class LeftRightConversation extends ConversationalBase
 
     private class ImageDownloadTask extends AsyncTask<String, Void, Bitmap>
     {
-        ImageView imageView;
+        final ImageView imageView;
 
         public ImageDownloadTask (ImageView imageView) { this.imageView = imageView; }
 
@@ -312,7 +312,7 @@ public class LeftRightConversation extends ConversationalBase
     }
 
 
-    public void addPasswordQuestion(Message message, CharSequence placeholder)
+    private void addPasswordQuestion(Message message, CharSequence placeholder)
     {
         View question = formatMessage(message);
         this.addLeftView(question, "name");

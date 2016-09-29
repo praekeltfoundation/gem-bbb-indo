@@ -27,8 +27,7 @@ public class ConversationNode {
         @SerializedName("mobile") mobile,
         @SerializedName("password") password,
         @SerializedName("passwordTwo") passwordTwo
-
-    };
+    }
 
     public class AnswerNode {
         public String name;

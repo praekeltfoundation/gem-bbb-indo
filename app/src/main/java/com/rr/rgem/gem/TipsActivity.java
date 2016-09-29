@@ -29,13 +29,13 @@ import java.util.Map;
  */
 public class TipsActivity extends AppCompatActivity {
 
-    GEMNavigation navigation;
-    RelativeLayout contentLayout;
-    LinearLayout coachScreen;
+    private GEMNavigation navigation;
+    private RelativeLayout contentLayout;
+    private LinearLayout coachScreen;
 
-    LeftRightConversation coachView;
-    JSONConversation coachController;
-    ImageView currentImage;
+    private LeftRightConversation coachView;
+    private JSONConversation coachController;
+    private ImageView currentImage;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -65,7 +65,7 @@ public class TipsActivity extends AppCompatActivity {
                     coachView.addFreeFormPlain(msg);
                 }*/
                 Button button1 = new Button(contentLayout.getContext());
-                button1.setText("Next");
+                button1.setText(R.string.challenge_next);
                 coachView.addRightView(button1, "name");
                 button1.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -88,7 +88,7 @@ public class TipsActivity extends AppCompatActivity {
     public void goToMain() {
 
         Button button1 = new Button(contentLayout.getContext());
-        button1.setText("Done");
+        button1.setText(R.string.challenge_done);
         coachView.addRightView(button1, "name");
 
         button1.setOnClickListener(new View.OnClickListener() {

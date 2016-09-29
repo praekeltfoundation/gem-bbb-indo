@@ -37,7 +37,7 @@ public class ChallengesAnswers implements AnswerInterface
         this.endCall = endCall;
     }
 
-    public JSONState getState(){
+    private JSONState getState(){
         return this.state;
     }
     public void setState(JSONState state){
@@ -47,7 +47,7 @@ public class ChallengesAnswers implements AnswerInterface
         return state.getController();
     }
 
-    public ChallengeActivity getActivity() {
+    private ChallengeActivity getActivity() {
         return activity;
     }
 

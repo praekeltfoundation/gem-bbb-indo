@@ -12,14 +12,14 @@ import java.util.regex.Pattern;
 
 public class Validation
 {
-    private static int MIN_PASSWORD_LENGTH = 8;
-    private static String DATE_FORMAT = "dd-MM-yyyy";
-    private static String PASSWORD_CHARACTERS = "[A-Za-z0-9()-._`~@#$&*]+";
-    private static String NUMERIC_CHARACTERS = "[0-9 ]+";
-    private static String ALPHABETIC_CHARACTERS = "[A-Za-z ]+";
-    private static String ALPHANUMERIC_CHARACTERS = "[A-Za-z0-9 ]+";
-    private static String CURRENCY_CHARACTERS = "[0-9 ,.]+";
-    private static Pattern NUMERIC_PATTERN = Pattern.compile("[0-9]+.[0-9]+");
+    private final static int MIN_PASSWORD_LENGTH = 8;
+    private final static String DATE_FORMAT = "dd-MM-yyyy";
+    private final static String PASSWORD_CHARACTERS = "[A-Za-z0-9()-._`~@#$&*]+";
+    private final static String NUMERIC_CHARACTERS = "[0-9 ]+";
+    private final static String ALPHABETIC_CHARACTERS = "[A-Za-z ]+";
+    private final static String ALPHANUMERIC_CHARACTERS = "[A-Za-z0-9 ]+";
+    private final static String CURRENCY_CHARACTERS = "[0-9 ,.]+";
+    private final static Pattern NUMERIC_PATTERN = Pattern.compile("[0-9]+.[0-9]+");
 
     public static enum PasswordStrength
     {
@@ -60,7 +60,7 @@ public class Validation
         if (password.length() < MIN_PASSWORD_LENGTH)
             return false;
 
-        Pattern pattern = Pattern.compile(PASSWORD_CHARACTERS);;
+        Pattern pattern = Pattern.compile(PASSWORD_CHARACTERS);
         Matcher matcher = pattern.matcher(password);
         return matcher.matches();
     }
@@ -97,7 +97,7 @@ public class Validation
         if(isEmpty(phrase))
             return false;
 
-        Pattern pattern = Pattern.compile(NUMERIC_CHARACTERS);;
+        Pattern pattern = Pattern.compile(NUMERIC_CHARACTERS);
         Matcher matcher = pattern.matcher(phrase);
         return matcher.matches();
     }
@@ -107,7 +107,7 @@ public class Validation
         if(isEmpty(phrase))
             return false;
 
-        Pattern pattern = Pattern.compile(ALPHABETIC_CHARACTERS);;
+        Pattern pattern = Pattern.compile(ALPHABETIC_CHARACTERS);
         Matcher matcher = pattern.matcher(phrase);
         return matcher.matches();
     }
@@ -117,7 +117,7 @@ public class Validation
         if(isEmpty(phrase))
             return false;
 
-        Pattern pattern = Pattern.compile(ALPHANUMERIC_CHARACTERS);;
+        Pattern pattern = Pattern.compile(ALPHANUMERIC_CHARACTERS);
         Matcher matcher = pattern.matcher(phrase);
         return matcher.matches();
     }
@@ -127,7 +127,7 @@ public class Validation
         if(isEmpty(currency))
             return false;
 
-        Pattern pattern = Pattern.compile(CURRENCY_CHARACTERS);;
+        Pattern pattern = Pattern.compile(CURRENCY_CHARACTERS);
         Matcher matcher = pattern.matcher(currency);
         return matcher.matches();
     }

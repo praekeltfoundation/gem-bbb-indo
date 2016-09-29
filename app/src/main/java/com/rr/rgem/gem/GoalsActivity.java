@@ -40,10 +40,10 @@ import java.util.Map;
 
 public class GoalsActivity extends AppCompatActivity {
 
-    GEMNavigation navigation;
-    LinearLayout goalScreen;
-    LinearLayout contentLayout;
-    ArrayList<Goal> goals;
+    private GEMNavigation navigation;
+    private LinearLayout goalScreen;
+    private LinearLayout contentLayout;
+    private ArrayList<Goal> goals;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,7 +56,7 @@ public class GoalsActivity extends AppCompatActivity {
         goals = generateGoals();
         if (goals == null) {
             TextView noGoals = new TextView(this);
-            noGoals.setText("No goals yet...");
+            noGoals.setText(R.string.goals_not_yet);
             noGoals.setTextSize(20);
             noGoals.setGravity(Gravity.CENTER);
             contentLayout.addView(noGoals);

@@ -8,7 +8,7 @@ import android.widget.Toast;
  * Created by chris on 9/8/2016.
  */
 public class Persisted {
-    public static String APP_PREFS = "bimbingbung_prefs_";
+    public final static String APP_PREFS = "bimbingbung_prefs_";
     final SharedPreferences settings;
     public Persisted(Context context){
         this.settings = context.getSharedPreferences(Persisted.APP_PREFS,0);
@@ -24,7 +24,7 @@ public class Persisted {
     public void saveConvState(String name,String state){
         SharedPreferences.Editor editor = settings.edit();
         editor.putString(name,state);
-        editor.commit();
+        editor.apply();
     }
     public void setRegistered(boolean registered){
         SharedPreferences.Editor editor = settings.edit();
@@ -33,7 +33,7 @@ public class Persisted {
 
         }
         // Commit the edits!
-        editor.commit();
+        editor.apply();
     }
     public boolean isRegistered(){
         boolean loggedIn = settings.getBoolean("registered", false);
@@ -47,7 +47,7 @@ public class Persisted {
         editor.putBoolean("loggedIn", loggedIn);
 
         // Commit the edits!
-        editor.commit();
+        editor.apply();
     }
     public boolean isLoggedIn(){
         boolean loggedIn = settings.getBoolean("loggedIn", false);

@@ -40,7 +40,7 @@ import java.io.FileNotFoundException;
  * Created by chris on 9/12/2016.
  */
 public class GEMNavigation implements NavigationView.OnNavigationItemSelectedListener {
-    final AppCompatActivity container;
+    private final AppCompatActivity container;
     Toolbar toolbar;
     public GEMNavigation(AppCompatActivity container){
         this.container = container;

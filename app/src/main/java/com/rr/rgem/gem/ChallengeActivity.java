@@ -34,15 +34,15 @@ public class ChallengeActivity extends AppCompatActivity{
 
     //public void goToMain(){};
 
-    GEMNavigation navigation;
-    RelativeLayout contentLayout;
-    LinearLayout coachScreen;
+    private GEMNavigation navigation;
+    private RelativeLayout contentLayout;
+    private LinearLayout coachScreen;
 
-    LeftRightConversation coachView;
+    private LeftRightConversation coachView;
     //JSONConversation coachController;
-    ChallengesAnswers coachController;
-    ImageView currentImage;
-    boolean done;
+    private ChallengesAnswers coachController;
+    private ImageView currentImage;
+    private boolean done;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -68,7 +68,7 @@ public class ChallengeActivity extends AppCompatActivity{
                 }
 
                 Button button1 = new Button(contentLayout.getContext());
-                button1.setText("Next");
+                button1.setText(R.string.challenge_next);
                 coachView.addRightView(button1, "name");
                 button1.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -90,7 +90,7 @@ public class ChallengeActivity extends AppCompatActivity{
     public  void goToMain() {
 
         Button button1 = new Button(contentLayout.getContext());
-        button1.setText("Done");
+        button1.setText(R.string.challenge_done);
         coachView.addRightView(button1, "name");
 
         button1.setOnClickListener(new View.OnClickListener() {

@@ -8,8 +8,8 @@ import java.util.List;
  */
 public class Onboard {
 
-    String name;
-    String completed;
+    private String name;
+    private String completed;
     List<Question> questions = new ArrayList<Question>();
 
     public String getName() {

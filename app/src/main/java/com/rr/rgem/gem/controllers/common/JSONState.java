@@ -23,11 +23,11 @@ public class JSONState {
     private State state = State.Initiated;
     private LeftRightConversation conversationView ;
     private Map<String, ConversationNode> nodeMap = new HashMap<String, ConversationNode>();
-    Pattern varStrPattern = Pattern.compile("[$](?:([$])|[(]([a-zA-Z][a-zA-Z_]*)[)])");
+    final private Pattern varStrPattern = Pattern.compile("[$](?:([$])|[(]([a-zA-Z][a-zA-Z_]*)[)])");
 
-    int challengeTracker = 0;
-    int questionTracker = 0;
-    long questionId = 1;
+    private int challengeTracker = 0;
+    private int questionTracker = 0;
+    private long questionId = 1;
     private JSONController controller;
 
     public Map<String, ConversationNode> getNodeMap() {
