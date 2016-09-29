@@ -7,24 +7,16 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.RecyclerView;
-import android.view.Gravity;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
-import android.widget.ScrollView;
 
-import com.rr.rgem.gem.R;
-import com.rr.rgem.gem.controllers.JSONCoach;
-import com.rr.rgem.gem.controllers.JSONCoach_Goals;
 import com.rr.rgem.gem.controllers.JSONConversation;
-import com.rr.rgem.gem.models.Challenge;
 import com.rr.rgem.gem.models.ConvoCallback;
 import com.rr.rgem.gem.navigation.GEMNavigation;
-import com.rr.rgem.gem.views.CoachConversation;
+import com.rr.rgem.gem.views.LeftRightConversation;
 import com.rr.rgem.gem.views.ImageUploadDialog;
 import com.rr.rgem.gem.views.Message;
 import com.rr.rgem.gem.views.Utils;
@@ -43,7 +35,7 @@ public class GoalActivity extends AppCompatActivity {
     RelativeLayout contentLayout;
     LinearLayout coachScreen;
 
-    CoachConversation coachView;
+    LeftRightConversation coachView;
     JSONConversation coachController;
     ImageView currentImage;
 
@@ -55,7 +47,7 @@ public class GoalActivity extends AppCompatActivity {
         Utils.toast(this,"starting Goals activity");
         coachScreen = (LinearLayout) navigation.addLayout(R.layout.conversational_layout);
         contentLayout = (RelativeLayout) coachScreen.findViewById(R.id.container);
-        coachView = new CoachConversation(contentLayout);
+        coachView = new LeftRightConversation(contentLayout);
         Message start = new Message(1, "2016", true, Message.ResponseType.FreeForm, null);
         start.setTitle("Lets Get Started!!!");
 
@@ -82,7 +74,7 @@ public class GoalActivity extends AppCompatActivity {
                     @Override
                     public void onClick(View v) {
 
-                        Intent intent = new Intent(GoalActivity.this,ChallengeActivity.class);
+                        Intent intent = new Intent(GoalActivity.this,GoalsActivity.class);
                         startActivity(intent);
 
                     }

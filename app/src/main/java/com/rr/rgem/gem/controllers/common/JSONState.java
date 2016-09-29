@@ -2,11 +2,9 @@ package com.rr.rgem.gem.controllers.common;
 
 import android.support.v7.app.AppCompatActivity;
 
-import com.rr.rgem.gem.models.Challenge;
-import com.rr.rgem.gem.models.Challenges;
 import com.rr.rgem.gem.models.ConversationNode;
 import com.rr.rgem.gem.models.Question;
-import com.rr.rgem.gem.views.CoachConversation;
+import com.rr.rgem.gem.views.LeftRightConversation;
 import com.rr.rgem.gem.views.Utils;
 
 import java.util.HashMap;
@@ -23,7 +21,7 @@ public class JSONState {
         Initiated, Correct, Incorrect, Complete, Waiting
     }
     private State state = State.Initiated;
-    private CoachConversation conversationView ;
+    private LeftRightConversation conversationView ;
     private Map<String, ConversationNode> nodeMap = new HashMap<String, ConversationNode>();
     Pattern varStrPattern = Pattern.compile("[$](?:([$])|[(]([a-zA-Z][a-zA-Z_]*)[)])");
 
@@ -48,11 +46,11 @@ public class JSONState {
         return  this.controller;
     }
 
-    public void setConversationView(CoachConversation conversationView){
+    public void setConversationView(LeftRightConversation conversationView){
         this.conversationView = conversationView;
     }
 
-    public CoachConversation getConversationView(){
+    public LeftRightConversation getConversationView(){
         return conversationView;
     }
 

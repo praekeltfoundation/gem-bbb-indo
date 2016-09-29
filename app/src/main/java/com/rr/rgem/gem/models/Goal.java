@@ -15,6 +15,7 @@ public class Goal {
     Date startDate;
     Date endDate;
     BigDecimal value;
+    String imageName;
     List<Transaction> transactions;
 
     public Goal() {
@@ -71,7 +72,23 @@ public class Goal {
         return true;
     }
 
-    public BigDecimal weeklyAverage() {
+    public String getImageName() {return this.imageName; }
+    public boolean setImageName(String imageName) {
+        this.imageName = imageName;
+        return true;
+    }
+
+    /*
+    public BigDecimal getWeeklySavingsGoal() {
+        BigDecimal weeks = new BigDecimal((endDate.getTime() - startDate.getTime()) / );
+    }
+
+    public BigDecimal getLastWeekSavings() {
+        return null;
+    }
+    */
+
+    public BigDecimal getAverageWeeklySavings() {
         BigDecimal total = new BigDecimal(0);
         for (Transaction t: transactions) {
             total = total.add(t.value);
@@ -110,7 +127,7 @@ public class Goal {
     public BigDecimal getTotalSaved() {
         BigDecimal total = new BigDecimal(0);
         for (Transaction t: this.transactions) {
-            total.add(t.value);
+            total = total.add(t.value);
         }
         return total;
     }

@@ -1,23 +1,28 @@
 package com.rr.rgem.gem.navigation;
 
 import android.app.Activity;
+import android.content.ClipData;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.rr.rgem.gem.ChallengeActivity;
 import com.rr.rgem.gem.GoalActivity;
+import com.rr.rgem.gem.GoalsActivity;
 import com.rr.rgem.gem.R;
 import com.rr.rgem.gem.RegistrationActivity;
 import com.rr.rgem.gem.RegistrationCompleteActivity;
@@ -101,7 +106,7 @@ public class GEMNavigation implements NavigationView.OnNavigationItemSelectedLis
             Intent intent = new Intent(container, SavingsActivity.class);
             container.startActivity(intent);
         } else if (id == R.id.nav_goals) {
-            Intent intent = new Intent(container, GoalActivity.class);
+            Intent intent = new Intent(container, GoalsActivity.class);
             container.startActivity(intent);
         } else if (id == R.id.nav_share) {
 

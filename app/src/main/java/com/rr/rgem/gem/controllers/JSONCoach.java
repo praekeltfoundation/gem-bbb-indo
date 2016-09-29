@@ -1,8 +1,6 @@
 package com.rr.rgem.gem.controllers;
 
 import android.content.Context;
-import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.View;
@@ -13,14 +11,11 @@ import android.widget.TextView;
 
 import com.google.gson.Gson;
 import com.rr.rgem.gem.ChallengeActivity;
-import com.rr.rgem.gem.OnBoardingActivity;
-import com.rr.rgem.gem.R;
 import com.rr.rgem.gem.models.Answer;
 import com.rr.rgem.gem.models.Challenge;
 import com.rr.rgem.gem.models.Challenges;
-import com.rr.rgem.gem.models.Onboarding;
 import com.rr.rgem.gem.models.Question;
-import com.rr.rgem.gem.views.CoachConversation;
+import com.rr.rgem.gem.views.LeftRightConversation;
 import com.rr.rgem.gem.views.Utils;
 
 import java.io.BufferedReader;
@@ -38,25 +33,25 @@ import java.util.regex.Pattern;
  * Created by chris on 9/14/2016.
  */
 public class JSONCoach {
-    Challenges challenges ;
+    private final Challenges challenges ;
+    private final Map<Long, Answer> answerMap = new HashMap<Long,Answer>();
 
-    int resource;
-    Map<Long, Answer> answerMap = new HashMap<Long,Answer>();
-    State state = State.Initiated;
-    long questionId = 0;
-    int challengeTracker = 0;
-    int questionTracker = 0;
-    Challenge challenge;
-    Question question;
-    String PasswordOne;
-    String PasswordTwo;
+    private int resource;
+    private State state = State.Initiated;
+    private long questionId = 0;
+    private int challengeTracker = 0;
+    private int questionTracker = 0;
+    private Challenge challenge;
+    private Question question;
+    private String PasswordOne;
+    private String PasswordTwo;
 
     private enum State
     {
         Initiated, Correct, Incorrect, Complete, Waiting
     }
 
-    String loadJsonFromResources(Context context){
+    private String loadJsonFromResources(Context context){
         InputStream is = context.getResources().openRawResource(resource);
         Writer writer = new StringWriter();
         char[] buffer = new char[1024];
@@ -90,7 +85,7 @@ public class JSONCoach {
 
     }
 
-    public void sendChallenges(final ChallengeActivity challengeActivity, final CoachConversation conversationView, CharSequence toastMessage)
+    private void sendChallenges(final ChallengeActivity challengeActivity, final LeftRightConversation conversationView, CharSequence toastMessage)
     {
         if (challenges == null)
         {
@@ -172,7 +167,7 @@ public class JSONCoach {
         }
     }
 
-    private void displayQuestion(final ChallengeActivity challengeActivity, final CoachConversation conversationView, Question question, long questionId)
+    private void displayQuestion(final ChallengeActivity challengeActivity, final LeftRightConversation conversationView, Question question, long questionId)
     {
         Iterator<Answer> answers = question.getAnswers().iterator();
 
@@ -359,53 +354,4 @@ public class JSONCoach {
         conversationView.scroll();
     }
 
-    private boolean checkValidPassword(String password)
-    {
-        if (password.length() < 8)
-            return false;
-        else
-            return true;
-    }
-
-
-    private boolean checkAlphabetic(CharSequence phrase)
-    {
-        for (int i = 0; i < phrase.length(); ++i)
-        {
-            if (Character.isLetter(phrase.charAt(i)) || phrase.charAt(i) == ' ')
-                continue;
-            else
-                return false;
-        }
-        return true;
-    }
-
-    private boolean checkAlphaNumeric(CharSequence phrase)
-    {
-        for (int i = 0; i < phrase.length(); ++i)
-        {
-            if (Character.isLetterOrDigit(phrase.charAt(i)) || phrase.charAt(i) == ' ')
-                continue;
-            else
-                return false;
-        }
-        return true;
-    }
-
-    private boolean checkCurrency(CharSequence phrase)
-    {
-        return Pattern.matches("^[$a-zA-Z]* ?[0-9]+([.][0-9]{2})?$", phrase.toString());
-    }
-
-    private  boolean checkDate(CharSequence phrase)
-    {
-        for (int i = 0; i < phrase.length(); ++i)
-        {
-            if (Character.isDigit(phrase.charAt(i)) || phrase.charAt(i) == '-')
-                continue;
-            else
-                return false;
-        }
-        return true;
-    }
 }

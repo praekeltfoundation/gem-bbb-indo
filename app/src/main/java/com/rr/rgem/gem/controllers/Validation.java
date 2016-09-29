@@ -19,6 +19,7 @@ public class Validation
     private static String ALPHABETIC_CHARACTERS = "[A-Za-z ]+";
     private static String ALPHANUMERIC_CHARACTERS = "[A-Za-z0-9 ]+";
     private static String CURRENCY_CHARACTERS = "[0-9 ,.]+";
+    private static Pattern NUMERIC_PATTERN = Pattern.compile("[0-9]+.[0-9]+");
 
     public static enum PasswordStrength
     {
@@ -28,7 +29,7 @@ public class Validation
 
     public static boolean isValidMobile(String phone)
     {
-        if (phone == null)
+        if(isEmpty(phone))
             return false;
         if (phone.length() < 10 || phone.length() > 14)
             return false;
@@ -39,7 +40,7 @@ public class Validation
 
     public static boolean isValidDate(String date)
     {
-        if (date == null)
+        if(isEmpty(date))
             return false;
 
         SimpleDateFormat dateFormat = new SimpleDateFormat(DATE_FORMAT);
@@ -54,7 +55,7 @@ public class Validation
 
     public static boolean isValidPassword(String password)
     {
-        if (password == null)
+        if(isEmpty(password))
             return false;
         if (password.length() < MIN_PASSWORD_LENGTH)
             return false;
@@ -68,7 +69,8 @@ public class Validation
     public static PasswordStrength getPasswordStrength(String password)
     {
         int score = 0;
-
+        if(isEmpty(password))
+            return null;
         if (password.length() >= 10)
             ++score;
         if (password.matches(".*[0-9]+.*"))
@@ -92,7 +94,7 @@ public class Validation
 
     public static boolean isNumeric (String phrase)
     {
-        if (phrase == null)
+        if(isEmpty(phrase))
             return false;
 
         Pattern pattern = Pattern.compile(NUMERIC_CHARACTERS);;
@@ -102,7 +104,7 @@ public class Validation
 
     public static boolean isAlphabetic (String phrase)
     {
-        if (phrase == null)
+        if(isEmpty(phrase))
             return false;
 
         Pattern pattern = Pattern.compile(ALPHABETIC_CHARACTERS);;
@@ -112,7 +114,7 @@ public class Validation
 
     public static boolean isAlphaNumeric (String phrase)
     {
-        if (phrase == null)
+        if(isEmpty(phrase))
             return false;
 
         Pattern pattern = Pattern.compile(ALPHANUMERIC_CHARACTERS);;
@@ -122,7 +124,7 @@ public class Validation
 
     public static boolean isValidCurrency(String currency)
     {
-        if (currency == null)
+        if(isEmpty(currency))
             return false;
 
         Pattern pattern = Pattern.compile(CURRENCY_CHARACTERS);;
@@ -132,6 +134,10 @@ public class Validation
 
     public static boolean areMatching(String firstValue, String secondValue)
     {
+        if(firstValue==null && secondValue == null) return true;
+        if(firstValue==null && secondValue != null) return false;
+        if(firstValue!=null && secondValue == null) return false;
+
         if (firstValue.equals(secondValue))
             return true;
         else
@@ -139,5 +145,12 @@ public class Validation
     }
     public static boolean isEmpty(String value){
         return value == null || value.equals("");
+    }
+    public static boolean isValidNumber(String value){
+        boolean result = false;
+
+        return NUMERIC_PATTERN.matcher(value).matches();
+
+
     }
 }

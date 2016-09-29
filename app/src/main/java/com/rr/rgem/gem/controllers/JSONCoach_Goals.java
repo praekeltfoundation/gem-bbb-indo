@@ -1,7 +1,6 @@
 package com.rr.rgem.gem.controllers;
 
 import android.content.Context;
-import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Gravity;
 import android.view.KeyEvent;
@@ -13,14 +12,11 @@ import android.widget.TextView;
 
 import com.google.gson.Gson;
 import com.rr.rgem.gem.GoalActivity;
-import com.rr.rgem.gem.MainActivity;
 import com.rr.rgem.gem.models.Answer;
 import com.rr.rgem.gem.models.Challenge;
 import com.rr.rgem.gem.models.Challenges;
-import com.rr.rgem.gem.models.Onboard;
-import com.rr.rgem.gem.models.Onboarding;
 import com.rr.rgem.gem.models.Question;
-import com.rr.rgem.gem.views.CoachConversation;
+import com.rr.rgem.gem.views.LeftRightConversation;
 import com.rr.rgem.gem.views.Utils;
 
 import java.io.BufferedReader;
@@ -98,7 +94,7 @@ public class JSONCoach_Goals extends AppCompatActivity {
         return android.util.Patterns.PHONE.matcher(phone).matches();
     }
 
-    public void sendGoals(final GoalActivity GoalActivity, CoachConversation conversationView,CharSequence toastMessage) {
+    public void sendGoals(final GoalActivity GoalActivity, LeftRightConversation conversationView, CharSequence toastMessage) {
         if (challenges == null)
         {
             return;
@@ -178,7 +174,7 @@ public class JSONCoach_Goals extends AppCompatActivity {
     }
 
 
-    private void displayQuestion(final GoalActivity GoalActivity, final CoachConversation conversationView, Question question, long questionId)
+    private void displayQuestion(final GoalActivity GoalActivity, final LeftRightConversation conversationView, Question question, long questionId)
     {
         Iterator<Answer> answers = question.getAnswers().iterator();
 

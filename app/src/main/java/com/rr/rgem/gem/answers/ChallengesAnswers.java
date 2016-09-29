@@ -13,6 +13,7 @@ import com.rr.rgem.gem.controllers.common.JSONState;
 import com.rr.rgem.gem.controllers.Validation;
 import com.rr.rgem.gem.models.Answer;
 import com.rr.rgem.gem.models.ConversationNode;
+import com.rr.rgem.gem.models.ConvoCallback;
 
 import java.util.Map;
 
@@ -24,6 +25,18 @@ public class ChallengesAnswers implements AnswerInterface
     private ChallengeActivity activity;
     private JSONState state;
     private final String name = "challenges";
+    private ConvoCallback endCall = null;
+    public void setDoneCallback(ConvoCallback done){
+        this.endCall = done;
+    }
+    public ConvoCallback getEndCall() {
+        return endCall;
+    }
+
+    public void setEndCall(ConvoCallback endCall) {
+        this.endCall = endCall;
+    }
+
     public JSONState getState(){
         return this.state;
     }
@@ -49,7 +62,10 @@ public class ChallengesAnswers implements AnswerInterface
     public void start(){
         this.getState().sendChallenges(activity,null);
     }
+
     public String complete(Map<String, String> vars, Map<String, String> responses){
+        if(this.endCall!=null)
+            this.endCall.callback(vars,responses);
         return  "";
     }
 

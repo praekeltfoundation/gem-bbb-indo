@@ -1,41 +1,30 @@
 package com.rr.rgem.gem;
 
-import android.Manifest;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
-import android.widget.TextView;
 
+import com.rr.rgem.gem.answers.ChallengesAnswers;
 import com.rr.rgem.gem.controllers.JSONConversation;
-import com.rr.rgem.gem.controllers.Validation;
+import com.rr.rgem.gem.controllers.common.Factory;
+import com.rr.rgem.gem.controllers.common.JSONController;
 import com.rr.rgem.gem.models.ConvoCallback;
 import com.rr.rgem.gem.navigation.GEMNavigation;
-import com.rr.rgem.gem.views.CoachConversation;
-import com.rr.rgem.gem.controllers.JSONCoach;
-import com.rr.rgem.gem.views.ImageUploadDialog;
+import com.rr.rgem.gem.views.LeftRightConversation;
 import com.rr.rgem.gem.views.Message;
-import com.rr.rgem.gem.views.MessageCarousel;
-import com.rr.rgem.gem.views.MultipleChoice;
 import com.rr.rgem.gem.views.Utils;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -49,8 +38,9 @@ public class ChallengeActivity extends AppCompatActivity{
     RelativeLayout contentLayout;
     LinearLayout coachScreen;
 
-    CoachConversation coachView;
-    JSONConversation coachController;
+    LeftRightConversation coachView;
+    //JSONConversation coachController;
+    ChallengesAnswers coachController;
     ImageView currentImage;
     boolean done;
 
@@ -58,15 +48,15 @@ public class ChallengeActivity extends AppCompatActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         navigation = new GEMNavigation(this);
-        Utils.toast(this, "starting challenge activity");
+        Utils.toast(this, "starting current challenge activity");
         coachScreen = (LinearLayout) navigation.addLayout(R.layout.conversational_layout);
         contentLayout = (RelativeLayout) coachScreen.findViewById(R.id.container);
-        coachView = new CoachConversation(contentLayout);
-        coachController = new JSONConversation(this, R.raw.challenges);
+        coachView = new LeftRightConversation(contentLayout);
+        //coachController = new JSONConversation(this, R.raw.challenges);
+        this.coachController = Factory.createChallenges(this,coachView);
         coachController.setDoneCallback(new ConvoCallback() {
             @Override
             public String callback(Map<String, String> vars, Map<String, String> responses) {
-
                 Message summary = new Message(1, "2016", true, Message.ResponseType.FreeForm, null);
                 summary.setTitle("SUMMARY:");
                 coachView.addFreeFormPlain(summary);
@@ -94,7 +84,7 @@ public class ChallengeActivity extends AppCompatActivity{
             }
 
         });
-        coachController.sendChallenges(this, coachView, null);
+        //coachController.sendChallenges(this, coachView, null);
     }
 
     public  void goToMain() {

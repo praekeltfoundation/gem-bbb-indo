@@ -16,12 +16,10 @@ import com.rr.rgem.gem.answers.AnswerInterface;
 import com.rr.rgem.gem.controllers.Validation;
 import com.rr.rgem.gem.models.Answer;
 import com.rr.rgem.gem.models.Challenge;
-import com.rr.rgem.gem.models.Challenges;
 import com.rr.rgem.gem.models.ConversationNode;
 import com.rr.rgem.gem.models.ConvoCallback;
 import com.rr.rgem.gem.models.Question;
-import com.rr.rgem.gem.views.CoachConversation;
-import com.rr.rgem.gem.views.Message;
+import com.rr.rgem.gem.views.LeftRightConversation;
 
 import java.io.BufferedReader;
 import java.io.InputStream;
@@ -30,10 +28,7 @@ import java.io.Reader;
 import java.io.StringWriter;
 import java.io.Writer;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.Map;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 /**
  * Created by chris on 9/26/2016.
@@ -42,7 +37,6 @@ public class JSONController {
 
     private Map<Long, Answer> answerMap = new HashMap<Long,Answer>();
     private int resource;
-    //private Challenges challenges ;
     ConversationNode[] conversation;
     ConversationNode current;
     private JSONState state;
@@ -155,7 +149,7 @@ public class JSONController {
 
         String response = v.getText().toString();
         if (
-            response != "" && Validation.isAlphaNumeric(response)
+                !Validation.isEmpty(response) && Validation.isAlphaNumeric(response)
         &&  answerProcess.textAnswer(answer,v.getText().toString())
         ){
             sendSuccess(activity,answer,v);
@@ -169,7 +163,7 @@ public class JSONController {
     public boolean mobileAnswer(AppCompatActivity activity,ConversationNode.AnswerNode answer,TextView v){
         String response = v.getText().toString();
         if (
-            response != "" && Validation.isValidMobile(response)
+                !Validation.isEmpty(response) && Validation.isValidMobile(response)
         &&  answerProcess.mobileAnswer(answer,v.getText().toString())
         ){
             sendSuccess(activity,answer,v);
@@ -183,7 +177,7 @@ public class JSONController {
 
         String response = v.getText().toString();
         if (
-            response != "" && Validation.isValidCurrency(response)
+                !Validation.isEmpty(response) && Validation.isValidCurrency(response)
             && answerProcess.currencyAnswer(answer,response))
         {
             sendSuccess(activity,answer,v);
@@ -206,7 +200,18 @@ public class JSONController {
     public boolean dateAnswer(AppCompatActivity activity,ConversationNode.AnswerNode answer,TextView v){
         String response = v.getText().toString();
 
-        if(response != "" && Validation.isValidDate(response) && answerProcess.dateAnswer(answer,response)){
+        if(!Validation.isEmpty(response) && Validation.isValidDate(response) && answerProcess.dateAnswer(answer,response)){
+            sendSuccess(activity,answer,v);
+            return true;
+        }else {
+            sendErrorAnswer(activity, v);
+        }
+        return false;
+    }
+    public boolean numberAnswer(AppCompatActivity activity,ConversationNode.AnswerNode answer,TextView v){
+        String response = v.getText().toString();
+
+        if(!Validation.isEmpty(response) && Validation.isValidNumber(response) && answerProcess.textAnswer(answer,response)){
             sendSuccess(activity,answer,v);
             return true;
         }else {
@@ -216,7 +221,7 @@ public class JSONController {
     }
     public boolean passwordAnswer(AppCompatActivity activity,ConversationNode.AnswerNode answer,TextView v){
         String response = v.getText().toString();
-        if(response != "" && Validation.isValidDate(response) && answerProcess.passwordAnswer(answer,response)){
+        if(!Validation.isEmpty(response) && Validation.isValidDate(response) && answerProcess.passwordAnswer(answer,response)){
             sendSuccess(activity,answer,v);
             return true;
         }
@@ -227,82 +232,42 @@ public class JSONController {
         String generated = toJson();
     }
 
-    public void displayQuestion(final AppCompatActivity activity, final CoachConversation conversationView, Question question, long questionId) {
+    private boolean anyTextAnswer(final AppCompatActivity activity,ConversationNode.NodeType type,ConversationNode.AnswerNode answer,TextView v){
+        if(type == ConversationNode.NodeType.currency){
+            return currencyAnswer(activity,answer,v);
+        }else if(type == ConversationNode.NodeType.date){
+            return dateAnswer(activity,answer,v);
+        }else if(type == ConversationNode.NodeType.info){
+            return textAnswer(activity,answer,v);
+        }else if(type == ConversationNode.NodeType.number){
+            return numberAnswer(activity,answer,v);
+        }else if(type == ConversationNode.NodeType.text) {
+            return textAnswer(activity,answer,v);
+        }else if(type ==     ConversationNode.NodeType.mobile){
+            return mobileAnswer(activity,answer,v);
+        }else if(type == ConversationNode.NodeType.password){
+            return passwordAnswer(activity,answer,v);
+        }
+        return false;
+    }
+    public void displayQuestion(final AppCompatActivity activity, final LeftRightConversation conversationView, Question question, long questionId) {
 
         final ConversationNode.AnswerNode answer = current.answers[0];
         //this.answerMap.put(questionId, answer);
 
-        if (current.type == ConversationNode.NodeType.text) {
-
-            conversationView.addTextInputQuestion(questionId, question.getText(), new TextView.OnEditorActionListener() {
-                @Override
-                public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                    if (actionId == EditorInfo.IME_ACTION_DONE || event.getKeyCode() == KeyEvent.KEYCODE_ENTER) {
-                        if(textAnswer(activity,answer,v)){
-                            JSONController.this.saveJson();
-                        }
-
-                        return true;
-                    }
-                    return false;
-                }
-            });
-            if(!Validation.isEmpty(answer.getResponse())){
-                TextView v = (TextView)conversationView.getViews().get(questionId);
-                v.setText(answer.getResponse());
-                textAnswer(activity,answer,v);
-            }
-
-        } else if (current.type == ConversationNode.NodeType.mobile) {
-            conversationView.addTextInputQuestion(questionId, question.getText(), new TextView.OnEditorActionListener() {
-                @Override
-                public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                    if (actionId == EditorInfo.IME_ACTION_DONE || event.getKeyCode() == KeyEvent.KEYCODE_ENTER) {
-                        if(mobileAnswer(activity,answer,v)){
-                            JSONController.this.saveJson();
-                        }
-                        return true;
-                    }
-                    return false;
-                }
-            });
-            if(!Validation.isEmpty(answer.getResponse())){
-                TextView v = (TextView)conversationView.getViews().get(questionId);
-                v.setText(answer.getResponse());
-                mobileAnswer(activity,answer,v);
-            }
-
-        } else if (current.type == ConversationNode.NodeType.currency) {
-            conversationView.addTextInputQuestion(questionId, question.getText(), new TextView.OnEditorActionListener() {
-                @Override
-                public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                    if (actionId == EditorInfo.IME_ACTION_DONE || event.getKeyCode() == KeyEvent.KEYCODE_ENTER) {
-                        if(currencyAnswer(activity,answer,v)){
-                            JSONController.this.saveJson();
-                        }
-                        return true;
-                    }
-                    return false;
-                }
-            });
-            if(!Validation.isEmpty(answer.getResponse())){
-                TextView v = (TextView)conversationView.getViews().get(questionId);
-                v.setText(answer.getResponse());
-                currencyAnswer(activity,answer,v);
-            }
-
-        } else if (current.type == ConversationNode.NodeType.choice) {
+        if (current.type == ConversationNode.NodeType.choice) {
             Map<String, View.OnClickListener> listeners = new HashMap<String, View.OnClickListener>();
             for (final ConversationNode.AnswerNode choice: current.answers)
             {
-                listeners.put(answer.value, new View.OnClickListener() {
+                listeners.put(choice.value, new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        getState().setState(JSONState.State.Correct);
+                        JSONController.this.getState().setState(JSONState.State.Correct);
                         responseMap.put(choice.name, choice.value);
-                        current = getState().getNodeMap().get(getNextNode(choice.next));
-                        getState().sendChallenges(activity, "You selected: " + ((Button) v).getText());
-
+                        current = JSONController.this.getState().getNodeMap().get(getNextNode(choice.next));
+                        JSONController.this.getState().sendChallenges(activity, "You selected: " + ((Button) v).getText());
+                        choice.setResponse(choice.value);
+                        JSONController.this.saveJson();
                         for (int j = 0; j < ((ViewGroup) v.getParent()).getChildCount(); ++j)
                         {
                             ((ViewGroup) v.getParent()).getChildAt(j).setEnabled(false);
@@ -314,28 +279,19 @@ public class JSONController {
 
             if (!listeners.isEmpty()) {
                 conversationView.addMultipleChoiceQuestion(questionId, question.getText(), listeners);
-                if (!Validation.isEmpty(answer.getResponse())) {
-
-                }
-            }
-        } else if (current.type == ConversationNode.NodeType.date) {
-            conversationView.addTextInputQuestion(questionId, question.getText(), new TextView.OnEditorActionListener() {
-                @Override
-                public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                    if (actionId == EditorInfo.IME_ACTION_DONE || event.getKeyCode() == KeyEvent.KEYCODE_ENTER) {
-                        if(dateAnswer(activity,answer,v)){
-                            JSONController.this.saveJson();
-                        }
-                        return true;
+                for (final ConversationNode.AnswerNode choice: current.answers) {
+                    if (!Validation.isEmpty(choice.getResponse())) {
+                        JSONController.this.getState().setState(JSONState.State.Correct);
+                        responseMap.put(choice.name, choice.value);
+                        current = JSONController.this.getState().getNodeMap().get(getNextNode(choice.next));
+                        JSONController.this.getState().sendChallenges(activity, "You selected: " + choice.getResponse());
+                        choice.setResponse(choice.value);
+                        JSONController.this.saveJson();
+                        break; /// TODO: at first choice recorded
                     }
-                    return false;
                 }
-            });
-            if(!Validation.isEmpty(answer.getResponse())){
-                TextView v = (TextView)conversationView.getViews().get(questionId);
-                v.setText(answer.getResponse());
-                dateAnswer(activity,answer,v);
             }
+
         } else if (current.type == ConversationNode.NodeType.password) {
             conversationView.addPasswordMessage(questionId, question.getText(), new TextView.OnEditorActionListener() {
                 @Override
@@ -355,9 +311,29 @@ public class JSONController {
                 v.setText(answer.getResponse());
                 passwordAnswer(activity,answer,v);
             }
+        }else {
+
+            conversationView.addTextInputQuestion(questionId, question.getText(), new TextView.OnEditorActionListener() {
+                @Override
+                public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                    if (actionId == EditorInfo.IME_ACTION_DONE || event.getKeyCode() == KeyEvent.KEYCODE_ENTER) {
+                        if(anyTextAnswer(activity,current.type ,answer,v)){
+                            JSONController.this.saveJson();
+                        }
+
+                        return true;
+                    }
+                    return false;
+                }
+            });
+            if(!Validation.isEmpty(answer.getResponse())){
+                TextView v = (TextView)conversationView.getViews().get(questionId);
+                v.setText(answer.getResponse());
+                anyTextAnswer(activity,current.type,answer,v);
+            }
+
+
         }
-
-
 
         conversationView.scroll();
     }

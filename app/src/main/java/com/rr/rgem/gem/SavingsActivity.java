@@ -16,7 +16,7 @@ import android.widget.RelativeLayout;
 import com.rr.rgem.gem.controllers.JSONConversation;
 import com.rr.rgem.gem.models.ConvoCallback;
 import com.rr.rgem.gem.navigation.GEMNavigation;
-import com.rr.rgem.gem.views.CoachConversation;
+import com.rr.rgem.gem.views.LeftRightConversation;
 import com.rr.rgem.gem.views.ImageUploadDialog;
 import com.rr.rgem.gem.views.Message;
 import com.rr.rgem.gem.views.Utils;
@@ -35,7 +35,7 @@ public class SavingsActivity extends AppCompatActivity {
     RelativeLayout contentLayout;
     LinearLayout coachScreen;
 
-    CoachConversation coachView;
+    LeftRightConversation coachView;
     JSONConversation coachController;
     ImageView currentImage;
 
@@ -49,7 +49,7 @@ public class SavingsActivity extends AppCompatActivity {
         Utils.toast(this,"starting Savings activity");
         coachScreen = (LinearLayout) navigation.addLayout(R.layout.conversational_layout);
         contentLayout = (RelativeLayout) coachScreen.findViewById(R.id.container);
-        coachView = new CoachConversation(contentLayout);
+        coachView = new LeftRightConversation(contentLayout);
         Message start = new Message(1, "2016", true, Message.ResponseType.FreeForm, null);
         start.setTitle("Lets Get Started!!!");
         coachController = new JSONConversation(this,R.raw.savings);

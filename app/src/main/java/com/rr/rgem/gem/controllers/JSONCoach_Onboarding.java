@@ -1,7 +1,6 @@
 package com.rr.rgem.gem.controllers;
 
 import android.content.Context;
-import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Gravity;
 import android.view.KeyEvent;
@@ -11,24 +10,14 @@ import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.TextView;
 
-import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
-import com.firebase.client.FirebaseError;
-import com.firebase.client.ValueEventListener;
 import com.google.gson.Gson;
-import com.rr.rgem.gem.GoalActivity;
 import com.rr.rgem.gem.OnBoardingActivity;
-import com.rr.rgem.gem.R;
-import com.rr.rgem.gem.RegistrationActivity;
-import com.rr.rgem.gem.RegistrationCompleteActivity;
 import com.rr.rgem.gem.models.Answer;
-import com.rr.rgem.gem.models.Challenge;
-import com.rr.rgem.gem.models.Challenges;
 import com.rr.rgem.gem.models.Onboard;
 import com.rr.rgem.gem.models.Onboarding;
 import com.rr.rgem.gem.models.Question;
-import com.rr.rgem.gem.views.CoachConversation;
-import com.rr.rgem.gem.views.Message;
+import com.rr.rgem.gem.views.LeftRightConversation;
 import com.rr.rgem.gem.views.Utils;
 
 import java.io.BufferedReader;
@@ -111,7 +100,7 @@ public class JSONCoach_Onboarding extends AppCompatActivity {
         return android.util.Patterns.PHONE.matcher(phone).matches();
     }
 
-    public void sendOnboarding(final OnBoardingActivity OnBoardingActivity, CoachConversation conversationView,CharSequence toastMessage) {
+    public void sendOnboarding(final OnBoardingActivity OnBoardingActivity, LeftRightConversation conversationView, CharSequence toastMessage) {
         if (onboarding == null)
         {
             return;
@@ -190,7 +179,7 @@ public class JSONCoach_Onboarding extends AppCompatActivity {
         }
     }
 
-    private void displayQuestion(final OnBoardingActivity  OnBoardingActivity, final CoachConversation conversationView, Question question, final long questionId) {
+    private void displayQuestion(final OnBoardingActivity  OnBoardingActivity, final LeftRightConversation conversationView, Question question, final long questionId) {
         Iterator<Answer> answers = question.getAnswers().iterator();
         mRef =new Firebase("https://GEM.firebaseio.com/GEM");
 

@@ -12,13 +12,10 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
-import com.rr.rgem.gem.controllers.JSONCoach;
-import com.rr.rgem.gem.controllers.JSONCoach_Goals;
-import com.rr.rgem.gem.controllers.JSONCoach_Tips;
 import com.rr.rgem.gem.controllers.JSONConversation;
 import com.rr.rgem.gem.models.ConvoCallback;
 import com.rr.rgem.gem.navigation.GEMNavigation;
-import com.rr.rgem.gem.views.CoachConversation;
+import com.rr.rgem.gem.views.LeftRightConversation;
 import com.rr.rgem.gem.views.Message;
 import com.rr.rgem.gem.views.Utils;
 
@@ -36,7 +33,7 @@ public class TipsActivity extends AppCompatActivity {
     RelativeLayout contentLayout;
     LinearLayout coachScreen;
 
-    CoachConversation coachView;
+    LeftRightConversation coachView;
     JSONConversation coachController;
     ImageView currentImage;
 
@@ -47,7 +44,7 @@ public class TipsActivity extends AppCompatActivity {
         Utils.toast(this, "starting Tips activity");
         coachScreen = (LinearLayout) navigation.addLayout(R.layout.conversational_layout);
         contentLayout = (RelativeLayout) coachScreen.findViewById(R.id.container);
-        coachView = new CoachConversation(contentLayout);
+        coachView = new LeftRightConversation(contentLayout);
         Message start = new Message(1, "2016", true, Message.ResponseType.FreeForm, null);
         start.setTitle("These are short tips that are sent by the coach,which are really useful for the user.");
         coachView.addFreeFormPlain(start);

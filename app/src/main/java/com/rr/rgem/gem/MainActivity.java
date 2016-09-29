@@ -4,7 +4,6 @@ import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.FragmentManager;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -14,7 +13,7 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
 import com.rr.rgem.gem.navigation.GEMNavigation;
-import com.rr.rgem.gem.views.CoachConversation;
+import com.rr.rgem.gem.views.LeftRightConversation;
 import com.rr.rgem.gem.views.Message;
 
 import java.util.Calendar;
@@ -25,8 +24,8 @@ public class MainActivity extends AppCompatActivity{
     GEMNavigation navigation;
     RelativeLayout contentLayout;
     LinearLayout coachScreen;
-    CoachConversation conversation ;
-    CoachConversation coachView;
+    LeftRightConversation conversation ;
+    LeftRightConversation coachView;
 
     //Reminder Challenge function
      void reminderChallenge(){
@@ -105,7 +104,7 @@ public class MainActivity extends AppCompatActivity{
         navigation = new GEMNavigation(this);
         coachScreen = (LinearLayout) navigation.addLayout(R.layout.conversational_layout);
         contentLayout = (RelativeLayout) coachScreen.findViewById(R.id.container);
-        conversation = (CoachConversation) new CoachConversation((RelativeLayout) contentLayout);
+        conversation = (LeftRightConversation) new LeftRightConversation((RelativeLayout) contentLayout);
 
         Persisted persisted = new Persisted(getSharedPreferences(Persisted.APP_PREFS,0));
         if(!persisted.isRegistered()){
@@ -117,7 +116,7 @@ public class MainActivity extends AppCompatActivity{
         }else{
 
 
-            coachView = new CoachConversation(contentLayout);
+            coachView = new LeftRightConversation(contentLayout);
             Message message = new Message(1, "2012", true, Message.ResponseType.FreeForm, null);
             message.setTitle("Hello you have registered and set your goals;swipe right or left to navigate further");
             coachView.addFreeFormPlain(message);

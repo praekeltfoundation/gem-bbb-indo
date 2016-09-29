@@ -11,15 +11,12 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
-import com.rr.rgem.gem.OnBoardingActivity;
 import com.rr.rgem.gem.TipsActivity;
 import com.rr.rgem.gem.models.Answer;
-import com.rr.rgem.gem.models.Onboard;
-import com.rr.rgem.gem.models.Onboarding;
 import com.rr.rgem.gem.models.Question;
 import com.rr.rgem.gem.models.Tip;
 import com.rr.rgem.gem.models.Tips;
-import com.rr.rgem.gem.views.CoachConversation;
+import com.rr.rgem.gem.views.LeftRightConversation;
 import com.rr.rgem.gem.views.Utils;
 
 import java.io.BufferedReader;
@@ -96,7 +93,7 @@ public class JSONCoach_Tips extends AppCompatActivity {
         return android.util.Patterns.PHONE.matcher(phone).matches();
     }
 
-    public void sendTips(final TipsActivity OnBoardingActivity, CoachConversation conversationView, CharSequence toastMessage) {
+    public void sendTips(final TipsActivity OnBoardingActivity, LeftRightConversation conversationView, CharSequence toastMessage) {
         if (tips == null) {
             return;
         }
@@ -159,7 +156,7 @@ public class JSONCoach_Tips extends AppCompatActivity {
         }
     }
 
-    private void displayQuestion(final TipsActivity OnBoardingActivity, final CoachConversation conversationView, Question question, long questionId) {
+    private void displayQuestion(final TipsActivity OnBoardingActivity, final LeftRightConversation conversationView, Question question, long questionId) {
         Iterator<Answer> answers = question.getAnswers().iterator();
 
         while (answers.hasNext()) {

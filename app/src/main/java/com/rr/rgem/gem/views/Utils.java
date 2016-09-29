@@ -7,6 +7,7 @@ import android.graphics.Bitmap;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.text.DecimalFormat;
 
 /**
  * Created by chris on 9/8/2016.
@@ -47,5 +48,11 @@ public class Utils {
                 e.printStackTrace();
             }
         }
+    }
+
+    public static String formatNumber(long number)
+    {
+        DecimalFormat formatter = new DecimalFormat("#,###");
+        return formatter.format(number);
     }
 }

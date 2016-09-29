@@ -14,7 +14,7 @@ import com.google.gson.Gson;
 import com.rr.rgem.gem.models.ConversationNode;
 import com.rr.rgem.gem.models.ConvoCallback;
 import com.rr.rgem.gem.models.Question;
-import com.rr.rgem.gem.views.CoachConversation;
+import com.rr.rgem.gem.views.LeftRightConversation;
 import com.rr.rgem.gem.views.Message;
 import com.rr.rgem.gem.views.Utils;
 
@@ -26,7 +26,6 @@ import java.io.StringWriter;
 import java.io.Writer;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.concurrent.Callable;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -87,7 +86,7 @@ public class JSONConversation {
         conversation = gson.fromJson(json,ConversationNode[].class);
     }
 
-    public void sendChallenges(final AppCompatActivity conversationActivity, final CoachConversation conversationView, CharSequence toastMessage)
+    public void sendChallenges(final AppCompatActivity conversationActivity, final LeftRightConversation conversationView, CharSequence toastMessage)
     {
         if (conversation == null)
         {
@@ -155,7 +154,7 @@ public class JSONConversation {
         }
     }
 
-    private void displayQuestion(final AppCompatActivity conversationActivity, final CoachConversation conversationView, Question question, long questionId)
+    private void displayQuestion(final AppCompatActivity conversationActivity, final LeftRightConversation conversationView, Question question, long questionId)
     {
         if (current.type == ConversationNode.NodeType.text) {
             final ConversationNode.AnswerNode answer = current.answers[0];
@@ -233,14 +232,13 @@ public class JSONConversation {
             });
         } else if (current.type == ConversationNode.NodeType.choice) {
             Map<String,View.OnClickListener> listeners = new HashMap<String,View.OnClickListener>();
-            for (final ConversationNode.AnswerNode answer: current.answers)
-            {
-                listeners.put(answer.value, new View.OnClickListener() {
+            for (final ConversationNode.AnswerNode choice: current.answers){
+                listeners.put(choice.value, new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         state = State.Correct;
-                        responseMap.put(answer.name, answer.value);
-                        current = nodeMap.get(getNextNode(answer.next));
+                        responseMap.put(choice.name, choice.value);
+                        current = nodeMap.get(getNextNode(choice.next));
                         sendChallenges(conversationActivity, conversationView, "You selected: " + ((Button) v).getText());
 
                         for (int j = 0; j < ((ViewGroup) v.getParent()).getChildCount(); ++j)

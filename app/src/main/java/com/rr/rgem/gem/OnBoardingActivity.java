@@ -7,32 +7,24 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
-import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
-import com.rr.rgem.gem.controllers.JSONCoach;
-import com.rr.rgem.gem.controllers.JSONCoach_Onboarding;
 import com.rr.rgem.gem.controllers.JSONConversation;
 import com.rr.rgem.gem.models.ConvoCallback;
 import com.rr.rgem.gem.navigation.GEMNavigation;
-import com.rr.rgem.gem.views.CoachConversation;
+import com.rr.rgem.gem.views.LeftRightConversation;
 import com.rr.rgem.gem.views.ImageUploadDialog;
 import com.rr.rgem.gem.views.Message;
-import com.rr.rgem.gem.views.MultipleChoice;
 import com.rr.rgem.gem.views.Utils;
 
-import org.w3c.dom.Text;
-
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -44,7 +36,7 @@ public class OnBoardingActivity extends AppCompatActivity {
     RelativeLayout contentLayout;
     LinearLayout coachScreen;
 
-    CoachConversation coachView;
+    LeftRightConversation coachView;
     //JSONCoach_Onboarding coachController;
     ImageView currentImage;
     JSONConversation coachController;
@@ -59,7 +51,7 @@ public class OnBoardingActivity extends AppCompatActivity {
         Utils.toast(this,"starting OnBoarding activity");
         coachScreen = (LinearLayout) navigation.addLayout(R.layout.conversational_layout);
         contentLayout = (RelativeLayout) coachScreen.findViewById(R.id.container);
-        coachView = new CoachConversation(contentLayout);
+        coachView = new LeftRightConversation(contentLayout);
         Message start = new Message(1, "2016", true, Message.ResponseType.FreeForm, null);
         start.setTitle("Lets Get Started!!!");
         coachView.addFreeFormPlain(start);
@@ -147,7 +139,7 @@ public class OnBoardingActivity extends AppCompatActivity {
             public void onClick(View v) {
 
                 persisted.setRegistered(true);
-                Intent intent = new Intent(OnBoardingActivity.this,GoalActivity.class);
+                Intent intent = new Intent(OnBoardingActivity.this,GoalsActivity.class);
                 startActivity(intent);
 
             }
