@@ -18,6 +18,7 @@ public class Message
     private String subtitle = "";
     private String text = "";
     private String dateAndTime;
+    private String content;
     private boolean botMessage;
     private String image = "";
     private ResponseType responseType;
@@ -52,6 +53,14 @@ public class Message
 
     public String getImagePath() { return image; }
     public void setImagePath(String image) { this.image = image; }
+
+    public String getContent() {
+        return content;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
+    }
 
     public ResponseType getResponseType() { return responseType; }
     public void setResponseType(ResponseType responseType) { this.responseType = responseType; }

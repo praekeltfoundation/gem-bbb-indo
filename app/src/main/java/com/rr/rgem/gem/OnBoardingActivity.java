@@ -152,7 +152,7 @@ public class OnBoardingActivity extends AppCompatActivity {
 
         if (resultCode == RESULT_OK)
         {
-            File path = Utils.getFileFromName("profile.jpg", getApplicationContext());
+            File path = Utils.getFileFromName("imageDir", "profile.jpg", getApplicationContext());
             Bitmap profilePicture = null;
 
             switch(requestCode) {
@@ -201,7 +201,7 @@ public class OnBoardingActivity extends AppCompatActivity {
                 }
             }
 
-            Utils.writeToFile(profilePicture, path);
+            Utils.writeImageToFile(profilePicture, path);
         }
     }
 }

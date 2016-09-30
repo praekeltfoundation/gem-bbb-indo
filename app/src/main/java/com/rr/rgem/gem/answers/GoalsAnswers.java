@@ -1,17 +1,9 @@
 package com.rr.rgem.gem.answers;
 
-import android.view.Gravity;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.TextView;
-
 import com.rr.rgem.gem.ChallengeActivity;
 import com.rr.rgem.gem.Persisted;
 import com.rr.rgem.gem.controllers.common.JSONController;
 import com.rr.rgem.gem.controllers.common.JSONState;
-import com.rr.rgem.gem.controllers.Validation;
-import com.rr.rgem.gem.models.Answer;
 import com.rr.rgem.gem.models.ConversationNode;
 import com.rr.rgem.gem.models.ConvoCallback;
 
@@ -20,11 +12,11 @@ import java.util.Map;
 /**
  * Created by chris on 9/27/2016.
  */
-public class ChallengesAnswers implements AnswerInterface
+public class GoalsAnswers implements AnswerInterface
 {
     private ChallengeActivity activity;
     private JSONState state;
-    private final String name = "challenges";
+    private final String name = "goals";
     private ConvoCallback endCall = null;
     public void setDoneCallback(ConvoCallback done){
         this.endCall = done;

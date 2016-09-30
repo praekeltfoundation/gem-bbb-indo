@@ -25,15 +25,14 @@ public class Utils {
         return file.exists();
     }
 
-    public static File getFileFromName(String fileName, Context context)
+    public static File getFileFromName(String directoryName, String fileName, Context context)
     {
-        ContextWrapper wrapper = new ContextWrapper(context);
-        File directory = context.getDir("imageDir", Context.MODE_PRIVATE);
+        File directory = context.getDir(directoryName, Context.MODE_PRIVATE);
         File path = new File(directory, fileName);
         return path;
     }
 
-    public static void writeToFile(Bitmap image, File file)
+    public static void writeImageToFile(Bitmap image, File file)
     {
         FileOutputStream stream = null;
         try {

@@ -13,7 +13,7 @@ import java.util.Set;
 public class MultipleChoice extends Message
 {
     private Map<String, View.OnClickListener> clicks;
-
+    private String response;
     public MultipleChoice(long id, String dateAndTime, boolean botMessage, ResponseType responseType, Map<String, View.OnClickListener> clicks)
     {
         super(id, dateAndTime, botMessage, responseType, null);
@@ -24,5 +24,13 @@ public class MultipleChoice extends Message
     public void setChoices(Map<String, View.OnClickListener> clicks)
     {
         this.clicks = clicks;
+    }
+
+    public String getResponse() {
+        return response;
+    }
+
+    public void setResponse(String response) {
+        this.response = response;
     }
 }

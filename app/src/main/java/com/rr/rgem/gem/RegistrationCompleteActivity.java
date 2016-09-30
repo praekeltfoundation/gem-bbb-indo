@@ -35,7 +35,7 @@ public class RegistrationCompleteActivity extends AppCompatActivity {
         setContentView(R.layout.user_registration_done);
         cv = (CircularImageView)findViewById(R.id.imageButtonDone);
 
-        File profile = Utils.getFileFromName("profile.jpg", getApplicationContext());
+        File profile = Utils.getFileFromName("imageDir", "profile.jpg", getApplicationContext());
         if (Utils.fileExists(profile))
         {
             try {
@@ -79,7 +79,7 @@ public class RegistrationCompleteActivity extends AppCompatActivity {
 
         if (resultCode == RESULT_OK)
         {
-            File path = Utils.getFileFromName("profile.jpg", getApplicationContext());
+            File path = Utils.getFileFromName("imageDir", "profile.jpg", getApplicationContext());
             Bitmap profilePicture = null;
 
             switch(requestCode) {
@@ -128,7 +128,7 @@ public class RegistrationCompleteActivity extends AppCompatActivity {
                 }
             }
 
-            Utils.writeToFile(profilePicture, path);
+            Utils.writeImageToFile(profilePicture, path);
         }
     }
 }

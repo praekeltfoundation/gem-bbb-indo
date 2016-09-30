@@ -30,7 +30,9 @@ import com.rr.rgem.gem.views.Utils;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Map;
 
@@ -43,7 +45,7 @@ public class GoalsActivity extends AppCompatActivity {
     private GEMNavigation navigation;
     private LinearLayout goalScreen;
     private LinearLayout contentLayout;
-    private ArrayList<Goal> goals;
+    private List<Goal> goals;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -58,7 +60,6 @@ public class GoalsActivity extends AppCompatActivity {
             TextView noGoals = new TextView(this);
             noGoals.setText(R.string.goals_not_yet);
             noGoals.setTextSize(20);
-            noGoals.setGravity(Gravity.CENTER);
             contentLayout.addView(noGoals);
         } else {
             for (Goal goal : goals) {
@@ -111,27 +112,28 @@ public class GoalsActivity extends AppCompatActivity {
 
         ProgressBar averageSavings = (ProgressBar) card.findViewById(R.id.averageSavings);
         ProgressBar weeklySavings = (ProgressBar) card.findViewById(R.id.weeklySavings);
-        averageSavings.setMax(100);
-        weeklySavings.setMax(100);
-        averageSavings.setProgress(33);
-        weeklySavings.setProgress(66);
+
+        averageSavings.setMax(goal.getWeeklySavingsGoal().intValue());
+        weeklySavings.setMax(goal.getWeeklySavingsGoal().intValue());
+        averageSavings.setProgress(goal.getAverageWeeklySavings().intValue());
+        weeklySavings.setProgress(goal.getLastWeekSavings().intValue());
     }
 
     private static ArrayList<Goal> generateGoals() {
         ArrayList <Goal> goals = new ArrayList<Goal>();
         Goal goal;
 
-        goal = new Goal("Teddy Bear", new BigDecimal(5000), new Date(2000, 5, 2), new Date(2000, 6, 2));
-        goal.addTransaction(new Transaction(new Date(2000, 5, 28), new BigDecimal(500)));
-        //System.out.println("TRANSACTION AMOUNT " + goal);
+        goal = new Goal("Teddy Bear", new BigDecimal(5000), (new GregorianCalendar(2016, Calendar.SEPTEMBER, 25)).getTime(), (new GregorianCalendar(2016, Calendar.OCTOBER, 25)).getTime());
+        goal.addTransaction(new Transaction((new GregorianCalendar(2016, Calendar.SEPTEMBER, 27)).getTime(), new BigDecimal(625)));
+
         goals.add(goal);
 
-        goal = new Goal("Shoes", new BigDecimal(10000), new Date(2000, 5, 2), new Date(2000, 6, 2));
-        goal.addTransaction(new Transaction(new Date(2000, 5, 28), new BigDecimal(2500)));
+        goal = new Goal("Shoes", new BigDecimal(10000), (new GregorianCalendar(2016, Calendar.SEPTEMBER, 25)).getTime(), (new GregorianCalendar(2016, Calendar.OCTOBER, 25)).getTime());
+        goal.addTransaction(new Transaction((new GregorianCalendar(2016, Calendar.SEPTEMBER, 27)).getTime(), new BigDecimal(2500)));
         goals.add(goal);
 
-        goal = new Goal("Tanzanite Ring", new BigDecimal(999999), new Date(2000, 5, 2), new Date(2000, 6, 2));
-        goal.addTransaction(new Transaction(new Date(2000, 5, 28), new BigDecimal(50000)));
+        goal = new Goal("Tanzanite Ring", new BigDecimal(999999), (new GregorianCalendar(2016, Calendar.SEPTEMBER, 25)).getTime(), (new GregorianCalendar(2016, Calendar.OCTOBER, 25)).getTime());
+        goal.addTransaction(new Transaction((new GregorianCalendar(2016, Calendar.SEPTEMBER, 27)).getTime(), new BigDecimal(5000)));
         goals.add(goal);
 
         return goals;

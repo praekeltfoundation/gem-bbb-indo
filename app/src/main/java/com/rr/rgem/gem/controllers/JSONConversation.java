@@ -200,7 +200,7 @@ public class JSONConversation {
                 public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                 if (actionId == EditorInfo.IME_ACTION_DONE || event.getKeyCode() == KeyEvent.KEYCODE_ENTER)
                 {
-                    if (v.getText() != "" && checkCurrency(v.getText().toString()))
+                    if (v.getText() != "" && Validation.isValidCurrency(v.getText().toString()))
                     {
                         state = State.Correct;
                         responseMap.put(answer.name, v.getText().toString());
@@ -538,55 +538,5 @@ public class JSONConversation {
         }
         m.appendTail(newStr);
         return newStr.toString();
-    }
-
-    private boolean checkValidPassword(String password)
-    {
-        if (password.length() < 8)
-            return false;
-        else
-            return true;
-    }
-
-
-    private boolean checkAlphabetic(CharSequence phrase)
-    {
-        for (int i = 0; i < phrase.length(); ++i)
-        {
-            if (Character.isLetter(phrase.charAt(i)) || phrase.charAt(i) == ' ')
-                continue;
-            else
-                return false;
-        }
-        return true;
-    }
-
-    private boolean checkAlphaNumeric(CharSequence phrase)
-    {
-        for (int i = 0; i < phrase.length(); ++i)
-        {
-            if (Character.isLetterOrDigit(phrase.charAt(i)) || phrase.charAt(i) == ' ')
-                continue;
-            else
-                return false;
-        }
-        return true;
-    }
-
-    private boolean checkCurrency(CharSequence phrase)
-    {
-        return Pattern.matches("^[$a-zA-Z]* ?([0-9]+([.][0-9]{2})?)$", phrase.toString());
-    }
-
-    private  boolean checkDate(CharSequence phrase)
-    {
-        for (int i = 0; i < phrase.length(); ++i)
-        {
-            if (Character.isDigit(phrase.charAt(i)) || phrase.charAt(i) == '-')
-                continue;
-            else
-                return false;
-        }
-        return true;
     }
 }

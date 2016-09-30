@@ -24,6 +24,7 @@ import android.widget.TextView;
 
 import com.rr.rgem.gem.MainActivity;
 import com.rr.rgem.gem.R;
+import com.rr.rgem.gem.controllers.Validation;
 
 import java.io.InputStream;
 import java.net.URL;
@@ -82,6 +83,8 @@ public class LeftRightConversation extends ConversationalBase
         textField.setImeOptions(EditorInfo.IME_ACTION_DONE);
         textField.setOnEditorActionListener(message.getEditorActionListener());
         textField.setSingleLine(true);
+        textField.setText(message.getContent());
+        textField.setEnabled(Validation.isEmpty(message.getContent()));
         addRightView(textField, "Textfield");
         question.setTag(Message.ResponseType.FreeForm);
         views.put(message.getId(), question);
@@ -99,6 +102,18 @@ public class LeftRightConversation extends ConversationalBase
         //addRightView(textField, "Textfield");
         question.setTag(Message.ResponseType.FreeForm);
         views.put(message.getId(), question);
+    }
+
+    public void addTextInputField(CharSequence text, CharSequence placeholder, TextView.OnEditorActionListener listener)
+    {
+        final EditText textField = new EditText(contentLayout.getContext());
+        textField.setHint(placeholder);
+        textField.setImeOptions(EditorInfo.IME_ACTION_DONE);
+        textField.setOnEditorActionListener(listener);
+        textField.setSingleLine(true);
+        textField.setText(text);
+        textField.setEnabled(false);
+        addRightView(textField, "Textfield");
     }
 
     public void addQuickReplyQuestion(MultipleChoice message)
@@ -125,8 +140,15 @@ public class LeftRightConversation extends ConversationalBase
             final CharSequence name = key;
             Button button = new Button(contentLayout.getContext());
             button.setText(key);
-            button.setOnClickListener(message.getChoices().get(name));
             button.setBackgroundColor(Color.WHITE);
+            if(Validation.areMatching(message.getResponse(), key)){
+                button.setBackgroundColor(Color.LTGRAY);
+            }
+            button.setOnClickListener(message.getChoices().get(name));
+            if(Validation.isEmpty(message.getResponse())) {
+            }else {
+                //button.setEnabled(false);
+            }
 
             LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
                     LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
@@ -301,16 +323,29 @@ public class LeftRightConversation extends ConversationalBase
     }
 
     public void addTextInputQuestion(long id,String title, TextView.OnEditorActionListener listener){
-        Message msg = new Message(newId(),new Date().toString(),true, Message.ResponseType.FreeForm,listener);
+        Message msg = new Message(id,new Date().toString(),true, Message.ResponseType.FreeForm,listener);
         msg.setTitle(title);
         addFreeFormQuestion(msg, "Type answer here...");
     }
+
+    public void addTextInputQuestion(long id,String title, String content,TextView.OnEditorActionListener listener){
+        Message msg = new Message(id,new Date().toString(),true, Message.ResponseType.FreeForm,listener);
+        msg.setTitle(title);
+        msg.setContent(content);
+        addFreeFormQuestion(msg, "Type answer here...");
+    }
+
     public void addMultipleChoiceQuestion(long id,String title,Map<String, View.OnClickListener> listeners){
-        MultipleChoice msg = new MultipleChoice(newId(),new Date().toString(),true, Message.ResponseType.QuickReply,listeners);
+        MultipleChoice msg = new MultipleChoice(id,new Date().toString(),true, Message.ResponseType.QuickReply,listeners);
         msg.setTitle(title);
         addQuickButtonQuestion(msg);
     }
-
+    public void addMultipleChoiceQuestion(long id,String title,String response,Map<String, View.OnClickListener> listeners){
+        MultipleChoice msg = new MultipleChoice(id,new Date().toString(),true, Message.ResponseType.QuickReply,listeners);
+        msg.setTitle(title);
+        msg.setResponse(response);
+        addQuickButtonQuestion(msg);
+    }
 
     private void addPasswordQuestion(Message message, CharSequence placeholder)
     {
@@ -333,6 +368,11 @@ public class LeftRightConversation extends ConversationalBase
         Message msg = new Message(newId(),new Date().toString(),true, Message.ResponseType.FreeForm,listener);
         msg.setTitle(title);
         addPasswordQuestion(msg, placeholder);
+    }
+    public void addInformationalMessage(long id,String title) {
+        Message msg = new Message(id,new Date().toString(),true, Message.ResponseType.FreeForm,null);
+        msg.setTitle(title);
+        addFreeFormPlain(msg);
     }
 
 }

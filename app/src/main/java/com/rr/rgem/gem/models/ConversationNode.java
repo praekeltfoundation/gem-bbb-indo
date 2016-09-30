@@ -16,6 +16,54 @@ public class ConversationNode {
     public String next;
     public AnswerNode[] answers;
 
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getText() {
+        return text;
+    }
+
+    public void setText(String text) {
+        this.text = text;
+    }
+
+    public NodeType getType() {
+        return type;
+    }
+
+    public void setType(NodeType type) {
+        this.type = type;
+    }
+
+    public String getError() {
+        return error;
+    }
+
+    public void setError(String error) {
+        this.error = error;
+    }
+
+    public String getNext() {
+        return next;
+    }
+
+    public void setNext(String next) {
+        this.next = next;
+    }
+
+    public AnswerNode[] getAnswers() {
+        return answers;
+    }
+
+    public void setAnswers(AnswerNode[] answers) {
+        this.answers = answers;
+    }
+
     public enum NodeType {
         @SerializedName("choice") choice,
         @SerializedName("currency") currency,

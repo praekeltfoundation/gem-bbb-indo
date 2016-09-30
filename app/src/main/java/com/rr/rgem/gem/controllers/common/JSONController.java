@@ -2,16 +2,19 @@ package com.rr.rgem.gem.controllers.common;
 
 import android.content.Context;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutCompat;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
 import com.rr.rgem.gem.Persisted;
+import com.rr.rgem.gem.R;
 import com.rr.rgem.gem.answers.AnswerInterface;
 import com.rr.rgem.gem.controllers.Validation;
 import com.rr.rgem.gem.models.Answer;
@@ -20,6 +23,7 @@ import com.rr.rgem.gem.models.ConversationNode;
 import com.rr.rgem.gem.models.ConvoCallback;
 import com.rr.rgem.gem.models.Question;
 import com.rr.rgem.gem.views.LeftRightConversation;
+import com.rr.rgem.gem.views.Utils;
 
 import java.io.BufferedReader;
 import java.io.InputStream;
@@ -28,7 +32,9 @@ import java.io.Reader;
 import java.io.StringWriter;
 import java.io.Writer;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * Created by chris on 9/26/2016.
@@ -47,6 +53,7 @@ public class JSONController {
     private Question question;
     private final AnswerInterface answerProcess;
     private final Map<String, String> responseMap = new HashMap<String, String>();
+    private Set<String> answersLoaded = new HashSet<String>();
     private Map<String, String> varMap = new HashMap<String, String>();
     private Map<String, ConvoCallback> extFnMap = new HashMap<String, ConvoCallback>();
     private ConvoCallback doneCallback;
@@ -127,21 +134,27 @@ public class JSONController {
     private void sendErrorAnswer(AppCompatActivity activity,TextView v){
         if (current.error != null && !current.error.equals(""))
         {
-            getState().setState(JSONState.State.Correct);
-            current = getState().getNodeMap().get(getNextNode(current.error));
-            getState().sendChallenges(activity, "Invalid answer. Please enter a valid answer.");
-            v.setGravity(Gravity.END);
-            v.setEnabled(false);
+            //getState().setState(JSONState.State.Correct);
+            ConversationNode error = getState().getNodeMap().get(getNextNode(current.error));
+            Utils.toast(activity,error.text);
+            //getState().sendChallenges(activity, "Invalid answer. Please enter a valid answer.");
+            //v.setGravity(Gravity.END);
+            //v.setEnabled(false);
         }else{
-            getState().setState(JSONState.State.Incorrect);
-            getState().sendChallenges(activity, "Invalid answer. Please enter a valid answer.");
+            Utils.toast(activity,"Invalid answer. Please enter a valid answer.");
+            //getState().setState(JSONState.State.Incorrect);
+            //getState().sendChallenges(activity, "Invalid answer. Please enter a valid answer.");
 
         }
 
     }
     private void sendSuccess(AppCompatActivity activity,ConversationNode.AnswerNode answer,TextView v){
+        String response = v.getText().toString();
+        answer.setResponse(response);
+        getState().setState(JSONState.State.Correct);
         current = getState().getNodeMap().get(getNextNode(answer.next));
-        responseMap.put(answer.name, v.getText().toString());
+        responseMap.put(answer.name, response);
+        getState().sendChallenges(activity, "You answered: " + response);
         v.setGravity(Gravity.END);
         v.setEnabled(false);
     }
@@ -180,6 +193,7 @@ public class JSONController {
                 !Validation.isEmpty(response) && Validation.isValidCurrency(response)
             && answerProcess.currencyAnswer(answer,response))
         {
+
             sendSuccess(activity,answer,v);
             return true;
         } else {
@@ -248,13 +262,18 @@ public class JSONController {
         }else if(type == ConversationNode.NodeType.password){
             return passwordAnswer(activity,answer,v);
         }
-        return false;
+        return textAnswer(activity,answer,v);
     }
+
     public void displayQuestion(final AppCompatActivity activity, final LeftRightConversation conversationView, Question question, long questionId) {
 
+        if(current.answers == null){
+            Utils.toast(activity,current.text);
+            return;
+        }
         final ConversationNode.AnswerNode answer = current.answers[0];
         //this.answerMap.put(questionId, answer);
-
+        boolean answerLoaded = answersLoaded.contains(current.getName());
         if (current.type == ConversationNode.NodeType.choice) {
             Map<String, View.OnClickListener> listeners = new HashMap<String, View.OnClickListener>();
             for (final ConversationNode.AnswerNode choice: current.answers)
@@ -262,15 +281,19 @@ public class JSONController {
                 listeners.put(choice.value, new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        JSONController.this.getState().setState(JSONState.State.Correct);
-                        responseMap.put(choice.name, choice.value);
-                        current = JSONController.this.getState().getNodeMap().get(getNextNode(choice.next));
-                        JSONController.this.getState().sendChallenges(activity, "You selected: " + ((Button) v).getText());
-                        choice.setResponse(choice.value);
-                        JSONController.this.saveJson();
-                        for (int j = 0; j < ((ViewGroup) v.getParent()).getChildCount(); ++j)
-                        {
-                            ((ViewGroup) v.getParent()).getChildAt(j).setEnabled(false);
+                        if(JSONController.this.answerProcess.choiceAnswer(answer,choice.value)) {
+                            JSONController.this.getState().setState(JSONState.State.Correct);
+                            responseMap.put(choice.name, choice.value);
+                            current = JSONController.this.getState().getNodeMap().get(getNextNode(choice.next));
+                            JSONController.this.getState().sendChallenges(activity, "You selected: " + ((Button) v).getText());
+                            choice.setResponse(choice.value);
+                            answer.setResponse(choice.value);
+                            JSONController.this.saveJson();
+                            for (int j = 0; j < ((ViewGroup) v.getParent()).getChildCount(); ++j) {
+                                ((ViewGroup) v.getParent()).getChildAt(j).setEnabled(false);
+                            }
+                        }else{
+
                         }
                     }
                 });
@@ -278,15 +301,16 @@ public class JSONController {
 
 
             if (!listeners.isEmpty()) {
-                conversationView.addMultipleChoiceQuestion(questionId, question.getText(), listeners);
+                conversationView.addMultipleChoiceQuestion(questionId, question.getText(),answer.getResponse(), listeners);
                 for (final ConversationNode.AnswerNode choice: current.answers) {
-                    if (!Validation.isEmpty(choice.getResponse())) {
+                    if (!Validation.isEmpty(choice.getResponse())&& !answerLoaded) {
+                        answersLoaded.add(current.getName());
                         JSONController.this.getState().setState(JSONState.State.Correct);
                         responseMap.put(choice.name, choice.value);
                         current = JSONController.this.getState().getNodeMap().get(getNextNode(choice.next));
                         JSONController.this.getState().sendChallenges(activity, "You selected: " + choice.getResponse());
                         choice.setResponse(choice.value);
-                        JSONController.this.saveJson();
+                        answer.setResponse(choice.value);
                         break; /// TODO: at first choice recorded
                     }
                 }
@@ -306,14 +330,17 @@ public class JSONController {
                     return false;
                 }
             }, "Type password here...");
-            if(!Validation.isEmpty(answer.getResponse())){
-                TextView v = (TextView)conversationView.getViews().get(questionId);
+            if(!Validation.isEmpty(answer.getResponse()) && !answerLoaded){
+                answersLoaded.add(current.getName());
+                LinearLayout contentHolder = (LinearLayout) conversationView.getViews().get(questionId);
+                TextView v = (TextView)contentHolder.findViewById(R.id.text);
                 v.setText(answer.getResponse());
+                v.setEnabled(false);
                 passwordAnswer(activity,answer,v);
             }
         }else {
 
-            conversationView.addTextInputQuestion(questionId, question.getText(), new TextView.OnEditorActionListener() {
+            conversationView.addTextInputQuestion(questionId, question.getText(),answer.getResponse(), new TextView.OnEditorActionListener() {
                 @Override
                 public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                     if (actionId == EditorInfo.IME_ACTION_DONE || event.getKeyCode() == KeyEvent.KEYCODE_ENTER) {
@@ -326,13 +353,14 @@ public class JSONController {
                     return false;
                 }
             });
-            if(!Validation.isEmpty(answer.getResponse())){
-                TextView v = (TextView)conversationView.getViews().get(questionId);
+            if(!Validation.isEmpty(answer.getResponse()) && !answerLoaded){
+                answersLoaded.add(current.getName());
+                LinearLayout contentHolder = (LinearLayout) conversationView.getViews().get(questionId);
+                TextView v = (TextView)contentHolder.findViewById(R.id.text);
                 v.setText(answer.getResponse());
-                anyTextAnswer(activity,current.type,answer,v);
+                v.setEnabled(false);
+                anyTextAnswer(activity,current.type ,answer,v);
             }
-
-
         }
 
         conversationView.scroll();

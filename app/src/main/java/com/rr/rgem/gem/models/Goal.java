@@ -1,10 +1,11 @@
 package com.rr.rgem.gem.models;
 
-import android.icu.util.DateInterval;
-
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
 
 /**
@@ -78,29 +79,37 @@ public class Goal {
         return true;
     }
 
-    /*
+
     public BigDecimal getWeeklySavingsGoal() {
-        BigDecimal weeks = new BigDecimal((endDate.getTime() - startDate.getTime()) / );
+        BigDecimal weeks = new BigDecimal(Double.valueOf(endDate.getTime() - startDate.getTime()) / (7*24*60*60*1000));
+        BigDecimal weeklySavingsGoal = value.divide(weeks, 8, RoundingMode.HALF_UP);
+        return weeklySavingsGoal;
     }
 
     public BigDecimal getLastWeekSavings() {
-        return null;
+        Date current = new Date();
+        Date lastWeek = new Date(current.getTime() - (7*24*60*60*1000));
+
+        BigDecimal total = new BigDecimal(0);
+        for (Transaction t: this.transactions) {
+            if(lastWeek.compareTo(t.date) <= 0)
+                total = total.add(t.value);
+        }
+        return total;
     }
-    */
+
 
     public BigDecimal getAverageWeeklySavings() {
+        Date current = (new GregorianCalendar()).getTime();
+        BigDecimal period = new BigDecimal(Double.valueOf(current.getTime() - startDate.getTime()) / (7*24*60*60*1000));
+
         BigDecimal total = new BigDecimal(0);
-        for (Transaction t: transactions) {
-            total = total.add(t.value);
+        for (Transaction t: this.transactions) {
+                total = total.add(t.value);
         }
-        Date now = new Date();
-        long millisInWeek = 7*24*60*60*1000;
-        long delT = (now.getTime() - startDate.getTime());
-        delT /= millisInWeek;
-        if (((delT % millisInWeek) > 0) || (delT == 0)) {
-            delT++;
-        }
-        return total.divide(new BigDecimal(delT));
+
+        BigDecimal average = total.divide(period, 8, RoundingMode.HALF_UP);
+        return average;
     }
 
     public boolean addTransaction(Date timestamp, BigDecimal value) {
