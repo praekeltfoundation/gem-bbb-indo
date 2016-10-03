@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
@@ -262,25 +263,27 @@ public class JSONCoach {
                     conversationView.addMultipleChoiceQuestion(questionId, question.getText(), listeners);
                 }
             } else if (answer.getType().equalsIgnoreCase("date")) {
-                conversationView.addTextInputQuestion(questionId, question.getText(), new TextView.OnEditorActionListener() {
-                    @Override
-                    public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                        if (actionId == EditorInfo.IME_ACTION_DONE || event.getKeyCode() == KeyEvent.KEYCODE_ENTER) {
-                            if (v.getText() != "" && Validation.isValidDate(v.getText().toString())) {
-                                state = State.Correct;
-                                sendChallenges(challengeActivity, conversationView, "You gave the date: " + v.getText());
-                                v.setGravity(Gravity.RIGHT);
-                                v.setEnabled(false);
-                                return true;
-                            } else {
-                                state = State.Incorrect;
-                                sendChallenges(challengeActivity, conversationView, "Invalid answer. Please enter a date in the format DD-MM-YYYY.");
-                                return false;
+                if(false) {
+                    conversationView.addTextInputQuestion(questionId, question.getText(), new TextView.OnEditorActionListener() {
+                        @Override
+                        public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                            if (actionId == EditorInfo.IME_ACTION_DONE || event.getKeyCode() == KeyEvent.KEYCODE_ENTER) {
+                                if (v.getText() != "" && Validation.isValidDate(v.getText().toString())) {
+                                    state = State.Correct;
+                                    sendChallenges(challengeActivity, conversationView, "You gave the date: " + v.getText());
+                                    v.setGravity(Gravity.RIGHT);
+                                    v.setEnabled(false);
+                                    return true;
+                                } else {
+                                    state = State.Incorrect;
+                                    sendChallenges(challengeActivity, conversationView, "Invalid answer. Please enter a date in the format DD-MM-YYYY.");
+                                    return false;
+                                }
                             }
+                            return false;
                         }
-                        return false;
-                    }
-                });
+                    });
+                }
             } else if (answer.getType().equalsIgnoreCase("password")) {
                 conversationView.addPasswordMessage(questionId, question.getText(), new TextView.OnEditorActionListener() {
                     @Override

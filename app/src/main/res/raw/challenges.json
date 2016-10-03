@@ -1,17 +1,27 @@
 [
 
-  {
+        {
           "name": "Q1",
-          "text":"this is the first question press yes if you wish to continue or no if not",
+          "text":"this is the first(1) question press yes if you wish to continue or no if not",
           "required":"false",
           "defaultValue":"yes",
           "type":"choice",
           "completed":"no",
           "answers":[
-              { "name": "yes", "value": "yes", "text":"Yes", "next":"Q2"},
+              { "name": "yes", "value": "yes", "text":"Yes", "next":"Q1.1"},
               { "name": "no", "value": "no", "text":"No", "next": "validationFailNoContinue"}
           ]
 
+        },
+        {
+          "name": "Q1.1",
+          "text":"this is first question part 2 (dob)",
+          "type":"date",
+          "completed":"no",
+          "error": "validationFailDate",
+          "answers":[
+            {"name":"dateOfBirth","next":"Q2"}
+          ]
         },
         {
           "name": "Q2",

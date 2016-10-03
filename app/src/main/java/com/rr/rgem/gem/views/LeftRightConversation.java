@@ -15,6 +15,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -29,7 +30,9 @@ import com.rr.rgem.gem.controllers.Validation;
 import java.io.InputStream;
 import java.net.URL;
 import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -42,7 +45,7 @@ import java.util.Random;
 public class LeftRightConversation extends ConversationalBase
 {
     private final HashMap<Long, View> views;
-
+    private final SimpleDateFormat ddMMyyyy = new SimpleDateFormat("dd-MM-yyyy");
     public LeftRightConversation(RelativeLayout contentLayout)
     {
         super(contentLayout);
@@ -88,6 +91,53 @@ public class LeftRightConversation extends ConversationalBase
         addRightView(textField, "Textfield");
         question.setTag(Message.ResponseType.FreeForm);
         views.put(message.getId(), question);
+
+    }
+    private void initDatePicker(final TextView tv, DatePicker dp){
+        final Calendar c = Calendar.getInstance();
+        int year = c.get(Calendar.YEAR);
+        int month = c.get(Calendar.MONTH);
+        int day = c.get(Calendar.DAY_OF_MONTH);
+        DatePicker.OnDateChangedListener cl = new DatePicker.OnDateChangedListener() {
+
+            @Override
+            public void onDateChanged(
+                    DatePicker view,
+                    int year,
+                    int monthOfYear,
+                    int dayOfMonth) {
+                final Calendar c = Calendar.getInstance();
+                c.set(Calendar.YEAR,year);
+                c.set(Calendar.MONTH,monthOfYear);
+                c.set(Calendar.DAY_OF_MONTH,dayOfMonth);
+                tv.setText(ddMMyyyy.format(new Date(c.getTimeInMillis())));
+            }
+
+        };
+        dp.init(year,month,day,cl);
+
+    }
+    private void addDatePickerQuestion(Message message, CharSequence placeholder)
+    {
+        View question = formatMessage(message);
+        this.addLeftView(question, "name");
+
+        final EditText textField = new EditText(contentLayout.getContext());
+        textField.setHint(placeholder);
+        textField.setImeOptions(EditorInfo.IME_ACTION_DONE);
+        textField.setOnEditorActionListener(message.getEditorActionListener());
+        textField.setSingleLine(true);
+        textField.setText(message.getContent());
+        textField.setEnabled(Validation.isEmpty(message.getContent()));
+        if(Validation.isEmpty(message.getContent())) {
+            final DatePicker datePicker = new DatePicker(contentLayout.getContext());
+            initDatePicker(textField, datePicker);
+            addRightView(datePicker, "DatePicker");
+        }
+        addRightView(textField, "Textfield");
+        question.setTag(Message.ResponseType.FreeForm);
+        views.put(message.getId(), question);
+
     }
 
     public void addFreeFormPlain(Message message)
@@ -320,6 +370,13 @@ public class LeftRightConversation extends ConversationalBase
         }
 
         protected void onPostExecute(Bitmap result) { imageView.setImageBitmap(result); }
+    }
+
+    public void addDateInputQuestion(long id,String title, String content, TextView.OnEditorActionListener listener){
+        Message msg = new Message(id, new Date().toString(), true, Message.ResponseType.FreeForm, listener);
+        msg.setTitle(title);
+        msg.setContent(content);
+        addDatePickerQuestion(msg, "Type answer here...");
     }
 
     public void addTextInputQuestion(long id,String title, TextView.OnEditorActionListener listener){

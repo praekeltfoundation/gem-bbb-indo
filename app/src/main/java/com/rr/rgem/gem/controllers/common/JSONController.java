@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -338,7 +339,30 @@ public class JSONController {
                 v.setEnabled(false);
                 passwordAnswer(activity,answer,v);
             }
-        }else {
+        }else if(current.type == ConversationNode.NodeType.date) {
+
+            conversationView.addDateInputQuestion(questionId, question.getText(),answer.getResponse(), new TextView.OnEditorActionListener() {
+                @Override
+                public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                    if (actionId == EditorInfo.IME_ACTION_DONE || event.getKeyCode() == KeyEvent.KEYCODE_ENTER) {
+                        if(anyTextAnswer(activity,current.type ,answer,v)){
+                            JSONController.this.saveJson();
+                        }
+
+                        return true;
+                    }
+                    return false;
+                }
+            });
+            if(!Validation.isEmpty(answer.getResponse()) && !answerLoaded){
+                answersLoaded.add(current.getName());
+                LinearLayout contentHolder = (LinearLayout) conversationView.getViews().get(questionId);
+                TextView v = (TextView)contentHolder.findViewById(R.id.text);
+                v.setText(answer.getResponse());
+                v.setEnabled(false);
+                anyTextAnswer(activity,current.type ,answer,v);
+            }
+        }else{
 
             conversationView.addTextInputQuestion(questionId, question.getText(),answer.getResponse(), new TextView.OnEditorActionListener() {
                 @Override
