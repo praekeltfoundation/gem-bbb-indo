@@ -13,7 +13,9 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
+import com.rr.rgem.gem.answers.GoalsAnswers;
 import com.rr.rgem.gem.controllers.JSONConversation;
+import com.rr.rgem.gem.controllers.common.Factory;
 import com.rr.rgem.gem.models.ConvoCallback;
 import com.rr.rgem.gem.navigation.GEMNavigation;
 import com.rr.rgem.gem.views.LeftRightConversation;
@@ -36,8 +38,10 @@ public class GoalActivity extends AppCompatActivity {
     private LinearLayout coachScreen;
 
     private LeftRightConversation coachView;
-    private JSONConversation coachController;
+    //private JSONConversation coachController;
+    private GoalsAnswers coachController;
     private ImageView currentImage;
+
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,8 +55,8 @@ public class GoalActivity extends AppCompatActivity {
         Message start = new Message(1, "2016", true, Message.ResponseType.FreeForm, null);
         start.setTitle("Lets Get Started!!!");
 
-        coachController = new JSONConversation(this,R.raw.goals);
-
+        //coachController = new JSONConversation(this,R.raw.goals);
+        coachController = Factory.createGoals(this,coachView);
         coachController.setDoneCallback(new ConvoCallback() {
             @Override
             public String callback(Map<String, String> vars, Map<String, String> responses) {
@@ -84,7 +88,7 @@ public class GoalActivity extends AppCompatActivity {
             }
 
         });
-        coachController.sendChallenges(this,coachView,null);
+        coachController.getState().sendChallenges(this,null);
 
         View.OnClickListener listener = new View.OnClickListener() {
             @Override

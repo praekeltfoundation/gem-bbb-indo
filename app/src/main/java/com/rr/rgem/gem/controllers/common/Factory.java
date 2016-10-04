@@ -1,6 +1,7 @@
 package com.rr.rgem.gem.controllers.common;
 
 import com.rr.rgem.gem.ChallengeActivity;
+import com.rr.rgem.gem.GoalActivity;
 import com.rr.rgem.gem.OnBoardingActivity;
 import com.rr.rgem.gem.R;
 import com.rr.rgem.gem.answers.ChallengesAnswers;
@@ -42,7 +43,7 @@ public class Factory {
 
         return answers;
     }
-    public static GoalsAnswers createGoals(ChallengeActivity context, LeftRightConversation conversation){
+    public static GoalsAnswers createGoals(GoalActivity context, LeftRightConversation conversation){
         GoalsAnswers answers = new GoalsAnswers();
         JSONState state = new JSONState();
         JSONController controller = new JSONController(context, R.raw.goals,answers);

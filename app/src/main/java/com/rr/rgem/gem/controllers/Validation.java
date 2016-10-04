@@ -3,6 +3,7 @@ package com.rr.rgem.gem.controllers;
 import com.rr.rgem.gem.R;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -13,7 +14,7 @@ import java.util.regex.Pattern;
 public class Validation
 {
     private final static int MIN_PASSWORD_LENGTH = 8;
-    private final static String DATE_FORMAT = "dd-MM-yyyy";
+    public final static String DATE_FORMAT = "dd-MM-yyyy";
     private final static String PASSWORD_CHARACTERS = "[A-Za-z0-9()-._`~@#$&*]+";
     private final static String NUMERIC_CHARACTERS = "[0-9 ]+";
     private final static String ALPHABETIC_CHARACTERS = "[A-Za-z ]+";
@@ -37,7 +38,17 @@ public class Validation
             return false;
         return true;
     }
-
+    public static Date convertDate(String text){
+        if(isEmpty(text)){
+            return new Date();
+        }
+        SimpleDateFormat dateFormat = new SimpleDateFormat(DATE_FORMAT);
+        try {
+            return dateFormat.parse(text);
+        }catch(ParseException pe){
+            return new Date();
+        }
+    }
     public static boolean isValidDate(String date)
     {
         if(isEmpty(date))

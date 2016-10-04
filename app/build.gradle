@@ -54,4 +54,5 @@ dependencies {
     compile 'com.pkmmte.view:circularimageview:1.1'
     compile 'com.google.code.gson:gson:2.2.4'
     compile 'com.firebase:firebase-client-android:2.3.1'
+    compile 'joda-time:joda-time:2.9.4'
 }

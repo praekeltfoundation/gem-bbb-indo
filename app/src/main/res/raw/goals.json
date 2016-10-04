@@ -41,7 +41,7 @@
     "type": "date",
     "text": "When would you like to have saved this much?",
     "error": "validationFailDate",
-    "answers": [ { "name": "goalDate", "next": "infoGoalEnd" } ]
+    "answers": [ { "name": "goalDate", "next": "verifyGoalAmount" } ]
   },
   {
     "name": "askGoalWeeklySaveAmount",
@@ -68,7 +68,7 @@
     "text": "Have you saved anything towards this goal yet?",
     "answers": [
       { "name": "hasSaved", "value": "yes", "text":"Yes", "next": "askPriorSavedAmount"},
-      { "name": "hasSaved", "value": "no", "text":"No", "next": "infoGoalEnd"}
+      { "name": "hasSaved", "value": "no", "text":"No", "next": "verifyGoalAmount"}
     ]
   },
   {
@@ -77,6 +77,17 @@
     "text": "How much have you already saved?",
     "error": "validationFailPriorSavedAmount",
     "answers": [ { "name": "priorSaveAmount", "next": "infoGoalEnd" } ]
+  },
+  {
+    "name": "verifyGoalAmount",
+    "type": "choice",
+    "text": "If you save Rp $(weeklyGoal) each week you’ll save enough to get your $(savingsGoal) in $(totalWeeks) weeks.",
+    "error": "validationFailPriorSavedAmount",
+    "answers": [
+      { "name": "goalCheck", "value": "reduceWeek", "text":"Reduce Time", "next": "askKnowGoalDate"},
+      { "name": "goalCheck", "value": "reduceAmount", "text":"Reduce Amount", "next": "askPriorSavedAmount"},
+      { "name": "goalCheck", "value": "ok", "text":"OK", "next": "infoGoalEnd"}
+    ]
   },
   {
     "name": "validationFail",
