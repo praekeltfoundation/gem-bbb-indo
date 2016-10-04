@@ -137,7 +137,7 @@ public class JSONState {
             case Complete:
             {
                 varMap.put("questionId", String.format("%d", questionId++));
-               /* if (doneCallback != null) {
+                /*if (doneCallback != null) {
                     doneCallback.callback(varMap, responseMap);
                 }*/
                 getController().getAnswerProcess().complete(varMap,getController().getResponseMap());
