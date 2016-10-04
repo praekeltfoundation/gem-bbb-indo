@@ -116,6 +116,7 @@ public class ConversationalBase {
         params.rightMargin = 10;
         preview = r;
         contentLayout.addView(r, params);
+        contentLayout.requestChildFocus(r,r);
     }
 
     public void addBottomView(View b, CharSequence name)

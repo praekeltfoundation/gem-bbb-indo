@@ -387,7 +387,7 @@ public class JSONController {
             }
         }
 
-        conversationView.scroll();
+        //conversationView.scroll();
     }
     /* external function logic */
     public Map<String, ConvoCallback> getFnMap()

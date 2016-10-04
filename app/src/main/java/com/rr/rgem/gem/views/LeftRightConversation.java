@@ -152,6 +152,7 @@ public class LeftRightConversation extends ConversationalBase
         //addRightView(textField, "Textfield");
         question.setTag(Message.ResponseType.FreeForm);
         views.put(message.getId(), question);
+
     }
 
     public void addTextInputField(CharSequence text, CharSequence placeholder, TextView.OnEditorActionListener listener)
