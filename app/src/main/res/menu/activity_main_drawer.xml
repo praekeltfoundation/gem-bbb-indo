@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<menu xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
 
     <group android:checkableBehavior="single">
         <item
@@ -20,6 +21,8 @@
         <item
             android:id="@+id/nav_tools"
             android:title="Tools" />
+        <item android:title="Tip Archive"
+            android:id="@+id/nav_tiparchive" />
     </group>
     <group android:id="@+id/nav_grp_settings"
             android:checkableBehavior="single">

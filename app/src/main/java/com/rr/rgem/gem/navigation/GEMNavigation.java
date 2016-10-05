@@ -27,6 +27,7 @@ import com.rr.rgem.gem.R;
 import com.rr.rgem.gem.RegistrationActivity;
 import com.rr.rgem.gem.RegistrationCompleteActivity;
 import com.rr.rgem.gem.SavingsActivity;
+import com.rr.rgem.gem.TipArchiveActivity;
 import com.rr.rgem.gem.TipsActivity;
 import com.rr.rgem.gem.models.Challenge;
 import com.rr.rgem.gem.models.Tips;
@@ -112,6 +113,9 @@ public class GEMNavigation implements NavigationView.OnNavigationItemSelectedLis
 
         } else if (id == R.id.nav_tools) {
 
+        } else if (id == R.id.nav_tiparchive) {
+            Intent intent = new Intent(container, TipArchiveActivity.class);
+            container.startActivity(intent);
         } else if (id == R.id.nav_notifications) {
 
         } else if (id == R.id.nav_share) {
