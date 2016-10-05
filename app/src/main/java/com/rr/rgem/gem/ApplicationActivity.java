@@ -10,6 +10,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.widget.ImageView;
 
 import com.rr.rgem.gem.controllers.Validation;
+import com.rr.rgem.gem.models.Goal;
 import com.rr.rgem.gem.views.Utils;
 
 import java.io.File;
@@ -19,6 +20,7 @@ import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
 /**
  * Created by jacob on 2016/10/04.

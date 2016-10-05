@@ -62,8 +62,8 @@ public class GoalsActivity extends ApplicationActivity {
     private LinearLayout goalScreen;
     private LinearLayout contentLayout;
     private GoalsAnswers controller;
-    private List<Goal> goals;
     private ImageView currentImage;
+    public List<Goal> goals;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -80,21 +80,33 @@ public class GoalsActivity extends ApplicationActivity {
 
         if (extras != null)
         {
-            HashMap<String, String> responses = (HashMap<String, String>) extras.get("responses");
-            DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
-            Date date = null;
+            if(extras.containsKey("responses")) {
+                HashMap<String, String> responses = (HashMap<String, String>) extras.get("responses");
+                DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+                Date date = null;
 
-            try {
-                date = dateFormat.parse(responses.get("goalDate"));
-            } catch (ParseException e) {
-                e.printStackTrace();
+                try {
+                    date = dateFormat.parse(responses.get("goalDate"));
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+
+                GregorianCalendar endDate = new GregorianCalendar();
+                endDate.setTime(date);
+                Goal goal = new Goal (responses.get("goalName"), new BigDecimal(responses.get("goalAmount")), new GregorianCalendar().getTime(), endDate.getTime());
+                goal.setImageName(responses.get("goalImage"));
+                goals.add(goal);
             }
+            else if (extras.containsKey("transaction")) {
+                HashMap<String, String> transactionInformation = (HashMap<String, String>) extras.get("transaction");
 
-            GregorianCalendar endDate = new GregorianCalendar();
-            endDate.setTime(date);
-            Goal goal = new Goal (responses.get("goalName"), new BigDecimal(responses.get("goalAmount")), new GregorianCalendar().getTime(), endDate.getTime());
-            goal.setImageName(responses.get("goalImage"));
-            goals.add(goal);
+                int amount = Integer.parseInt(transactionInformation.get("amount"));
+                if(transactionInformation.get("savingsType").equals("withdraw"))
+                    amount *= -1;
+                System.out.println("AMOUNT: " + amount);
+                Transaction transaction = new Transaction(new GregorianCalendar().getTime(), new BigDecimal(amount));
+                goals.get(getGoalIndex(transactionInformation.get("goal"))).addTransaction(transaction);
+            }
         }
 
         if (goals == null || goals.size() == 0) {
@@ -143,7 +155,7 @@ public class GoalsActivity extends ApplicationActivity {
         this.goals = goals;
     }
 
-    private void addGoalCard(Goal goal)
+    private void addGoalCard(final Goal goal)
     {
         View card = LayoutInflater.from(contentLayout.getContext()).inflate(R.layout.goal_card, null);
         contentLayout.addView(card);
@@ -171,6 +183,7 @@ public class GoalsActivity extends ApplicationActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(GoalsActivity.this, SavingsActivity.class);
+                intent.putExtra("goal", goal.getName());
                 GoalsActivity.this.startActivity(intent);
             }
         });
@@ -182,5 +195,19 @@ public class GoalsActivity extends ApplicationActivity {
         weeklySavings.setMax(goal.getWeeklySavingsGoal().intValue());
         averageSavings.setProgress(goal.getAverageWeeklySavings().intValue());
         weeklySavings.setProgress(goal.getLastWeekSavings().intValue());
+    }
+
+    public int getGoalIndex(String name) {
+        int index = 0;
+        for(Goal goal : goals) {
+            if(goal.getName().equals(name))
+                return index;
+            ++index;
+        }
+        return -1;
+    }
+
+    public void removeGoal(int index) {
+        goals.remove(index);
     }
 }

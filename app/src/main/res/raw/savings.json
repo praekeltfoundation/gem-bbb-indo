@@ -14,7 +14,7 @@
     "type": "currency",
     "error": "savingsInfoInvalidAmount",
     "answers": [
-      {"name":"saveAmount","value":"","text":"","next":"savingsCongratulate"}
+      {"name":"amount","value":"","text":"","next":"savingsCongratulate"}
     ]
   },
   {
@@ -34,7 +34,7 @@
     "type": "currency",
     "error": "savingsInfoWithdrawInvalidAmount",
     "answers": [
-      {"name":"withdrawAmount","value":"","text":"","next":"savingsConsole"}
+      {"name":"amount","value":"","text":"","next":"savingsConsole"}
     ]
   },
   {

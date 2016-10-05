@@ -15,6 +15,7 @@ import android.widget.RelativeLayout;
 
 import com.rr.rgem.gem.controllers.JSONConversation;
 import com.rr.rgem.gem.models.ConvoCallback;
+import com.rr.rgem.gem.models.Goal;
 import com.rr.rgem.gem.navigation.GEMNavigation;
 import com.rr.rgem.gem.views.LeftRightConversation;
 import com.rr.rgem.gem.views.ImageUploadDialog;
@@ -24,6 +25,7 @@ import com.rr.rgem.gem.views.Utils;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -57,7 +59,7 @@ public class SavingsActivity extends ApplicationActivity {
 
 
             @Override
-            public String callback(Map<String, String> vars, Map<String, String> responses) {
+            public String callback(Map<String, String> vars, final Map<String, String> responses) {
 
                 Message summary = new Message(1, "2016", true, Message.ResponseType.FreeForm, null);
                 summary.setTitle("SUMMARY:");
@@ -75,7 +77,13 @@ public class SavingsActivity extends ApplicationActivity {
                     @Override
                     public void onClick(View v) {
 
-                        Intent intent = new Intent(SavingsActivity.this,MainActivity.class);
+                        Intent intent = new Intent(SavingsActivity.this,GoalsActivity.class);
+                        if(getIntent().hasExtra("goal")) {
+
+                            HashMap<String, String> transaction = (HashMap<String, String>) responses;
+                            transaction.put("goal", getIntent().getStringExtra("goal"));
+                            intent.putExtra("transaction", transaction);
+                        }
                         startActivity(intent);
 
                     }
@@ -86,15 +94,5 @@ public class SavingsActivity extends ApplicationActivity {
 
 
         coachController.sendChallenges(this,coachView,null);
-
-        View.OnClickListener listener = new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                FragmentManager manager = getSupportFragmentManager();
-                ImageUploadDialog dialog = new ImageUploadDialog();
-                dialog.show(manager, "dialog");
-            }
-        };
-
     }
 }
