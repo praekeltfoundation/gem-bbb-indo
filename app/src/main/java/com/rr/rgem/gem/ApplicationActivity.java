@@ -26,7 +26,7 @@ import java.util.Date;
 
 public class ApplicationActivity extends AppCompatActivity {
 
-    ImageView currentImage;
+    public ImageView currentImage;
     public String currentImageName;
 
     protected void onCreate(Bundle savedInstanceState) {

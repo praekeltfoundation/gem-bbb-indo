@@ -1,6 +1,8 @@
 package com.rr.rgem.gem.controllers.common;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutCompat;
@@ -11,6 +13,7 @@ import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.DatePicker;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -32,6 +35,8 @@ import com.rr.rgem.gem.views.Utils;
 
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
@@ -65,7 +70,6 @@ public class JSONController {
     Persisted persisted;
     String saved;
     private ConvoCallback doneCallback;
-    private String currentImageName;
 
     public AnswerInterface getAnswerProcess() {
         return answerProcess;
@@ -395,19 +399,33 @@ public class JSONController {
         } else if (current.type == ConversationNode.NodeType.imageUpload) {
             Message message = new Message(1, "2016", true, Message.ResponseType.ImageUpload, null);
             message.setTitle(question.getText());
-            conversationView.addImageUploadQuestion(message, new View.OnClickListener() {
+            activity.currentImage = conversationView.addImageUploadQuestion(message, new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     FragmentManager manager = activity.getSupportFragmentManager();
                     ImageUploadDialog dialog = new ImageUploadDialog();
-                    String imageName = activity.currentImageName;
                     dialog.show(manager, "dialog");
-
-                    if(imageUploadAnswer(activity, answer, imageName)) {
-                        JSONController.this.saveJson();
-                    }
                 }
             });
+
+            if(!Validation.isEmpty(answer.getResponse()) && !answerLoaded){
+                answersLoaded.add(current.getName());
+                ImageView v = activity.currentImage;
+                File imageFile = Utils.getFileFromName("imageDir", answer.getResponse(), activity.getBaseContext());
+                if (Utils.fileExists(imageFile))
+                {
+                    try {
+                        Bitmap photo = BitmapFactory.decodeStream(new FileInputStream(imageFile));
+                        v.setImageBitmap(photo);
+                    }
+                    catch (FileNotFoundException e)
+                    {
+                        e.printStackTrace();
+                    }
+                }
+                imageUploadAnswer(activity, answer, answer.getResponse());
+            }
+
         } else{
             conversationView.addTextInputQuestion(questionId, question.getText(),answer.getResponse(), new TextView.OnEditorActionListener() {
                 @Override
@@ -488,5 +506,10 @@ public class JSONController {
         return result;
     }
 
-    public void setCurrentImageName(String name) { currentImageName = name; }
+    public void ImageUploaded(ApplicationActivity activity, String imageName)
+    {
+        if(imageUploadAnswer(activity, current.answers[0], imageName)) {
+            JSONController.this.saveJson();
+        }
+    }
 }

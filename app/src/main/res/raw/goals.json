@@ -3,7 +3,13 @@
     "name": "askGoalName",
     "type": "text",
     "text": "What are you saving for?",
-    "answers": [ {"name": "goalName", "next": "askKnowGoalAmount" } ]
+    "answers": [ {"name": "goalName", "next": "askGoalImage" } ]
+  },
+  {
+    "name": "askGoalImage",
+    "type": "imageUpload",
+    "text": "Add an image for your savings goal to help keep you motivated:",
+    "answers": [ {"name": "goalImage", "next": "askKnowGoalAmount" } ]
   },
   {
     "name": "askKnowGoalAmount",

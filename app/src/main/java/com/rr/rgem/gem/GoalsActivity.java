@@ -152,11 +152,11 @@ public class GoalsActivity extends ApplicationActivity {
         ImageView editGoal = (ImageView) card.findViewById(R.id.editGoal);
         ImageView goalImage = (ImageView) card.findViewById(R.id.goalImage);
 
-        File profile = Utils.getFileFromName("imageDir", "profile.jpg", getApplicationContext());
-        if (Utils.fileExists(profile))
+        File image = Utils.getFileFromName("imageDir", goal.getImageName(), getApplicationContext());
+        if (Utils.fileExists(image))
         {
             try {
-                Bitmap photo = BitmapFactory.decodeStream(new FileInputStream(profile));
+                Bitmap photo = BitmapFactory.decodeStream(new FileInputStream(image));
                 goalImage.setImageBitmap(photo);
             }
             catch (FileNotFoundException e)

@@ -111,4 +111,10 @@ public class GoalActivity extends ApplicationActivity {
     public void setGoal(Goal goal) {
         this.goal = goal;
     }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        coachController.getController().ImageUploaded(this, currentImageName);
+    }
 }
