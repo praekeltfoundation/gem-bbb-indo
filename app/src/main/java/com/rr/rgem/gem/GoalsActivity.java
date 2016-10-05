@@ -1,7 +1,10 @@
 package com.rr.rgem.gem;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.ActionBar;
@@ -18,7 +21,11 @@ import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.google.gson.Gson;
+import com.rr.rgem.gem.answers.GoalsAnswers;
 import com.rr.rgem.gem.controllers.JSONConversation;
+import com.rr.rgem.gem.controllers.common.Factory;
+import com.rr.rgem.gem.controllers.common.JSONController;
 import com.rr.rgem.gem.models.ConvoCallback;
 import com.rr.rgem.gem.models.Goal;
 import com.rr.rgem.gem.models.Transaction;
@@ -28,11 +35,20 @@ import com.rr.rgem.gem.views.ImageUploadDialog;
 import com.rr.rgem.gem.views.Message;
 import com.rr.rgem.gem.views.Utils;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
 import java.math.BigDecimal;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -40,12 +56,14 @@ import java.util.Map;
  * Created by jacob on 2016/09/28.
  */
 
-public class GoalsActivity extends AppCompatActivity {
+public class GoalsActivity extends ApplicationActivity {
 
     private GEMNavigation navigation;
     private LinearLayout goalScreen;
     private LinearLayout contentLayout;
+    private GoalsAnswers controller;
     private List<Goal> goals;
+    private ImageView currentImage;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,8 +73,31 @@ public class GoalsActivity extends AppCompatActivity {
         Utils.toast(this,"starting Goals activity");
         goalScreen = (LinearLayout) navigation.addLayout(R.layout.goal_carousel);
         contentLayout = (LinearLayout) goalScreen.findViewById(R.id.carousel);
-        goals = generateGoals();
-        if (goals == null) {
+        this.controller = Factory.createGoalsCarousel(this);
+
+        Intent intent = getIntent();
+        Bundle extras = intent.getExtras();
+
+        if (extras != null)
+        {
+            HashMap<String, String> responses = (HashMap<String, String>) extras.get("responses");
+            DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+            Date date = null;
+
+            try {
+                date = dateFormat.parse(responses.get("goalDate"));
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+
+            GregorianCalendar endDate = new GregorianCalendar();
+            endDate.setTime(date);
+            Goal goal = new Goal (responses.get("goalName"), new BigDecimal(responses.get("goalAmount")), new GregorianCalendar().getTime(), endDate.getTime());
+            goal.setImageName(responses.get("goalImage"));
+            goals.add(goal);
+        }
+
+        if (goals == null || goals.size() == 0) {
             TextView noGoals = new TextView(this);
             noGoals.setText(R.string.goals_not_yet);
             noGoals.setTextSize(20);
@@ -66,6 +107,10 @@ public class GoalsActivity extends AppCompatActivity {
                 addGoalCard(goal);
             }
         }
+
+        Gson g = new Gson();
+        String j = g.toJson(goals);
+        this.controller.save(j);
     }
 
     @Override
@@ -93,6 +138,11 @@ public class GoalsActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    public void setGoals(List<Goal> goals)
+    {
+        this.goals = goals;
+    }
+
     private void addGoalCard(Goal goal)
     {
         View card = LayoutInflater.from(contentLayout.getContext()).inflate(R.layout.goal_card, null);
@@ -100,6 +150,21 @@ public class GoalsActivity extends AppCompatActivity {
         TextView title = (TextView) card.findViewById(R.id.title);
         TextView savings = (TextView) card.findViewById(R.id.savings);
         ImageView editGoal = (ImageView) card.findViewById(R.id.editGoal);
+        ImageView goalImage = (ImageView) card.findViewById(R.id.goalImage);
+
+        File profile = Utils.getFileFromName("imageDir", "profile.jpg", getApplicationContext());
+        if (Utils.fileExists(profile))
+        {
+            try {
+                Bitmap photo = BitmapFactory.decodeStream(new FileInputStream(profile));
+                goalImage.setImageBitmap(photo);
+            }
+            catch (FileNotFoundException e)
+            {
+                e.printStackTrace();
+            }
+        }
+
         title.setText(goal.getName());
         savings.setText("Rp " + Utils.formatNumber(goal.getTotalSaved().longValue()));
         editGoal.setOnClickListener(new View.OnClickListener() {
@@ -117,25 +182,5 @@ public class GoalsActivity extends AppCompatActivity {
         weeklySavings.setMax(goal.getWeeklySavingsGoal().intValue());
         averageSavings.setProgress(goal.getAverageWeeklySavings().intValue());
         weeklySavings.setProgress(goal.getLastWeekSavings().intValue());
-    }
-
-    private static ArrayList<Goal> generateGoals() {
-        ArrayList <Goal> goals = new ArrayList<Goal>();
-        Goal goal;
-
-        goal = new Goal("Teddy Bear", new BigDecimal(5000), (new GregorianCalendar(2016, Calendar.SEPTEMBER, 25)).getTime(), (new GregorianCalendar(2016, Calendar.OCTOBER, 25)).getTime());
-        goal.addTransaction(new Transaction((new GregorianCalendar(2016, Calendar.SEPTEMBER, 27)).getTime(), new BigDecimal(625)));
-
-        goals.add(goal);
-
-        goal = new Goal("Shoes", new BigDecimal(10000), (new GregorianCalendar(2016, Calendar.SEPTEMBER, 25)).getTime(), (new GregorianCalendar(2016, Calendar.OCTOBER, 25)).getTime());
-        goal.addTransaction(new Transaction((new GregorianCalendar(2016, Calendar.SEPTEMBER, 27)).getTime(), new BigDecimal(2500)));
-        goals.add(goal);
-
-        goal = new Goal("Tanzanite Ring", new BigDecimal(999999), (new GregorianCalendar(2016, Calendar.SEPTEMBER, 25)).getTime(), (new GregorianCalendar(2016, Calendar.OCTOBER, 25)).getTime());
-        goal.addTransaction(new Transaction((new GregorianCalendar(2016, Calendar.SEPTEMBER, 27)).getTime(), new BigDecimal(5000)));
-        goals.add(goal);
-
-        return goals;
     }
 }

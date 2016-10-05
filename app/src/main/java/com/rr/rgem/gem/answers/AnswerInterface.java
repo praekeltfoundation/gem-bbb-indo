@@ -1,5 +1,6 @@
 package com.rr.rgem.gem.answers;
 
+import android.content.Context;
 import android.view.View;
 import android.widget.TextView;
 
@@ -21,6 +22,6 @@ public interface AnswerInterface {
     public void start();
     public String complete(Map<String, String> vars, Map<String, String> responses);
     public void save(String json);
-    public void load();
+    public void load(Context context);
     public String getName();
 }

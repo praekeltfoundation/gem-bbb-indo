@@ -14,7 +14,7 @@ import com.rr.rgem.gem.views.Utils;
 /**
  * Created by chris on 9/8/2016.
  */
-public class RegistrationActivity extends AppCompatActivity {
+public class RegistrationActivity extends ApplicationActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

@@ -29,7 +29,7 @@ import java.util.Map;
 /**
  * Created by sjj98 on 9/19/2016.
  */
-public class SavingsActivity extends AppCompatActivity {
+public class SavingsActivity extends ApplicationActivity {
 
     private GEMNavigation navigation;
     private RelativeLayout contentLayout;
@@ -96,38 +96,5 @@ public class SavingsActivity extends AppCompatActivity {
             }
         };
 
-    }
-
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-
-        switch(requestCode) {
-            case 0: {
-
-                Bundle extras = data.getExtras();
-                Bitmap imageBitmap = (Bitmap) extras.get("data");
-                currentImage.setImageBitmap(imageBitmap);
-                break;
-            }
-            case 1: {
-
-                Uri selectedImage = data.getData();
-                InputStream inputStream = null;
-                Bitmap bmp = null;
-                try {
-                    inputStream = contentLayout.getContext().getContentResolver().openInputStream(selectedImage);
-                } catch (FileNotFoundException e) {
-                    e.printStackTrace();
-                }
-                if (inputStream != null) try {
-                    bmp = BitmapFactory.decodeStream(inputStream);
-                    inputStream.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-                currentImage.setImageBitmap(bmp);
-                break;
-            }
-        }
     }
 }

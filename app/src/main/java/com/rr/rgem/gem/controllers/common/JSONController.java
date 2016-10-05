@@ -1,6 +1,7 @@
 package com.rr.rgem.gem.controllers.common;
 
 import android.content.Context;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutCompat;
 import android.view.Gravity;
@@ -14,6 +15,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
+import com.rr.rgem.gem.ApplicationActivity;
 import com.rr.rgem.gem.Persisted;
 import com.rr.rgem.gem.R;
 import com.rr.rgem.gem.answers.AnswerInterface;
@@ -23,10 +25,13 @@ import com.rr.rgem.gem.models.Challenge;
 import com.rr.rgem.gem.models.ConversationNode;
 import com.rr.rgem.gem.models.ConvoCallback;
 import com.rr.rgem.gem.models.Question;
+import com.rr.rgem.gem.views.ImageUploadDialog;
 import com.rr.rgem.gem.views.LeftRightConversation;
+import com.rr.rgem.gem.views.Message;
 import com.rr.rgem.gem.views.Utils;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
@@ -58,6 +63,7 @@ public class JSONController {
     private Map<String, String> varMap = new HashMap<String, String>();
     private Map<String, ConvoCallback> extFnMap = new HashMap<String, ConvoCallback>();
     private ConvoCallback doneCallback;
+    private String currentImageName;
 
     public AnswerInterface getAnswerProcess() {
         return answerProcess;
@@ -149,7 +155,7 @@ public class JSONController {
         }
 
     }
-    private void sendSuccess(AppCompatActivity activity,ConversationNode.AnswerNode answer,TextView v){
+    private void sendSuccess(ApplicationActivity activity,ConversationNode.AnswerNode answer,TextView v){
         String response = v.getText().toString();
         answer.setResponse(response);
         getState().setState(JSONState.State.Correct);
@@ -159,7 +165,7 @@ public class JSONController {
         v.setGravity(Gravity.END);
         v.setEnabled(false);
     }
-    private boolean textAnswer(AppCompatActivity activity,ConversationNode.AnswerNode answer, TextView v){
+    private boolean textAnswer(ApplicationActivity activity,ConversationNode.AnswerNode answer, TextView v){
 
         String response = v.getText().toString();
         if (
@@ -174,7 +180,7 @@ public class JSONController {
 
         return false;
     }
-    private boolean mobileAnswer(AppCompatActivity activity,ConversationNode.AnswerNode answer,TextView v){
+    private boolean mobileAnswer(ApplicationActivity activity,ConversationNode.AnswerNode answer,TextView v){
         String response = v.getText().toString();
         if (
                 !Validation.isEmpty(response) && Validation.isValidMobile(response)
@@ -187,7 +193,7 @@ public class JSONController {
         }
         return false;
     }
-    private boolean currencyAnswer(AppCompatActivity activity,ConversationNode.AnswerNode answer,TextView v){
+    private boolean currencyAnswer(ApplicationActivity activity,ConversationNode.AnswerNode answer,TextView v){
 
         String response = v.getText().toString();
         if (
@@ -212,7 +218,7 @@ public class JSONController {
         }
         return true;
     }
-    private boolean dateAnswer(AppCompatActivity activity,ConversationNode.AnswerNode answer,TextView v){
+    private boolean dateAnswer(ApplicationActivity activity,ConversationNode.AnswerNode answer,TextView v){
         String response = v.getText().toString();
 
         if(!Validation.isEmpty(response) && Validation.isValidDate(response) && answerProcess.dateAnswer(answer,response)){
@@ -223,7 +229,7 @@ public class JSONController {
         }
         return false;
     }
-    private boolean numberAnswer(AppCompatActivity activity,ConversationNode.AnswerNode answer,TextView v){
+    private boolean numberAnswer(ApplicationActivity activity,ConversationNode.AnswerNode answer,TextView v){
         String response = v.getText().toString();
 
         if(!Validation.isEmpty(response) && Validation.isValidNumber(response) && answerProcess.textAnswer(answer,response)){
@@ -234,7 +240,7 @@ public class JSONController {
         }
         return false;
     }
-    private boolean passwordAnswer(AppCompatActivity activity,ConversationNode.AnswerNode answer,TextView v){
+    private boolean passwordAnswer(ApplicationActivity activity,ConversationNode.AnswerNode answer,TextView v){
         String response = v.getText().toString();
         if(!Validation.isEmpty(response) && Validation.isValidDate(response) && answerProcess.passwordAnswer(answer,response)){
             sendSuccess(activity,answer,v);
@@ -243,11 +249,25 @@ public class JSONController {
         return false;
 
     }
+
+    private boolean imageUploadAnswer(ApplicationActivity activity, ConversationNode.AnswerNode answer, String imageName) {
+        File image = Utils.getFileFromName("imageDir", imageName, activity.getBaseContext());
+        if (!Validation.isEmpty(imageName) && Utils.fileExists(image)) {
+            answer.setResponse(imageName);
+            getState().setState(JSONState.State.Correct);
+            current = getState().getNodeMap().get(getNextNode(answer.next));
+            responseMap.put(answer.name, imageName);
+            getState().sendChallenges(activity, null);
+            return true;
+        }
+        return false;
+    }
+
     public void saveState(){
         String generated = toJson();
     }
 
-    private boolean anyTextAnswer(final AppCompatActivity activity,ConversationNode.NodeType type,ConversationNode.AnswerNode answer,TextView v){
+    private boolean anyTextAnswer(final ApplicationActivity activity,ConversationNode.NodeType type,ConversationNode.AnswerNode answer,TextView v){
         if(type == ConversationNode.NodeType.currency){
             return currencyAnswer(activity,answer,v);
         }else if(type == ConversationNode.NodeType.date){
@@ -266,12 +286,13 @@ public class JSONController {
         return textAnswer(activity,answer,v);
     }
 
-    public void displayQuestion(final AppCompatActivity activity, final LeftRightConversation conversationView, Question question, long questionId) {
+    public void displayQuestion(final ApplicationActivity activity, final LeftRightConversation conversationView, Question question, long questionId) {
 
-        if(current.answers == null){
-            Utils.toast(activity,current.text);
+        if(current.type == ConversationNode.NodeType.info) {
+            Utils.toast(activity, current.text);
             return;
         }
+
         final ConversationNode.AnswerNode answer = current.answers[0];
         //this.answerMap.put(questionId, answer);
         boolean answerLoaded = answersLoaded.contains(current.getName());
@@ -362,8 +383,23 @@ public class JSONController {
                 v.setEnabled(false);
                 anyTextAnswer(activity,current.type ,answer,v);
             }
-        }else{
+        } else if (current.type == ConversationNode.NodeType.imageUpload) {
+            Message message = new Message(1, "2016", true, Message.ResponseType.ImageUpload, null);
+            message.setTitle(question.getText());
+            conversationView.addImageUploadQuestion(message, new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    FragmentManager manager = activity.getSupportFragmentManager();
+                    ImageUploadDialog dialog = new ImageUploadDialog();
+                    String imageName = activity.currentImageName;
+                    dialog.show(manager, "dialog");
 
+                    if(imageUploadAnswer(activity, answer, imageName)) {
+                        JSONController.this.saveJson();
+                    }
+                }
+            });
+        } else{
             conversationView.addTextInputQuestion(questionId, question.getText(),answer.getResponse(), new TextView.OnEditorActionListener() {
                 @Override
                 public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
@@ -386,8 +422,6 @@ public class JSONController {
                 anyTextAnswer(activity,current.type ,answer,v);
             }
         }
-
-        //conversationView.scroll();
     }
     /* external function logic */
     public Map<String, ConvoCallback> getFnMap()
@@ -444,4 +478,6 @@ public class JSONController {
         }
         return result;
     }
+
+    public void setCurrentImageName(String name) { currentImageName = name; }
 }

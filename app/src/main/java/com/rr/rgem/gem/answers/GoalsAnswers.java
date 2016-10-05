@@ -1,14 +1,21 @@
 package com.rr.rgem.gem.answers;
 
+import android.content.Context;
+
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.rr.rgem.gem.ChallengeActivity;
-import com.rr.rgem.gem.GoalActivity;
+import com.rr.rgem.gem.GoalsActivity;
 import com.rr.rgem.gem.Persisted;
 import com.rr.rgem.gem.controllers.Validation;
 import com.rr.rgem.gem.controllers.common.JSONController;
 import com.rr.rgem.gem.controllers.common.JSONState;
 import com.rr.rgem.gem.models.ConversationNode;
 import com.rr.rgem.gem.models.ConvoCallback;
-
+import com.rr.rgem.gem.models.Goal;
+import java.lang.reflect.Type;
+import java.util.ArrayList;
+import java.util.List;
 import org.joda.time.DateTime;
 import org.joda.time.Weeks;
 
@@ -24,10 +31,11 @@ import java.util.Map;
 public class GoalsAnswers implements AnswerInterface
 {
 
-    private GoalActivity activity;
+    private GoalsActivity activity;
     private JSONState state;
     private final String name = "goals";
     private ConvoCallback endCall = null;
+	private List<Goal> goals = new ArrayList<Goal>();
     public void setDoneCallback(ConvoCallback done){
         this.endCall = done;
     }
@@ -49,7 +57,7 @@ public class GoalsAnswers implements AnswerInterface
         return state.getController();
     }
 
-    private GoalActivity getActivity() {
+    private GoalsActivity getActivity() {
         return activity;
     }
 
@@ -57,7 +65,7 @@ public class GoalsAnswers implements AnswerInterface
         return name;
     }
 
-    public void setActivity(GoalActivity activity) {
+    public void setActivity(GoalsActivity activity) {
         this.activity = activity;
     }
     private void checkSavingsGoals(ConversationNode.AnswerNode answer, String response){
@@ -102,6 +110,10 @@ public class GoalsAnswers implements AnswerInterface
         this.getState().sendChallenges(activity,null);
     }
 
+	public List<Goal> getGoals() { return goals; }
+    public void setGoals (List<Goal> goals) {
+        this.goals = goals;
+    }
     public String complete(Map<String, String> vars, Map<String, String> responses){
         if(this.endCall!=null)
             this.endCall.callback(vars,responses);
@@ -136,10 +148,17 @@ public class GoalsAnswers implements AnswerInterface
     }
 
     public void save(String json){
-        //Persisted persisted = new Persisted(this.getActivity());
-        //persisted.saveConvState(getName(),json);
+        Persisted persisted = new Persisted(this.getActivity());
+        persisted.saveConvState(getName(), json);
     }
-    public void load(){
 
+    public void load(Context context){
+        Gson gson = new Gson();
+        Persisted persisted = new Persisted(context);
+        String saved = persisted.loadConvState(getName());
+        if (!Validation.isEmpty(saved)) {
+            Type listType = new TypeToken<List<Goal>>() {}.getType();
+            goals  = gson.fromJson(saved, listType);
+        }
     }
 }

@@ -18,6 +18,10 @@ import android.widget.LinearLayout;
 
 import com.rr.rgem.gem.R;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+
 /**
  * Created by jacob on 2016/09/19.
  */

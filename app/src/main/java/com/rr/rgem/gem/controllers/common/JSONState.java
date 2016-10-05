@@ -2,6 +2,7 @@ package com.rr.rgem.gem.controllers.common;
 
 import android.support.v7.app.AppCompatActivity;
 
+import com.rr.rgem.gem.ApplicationActivity;
 import com.rr.rgem.gem.models.ConversationNode;
 import com.rr.rgem.gem.models.Question;
 import com.rr.rgem.gem.views.LeftRightConversation;
@@ -79,7 +80,7 @@ public class JSONState {
     public void setState(State state){
         this.state = state;
     }
-    public void sendChallenges(final AppCompatActivity activity, CharSequence toastMessage)
+    public void sendChallenges(final ApplicationActivity activity, CharSequence toastMessage)
     {
         ConversationNode[] conversation = getController().getConversation();
         Map<String,String> varMap = getController().getVars();

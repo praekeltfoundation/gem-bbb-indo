@@ -27,20 +27,20 @@ import java.io.InputStream;
 /**
  * Created by chris on 9/8/2016.
  */
-public class RegistrationCompleteActivity extends AppCompatActivity {
-    CircularImageView cv;
+public class RegistrationCompleteActivity extends ApplicationActivity {
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.user_registration_done);
-        cv = (CircularImageView)findViewById(R.id.imageButtonDone);
+        currentImage = (CircularImageView)findViewById(R.id.imageButtonDone);
+        currentImageName = "profile.jpg";
 
         File profile = Utils.getFileFromName("imageDir", "profile.jpg", getApplicationContext());
         if (Utils.fileExists(profile))
         {
             try {
                 Bitmap photo = BitmapFactory.decodeStream(new FileInputStream(profile));
-                cv.setImageBitmap(photo);
+                currentImage.setImageBitmap(photo);
             }
             catch (FileNotFoundException e)
             {
@@ -48,7 +48,7 @@ public class RegistrationCompleteActivity extends AppCompatActivity {
             }
         }
 
-        cv.setOnClickListener(new View.OnClickListener(){
+        currentImage.setOnClickListener(new View.OnClickListener(){
             public void onClick(View v) {
 
                 FragmentManager manager = getSupportFragmentManager();
@@ -72,63 +72,5 @@ public class RegistrationCompleteActivity extends AppCompatActivity {
                 RegistrationCompleteActivity.this.finish();
             }
         });
-    }
-
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-
-        if (resultCode == RESULT_OK)
-        {
-            File path = Utils.getFileFromName("imageDir", "profile.jpg", getApplicationContext());
-            Bitmap profilePicture = null;
-
-            switch(requestCode) {
-                case 0: {
-
-                    Bundle extras = data.getExtras();
-                    profilePicture = (Bitmap) extras.get("data");
-                    cv.setImageBitmap(profilePicture);
-
-                /*
-                Bundle extras = data.getExtras();
-                InputStream inputStream = null;
-                Bitmap bmp = null;
-                try {
-                    inputStream = contentLayout.getContext().getContentResolver().openInputStream(selectedImage);
-                } catch (FileNotFoundException e) {
-                    e.printStackTrace();
-                }
-                if (inputStream != null) try {
-                    bmp = BitmapFactory.decodeStream(inputStream);
-                    inputStream.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-                currentImage.setImageBitmap(bmp);
-                */
-                    break;
-                }
-                case 1: {
-
-                    Uri selectedImage = data.getData();
-                    InputStream inputStream = null;
-                    try {
-                        inputStream = this.getContentResolver().openInputStream(selectedImage);
-                    } catch (FileNotFoundException e) {
-                        e.printStackTrace();
-                    }
-                    if (inputStream != null) try {
-                        profilePicture = BitmapFactory.decodeStream(inputStream);
-                        inputStream.close();
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                    cv.setImageBitmap(profilePicture);
-                    break;
-                }
-            }
-
-            Utils.writeImageToFile(profilePicture, path);
-        }
     }
 }

@@ -22,6 +22,7 @@ import com.rr.rgem.gem.views.LeftRightConversation;
 import com.rr.rgem.gem.views.Message;
 import com.rr.rgem.gem.views.Utils;
 
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
@@ -30,7 +31,7 @@ import java.util.Map;
 /**
  * Created by chris on 9/14/2016.
  */
-public class ChallengeActivity extends AppCompatActivity{
+public class ChallengeActivity extends ApplicationActivity{
 
     //public void goToMain(){};
 
@@ -103,56 +104,5 @@ public class ChallengeActivity extends AppCompatActivity{
         });
 
 
-    }
-
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-
-        switch(requestCode) {
-            case 0: {
-
-                Bundle extras = data.getExtras();
-                Bitmap imageBitmap = (Bitmap) extras.get("data");
-                currentImage.setImageBitmap(imageBitmap);
-
-                /*
-                Bundle extras = data.getExtras();
-                InputStream inputStream = null;
-                Bitmap bmp = null;
-                try {
-                    inputStream = contentLayout.getContext().getContentResolver().openInputStream(selectedImage);
-                } catch (FileNotFoundException e) {
-                    e.printStackTrace();
-                }
-                if (inputStream != null) try {
-                    bmp = BitmapFactory.decodeStream(inputStream);
-                    inputStream.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-                currentImage.setImageBitmap(bmp);
-                */
-                break;
-            }
-            case 1: {
-
-                Uri selectedImage = data.getData();
-                InputStream inputStream = null;
-                Bitmap bmp = null;
-                try {
-                    inputStream = contentLayout.getContext().getContentResolver().openInputStream(selectedImage);
-                } catch (FileNotFoundException e) {
-                    e.printStackTrace();
-                }
-                if (inputStream != null) try {
-                    bmp = BitmapFactory.decodeStream(inputStream);
-                    inputStream.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-                currentImage.setImageBitmap(bmp);
-                break;
-            }
-        }
     }
 }

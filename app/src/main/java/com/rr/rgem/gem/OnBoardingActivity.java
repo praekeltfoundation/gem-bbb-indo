@@ -5,6 +5,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -25,12 +26,15 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.Map;
 
 /**
  * Created by sjj98 on 9/19/2016.
  */
-public class OnBoardingActivity extends AppCompatActivity {
+public class OnBoardingActivity extends ApplicationActivity {
 
     GEMNavigation navigation;
     RelativeLayout contentLayout;
@@ -38,7 +42,6 @@ public class OnBoardingActivity extends AppCompatActivity {
 
     LeftRightConversation coachView;
     //JSONCoach_Onboarding coachController;
-    ImageView currentImage;
     JSONConversation coachController;
 
 
@@ -124,6 +127,7 @@ public class OnBoardingActivity extends AppCompatActivity {
         Message message = new Message(1, "2016", true, Message.ResponseType.ImageUpload, null);
         message.setTitle("Set a profile picture: ");
         currentImage = coachView.addImageUploadQuestion(message, listener);
+        currentImageName = "profile.jpg";
 
     }
 
@@ -147,61 +151,5 @@ public class OnBoardingActivity extends AppCompatActivity {
     }
 
 
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
 
-        if (resultCode == RESULT_OK)
-        {
-            File path = Utils.getFileFromName("imageDir", "profile.jpg", getApplicationContext());
-            Bitmap profilePicture = null;
-
-            switch(requestCode) {
-                case 0: {
-
-                    Bundle extras = data.getExtras();
-                    profilePicture = (Bitmap) extras.get("data");
-                    currentImage.setImageBitmap(profilePicture);
-
-                /*
-                Bundle extras = data.getExtras();
-                InputStream inputStream = null;
-                Bitmap bmp = null;
-                try {
-                    inputStream = contentLayout.getContext().getContentResolver().openInputStream(selectedImage);
-                } catch (FileNotFoundException e) {
-                    e.printStackTrace();
-                }
-                if (inputStream != null) try {
-                    bmp = BitmapFactory.decodeStream(inputStream);
-                    inputStream.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-                currentImage.setImageBitmap(bmp);
-                */
-                    break;
-                }
-                case 1: {
-
-                    Uri selectedImage = data.getData();
-                    InputStream inputStream = null;
-                    try {
-                        inputStream = this.getContentResolver().openInputStream(selectedImage);
-                    } catch (FileNotFoundException e) {
-                        e.printStackTrace();
-                    }
-                    if (inputStream != null) try {
-                        profilePicture = BitmapFactory.decodeStream(inputStream);
-                        inputStream.close();
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                    currentImage.setImageBitmap(profilePicture);
-                    break;
-                }
-            }
-
-            Utils.writeImageToFile(profilePicture, path);
-        }
-    }
 }

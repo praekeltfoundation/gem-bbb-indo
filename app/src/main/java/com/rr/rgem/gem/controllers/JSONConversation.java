@@ -1,6 +1,7 @@
 package com.rr.rgem.gem.controllers;
 
 import android.content.Context;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Gravity;
 import android.view.KeyEvent;
@@ -8,12 +9,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
+import com.rr.rgem.gem.controllers.common.JSONController;
 import com.rr.rgem.gem.models.ConversationNode;
 import com.rr.rgem.gem.models.ConvoCallback;
 import com.rr.rgem.gem.models.Question;
+import com.rr.rgem.gem.views.ImageUploadDialog;
 import com.rr.rgem.gem.views.LeftRightConversation;
 import com.rr.rgem.gem.views.Message;
 import com.rr.rgem.gem.views.Utils;
@@ -47,6 +51,7 @@ public class JSONConversation {
     int questionId;
     String PasswordOne;
     String PasswordTwo;
+    ImageView currentImage;
 
     private enum State
     {
@@ -419,7 +424,7 @@ public class JSONConversation {
                     return false;
                 }
             },"Type password here...");
-        }else if (current.type == ConversationNode.NodeType.passwordTwo) {
+        } else if (current.type == ConversationNode.NodeType.passwordTwo) {
             final ConversationNode.AnswerNode answer = current.answers[0];
             conversationView.addPasswordMessage(questionId,current.text, new TextView.OnEditorActionListener() {
                 @Override

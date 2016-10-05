@@ -1,5 +1,6 @@
 package com.rr.rgem.gem.answers;
 
+import android.content.Context;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
@@ -96,7 +97,7 @@ public class ChallengesAnswers implements AnswerInterface
         Persisted persisted = new Persisted(this.getActivity());
         persisted.saveConvState(getName(),json);
     }
-    public void load(){
+    public void load(Context context){
 
     }
 }

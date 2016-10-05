@@ -13,10 +13,12 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
+import com.rr.rgem.gem.answers.GoalAnswers;
 import com.rr.rgem.gem.answers.GoalsAnswers;
 import com.rr.rgem.gem.controllers.JSONConversation;
 import com.rr.rgem.gem.controllers.common.Factory;
 import com.rr.rgem.gem.models.ConvoCallback;
+import com.rr.rgem.gem.models.Goal;
 import com.rr.rgem.gem.navigation.GEMNavigation;
 import com.rr.rgem.gem.views.LeftRightConversation;
 import com.rr.rgem.gem.views.ImageUploadDialog;
@@ -26,12 +28,13 @@ import com.rr.rgem.gem.views.Utils;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.HashMap;
 import java.util.Map;
 
 /**
  * Created by sjj98 on 9/19/2016.
  */
-public class GoalActivity extends AppCompatActivity {
+public class GoalActivity extends ApplicationActivity {
 
     private GEMNavigation navigation;
     private RelativeLayout contentLayout;
@@ -39,9 +42,9 @@ public class GoalActivity extends AppCompatActivity {
 
     private LeftRightConversation coachView;
     //private JSONConversation coachController;
-    private GoalsAnswers coachController;
+    private GoalAnswers coachController;
     private ImageView currentImage;
-
+    Goal goal;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,10 +59,10 @@ public class GoalActivity extends AppCompatActivity {
         start.setTitle("Lets Get Started!!!");
 
         //coachController = new JSONConversation(this,R.raw.goals);
-        coachController = Factory.createGoals(this,coachView);
+        coachController = Factory.createGoal(this,coachView);
         coachController.setDoneCallback(new ConvoCallback() {
             @Override
-            public String callback(Map<String, String> vars, Map<String, String> responses) {
+            public String callback(Map<String, String> vars, final Map<String, String> responses) {
 
                 Message summary = new Message(1, "2016", true, Message.ResponseType.FreeForm, null);
                 summary.setTitle("SUMMARY:");
@@ -79,6 +82,7 @@ public class GoalActivity extends AppCompatActivity {
                     public void onClick(View v) {
 
                         Intent intent = new Intent(GoalActivity.this,GoalsActivity.class);
+                        intent.putExtra("responses", (HashMap<String, String>) responses);
                         startActivity(intent);
 
                     }
@@ -101,36 +105,7 @@ public class GoalActivity extends AppCompatActivity {
 
     }
 
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-
-        switch (requestCode) {
-            case 0: {
-
-                Bundle extras = data.getExtras();
-                Bitmap imageBitmap = (Bitmap) extras.get("data");
-                currentImage.setImageBitmap(imageBitmap);
-                break;
-            }
-            case 1: {
-
-                Uri selectedImage = data.getData();
-                InputStream inputStream = null;
-                Bitmap bmp = null;
-                try {
-                    inputStream = contentLayout.getContext().getContentResolver().openInputStream(selectedImage);
-                } catch (FileNotFoundException e) {
-                    e.printStackTrace();
-                }
-                if (inputStream != null) try {
-                    bmp = BitmapFactory.decodeStream(inputStream);
-                    inputStream.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-                currentImage.setImageBitmap(bmp);
-                break;
-            }
-        }
+    public void setGoal(Goal goal) {
+        this.goal = goal;
     }
 }

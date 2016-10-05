@@ -2,9 +2,11 @@ package com.rr.rgem.gem.controllers.common;
 
 import com.rr.rgem.gem.ChallengeActivity;
 import com.rr.rgem.gem.GoalActivity;
+import com.rr.rgem.gem.GoalsActivity;
 import com.rr.rgem.gem.OnBoardingActivity;
 import com.rr.rgem.gem.R;
 import com.rr.rgem.gem.answers.ChallengesAnswers;
+import com.rr.rgem.gem.answers.GoalAnswers;
 import com.rr.rgem.gem.answers.GoalsAnswers;
 import com.rr.rgem.gem.answers.OnBoardingAnswers;
 import com.rr.rgem.gem.views.LeftRightConversation;
@@ -17,13 +19,13 @@ public class Factory {
     public static OnBoardingAnswers createCoach(OnBoardingActivity context, LeftRightConversation conversation){
         OnBoardingAnswers answers = new OnBoardingAnswers();
         JSONState state = new JSONState();
-        JSONController controller = new JSONController(context, R.raw.goals,answers);
+        JSONController controller = new JSONController(context, R.raw.onboarding,answers);
         state.setConversationView(conversation);
         state.setController(controller);
         controller.setState(state);
         answers.setState(state);
         answers.setActivity(context);
-        answers.load();
+        answers.load(context);
         answers.start();
 
         return answers;
@@ -38,13 +40,21 @@ public class Factory {
         controller.setState(state);
         answers.setState(state);
         answers.setActivity(context);
-        answers.load();
+        answers.load(context);
         answers.start();
 
         return answers;
     }
-    public static GoalsAnswers createGoals(GoalActivity context, LeftRightConversation conversation){
+    public static GoalsAnswers createGoalsCarousel(GoalsActivity context){
         GoalsAnswers answers = new GoalsAnswers();
+        answers.load(context);
+        context.setGoals(answers.getGoals());
+        answers.setActivity(context);
+        return answers;
+    }
+
+    public static GoalAnswers createGoal(GoalActivity context, LeftRightConversation conversation){
+        GoalAnswers answers = new GoalAnswers();
         JSONState state = new JSONState();
         JSONController controller = new JSONController(context, R.raw.goals,answers);
         state.setConversationView(conversation);
@@ -52,10 +62,9 @@ public class Factory {
         controller.setState(state);
         answers.setState(state);
         answers.setActivity(context);
-        answers.load();
+        answers.load(context);
         answers.start();
 
         return answers;
     }
-
 }
