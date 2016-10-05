@@ -115,7 +115,7 @@
 },
   {
     "name": "infoGoalEnd",
-    "type": "info",
+    "type": "end",
     "text": "Thank you. That concludes the goal-setting process."
   }
 ]

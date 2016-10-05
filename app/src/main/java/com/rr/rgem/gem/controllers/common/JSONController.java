@@ -62,6 +62,8 @@ public class JSONController {
     private Set<String> answersLoaded = new HashSet<String>();
     private Map<String, String> varMap = new HashMap<String, String>();
     private Map<String, ConvoCallback> extFnMap = new HashMap<String, ConvoCallback>();
+    Persisted persisted;
+    String saved;
     private ConvoCallback doneCallback;
     private String currentImageName;
 
@@ -130,8 +132,8 @@ public class JSONController {
         Gson gson = new Gson();
         this.resource = resource;
         this.answerProcess = answerProcess;
-        Persisted persisted = new Persisted(context);
-        String saved = persisted.loadConvState(answerProcess.getName());
+        persisted = new Persisted(context);
+        saved = persisted.loadConvState(answerProcess.getName());
         if(Validation.isEmpty(saved)) {
             conversation = gson.fromJson(loadJsonFromResources(context),ConversationNode[].class);
         }else{
@@ -287,6 +289,13 @@ public class JSONController {
     }
 
     public void displayQuestion(final ApplicationActivity activity, final LeftRightConversation conversationView, Question question, long questionId) {
+
+        if(current.type == ConversationNode.NodeType.end) {
+            Utils.toast(activity, current.text);
+            state.setState(JSONState.State.Complete);
+            getState().sendChallenges(activity, null);
+            return;
+        }
 
         if(current.type == ConversationNode.NodeType.info) {
             Utils.toast(activity, current.text);

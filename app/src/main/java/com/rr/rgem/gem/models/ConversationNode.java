@@ -75,7 +75,8 @@ public class ConversationNode {
         @SerializedName("mobile") mobile,
         @SerializedName("password") password,
         @SerializedName("passwordTwo") passwordTwo,
-        @SerializedName("imageUpload") imageUpload
+        @SerializedName("imageUpload") imageUpload,
+        @SerializedName("end") end
     }
 
     public class AnswerNode {

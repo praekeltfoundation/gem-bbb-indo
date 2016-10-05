@@ -59,7 +59,9 @@ public class GoalActivity extends ApplicationActivity {
         start.setTitle("Lets Get Started!!!");
 
         //coachController = new JSONConversation(this,R.raw.goals);
+
         coachController = Factory.createGoal(this,coachView);
+
         coachController.setDoneCallback(new ConvoCallback() {
             @Override
             public String callback(Map<String, String> vars, final Map<String, String> responses) {
@@ -80,13 +82,14 @@ public class GoalActivity extends ApplicationActivity {
                 button1.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-
+                        coachController.save(null);
                         Intent intent = new Intent(GoalActivity.this,GoalsActivity.class);
                         intent.putExtra("responses", (HashMap<String, String>) responses);
                         startActivity(intent);
 
                     }
                 });
+
                 return null;
 
             }
