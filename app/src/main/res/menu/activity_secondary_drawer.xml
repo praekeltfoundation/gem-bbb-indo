@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<menu xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
     <group android:checkableBehavior="single">
         <item
             android:id="@+id/nav_goals"
@@ -20,18 +21,21 @@
             android:icon="@drawable/ic_launcher"
 
             />
+        <item android:title="TIP ARCHIVE"
+            android:id="@+id/nav_tiparchive"
+            android:icon="@drawable/ic_launcher" />
         <item
             android:id="@+id/nav_invite"
             android:title="INVITE"
             android:icon="@drawable/ic_launcher"
 
             />
-       <!-- <item
-            android:id="@+id/nav_profile"
-            android:title="PROFILE"
-            android:icon="@drawable/ic_launcher"
+        <!-- <item
+             android:id="@+id/nav_profile"
+             android:title="PROFILE"
+             android:icon="@drawable/ic_launcher"
 
-            />-->
+             />-->
 
     </group>
 </menu>

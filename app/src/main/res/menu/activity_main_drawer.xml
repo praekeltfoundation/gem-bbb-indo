@@ -21,8 +21,6 @@
         <item
             android:id="@+id/nav_tools"
             android:title="Tools" />
-        <item android:title="Tip Archive"
-            android:id="@+id/nav_tiparchive" />
     </group>
     <group android:id="@+id/nav_grp_settings"
             android:checkableBehavior="single">
