@@ -1,12 +1,55 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:id="@+id/tipCard">
 
-    <TextView
-        android:text="Tip Card"
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:id="@+id/tipCardHead"
+        android:layout_height="128dp">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:srcCompat="@drawable/tip_placeholder"
+            android:id="@+id/imageView2"
+            android:scaleType="centerCrop"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentRight="true" />
+
+        <TextView
+            android:text="Tip Card"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/tipTitle"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentRight="true" />
+    </RelativeLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/tipTitle" />
+        android:background="@android:color/white">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:srcCompat="@drawable/ic_action_name"
+            android:layout_weight="1"
+            android:id="@+id/favBtn" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:srcCompat="@drawable/ic_menu_share"
+            android:layout_weight="1"
+            android:id="@+id/shareBtn" />
+    </LinearLayout>
+
 </LinearLayout>

@@ -1,10 +1,14 @@
 package com.rr.rgem.gem;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TabHost;
+import android.widget.TextView;
 
 import com.rr.rgem.gem.models.Tip;
 import com.rr.rgem.gem.navigation.GEMNavigation;
@@ -58,11 +62,10 @@ public class TipArchiveActivity extends ApplicationActivity implements TabHost.T
 
         tips.clear();
 
-        if (tag.equals(TAB_FAVOURITES)){
+        if (tag.equals(TAB_FAVOURITES)) {
             tips.add(createTip("Fav Tip 1"));
             tips.add(createTip("Fav Tip 2"));
             tips.add(createTip("Fav Tip 3"));
-            tips.add(createTip("Fav Tip 4"));
         } else if (tag.equals(TAB_ALL)) {
             tips.add(createTip("All Tip 1"));
             tips.add(createTip("All Tip 2"));
@@ -84,8 +87,32 @@ public class TipArchiveActivity extends ApplicationActivity implements TabHost.T
         return tip;
     }
 
-    private void addTipCard(Tip tip) {
+    private void addTipCard(final Tip tip) {
         View view = LayoutInflater.from(tipContainer.getContext()).inflate(R.layout.tip_card, null);
         tipContainer.addView(view);
+
+        TextView title = (TextView) view.findViewById(R.id.tipTitle);
+        RelativeLayout tipCardHead = (RelativeLayout) view.findViewById(R.id.tipCardHead);
+        ImageView favBtn = (ImageView) view.findViewById(R.id.favBtn);
+        ImageView shareBtn = (ImageView) view.findViewById(R.id.shareBtn);
+
+        title.setText(tip.getName());
+
+        // Bind events
+        final Context context = this;
+
+        favBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Utils.toast(context, String.format("'%s' FAVOURITE clicked...", tip.getName()));
+            }
+        });
+
+        shareBtn.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                Utils.toast(context, String.format("'%s' SHARE clicked...", tip.getName()));
+            }
+        });
     }
 }
