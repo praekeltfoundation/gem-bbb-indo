@@ -16,5 +16,7 @@
     <string name="challenge_next">Next</string>
     <string name="challenge_done">Done</string>
     <string name="goals_not_yet">"No goals yet..."</string>
+    <string name="favourites">Favourites</string>
+    <string name="all">All</string>
 
 </resources>

@@ -49,12 +49,12 @@ public class TipArchiveActivity extends ApplicationActivity implements TabHost.T
 
         tabHost.addTab(tabHost.newTabSpec(TAB_FAVOURITES)
                 .setContent(this)
-                .setIndicator(TAB_FAVOURITES)
+                .setIndicator(getResources().getString(R.string.favourites))
         );
 
         tabHost.addTab(tabHost.newTabSpec(TAB_ALL)
                 .setContent(this)
-                .setIndicator(TAB_ALL)
+                .setIndicator(getResources().getString(R.string.all))
         );
     }
 
