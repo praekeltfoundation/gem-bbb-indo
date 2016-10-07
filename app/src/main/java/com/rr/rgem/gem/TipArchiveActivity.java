@@ -4,6 +4,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -29,7 +30,8 @@ public class TipArchiveActivity extends ApplicationActivity implements TabHost.T
     private LinearLayout tipScreen;
     private LinearLayout tipContainer;
     private TabHost tabHost;
-    private List<Tip> tips = new ArrayList<Tip>();
+    private List<Tip> tips = new ArrayList();
+    private int cardCount;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,11 +63,17 @@ public class TipArchiveActivity extends ApplicationActivity implements TabHost.T
         tipContainer = (LinearLayout) view.findViewById(R.id.tipContainer);
 
         tips.clear();
+        cardCount = 0;
 
         if (tag.equals(TAB_FAVOURITES)) {
             tips.add(createTip("Fav Tip 1"));
             tips.add(createTip("Fav Tip 2"));
             tips.add(createTip("Fav Tip 3"));
+            tips.add(createTip("Fav Tip 4"));
+            tips.add(createTip("Fav Tip 5"));
+            tips.add(createTip("Fav Tip 6"));
+            tips.add(createTip("Fav Tip 7"));
+            tips.add(createTip("Fav Tip 8"));
         } else if (tag.equals(TAB_ALL)) {
             tips.add(createTip("All Tip 1"));
             tips.add(createTip("All Tip 2"));
@@ -89,7 +97,20 @@ public class TipArchiveActivity extends ApplicationActivity implements TabHost.T
 
     private void addTipCard(final Tip tip) {
         View view = LayoutInflater.from(tipContainer.getContext()).inflate(R.layout.tip_card, null);
-        tipContainer.addView(view);
+        // Params required for cards to resize on add
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 1.0f);
+
+        // Every second row contains two cards
+        int nextCount = cardCount + 1;
+        if (nextCount % 3 == 0) {
+            // Insert view into last existing row
+            ViewGroup row = (ViewGroup) tipContainer.getChildAt(tipContainer.getChildCount() - 1);
+            row.addView(view, params);
+        } else {
+            // Create new row
+            ViewGroup row = newRow();
+            row.addView(view, params);
+        }
 
         TextView title = (TextView) view.findViewById(R.id.tipTitle);
         RelativeLayout tipCardHead = (RelativeLayout) view.findViewById(R.id.tipCardHead);
@@ -114,5 +135,16 @@ public class TipArchiveActivity extends ApplicationActivity implements TabHost.T
                 Utils.toast(context, String.format("'%s' SHARE clicked...", tip.getName()));
             }
         });
+
+        cardCount++;
+    }
+
+    private ViewGroup newRow() {
+        LinearLayout row = new LinearLayout(tipContainer.getContext());
+        row.setOrientation(LinearLayout.HORIZONTAL);
+        row.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
+        row.setTag("row");
+        tipContainer.addView(row);
+        return row;
     }
 }
