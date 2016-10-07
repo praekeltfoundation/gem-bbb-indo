@@ -31,7 +31,6 @@ public class TipArchiveActivity extends ApplicationActivity implements TabHost.T
     private LinearLayout tipScreen;
     private LinearLayout tipContainer;
     private TabHost tabHost;
-    private List<Tip> tips = new ArrayList();
     private int cardCount;
 
     @Override
@@ -65,7 +64,7 @@ public class TipArchiveActivity extends ApplicationActivity implements TabHost.T
 
         Log.d("TipArchive", "Creating content");
 
-        tips.clear();
+        List<Tip> tips = new ArrayList();
         cardCount = 0;
 
         if (tag.equals(TAB_FAVOURITES)) {
