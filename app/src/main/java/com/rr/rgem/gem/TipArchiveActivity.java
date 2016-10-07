@@ -2,6 +2,7 @@ package com.rr.rgem.gem;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -62,6 +63,8 @@ public class TipArchiveActivity extends ApplicationActivity implements TabHost.T
         LinearLayout view = (LinearLayout) getLayoutInflater().inflate(R.layout.tip_list, null);
         tipContainer = (LinearLayout) view.findViewById(R.id.tipContainer);
 
+        Log.d("TipArchive", "Creating content");
+
         tips.clear();
         cardCount = 0;
 
@@ -114,6 +117,7 @@ public class TipArchiveActivity extends ApplicationActivity implements TabHost.T
 
         TextView title = (TextView) view.findViewById(R.id.tipTitle);
         RelativeLayout tipCardHead = (RelativeLayout) view.findViewById(R.id.tipCardHead);
+        ImageView tipCardImage = (ImageView) view.findViewById(R.id.tipCardImage);
         ImageView favBtn = (ImageView) view.findViewById(R.id.favBtn);
         ImageView shareBtn = (ImageView) view.findViewById(R.id.shareBtn);
 
@@ -121,6 +125,13 @@ public class TipArchiveActivity extends ApplicationActivity implements TabHost.T
 
         // Bind events
         final Context context = this;
+
+        tipCardImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Utils.toast(context, String.format("'%s' ARTICLE clicked...", tip.getName()));
+            }
+        });
 
         favBtn.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="vertical" android:layout_width="0dp"
+    android:orientation="vertical" android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:id="@+id/tipCard"
     android:layout_weight="1"
@@ -11,13 +11,13 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:id="@+id/tipCardHead"
-        android:layout_height="128dp">
+        android:layout_height="180dp">
 
         <ImageView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             app:srcCompat="@drawable/tip_placeholder"
-            android:id="@+id/imageView2"
+            android:id="@+id/tipCardImage"
             android:scaleType="centerCrop"
             android:layout_alignParentBottom="true"
             android:layout_alignParentLeft="true"
@@ -30,28 +30,33 @@
             android:id="@+id/tipTitle"
             android:layout_alignParentBottom="true"
             android:layout_alignParentLeft="true"
-            android:layout_alignParentRight="true" />
+            android:layout_alignParentRight="true"
+            android:layout_margin="8dp"
+            android:textStyle="normal|bold"
+            android:textSize="24sp" />
     </RelativeLayout>
 
-    <LinearLayout
-        android:orientation="horizontal"
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@android:color/white">
+        android:background="@android:color/white"
+        android:padding="8dp">
 
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:srcCompat="@drawable/ic_action_name"
+            app:srcCompat="@drawable/ic_fav"
             android:layout_weight="1"
-            android:id="@+id/favBtn" />
+            android:id="@+id/favBtn"
+            android:layout_toLeftOf="@+id/shareBtn" />
 
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:srcCompat="@drawable/ic_menu_share"
+            app:srcCompat="@drawable/ic_share"
             android:layout_weight="1"
-            android:id="@+id/shareBtn" />
-    </LinearLayout>
+            android:id="@+id/shareBtn"
+            android:layout_alignParentRight="true" />
+    </RelativeLayout>
 
 </LinearLayout>
