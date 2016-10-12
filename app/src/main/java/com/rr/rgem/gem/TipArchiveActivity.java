@@ -1,6 +1,7 @@
 package com.rr.rgem.gem;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -150,12 +151,14 @@ public class TipArchiveActivity extends ApplicationActivity {
             title.setText(tip.getName());
 
             // Bind events
+            final TipListScreen screen = this;
             final Context context = activity;
 
             tipCardImage.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     Utils.toast(context, String.format("'%s' ARTICLE clicked...", tip.getName()));
+                    screen.startArticleActivity("http://10.0.2.2:8000/test/");
                 }
             });
 
@@ -183,6 +186,12 @@ public class TipArchiveActivity extends ApplicationActivity {
             row.setTag("row");
             tipContainer.addView(row);
             return row;
+        }
+
+        private void startArticleActivity(String url) {
+            Intent intent = new Intent(activity, TipArticleActivity.class);
+            intent.putExtra("url", url);
+            activity.startActivity(intent);
         }
     }
 }
