@@ -126,7 +126,7 @@ public class WebServiceFactory {
                 } else {
                     // TODO: Get login credentials
                     Log.d("Interceptor", "Retrieving token from service");
-                    token = authService.createToken(new AuthLogin("wimpie", "2")).execute().body();
+                    token = authService.createToken(new AuthLogin("anon", "foo")).execute().body();
                 }
                 Log.d("Interceptor", String.format("Interceptor got token: %s", token));
                 Request authRequest = request.newBuilder()
