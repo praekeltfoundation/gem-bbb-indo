@@ -54,6 +54,10 @@ public class WebServiceFactory {
                 .addConverterFactory(GsonConverterFactory.create());
     }
 
+    /**
+     * Because the Authenticator and Interceptor make HTTP requests to the token endpoint, they
+     * require their own HTTP client where they themselves are not included.
+     */
     AuthService createAuthService() {
         return new Retrofit.Builder()
                 .baseUrl(baseUrl)
