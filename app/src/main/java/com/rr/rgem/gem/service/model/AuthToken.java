@@ -5,6 +5,8 @@ package com.rr.rgem.gem.service.model;
  */
 public class AuthToken {
 
+    private static String TOKEN_HEADER_TEMPLATE = "Token %s";
+
     String token;
 
     public String getToken() {
@@ -13,6 +15,13 @@ public class AuthToken {
 
     public void setToken(String token) {
         this.token = token;
+    }
+
+    /**
+     * Returns the token formatted for an HTTP header.
+     */
+    public String getTokenHeader() {
+        return String.format(TOKEN_HEADER_TEMPLATE, token);
     }
 
     @Override
