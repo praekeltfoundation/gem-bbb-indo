@@ -1,0 +1,17 @@
+package com.rr.rgem.gem.service;
+
+import com.rr.rgem.gem.service.model.AuthLogin;
+import com.rr.rgem.gem.service.model.AuthToken;
+
+import retrofit2.Call;
+import retrofit2.http.Body;
+import retrofit2.http.POST;
+
+/**
+ * Created by Wimpie Victor on 2016/10/14.
+ */
+public interface AuthService {
+
+    @POST("/api/token/")
+    Call<AuthToken> createToken(@Body AuthLogin login);
+}
