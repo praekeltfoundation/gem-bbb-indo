@@ -122,7 +122,7 @@ public class WebServiceFactory {
             Log.d("Interceptor", "In AuthenticationInterceptor " + request.url());
 
             if (originalResponse.code() == 403) {
-                Log.d("Interceptor", "");
+                Log.d("Interceptor", "Status 403");
                 AuthToken token;
                 if (factory.hasToken()) {
                     Log.d("Interceptor", "Token exists");
@@ -131,8 +131,13 @@ public class WebServiceFactory {
                     // TODO: Get login credentials
                     Log.d("Interceptor", "Retrieving token from service");
                     token = authService.createToken(new AuthLogin("anon", "foo")).execute().body();
+                    factory.setToken(token);
                 }
                 Log.d("Interceptor", String.format("Interceptor got token: %s", token));
+                if (token == null) {
+                    Log.d("Interceptor", "Log in failed");
+                    return originalResponse;
+                }
                 Request authRequest = request.newBuilder()
                         .header("Authorization", token.getTokenHeader())
                         .build();
