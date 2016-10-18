@@ -37,11 +37,6 @@ public class TipArticle {
         this.title = title;
     }
 
-    @Override
-    public String toString() {
-        return String.format("TipArticle{%s}", title);
-    }
-
     public String getArticleUrl() {
         return articleUrl;
     }
@@ -64,5 +59,10 @@ public class TipArticle {
 
     public void setTags(List<String> tags) {
         this.tags = tags;
+    }
+
+    @Override
+    public String toString() {
+        return String.format("TipArticle{%s}", title);
     }
 }
