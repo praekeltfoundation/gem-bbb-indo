@@ -38,6 +38,7 @@ public class ErrorUtil {
 
         try {
             error = converter.convert(response.errorBody());
+            error.setStatus(response.code());
             Log.d(TAG, String.format("Parsed error %s", error.toString()));
         } catch (IOException e) {
             Log.e(TAG, "IO Exception while parsing error", e);
@@ -56,6 +57,10 @@ public class ErrorUtil {
 
         public int getStatus() {
             return status;
+        }
+
+        void setStatus(int status) {
+            this.status = status;
         }
 
         public String getDetail() {
