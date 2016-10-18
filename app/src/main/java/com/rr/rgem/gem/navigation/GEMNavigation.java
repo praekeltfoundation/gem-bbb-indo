@@ -23,6 +23,7 @@ import android.widget.TextView;
 import com.rr.rgem.gem.ChallengeActivity;
 import com.rr.rgem.gem.GoalActivity;
 import com.rr.rgem.gem.GoalsActivity;
+import com.rr.rgem.gem.LoginActivity;
 import com.rr.rgem.gem.R;
 import com.rr.rgem.gem.RegistrationActivity;
 import com.rr.rgem.gem.RegistrationCompleteActivity;
@@ -115,6 +116,9 @@ public class GEMNavigation implements NavigationView.OnNavigationItemSelectedLis
 
         } else if (id == R.id.nav_tiparchive) {
             Intent intent = new Intent(container, TipArchiveActivity.class);
+            container.startActivity(intent);
+        } else if (id == R.id.nav_login) {
+            Intent intent = new Intent(container, LoginActivity.class);
             container.startActivity(intent);
         } else if (id == R.id.nav_notifications) {
 

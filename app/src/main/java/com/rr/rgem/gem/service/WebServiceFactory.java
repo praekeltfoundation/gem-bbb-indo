@@ -58,7 +58,7 @@ public class WebServiceFactory {
      * Because the Authenticator and Interceptor make HTTP requests to the token endpoint, they
      * require their own HTTP client where they themselves are not included.
      */
-    AuthService createAuthService() {
+    public AuthService createAuthService() {
         return new Retrofit.Builder()
                 .baseUrl(baseUrl)
                 .addConverterFactory(GsonConverterFactory.create())
@@ -74,8 +74,18 @@ public class WebServiceFactory {
                 .create(serviceClass);
     }
 
+    public Retrofit createRetrofit() {
+        return retrofitBuilder
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+    }
+
     public OkHttpClient getClient() {
         return clientBuilder.build();
+    }
+
+    public String getBaseUrl() {
+        return baseUrl;
     }
 
     public boolean hasToken() {
@@ -128,7 +138,7 @@ public class WebServiceFactory {
                     Log.d("Interceptor", "Token exists");
                     token = factory.getToken();
                 } else {
-                    // TODO: Get login credentials
+                    // TODO: Get user_login credentials
                     Log.d("Interceptor", "Retrieving token from service");
                     token = authService.createToken(new AuthLogin("anon", "foo")).execute().body();
                     factory.setToken(token);

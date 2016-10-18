@@ -123,7 +123,8 @@
         <receiver android:name=".Notification_receiver_C" />
         <receiver android:name=".Notification_receiver_TP" />
 
-        <activity android:name=".TipArticleActivity"></activity>
+        <activity android:name=".TipArticleActivity" />
+        <activity android:name=".LoginActivity"></activity>
     </application>
 
 </manifest>

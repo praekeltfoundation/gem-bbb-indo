@@ -24,6 +24,9 @@
         <item android:title="TIP ARCHIVE"
             android:id="@+id/nav_tiparchive"
             android:icon="@drawable/ic_launcher" />
+        <item android:title="LOGIN"
+            android:id="@+id/nav_login"
+            android:icon="@drawable/ic_launcher" />
         <item
             android:id="@+id/nav_invite"
             android:title="INVITE"
