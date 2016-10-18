@@ -6,7 +6,6 @@ import com.google.gson.annotations.SerializedName;
 
 import java.io.IOException;
 import java.lang.annotation.Annotation;
-import java.util.ArrayList;
 import java.util.List;
 
 import okhttp3.ResponseBody;
@@ -28,29 +27,32 @@ public class ErrorUtil {
     }
 
     public WebServiceError parseError(Response<?> response) {
-        Converter<ResponseBody, WebServiceError> converter =
-                retrofit.responseBodyConverter(WebServiceError.class, new Annotation[]{});
+        return parseError(response, WebServiceError.class);
+    }
 
-        WebServiceError error;
+    public <T extends WebServiceError> T parseError(Response<?> response, Class<T> errorClass) {
+        Converter<ResponseBody, T> converter =
+                retrofit.responseBodyConverter(errorClass, new Annotation[]{});
+
+        T error;
 
         try {
             error = converter.convert(response.errorBody());
             Log.d(TAG, String.format("Parsed error %s", error.toString()));
         } catch (IOException e) {
             Log.e(TAG, "IO Exception while parsing error", e);
-            error =  new WebServiceError();
+            error = null;
         }
 
         return error;
     }
 
-
     public static class WebServiceError {
 
-        int status;
-        String detail;
+        protected int status;
+        protected String detail;
         @SerializedName("non_field_errors")
-        List<String> nonFieldErrors;
+        protected List<String> nonFieldErrors;
 
         public int getStatus() {
             return status;
@@ -77,6 +79,15 @@ public class ErrorUtil {
                 sb.append(nonFieldErrors.get(i));
             }
             return sb.toString();
+        }
+
+        @Override
+        public String toString() {
+            return "WebServiceError{" +
+                    "status=" + status +
+                    ", detail='" + detail + '\'' +
+                    ", nonFieldErrors=" + nonFieldErrors +
+                    '}';
         }
     }
 }

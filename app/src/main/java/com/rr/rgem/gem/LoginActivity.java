@@ -13,6 +13,7 @@ import com.rr.rgem.gem.service.CMSService;
 import com.rr.rgem.gem.service.ErrorUtil;
 import com.rr.rgem.gem.service.WebServiceApplication;
 import com.rr.rgem.gem.service.WebServiceFactory;
+import com.rr.rgem.gem.service.errors.AuthError;
 import com.rr.rgem.gem.service.model.AuthLogin;
 import com.rr.rgem.gem.service.model.AuthToken;
 import com.rr.rgem.gem.service.model.User;
@@ -78,8 +79,8 @@ public class LoginActivity extends ApplicationActivity {
                             Log.d(LoginActivity.TAG, "Login Successful " + response.body().toString());
                             LoginActivity.this.persist.saveToken(response.body());
                         } else {
-                            ErrorUtil.WebServiceError error = errorUtil.parseError(response);
-                            Log.d(LoginActivity.TAG, "API Errors: " + error.getNonFieldErrorsJoined() + " " + error.getDetail());
+                            ErrorUtil.WebServiceError error = errorUtil.parseError(response, AuthError.class);
+                            Log.d(LoginActivity.TAG, "API Errors: " + error);
                             Utils.toast(LoginActivity.this, error.getNonFieldErrorsJoined());
                         }
 
