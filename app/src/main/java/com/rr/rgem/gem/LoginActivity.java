@@ -75,7 +75,8 @@ public class LoginActivity extends ApplicationActivity {
                         Utils.toast(LoginActivity.this, "Response");
                         Log.d(LoginActivity.TAG, String.format("Login Status %d", response.code()));
                         if (response.isSuccessful()) {
-
+                            Log.d(LoginActivity.TAG, "Login Successful " + response.body().toString());
+                            LoginActivity.this.persist.saveToken(response.body());
                         } else {
                             ErrorUtil.WebServiceError error = errorUtil.parseError(response);
                             Log.d(LoginActivity.TAG, "API Errors: " + error.getNonFieldErrorsJoined() + " " + error.getDetail());
