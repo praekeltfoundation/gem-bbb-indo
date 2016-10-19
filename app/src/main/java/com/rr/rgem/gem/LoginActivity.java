@@ -27,22 +27,15 @@ public class LoginActivity extends ApplicationActivity {
 
     private final static String TAG = "LoginActivity";
 
-    GEMNavigation navigation;
-    CMSService service;
     AuthService authService;
     Persisted persist;
-    View loginScreen;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-
-        navigation = new GEMNavigation(this);
-        loginScreen = navigation.addLayout(R.layout.user_login);
+        setContentView(R.layout.user_login);
 
         WebServiceFactory factory = ((WebServiceApplication) getApplication()).getWebServiceFactory();
-        service = factory.createService(CMSService.class);
         authService = factory.createAuthService();
         persist = new Persisted(this);
 
