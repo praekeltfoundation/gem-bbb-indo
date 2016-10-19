@@ -2,6 +2,7 @@ package com.rr.rgem.gem.service;
 
 import android.util.Log;
 
+import com.rr.rgem.gem.Persisted;
 import com.rr.rgem.gem.service.model.AuthLogin;
 import com.rr.rgem.gem.service.model.AuthToken;
 
@@ -25,10 +26,11 @@ public class WebServiceFactory {
     private final String baseUrl;
     private OkHttpClient.Builder clientBuilder;
     private Retrofit.Builder retrofitBuilder;
-    private AuthToken token;
+    private AuthStore store;
 
-    public WebServiceFactory(String baseUrl) {
+    public WebServiceFactory(String baseUrl, AuthStore store) {
         this.baseUrl = baseUrl;
+        this.store = store;
         clientBuilder = createHttpClientBuilder(true);
         retrofitBuilder = createRetrofitBuilder(baseUrl);
     }
@@ -41,7 +43,7 @@ public class WebServiceFactory {
         if (shouldAuthenticate) {
             AuthService authService = createAuthService();
             builder.authenticator(new TokenAuthenticator(authService));
-            builder.addInterceptor(new AuthenticationInterceptor(this, authService));
+            builder.addInterceptor(new AuthenticationInterceptor(store, authService));
         } else {
             builder.authenticator(Authenticator.NONE);
         }
@@ -90,18 +92,6 @@ public class WebServiceFactory {
         return baseUrl;
     }
 
-    public boolean hasToken() {
-        return token != null;
-    }
-
-    public AuthToken getToken() {
-        return token;
-    }
-
-    void setToken(AuthToken token) {
-        this.token = token;
-    }
-
     private class TokenAuthenticator implements Authenticator {
 
         private AuthService authService;
@@ -119,42 +109,49 @@ public class WebServiceFactory {
 
     private class AuthenticationInterceptor implements Interceptor {
 
-        private WebServiceFactory factory;
+        private static final String TAG = "AuthInterceptor";
+        private AuthStore store;
         private AuthService authService;
 
-        public AuthenticationInterceptor(WebServiceFactory factory, AuthService authService) {
-            this.factory = factory;
+        public AuthenticationInterceptor(AuthStore store, AuthService authService) {
+            this.store = store;
             this.authService = authService;
+
+            if (store == null) {
+                throw new NullPointerException("Auth Store is null");
+            }
         }
 
         @Override
         public Response intercept(Chain chain) throws IOException {
             Request request = chain.request();
             Response originalResponse = chain.proceed(request);
-            Log.d("Interceptor", "In AuthenticationInterceptor " + request.url());
+            Log.d(TAG, "In AuthenticationInterceptor " + request.url());
 
             if (originalResponse.code() == 403) {
-                Log.d("Interceptor", "Status 403");
+                Log.d(TAG, "Status 403");
                 AuthToken token;
-                if (factory.hasToken()) {
+                if (store.hasToken()) {
                     Log.d("Interceptor", "Token exists");
-                    token = factory.getToken();
+                    token = store.loadToken();
                 } else {
                     // TODO: Get user_login credentials
-                    Log.d("Interceptor", "Retrieving token from service");
-                    token = authService.createToken(new AuthLogin("anon", "foo")).execute().body();
-                    factory.setToken(token);
+                    Log.d(TAG, "Interceptor needs to log in");
+                    //Log.d("Interceptor", "Retrieving token from service");
+                    //token = authService.createToken(new AuthLogin("anon", "foo")).execute().body();
+                    //store.saveToken(token);
+                    token = null;
                 }
-                Log.d("Interceptor", String.format("Interceptor got token: %s", token));
+                Log.d(TAG, String.format("Interceptor got token: %s", token));
                 if (token == null) {
-                    Log.d("Interceptor", "Log in failed");
+                    Log.d(TAG, "Log in failed");
                     return originalResponse;
                 }
                 Request authRequest = request.newBuilder()
                         .header("Authorization", token.getTokenHeader())
                         .build();
                 Response newResponse = chain.proceed(authRequest);
-                Log.d("Interceptor", String.format("New status after proceed %d", newResponse.code()));
+                Log.d(TAG, String.format("New status after proceed %d", newResponse.code()));
                 return newResponse;
             } else {
                 return originalResponse;

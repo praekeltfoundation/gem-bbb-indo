@@ -9,6 +9,10 @@ public class AuthToken {
 
     String token;
 
+    public boolean hasToken() {
+        return token != null && !token.isEmpty();
+    }
+
     public String getToken() {
         return token;
     }

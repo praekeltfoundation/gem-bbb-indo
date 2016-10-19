@@ -5,13 +5,14 @@ import android.content.SharedPreferences;
 import android.util.Log;
 
 import com.google.gson.Gson;
+import com.rr.rgem.gem.service.AuthStore;
 import com.rr.rgem.gem.service.model.AuthToken;
 import com.rr.rgem.gem.service.model.User;
 
 /**
  * Created by chris on 9/8/2016.
  */
-public class Persisted {
+public class Persisted implements AuthStore {
 
     public final static String APP_PREFS = "bimbingbung_prefs_";
     public final static String PREF_USER = "user";
@@ -58,6 +59,11 @@ public class Persisted {
         SharedPreferences.Editor editor = settings.edit();
         editor.remove(PREF_USER);
         editor.apply();
+    }
+
+    @Override
+    public boolean hasToken() {
+        return loadToken().hasToken();
     }
 
     public AuthToken loadToken() {
