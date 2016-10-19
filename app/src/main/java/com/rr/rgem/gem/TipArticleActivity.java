@@ -5,11 +5,14 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.WebResourceRequest;
+import android.webkit.WebResourceResponse;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
 import com.rr.rgem.gem.navigation.GEMNavigation;
 import com.rr.rgem.gem.views.Utils;
+
+import java.io.IOException;
 
 public class TipArticleActivity extends ApplicationActivity {
 
@@ -26,6 +29,7 @@ public class TipArticleActivity extends ApplicationActivity {
         navigation = new GEMNavigation(this);
         articleScreen = (ViewGroup) navigation.addLayout(R.layout.tip_article);
 
+        final Persisted persisted = new Persisted(this);
         final View tipProgress = findViewById(R.id.tipProgress);
         //tipProgress.setVisibility(View.GONE);
         webView = (WebView) findViewById(R.id.tipWebView);
@@ -40,6 +44,20 @@ public class TipArticleActivity extends ApplicationActivity {
             public void onPageFinished(WebView view, String url) {
                 super.onPageFinished(view, url);
                 tipProgress.setVisibility(View.GONE);
+            }
+
+            @Override
+            public WebResourceResponse shouldInterceptRequest(WebView view, WebResourceRequest request) {
+                // TODO: Token Auth in WebView
+                /*
+                try {
+
+                } catch (IOException e) {
+                    // Tell Client to retry
+                    return null;
+                }*/
+
+                return super.shouldInterceptRequest(view, request);
             }
         });
 

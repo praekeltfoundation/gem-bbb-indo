@@ -124,6 +124,7 @@ public class WebServiceFactory {
 
         @Override
         public Response intercept(Chain chain) throws IOException {
+            // TODO: Include existing token proactively
             Request request = chain.request();
             Response originalResponse = chain.proceed(request);
             Log.d(TAG, "In AuthenticationInterceptor " + request.url());

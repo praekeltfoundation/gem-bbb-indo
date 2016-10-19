@@ -14,21 +14,31 @@ import android.widget.TabHost;
 import android.widget.TextView;
 
 import com.rr.rgem.gem.models.Tip;
+import com.rr.rgem.gem.models.TipArticle;
 import com.rr.rgem.gem.navigation.GEMNavigation;
+import com.rr.rgem.gem.service.CMSService;
+import com.rr.rgem.gem.service.WebServiceApplication;
+import com.rr.rgem.gem.service.WebServiceFactory;
 import com.rr.rgem.gem.views.Utils;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 /**
  * Created by Wimpie Victor on 2016/10/05.
  */
 public class TipArchiveActivity extends ApplicationActivity {
 
-    static String TAB_FAVOURITES = "favourites";
-    static String TAB_ALL = "all";
+    private final static String TAG = "TipArchive";
+    private final static String TAB_FAVOURITES = "favourites";
+    private final static String TAB_ALL = "all";
 
     private GEMNavigation navigation;
+    private CMSService service;
     private LinearLayout tipScreen;
     private TabHost tabHost;
 
@@ -36,6 +46,9 @@ public class TipArchiveActivity extends ApplicationActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        WebServiceFactory factory = ((WebServiceApplication) getApplication()).getWebServiceFactory();
+        service = factory.createService(CMSService.class);
 
         Utils.toast(this, "starting Tips Archive activity");
         navigation = new GEMNavigation(this);
@@ -48,13 +61,8 @@ public class TipArchiveActivity extends ApplicationActivity {
         tabHost.addTab(tabHost.newTabSpec(TAB_FAVOURITES)
                 .setContent(new TipListScreen(this, new TipFactory() {
                     @Override
-                    public List<Tip> initialTips() {
-                        List<Tip> tips = new ArrayList();
-                        tips.add(createTip("Fav Tip 1"));
-                        tips.add(createTip("Fav Tip 2"));
-                        tips.add(createTip("Fav Tip 3"));
-                        tips.add(createTip("Fav Tip 4"));
-                        return tips;
+                    public void loadTips(TipCallback callback) {
+                        // TODO: Tip Favourites
                     }
                 }))
                 .setIndicator(getResources().getString(R.string.favourites))
@@ -62,22 +70,24 @@ public class TipArchiveActivity extends ApplicationActivity {
 
         tabHost.addTab(tabHost.newTabSpec(TAB_ALL)
                 .setContent(new TipListScreen(this, new TipFactory() {
+
                     @Override
-                    public List<Tip> initialTips() {
-                        List<Tip> tips = new ArrayList();
-                        tips.add(createTip("All Tip 1"));
-                        tips.add(createTip("All Tip 2"));
-                        tips.add(createTip("All Tip 3"));
-                        tips.add(createTip("All Tip 4"));
-                        tips.add(createTip("All Tip 5"));
-                        tips.add(createTip("All Tip 6"));
-                        tips.add(createTip("All Tip 7"));
-                        tips.add(createTip("All Tip 8"));
-                        tips.add(createTip("All Tip 9"));
-                        tips.add(createTip("All Tip 10"));
-                        tips.add(createTip("All Tip 11"));
-                        tips.add(createTip("All Tip 12"));
-                        return tips;
+                    public void loadTips(final TipCallback callback) {
+                        TipArchiveActivity.this.service.listTips().enqueue(new Callback<List<TipArticle>>() {
+                            @Override
+                            public void onResponse(Call<List<TipArticle>> call, Response<List<TipArticle>> response) {
+                                if (response.isSuccessful()) {
+                                    callback.onLoad(response.body());
+                                } else {
+                                    // TODO: Handle error
+                                }
+                            }
+
+                            @Override
+                            public void onFailure(Call<List<TipArticle>> call, Throwable t) {
+                                // TODO: Handle error
+                            }
+                        });
                     }
                 }))
                 .setIndicator(getResources().getString(R.string.all))
@@ -92,15 +102,21 @@ public class TipArchiveActivity extends ApplicationActivity {
     }
 
     interface TipFactory {
-        List<Tip> initialTips();
+        void loadTips(final TipCallback callback);
+    }
+
+    interface TipCallback {
+        void onLoad(List<TipArticle> tips);
     }
 
     class TipListScreen implements TabHost.TabContentFactory {
 
+        private static final String TAG = "TipList";
+
         private ApplicationActivity activity;
         private TipFactory factory;
         private ViewGroup tipContainer;
-        private List<Tip> tips;
+        private List<TipArticle> tips;
         private int cardCount;
 
         public TipListScreen(ApplicationActivity activity, TipFactory factory) {
@@ -113,19 +129,23 @@ public class TipArchiveActivity extends ApplicationActivity {
             LinearLayout view = (LinearLayout) activity.getLayoutInflater().inflate(R.layout.tip_list, null);
             tipContainer = (LinearLayout) view.findViewById(R.id.tipContainer);
 
-            Log.d("TipArchive", "Creating content");
-
-            tips = factory.initialTips();
+            Log.d(TAG, "Creating tab content");
             cardCount = 0;
 
-            for (Tip tip : tips) {
-                addTipCard(tip);
-            }
+            factory.loadTips(new TipCallback() {
+                @Override
+                public void onLoad(List<TipArticle> tips) {
+                    TipListScreen.this.tips = tips;
+                    for (TipArticle tip : tips) {
+                        TipListScreen.this.addTipCard(tip);
+                    }
+                }
+            });
 
             return view;
         }
 
-        private void addTipCard(final Tip tip) {
+        private void addTipCard(final TipArticle tip) {
             View view = LayoutInflater.from(tipContainer.getContext()).inflate(R.layout.tip_card, null);
             // Params required for cards to resize on add
             LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 1.0f);
@@ -148,7 +168,7 @@ public class TipArchiveActivity extends ApplicationActivity {
             ImageView favBtn = (ImageView) view.findViewById(R.id.favBtn);
             ImageView shareBtn = (ImageView) view.findViewById(R.id.shareBtn);
 
-            title.setText(tip.getName());
+            title.setText(tip.getTitle());
 
             // Bind events
             final TipListScreen screen = this;
@@ -157,22 +177,22 @@ public class TipArchiveActivity extends ApplicationActivity {
             tipCardImage.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Utils.toast(context, String.format("'%s' ARTICLE clicked...", tip.getName()));
-                    screen.startArticleActivity("http://10.0.2.2:8000/test/");
+                    Utils.toast(context, String.format("'%s' ARTICLE clicked...", tip.getTitle()));
+                    startArticleActivity(tip.getArticleUrl());
                 }
             });
 
             favBtn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Utils.toast(context, String.format("'%s' FAVOURITE clicked...", tip.getName()));
+                    Utils.toast(context, String.format("'%s' FAVOURITE clicked...", tip.getTitle()));
                 }
             });
 
             shareBtn.setOnClickListener(new View.OnClickListener(){
                 @Override
                 public void onClick(View v) {
-                    Utils.toast(context, String.format("'%s' SHARE clicked...", tip.getName()));
+                    Utils.toast(context, String.format("'%s' SHARE clicked...", tip.getTitle()));
                 }
             });
 
