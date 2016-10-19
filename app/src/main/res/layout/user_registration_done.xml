@@ -12,7 +12,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Your&apos;e registered"
+        android:text="You're registered"
         android:id="@+id/textViewHeading"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="40dp" />

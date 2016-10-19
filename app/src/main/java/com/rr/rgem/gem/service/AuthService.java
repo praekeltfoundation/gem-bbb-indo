@@ -2,6 +2,8 @@ package com.rr.rgem.gem.service;
 
 import com.rr.rgem.gem.service.model.AuthLogin;
 import com.rr.rgem.gem.service.model.AuthToken;
+import com.rr.rgem.gem.service.model.RegistrationResponse;
+import com.rr.rgem.gem.service.model.User;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
@@ -14,4 +16,7 @@ public interface AuthService {
 
     @POST("/api/token/")
     Call<AuthToken> createToken(@Body AuthLogin login);
+
+    @POST("/api/users/")
+    Call<RegistrationResponse> register(@Body User user);
 }

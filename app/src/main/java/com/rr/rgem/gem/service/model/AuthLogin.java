@@ -29,4 +29,19 @@ public class AuthLogin {
     public void setPassword(String password) {
         this.password = password;
     }
+
+    public static AuthLogin fromUser(User user) {
+        String username = user.getUsername();
+        String password = user.getPassword();
+
+        if (username == null) {
+            throw new NullPointerException("Username is null");
+        }
+
+        if (password == null) {
+            throw new NullPointerException("Password is null");
+        }
+
+        return new AuthLogin(username, password);
+    }
 }

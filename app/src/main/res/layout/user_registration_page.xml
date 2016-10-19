@@ -28,7 +28,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceSmall"
-        android:text="Name"
+        android:text="@string/username"
         android:id="@+id/textViewName"
         android:layout_marginTop="10dp" />
 
@@ -41,7 +41,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceSmall"
-        android:text="Mobile Number"
+        android:text="@string/mobile_number"
         android:id="@+id/textViewMobileNumber"
         android:layout_marginTop="10dp" />
 
@@ -54,7 +54,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceSmall"
-        android:text="Password"
+        android:text="@string/password"
         android:id="@+id/textViewPasword"
         android:layout_marginTop="10dp" />
 
