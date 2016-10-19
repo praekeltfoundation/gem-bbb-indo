@@ -7,9 +7,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.rr.rgem.gem.navigation.GEMNavigation;
 import com.rr.rgem.gem.service.AuthService;
-import com.rr.rgem.gem.service.CMSService;
 import com.rr.rgem.gem.service.ErrorUtil;
 import com.rr.rgem.gem.service.WebServiceApplication;
 import com.rr.rgem.gem.service.WebServiceFactory;
@@ -71,13 +69,12 @@ public class LoginActivity extends ApplicationActivity {
                         if (response.isSuccessful()) {
                             Log.d(LoginActivity.TAG, "Login Successful " + response.body().toString());
                             LoginActivity.this.persist.saveToken(response.body());
+                            LoginActivity.this.returnToActivity();
                         } else {
                             ErrorUtil.WebServiceError error = errorUtil.parseError(response, AuthError.class);
                             Log.d(LoginActivity.TAG, "API Errors: " + error);
                             Utils.toast(LoginActivity.this, error.getNonFieldErrorsJoined());
                         }
-
-
                     }
 
                     @Override
@@ -85,8 +82,6 @@ public class LoginActivity extends ApplicationActivity {
                         Log.e(LoginActivity.TAG, "Create Token HTTP Failure", t);
                     }
                 });
-
-                //LoginActivity.this.finish();
             }
         });
     }
@@ -105,5 +100,9 @@ public class LoginActivity extends ApplicationActivity {
             return false;
         }
         return true;
+    }
+
+    void returnToActivity() {
+        LoginActivity.this.finish();
     }
 }

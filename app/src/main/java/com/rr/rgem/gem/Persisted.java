@@ -54,6 +54,12 @@ public class Persisted {
         editor.apply();
     }
 
+    public void clearUser() {
+        SharedPreferences.Editor editor = settings.edit();
+        editor.remove(PREF_USER);
+        editor.apply();
+    }
+
     public AuthToken loadToken() {
         Gson g = new Gson();
         AuthToken token = g.fromJson(settings.getString(PREF_TOKEN, "{}"), AuthToken.class);
@@ -67,6 +73,12 @@ public class Persisted {
         String json = g.toJson(token);
         Log.d(TAG, String.format("Saving: %s", json));
         editor.putString(PREF_TOKEN, json);
+        editor.apply();
+    }
+
+    public void clearToken() {
+        SharedPreferences.Editor editor = settings.edit();
+        editor.remove(PREF_TOKEN);
         editor.apply();
     }
 

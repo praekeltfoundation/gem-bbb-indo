@@ -1,17 +1,12 @@
 package com.rr.rgem.gem;
 
-import android.content.Context;
-import android.content.ContextWrapper;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
-import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
-import android.widget.LinearLayout;
 
 import com.pkmmte.view.CircularImageView;
 import com.rr.rgem.gem.views.ImageUploadDialog;
@@ -20,9 +15,6 @@ import com.rr.rgem.gem.views.Utils;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
 
 /**
  * Created by chris on 9/8/2016.
@@ -69,6 +61,8 @@ public class RegistrationCompleteActivity extends ApplicationActivity {
             public void onClick(View v) {
                 Persisted persisted = new Persisted(getSharedPreferences(Persisted.APP_PREFS,0));
                 persisted.setRegistered(false);
+                persisted.clearToken();
+                persisted.clearUser();
                 RegistrationCompleteActivity.this.finish();
             }
         });

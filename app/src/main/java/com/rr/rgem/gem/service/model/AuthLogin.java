@@ -44,4 +44,12 @@ public class AuthLogin {
 
         return new AuthLogin(username, password);
     }
+
+    @Override
+    public String toString() {
+        return "AuthLogin{" +
+                "username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                '}';
+    }
 }

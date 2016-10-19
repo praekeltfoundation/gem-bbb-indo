@@ -12,6 +12,7 @@ import com.rr.rgem.gem.service.AuthService;
 import com.rr.rgem.gem.service.ErrorUtil;
 import com.rr.rgem.gem.service.WebServiceApplication;
 import com.rr.rgem.gem.service.WebServiceFactory;
+import com.rr.rgem.gem.service.errors.AuthError;
 import com.rr.rgem.gem.service.errors.RegistrationError;
 import com.rr.rgem.gem.service.model.AuthLogin;
 import com.rr.rgem.gem.service.model.AuthToken;
@@ -40,6 +41,7 @@ public class RegistrationActivity extends ApplicationActivity {
         setContentView(R.layout.user_registration_page);
 
         final Persisted persisted = new Persisted(getSharedPreferences(Persisted.APP_PREFS,0));
+        Log.d(TAG, "Current token " + persisted.loadToken());
 
         if (persisted.isRegistered()) {
             Intent intent = new Intent(RegistrationActivity.this, RegistrationCompleteActivity.class);
@@ -95,10 +97,8 @@ public class RegistrationActivity extends ApplicationActivity {
                 profile.setMobile(editMobile.getText().toString());
 
                 user.setProfile(profile);
-
-                if (RegistrationActivity.this.authService == null) {
-                    throw new NullPointerException("Auth Service is null");
-                }
+                Log.d(RegistrationActivity.TAG, "Registering user: " + user);
+                Log.d(RegistrationActivity.TAG, "Password: " + user.getPassword());
 
                 RegistrationActivity.this.authService.register(user).enqueue(new Callback<RegistrationResponse>() {
                     @Override
@@ -134,22 +134,27 @@ public class RegistrationActivity extends ApplicationActivity {
 
     void retrieveToken(User user) {
         // TODO: Log user in immediately after successful registration
-        Persisted persisted = new Persisted(this);
+        final Persisted persisted = new Persisted(this);
         final AuthLogin login = AuthLogin.fromUser(user);
 
         authService.createToken(login).enqueue(new Callback<AuthToken>() {
             @Override
             public void onResponse(Call<AuthToken> call, Response<AuthToken> response) {
+                Log.d(RegistrationActivity.TAG, "Token Status code " + response.code());
                 if (response.isSuccessful()) {
+                    Log.d(RegistrationActivity.TAG, "Token success");
+                    persisted.saveToken(response.body());
                     RegistrationActivity.this.startNextActivity();
                 } else {
-
+                    // TODO: Handle case where auto login fails
+                    AuthError error = RegistrationActivity.this.errorUtil.parseError(response, AuthError.class);
+                    Log.d(RegistrationActivity.TAG, "Token failure " + error.toString());
                 }
             }
 
             @Override
             public void onFailure(Call<AuthToken> call, Throwable t) {
-
+                Log.e(RegistrationActivity.TAG, "Token exception", t);
             }
         });
     }
