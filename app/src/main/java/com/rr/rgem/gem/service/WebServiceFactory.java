@@ -51,6 +51,7 @@ public class WebServiceFactory {
     Retrofit.Builder createRetrofitBuilder(String baseUrl) {
         return new Retrofit.Builder()
                 .baseUrl(baseUrl)
+                .callbackExecutor(new MainThreadExecutor())
                 .addConverterFactory(GsonConverterFactory.create());
     }
 
@@ -62,6 +63,7 @@ public class WebServiceFactory {
         return new Retrofit.Builder()
                 .baseUrl(baseUrl)
                 .addConverterFactory(GsonConverterFactory.create())
+                .callbackExecutor(new MainThreadExecutor())
                 .client(createHttpClientBuilder(false).build())
                 .build()
                 .create(AuthService.class);
