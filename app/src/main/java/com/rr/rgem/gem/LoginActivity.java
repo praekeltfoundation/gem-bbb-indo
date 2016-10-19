@@ -69,6 +69,7 @@ public class LoginActivity extends ApplicationActivity {
                         if (response.isSuccessful()) {
                             Log.d(LoginActivity.TAG, "Login Successful " + response.body().toString());
                             LoginActivity.this.persist.saveToken(response.body());
+                            LoginActivity.this.persist.setLoggedIn(true);
                             LoginActivity.this.returnToActivity();
                         } else {
                             ErrorUtil.WebServiceError error = errorUtil.parseError(response, AuthError.class);

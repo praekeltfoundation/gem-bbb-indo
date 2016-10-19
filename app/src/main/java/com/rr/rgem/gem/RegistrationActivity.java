@@ -144,6 +144,7 @@ public class RegistrationActivity extends ApplicationActivity {
                 if (response.isSuccessful()) {
                     Log.d(RegistrationActivity.TAG, "Token success");
                     persisted.saveToken(response.body());
+                    persisted.setLoggedIn(true);
                     RegistrationActivity.this.startNextActivity();
                 } else {
                     // TODO: Handle case where auto login fails

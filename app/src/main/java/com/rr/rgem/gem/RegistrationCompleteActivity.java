@@ -63,6 +63,7 @@ public class RegistrationCompleteActivity extends ApplicationActivity {
                 persisted.setRegistered(false);
                 persisted.clearToken();
                 persisted.clearUser();
+                persisted.setLoggedIn(false);
                 RegistrationCompleteActivity.this.finish();
             }
         });
