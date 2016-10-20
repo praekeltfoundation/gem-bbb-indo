@@ -2,6 +2,7 @@ package com.rr.rgem.gem;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -13,6 +14,8 @@ import android.widget.RelativeLayout;
 import android.widget.TabHost;
 import android.widget.TextView;
 
+import com.rr.rgem.gem.image.ImageCallback;
+import com.rr.rgem.gem.image.ImageDownloader;
 import com.rr.rgem.gem.models.Tip;
 import com.rr.rgem.gem.models.TipArticle;
 import com.rr.rgem.gem.navigation.GEMNavigation;
@@ -22,9 +25,10 @@ import com.rr.rgem.gem.service.WebServiceFactory;
 import com.rr.rgem.gem.views.Utils;
 
 import java.io.IOException;
-import java.util.ArrayList;
+import java.net.MalformedURLException;
 import java.util.List;
 
+import okhttp3.OkHttpClient;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -138,11 +142,17 @@ public class TipArchiveActivity extends ApplicationActivity {
         private View textViewEmpty;
         private View textViewLoading;
         private List<TipArticle> tips;
+        private WebServiceFactory webFactory;
+        private ImageDownloader imageDownloader;
         private int cardCount;
 
         public TipListScreen(ApplicationActivity activity, TipFactory factory) {
             this.activity = activity;
             this.factory = factory;
+
+            webFactory = ((WebServiceApplication) activity.getApplication()).getWebServiceFactory();
+            OkHttpClient client = webFactory.getClient();
+            imageDownloader = new ImageDownloader(client);
         }
 
         @Override
@@ -197,11 +207,28 @@ public class TipArchiveActivity extends ApplicationActivity {
 
             TextView title = (TextView) view.findViewById(R.id.tipTitle);
             RelativeLayout tipCardHead = (RelativeLayout) view.findViewById(R.id.tipCardHead);
-            ImageView tipCardImage = (ImageView) view.findViewById(R.id.tipCardImage);
+            final ImageView tipCardImage = (ImageView) view.findViewById(R.id.tipCardImage);
             ImageView favBtn = (ImageView) view.findViewById(R.id.favBtn);
             ImageView shareBtn = (ImageView) view.findViewById(R.id.shareBtn);
 
             title.setText(tip.getTitle());
+            try {
+                if (tip.hasCoverImageUrl()) {
+                    imageDownloader.retrieveImage(webFactory.joinUrl(tip.getCoverImageUrl()), new ImageCallback() {
+                        @Override
+                        public void onLoad(Bitmap image) {
+                            tipCardImage.setImageBitmap(image);
+                        }
+
+                        @Override
+                        public void onFailure() {
+                            Log.d(TAG, "Failed to set tip card image");
+                        }
+                    });
+                }
+            } catch (MalformedURLException e) {
+                Log.e(TAG, "Image download URL join fail", e);
+            }
 
             // Bind events
             final TipListScreen screen = this;
