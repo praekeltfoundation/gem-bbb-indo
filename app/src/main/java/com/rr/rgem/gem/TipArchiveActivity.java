@@ -21,6 +21,7 @@ import com.rr.rgem.gem.service.WebServiceApplication;
 import com.rr.rgem.gem.service.WebServiceFactory;
 import com.rr.rgem.gem.views.Utils;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -63,6 +64,7 @@ public class TipArchiveActivity extends ApplicationActivity {
                     @Override
                     public void loadTips(TipCallback callback) {
                         // TODO: Tip Favourites
+                        callback.onEmpty();
                     }
                 }))
                 .setIndicator(getResources().getString(R.string.favourites))
@@ -73,19 +75,29 @@ public class TipArchiveActivity extends ApplicationActivity {
 
                     @Override
                     public void loadTips(final TipCallback callback) {
+                        Log.d(TAG, "TipCallback loading tips");
                         TipArchiveActivity.this.service.listTips().enqueue(new Callback<List<TipArticle>>() {
                             @Override
                             public void onResponse(Call<List<TipArticle>> call, Response<List<TipArticle>> response) {
+                                Log.d(TAG, "Loading tips status " + response.code());
                                 if (response.isSuccessful()) {
                                     callback.onLoad(response.body());
                                 } else {
                                     // TODO: Handle error
+                                    try {
+                                        Log.d(TAG, "Tips not loaded " + response.errorBody().string());
+                                    } catch (IOException e) {
+                                        Log.d(TAG, "IO Exception while reading tips error body", e);
+                                    }
+                                    callback.onEmpty();
                                 }
                             }
 
                             @Override
                             public void onFailure(Call<List<TipArticle>> call, Throwable t) {
                                 // TODO: Handle error
+                                Log.d(TAG, "Loading tips exception", t);
+                                callback.onEmpty();
                             }
                         });
                     }
@@ -107,6 +119,7 @@ public class TipArchiveActivity extends ApplicationActivity {
 
     interface TipCallback {
         void onLoad(List<TipArticle> tips);
+        void onEmpty();
     }
 
     class TipListScreen implements TabHost.TabContentFactory {
@@ -116,6 +129,8 @@ public class TipArchiveActivity extends ApplicationActivity {
         private ApplicationActivity activity;
         private TipFactory factory;
         private ViewGroup tipContainer;
+        private View textViewEmpty;
+        private View textViewLoading;
         private List<TipArticle> tips;
         private int cardCount;
 
@@ -126,19 +141,31 @@ public class TipArchiveActivity extends ApplicationActivity {
 
         @Override
         public View createTabContent(String tag) {
-            LinearLayout view = (LinearLayout) activity.getLayoutInflater().inflate(R.layout.tip_list, null);
-            tipContainer = (LinearLayout) view.findViewById(R.id.tipContainer);
+            ViewGroup view = (ViewGroup) activity.getLayoutInflater().inflate(R.layout.tip_list, null);
+            textViewEmpty = view.findViewById(R.id.textViewEmpty);
+            textViewLoading = view.findViewById(R.id.textViewLoading);
+            tipContainer = (ViewGroup) view.findViewById(R.id.tipContainer);
 
             Log.d(TAG, "Creating tab content");
             cardCount = 0;
 
+            textViewEmpty.setVisibility(View.GONE);
+            textViewLoading.setVisibility(View.VISIBLE);
             factory.loadTips(new TipCallback() {
                 @Override
                 public void onLoad(List<TipArticle> tips) {
                     TipListScreen.this.tips = tips;
+                    textViewLoading.setVisibility(View.GONE);
                     for (TipArticle tip : tips) {
                         TipListScreen.this.addTipCard(tip);
                     }
+                }
+
+                @Override
+                public void onEmpty() {
+                    Log.d(TAG, "Tips Empty");
+                    textViewLoading.setVisibility(View.GONE);
+                    textViewEmpty.setVisibility(View.VISIBLE);
                 }
             });
 
