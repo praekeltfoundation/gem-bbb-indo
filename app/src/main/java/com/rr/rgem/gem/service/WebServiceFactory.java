@@ -130,41 +130,17 @@ public class WebServiceFactory {
 
         @Override
         public Response intercept(Chain chain) throws IOException {
-            // TODO: Include existing token proactively
             Request request = chain.request();
-            Response originalResponse = chain.proceed(request);
             Log.d(TAG, "In AuthenticationInterceptor " + request.url());
 
-            if (originalResponse.code() == 403) {
-                Log.d(TAG, "Status 403");
-                AuthToken token;
-                if (store.hasToken()) {
-                    Log.d("Interceptor", "Token exists");
-                    token = store.loadToken();
-                } else {
-                    // TODO: Get user_login credentials
-                    Log.d(TAG, "Interceptor needs to log in");
-                    //Log.d("Interceptor", "Retrieving token from service");
-                    //token = authService.createToken(new AuthLogin("anon", "foo")).execute().body();
-                    //store.saveToken(token);
-                    token = null;
-                }
-                Log.d(TAG, String.format("Interceptor got token: %s", token));
-                if (token == null) {
-                    Log.d(TAG, "Log in failed");
-                    return originalResponse;
-                }
+            AuthToken token = store.loadToken();
+            if (token.hasToken()) {
                 Request authRequest = request.newBuilder()
                         .header("Authorization", token.getTokenHeader())
                         .build();
-                Response newResponse = chain.proceed(authRequest);
-                Log.d(TAG, String.format("New status after proceed %d", newResponse.code()));
-
-                // Unused response needs to be closed to prevent memory leak
-                originalResponse.close();
-                return newResponse;
+                return chain.proceed(authRequest);
             } else {
-                return originalResponse;
+                return chain.proceed(request);
             }
         }
     }
