@@ -67,6 +67,13 @@ public class ImageStorage {
         }
     }
 
+    public void clearDirectory() {
+        File dir = context.getDir(directory, Context.MODE_PRIVATE);
+        for (File file : dir.listFiles()) {
+            file.delete();
+        }
+    }
+
     protected static String fileId(String filepath) {
         return filepath.replace('/', '-');
     }
