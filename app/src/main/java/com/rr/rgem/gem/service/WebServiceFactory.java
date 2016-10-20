@@ -7,6 +7,8 @@ import com.rr.rgem.gem.service.model.AuthLogin;
 import com.rr.rgem.gem.service.model.AuthToken;
 
 import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
 
 import okhttp3.Authenticator;
 import okhttp3.Interceptor;
@@ -90,6 +92,10 @@ public class WebServiceFactory {
 
     public String getBaseUrl() {
         return baseUrl;
+    }
+
+    public String joinUrl(String relativeUrl) throws MalformedURLException {
+        return new URL(new URL(baseUrl), relativeUrl).toString();
     }
 
     private class TokenAuthenticator implements Authenticator {
