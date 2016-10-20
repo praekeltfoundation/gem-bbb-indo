@@ -16,6 +16,7 @@ import android.widget.TextView;
 
 import com.rr.rgem.gem.image.ImageCallback;
 import com.rr.rgem.gem.image.ImageDownloader;
+import com.rr.rgem.gem.image.ImageStorage;
 import com.rr.rgem.gem.models.Tip;
 import com.rr.rgem.gem.models.TipArticle;
 import com.rr.rgem.gem.navigation.GEMNavigation;
@@ -135,6 +136,7 @@ public class TipArchiveActivity extends ApplicationActivity {
     class TipListScreen implements TabHost.TabContentFactory {
 
         private static final String TAG = "TipList";
+        private static final String TIP_IMAGE_DIR = "tip-images";
 
         private ApplicationActivity activity;
         private TipFactory factory;
@@ -144,6 +146,7 @@ public class TipArchiveActivity extends ApplicationActivity {
         private List<TipArticle> tips;
         private WebServiceFactory webFactory;
         private ImageDownloader imageDownloader;
+        private ImageStorage imageStorage;
         private int cardCount;
 
         public TipListScreen(ApplicationActivity activity, TipFactory factory) {
@@ -153,6 +156,7 @@ public class TipArchiveActivity extends ApplicationActivity {
             webFactory = ((WebServiceApplication) activity.getApplication()).getWebServiceFactory();
             OkHttpClient client = webFactory.getClient();
             imageDownloader = new ImageDownloader(client);
+            imageStorage = new ImageStorage(activity, TIP_IMAGE_DIR);
         }
 
         @Override
@@ -214,17 +218,25 @@ public class TipArchiveActivity extends ApplicationActivity {
             title.setText(tip.getTitle());
             try {
                 if (tip.hasCoverImageUrl()) {
-                    imageDownloader.retrieveImage(webFactory.joinUrl(tip.getCoverImageUrl()), new ImageCallback() {
-                        @Override
-                        public void onLoad(Bitmap image) {
-                            tipCardImage.setImageBitmap(image);
-                        }
+                    // Attempt to get image from internal storage
+                    Bitmap image = imageStorage.loadImage(tip.getCoverImageUrl());
+                    if (image != null) {
+                        tipCardImage.setImageBitmap(image);
+                        Log.d(TAG, String.format("Image loaded locally [%s]", tip.getCoverImageUrl()));
+                    } else {
+                        imageDownloader.retrieveImage(webFactory.joinUrl(tip.getCoverImageUrl()), new ImageCallback() {
+                            @Override
+                            public void onLoad(Bitmap image) {
+                                tipCardImage.setImageBitmap(image);
+                                imageStorage.saveImage(tip.getCoverImageUrl(), image);
+                            }
 
-                        @Override
-                        public void onFailure() {
-                            Log.d(TAG, "Failed to set tip card image");
-                        }
-                    });
+                            @Override
+                            public void onFailure() {
+                                Log.d(TAG, "Failed to set tip card image");
+                            }
+                        });
+                    }
                 }
             } catch (MalformedURLException e) {
                 Log.e(TAG, "Image download URL join fail", e);
