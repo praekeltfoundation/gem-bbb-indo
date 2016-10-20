@@ -153,6 +153,9 @@ public class WebServiceFactory {
                         .build();
                 Response newResponse = chain.proceed(authRequest);
                 Log.d(TAG, String.format("New status after proceed %d", newResponse.code()));
+
+                // Unused response needs to be closed to prevent memory leak
+                originalResponse.close();
                 return newResponse;
             } else {
                 return originalResponse;
