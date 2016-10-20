@@ -81,7 +81,12 @@ public class TipArchiveActivity extends ApplicationActivity {
                             public void onResponse(Call<List<TipArticle>> call, Response<List<TipArticle>> response) {
                                 Log.d(TAG, "Loading tips status " + response.code());
                                 if (response.isSuccessful()) {
-                                    callback.onLoad(response.body());
+                                    List<TipArticle> tips = response.body();
+                                    if (tips.isEmpty()) {
+                                        callback.onEmpty();
+                                    } else {
+                                        callback.onLoad(tips);
+                                    }
                                 } else {
                                     // TODO: Handle error
                                     try {
@@ -91,6 +96,7 @@ public class TipArchiveActivity extends ApplicationActivity {
                                     }
                                     callback.onEmpty();
                                 }
+
                             }
 
                             @Override
