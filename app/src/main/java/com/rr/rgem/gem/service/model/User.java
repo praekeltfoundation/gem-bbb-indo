@@ -79,6 +79,18 @@ public class User {
         this.profile = profile;
     }
 
+    public String getLabel() {
+        if (firstName != null) {
+            if (lastName != null) {
+                return firstName + " " + lastName;
+            } else {
+                return firstName;
+            }
+        } else {
+            return username;
+        }
+    }
+
     @Override
     public String toString() {
         return String.format("User {%s <%s>}", username, email);

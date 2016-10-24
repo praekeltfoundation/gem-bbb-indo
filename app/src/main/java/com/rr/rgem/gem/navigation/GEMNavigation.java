@@ -81,7 +81,7 @@ public class GEMNavigation implements NavigationView.OnNavigationItemSelectedLis
         Log.d(TAG, "Loaded user " + user);
         if (user.getUsername() != null) {
             TextView nameTextView = (TextView) headerView.findViewById(R.id.textViewName);
-            nameTextView.setText(user.getUsername());
+            nameTextView.setText(user.getLabel());
         }
 
         Log.d(TAG, "Loading profile picture from storage");
