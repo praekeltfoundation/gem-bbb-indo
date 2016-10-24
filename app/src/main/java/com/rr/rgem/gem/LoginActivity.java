@@ -1,7 +1,9 @@
 package com.rr.rgem.gem;
 
 import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
+import android.support.v4.content.res.ResourcesCompat;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -12,13 +14,11 @@ import com.rr.rgem.gem.image.ImageCallback;
 import com.rr.rgem.gem.image.ImageDownloader;
 import com.rr.rgem.gem.image.ImageStorage;
 import com.rr.rgem.gem.service.AuthService;
-import com.rr.rgem.gem.service.CMSService;
 import com.rr.rgem.gem.service.ErrorUtil;
 import com.rr.rgem.gem.service.WebServiceApplication;
 import com.rr.rgem.gem.service.WebServiceFactory;
 import com.rr.rgem.gem.service.errors.AuthError;
 import com.rr.rgem.gem.service.model.AuthLogin;
-import com.rr.rgem.gem.service.model.AuthToken;
 import com.rr.rgem.gem.service.model.AuthTokenResponse;
 import com.rr.rgem.gem.service.model.User;
 import com.rr.rgem.gem.views.Utils;
@@ -86,12 +86,7 @@ public class LoginActivity extends ApplicationActivity {
                     LoginActivity.this.persist.saveToken(auth.getToken());
                     LoginActivity.this.persist.saveUser(auth.getUser());
                     LoginActivity.this.persist.setLoggedIn(true);
-                    //LoginActivity.this.returnToActivity();
-                    if (auth.getUser().getProfile().hasProfileImage()) {
-                        retrieveProfileImage(auth.getUser());
-                    } else {
-                        completeLogin();
-                    }
+                    retrieveProfileImage(auth.getUser());
                 } else {
                     ErrorUtil.WebServiceError error = errorUtil.parseError(response, AuthError.class);
                     Log.d(LoginActivity.TAG, "API Errors: " + error);
@@ -118,7 +113,15 @@ public class LoginActivity extends ApplicationActivity {
 
             @Override
             public void onFailure() {
+                Log.d(TAG, "User has no profile image.");
+                BitmapDrawable drawable = (BitmapDrawable) ResourcesCompat
+                        .getDrawable(getResources(), R.drawable.ic_launcher, null);
+                Bitmap image = drawable.getBitmap();
 
+                ImageStorage storage = new ImageStorage(LoginActivity.this, "imageDir");
+                storage.saveImage("profile.jpg", image);
+
+                completeLogin();
             }
         });
     }

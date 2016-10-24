@@ -74,6 +74,11 @@ public class ImageStorage {
         }
     }
 
+    public void deleteFile(String filename) {
+        File file = new File(filename);
+        file.delete();
+    }
+
     protected static String fileId(String filepath) {
         return filepath.replace('/', '-');
     }
