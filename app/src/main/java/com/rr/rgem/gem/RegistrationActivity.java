@@ -16,6 +16,7 @@ import com.rr.rgem.gem.service.errors.AuthError;
 import com.rr.rgem.gem.service.errors.RegistrationError;
 import com.rr.rgem.gem.service.model.AuthLogin;
 import com.rr.rgem.gem.service.model.AuthToken;
+import com.rr.rgem.gem.service.model.AuthTokenResponse;
 import com.rr.rgem.gem.service.model.Profile;
 import com.rr.rgem.gem.service.model.RegistrationResponse;
 import com.rr.rgem.gem.service.model.User;
@@ -137,13 +138,13 @@ public class RegistrationActivity extends ApplicationActivity {
         final Persisted persisted = new Persisted(this);
         final AuthLogin login = AuthLogin.fromUser(user);
 
-        authService.createToken(login).enqueue(new Callback<AuthToken>() {
+        authService.createToken(login).enqueue(new Callback<AuthTokenResponse>() {
             @Override
-            public void onResponse(Call<AuthToken> call, Response<AuthToken> response) {
+            public void onResponse(Call<AuthTokenResponse> call, Response<AuthTokenResponse> response) {
                 Log.d(RegistrationActivity.TAG, "Token Status code " + response.code());
                 if (response.isSuccessful()) {
                     Log.d(RegistrationActivity.TAG, "Token success");
-                    persisted.saveToken(response.body());
+                    persisted.saveToken(response.body().getToken());
                     persisted.setLoggedIn(true);
                     RegistrationActivity.this.startNextActivity();
                 } else {
@@ -154,7 +155,7 @@ public class RegistrationActivity extends ApplicationActivity {
             }
 
             @Override
-            public void onFailure(Call<AuthToken> call, Throwable t) {
+            public void onFailure(Call<AuthTokenResponse> call, Throwable t) {
                 Log.e(RegistrationActivity.TAG, "Token exception", t);
             }
         });

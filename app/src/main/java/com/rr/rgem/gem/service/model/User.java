@@ -7,6 +7,8 @@ import com.google.gson.annotations.SerializedName;
  */
 public class User {
 
+    int id;
+
     String username;
 
     String password;
@@ -20,6 +22,14 @@ public class User {
     String email;
 
     Profile profile;
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public String getUsername() {
         return username;

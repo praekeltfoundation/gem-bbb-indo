@@ -155,7 +155,7 @@ public class TipArchiveActivity extends ApplicationActivity {
 
             webFactory = ((WebServiceApplication) activity.getApplication()).getWebServiceFactory();
             OkHttpClient client = webFactory.getClient();
-            imageDownloader = new ImageDownloader(client);
+            imageDownloader = webFactory.createImageDownloader();
             imageStorage = new ImageStorage(activity, TIP_IMAGE_DIR);
         }
 

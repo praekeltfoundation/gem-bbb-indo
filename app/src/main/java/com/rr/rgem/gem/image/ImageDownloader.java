@@ -8,6 +8,8 @@ import android.util.Log;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.MalformedURLException;
+import java.net.URL;
 
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -23,20 +25,26 @@ public class ImageDownloader {
     private static final String TAG = "ImageDownloader";
 
     OkHttpClient client;
+    String baseUrl;
     Handler handler;
 
-    public ImageDownloader(OkHttpClient client) {
+    public ImageDownloader(String baseUrl, OkHttpClient client) {
         this.client = client;
+        this.baseUrl = baseUrl;
         handler = new Handler(Looper.getMainLooper());
     }
 
     public void retrieveImage(final String url, final ImageCallback callback) {
-        retrieveImage(url, false, callback);
-    }
+        URL completeUrl;
+        try {
+             completeUrl = new URL(new URL(baseUrl), url);
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+            return;
+        }
 
-    public void retrieveImage(final String url, boolean refresh, final ImageCallback callback) {
         Request request = new Request.Builder()
-                .url(url)
+                .url(completeUrl)
                 .build();
 
         client.newCall(request).enqueue(new Callback() {
@@ -75,5 +83,4 @@ public class ImageDownloader {
             }
         });
     }
-
 }

@@ -3,6 +3,7 @@ package com.rr.rgem.gem.service;
 import android.util.Log;
 
 import com.rr.rgem.gem.Persisted;
+import com.rr.rgem.gem.image.ImageDownloader;
 import com.rr.rgem.gem.service.model.AuthLogin;
 import com.rr.rgem.gem.service.model.AuthToken;
 
@@ -84,6 +85,10 @@ public class WebServiceFactory {
         return retrofitBuilder
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
+    }
+
+    public ImageDownloader createImageDownloader() {
+        return new ImageDownloader(baseUrl, getClient());
     }
 
     public OkHttpClient getClient() {

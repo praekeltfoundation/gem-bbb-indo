@@ -12,6 +12,7 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -24,14 +25,17 @@ import com.rr.rgem.gem.ChallengeActivity;
 import com.rr.rgem.gem.GoalActivity;
 import com.rr.rgem.gem.GoalsActivity;
 import com.rr.rgem.gem.LoginActivity;
+import com.rr.rgem.gem.Persisted;
 import com.rr.rgem.gem.R;
 import com.rr.rgem.gem.RegistrationActivity;
 import com.rr.rgem.gem.RegistrationCompleteActivity;
 import com.rr.rgem.gem.SavingsActivity;
 import com.rr.rgem.gem.TipArchiveActivity;
 import com.rr.rgem.gem.TipsActivity;
+import com.rr.rgem.gem.image.ImageStorage;
 import com.rr.rgem.gem.models.Challenge;
 import com.rr.rgem.gem.models.Tips;
+import com.rr.rgem.gem.service.model.User;
 import com.rr.rgem.gem.views.Utils;
 
 import java.io.File;
@@ -42,8 +46,14 @@ import java.io.FileNotFoundException;
  * Created by chris on 9/12/2016.
  */
 public class GEMNavigation implements NavigationView.OnNavigationItemSelectedListener {
+
+    private static final String TAG = "GEMNavigation";
+    private static final String IMAGE_DIR = "imageDir";
+    private static final String PROFILE_IMAGE_FILE = "profile.jpg";
+
     private final AppCompatActivity container;
     Toolbar toolbar;
+
     public GEMNavigation(AppCompatActivity container){
         this.container = container;
         Toolbar toolbar = (Toolbar) container.findViewById(R.id.toolbar);
@@ -64,24 +74,26 @@ public class GEMNavigation implements NavigationView.OnNavigationItemSelectedLis
         navigationView_two.setNavigationItemSelectedListener(this);
         container.getSupportActionBar().setDisplayShowTitleEnabled(false);
 
-        /*
-        ImageView profilePicture = (ImageView) toolbar.findViewById(R.id.imageView);
-        File profile = Utils.getFileFromName("profile.jpg", container.getBaseContext());
-        if (Utils.fileExists(profile))
-        {
-            try {
-                Bitmap photo = BitmapFactory.decodeStream(new FileInputStream(profile));
-                profilePicture.setImageBitmap(photo);
-            }
-            catch (FileNotFoundException e)
-            {
-                e.printStackTrace();
-            }
+        // Special header method required, because NavigationView is a RecyclerView
+        View headerView = navigationView.getHeaderView(0);
+        Persisted persisted = new Persisted(container);
+        User user = persisted.loadUser();
+        Log.d(TAG, "Loaded user " + user);
+        if (user.getUsername() != null) {
+            TextView nameTextView = (TextView) headerView.findViewById(R.id.textViewName);
+            nameTextView.setText(user.getUsername());
         }
-        */
 
+        Log.d(TAG, "Loading profile picture from storage");
+        ImageView profileImageView = (ImageView) headerView.findViewById(R.id.imageProfile);
+        ImageStorage imageStorage = new ImageStorage(container.getApplicationContext(), IMAGE_DIR);
+        Bitmap profileImage = imageStorage.loadImage(PROFILE_IMAGE_FILE);
+        if (profileImage != null) {
+            profileImageView.setImageBitmap(profileImage);
+        }
     }
-   public View addLayout(int id){
+
+    public View addLayout(int id){
         RelativeLayout inner = (RelativeLayout)container.findViewById(R.id.content_main);
         if(inner==null){
             Utils.toast(container,"the main content view could not be found");
@@ -92,6 +104,7 @@ public class GEMNavigation implements NavigationView.OnNavigationItemSelectedLis
         inner.addView(layout);
         return  layout;
     }
+
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
