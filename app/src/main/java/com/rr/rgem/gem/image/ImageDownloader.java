@@ -11,6 +11,7 @@ import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
 
+import okhttp3.CacheControl;
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.OkHttpClient;
@@ -45,6 +46,7 @@ public class ImageDownloader {
 
         Request request = new Request.Builder()
                 .url(completeUrl)
+                .cacheControl(CacheControl.FORCE_NETWORK)
                 .build();
 
         client.newCall(request).enqueue(new Callback() {

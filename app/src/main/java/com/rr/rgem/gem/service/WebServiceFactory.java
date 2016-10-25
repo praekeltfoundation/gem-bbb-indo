@@ -2,14 +2,13 @@ package com.rr.rgem.gem.service;
 
 import android.util.Log;
 
-import com.rr.rgem.gem.Persisted;
 import com.rr.rgem.gem.image.ImageDownloader;
-import com.rr.rgem.gem.service.model.AuthLogin;
 import com.rr.rgem.gem.service.model.AuthToken;
 
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.concurrent.TimeUnit;
 
 import okhttp3.Authenticator;
 import okhttp3.Interceptor;
@@ -24,6 +23,8 @@ import retrofit2.converter.gson.GsonConverterFactory;
  * Created by Wimpie Victor on 2016/10/14.
  */
 public class WebServiceFactory {
+
+    private static final String TAG = "WebServiceFactory";
 
     // Builders are stored to leverage shared cache and thread pools between http clients.
     private final String baseUrl;
@@ -43,6 +44,11 @@ public class WebServiceFactory {
      */
     OkHttpClient.Builder createHttpClientBuilder(boolean shouldAuthenticate) {
         OkHttpClient.Builder builder = new OkHttpClient.Builder();
+
+        builder.connectTimeout(30, TimeUnit.SECONDS);
+        builder.readTimeout(30, TimeUnit.SECONDS);
+        builder.writeTimeout(30, TimeUnit.SECONDS);
+
         if (shouldAuthenticate) {
             AuthService authService = createAuthService();
             builder.authenticator(new TokenAuthenticator(authService));
