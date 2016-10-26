@@ -3,9 +3,12 @@ package com.rr.rgem.gem;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+
+import com.rr.rgem.gem.views.Utils;
 
 /**
  * Created by Wimpie Victor on 2016/10/26.
@@ -32,6 +35,11 @@ public class SettingsActivity extends AppCompatActivity {
 
                 String prevUrl = persisted.loadUrl();
                 String newUrl = editViewUrl.getText().toString();
+
+                if (!Patterns.WEB_URL.matcher(newUrl).matches()) {
+                    Utils.toast(SettingsActivity.this, "URL is not valid");
+                    return;
+                }
 
                 persisted.saveUrl(newUrl);
 
