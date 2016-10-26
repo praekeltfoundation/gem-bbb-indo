@@ -18,8 +18,7 @@ public class GEM extends android.app.Application implements WebServiceApplicatio
     @Override
     public void onCreate() {
         super.onCreate();
-        Persisted persisted = new Persisted(this);
-        webService = new WebServiceFactory(persisted.loadUrl(), persisted);
+        setupWebServiceFactory();
         Log.d("Application", "Application onCreate");
     }
 
@@ -28,8 +27,17 @@ public class GEM extends android.app.Application implements WebServiceApplicatio
         Firebase.setAndroidContext(this);
     }
 
+    private void setupWebServiceFactory() {
+        Persisted persisted = new Persisted(this);
+        webService = new WebServiceFactory(persisted.loadUrl(), persisted);
+    }
+
     @Override
     public WebServiceFactory getWebServiceFactory() {
         return webService;
+    }
+
+    public void onUrlChanged() {
+        setupWebServiceFactory();
     }
 }

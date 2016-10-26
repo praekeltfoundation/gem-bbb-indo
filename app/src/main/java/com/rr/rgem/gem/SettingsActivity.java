@@ -38,8 +38,10 @@ public class SettingsActivity extends AppCompatActivity {
                 // Settings Changed
                 if (!prevUrl.equals(newUrl)) {
                     // Clear activity history stack
+                    ((GEM) getApplication()).onUrlChanged();
                     Intent intent = new Intent(SettingsActivity.this, MainActivity.class);
-                    intent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY | Intent.FLAG_ACTIVITY_NEW_TASK);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+                    startActivity(intent);
                     SettingsActivity.this.finish();
                 } else {
                     // Return to previous activity
