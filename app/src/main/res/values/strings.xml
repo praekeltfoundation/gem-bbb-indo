@@ -20,6 +20,7 @@
     <string name="login_progress">Logging in...</string>
     <string name="login_success">Login Successful</string>
     <string name="login_failed">Login Failed</string>
+    <string name="login_debug_url">Using %s</string>
     <string name="profile_image_progress">Retrieving profile image...</string>
     <string name="profile_image_success">Profile Image Successful</string>
     <string name="profile_image_failed">Profile Image Failed</string>

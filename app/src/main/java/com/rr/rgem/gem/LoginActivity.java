@@ -46,18 +46,20 @@ public class LoginActivity extends ApplicationActivity {
 
         handler = new Handler(getMainLooper());
 
-        // Setup ui
-        progressView = (TextView) findViewById(R.id.textViewProgress);
-        progressView.setText(getString(R.string.login_progress));
-        progressView.setVisibility(View.GONE);
-        setInputEnabled(true);
-
         // Setup REST services
         WebServiceFactory factory = ((WebServiceApplication) getApplication()).getWebServiceFactory();
         authService = factory.createAuthService();
         imageDownloader = factory.createImageDownloader();
         persist = new Persisted(this);
         errorUtil = new ErrorUtil(factory.createRetrofit());
+
+        // Setup ui
+        progressView = (TextView) findViewById(R.id.textViewProgress);
+        progressView.setText(getString(R.string.login_progress));
+        progressView.setVisibility(View.GONE);
+        ((TextView) findViewById(R.id.textViewDebugUrl))
+                .setText(String.format(getString(R.string.login_debug_url), factory.getBaseUrl()));
+        setInputEnabled(true);
 
         User user = persist.loadUser();
         if (user.getUsername() != null) {

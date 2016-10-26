@@ -7,6 +7,14 @@
     android:paddingTop="40dp">
 
     <TextView
+        android:text="@string/login_debug_url"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/textViewDebugUrl"
+        android:textAlignment="center"
+        android:paddingBottom="16dp" />
+
+    <TextView
         android:text="@string/mobile_number"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
