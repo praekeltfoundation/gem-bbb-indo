@@ -30,7 +30,7 @@ public class GEM extends android.app.Application implements WebServiceApplicatio
 
     private void setupWebServiceFactory() {
         Persisted persisted = new Persisted(this);
-        webService = new WebServiceFactory(persisted.loadUrl(), persisted);
+        webService = new WebServiceFactory(persisted.loadUrl(getString(R.string.default_service_url)), persisted);
     }
 
     @Override
