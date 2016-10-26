@@ -15,10 +15,10 @@
         android:paddingBottom="16dp" />
 
     <TextView
-        android:text="@string/mobile_number"
+        android:text="@string/username"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/textViewMobile"
+        android:id="@+id/textViewUsername"
         android:layout_gravity="center_horizontal" />
 
     <EditText
@@ -26,7 +26,7 @@
         android:layout_height="wrap_content"
         android:inputType="textPersonName"
         android:ems="10"
-        android:id="@+id/editTextMobile"
+        android:id="@+id/editTextUsername"
         android:layout_gravity="center_horizontal"/>
 
     <TextView

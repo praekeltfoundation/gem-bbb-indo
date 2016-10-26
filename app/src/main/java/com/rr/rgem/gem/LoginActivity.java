@@ -64,8 +64,8 @@ public class LoginActivity extends ApplicationActivity {
 
         User user = persist.loadUser();
         if (user.getUsername() != null) {
-            EditText editMobile = (EditText) findViewById(R.id.editTextMobile);
-            editMobile.setText(user.getUsername());
+            EditText editUsername = (EditText) findViewById(R.id.editTextUsername);
+            editUsername.setText(user.getUsername());
         }
 
         Button button = (Button) findViewById(R.id.buttonLogin);
@@ -74,12 +74,12 @@ public class LoginActivity extends ApplicationActivity {
             public void onClick(View v) {
                 Utils.toast(LoginActivity.this, "Login clicked");
 
-                TextView editMobile = (TextView) LoginActivity.this.findViewById(R.id.editTextMobile);
+                TextView editUsername = (TextView) LoginActivity.this.findViewById(R.id.editTextUsername);
                 TextView editPassword = (TextView) LoginActivity.this.findViewById(R.id.editTextPassword);
-                String mobile = editMobile.getText().toString();
+                String username = editUsername.getText().toString();
                 String password = editPassword.getText().toString();
 
-                if (!mobileValid(mobile) || !passwordValid(password)) {
+                if (!usernameValid(username) || !passwordValid(password)) {
                     return;
                 }
 
@@ -87,13 +87,13 @@ public class LoginActivity extends ApplicationActivity {
                 progressView.setVisibility(View.VISIBLE);
                 setInputEnabled(false);
 
-                retrieveToken(mobile, password);
+                retrieveToken(username, password);
             }
         });
     }
 
-    void retrieveToken(String mobile, String password) {
-        AuthLogin login = new AuthLogin(mobile, password);
+    void retrieveToken(String username, String password) {
+        AuthLogin login = new AuthLogin(username, password);
         authService.createToken(login).enqueue(new Callback<AuthTokenResponse>() {
             @Override
             public void onResponse(Call<AuthTokenResponse> call, Response<AuthTokenResponse> response) {
@@ -173,9 +173,9 @@ public class LoginActivity extends ApplicationActivity {
         }, 2000);
     }
 
-    boolean mobileValid(String mobile) {
-        if (mobile == null || mobile.isEmpty()) {
-            Utils.toast(this, "Mobile number is empty");
+    boolean usernameValid(String username) {
+        if (username == null || username.isEmpty()) {
+            Utils.toast(this, "Username is empty");
             return false;
         }
         return true;
@@ -190,11 +190,11 @@ public class LoginActivity extends ApplicationActivity {
     }
 
     void setInputEnabled(boolean enabled) {
-        View editMobile = findViewById(R.id.editTextMobile);
+        View editUsername = findViewById(R.id.editTextUsername);
         View editPassword = findViewById(R.id.editTextPassword);
         View buttonLogin = findViewById(R.id.buttonLogin);
 
-        editMobile.setEnabled(enabled);
+        editUsername.setEnabled(enabled);
         editPassword.setEnabled(enabled);
         buttonLogin.setEnabled(enabled);
     }
