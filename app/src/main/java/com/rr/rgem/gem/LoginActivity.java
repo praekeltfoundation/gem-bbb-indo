@@ -71,10 +71,6 @@ public class LoginActivity extends ApplicationActivity {
             public void onClick(View v) {
                 Utils.toast(LoginActivity.this, "Login clicked");
 
-                progressView.setText(R.string.login_progress);
-                progressView.setVisibility(View.VISIBLE);
-                setInputEnabled(false);
-
                 TextView editMobile = (TextView) LoginActivity.this.findViewById(R.id.editTextMobile);
                 TextView editPassword = (TextView) LoginActivity.this.findViewById(R.id.editTextPassword);
                 String mobile = editMobile.getText().toString();
@@ -83,6 +79,10 @@ public class LoginActivity extends ApplicationActivity {
                 if (!mobileValid(mobile) || !passwordValid(password)) {
                     return;
                 }
+
+                progressView.setText(R.string.login_progress);
+                progressView.setVisibility(View.VISIBLE);
+                setInputEnabled(false);
 
                 retrieveToken(mobile, password);
             }
