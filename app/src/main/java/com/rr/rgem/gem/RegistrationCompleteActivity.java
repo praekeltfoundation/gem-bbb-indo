@@ -67,5 +67,13 @@ public class RegistrationCompleteActivity extends ApplicationActivity {
                 RegistrationCompleteActivity.this.finish();
             }
         });
+        Button uploadButton = (Button) findViewById(R.id.buttonUpload);
+        uploadButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                File file = Utils.getFileFromName("imageDir", "profile.jpg", getApplicationContext());
+                RegistrationCompleteActivity.this.uploadImage(file);
+            }
+        });
     }
 }

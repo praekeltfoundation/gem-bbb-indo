@@ -5,28 +5,35 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.v4.view.ActionProvider;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.widget.ImageView;
 
 import com.rr.rgem.gem.controllers.Validation;
-import com.rr.rgem.gem.models.Goal;
+import com.rr.rgem.gem.service.FileUploader;
+import com.rr.rgem.gem.service.WebServiceApplication;
+import com.rr.rgem.gem.service.WebServiceFactory;
+import com.rr.rgem.gem.service.model.User;
 import com.rr.rgem.gem.views.Utils;
 
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.MalformedURLException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.List;
+
+import okhttp3.OkHttpClient;
 
 /**
  * Created by jacob on 2016/10/04.
  */
 
 public class ApplicationActivity extends AppCompatActivity {
+
+    private static final String TAG = "ApplicationActivity";
 
     public ImageView currentImage;
     public String currentImageName;
@@ -35,7 +42,9 @@ public class ApplicationActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
     }
 
+    @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        Log.wtf(TAG, "onActivityResult ; Result code: " + resultCode + " ; Request code: " + requestCode);
         super.onActivityResult(requestCode, resultCode, data);
 
         if (resultCode == RESULT_OK)
@@ -78,6 +87,44 @@ public class ApplicationActivity extends AppCompatActivity {
             }
 
             Utils.writeImageToFile(profilePicture, path);
+            uploadImage(path);
         }
+    }
+
+    protected void uploadImage(File file) {
+        Log.d(TAG, "Uploading Image");
+        System.out.println("Uploading Image");
+        Persisted persisted = new Persisted(this);
+        User user = persisted.loadUser();
+
+        if (!user.hasId()) {
+            Log.d(TAG, "User id not set");
+            return;
+        }
+
+        WebServiceFactory factory = ((WebServiceApplication) getApplication()).getWebServiceFactory();
+        OkHttpClient client = factory.getClient();
+        FileUploader uploader = new FileUploader(client);
+
+        String url;
+        String mediaType = "image/jpg";
+
+        try {
+            url = factory.joinUrl(String.format("/api/profile-image/%d/", user.getId()));
+        } catch (MalformedURLException e) {
+            return;
+        }
+
+        uploader.send(url, mediaType, file, new FileUploader.UploadCallback() {
+            @Override
+            public void onComplete() {
+                Log.d(TAG, "File Uploaded");
+            }
+
+            @Override
+            public void onFailure() {
+                Log.w(TAG, "File Upload Failed");
+            }
+        });
     }
 }

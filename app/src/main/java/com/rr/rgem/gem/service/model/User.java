@@ -7,7 +7,9 @@ import com.google.gson.annotations.SerializedName;
  */
 public class User {
 
-    int id;
+    private static final int NO_ID = -1;
+
+    int id = NO_ID;
 
     String username;
 
@@ -29,6 +31,10 @@ public class User {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public boolean hasId() {
+        return id != NO_ID;
     }
 
     public String getUsername() {
