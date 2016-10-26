@@ -35,6 +35,7 @@
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:inputType="textPersonName"
         android:id="@+id/editTextName" />
 
     <TextView
@@ -48,6 +49,7 @@
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:inputType="text"
         android:id="@+id/editTextMobile" />
 
     <TextView
@@ -62,7 +64,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:inputType="textPassword"
-        android:ems="10"
         android:id="@+id/editTextPassword" />
 
     <TextView
