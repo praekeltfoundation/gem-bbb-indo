@@ -32,4 +32,7 @@
     <string name="no_tips">No Tips to show...</string>
     <string name="loading">Loading...</string>
 
+    <!-- Settings -->
+    <string name="server_url">Server url</string>
+
 </resources>
