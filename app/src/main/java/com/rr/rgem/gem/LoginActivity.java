@@ -1,5 +1,6 @@
 package com.rr.rgem.gem;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
@@ -161,7 +162,15 @@ public class LoginActivity extends ApplicationActivity {
 
     void completeLogin() {
         persist.setLoggedIn(true);
-        returnToActivity();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent);
+                finish();
+            }
+        }, 2000);
     }
 
     boolean mobileValid(String mobile) {
@@ -188,14 +197,5 @@ public class LoginActivity extends ApplicationActivity {
         editMobile.setEnabled(enabled);
         editPassword.setEnabled(enabled);
         buttonLogin.setEnabled(enabled);
-    }
-
-    void returnToActivity() {
-        handler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                LoginActivity.this.finish();
-            }
-        }, 2000);
     }
 }
