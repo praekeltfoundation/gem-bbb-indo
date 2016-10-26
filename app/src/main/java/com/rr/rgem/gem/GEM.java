@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.util.Log;
 
 import com.firebase.client.Firebase;
+import com.rr.rgem.gem.image.ImageStorage;
 import com.rr.rgem.gem.service.WebServiceApplication;
 import com.rr.rgem.gem.service.WebServiceFactory;
 
@@ -38,6 +39,14 @@ public class GEM extends android.app.Application implements WebServiceApplicatio
     }
 
     public void onUrlChanged() {
+        Persisted persisted = new Persisted(this);
+        persisted.clearUser();
+        persisted.clearToken();
+        persisted.setLoggedIn(false);
+
+        ImageStorage storage = new ImageStorage(this, "imageDir");
+        storage.clearDirectory();
+
         setupWebServiceFactory();
     }
 }
