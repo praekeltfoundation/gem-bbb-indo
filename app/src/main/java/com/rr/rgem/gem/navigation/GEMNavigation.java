@@ -80,7 +80,8 @@ public class GEMNavigation implements NavigationView.OnNavigationItemSelectedLis
         Persisted persisted = new Persisted(container);
         User user = persisted.loadUser();
         Log.d(TAG, "Loaded user " + user);
-        if (user.getUsername() != null) {
+        if (user.getLabel() != null) {
+            Log.d(TAG, "Setting label");
             TextView nameTextView = (TextView) headerView.findViewById(R.id.textViewName);
             nameTextView.setText(user.getLabel());
         }

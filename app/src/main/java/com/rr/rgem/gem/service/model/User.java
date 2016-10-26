@@ -86,8 +86,8 @@ public class User {
     }
 
     public String getLabel() {
-        if (firstName != null) {
-            if (lastName != null) {
+        if (firstName != null && !firstName.isEmpty()) {
+            if (lastName != null && !lastName.isEmpty()) {
                 return firstName + " " + lastName;
             } else {
                 return firstName;
@@ -99,6 +99,6 @@ public class User {
 
     @Override
     public String toString() {
-        return String.format("User {%s <%s>}", username, email);
+        return String.format("User {%s <%s>}", getLabel(), email);
     }
 }
