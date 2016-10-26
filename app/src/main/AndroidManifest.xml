@@ -124,7 +124,8 @@
         <receiver android:name=".Notification_receiver_TP" />
 
         <activity android:name=".TipArticleActivity" />
-        <activity android:name=".LoginActivity"></activity>
+        <activity android:name=".LoginActivity" />
+        <activity android:name=".SettingsActivity"></activity>
     </application>
 
 </manifest>
