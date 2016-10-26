@@ -18,7 +18,8 @@ public class GEM extends android.app.Application implements WebServiceApplicatio
     @Override
     public void onCreate() {
         super.onCreate();
-        webService = new WebServiceFactory("http://10.0.2.2:8000", new Persisted(this));
+        Persisted persisted = new Persisted(this);
+        webService = new WebServiceFactory(persisted.loadUrl(), persisted);
         Log.d("Application", "Application onCreate");
     }
 

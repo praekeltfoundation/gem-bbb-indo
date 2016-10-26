@@ -6,17 +6,19 @@ import android.util.Log;
 
 import com.google.gson.Gson;
 import com.rr.rgem.gem.service.AuthStore;
+import com.rr.rgem.gem.service.UrlStore;
 import com.rr.rgem.gem.service.model.AuthToken;
 import com.rr.rgem.gem.service.model.User;
 
 /**
  * Created by chris on 9/8/2016.
  */
-public class Persisted implements AuthStore {
+public class Persisted implements AuthStore, UrlStore {
 
     public final static String APP_PREFS = "bimbingbung_prefs_";
     public final static String PREF_USER = "user";
     public final static String PREF_TOKEN = "token";
+    public final static String PREF_URL = "url";
     public final static String TAG = "Persisted";
 
     final SharedPreferences settings;
@@ -120,6 +122,18 @@ public class Persisted implements AuthStore {
             //Toast.makeText(this,"The user has not registered",300);
         }
         return  loggedIn;
+    }
+
+    @Override
+    public String loadUrl() {
+        return settings.getString(PREF_URL, "http://10.0.2.2:8000");
+    }
+
+    @Override
+    public void saveUrl(String url) {
+        SharedPreferences.Editor editor = settings.edit();
+        editor.putString(PREF_URL, url);
+        editor.apply();
     }
 }
 
