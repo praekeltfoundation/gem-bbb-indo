@@ -50,10 +50,11 @@ public class ApplicationActivity extends AppCompatActivity {
         if (resultCode == RESULT_OK)
         {
             if (Validation.isEmpty(currentImageName)) {
-                Date timeStamp = Calendar.getInstance().getTime();
-                SimpleDateFormat formatter = new SimpleDateFormat("yyyy_MM_dd_HH_mm_ss_SSS");
-                currentImageName =  formatter.format(timeStamp);
-                currentImageName += ".jpg";
+                //Date timeStamp = Calendar.getInstance().getTime();
+                //SimpleDateFormat formatter = new SimpleDateFormat("yyyy_MM_dd_HH_mm_ss_SSS");
+                //currentImageName =  formatter.format(timeStamp);
+                //currentImageName += ".jpg";
+                currentImageName = "profile.jpg";
             }
 
             Bundle extras = data.getExtras();
@@ -92,13 +93,12 @@ public class ApplicationActivity extends AppCompatActivity {
     }
 
     protected void uploadImage(File file) {
-        Log.d(TAG, "Uploading Image");
-        System.out.println("Uploading Image");
+        Utils.toast(this, "Uploading Image");
         Persisted persisted = new Persisted(this);
         User user = persisted.loadUser();
 
         if (!user.hasId()) {
-            Log.d(TAG, "User id not set");
+            Utils.toast(this, "User id not set");
             return;
         }
 
@@ -118,12 +118,12 @@ public class ApplicationActivity extends AppCompatActivity {
         uploader.send(url, mediaType, file, new FileUploader.UploadCallback() {
             @Override
             public void onComplete() {
-                Log.d(TAG, "File Uploaded");
+                Utils.toast(ApplicationActivity.this, "File Upload Success");
             }
 
             @Override
             public void onFailure() {
-                Log.w(TAG, "File Upload Failed");
+                Utils.toast(ApplicationActivity.this, "File Upload Failed");
             }
         });
     }

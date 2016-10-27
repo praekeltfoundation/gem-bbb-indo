@@ -61,6 +61,7 @@ public class RegistrationCompleteActivity extends ApplicationActivity {
         buttonDeregister.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 Persisted persisted = new Persisted(getSharedPreferences(Persisted.APP_PREFS,0));
+                persisted.setRegistered(false);
                 logout();
                 clearHistoryAndStart();
             }

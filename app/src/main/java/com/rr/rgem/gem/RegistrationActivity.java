@@ -55,8 +55,8 @@ public class RegistrationActivity extends ApplicationActivity {
         authService = factory.createAuthService();
         errorUtil = new ErrorUtil(factory.createRetrofit());
 
-        final Button button = (Button) findViewById(R.id.buttonRegister);
-        button.setOnClickListener(new View.OnClickListener() {
+        final Button buttonRegister = (Button) findViewById(R.id.buttonRegister);
+        buttonRegister.setOnClickListener(new View.OnClickListener() {
 
             private boolean isValidMobile(CharSequence phone){
                 return android.util.Patterns.PHONE.matcher(phone).matches();
@@ -90,6 +90,8 @@ public class RegistrationActivity extends ApplicationActivity {
 
                 //TODO: check for log in activity
 
+                Utils.toast(RegistrationActivity.this, "Registering...");
+
                 final User user = new User();
                 user.setUsername(editName.getText().toString());
                 user.setPassword(editPassword.getText().toString());
@@ -105,11 +107,13 @@ public class RegistrationActivity extends ApplicationActivity {
                     @Override
                     public void onResponse(Call<RegistrationResponse> call, Response<RegistrationResponse> response) {
                         if (response.isSuccessful()) {
-                            Log.d(RegistrationActivity.TAG, "Registration successful");
                             Utils.toast(getApplicationContext(), getString(R.string.congratulations_registered));
+                            RegistrationResponse regResponse = response.body();
                             persisted.setRegistered(true);
                             // TODO: Should password be cleared before save?
+                            user.setId(regResponse.getUserId());
                             persisted.saveUser(user);
+                            Log.wtf(RegistrationActivity.TAG, "Registration successful " + user);
                             retrieveToken(user);
                         } else {
                             RegistrationError error = RegistrationActivity.this.errorUtil
