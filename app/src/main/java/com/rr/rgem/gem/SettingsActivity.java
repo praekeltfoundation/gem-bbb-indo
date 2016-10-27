@@ -16,7 +16,7 @@ import com.rr.rgem.gem.views.Utils;
 /**
  * Created by Wimpie Victor on 2016/10/26.
  */
-public class SettingsActivity extends AppCompatActivity {
+public class SettingsActivity extends ApplicationActivity {
 
     Persisted persisted;
 
@@ -81,6 +81,7 @@ public class SettingsActivity extends AppCompatActivity {
     }
 
     void clearHistoryAndStart() {
+        // TODO: Refactor into ApplicationActivity
         Intent intent = new Intent(SettingsActivity.this, MainActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
