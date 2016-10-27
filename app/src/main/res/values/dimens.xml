@@ -9,4 +9,7 @@
     
     <!-- Text Sizes -->
     <dimen name="text_header">24dp</dimen>
+
+    <dimen name="activity_screen_horizontal_padding">40dp</dimen>
+    <dimen name="activity_screen_verticle_padding">30dp</dimen>
 </resources>
