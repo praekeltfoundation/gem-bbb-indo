@@ -35,6 +35,8 @@
     <string name="loading">Loading...</string>
 
     <!-- Settings -->
+    <string name="settings">Settings</string>
+    <string name="signout">Sign Out</string>
     <string name="server_url">Server url</string>
 
 </resources>
