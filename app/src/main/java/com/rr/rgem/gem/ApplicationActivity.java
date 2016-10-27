@@ -10,6 +10,7 @@ import android.util.Log;
 import android.widget.ImageView;
 
 import com.rr.rgem.gem.controllers.Validation;
+import com.rr.rgem.gem.image.ImageStorage;
 import com.rr.rgem.gem.service.FileUploader;
 import com.rr.rgem.gem.service.WebServiceApplication;
 import com.rr.rgem.gem.service.WebServiceFactory;
@@ -34,6 +35,8 @@ import okhttp3.OkHttpClient;
 public class ApplicationActivity extends AppCompatActivity {
 
     private static final String TAG = "ApplicationActivity";
+    private static final int MAX_IMAGE_WIDTH = 640;
+    private static final int MAX_IMAGE_HEIGHT = 640;
 
     public ImageView currentImage;
     public String currentImageName;
@@ -78,6 +81,9 @@ public class ApplicationActivity extends AppCompatActivity {
                     }
                     if (inputStream != null) try {
                         profilePicture = BitmapFactory.decodeStream(inputStream);
+                        if (profilePicture != null) {
+                            profilePicture = ImageStorage.scaleDownBitmap(profilePicture, MAX_IMAGE_WIDTH, MAX_IMAGE_HEIGHT);
+                        }
                         inputStream.close();
                     } catch (IOException e) {
                         e.printStackTrace();
