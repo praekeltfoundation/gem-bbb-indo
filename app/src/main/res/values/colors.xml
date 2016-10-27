@@ -6,6 +6,8 @@
     <color name="colorMenuText">#547cff</color>
     <color name="colorCoachMessage">#ffffff</color>
 
-    <!-- <color name="colorBackground">#efefef</color> -->
-    <color name="colorBackground">#00aacc</color>
+    <color name="colorBodyText">#000000</color>
+    <color name="colorHeaderText">#000000</color>
+    <color name="colorHeader4Text">#cccccc</color>
+    <color name="colorBackground">#efefef</color>
 </resources>
