@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.Button;
 
 import com.pkmmte.view.CircularImageView;
+import com.rr.rgem.gem.image.ImageStorage;
 import com.rr.rgem.gem.views.ImageUploadDialog;
 import com.rr.rgem.gem.views.Utils;
 
@@ -60,11 +61,8 @@ public class RegistrationCompleteActivity extends ApplicationActivity {
         buttonDeregister.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 Persisted persisted = new Persisted(getSharedPreferences(Persisted.APP_PREFS,0));
-                persisted.setRegistered(false);
-                persisted.clearToken();
-                persisted.clearUser();
-                persisted.setLoggedIn(false);
-                RegistrationCompleteActivity.this.finish();
+                logout();
+                clearHistoryAndStart();
             }
         });
         Button uploadButton = (Button) findViewById(R.id.buttonUpload);
@@ -75,5 +73,22 @@ public class RegistrationCompleteActivity extends ApplicationActivity {
                 RegistrationCompleteActivity.this.uploadImage(file);
             }
         });
+    }
+
+    void logout() {
+        Persisted persisted = new Persisted(getApplicationContext());
+        persisted.clearUser();
+        persisted.clearToken();
+        persisted.setLoggedIn(false);
+
+        ImageStorage storage = new ImageStorage(getApplicationContext(), "imageDir");
+        storage.clearDirectory();
+    }
+
+    void clearHistoryAndStart() {
+        Intent intent = new Intent(RegistrationCompleteActivity.this, MainActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
+        RegistrationCompleteActivity.this.finish();
     }
 }
