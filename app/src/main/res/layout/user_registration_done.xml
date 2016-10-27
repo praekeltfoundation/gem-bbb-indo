@@ -15,7 +15,7 @@
         android:text="You're registered"
         android:id="@+id/textViewHeading"
         android:layout_gravity="center_horizontal"
-        android:layout_marginTop="40dp" />
+        android:layout_marginTop="20dp" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -34,6 +34,7 @@
         android:src="@drawable/ic_launcher"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="40dp"
+        android:scaleType="centerCrop"
         app:border="true"
         app:border_width="1dp"
         app:border_color="@android:color/black"
