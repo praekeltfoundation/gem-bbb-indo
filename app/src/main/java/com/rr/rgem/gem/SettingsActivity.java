@@ -25,7 +25,7 @@ public class SettingsActivity extends AppCompatActivity {
         persisted = new Persisted(getApplicationContext());
 
         EditText editViewUrl = (EditText) findViewById(R.id.editTextUrl);
-        editViewUrl.setText(persisted.loadUrl());
+        editViewUrl.setText(persisted.loadUrl(getString(R.string.default_service_url)));
 
         Button buttonSave = (Button) findViewById(R.id.buttonSave);
         buttonSave.setOnClickListener(new View.OnClickListener() {

@@ -5,5 +5,6 @@ package com.rr.rgem.gem.service;
  */
 public interface UrlStore {
     String loadUrl();
+    String loadUrl(String defaultUrl);
     void saveUrl(String url);
 }

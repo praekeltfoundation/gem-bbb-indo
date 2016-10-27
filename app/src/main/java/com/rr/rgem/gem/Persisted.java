@@ -126,7 +126,12 @@ public class Persisted implements AuthStore, UrlStore {
 
     @Override
     public String loadUrl() {
-        return settings.getString(PREF_URL, "http://10.0.2.2:8000");
+        return loadUrl("");
+    }
+
+    @Override
+    public String loadUrl(String defaultUrl) {
+        return settings.getString(PREF_URL, defaultUrl);
     }
 
     @Override
