@@ -22,11 +22,12 @@
     <string name="registration_complete_heading">You are registered!</string>
     <string name="registration_complete_subheading">Upload profile photo</string>
 
-
-    <string name="username">Username</string>
+    <!-- Login -->
+    <string name="username">Name</string>
+    <string name="username_hint">ex: Aida</string>
     <string name="mobile_number">Mobile Number</string>
     <string name="password">Password</string>
-    <string name="login">Login</string>
+    <string name="login">Log In</string>
     <string name="login_progress">Logging in...</string>
     <string name="login_success">Login Successful</string>
     <string name="login_failed">Login Failed</string>

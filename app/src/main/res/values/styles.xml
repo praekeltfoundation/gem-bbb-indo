@@ -18,6 +18,7 @@
         <item name="android:buttonStyle">@style/AppTheme.Widget.Button</item>
 
         <item name="textAppearanceHeading">@style/AppTheme.TextAppearance.Heading</item>
+        <item name="textAppearanceHint">@style/AppTheme.TextAppearance.Hint</item>
         <item name="circularImageViewStyle">@style/AppTheme.CircularImageView</item>
     </style>
 
@@ -36,6 +37,10 @@
         <item name="android:textColor">@color/colorHeaderText</item>
         <item name="android:textSize">@dimen/text_header</item>
         <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="AppTheme.TextAppearance.Hint" parent="TextAppearance.AppCompat.Small">
+        <item name="android:textSize">@dimen/text_hint</item>
     </style>
 
     <style name="AppTheme.CircularImageView">
