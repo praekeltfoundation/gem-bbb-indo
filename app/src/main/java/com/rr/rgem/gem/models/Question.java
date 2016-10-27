@@ -15,7 +15,7 @@ public class Question {
     private String text;
     private boolean completed = false;
 
-    private List<Answer> answers = new ArrayList<Answer>();
+    private List<Answer> options = new ArrayList<Answer>();
 
     public Question() {
     }
@@ -25,11 +25,11 @@ public class Question {
     }
 
     public List<Answer> getAnswers() {
-        return answers;
+        return options;
     }
 
     public void setAnswers(List<Answer>  answers) {
-        this.answers = answers;
+        this.options = answers;
     }
 
     public String getText() {
