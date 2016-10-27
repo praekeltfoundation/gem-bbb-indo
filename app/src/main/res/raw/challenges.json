@@ -1,114 +1,24 @@
-[
-
+{
+  "id": 1,
+  "name": "Test Challenge",
+  "type": 1,
+  "activation_date": "2016-10-27T15:20:48Z",
+  "deactivation_date": "2016-10-27T18:00:00Z",
+  "questions": [
+    {
+      "id": 1,
+      "text": "Can you touch your toes?",
+      "options": [
         {
-          "name": "Q1",
-          "text":"this is the first(1) question press yes if you wish to continue or no if not",
-          "required":"false",
-          "defaultValue":"yes",
-          "type":"choice",
-          "completed":"no",
-          "answers":[
-              { "name": "yes", "value": "yes", "text":"Yes", "next":"Q1.1"},
-              { "name": "no", "value": "no", "text":"No", "next": "validationFailNoContinue"}
-          ]
-
+          "id": 1,
+          "text": "Yes"
         },
         {
-          "name": "Q1.1",
-          "text":"this is first question part 2 (dob)",
-          "type":"date",
-          "completed":"no",
-          "error": "validationFailDate",
-          "answers":[
-            {"name":"dateOfBirth","next":"Q2"}
-          ]
-        },
-        {
-          "name": "Q2",
-          "text":"this is the second question please enter your name",
-          "completed":"no",
-          "type":"initials",
-          "error": "validationFailName",
-          "answers":[
-              {"name":"userName","next":"Q3"}
-          ]
-
-        },
-        {
-          "name": "Q3",
-          "text":"this is the third question please enter your initials and surname ",
-          "completed":"no",
-          "type":"initials",
-          "error": "validationFailInitials",
-          "answers":[
-            {"name":"initials","next":"Q4"}
-          ]
-
-        },
-        {
-          "name": "Q4",
-          "text":"this is the fourth question please provide your title ",
-          "completed":"no",
-          "type":"choice",
-          "answers":[
-            {"name":"Mr","value":"Mr.", "text":"Mr.","next":"Q5"},
-            { "name": "Miss", "value": "Miss.", "text":"Miss", "next":"Q5"},
-            { "name": "Mrs", "value": "Mrs.", "text":"Mrs", "next":"Q5"}
-          ]
-
-        },
-        {
-          "name": "Q5",
-          "text":"this is the fifth question please enter yes if you see red else no",
-          "completed":"no",
-          "type":"choice",
-          //"error": "validationFailInitials",
-          "answers":[
-            { "name": "yes", "value": "yes", "text":"Yes", "next":"Q6"},
-            { "name": "no", "value": "no", "text":"No", "next":"Q6"}
-          ]
-
-        },
-        {
-          "name": "Q6",
-          "text":"this is the sixth question please add your birth date",
-          "type":"date",
-          "completed":"no",
-          "error": "validationFailDate",
-          "answers":[
-            {"name":"birthDate","next":"infoChallnegeEnd"}
-          ]
-        },
-
-  {
-    "name": "validationFailDate",
-    "type": "info",
-    "text": "Sorry, I don't understand that and haven't been taught how to handle it yet.",
-    "next": "Q6"
-  },
-  {
-    "name": "validationFailInitials",
-    "type": "info",
-    "text": "Sorry, I don't understand that and haven't been taught how to handle it yet.",
-    "next": "Q3"
-  },
-  {
-    "name": "validationFailName",
-    "type": "info",
-    "text": "Sorry, I don't understand that and haven't been taught how to handle it yet.",
-    "next": "Q2"
-  },
-  {
-  "name": "validationFailNoContinue",
-  "type": "info",
-  "text": "Hope you do challenges soon.",
-  "next": "infoChallnegeEnd"
-},
-  {
-    "name": "infoChallnegeEnd",
-    "type": "info",
-    "text": "Thank you."
-  }
-
-]
+          "id": 2,
+          "text": "No"
+        }
+      ]
+    }
+  ]
+}
 
