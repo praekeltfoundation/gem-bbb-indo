@@ -17,6 +17,20 @@ public class ParticipantAnswer {
     @SerializedName("date_answered")
     Date dateAnswered = new Date();
 
+    public ParticipantAnswer(Question question, Answer selectedOption)
+    {
+        this.question = question.getId();
+        this.selectedOption = selectedOption.getId();
+        this.dateAnswered = new Date();
+    }
+
+    public ParticipantAnswer(long question, long selectedOption)
+    {
+        this.question = question;
+        this.selectedOption = selectedOption;
+        this.dateAnswered = new Date();
+    }
+
     public long getQuestion() {
         return question;
     }
