@@ -87,8 +87,7 @@ public class ChallengeActivity extends ApplicationActivity{
                         handler.postDelayed(new Runnable() {
                             @Override
                             public void run() {
-                                Intent intent = new Intent(ChallengeActivity.this,MainActivity.class);
-                                startActivity(intent);
+                                ChallengeActivity.this.finish();
                             }
                         }, 2000); // Delay in milliseconds
                     }
