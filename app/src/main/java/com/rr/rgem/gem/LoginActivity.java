@@ -5,11 +5,14 @@ import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.design.widget.TextInputEditText;
+import android.support.design.widget.TextInputLayout;
 import android.support.v4.content.res.ResourcesCompat;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.TextView;
 
 import com.rr.rgem.gem.image.ImageCallback;
@@ -40,10 +43,25 @@ public class LoginActivity extends ApplicationActivity {
     Handler handler;
     TextView progressView;
 
+    TextInputEditText editUsername;
+    TextInputLayout textViewUsername;
+    TextInputEditText editPassword;
+    TextInputLayout textViewPassword;
+    Button buttonLogin;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.user_login);
+
+        editUsername = (TextInputEditText) findViewById(R.id.editTextUsername);
+        textViewUsername = (TextInputLayout) findViewById(R.id.textViewUsername);
+        editPassword = (TextInputEditText) findViewById(R.id.editTextPassword);
+        textViewPassword = (TextInputLayout) findViewById(R.id.textViewPassword);
+        buttonLogin = (Button) findViewById(R.id.buttonLogin);
+
+        editUsername.addTextChangedListener(new ErrorResetWatcher(textViewUsername));
+        editPassword.addTextChangedListener(new ErrorResetWatcher(textViewPassword));
 
         handler = new Handler(getMainLooper());
 
@@ -64,7 +82,6 @@ public class LoginActivity extends ApplicationActivity {
 
         User user = persist.loadUser();
         if (user.getUsername() != null) {
-            EditText editUsername = (EditText) findViewById(R.id.editTextUsername);
             editUsername.setText(user.getUsername());
         }
 
@@ -74,8 +91,6 @@ public class LoginActivity extends ApplicationActivity {
             public void onClick(View v) {
                 Utils.toast(LoginActivity.this, "Login clicked");
 
-                TextView editUsername = (TextView) LoginActivity.this.findViewById(R.id.editTextUsername);
-                TextView editPassword = (TextView) LoginActivity.this.findViewById(R.id.editTextPassword);
                 String username = editUsername.getText().toString();
                 String password = editPassword.getText().toString();
 
@@ -175,7 +190,7 @@ public class LoginActivity extends ApplicationActivity {
 
     boolean usernameValid(String username) {
         if (username == null || username.isEmpty()) {
-            Utils.toast(this, "Username is empty");
+            textViewUsername.setError("Username is empty");
             return false;
         }
         return true;
@@ -183,19 +198,39 @@ public class LoginActivity extends ApplicationActivity {
 
     boolean passwordValid(String password) {
         if (password == null || password.isEmpty()) {
-            Utils.toast(this, "Password is empty");
+            textViewPassword.setError("Password is empty");
             return false;
         }
         return true;
     }
 
     void setInputEnabled(boolean enabled) {
-        View editUsername = findViewById(R.id.editTextUsername);
-        View editPassword = findViewById(R.id.editTextPassword);
-        View buttonLogin = findViewById(R.id.buttonLogin);
-
         editUsername.setEnabled(enabled);
         editPassword.setEnabled(enabled);
         buttonLogin.setEnabled(enabled);
+    }
+
+    private static class ErrorResetWatcher implements TextWatcher {
+
+        TextInputLayout view;
+
+        public ErrorResetWatcher(TextInputLayout view) {
+            this.view = view;
+        }
+
+        @Override
+        public void afterTextChanged(Editable s) {
+
+        }
+
+        @Override
+        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            view.setError("");
+        }
+
+        @Override
+        public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+        }
     }
 }
