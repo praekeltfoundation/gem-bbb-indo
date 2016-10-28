@@ -20,6 +20,8 @@ public class Question {
     public Question() {
     }
 
+    public long getId() { return this.id; }
+
     public Question(String text) {
         this.text = text;
     }
