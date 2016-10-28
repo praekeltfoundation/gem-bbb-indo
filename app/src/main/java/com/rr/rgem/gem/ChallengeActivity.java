@@ -70,10 +70,20 @@ public class ChallengeActivity extends ApplicationActivity{
         questionText.setText(question.getText());
         LinearLayout questionOptionList = (LinearLayout)challengeMainLayout.findViewById(R.id.questionOptionList);
         questionOptionList.removeAllViews();
-        for (Answer answer: question.getAnswers()) {
+        for (final Answer answer: question.getAnswers()) {
             Button option = new Button(this);
             option.setText(answer.getText());
             questionOptionList.addView(option);
+            option.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (answer.getCorrect()) {
+                        Utils.toast(ChallengeActivity.this, "Answer correct.");
+                    } else {
+                        Utils.toast(ChallengeActivity.this, "Answer incorrect.");
+                    }
+                }
+            });
         }
     }
 
