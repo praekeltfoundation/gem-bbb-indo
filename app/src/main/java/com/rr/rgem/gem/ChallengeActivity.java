@@ -32,6 +32,10 @@ import java.util.List;
 import java.util.ListIterator;
 import android.os.Handler;
 
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
 /**
  * Created by chris on 9/14/2016.
  */
@@ -62,17 +66,33 @@ public class ChallengeActivity extends ApplicationActivity{
 
         WebServiceFactory factory = ((WebServiceApplication) getApplication()).getWebServiceFactory();
         cmsService = factory.createService(CMSService.class);
+        cmsService.retrieveChallenge(1).enqueue(new Callback<Challenge>() {
+            @Override
+            public void onResponse(Call<Challenge> call, Response<Challenge> response) {
+                challenge = response.body();
+                initChallenge();
+            }
 
-        Gson gson = new Gson();
-        challenge = gson.fromJson(loadJsonFromResources(this), Challenge.class);
+            @Override
+            public void onFailure(Call<Challenge> call, Throwable t) {
+                Utils.toast(ChallengeActivity.this, "Challenge could not be loaded.");
+            }
+        });
+
+//        Gson gson = new Gson();
+//        challenge = gson.fromJson(loadJsonFromResources(this), Challenge.class);
+    }
+
+    void initChallenge()
+    {
         questions = challenge.getQuestions().listIterator();
         if (!questions.hasNext()) {
             Utils.toast(this, "Challenge has no questions.");
             return;
         }
         currentQuestion = questions.next();
-        displayQuestion();
         participantAnswerList = new ArrayList<>();
+        displayQuestion();
         Button submitAnswer = (Button)challengeMainLayout.findViewById(R.id.submitAnswer);
         submitAnswer.setOnClickListener(new View.OnClickListener() {
             @Override
