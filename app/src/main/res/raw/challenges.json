@@ -19,6 +19,21 @@
           "text": "No"
         }
       ]
+    },
+    {
+      "id": 2,
+      "text": "Can you land on the sun at night?",
+      "options": [
+        {
+          "id": 3,
+          "text": "Yes"
+        },
+        {
+          "id": 4,
+          "text": "No",
+          "correct": true
+        }
+      ]
     }
   ]
 }
