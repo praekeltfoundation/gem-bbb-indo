@@ -143,6 +143,25 @@ public class ChallengeActivity extends ApplicationActivity{
         }
     }
 
+    void submitAnswers()
+    {
+        cmsService.createParticipantAnswers(participantAnswerList).enqueue(new Callback<List<ParticipantAnswer>>() {
+            @Override
+            public void onResponse(Call<List<ParticipantAnswer>> call, Response<List<ParticipantAnswer>> response) {
+                if (response.isSuccessful()){
+                    Utils.toast(ChallengeActivity.this, "Answers response successfully sent.");
+                } else {
+                    Utils.toast(ChallengeActivity.this, "Answers sent, but unsuccessful.");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<ParticipantAnswer>> call, Throwable t) {
+                Utils.toast(ChallengeActivity.this, "Failed to send answers.");
+            }
+        });
+    }
+
     String loadJsonFromResources(Context context)
     {
         InputStream is = context.getResources().openRawResource(R.raw.challenges);
