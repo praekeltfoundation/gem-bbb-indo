@@ -26,6 +26,8 @@ import java.io.InputStreamReader;
 import java.io.Reader;
 import java.io.StringWriter;
 import java.io.Writer;
+import java.util.ListIterator;
+import android.os.Handler;
 
 /**
  * Created by chris on 9/14/2016.
@@ -43,8 +45,9 @@ public class ChallengeActivity extends ApplicationActivity{
     private ImageView currentImage;
     private boolean done;
     private Challenge challenge;
-    private int questionIdx;
-    private Question[] questions;
+    private ListIterator<Question> questions;
+    private Question currentQuestion;
+    private Answer selectedOption;
 
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -58,30 +61,52 @@ public class ChallengeActivity extends ApplicationActivity{
 
         Gson gson = new Gson();
         challenge = gson.fromJson(loadJsonFromResources(this), Challenge.class);
-        questions = challenge.getQuestions().toArray(new Question[0]);
-        questionIdx = 0;
-        displayQuestion(questionIdx);
+        questions = challenge.getQuestions().listIterator();
+        if (!questions.hasNext()) {
+            Utils.toast(this, "Challenge has no questions.");
+            return;
+        }
+        currentQuestion = questions.next();
+        displayQuestion();
+        Button submitAnswer = (Button)challengeMainLayout.findViewById(R.id.submitAnswer);
+        submitAnswer.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (checkAnswer()) {
+                    if (questions.hasNext()) {
+                        currentQuestion = questions.next();
+                        displayQuestion();
+                    } else {
+                        Utils.toast(ChallengeActivity.this, "Congratulations! Challenge complete.");
+                        Handler handler = new Handler(getMainLooper());
+                        handler.postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                Intent intent = new Intent(ChallengeActivity.this,MainActivity.class);
+                                startActivity(intent);
+                            }
+                        }, 2000); // Delay in milliseconds
+                    }
+                }
+            }
+        });
     }
 
-    void displayQuestion(int idx)
+    void displayQuestion()
     {
-        Question question = questions[idx];
-        TextView questionText = (TextView)challengeMainLayout.findViewById(R.id.questionText) ;
-        questionText.setText(question.getText());
+        selectedOption = null;
+        TextView questionText = (TextView)challengeMainLayout.findViewById(R.id.questionText);
+        questionText.setText(currentQuestion.getText());
         LinearLayout questionOptionList = (LinearLayout)challengeMainLayout.findViewById(R.id.questionOptionList);
         questionOptionList.removeAllViews();
-        for (final Answer answer: question.getAnswers()) {
+        for (final Answer answer: currentQuestion.getAnswers()) {
             Button option = new Button(this);
             option.setText(answer.getText());
             questionOptionList.addView(option);
             option.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if (answer.getCorrect()) {
-                        Utils.toast(ChallengeActivity.this, "Answer correct.");
-                    } else {
-                        Utils.toast(ChallengeActivity.this, "Answer incorrect.");
-                    }
+                    selectedOption = answer;
                 }
             });
         }
@@ -107,6 +132,21 @@ public class ChallengeActivity extends ApplicationActivity{
         }
 
         return writer.toString();
+    }
+
+    private boolean checkAnswer()
+    {
+        if (selectedOption == null) {
+            Utils.toast(ChallengeActivity.this, "No answer selected.");
+        } else {
+            if (selectedOption.getCorrect()) {
+                Utils.toast(ChallengeActivity.this, "Answer correct.");
+                return true;
+            } else {
+                Utils.toast(ChallengeActivity.this, "Answer incorrect.");
+            }
+        }
+        return false;
     }
 
     public  void goToMain() {
