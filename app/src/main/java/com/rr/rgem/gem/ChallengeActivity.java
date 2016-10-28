@@ -12,12 +12,14 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.google.gson.Gson;
 import com.rr.rgem.gem.answers.ChallengesAnswers;
 import com.rr.rgem.gem.controllers.JSONConversation;
 import com.rr.rgem.gem.controllers.common.Factory;
 import com.rr.rgem.gem.controllers.common.JSONController;
+import com.rr.rgem.gem.models.Answer;
 import com.rr.rgem.gem.models.Challenge;
 import com.rr.rgem.gem.models.ConversationNode;
 import com.rr.rgem.gem.models.ConvoCallback;
@@ -53,21 +55,33 @@ public class ChallengeActivity extends ApplicationActivity{
     private boolean done;
     private Challenge challenge;
     private int questionIdx;
+    private Question[] questions;
 
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.challenge_screen);
+        challengeMainLayout = (LinearLayout)this.findViewById(R.id.challengeMainLayout);
         Utils.toast(this, "starting current challenge activity");
         Gson gson = new Gson();
         challenge = gson.fromJson(loadJsonFromResources(this), Challenge.class);
-        Question[] questions = challenge.getQuestions().toArray(new Question[0]);
+        questions = challenge.getQuestions().toArray(new Question[0]);
         questionIdx = 0;
         displayQuestion(questionIdx);
     }
 
     void displayQuestion(int idx)
     {
+        Question question = questions[idx];
+        TextView questionText = (TextView)challengeMainLayout.findViewById(R.id.questionText) ;
+        questionText.setText(question.getText());
+        LinearLayout questionOptionList = (LinearLayout)challengeMainLayout.findViewById(R.id.questionOptionList);
+        questionOptionList.removeAllViews();
+        for (Answer answer: question.getAnswers()) {
+            Button option = new Button(this);
+            option.setText(answer.getText());
+            questionOptionList.addView(option);
+        }
     }
 
     String loadJsonFromResources(Context context)
