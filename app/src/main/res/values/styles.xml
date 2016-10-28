@@ -13,6 +13,33 @@
     <style name="AppTheme.NoActionBar">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
+
+        <item name="android:editTextStyle">@style/AppTheme.Widget.EditText</item>
+        <item name="android:buttonStyle">@style/AppTheme.Widget.Button</item>
+
+        <item name="textAppearanceHeading">@style/AppTheme.TextAppearance.Heading</item>
+        <item name="circularImageViewStyle">@style/AppTheme.CircularImageView</item>
+    </style>
+
+    <!-- EditText -->
+    <style name="AppTheme.Widget.EditText" parent="Widget.AppCompat.EditText">
+
+    </style>
+
+    <!-- Button -->
+    <style name="AppTheme.Widget.Button" parent="Widget.AppCompat.Button">
+        <item name="android:textColor">@color/colorBodyText</item>
+    </style>
+
+    <!-- TextView -->
+    <style name="AppTheme.TextAppearance.Heading" parent="TextAppearance.AppCompat.Large">
+        <item name="android:textColor">@color/colorHeaderText</item>
+        <item name="android:textSize">@dimen/text_header</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="AppTheme.CircularImageView">
+
     </style>
 
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />

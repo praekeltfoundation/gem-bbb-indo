@@ -7,4 +7,9 @@
     <color name="colorCoachMessage">#ffffff</color>
     <color name="colorTextDeselected">#547cff</color>
     <color name="colorTextSelected">#84CC2F</color>
+
+    <color name="colorBodyText">#000000</color>
+    <color name="colorHeaderText">#000000</color>
+    <color name="colorHeader4Text">#cccccc</color>
+    <color name="colorBackground">#efefef</color>
 </resources>

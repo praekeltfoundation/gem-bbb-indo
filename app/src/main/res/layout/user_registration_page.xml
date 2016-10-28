@@ -8,8 +8,8 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="Welcome To Bimbingbung"
+        android:textAppearance="?attr/textAppearanceHeading"
+        android:text="@string/registration"
         android:id="@+id/textViewHeading"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="40dp" />
@@ -35,6 +35,7 @@
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:inputType="textPersonName"
         android:id="@+id/editTextName" />
 
     <TextView
@@ -48,6 +49,7 @@
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:inputType="text"
         android:id="@+id/editTextMobile" />
 
     <TextView
@@ -62,8 +64,14 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:inputType="textPassword"
-        android:ems="10"
         android:id="@+id/editTextPassword" />
+
+    <TextView
+        android:text="@string/register_notice"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/textViewTerms"
+        android:textAlignment="center" />
 
     <Button
         android:layout_width="fill_parent"
@@ -72,5 +80,13 @@
         android:id="@+id/buttonRegister"
         android:layout_gravity="bottom|center_horizontal"
         android:layout_marginTop="20dp" />
+
+    <TextView
+        android:text="@string/registration_already_registered"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/textViewAlreadyRegistered"
+        android:textAlignment="center"
+        android:layout_marginTop="10dp" />
 
 </LinearLayout>

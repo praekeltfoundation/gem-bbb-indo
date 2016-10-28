@@ -10,6 +10,7 @@ import android.util.Log;
 import android.widget.ImageView;
 
 import com.rr.rgem.gem.controllers.Validation;
+import com.rr.rgem.gem.image.ImageStorage;
 import com.rr.rgem.gem.service.FileUploader;
 import com.rr.rgem.gem.service.WebServiceApplication;
 import com.rr.rgem.gem.service.WebServiceFactory;
@@ -34,6 +35,8 @@ import okhttp3.OkHttpClient;
 public class ApplicationActivity extends AppCompatActivity {
 
     private static final String TAG = "ApplicationActivity";
+    private static final int MAX_IMAGE_WIDTH = 640;
+    private static final int MAX_IMAGE_HEIGHT = 640;
 
     public ImageView currentImage;
     public String currentImageName;
@@ -50,10 +53,11 @@ public class ApplicationActivity extends AppCompatActivity {
         if (resultCode == RESULT_OK)
         {
             if (Validation.isEmpty(currentImageName)) {
-                Date timeStamp = Calendar.getInstance().getTime();
-                SimpleDateFormat formatter = new SimpleDateFormat("yyyy_MM_dd_HH_mm_ss_SSS");
-                currentImageName =  formatter.format(timeStamp);
-                currentImageName += ".jpg";
+                //Date timeStamp = Calendar.getInstance().getTime();
+                //SimpleDateFormat formatter = new SimpleDateFormat("yyyy_MM_dd_HH_mm_ss_SSS");
+                //currentImageName =  formatter.format(timeStamp);
+                //currentImageName += ".jpg";
+                currentImageName = "profile.jpg";
             }
 
             Bundle extras = data.getExtras();
@@ -77,6 +81,9 @@ public class ApplicationActivity extends AppCompatActivity {
                     }
                     if (inputStream != null) try {
                         profilePicture = BitmapFactory.decodeStream(inputStream);
+                        if (profilePicture != null) {
+                            profilePicture = ImageStorage.scaleDownBitmap(profilePicture, MAX_IMAGE_WIDTH, MAX_IMAGE_HEIGHT);
+                        }
                         inputStream.close();
                     } catch (IOException e) {
                         e.printStackTrace();
@@ -92,13 +99,12 @@ public class ApplicationActivity extends AppCompatActivity {
     }
 
     protected void uploadImage(File file) {
-        Log.d(TAG, "Uploading Image");
-        System.out.println("Uploading Image");
+        Utils.toast(this, "Uploading Image");
         Persisted persisted = new Persisted(this);
         User user = persisted.loadUser();
 
         if (!user.hasId()) {
-            Log.d(TAG, "User id not set");
+            Utils.toast(this, "User id not set");
             return;
         }
 
@@ -118,12 +124,12 @@ public class ApplicationActivity extends AppCompatActivity {
         uploader.send(url, mediaType, file, new FileUploader.UploadCallback() {
             @Override
             public void onComplete() {
-                Log.d(TAG, "File Uploaded");
+                Utils.toast(ApplicationActivity.this, "File Upload Success");
             }
 
             @Override
             public void onFailure() {
-                Log.w(TAG, "File Upload Failed");
+                Utils.toast(ApplicationActivity.this, "File Upload Failed");
             }
         });
     }
