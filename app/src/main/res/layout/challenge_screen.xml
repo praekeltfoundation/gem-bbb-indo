@@ -24,5 +24,6 @@
         android:text="Check"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/submitAnswer" />
+        android:id="@+id/submitAnswer"
+        android:layout_marginTop="16dp" />
 </LinearLayout>

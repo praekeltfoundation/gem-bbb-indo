@@ -121,16 +121,23 @@ public class ChallengeActivity extends ApplicationActivity{
         selectedOption = null;
         TextView questionText = (TextView)challengeMainLayout.findViewById(R.id.questionText);
         questionText.setText(currentQuestion.getText());
-        LinearLayout questionOptionList = (LinearLayout)challengeMainLayout.findViewById(R.id.questionOptionList);
+        final LinearLayout questionOptionList = (LinearLayout)challengeMainLayout.findViewById(R.id.questionOptionList);
         questionOptionList.removeAllViews();
         for (final Answer answer: currentQuestion.getAnswers()) {
-            Button option = new Button(this);
+            final Button option = new Button(this);
             option.setText(answer.getText());
+            option.setTextColor(getResources().getColor(R.color.colorTextDeselected));
             questionOptionList.addView(option);
             option.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     selectedOption = answer;
+                    int count = questionOptionList.getChildCount();
+                    for (int i = 0; i < count; i++) {
+                        ((Button)questionOptionList.getChildAt(i))
+                                .setTextColor(getResources().getColor(R.color.colorTextDeselected));
+                    }
+                    option.setTextColor(getResources().getColor(R.color.colorTextSelected));
                 }
             });
         }
