@@ -13,6 +13,7 @@ import android.widget.TextView;
 import com.google.gson.Gson;
 import com.rr.rgem.gem.models.Answer;
 import com.rr.rgem.gem.models.Challenge;
+import com.rr.rgem.gem.models.ParticipantAnswer;
 import com.rr.rgem.gem.models.Question;
 import com.rr.rgem.gem.navigation.GEMNavigation;
 import com.rr.rgem.gem.service.CMSService;
@@ -26,6 +27,8 @@ import java.io.InputStreamReader;
 import java.io.Reader;
 import java.io.StringWriter;
 import java.io.Writer;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.ListIterator;
 import android.os.Handler;
 
@@ -48,6 +51,7 @@ public class ChallengeActivity extends ApplicationActivity{
     private ListIterator<Question> questions;
     private Question currentQuestion;
     private Answer selectedOption;
+    private List<ParticipantAnswer> participantAnswerList;
 
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -68,6 +72,7 @@ public class ChallengeActivity extends ApplicationActivity{
         }
         currentQuestion = questions.next();
         displayQuestion();
+        participantAnswerList = new ArrayList<>();
         Button submitAnswer = (Button)challengeMainLayout.findViewById(R.id.submitAnswer);
         submitAnswer.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -139,6 +144,7 @@ public class ChallengeActivity extends ApplicationActivity{
         if (selectedOption == null) {
             Utils.toast(ChallengeActivity.this, "No answer selected.");
         } else {
+            participantAnswerList.add(new ParticipantAnswer(currentQuestion, selectedOption));
             if (selectedOption.getCorrect()) {
                 Utils.toast(ChallengeActivity.this, "Answer correct.");
                 return true;
