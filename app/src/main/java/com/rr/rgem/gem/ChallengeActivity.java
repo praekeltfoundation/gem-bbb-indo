@@ -21,6 +21,7 @@ import com.rr.rgem.gem.controllers.common.JSONController;
 import com.rr.rgem.gem.models.Challenge;
 import com.rr.rgem.gem.models.ConversationNode;
 import com.rr.rgem.gem.models.ConvoCallback;
+import com.rr.rgem.gem.models.Question;
 import com.rr.rgem.gem.navigation.GEMNavigation;
 import com.rr.rgem.gem.views.LeftRightConversation;
 import com.rr.rgem.gem.views.Message;
@@ -46,25 +47,31 @@ public class ChallengeActivity extends ApplicationActivity{
 
     private GEMNavigation navigation;
     private RelativeLayout contentLayout;
-    private LinearLayout coachScreen;
+    private LinearLayout challengeMainLayout;
 
-    private LeftRightConversation coachView;
-    //JSONConversation coachController;
-    private ChallengesAnswers coachController;
     private ImageView currentImage;
     private boolean done;
     private Challenge challenge;
+    private int questionIdx;
 
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        navigation = new GEMNavigation(this);
+        setContentView(R.layout.challenge_screen);
         Utils.toast(this, "starting current challenge activity");
         Gson gson = new Gson();
         challenge = gson.fromJson(loadJsonFromResources(this), Challenge.class);
+        Question[] questions = challenge.getQuestions().toArray(new Question[0]);
+        questionIdx = 0;
+        displayQuestion(questionIdx);
     }
 
-    String loadJsonFromResources(Context context){
+    void displayQuestion(int idx)
+    {
+    }
+
+    String loadJsonFromResources(Context context)
+    {
         InputStream is = context.getResources().openRawResource(R.raw.challenges);
         Writer writer = new StringWriter();
         char[] buffer = new char[1024];
@@ -89,7 +96,7 @@ public class ChallengeActivity extends ApplicationActivity{
 
         Button button1 = new Button(contentLayout.getContext());
         button1.setText(R.string.challenge_done);
-        coachView.addRightView(button1, "name");
+//        coachView.addRightView(button1, "name");
 
         button1.setOnClickListener(new View.OnClickListener() {
             @Override
