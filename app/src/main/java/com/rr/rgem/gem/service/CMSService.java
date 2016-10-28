@@ -1,8 +1,7 @@
 package com.rr.rgem.gem.service;
 
+import com.rr.rgem.gem.models.Challenge;
 import com.rr.rgem.gem.models.TipArticle;
-import com.rr.rgem.gem.service.model.AuthLogin;
-import com.rr.rgem.gem.service.model.AuthToken;
 import com.rr.rgem.gem.service.model.User;
 
 import java.util.List;
@@ -26,4 +25,10 @@ public interface CMSService {
 
     @GET("/api/tips/")
     Call<List<TipArticle>> listTips();
+
+    @GET("/api/challenges/")
+    Call<List<Challenge>> listChallenges();
+
+    @GET("/api/challenges/{id}/")
+    Call<Challenge> retrieveChallenge(@Path("id") int id);
 }

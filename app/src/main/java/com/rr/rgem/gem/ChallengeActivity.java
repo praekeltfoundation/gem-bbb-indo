@@ -2,11 +2,7 @@ package com.rr.rgem.gem;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.net.Uri;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -14,36 +10,29 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
 import com.google.gson.Gson;
-import com.rr.rgem.gem.answers.ChallengesAnswers;
-import com.rr.rgem.gem.controllers.JSONConversation;
-import com.rr.rgem.gem.controllers.common.Factory;
-import com.rr.rgem.gem.controllers.common.JSONController;
 import com.rr.rgem.gem.models.Challenge;
-import com.rr.rgem.gem.models.ConversationNode;
-import com.rr.rgem.gem.models.ConvoCallback;
 import com.rr.rgem.gem.models.Question;
 import com.rr.rgem.gem.navigation.GEMNavigation;
-import com.rr.rgem.gem.views.LeftRightConversation;
-import com.rr.rgem.gem.views.Message;
+import com.rr.rgem.gem.service.CMSService;
+import com.rr.rgem.gem.service.WebServiceApplication;
+import com.rr.rgem.gem.service.WebServiceFactory;
 import com.rr.rgem.gem.views.Utils;
 
 import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
 import java.io.StringWriter;
 import java.io.Writer;
-import java.util.Map;
 
 /**
  * Created by chris on 9/14/2016.
  */
 public class ChallengeActivity extends ApplicationActivity{
 
-    //public void goToMain(){};
+    private final static String TAG = "ChallengeActivity";
+
+    private CMSService cmsService;
 
     private GEMNavigation navigation;
     private RelativeLayout contentLayout;
@@ -59,6 +48,10 @@ public class ChallengeActivity extends ApplicationActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.challenge_screen);
         Utils.toast(this, "starting current challenge activity");
+
+        WebServiceFactory factory = ((WebServiceApplication) getApplication()).getWebServiceFactory();
+        cmsService = factory.createService(CMSService.class);
+
         Gson gson = new Gson();
         challenge = gson.fromJson(loadJsonFromResources(this), Challenge.class);
         Question[] questions = challenge.getQuestions().toArray(new Question[0]);
