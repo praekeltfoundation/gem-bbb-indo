@@ -1,65 +1,64 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="fill_parent"
-    android:paddingTop="40dp"
-    android:paddingLeft="20dp"
-    android:paddingRight="20dp">
+    android:orientation="vertical"
+    android:paddingLeft="@dimen/activity_screen_horizontal_padding"
+    android:paddingRight="@dimen/activity_screen_horizontal_padding"
+    android:paddingTop="@dimen/activity_screen_verticle_padding">
 
     <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="You're registered"
         android:id="@+id/textViewHeading"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="20dp" />
-
-    <TextView
-        android:layout_width="wrap_content"
+        style="@style/AppTheme.TextAppearance.Heading"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="upload a profile picture"
-        android:id="@+id/textViewUpload"
         android:layout_gravity="center_horizontal"
-        android:layout_marginTop="40dp" />
+        android:layout_marginTop="20dp"
+        android:text="@string/registration_complete_heading"
+        android:textAlignment="center" />
 
 
     <com.pkmmte.view.CircularImageView
+        android:id="@+id/imageButtonDone"
         android:layout_width="200dp"
         android:layout_height="200dp"
-        android:id="@+id/imageButtonDone"
-        android:src="@drawable/ic_launcher"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="40dp"
         android:scaleType="centerCrop"
+        android:src="@drawable/ic_launcher"
         app:border="true"
-        app:border_width="1dp"
         app:border_color="@android:color/black"
-        app:selector_stroke_width="1dp"
-        />
+        app:border_width="1dp"
+        app:selector_stroke_width="1dp" />
+
+    <TextView
+        android:id="@+id/textViewUpload"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="40dp"
+        android:text="@string/registration_complete_subheading"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
 
     <Button
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:text="DONE"
         android:id="@+id/buttonRegistrationDone"
-        android:layout_gravity="bottom|center_horizontal"
-        android:layout_marginTop="40dp" />
-
-    <Button
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:text="Deregister"
-        android:id="@+id/buttonRegistrationUndo"
-        android:layout_gravity="bottom|center_horizontal" />
+        android:layout_gravity="bottom|center_horizontal"
+        android:layout_marginTop="40dp"
+        android:text="DONE" />
 
     <Button
-        android:text="Upload"
+        android:id="@+id/buttonRegistrationUndo"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|center_horizontal"
+        android:text="Deregister" />
+
+    <Button
+        android:id="@+id/buttonUpload"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/buttonUpload"
-        />
+        android:text="Upload" />
 </LinearLayout>

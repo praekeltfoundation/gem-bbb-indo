@@ -17,14 +17,29 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
+
 /**
  * Created by chris on 9/8/2016.
  */
 public class RegistrationCompleteActivity extends ApplicationActivity {
 
+    private static final String TAG = "RegistrationCompleteActivity";
+
+    @BindView(R.id.buttonRegistrationDone) Button buttonDone;
+    @BindView(R.id.buttonRegistrationUndo) Button buttonDeregister;
+    @BindView(R.id.buttonUpload) Button buttonUpload;
+
+    private Persisted persisted;
+
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.user_registration_done);
+        ButterKnife.bind(this);
+
+        persisted = new Persisted(getSharedPreferences(Persisted.APP_PREFS,0));
         currentImage = (CircularImageView)findViewById(R.id.imageButtonDone);
         currentImageName = "profile.jpg";
 
@@ -43,37 +58,32 @@ public class RegistrationCompleteActivity extends ApplicationActivity {
 
         currentImage.setOnClickListener(new View.OnClickListener(){
             public void onClick(View v) {
-
                 FragmentManager manager = getSupportFragmentManager();
                 ImageUploadDialog dialog = new ImageUploadDialog();
                 dialog.show(manager, "dialog");
             }
         });
-        final Button button = (Button) findViewById(R.id.buttonRegistrationDone);
-        button.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                Intent intent = new Intent(RegistrationCompleteActivity.this, SavingsActivity.class);
-                RegistrationCompleteActivity.this.startActivity(intent);
-                RegistrationCompleteActivity.this.finish();
-            }
-        });
-        final Button buttonDeregister = (Button) findViewById(R.id.buttonRegistrationUndo);
-        buttonDeregister.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                Persisted persisted = new Persisted(getSharedPreferences(Persisted.APP_PREFS,0));
-                persisted.setRegistered(false);
-                logout();
-                clearHistoryAndStart();
-            }
-        });
-        Button uploadButton = (Button) findViewById(R.id.buttonUpload);
-        uploadButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                File file = Utils.getFileFromName("imageDir", "profile.jpg", getApplicationContext());
-                RegistrationCompleteActivity.this.uploadImage(file);
-            }
-        });
+    }
+
+    @OnClick(R.id.buttonRegistrationDone)
+    void onDoneClicked(Button button) {
+        Intent intent = new Intent(RegistrationCompleteActivity.this, SavingsActivity.class);
+        RegistrationCompleteActivity.this.startActivity(intent);
+        RegistrationCompleteActivity.this.finish();
+    }
+
+    @OnClick(R.id.buttonRegistrationUndo)
+    void onDeregisterClicked(Button button) {
+        persisted.setRegistered(false);
+        logout();
+        clearHistoryAndStart();
+        finish();
+    }
+
+    @OnClick(R.id.buttonUpload)
+    void onUploadClicked(Button button) {
+        File file = Utils.getFileFromName("imageDir", "profile.jpg", getApplicationContext());
+        uploadImage(file);
     }
 
     void logout() {

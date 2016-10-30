@@ -5,11 +5,14 @@ import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.design.widget.TextInputEditText;
+import android.support.design.widget.TextInputLayout;
 import android.support.v4.content.res.ResourcesCompat;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.TextView;
 
 import com.rr.rgem.gem.image.ImageCallback;
@@ -25,6 +28,8 @@ import com.rr.rgem.gem.service.model.AuthTokenResponse;
 import com.rr.rgem.gem.service.model.User;
 import com.rr.rgem.gem.views.Utils;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -33,17 +38,27 @@ public class LoginActivity extends ApplicationActivity {
 
     private final static String TAG = "LoginActivity";
 
+    @BindView(R.id.textViewProgress) TextView progressView;
+    @BindView(R.id.textViewUsername) TextInputLayout textViewUsername;
+    @BindView(R.id.editTextUsername) TextInputEditText editUsername;
+    @BindView(R.id.textViewPassword) TextInputLayout textViewPassword;
+    @BindView(R.id.editTextPassword) TextInputEditText editPassword;
+    @BindView(R.id.buttonLogin) Button buttonLogin;
+
     AuthService authService;
     ImageDownloader imageDownloader;
     ErrorUtil errorUtil;
     Persisted persist;
     Handler handler;
-    TextView progressView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.user_login);
+        ButterKnife.bind(this);
+
+        editUsername.addTextChangedListener(new ErrorResetWatcher(textViewUsername));
+        editPassword.addTextChangedListener(new ErrorResetWatcher(textViewPassword));
 
         handler = new Handler(getMainLooper());
 
@@ -55,7 +70,6 @@ public class LoginActivity extends ApplicationActivity {
         errorUtil = new ErrorUtil(factory.createRetrofit());
 
         // Setup ui
-        progressView = (TextView) findViewById(R.id.textViewProgress);
         progressView.setText(getString(R.string.login_progress));
         progressView.setVisibility(View.GONE);
         ((TextView) findViewById(R.id.textViewDebugUrl))
@@ -64,18 +78,14 @@ public class LoginActivity extends ApplicationActivity {
 
         User user = persist.loadUser();
         if (user.getUsername() != null) {
-            EditText editUsername = (EditText) findViewById(R.id.editTextUsername);
             editUsername.setText(user.getUsername());
         }
 
-        Button button = (Button) findViewById(R.id.buttonLogin);
-        button.setOnClickListener(new View.OnClickListener() {
+        buttonLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Utils.toast(LoginActivity.this, "Login clicked");
 
-                TextView editUsername = (TextView) LoginActivity.this.findViewById(R.id.editTextUsername);
-                TextView editPassword = (TextView) LoginActivity.this.findViewById(R.id.editTextPassword);
                 String username = editUsername.getText().toString();
                 String password = editPassword.getText().toString();
 
@@ -175,7 +185,7 @@ public class LoginActivity extends ApplicationActivity {
 
     boolean usernameValid(String username) {
         if (username == null || username.isEmpty()) {
-            Utils.toast(this, "Username is empty");
+            textViewUsername.setError("Username is empty");
             return false;
         }
         return true;
@@ -183,19 +193,39 @@ public class LoginActivity extends ApplicationActivity {
 
     boolean passwordValid(String password) {
         if (password == null || password.isEmpty()) {
-            Utils.toast(this, "Password is empty");
+            textViewPassword.setError("Password is empty");
             return false;
         }
         return true;
     }
 
     void setInputEnabled(boolean enabled) {
-        View editUsername = findViewById(R.id.editTextUsername);
-        View editPassword = findViewById(R.id.editTextPassword);
-        View buttonLogin = findViewById(R.id.buttonLogin);
-
         editUsername.setEnabled(enabled);
         editPassword.setEnabled(enabled);
         buttonLogin.setEnabled(enabled);
+    }
+
+    private static class ErrorResetWatcher implements TextWatcher {
+
+        TextInputLayout view;
+
+        public ErrorResetWatcher(TextInputLayout view) {
+            this.view = view;
+        }
+
+        @Override
+        public void afterTextChanged(Editable s) {
+
+        }
+
+        @Override
+        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            view.setError("");
+        }
+
+        @Override
+        public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+        }
     }
 }

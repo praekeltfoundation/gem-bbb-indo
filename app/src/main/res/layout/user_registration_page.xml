@@ -1,92 +1,93 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingLeft="40dp"
-    android:paddingRight="40dp">
+    android:orientation="vertical"
+    android:paddingLeft="@dimen/activity_screen_horizontal_padding"
+    android:paddingRight="@dimen/activity_screen_horizontal_padding"
+    android:paddingTop="@dimen/activity_screen_verticle_padding">
 
     <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?attr/textAppearanceHeading"
-        android:text="@string/registration"
         android:id="@+id/textViewHeading"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="40dp" />
+        style="@style/AppTheme.TextAppearance.Heading"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/registration"
+        android:textAlignment="center" />
 
     <TextView
+        android:id="@+id/textViewInfoHeading"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceSmall"
-        android:text="Create your account"
-        android:id="@+id/textViewInfoHeading"
-        android:layout_marginTop="40dp"
         android:layout_gravity="center_horizontal"
-        android:layout_marginBottom="40dp" />
+        android:layout_marginBottom="40dp"
+        android:layout_marginTop="40dp"
+        android:text="Create your account"
+        android:textAppearance="?android:attr/textAppearanceSmall" />
 
     <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceSmall"
-        android:text="@string/username"
         android:id="@+id/textViewName"
-        android:layout_marginTop="10dp" />
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="@string/username"
+        android:textAppearance="?android:attr/textAppearanceSmall" />
 
     <EditText
+        android:id="@+id/editTextName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:inputType="textPersonName"
-        android:id="@+id/editTextName" />
+        android:inputType="textPersonName" />
 
     <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceSmall"
-        android:text="@string/mobile_number"
         android:id="@+id/textViewMobileNumber"
-        android:layout_marginTop="10dp" />
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="@string/mobile_number"
+        android:textAppearance="?android:attr/textAppearanceSmall" />
 
     <EditText
+        android:id="@+id/editTextMobile"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:inputType="text"
-        android:id="@+id/editTextMobile" />
+        android:inputType="text" />
 
     <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceSmall"
-        android:text="@string/password"
         android:id="@+id/textViewPasword"
-        android:layout_marginTop="10dp" />
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="@string/password"
+        android:textAppearance="?android:attr/textAppearanceSmall" />
 
     <EditText
+        android:id="@+id/editTextPassword"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:inputType="textPassword"
-        android:id="@+id/editTextPassword" />
+        android:inputType="textPassword" />
 
     <TextView
-        android:text="@string/register_notice"
+        android:id="@+id/textViewTerms"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/textViewTerms"
+        android:text="@string/register_notice"
         android:textAlignment="center" />
 
     <Button
+        android:id="@+id/buttonRegister"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:text="REGISTER"
-        android:id="@+id/buttonRegister"
         android:layout_gravity="bottom|center_horizontal"
-        android:layout_marginTop="20dp" />
+        android:layout_marginTop="20dp"
+        android:text="REGISTER" />
 
     <TextView
-        android:text="@string/registration_already_registered"
+        android:id="@+id/textViewAlreadyRegistered"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/textViewAlreadyRegistered"
-        android:textAlignment="center"
-        android:layout_marginTop="10dp" />
+        android:layout_marginTop="10dp"
+        android:text="@string/registration_already_registered"
+        android:textAlignment="center" />
 
 </LinearLayout>

@@ -13,14 +13,21 @@
     <string name="currency_side">left</string>
     <string name="action_settings"></string>
 
+    <!-- Registration -->
     <string name="registration">Registration</string>
     <string name="register_notice">By clicking register you agree to our Terms &amp; Conditions</string>
     <string name="registration_already_registered">Already registered? Log In</string>
 
-    <string name="username">Username</string>
+    <!-- Registration Complete -->
+    <string name="registration_complete_heading">You are registered!</string>
+    <string name="registration_complete_subheading">Upload profile photo</string>
+
+    <!-- Login -->
+    <string name="username">Name</string>
+    <string name="username_hint">ex: Aida</string>
     <string name="mobile_number">Mobile Number</string>
     <string name="password">Password</string>
-    <string name="login">Login</string>
+    <string name="login">Log In</string>
     <string name="login_progress">Logging in...</string>
     <string name="login_success">Login Successful</string>
     <string name="login_failed">Login Failed</string>

@@ -18,13 +18,17 @@ import com.rr.rgem.gem.views.Utils;
 import java.io.IOException;
 import java.net.MalformedURLException;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 public class TipArticleActivity extends ApplicationActivity {
 
     private static final String TAG = "TipArticle";
 
+    @BindView(R.id.tipWebView) WebView webView;
+
     private GEMNavigation navigation;
     private ViewGroup articleScreen;
-    private WebView webView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,11 +38,11 @@ public class TipArticleActivity extends ApplicationActivity {
         Utils.toast(this, "starting Tip Article activity");
         navigation = new GEMNavigation(this);
         articleScreen = (ViewGroup) navigation.addLayout(R.layout.tip_article);
+        ButterKnife.bind(this);
 
         final Persisted persisted = new Persisted(this);
         final View tipProgress = findViewById(R.id.tipProgress);
 
-        webView = (WebView) findViewById(R.id.tipWebView);
         webView.setWebViewClient(new WebViewClient(){
             @Override
             public void onPageStarted(WebView view, String url, Bitmap favicon) {

@@ -10,4 +10,5 @@
     <color name="colorHeaderText">#000000</color>
     <color name="colorHeader4Text">#cccccc</color>
     <color name="colorBackground">#efefef</color>
+    <color name="colorHint">#000</color>
 </resources>
