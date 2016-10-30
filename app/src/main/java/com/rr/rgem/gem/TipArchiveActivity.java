@@ -29,6 +29,8 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import okhttp3.OkHttpClient;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -46,7 +48,9 @@ public class TipArchiveActivity extends ApplicationActivity {
     private GEMNavigation navigation;
     private CMSService service;
     private LinearLayout tipScreen;
-    private TabHost tabHost;
+    //private TabHost tabHost;
+
+    @BindView(R.id.tipTabHost) TabHost tabHost;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,8 +64,9 @@ public class TipArchiveActivity extends ApplicationActivity {
         navigation = new GEMNavigation(this);
         tipScreen = (LinearLayout) navigation.addLayout(R.layout.tip_archive);
 
+        ButterKnife.bind(this);
+
         // Initialize Tabs
-        tabHost = (TabHost) tipScreen.findViewById(R.id.tipTabHost);
         tabHost.setup();
 
         tabHost.addTab(tabHost.newTabSpec(TAB_FAVOURITES)
@@ -138,11 +143,12 @@ public class TipArchiveActivity extends ApplicationActivity {
         private static final String TAG = "TipList";
         private static final String TIP_IMAGE_DIR = "tip-images";
 
+        @BindView(R.id.tipContainer) ViewGroup tipContainer;
+        @BindView(R.id.textViewEmpty) View textViewEmpty;
+        @BindView(R.id.textViewLoading) View textViewLoading;
+
         private ApplicationActivity activity;
         private TipFactory factory;
-        private ViewGroup tipContainer;
-        private View textViewEmpty;
-        private View textViewLoading;
         private List<TipArticle> tips;
         private WebServiceFactory webFactory;
         private ImageDownloader imageDownloader;
@@ -162,9 +168,7 @@ public class TipArchiveActivity extends ApplicationActivity {
         @Override
         public View createTabContent(String tag) {
             ViewGroup view = (ViewGroup) activity.getLayoutInflater().inflate(R.layout.tip_list, null);
-            textViewEmpty = view.findViewById(R.id.textViewEmpty);
-            textViewLoading = view.findViewById(R.id.textViewLoading);
-            tipContainer = (ViewGroup) view.findViewById(R.id.tipContainer);
+            ButterKnife.bind(this, view);
 
             Log.d(TAG, "Creating tab content");
             cardCount = 0;
