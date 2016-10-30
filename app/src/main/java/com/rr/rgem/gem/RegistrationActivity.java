@@ -100,27 +100,32 @@ public class RegistrationActivity extends ApplicationActivity {
         user.setProfile(profile);
         Log.d(RegistrationActivity.TAG, "Registering user: " + user);
         Log.d(RegistrationActivity.TAG, "Password: " + user.getPassword());
+        toast("Registering...");
 
         RegistrationActivity.this.authService.register(user).enqueue(new Callback<RegistrationResponse>() {
             @Override
             public void onResponse(Call<RegistrationResponse> call, Response<RegistrationResponse> response) {
                 if (response.isSuccessful()) {
                     Log.d(RegistrationActivity.TAG, "Registration successful");
-                    Utils.toast(getApplicationContext(), getString(R.string.congratulations_registered));
+                    toast(getString(R.string.congratulations_registered));
+                    RegistrationResponse regResponse = response.body();
                     persisted.setRegistered(true);
                     // TODO: Should password be cleared before save?
+                    user.setId(regResponse.getUserId());
                     persisted.saveUser(user);
                     retrieveToken(user);
                 } else {
                     RegistrationError error = RegistrationActivity.this.errorUtil
                             .parseError(response, RegistrationError.class);
                     Log.d(RegistrationActivity.TAG, "Registration failed " + error.toString());
+                    toast("Registration failed " + error.toString());
                 }
             }
 
             @Override
             public void onFailure(Call<RegistrationResponse> call, Throwable t) {
-                Log.d(RegistrationActivity.TAG, "Registration error", t);
+                Log.e(RegistrationActivity.TAG, "Registration error", t);
+                toast("Registration error");
             }
         });
     }

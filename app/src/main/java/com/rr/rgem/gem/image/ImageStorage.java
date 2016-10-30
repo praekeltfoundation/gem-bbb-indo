@@ -67,6 +67,7 @@ public class ImageStorage {
         }
     }
 
+
     public void clearDirectory() {
         File dir = context.getDir(directory, Context.MODE_PRIVATE);
         for (File file : dir.listFiles()) {
@@ -77,6 +78,30 @@ public class ImageStorage {
     public void deleteFile(String filename) {
         File file = new File(filename);
         file.delete();
+    }
+
+    public static Bitmap scaleDownBitmap(Bitmap bitmap, int maxWidth, int maxHeight) {
+        if (maxWidth > 0 && maxHeight > 0) {
+            int width = bitmap.getWidth();
+            int height = bitmap.getHeight();
+
+            float ratioBitmap = (float) width / (float) height;
+            float ratioMax = (float) maxWidth / (float) maxHeight;
+
+            int finalWidth = maxWidth;
+            int finalHeight = maxHeight;
+
+            if (ratioMax > 1) {
+                // Landscape
+                finalWidth = (int) ((float) maxHeight * ratioBitmap);
+            } else {
+                // Portrait
+                finalHeight = (int) ((float) maxWidth / ratioBitmap);
+            }
+            return Bitmap.createScaledBitmap(bitmap, finalWidth, finalHeight, true);
+        } else {
+            return bitmap;
+        }
     }
 
     protected static String fileId(String filepath) {
