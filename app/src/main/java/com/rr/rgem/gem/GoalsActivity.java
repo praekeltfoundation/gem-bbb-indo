@@ -3,54 +3,35 @@ package com.rr.rgem.gem;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.Color;
-import android.net.Uri;
 import android.os.Bundle;
-import android.support.v4.app.FragmentManager;
-import android.support.v7.app.ActionBar;
-import android.support.v7.app.AppCompatActivity;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
 import com.rr.rgem.gem.answers.GoalsAnswers;
-import com.rr.rgem.gem.controllers.JSONConversation;
 import com.rr.rgem.gem.controllers.common.Factory;
-import com.rr.rgem.gem.controllers.common.JSONController;
-import com.rr.rgem.gem.models.ConvoCallback;
 import com.rr.rgem.gem.models.Goal;
 import com.rr.rgem.gem.models.Transaction;
 import com.rr.rgem.gem.navigation.GEMNavigation;
-import com.rr.rgem.gem.views.LeftRightConversation;
-import com.rr.rgem.gem.views.ImageUploadDialog;
-import com.rr.rgem.gem.views.Message;
 import com.rr.rgem.gem.views.Utils;
 
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStream;
 import java.math.BigDecimal;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Created by jacob on 2016/09/28.
@@ -142,7 +123,7 @@ public class GoalsActivity extends ApplicationActivity {
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_bimbingbung) {
+        if (id == R.id.action_dooit) {
             Intent intent = new Intent(GoalsActivity.this, GoalActivity.class);
             GoalsActivity.this.startActivity(intent);
         }

@@ -15,7 +15,7 @@ import com.rr.rgem.gem.service.model.User;
  */
 public class Persisted implements AuthStore, UrlStore {
 
-    public final static String APP_PREFS = "bimbingbung_prefs_";
+    public final static String APP_PREFS = "dooit_prefs_";
     public final static String PREF_USER = "user";
     public final static String PREF_TOKEN = "token";
     public final static String PREF_URL = "url";

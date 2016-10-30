@@ -1,12 +1,12 @@
 <resources>
-    <string name="app_name">Bimbingbung</string>
+    <string name="app_name">dooit</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="invalid_password_length">Please use a password longer than 8 characters</string>
     <string name="invalid_username_length">The username is too short</string>
     <string name="invalid_mobile_number">Invalid mobile number</string>
-    <string name="congratulations_registered">Congratulations you have registered for Bimbingbung</string>
+    <string name="congratulations_registered">Congratulations you have registered for dooit!</string>
     <string name="Chanllenge_receiver_Text">Have you participated in this weeks challenge?</string>
     <string name="Progress_Tracked_receiver_Text">I see you have not saved. Whats happened?</string>
     <string name="currency_unit">Rp</string>
