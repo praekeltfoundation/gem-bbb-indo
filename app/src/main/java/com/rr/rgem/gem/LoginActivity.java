@@ -28,6 +28,8 @@ import com.rr.rgem.gem.service.model.AuthTokenResponse;
 import com.rr.rgem.gem.service.model.User;
 import com.rr.rgem.gem.views.Utils;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -36,29 +38,24 @@ public class LoginActivity extends ApplicationActivity {
 
     private final static String TAG = "LoginActivity";
 
+    @BindView(R.id.textViewProgress) TextView progressView;
+    @BindView(R.id.textViewUsername) TextInputLayout textViewUsername;
+    @BindView(R.id.editTextUsername) TextInputEditText editUsername;
+    @BindView(R.id.textViewPassword) TextInputLayout textViewPassword;
+    @BindView(R.id.editTextPassword) TextInputEditText editPassword;
+    @BindView(R.id.buttonLogin) Button buttonLogin;
+
     AuthService authService;
     ImageDownloader imageDownloader;
     ErrorUtil errorUtil;
     Persisted persist;
     Handler handler;
-    TextView progressView;
-
-    TextInputEditText editUsername;
-    TextInputLayout textViewUsername;
-    TextInputEditText editPassword;
-    TextInputLayout textViewPassword;
-    Button buttonLogin;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.user_login);
-
-        editUsername = (TextInputEditText) findViewById(R.id.editTextUsername);
-        textViewUsername = (TextInputLayout) findViewById(R.id.textViewUsername);
-        editPassword = (TextInputEditText) findViewById(R.id.editTextPassword);
-        textViewPassword = (TextInputLayout) findViewById(R.id.textViewPassword);
-        buttonLogin = (Button) findViewById(R.id.buttonLogin);
+        ButterKnife.bind(this);
 
         editUsername.addTextChangedListener(new ErrorResetWatcher(textViewUsername));
         editPassword.addTextChangedListener(new ErrorResetWatcher(textViewPassword));
@@ -73,7 +70,6 @@ public class LoginActivity extends ApplicationActivity {
         errorUtil = new ErrorUtil(factory.createRetrofit());
 
         // Setup ui
-        progressView = (TextView) findViewById(R.id.textViewProgress);
         progressView.setText(getString(R.string.login_progress));
         progressView.setVisibility(View.GONE);
         ((TextView) findViewById(R.id.textViewDebugUrl))
@@ -85,8 +81,7 @@ public class LoginActivity extends ApplicationActivity {
             editUsername.setText(user.getUsername());
         }
 
-        Button button = (Button) findViewById(R.id.buttonLogin);
-        button.setOnClickListener(new View.OnClickListener() {
+        buttonLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Utils.toast(LoginActivity.this, "Login clicked");
