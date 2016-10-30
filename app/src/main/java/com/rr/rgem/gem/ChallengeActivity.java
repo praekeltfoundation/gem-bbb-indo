@@ -3,6 +3,7 @@ package com.rr.rgem.gem;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -19,6 +20,7 @@ import com.rr.rgem.gem.navigation.GEMNavigation;
 import com.rr.rgem.gem.service.CMSService;
 import com.rr.rgem.gem.service.WebServiceApplication;
 import com.rr.rgem.gem.service.WebServiceFactory;
+import com.rr.rgem.gem.service.model.User;
 import com.rr.rgem.gem.views.Utils;
 
 import java.io.BufferedReader;
@@ -44,6 +46,8 @@ public class ChallengeActivity extends ApplicationActivity{
     private final static String TAG = "ChallengeActivity";
 
     private CMSService cmsService;
+    private Persisted persist;
+    private User user = null;
 
     private GEMNavigation navigation;
     private RelativeLayout contentLayout;
@@ -61,6 +65,10 @@ public class ChallengeActivity extends ApplicationActivity{
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.challenge_screen);
+        persist = new Persisted(this);
+        if (persist.isLoggedIn()) {
+            user = persist.loadUser();
+        }
         challengeMainLayout = (LinearLayout)this.findViewById(R.id.challengeMainLayout);
         Utils.toast(this, "starting current challenge activity");
 
@@ -103,6 +111,7 @@ public class ChallengeActivity extends ApplicationActivity{
                         displayQuestion();
                     } else {
                         Utils.toast(ChallengeActivity.this, "Congratulations! Challenge complete.");
+                        submitAnswers();
                         Handler handler = new Handler(getMainLooper());
                         handler.postDelayed(new Runnable() {
                             @Override
@@ -145,6 +154,10 @@ public class ChallengeActivity extends ApplicationActivity{
 
     void submitAnswers()
     {
+        if (user == null) {
+            Utils.toast(ChallengeActivity.this, "User not logged in, cannot submit.");
+            return;
+        }
         cmsService.createParticipantAnswers(participantAnswerList).enqueue(new Callback<List<ParticipantAnswer>>() {
             @Override
             public void onResponse(Call<List<ParticipantAnswer>> call, Response<List<ParticipantAnswer>> response) {
@@ -189,7 +202,11 @@ public class ChallengeActivity extends ApplicationActivity{
         if (selectedOption == null) {
             Utils.toast(ChallengeActivity.this, "No answer selected.");
         } else {
-            participantAnswerList.add(new ParticipantAnswer(currentQuestion, selectedOption));
+            if (user == null) {
+                participantAnswerList.add(new ParticipantAnswer(currentQuestion, selectedOption));
+            } else {
+                participantAnswerList.add(new ParticipantAnswer(user.getId(), currentQuestion, selectedOption));
+            }
             if (selectedOption.getCorrect()) {
                 Utils.toast(ChallengeActivity.this, "Answer correct.");
                 return true;
