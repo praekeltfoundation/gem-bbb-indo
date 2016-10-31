@@ -1,7 +1,7 @@
 [
   {
     "name":"askName",
-    "text":"Welcome to Bimbingbung! What is your name?",
+    "text":"Welcome to dooit! What is your name?",
     "type":"initials",
     "error": "validationFailName",
     "answers":[

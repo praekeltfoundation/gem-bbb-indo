@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.LinearLayout;
@@ -19,8 +18,7 @@ import com.rr.rgem.gem.views.Message;
 import java.util.Calendar;
 
 public class MainActivity extends ApplicationActivity{
-
-    private static String APP_PREFS = "shared_bimbingbung";
+    
     private GEMNavigation navigation;
     private RelativeLayout contentLayout;
     private LinearLayout coachScreen;
@@ -151,7 +149,7 @@ public class MainActivity extends ApplicationActivity{
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_bimbingbung) {
+        if (id == R.id.action_dooit) {
             return true;
         }
 
