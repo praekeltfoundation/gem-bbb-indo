@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.Button;
 
 import com.pkmmte.view.CircularImageView;
+import com.rr.rgem.gem.image.ImageHelper;
 import com.rr.rgem.gem.image.ImageStorage;
 import com.rr.rgem.gem.views.ImageUploadDialog;
 import com.rr.rgem.gem.views.Utils;
@@ -34,16 +35,19 @@ public class RegistrationCompleteActivity extends ApplicationActivity {
 
     private Persisted persisted;
 
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.user_registration_done);
         ButterKnife.bind(this);
 
-        persisted = new Persisted(getSharedPreferences(Persisted.APP_PREFS,0));
+        persisted = new Persisted(this);
         currentImage = (CircularImageView)findViewById(R.id.imageButtonDone);
-        currentImageName = "profile.jpg";
+        currentImageName = ImageHelper.PROFILE_IMAGE_FILENAME;
+        currentImageUrl = "/api/profile-image/%d/";
 
-        File profile = Utils.getFileFromName("imageDir", "profile.jpg", getApplicationContext());
+        File profile = Utils.getFileFromName(ImageHelper.IMAGE_DIRECTORY, currentImageName,
+                getApplicationContext());
         if (Utils.fileExists(profile))
         {
             try {
@@ -65,6 +69,11 @@ public class RegistrationCompleteActivity extends ApplicationActivity {
         });
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+    }
+
     @OnClick(R.id.buttonRegistrationDone)
     void onDoneClicked(Button button) {
         Intent intent = new Intent(RegistrationCompleteActivity.this, SavingsActivity.class);
@@ -82,8 +91,9 @@ public class RegistrationCompleteActivity extends ApplicationActivity {
 
     @OnClick(R.id.buttonUpload)
     void onUploadClicked(Button button) {
-        File file = Utils.getFileFromName("imageDir", "profile.jpg", getApplicationContext());
-        uploadImage(file);
+        File file = Utils.getFileFromName(ImageHelper.IMAGE_DIRECTORY,
+                ImageHelper.PROFILE_IMAGE_FILENAME, getApplicationContext());
+        uploadImage(currentImageUrl, file);
     }
 
     void logout() {
@@ -92,7 +102,7 @@ public class RegistrationCompleteActivity extends ApplicationActivity {
         persisted.clearToken();
         persisted.setLoggedIn(false);
 
-        ImageStorage storage = new ImageStorage(getApplicationContext(), "imageDir");
+        ImageStorage storage = new ImageStorage(getApplicationContext(), ImageHelper.IMAGE_DIRECTORY);
         storage.clearDirectory();
     }
 

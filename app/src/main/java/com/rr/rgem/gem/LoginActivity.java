@@ -17,6 +17,7 @@ import android.widget.TextView;
 
 import com.rr.rgem.gem.image.ImageCallback;
 import com.rr.rgem.gem.image.ImageDownloader;
+import com.rr.rgem.gem.image.ImageHelper;
 import com.rr.rgem.gem.image.ImageStorage;
 import com.rr.rgem.gem.service.AuthService;
 import com.rr.rgem.gem.service.ErrorUtil;
@@ -148,8 +149,9 @@ public class LoginActivity extends ApplicationActivity {
                 Log.d(TAG, "Retrieve profile success");
                 progressView.setText(R.string.profile_image_success);
 
-                ImageStorage storage = new ImageStorage(LoginActivity.this, "imageDir");
-                storage.saveImage("profile.jpg", image);
+                ImageStorage storage = new ImageStorage(LoginActivity.this,
+                        ImageHelper.IMAGE_DIRECTORY);
+                storage.saveImage(ImageHelper.PROFILE_IMAGE_FILENAME, image);
                 completeLogin();
             }
 
@@ -162,9 +164,9 @@ public class LoginActivity extends ApplicationActivity {
                         .getDrawable(getResources(), R.drawable.ic_launcher, null);
                 Bitmap image = drawable.getBitmap();
 
-                ImageStorage storage = new ImageStorage(LoginActivity.this, "imageDir");
-                storage.saveImage("profile.jpg", image);
-
+                ImageStorage storage = new ImageStorage(LoginActivity.this,
+                        ImageHelper.IMAGE_DIRECTORY);
+                storage.saveImage(ImageHelper.PROFILE_IMAGE_FILENAME, image);
                 completeLogin();
             }
         });

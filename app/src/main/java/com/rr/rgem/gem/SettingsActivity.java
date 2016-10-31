@@ -2,14 +2,12 @@ package com.rr.rgem.gem;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
-import android.widget.Toast;
 
+import com.rr.rgem.gem.image.ImageHelper;
 import com.rr.rgem.gem.image.ImageStorage;
 import com.rr.rgem.gem.views.Utils;
 
@@ -74,7 +72,7 @@ public class SettingsActivity extends ApplicationActivity {
         persisted.setLoggedIn(false);
         persisted.setRegistered(false);
 
-        ImageStorage storage = new ImageStorage(getApplicationContext(), "imageDir");
+        ImageStorage storage = new ImageStorage(getApplicationContext(), ImageHelper.IMAGE_DIRECTORY);
         storage.clearDirectory();
 
         clearHistoryAndStart();

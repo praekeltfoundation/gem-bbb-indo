@@ -1,19 +1,14 @@
 package com.rr.rgem.gem.navigation;
 
-import android.app.Activity;
-import android.content.ClipData;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -22,7 +17,6 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.rr.rgem.gem.ChallengeActivity;
-import com.rr.rgem.gem.GoalActivity;
 import com.rr.rgem.gem.GoalsActivity;
 import com.rr.rgem.gem.LoginActivity;
 import com.rr.rgem.gem.Persisted;
@@ -33,15 +27,10 @@ import com.rr.rgem.gem.SavingsActivity;
 import com.rr.rgem.gem.SettingsActivity;
 import com.rr.rgem.gem.TipArchiveActivity;
 import com.rr.rgem.gem.TipsActivity;
+import com.rr.rgem.gem.image.ImageHelper;
 import com.rr.rgem.gem.image.ImageStorage;
-import com.rr.rgem.gem.models.Challenge;
-import com.rr.rgem.gem.models.Tips;
 import com.rr.rgem.gem.service.model.User;
 import com.rr.rgem.gem.views.Utils;
-
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 
 /**
  * Created by chris on 9/12/2016.
@@ -49,8 +38,6 @@ import java.io.FileNotFoundException;
 public class GEMNavigation implements NavigationView.OnNavigationItemSelectedListener {
 
     private static final String TAG = "GEMNavigation";
-    private static final String IMAGE_DIR = "imageDir";
-    private static final String PROFILE_IMAGE_FILE = "profile.jpg";
 
     private final AppCompatActivity container;
     Toolbar toolbar;
@@ -88,8 +75,9 @@ public class GEMNavigation implements NavigationView.OnNavigationItemSelectedLis
 
         Log.d(TAG, "Loading profile picture from storage");
         ImageView profileImageView = (ImageView) headerView.findViewById(R.id.imageProfile);
-        ImageStorage imageStorage = new ImageStorage(container.getApplicationContext(), IMAGE_DIR);
-        Bitmap profileImage = imageStorage.loadImage(PROFILE_IMAGE_FILE);
+        ImageStorage imageStorage = new ImageStorage(container.getApplicationContext(),
+                ImageHelper.IMAGE_DIRECTORY);
+        Bitmap profileImage = imageStorage.loadImage(ImageHelper.PROFILE_IMAGE_FILENAME);
         if (profileImage != null) {
             profileImageView.setImageBitmap(profileImage);
         }
