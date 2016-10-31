@@ -7,38 +7,22 @@ import java.util.List;
  * Created by chris on 9/14/2016.
  */
 public class Answer {
-    private String type;
+    private long id;
     private String name;
-    private String response;
-    private List<String> values = new ArrayList<String>();
+    private String text;
+    private boolean correct = false;
 
-    public String getType() {
-        return type;
+    public long getId() {
+        return id;
     }
 
-    public void setType(String type) {
-        this.type = type;
+    public String getName() { return name; }
+
+    public String getText() {
+        return text;
     }
 
-    public List<String> getValues() {
-        return values;
-    }
-
-    public void setValues(List<String> values) {
-        this.values = values;
-    }
-
-    public String getResponse() {
-        return response;
-    }
-
-    public void setResponse(String response) {
-        this.response = response;
-    }
-
-    public String getName() {
-        return name;
-    }
+    public boolean getCorrect() { return correct; }
 
     public void setName(String name) {
         this.name = name;
