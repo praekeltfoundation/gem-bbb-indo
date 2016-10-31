@@ -18,8 +18,7 @@ import com.rr.rgem.gem.views.Message;
 import java.util.Calendar;
 
 public class MainActivity extends ApplicationActivity{
-
-    private static String APP_PREFS = "shared_bimbingbung";
+    
     private GEMNavigation navigation;
     private RelativeLayout contentLayout;
     private LinearLayout coachScreen;
