@@ -15,6 +15,7 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
 import com.rr.rgem.gem.controllers.JSONConversation;
+import com.rr.rgem.gem.image.ImageHelper;
 import com.rr.rgem.gem.models.ConvoCallback;
 import com.rr.rgem.gem.navigation.GEMNavigation;
 import com.rr.rgem.gem.views.LeftRightConversation;
@@ -127,8 +128,7 @@ public class OnBoardingActivity extends ApplicationActivity {
         Message message = new Message(1, "2016", true, Message.ResponseType.ImageUpload, null);
         message.setTitle("Set a profile picture: ");
         currentImage = coachView.addImageUploadQuestion(message, listener);
-        currentImageName = "profile.jpg";
-
+        currentImageName = ImageHelper.PROFILE_IMAGE_FILENAME;
     }
 
     public  void goToNext() {

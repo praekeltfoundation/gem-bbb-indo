@@ -10,6 +10,7 @@ import android.util.Log;
 import android.widget.ImageView;
 
 import com.rr.rgem.gem.controllers.Validation;
+import com.rr.rgem.gem.image.ImageHelper;
 import com.rr.rgem.gem.image.ImageStorage;
 import com.rr.rgem.gem.service.FileUploader;
 import com.rr.rgem.gem.service.WebServiceApplication;
@@ -40,6 +41,7 @@ public class ApplicationActivity extends AppCompatActivity {
 
     public ImageView currentImage;
     public String currentImageName;
+    public String currentImageUrl;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,24 +55,23 @@ public class ApplicationActivity extends AppCompatActivity {
         if (resultCode == RESULT_OK)
         {
             if (Validation.isEmpty(currentImageName)) {
-                //Date timeStamp = Calendar.getInstance().getTime();
-                //SimpleDateFormat formatter = new SimpleDateFormat("yyyy_MM_dd_HH_mm_ss_SSS");
-                //currentImageName =  formatter.format(timeStamp);
-                //currentImageName += ".jpg";
-                currentImageName = "profile.jpg";
+                Date timeStamp = Calendar.getInstance().getTime();
+                SimpleDateFormat formatter = new SimpleDateFormat("yyyy_MM_dd_HH_mm_ss_SSS");
+                currentImageName =  formatter.format(timeStamp);
+                currentImageName += ".jpg";
             }
 
             Bundle extras = data.getExtras();
             File path = Utils.getFileFromName("imageDir", currentImageName, getApplicationContext());
-            Bitmap profilePicture = null;
+            Bitmap image = null;
 
             switch(requestCode) {
-                case 0: {
-                    profilePicture = (Bitmap) extras.get("data");
-                    currentImage.setImageBitmap(profilePicture);
+                case ImageHelper.RESULT_CAMERA: {
+                    image = (Bitmap) extras.get("data");
+                    currentImage.setImageBitmap(image);
                     break;
                 }
-                case 1: {
+                case ImageHelper.RESULT_GALLERY: {
 
                     Uri selectedImage = data.getData();
                     InputStream inputStream = null;
@@ -80,25 +81,34 @@ public class ApplicationActivity extends AppCompatActivity {
                         e.printStackTrace();
                     }
                     if (inputStream != null) try {
-                        profilePicture = BitmapFactory.decodeStream(inputStream);
-                        if (profilePicture != null) {
-                            profilePicture = ImageStorage.scaleDownBitmap(profilePicture, MAX_IMAGE_WIDTH, MAX_IMAGE_HEIGHT);
+                        image = BitmapFactory.decodeStream(inputStream);
+                        if (image != null) {
+                            image = ImageStorage.scaleDownBitmap(image, MAX_IMAGE_WIDTH, MAX_IMAGE_HEIGHT);
                         }
                         inputStream.close();
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
-                    currentImage.setImageBitmap(profilePicture);
+                    currentImage.setImageBitmap(image);
                     break;
                 }
             }
 
-            Utils.writeImageToFile(profilePicture, path);
-            uploadImage(path);
+            Utils.writeImageToFile(image, path);
+
+            if (!Validation.isEmpty(currentImageUrl)) {
+                uploadImage(currentImageUrl, path);
+            } else {
+                Log.d(TAG, "No Upload URL set, not uploading image");
+            }
         }
     }
 
-    protected void uploadImage(File file) {
+    /**
+     * @param urlTemplate Requires one decimal (%d) placeholder to inject userId
+     * @param imageFile
+     */
+    protected void uploadImage(String urlTemplate, File imageFile) {
         Utils.toast(this, "Uploading Image");
         Persisted persisted = new Persisted(this);
         User user = persisted.loadUser();
@@ -116,12 +126,12 @@ public class ApplicationActivity extends AppCompatActivity {
         String mediaType = "image/jpg";
 
         try {
-            url = factory.joinUrl(String.format("/api/profile-image/%d/", user.getId()));
+            url = factory.joinUrl(String.format(urlTemplate, user.getId()));
         } catch (MalformedURLException e) {
             return;
         }
 
-        uploader.send(url, mediaType, file, new FileUploader.UploadCallback() {
+        uploader.send(url, mediaType, imageFile, new FileUploader.UploadCallback() {
             @Override
             public void onComplete() {
                 Utils.toast(ApplicationActivity.this, "File Upload Success");

@@ -32,12 +32,12 @@ public class FileUploader {
 
     public void send(final String url, String mediaType, File file, final UploadCallback callback) {
         Log.d(TAG, String.format("Uploading [%s] %s", mediaType, url));
-
+        String filename = file.getName();
         MediaType mediaTypeHeader = MediaType.parse(mediaType);
         Request request = new Request.Builder()
                 .url(url)
                 .post(RequestBody.create(mediaTypeHeader, file))
-                .header("Content-Disposition", "attachment;filename=\"profile.jpg\"")
+                .header("Content-Disposition", "attachment;filename=\"" + filename + "\"")
                 .build();
 
         Log.d(TAG, request.headers().toString());

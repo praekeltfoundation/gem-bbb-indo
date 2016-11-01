@@ -4,23 +4,16 @@ package com.rr.rgem.gem.views;
 import android.Manifest;
 import android.app.AlertDialog;
 import android.app.Dialog;
-import android.content.pm.PackageManager;
-import android.os.Build;
-import android.support.v4.app.DialogFragment;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.support.v4.app.DialogFragment;
 import android.support.v4.content.ContextCompat;
-import android.view.Gravity;
-import android.widget.Button;
-import android.widget.LinearLayout;
 
-import com.rr.rgem.gem.R;
-
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
+import com.rr.rgem.gem.image.ImageHelper;
 
 /**
  * Created by jacob on 2016/09/19.
@@ -40,18 +33,18 @@ public class ImageUploadDialog extends DialogFragment
                             int hasPermission = ContextCompat.checkSelfPermission(getContext(), Manifest.permission.CAMERA);
 
                             if (hasPermission != PackageManager.PERMISSION_GRANTED) {
-                                requestPermissions(new String[]{Manifest.permission.CAMERA},0);
+                                requestPermissions(new String[]{Manifest.permission.CAMERA}, 0);
                             }
 
                             if (hasPermission == PackageManager.PERMISSION_GRANTED) {
                                 Intent takePicture = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                                getActivity().startActivityForResult(takePicture, 0);
+                                getActivity().startActivityForResult(takePicture, ImageHelper.RESULT_CAMERA);
                             }
                         }
                         else
                         {
                             Intent takePicture = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                            getActivity().startActivityForResult(takePicture, 0);
+                            getActivity().startActivityForResult(takePicture, ImageHelper.RESULT_CAMERA);
                         }
                     }
                 })
@@ -63,7 +56,7 @@ public class ImageUploadDialog extends DialogFragment
                             int hasPermission = ContextCompat.checkSelfPermission(getContext(), Manifest.permission.READ_EXTERNAL_STORAGE);
 
                             if (hasPermission != PackageManager.PERMISSION_GRANTED) {
-                                requestPermissions(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},0);
+                                requestPermissions(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, 0);
                             }
 
                             if (hasPermission == PackageManager.PERMISSION_GRANTED) {
@@ -71,7 +64,7 @@ public class ImageUploadDialog extends DialogFragment
                                         android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
                                 pickPhoto.putExtra(MediaStore.EXTRA_OUTPUT,
                                         MediaStore.Images.Media.EXTERNAL_CONTENT_URI.getPath());
-                                getActivity().startActivityForResult(pickPhoto , 1);
+                                getActivity().startActivityForResult(pickPhoto , ImageHelper.RESULT_GALLERY);
                             }
                         }
                         else
@@ -80,7 +73,7 @@ public class ImageUploadDialog extends DialogFragment
                                     android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
                             pickPhoto.putExtra(MediaStore.EXTRA_OUTPUT,
                                     MediaStore.Images.Media.EXTERNAL_CONTENT_URI.getPath());
-                            getActivity().startActivityForResult(pickPhoto , 1);
+                            getActivity().startActivityForResult(pickPhoto , ImageHelper.RESULT_GALLERY);
                         }
                     }
                 });
