@@ -10,8 +10,9 @@ import com.google.gson.annotations.SerializedName;
 import com.rr.rgem.gem.Persisted;
 
 import java.lang.reflect.Type;
-import java.util.Date;
 import java.text.SimpleDateFormat;
+
+import org.joda.time.DateTime;
 
 /**
  * Created by Rudolph Jacobs on 2016-10-28.
@@ -26,20 +27,20 @@ public class ParticipantAnswer {
     private Long selectedOption;
 
     @SerializedName("date_answered")
-    Date dateAnswered = new Date();
+    DateTime dateAnswered = new DateTime();
 
     public ParticipantAnswer(Question question, Answer selectedOption)
     {
         this.question = question.getId();
         this.selectedOption = selectedOption.getId();
-        this.dateAnswered = new Date();
+        this.dateAnswered = new DateTime();
     }
 
     public ParticipantAnswer(long question, long selectedOption)
     {
         this.question = question;
         this.selectedOption = selectedOption;
-        this.dateAnswered = new Date();
+        this.dateAnswered = new DateTime();
     }
 
     public long getQuestion() {
@@ -58,11 +59,11 @@ public class ParticipantAnswer {
         this.selectedOption = selectedOption;
     }
 
-    public Date getDateAnswered() {
+    public DateTime getDateAnswered() {
         return dateAnswered;
     }
 
-    public void setDateAnswered(Date dateAnswered) {
+    public void setDateAnswered(DateTime dateAnswered) {
         this.dateAnswered = dateAnswered;
     }
 
