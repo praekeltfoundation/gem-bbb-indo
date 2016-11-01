@@ -45,6 +45,8 @@ public class Entry {
 
     public List<ParticipantAnswer> getAnswers() { return this.answers; }
 
+    public void setAnswers(List<ParticipantAnswer> answers) { this.answers = answers; }
+
     public boolean userSpecified() { return this.user != null; }
 
     public boolean participantSpecified() { return this.participant != null; }
