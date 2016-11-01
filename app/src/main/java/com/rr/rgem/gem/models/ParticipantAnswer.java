@@ -18,23 +18,15 @@ import java.text.SimpleDateFormat;
  */
 
 public class ParticipantAnswer {
-    long user = 0;
+    private Long participant;
 
-    long question;
+    private Long question;
 
     @SerializedName("selected_option")
-    long selectedOption;
+    private Long selectedOption;
 
     @SerializedName("date_answered")
     Date dateAnswered = new Date();
-
-    public ParticipantAnswer(long user, Question question, Answer selectedOption)
-    {
-        this.user = user;
-        this.question = question.getId();
-        this.selectedOption = selectedOption.getId();
-        this.dateAnswered = new Date();
-    }
 
     public ParticipantAnswer(Question question, Answer selectedOption)
     {
