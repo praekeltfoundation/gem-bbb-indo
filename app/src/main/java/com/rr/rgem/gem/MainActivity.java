@@ -105,16 +105,15 @@ public class MainActivity extends ApplicationActivity{
         conversation = (LeftRightConversation) new LeftRightConversation((RelativeLayout) contentLayout);
 
         Persisted persisted = new Persisted(getSharedPreferences(Persisted.APP_PREFS,0));
+
+
         if(!persisted.isRegistered()){
-            //Intent intent = new Intent(this, RegistrationActivity.class);
-            //startActivity(intent);
-            Intent intent = new Intent(this, OnBoardingActivity.class);
+            Intent intent = new Intent(this, Language_Selection.class);
             startActivity(intent);
             this.finish();
         }else{
 
-
-            coachView = new LeftRightConversation(contentLayout);
+        coachView = new LeftRightConversation(contentLayout);
             Message message = new Message(1, "2012", true, Message.ResponseType.FreeForm, null);
             message.setTitle("Hello you have registered and set your goals;swipe right or left to navigate further");
             coachView.addFreeFormPlain(message);

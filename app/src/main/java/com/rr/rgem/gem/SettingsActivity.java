@@ -64,6 +64,17 @@ public class SettingsActivity extends ApplicationActivity {
                 }
             }
         });
+
+
+        Button changeLanguageButton=(Button)findViewById(R.id.changeLanguage);
+        changeLanguageButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(SettingsActivity.this, Language_Selection.class);
+                startActivity(intent);
+                SettingsActivity.this.finish();
+            }
+        });
     }
 
     void signOut() {

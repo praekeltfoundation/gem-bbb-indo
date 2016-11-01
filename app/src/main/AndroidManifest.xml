@@ -109,6 +109,19 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <activity
+            android:name=".Language_Selection"
+            android:label="@string/app_name"
+            android:theme="@style/AppTheme.NoActionBar">
+            <intent-filter>
+                <action android:name="android.intent.action.LANGUAGESELECTION" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+
         <activity
             android:name=".TipArchiveActivity"
             android:label="@string/app_name"
@@ -125,7 +138,8 @@
 
         <activity android:name=".TipArticleActivity" />
         <activity android:name=".LoginActivity" />
-        <activity android:name=".SettingsActivity"></activity>
+        <activity android:name=".SettingsActivity" />
+
     </application>
 
 </manifest>

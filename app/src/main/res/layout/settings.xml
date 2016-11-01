@@ -4,7 +4,8 @@
     android:layout_height="match_parent"
     android:layout_marginLeft="16dp"
     android:layout_marginRight="16dp"
-    android:layout_marginTop="16dp">
+    android:layout_marginTop="16dp"
+    android:weightSum="1">
 
     <TextView
         android:text="@string/settings"
@@ -40,4 +41,13 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/buttonSave" />
+
+    <Button
+        android:text="Change Language"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/changeLanguage"
+        android:layout_weight="0.06"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="@dimen/abc_action_bar_content_inset_with_nav" />
 </LinearLayout>

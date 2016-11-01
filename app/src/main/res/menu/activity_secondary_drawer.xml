@@ -4,32 +4,32 @@
     <group android:checkableBehavior="single">
         <item
             android:id="@+id/nav_goals"
-            android:title="GOALS"
+            android:title="@string/GOALS"
             android:icon="@drawable/ic_launcher"
             />
 
         <item
             android:id="@+id/nav_challenges"
-            android:title="CHALLENGES"
+            android:title="@string/CHALLENGES"
             android:icon="@drawable/ic_launcher"
 
             />
 
         <item
             android:id="@+id/nav_tips"
-            android:title="TIPS"
+            android:title="@string/TIPS"
             android:icon="@drawable/ic_launcher"
 
             />
-        <item android:title="TIP ARCHIVE"
+        <item android:title="@string/TA"
             android:id="@+id/nav_tiparchive"
             android:icon="@drawable/ic_launcher" />
-        <item android:title="LOGIN"
+        <item android:title="@string/login"
             android:id="@+id/nav_login"
             android:icon="@drawable/ic_launcher" />
         <item
             android:id="@+id/nav_invite"
-            android:title="INVITE"
+            android:title="@string/INVITE"
             android:icon="@drawable/ic_launcher"
 
             />

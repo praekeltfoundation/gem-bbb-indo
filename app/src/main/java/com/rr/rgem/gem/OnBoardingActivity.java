@@ -1,6 +1,9 @@
 package com.rr.rgem.gem;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
@@ -8,6 +11,7 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
+import android.util.DisplayMetrics;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -30,6 +34,7 @@ import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Locale;
 import java.util.Map;
 
 /**
@@ -51,7 +56,7 @@ public class OnBoardingActivity extends ApplicationActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        navigation = new GEMNavigation(this);
+         navigation = new GEMNavigation(this);
         Utils.toast(this,"starting OnBoarding activity");
         coachScreen = (LinearLayout) navigation.addLayout(R.layout.conversational_layout);
         contentLayout = (RelativeLayout) coachScreen.findViewById(R.id.container);
@@ -73,6 +78,8 @@ public class OnBoardingActivity extends ApplicationActivity {
                 }
             }
         });
+
+
         coachController.setDoneCallback(new ConvoCallback() {
             @Override
             public String callback(Map<String, String> vars, Map<String, String> responses) {

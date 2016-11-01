@@ -8,13 +8,31 @@
     <string name="invalid_mobile_number">Invalid mobile number</string>
     <string name="congratulations_registered">Congratulations you have registered for dooit!</string>
     <string name="Chanllenge_receiver_Text">Have you participated in this weeks challenge?</string>
-    <string name="Progress_Tracked_receiver_Text">I see you have not saved. Whats happened?</string>
+    <string name="Progress_Tracked_receiver_Text">Hi Name. I see you haven\'t saved in the last two weeks. What happened?</string>
     <string name="currency_unit">Rp</string>
     <string name="currency_side">left</string>
     <string name="action_settings"></string>
 
-    <!-- Registration -->
+
+    <!--Drawer words-->
+    <string name="Profile">Profile</string>
     <string name="registration">Registration</string>
+    <string name="Savings">Savings</string>
+    <string name="Share">Share</string>
+    <string name="Notifications">Notifications</string>
+    <string name="Tools">Tools</string>
+    <string name="SETTINGS">SETTINGS</string>
+    <string name="HELP">HELP</string>
+    <string name="TAC">TERMS AND CONDITIONS</string>
+
+    <string name="GOALS">GOALS</string>
+    <string name="CHALLENGES">CHALLENGES</string>
+    <string name="TIPS">TIPS</string>
+    <string name="TA">TIP ARCHIVE</string>
+    <string name="LOGIN">LOGIN</string>
+    <string name="INVITE">INVITE</string>
+
+    <!-- Registration -->
     <string name="register_notice">By clicking register you agree to our Terms &amp; Conditions</string>
     <string name="registration_already_registered">Already registered? Log In</string>
 
@@ -49,5 +67,7 @@
     <string name="settings">Settings</string>
     <string name="signout">Sign Out</string>
     <string name="server_url">Server url</string>
+    <string name="title_activity_language_selection">LanguageSelection</string>
+    <string name="title_activity_language__selection">Language_Selection</string>
 
 </resources>

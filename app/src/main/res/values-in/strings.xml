@@ -1,0 +1,72 @@
+<resources>
+    <string name="app_name">dooit</string>
+
+    <string name="navigation_drawer_open">Terbuka laci navigasi</string>
+    <string name="navigation_drawer_close">Tutup laci navigasi</string>
+    <string name="invalid_password_length">Silahkan menggunakan password lebih dari 8 karakter</string>
+    <string name="invalid_username_length">Username terlalu pendek</string>
+    <string name="invalid_mobile_number">nomor ponsel yang tidak valid</string>
+    <string name="congratulations_registered">Selamat Anda telah terdaftar untuk dooit!</string>
+    <string name="Chanllenge_receiver_Text">Apakah kamu udah ikutan tantangan minggu ini?</string>
+    <string name="Progress_Tracked_receiver_Text">Hai [nama], udah 2 minggu saya nggak lihat kamu nabung. Apa yang terjadi?</string>
+    <string name="currency_unit">Rp</string>
+    <string name="currency_side">Kiri</string>
+    <string name="action_settings"></string>
+
+
+
+    <!--Drawer words-->
+    <string name="Profile">Profil</string>
+    <string name="registration">Pendaftaran</string>
+    <string name="Savings">Tabungan</string>
+    <string name="Share">Bagikan</string>
+    <string name="Notifications">Notifikasi</string>
+    <string name="Tools">Alat</string>
+    <string name="SETTINGS">Pengaturan</string>
+    <string name="HELP">Bantuan </string>
+    <string name="TAC">Syarat &amp; Ketentuan</string>
+
+    <string name="GOALS">Gol</string>
+    <string name="CHALLENGES">Tantangan</string>
+    <string name="TIPS">Tips</string>
+    <string name="TA">Tip Arsip</string>
+    <string name="LOGIN">Masuk</string>
+    <string name="INVITE">Undang</string>
+
+    <!-- Registration -->
+    <string name="register_notice">Dengan menekan \'Mulai\' kamu menyetujui Syarat &amp; Ketentuan dan aturan main Koois Dooit</string>
+    <string name="registration_already_registered">Sudah terdaftar? Masuk</string>
+
+    <!-- Registration Complete -->
+    <string name="registration_complete_heading">Kamu telah terdaftar!</string>
+    <string name="registration_complete_subheading">Upload foto profil</string>
+
+    <!-- Login -->
+    <string name="username">Nama</string>
+    <string name="username_hint">ex: Aida</string>
+    <string name="mobile_number">No. HP</string>
+    <string name="password">Kata sandi</string>
+    <string name="login">Masuk</string>
+    <string name="login_progress">logging di...</string>
+    <string name="login_success">Login berhasil</string>
+    <string name="login_failed">Gagal masuk</string>
+    <string name="login_debug_url">menggunakan %s</string>
+
+    <string name="profile_image_progress">Mengambil gambar profil...</string>
+    <string name="profile_image_success">Profil Gambar Sukses</string>
+    <string name="profile_image_failed">Profil Gambar Gagal</string>
+
+    <string name="challenge_next">Berikutnya</string>
+    <string name="challenge_done">Selesai</string>
+    <string name="goals_not_yet">"Tidak ada gol belum..."</string>
+    <string name="favourites">Favorit</string>
+    <string name="all">Semua</string>
+    <string name="no_tips">Tidak Tips untuk menunjukkan...</string>
+    <string name="loading">Pemuatan...</string>
+
+    <!-- Settings -->
+    <string name="settings">Pengaturan</string>
+    <string name="signout">Keluar</string>
+    <string name="server_url">url Server</string>
+
+</resources>
