@@ -34,4 +34,18 @@ public class Entry {
         this.user = user;
         this.challenge = challenge;
     }
+
+    public long getParticipant() { return this.participant; }
+
+    public long getChallenge() { return this.challenge; }
+
+    public long getUser() { return this.user; }
+
+    public DateTime getDateCompleted() { return this.dateCompleted; }
+
+    public List<ParticipantAnswer> getAnswers() { return this.answers; }
+
+    public boolean userSpecified() { return this.user != null; }
+
+    public boolean participantSpecified() { return this.participant != null; }
 }
