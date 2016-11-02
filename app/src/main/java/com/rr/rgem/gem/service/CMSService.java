@@ -1,6 +1,7 @@
 package com.rr.rgem.gem.service;
 
 import com.rr.rgem.gem.models.Challenge;
+import com.rr.rgem.gem.models.Entry;
 import com.rr.rgem.gem.models.ParticipantAnswer;
 import com.rr.rgem.gem.models.TipArticle;
 import com.rr.rgem.gem.service.model.User;
@@ -38,4 +39,10 @@ public interface CMSService {
 
     @POST("/api/participantanswers/")
     Call<List<ParticipantAnswer>> createParticipantAnswers(@Body List<ParticipantAnswer> data);
+
+    @POST("/api/entries/")
+    Call<Entry> createEntries(@Body Entry data);
+
+    @POST("/api/entries/")
+    Call<List<Entry>> createEntries(@Body List<Entry> data);
 }
