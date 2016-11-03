@@ -163,7 +163,7 @@ public class JSONConversation {
     {
         if (current.type == ConversationNode.NodeType.text) {
             final ConversationNode.AnswerNode answer = current.answers[0];
-            conversationView.addTextInputQuestion(questionId,current.text, new TextView.OnEditorActionListener() {
+            conversationView.addTextInputQuestion(questionId, parseStringVars(current.text), new TextView.OnEditorActionListener() {
                 @Override
                 public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                 if (actionId == EditorInfo.IME_ACTION_DONE || event.getKeyCode() == KeyEvent.KEYCODE_ENTER)
@@ -200,7 +200,7 @@ public class JSONConversation {
             });
         } else if(current.type == ConversationNode.NodeType.currency){
             final ConversationNode.AnswerNode answer = current.answers[0];
-            conversationView.addTextInputQuestion(questionId,current.text, new TextView.OnEditorActionListener() {
+            conversationView.addTextInputQuestion(questionId, parseStringVars(current.text), new TextView.OnEditorActionListener() {
                 @Override
                 public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                 if (actionId == EditorInfo.IME_ACTION_DONE || event.getKeyCode() == KeyEvent.KEYCODE_ENTER)
@@ -259,7 +259,7 @@ public class JSONConversation {
             }
         } else if (current.type == ConversationNode.NodeType.date) {
             final ConversationNode.AnswerNode answer = current.answers[0];
-            conversationView.addTextInputQuestion(questionId,current.text, new TextView.OnEditorActionListener() {
+            conversationView.addTextInputQuestion(questionId, parseStringVars(current.text), new TextView.OnEditorActionListener() {
                 @Override
                 public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                     if (actionId == EditorInfo.IME_ACTION_DONE || event.getKeyCode() == KeyEvent.KEYCODE_ENTER)
@@ -314,7 +314,7 @@ public class JSONConversation {
             sendChallenges(conversationActivity, conversationView, "Info");
         }else if (current.type == ConversationNode.NodeType.initials) {
             final ConversationNode.AnswerNode answer = current.answers[0];
-            conversationView.addTextInputQuestion(questionId,current.text, new TextView.OnEditorActionListener() {
+            conversationView.addTextInputQuestion(questionId, parseStringVars(current.text), new TextView.OnEditorActionListener() {
                 @Override
                 public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                     if (actionId == EditorInfo.IME_ACTION_DONE || event.getKeyCode() == KeyEvent.KEYCODE_ENTER)
@@ -351,7 +351,7 @@ public class JSONConversation {
             });
         }else if (current.type == ConversationNode.NodeType.mobile) {
             final ConversationNode.AnswerNode answer = current.answers[0];
-            conversationView.addTextInputQuestion(questionId,current.text, new TextView.OnEditorActionListener() {
+            conversationView.addTextInputQuestion(questionId, parseStringVars(current.text), new TextView.OnEditorActionListener() {
                 @Override
                 public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                     if (actionId == EditorInfo.IME_ACTION_DONE || event.getKeyCode() == KeyEvent.KEYCODE_ENTER)
@@ -388,7 +388,7 @@ public class JSONConversation {
             });
         }else if (current.type == ConversationNode.NodeType.password) {
             final ConversationNode.AnswerNode answer = current.answers[0];
-            conversationView.addPasswordMessage(questionId,current.text, new TextView.OnEditorActionListener() {
+            conversationView.addPasswordMessage(questionId, parseStringVars(current.text), new TextView.OnEditorActionListener() {
                 @Override
                 public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                     if (actionId == EditorInfo.IME_ACTION_DONE || event.getKeyCode() == KeyEvent.KEYCODE_ENTER)
@@ -426,7 +426,7 @@ public class JSONConversation {
             },"Type password here...");
         } else if (current.type == ConversationNode.NodeType.passwordTwo) {
             final ConversationNode.AnswerNode answer = current.answers[0];
-            conversationView.addPasswordMessage(questionId,current.text, new TextView.OnEditorActionListener() {
+            conversationView.addPasswordMessage(questionId, parseStringVars(current.text), new TextView.OnEditorActionListener() {
                 @Override
                 public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                     if (actionId == EditorInfo.IME_ACTION_DONE || event.getKeyCode() == KeyEvent.KEYCODE_ENTER)
