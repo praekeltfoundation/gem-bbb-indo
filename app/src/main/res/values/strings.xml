@@ -13,6 +13,78 @@
     <string name="currency_side">left</string>
     <string name="action_settings"></string>
 
+    <!--Goals Strings-->
+    <string name="startingGoalsActivity">starting Goals activity</string>
+    <string name="LetsGetStarted">Lets Get Started!!!</string>
+    <string name="SUMMARY">SUMMARY:</string>
+    <string name="AMOUNT">AMOUNT:</string>
+    <string name="dialog">dialog</string>
+    <string name="noUploadingImage">No Upload URL set, not uploading image</string>
+
+
+
+    <!--Challenges Strings-->
+    <string name="startingchallengesActivity">Starting current challenge activity.</string>
+    <string name="challengeCouldNotBeLoaded">Challenge could not be loaded.</string>
+    <string name="challengeHasNoQuestions">Challenge has no questions.</string>
+    <string name="congratulationsChallengecomplete">Congratulations! Challenge complete.</string>
+    <string name="userNoLoggedInCannotSubmit">User not logged in, cannot submit.</string>
+    <string name="answersResponseSuccessfullySent">Answers response successfully sent.</string>
+    <string name="answersSentButUnsuccessful">Answers sent, but unsuccessful.</string>
+    <string name="failedToSendAnswers">Failed to send answers.</string>
+    <string name="noAnswerSelected">No answer selected.</string>
+    <string name="answerCorrect">Answer correct.</string>
+    <string name="answerIncorrect"> Answer incorrect.</string>
+
+    <!--Tips Strings-->
+    <string name="startingTipsActivity"> Starting Tips activity.</string>
+    <string name="shortTips"> These are short tips that are sent by the coach,which are really useful for the user.</string>
+    <string name="startingArticleActivity"> Starting Tip Article activity.</string>
+    <string name="startingTipsArchiveActivity">Starting Tips Archive activity.</string>
+    <string name="articleClicked">ARTICLE clicked...</string>
+    <string name="favClicked">FAVOURITE clicked...</string>
+    <string name="shareClicked">SHARE clicked...</string>
+
+<!--Application Activity-->
+    <string name="UploadingImage">Uploading Image...</string>
+    <string name="userIdnotSet">User id not set</string>
+    <string name="fileUploadSuccess">File Upload Success</string>
+    <string name="fileUploadFailed">File Upload Failed</string>
+
+    <!--Login Activity-->
+   <string name="loginClicked">Login clicked</string>
+    <string name="usernameIsEmpty">Username is empty</string>
+    <string name="passwordIsEmpty">Password is empty</string>
+
+    <!--MainActivity-->
+    <string name="mainTextAfterReg">Hello you have registered and set your goals;swipe right or left to navigate further</string>
+
+    <!--OnboardingActivity-->
+    <string name="startOnbaordActivity">Starting OnBoarding activity</string>
+    <string name="conversationDone">Conversation done</string>
+    <string name="setProfilePicture">Set a profile picture:</string>
+
+
+    <!-- Savings-->
+    <string name="startingSavingsActivity">Starting Savings activity</string>
+
+    <!--Layout strings-->
+    <string name="check">Check</string>
+    <string name="averageSavings">Average savings</string>
+    <string name="weeklySavings">Weekly Savings</string>
+    <string name="totalSaved">TOTAL SAVED</string>
+    <string name="Goal">Goal</string>
+    <string name="Challenge">Challenge</string>
+    <string name="Button">Button</string>
+    <string name="Amount">Amount</string>
+    <string name="Withdraw">Withdraw</string>
+    <string name="Add">ADD</string>
+    <string name="TipCard">Tip Card</string>
+    <string name="Done">Done</string>
+    <string name="Deregister">Deregister</string>
+    <string name="Upload">Upload</string>
+    <string name="createYourAccount">Create Your Account</string>
+    <string name="REGISTER">REGISTER</string>
 
     <!--Drawer words-->
     <string name="Profile">Profile</string>
@@ -35,6 +107,10 @@
     <!-- Registration -->
     <string name="register_notice">By clicking register you agree to our Terms &amp; Conditions</string>
     <string name="registration_already_registered">Already registered? Log In</string>
+    <string name="registrationing">Registering...</string>
+    <string name="registrationFailed">Registration failed</string>
+    <string name="registrationError">Registration error</string>
+
 
     <!-- Registration Complete -->
     <string name="registration_complete_heading">You are registered!</string>
@@ -47,6 +123,7 @@
     <string name="password">Password</string>
     <string name="login">Log In</string>
     <string name="login_progress">Logging in...</string>
+    <string name="login_out_progress">Logging out...</string>
     <string name="login_success">Login Successful</string>
     <string name="login_failed">Login Failed</string>
     <string name="login_debug_url">Using %s</string>
@@ -66,8 +143,11 @@
     <!-- Settings -->
     <string name="settings">Settings</string>
     <string name="signout">Sign Out</string>
+    <string name="save">Save</string>
     <string name="server_url">Server url</string>
-    <string name="title_activity_language_selection">LanguageSelection</string>
+    <string name="server_url_not_valid">URL is not valid</string>
+    <string name="title_activity_language_selection">Select a Langauge</string>
+    <string name="changeLanguage">Change Language</string>
     <string name="title_activity_language__selection">Language_Selection</string>
 
 </resources>

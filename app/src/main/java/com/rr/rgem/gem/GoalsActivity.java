@@ -51,7 +51,7 @@ public class GoalsActivity extends ApplicationActivity {
         setContentView(R.layout.activity_main);
 
         navigation = new GEMNavigation(this);
-        Utils.toast(this,"starting Goals activity");
+        Utils.toast(this,getString(R.string.startingGoalsActivity));
         goalScreen = (LinearLayout) navigation.addLayout(R.layout.goal_carousel);
         contentLayout = (LinearLayout) goalScreen.findViewById(R.id.carousel);
         this.controller = Factory.createGoalsCarousel(this);
@@ -84,7 +84,7 @@ public class GoalsActivity extends ApplicationActivity {
                 int amount = Integer.parseInt(transactionInformation.get("amount"));
                 if(transactionInformation.get("savingsType").equals("withdraw"))
                     amount *= -1;
-                System.out.println("AMOUNT: " + amount);
+                System.out.println(getString(R.string.AMOUNT) + amount);
                 Transaction transaction = new Transaction(new GregorianCalendar().getTime(), new BigDecimal(amount));
                 goals.get(getGoalIndex(transactionInformation.get("goal"))).addTransaction(transaction);
             }

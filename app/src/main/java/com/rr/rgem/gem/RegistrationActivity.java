@@ -100,7 +100,7 @@ public class RegistrationActivity extends ApplicationActivity {
         user.setProfile(profile);
         Log.d(RegistrationActivity.TAG, "Registering user: " + user);
         Log.d(RegistrationActivity.TAG, "Password: " + user.getPassword());
-        toast("Registering...");
+        toast(getString(R.string.registrationing));
 
         RegistrationActivity.this.authService.register(user).enqueue(new Callback<RegistrationResponse>() {
             @Override
@@ -118,14 +118,14 @@ public class RegistrationActivity extends ApplicationActivity {
                     RegistrationError error = RegistrationActivity.this.errorUtil
                             .parseError(response, RegistrationError.class);
                     Log.d(RegistrationActivity.TAG, "Registration failed " + error.toString());
-                    toast("Registration failed " + error.toString());
+                    toast(getString(R.string.registrationFailed) + error.toString());
                 }
             }
 
             @Override
             public void onFailure(Call<RegistrationResponse> call, Throwable t) {
                 Log.e(RegistrationActivity.TAG, "Registration error", t);
-                toast("Registration error");
+                toast(getString(R.string.registrationError));
             }
         });
     }

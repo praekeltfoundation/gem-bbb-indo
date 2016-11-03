@@ -60,7 +60,7 @@ public class TipArchiveActivity extends ApplicationActivity {
         WebServiceFactory factory = ((WebServiceApplication) getApplication()).getWebServiceFactory();
         service = factory.createService(CMSService.class);
 
-        Utils.toast(this, "starting Tips Archive activity");
+        Utils.toast(this, getString(R.string.startingTipsArchiveActivity));
         navigation = new GEMNavigation(this);
         tipScreen = (LinearLayout) navigation.addLayout(R.layout.tip_archive);
 
@@ -253,7 +253,7 @@ public class TipArchiveActivity extends ApplicationActivity {
             tipCardImage.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Utils.toast(context, String.format("'%s' ARTICLE clicked...", tip.getTitle()));
+                    Utils.toast(context, String.format("'%s'", tip.getTitle()) +getString(R.string.articleClicked));
                     startArticleActivity(tip.getArticleUrl());
                 }
             });
@@ -261,14 +261,14 @@ public class TipArchiveActivity extends ApplicationActivity {
             favBtn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Utils.toast(context, String.format("'%s' FAVOURITE clicked...", tip.getTitle()));
+                    Utils.toast(context, String.format("'%s'", tip.getTitle()) +getString(R.string.favClicked));
                 }
             });
 
             shareBtn.setOnClickListener(new View.OnClickListener(){
                 @Override
                 public void onClick(View v) {
-                    Utils.toast(context, String.format("'%s' SHARE clicked...", tip.getTitle()));
+                    Utils.toast(context, String.format("'%s'", tip.getTitle())+getString(R.string.shareClicked));
                 }
             });
 

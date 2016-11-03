@@ -35,7 +35,7 @@ public class TipArticleActivity extends ApplicationActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Utils.toast(this, "starting Tip Article activity");
+        Utils.toast(this,getString(R.string.startingArticleActivity));
         navigation = new GEMNavigation(this);
         articleScreen = (ViewGroup) navigation.addLayout(R.layout.tip_article);
         ButterKnife.bind(this);

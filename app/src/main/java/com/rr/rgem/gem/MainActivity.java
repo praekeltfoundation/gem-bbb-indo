@@ -115,7 +115,7 @@ public class MainActivity extends ApplicationActivity{
 
         coachView = new LeftRightConversation(contentLayout);
             Message message = new Message(1, "2012", true, Message.ResponseType.FreeForm, null);
-            message.setTitle("Hello you have registered and set your goals;swipe right or left to navigate further");
+            message.setTitle(getString(R.string.mainTextAfterReg));
             coachView.addFreeFormPlain(message);
 
         }

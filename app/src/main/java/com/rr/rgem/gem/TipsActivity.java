@@ -41,12 +41,12 @@ public class TipsActivity extends ApplicationActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         navigation = new GEMNavigation(this);
-        Utils.toast(this, "starting Tips activity");
+        Utils.toast(this, getString(R.string.startingTipsActivity));
         coachScreen = (LinearLayout) navigation.addLayout(R.layout.conversational_layout);
         contentLayout = (RelativeLayout) coachScreen.findViewById(R.id.container);
         coachView = new LeftRightConversation(contentLayout);
         Message start = new Message(1, "2016", true, Message.ResponseType.FreeForm, null);
-        start.setTitle("These are short tips that are sent by the coach,which are really useful for the user.");
+        start.setTitle(getString(R.string.shortTips));
         coachView.addFreeFormPlain(start);
         coachController = new JSONConversation(this, R.raw.tips);
         coachController.setDoneCallback(new ConvoCallback() {

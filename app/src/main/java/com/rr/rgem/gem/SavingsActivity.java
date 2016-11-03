@@ -48,12 +48,12 @@ public class SavingsActivity extends ApplicationActivity {
         setContentView(R.layout.activity_main);
 
         navigation = new GEMNavigation(this);
-        Utils.toast(this,"starting Savings activity");
+        Utils.toast(this,getString(R.string.startingSavingsActivity));
         coachScreen = (LinearLayout) navigation.addLayout(R.layout.conversational_layout);
         contentLayout = (RelativeLayout) coachScreen.findViewById(R.id.container);
         coachView = new LeftRightConversation(contentLayout);
         Message start = new Message(1, "2016", true, Message.ResponseType.FreeForm, null);
-        start.setTitle("Lets Get Started!!!");
+        start.setTitle(getString(R.string.LetsGetStarted));
         coachController = new JSONConversation(this,R.raw.savings);
         coachController.setDoneCallback(new ConvoCallback() {
 
@@ -62,7 +62,7 @@ public class SavingsActivity extends ApplicationActivity {
             public String callback(Map<String, String> vars, final Map<String, String> responses) {
 
                 Message summary = new Message(1, "2016", true, Message.ResponseType.FreeForm, null);
-                summary.setTitle("SUMMARY:");
+                summary.setTitle(getString(R.string.SUMMARY));
                 coachView.addFreeFormPlain(summary);
 
                 for (String key: responses.keySet()) {

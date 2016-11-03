@@ -1,7 +1,7 @@
 [
   {
     "name":"askName",
-    "text":"Welcome to dooit! What is your name?",
+    "text":"Welcome to $(askName) dooit! What is your name?",
     "type":"initials",
     "error": "validationFailName",
     "answers":[
@@ -11,7 +11,7 @@
   },
   {
     "name":"askMobileNumber",
-    "text":"What is your mobile number? ",
+    "text":"What is $(askName) mobile number? ",
     "type":"mobile",
     "error": "validationFailNumber",
     "answers":[

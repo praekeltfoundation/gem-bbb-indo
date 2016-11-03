@@ -41,7 +41,7 @@
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:gravity="center_horizontal"
-            android:text="TOTAL SAVED"
+            android:text="@string/totalSaved"
             android:layout_above="@id/savings"
             android:layout_centerHorizontal="true"
             android:padding="10dp"
@@ -75,7 +75,7 @@
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceSmall"
             android:gravity="center_horizontal"
-            android:text="average savings"
+            android:text="@string/averageSavings"
             android:layout_below="@id/title"
             android:layout_centerHorizontal="true"
             android:id="@+id/averageSavingsTitle"/>
@@ -99,7 +99,7 @@
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceSmall"
             android:gravity="center_horizontal"
-            android:text="weekly savings"
+            android:text="@string/weeklySavings"
             android:layout_below="@id/weeklySavings"
             android:layout_centerHorizontal="true"
             android:id="@+id/weeklySavingsTitle"/>

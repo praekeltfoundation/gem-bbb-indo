@@ -14,6 +14,75 @@
     <string name="action_settings"></string>
 
 
+    <!--Goals Strings-->
+    <string name="startingGoalsActivity">Memulai aktivitas Gol</string>
+    <string name="LetsGetStarted">Mari Memulai !!!</string>
+    <string name="SUMMARY">RINGKASAN:</string>
+    <string name="AMOUNT">JUMLAH:</string>
+    <string name="dialog">dialog</string>
+    <string name="noUploadingImage">Tidak ada URL Upload set, tidak meng-upload gambar</string>
+
+    <!--Challenges Strings-->
+    <string name="startingchallengesActivity">Memulai aktivitas tantangan saat ini.</string>
+    <string name="challengeCouldNotBeLoaded">Challenge could not be loaded.</string>
+    <string name="challengeHasNoQuestions">Tantangan tidak dapat dimuat.</string>
+    <string name="congratulationsChallengecomplete">Selamat! Tantang lengkap.</string>
+    <string name="userNoLoggedInCannotSubmit">Pengguna belum login, tidak bisa mengirimkan.</string>
+    <string name="answersResponseSuccessfullySent">Jawaban respon berhasil dikirim.</string>
+    <string name="answersSentButUnsuccessful">Jawaban dikirim, tapi tidak berhasil.</string>
+    <string name="failedToSendAnswers">Gagal mengirim jawaban.</string>
+    <string name="noAnswerSelected">Tidak ada jawaban yang dipilih.</string>
+    <string name="answerCorrect">Answer correct.</string>
+    <string name="answerIncorrect"> Jawaban yang salah.</string>
+
+    <!--Tips Strings-->
+    <string name="startingTipsActivity">Mulai aktivitas Tips.</string>
+    <string name="shortTips">Ini adalah tips singkat yang dikirim oleh pelatih, yang benar-benar berguna bagi pengguna.</string>
+    <string name="startingArticleActivity">Mulai aktivitas Pasal Tip.</string>
+    <string name="startingTipsArchiveActivity">Mulai aktivitas Tips Arsip.</string>
+    <string name="articleClicked">PASAL diklik ...</string>
+    <string name="favClicked">FAVORIT diklik ...</string>
+    <string name="shareClicked">SAHAM diklik ...</string>
+
+    <!--Application Activity-->
+    <string name="UploadingImage">Meng-upload gambar ...</string>
+    <string name="userIdnotSet">User id tidak diatur</string>
+    <string name="fileUploadSuccess">Berkas Upload Sukses</string>
+    <string name="fileUploadFailed">Upload File Gagal</string>
+
+    <!--Login Activity-->
+    <string name="loginClicked">Login diklik</string>
+    <string name="usernameIsEmpty">Nama pengguna kosong</string>
+    <string name="passwordIsEmpty">Sandi kosong</string>
+
+    <!--MainActivity-->
+    <string name="mainTextAfterReg">Halo Anda telah terdaftar dan menetapkan tujuan Anda; gesek ke kanan atau ke kiri untuk menavigasi lanjut</string>
+
+    <!--OnboardingActivity-->
+    <string name="startOnbaordActivity">Mulai kegiatan orientasi</string>
+    <string name="conversationDone">Percakapan dilakukan</string>
+    <string name="setProfilePicture">Mengatur gambar profil:</string>
+
+    <!-- Savings-->
+    <string name="startingSavingsActivity">Memulai aktivitas Tabungan</string>
+
+    <!--Layout strings-->
+    <string name="check">Memeriksa</string>
+    <string name="averageSavings">Rata-rata tabungan</string>
+    <string name="weeklySavings">Tabungan mingguan</string>
+    <string name="totalSaved">TOTAL DISELAMATKAN</string>
+    <string name="Goal">Tujuan</string>
+    <string name="Challenge">Tantangan</string>
+    <string name="Button">Tombol</string>
+    <string name="Amount">Jumlah</string>
+    <string name="Withdraw">Menarik</string>
+    <string name="Add">MENAMBAHKAN</string>
+    <string name="TipCard">Kartu tip</string>
+    <string name="Done">Matang</string>
+    <string name="Deregister">Deregister</string>
+    <string name="Upload">Upload</string>
+    <string name="createYourAccount">Buat akunmu</string>
+    <string name="REGISTER">DAFTAR</string>
 
     <!--Drawer words-->
     <string name="Profile">Profil</string>
@@ -36,6 +105,9 @@
     <!-- Registration -->
     <string name="register_notice">Dengan menekan \'Mulai\' kamu menyetujui Syarat &amp; Ketentuan dan aturan main Koois Dooit</string>
     <string name="registration_already_registered">Sudah terdaftar? Masuk</string>
+    <string name="registrationing">Mendaftarkan ...</string>
+    <string name="registrationFailed">Registrasi gagal</string>
+    <string name="registrationError">Kesalahan pendaftaran</string>
 
     <!-- Registration Complete -->
     <string name="registration_complete_heading">Kamu telah terdaftar!</string>
@@ -48,6 +120,7 @@
     <string name="password">Kata sandi</string>
     <string name="login">Masuk</string>
     <string name="login_progress">logging di...</string>
+    <string name="login_out_progress">Keluar...</string>
     <string name="login_success">Login berhasil</string>
     <string name="login_failed">Gagal masuk</string>
     <string name="login_debug_url">menggunakan %s</string>
@@ -67,6 +140,11 @@
     <!-- Settings -->
     <string name="settings">Pengaturan</string>
     <string name="signout">Keluar</string>
+    <string name="save">Menyimpan</string>
     <string name="server_url">url Server</string>
+    <string name="server_url_not_valid">URL tidak valid</string>
+    <string name="title_activity_language_selection">Pilih Langauge a</string>
+    <string name="changeLanguage">Ganti BAHASA</string>
+    <string name="title_activity_language__selection">Seleksi_bahasa</string>
 
 </resources>

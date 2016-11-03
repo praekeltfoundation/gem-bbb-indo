@@ -51,12 +51,12 @@ public class GoalActivity extends ApplicationActivity {
         setContentView(R.layout.activity_main);
 
         navigation = new GEMNavigation(this);
-        Utils.toast(this,"starting Goals activity");
+        Utils.toast(this,getString(R.string.startingGoalsActivity));
         coachScreen = (LinearLayout) navigation.addLayout(R.layout.conversational_layout);
         contentLayout = (RelativeLayout) coachScreen.findViewById(R.id.container);
         coachView = new LeftRightConversation(contentLayout);
         Message start = new Message(1, "2016", true, Message.ResponseType.FreeForm, null);
-        start.setTitle("Lets Get Started!!!");
+        start.setTitle(getString(R.string.LetsGetStarted));
 
         //coachController = new JSONConversation(this,R.raw.goals);
 
@@ -67,7 +67,7 @@ public class GoalActivity extends ApplicationActivity {
             public String callback(Map<String, String> vars, final Map<String, String> responses) {
 
                 Message summary = new Message(1, "2016", true, Message.ResponseType.FreeForm, null);
-                summary.setTitle("SUMMARY:");
+                summary.setTitle(getString(R.string.SUMMARY));
                 coachView.addFreeFormPlain(summary);
 
                 for (String key: responses.keySet()) {
@@ -102,7 +102,7 @@ public class GoalActivity extends ApplicationActivity {
             public void onClick(View v) {
                 FragmentManager manager = getSupportFragmentManager();
                 ImageUploadDialog dialog = new ImageUploadDialog();
-                dialog.show(manager, "dialog");
+                dialog.show(manager, getString(R.string.dialog));
             }
         };
 

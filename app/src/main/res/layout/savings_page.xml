@@ -16,7 +16,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceSmall"
-            android:text="Amount"
+            android:text="@string/Amount"
             android:id="@+id/textViewSavingsAmmount"
             android:singleLine="true" />
 
@@ -37,7 +37,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceSmall"
-            android:text="Goal "
+            android:text="@string/Goal"
             android:id="@+id/textViewGoal"
             android:singleLine="true"/>
 
@@ -60,14 +60,14 @@
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Add"
+            android:text="@string/Add"
             android:id="@+id/buttonAddSavings"
             android:textColor="@color/colorMenuText" />
 
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Withdraw"
+            android:text="@string/Withdraw"
             android:id="@+id/buttonWithdrawSavings"
             android:textColor="@color/colorMenuText" />
     </LinearLayout>

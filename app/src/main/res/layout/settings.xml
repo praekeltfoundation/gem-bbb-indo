@@ -37,13 +37,13 @@
         android:id="@+id/editTextUrl" />
 
     <Button
-        android:text="Save"
+        android:text="@string/save"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/buttonSave" />
 
     <Button
-        android:text="Change Language"
+        android:text="@string/changeLanguage"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/changeLanguage"
