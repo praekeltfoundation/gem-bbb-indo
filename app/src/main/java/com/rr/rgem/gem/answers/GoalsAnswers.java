@@ -7,6 +7,7 @@ import com.google.gson.reflect.TypeToken;
 import com.rr.rgem.gem.ChallengeActivity;
 import com.rr.rgem.gem.GoalsActivity;
 import com.rr.rgem.gem.Persisted;
+import com.rr.rgem.gem.R;
 import com.rr.rgem.gem.controllers.Validation;
 import com.rr.rgem.gem.controllers.common.JSONController;
 import com.rr.rgem.gem.controllers.common.JSONState;

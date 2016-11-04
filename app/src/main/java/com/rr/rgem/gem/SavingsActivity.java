@@ -55,6 +55,18 @@ public class SavingsActivity extends ApplicationActivity {
         Message start = new Message(1, "2016", true, Message.ResponseType.FreeForm, null);
         start.setTitle(getString(R.string.LetsGetStarted));
         coachController = new JSONConversation(this,R.raw.savings);
+
+        Map<String, String> vars = coachController.getVars();
+        vars.put("savingsAskType", getString(R.string.savingsAskType));
+        vars.put("savingsAskSaveAmount", getString(R.string.savingsAskSaveAmount));
+        vars.put("savingsInfoInvalidAmount", getString(R.string.savingsInfoInvalidAmount));
+        vars.put("savingsCongratulate", getString(R.string.savingsCongratulate));
+        vars.put("savingsAskWithdrawAmount", getString(R.string.savingsAskWithdrawAmount));
+        vars.put("savingsInfoWithdrawInvalidAmount", getString(R.string.savingsInfoWithdrawInvalidAmount));
+        vars.put("savingsConsole", getString(R.string.savingsConsole));
+
+
+
         coachController.setDoneCallback(new ConvoCallback() {
 
 

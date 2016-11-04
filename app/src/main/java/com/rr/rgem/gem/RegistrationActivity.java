@@ -131,7 +131,7 @@ public class RegistrationActivity extends ApplicationActivity {
     }
 
     void startNextActivity() {
-        Intent intent = new Intent(this, RegistrationCompleteActivity.class);
+        Intent intent = new Intent(this, Terms_Conditions.class);
         RegistrationActivity.this.startActivity(intent);
         RegistrationActivity.this.finish();
     }

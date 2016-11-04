@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import com.rr.rgem.gem.OnBoardingActivity;
 import com.rr.rgem.gem.Persisted;
+import com.rr.rgem.gem.R;
 import com.rr.rgem.gem.controllers.common.JSONController;
 import com.rr.rgem.gem.controllers.common.JSONState;
 import com.rr.rgem.gem.controllers.Validation;
@@ -25,7 +26,7 @@ public class OnBoardingAnswers implements AnswerInterface {
     private String PasswordOne;
     private String PasswordTwo;
     private OnBoardingActivity activity;
-    private final String name = "onboarding";
+    private final String name = "goals";
     private JSONState state;
 
     public JSONState getState(){

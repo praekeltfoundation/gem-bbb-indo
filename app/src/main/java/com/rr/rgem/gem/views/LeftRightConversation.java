@@ -62,11 +62,11 @@ public class LeftRightConversation extends ConversationalBase
             View message = views.get(key);
             if (message.getTag() == Message.ResponseType.FreeForm || message.getTag() == Message.ResponseType.QuickReply || message.getTag() == Message.ResponseType.QuickButton)
             {
-                addLeftView(message, "name");
+                addLeftView(message, contentLayout.getResources().getString(R.string.name));
             }
             else
             {
-                addRightView(message, "name");
+                addRightView(message, contentLayout.getResources().getString(R.string.name));
             }
         }
     }
@@ -79,7 +79,7 @@ public class LeftRightConversation extends ConversationalBase
     private void addFreeFormQuestion(Message message, CharSequence placeholder)
     {
         View question = formatMessage(message);
-        this.addLeftView(question, "name");
+        this.addLeftView(question, contentLayout.getResources().getString(R.string.name));
 
         final EditText textField = new EditText(contentLayout.getContext());
         textField.setHint(placeholder);
@@ -88,7 +88,7 @@ public class LeftRightConversation extends ConversationalBase
         textField.setSingleLine(true);
         textField.setText(message.getContent());
         textField.setEnabled(Validation.isEmpty(message.getContent()));
-        addRightView(textField, "Textfield");
+        addRightView(textField, contentLayout.getResources().getString(R.string.textField));
         question.setTag(Message.ResponseType.FreeForm);
         views.put(message.getId(), question);
 
@@ -120,7 +120,7 @@ public class LeftRightConversation extends ConversationalBase
     private void addDatePickerQuestion(Message message, CharSequence placeholder)
     {
         View question = formatMessage(message);
-        this.addLeftView(question, "name");
+        this.addLeftView(question, contentLayout.getResources().getString(R.string.name));
 
         final EditText textField = new EditText(contentLayout.getContext());
         textField.setHint(placeholder);
@@ -132,9 +132,9 @@ public class LeftRightConversation extends ConversationalBase
         if(Validation.isEmpty(message.getContent())) {
             final DatePicker datePicker = new DatePicker(contentLayout.getContext());
             initDatePicker(textField, datePicker);
-            addRightView(datePicker, "DatePicker");
+            addRightView(datePicker, contentLayout.getResources().getString(R.string.datePicker));
         }
-        addRightView(textField, "Textfield");
+        addRightView(textField,contentLayout.getResources().getString(R.string.textField));
         question.setTag(Message.ResponseType.FreeForm);
         views.put(message.getId(), question);
 
@@ -143,7 +143,7 @@ public class LeftRightConversation extends ConversationalBase
     public void addFreeFormPlain(Message message)
     {
         View question = formatMessage(message);
-        this.addLeftView(question, "name");
+        this.addLeftView(question, contentLayout.getResources().getString(R.string.name));
 
         //final EditText textField = new EditText(contentLayout.getContext());
         //textField.setHint(placeholder);
@@ -164,13 +164,13 @@ public class LeftRightConversation extends ConversationalBase
         textField.setSingleLine(true);
         textField.setText(text);
         textField.setEnabled(false);
-        addRightView(textField, "Textfield");
+        addRightView(textField, contentLayout.getResources().getString(R.string.textField));
     }
 
     public void addQuickReplyQuestion(MultipleChoice message)
     {
         View question = formatMessage(message);
-        this.addLeftView(question, "name");
+        this.addLeftView(question, contentLayout.getResources().getString(R.string.name));
         ConversationalBase.OptionButtonSentence sentence = this.createOptionButtonSentence();
         for(String key: message.getChoices().keySet()){
             final CharSequence name = key;
@@ -184,7 +184,7 @@ public class LeftRightConversation extends ConversationalBase
     {
         View question = formatMessage(message);
         LinearLayout contentHolder = (LinearLayout) question.findViewById(R.id.contentHolder);
-        this.addLeftView(question, "name");
+        this.addLeftView(question, contentLayout.getResources().getString(R.string.name));
 
         for (String key: message.getChoices().keySet())
         {
@@ -218,7 +218,7 @@ public class LeftRightConversation extends ConversationalBase
     {
         View answer = formatMessage(message);
         LinearLayout contentHolder = (LinearLayout) answer.findViewById(R.id.contentHolder);
-        this.addRightView(answer, "name");
+        this.addRightView(answer, contentLayout.getResources().getString(R.string.name));
         answer.setTag(Message.ResponseType.User);
         views.put(message.getId(), answer);
     }
@@ -226,7 +226,7 @@ public class LeftRightConversation extends ConversationalBase
     public void addMessageCarousel(MessageCarousel messageCarousel)
     {
         View carouselHolder = LayoutInflater.from(contentLayout.getContext()).inflate(R.layout.message_carousel, null);
-        this.addLeftView(carouselHolder, "name");
+        this.addLeftView(carouselHolder, contentLayout.getResources().getString(R.string.name));
         LinearLayout carousel = (LinearLayout) carouselHolder.findViewById(R.id.carousel);
         View preview = null;
 
@@ -268,10 +268,10 @@ public class LeftRightConversation extends ConversationalBase
     public ImageView addImageUploadQuestion(Message message, View.OnClickListener listener)
     {
         View question = formatMessage(message);
-        this.addLeftView(question, "name");
+        this.addLeftView(question, contentLayout.getResources().getString(R.string.name));
 
         RelativeLayout container = new RelativeLayout(contentLayout.getContext());
-        this.addRightView(container, "image");
+        this.addRightView(container, contentLayout.getResources().getString(R.string.image));
         final float scale = contentLayout.getContext().getResources().getDisplayMetrics().density;
         int pixels = (int) (200 * scale + 0.5f);
         /*
@@ -377,20 +377,20 @@ public class LeftRightConversation extends ConversationalBase
         Message msg = new Message(id, new Date().toString(), true, Message.ResponseType.FreeForm, listener);
         msg.setTitle(title);
         msg.setContent(content);
-        addDatePickerQuestion(msg, "Type answer here...");
+        addDatePickerQuestion(msg, contentLayout.getResources().getString(R.string.typeAnswerHere));
     }
 
     public void addTextInputQuestion(long id,String title, TextView.OnEditorActionListener listener){
         Message msg = new Message(id,new Date().toString(),true, Message.ResponseType.FreeForm,listener);
         msg.setTitle(title);
-        addFreeFormQuestion(msg, "Type answer here...");
+        addFreeFormQuestion(msg, contentLayout.getResources().getString(R.string.typeAnswerHere));
     }
 
     public void addTextInputQuestion(long id,String title, String content,TextView.OnEditorActionListener listener){
         Message msg = new Message(id,new Date().toString(),true, Message.ResponseType.FreeForm,listener);
         msg.setTitle(title);
         msg.setContent(content);
-        addFreeFormQuestion(msg, "Type answer here...");
+        addFreeFormQuestion(msg, contentLayout.getResources().getString(R.string.typeAnswerHere));
     }
 
     public void addMultipleChoiceQuestion(long id,String title,Map<String, View.OnClickListener> listeners){
@@ -408,7 +408,7 @@ public class LeftRightConversation extends ConversationalBase
     private void addPasswordQuestion(Message message, CharSequence placeholder)
     {
         View question = formatMessage(message);
-        this.addLeftView(question, "name");
+        this.addLeftView(question, contentLayout.getResources().getString(R.string.name));
 
         EditText passwordField = new EditText(contentLayout.getContext());
         passwordField.setHint(placeholder);
@@ -416,7 +416,7 @@ public class LeftRightConversation extends ConversationalBase
         passwordField.setSingleLine(true);
         passwordField.setOnEditorActionListener(message.getEditorActionListener());
         passwordField.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
-        this.addRightView(passwordField, "Passwordfield");
+        this.addRightView(passwordField, contentLayout.getResources().getString(R.string.Passwordfield));
 
         question.setTag(Message.ResponseType.FreeForm);
         views.put(message.getId(), question);

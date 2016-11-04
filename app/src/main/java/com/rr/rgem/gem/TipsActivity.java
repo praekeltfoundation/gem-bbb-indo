@@ -49,6 +49,15 @@ public class TipsActivity extends ApplicationActivity {
         start.setTitle(getString(R.string.shortTips));
         coachView.addFreeFormPlain(start);
         coachController = new JSONConversation(this, R.raw.tips);
+
+        Map<String, String> vars = coachController.getVars();
+        vars.put("Tone", getString(R.string.Tone));
+        vars.put("Ttwo",getString(R.string.Ttwo));
+        vars.put("Tthree", getString(R.string.Tthree));
+        vars.put("Tfour",getString(R.string.Tfour));
+        vars.put("infoTipsEnd", getString(R.string.infoTipsEnd));
+
+
         coachController.setDoneCallback(new ConvoCallback() {
 
 

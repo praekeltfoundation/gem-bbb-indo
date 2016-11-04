@@ -13,6 +13,24 @@
     <string name="currency_side">Kiri</string>
     <string name="action_settings"></string>
 
+    <string name="youAnswered">Kamu menjawab:</string>
+    <string name="inValidAnswer">Jawabannya tidak valid. Masukkan jawaban yang valid.</string>
+    <string name="youSelected">Anda pilih: </string>
+    <string name="info">Info</string>
+    <string name="saved">Disimpan</string>
+    <string name="typePasswordHere">Ketik Sandi sini ...</string>
+    <string name="challenges">Tantangan</string>
+    <string name="onboarding">Orientasi</string>
+    <string name="goals">Tujuan</string>
+    <string name="toolBarNotSupplied">Toolbar tidak dapat ditemukan dalam argumen wadah yang disediakan</string>
+    <string name="contentNotSupplied">Tampilan konten utama tidak dapat ditemukan</string>
+    <string name="typeAnswerHere">Ketik menjawab di sini ...</string>
+    <string name="name">nama</string>
+    <string name="datePicker">datePicker</string>
+    <string name="textField">textField</string>
+    <string name="Passwordfield">Passwordfield</string>
+    <string name="image">gambar</string>
+
 
     <!--Goals Strings-->
     <string name="startingGoalsActivity">Memulai aktivitas Gol</string>
@@ -146,5 +164,75 @@
     <string name="title_activity_language_selection">Pilih Langauge a</string>
     <string name="changeLanguage">Ganti BAHASA</string>
     <string name="title_activity_language__selection">Seleksi_bahasa</string>
+
+
+
+    <!--JSON ONBOARDING-->
+    <string name="askName">Selamat Datang di dooit! Siapa namamu?</string>
+    <string name="askMobileNumber">Apa nomor ponsel?</string>
+    <string name="askPasswordOne">Kami membutuhkan Anda untuk membuat password sehingga saya bisa pastikan itu selalu Anda siapa yang mengakses informasi tabungan Anda. Balas dengan password 8 huruf atau angka. Jangan khawatir saya akan menyembunyikan apa yang Anda mengetik sehingga tidak ada yang bisa melihat. </string>
+    <string name="askPasswordTwo">Akan Anda ketik sekali lagi sehingga saya bisa memeriksa apakah aku telah disimpan dengan benar?</string>
+    <string name="validationFailName">Maaf, saya tidak mengerti itu dan belum diajarkan bagaimana menanganinya belum.</string>
+    <string name="validationFailNumber">Maaf, saya tidak mengerti itu dan belum diajarkan bagaimana menanganinya belum.</string>
+    <string name="validationFailPassword">Jawabannya tidak valid. Cukup masukkan 8 atau lebih karakter (huruf / angka / karakter khusus (- _ `~ @ # $ &amp; *)).</string>
+    <string name="validationFailPasswordMatch">Kata sandi harus cocok.</string>
+    <string name="infoOnboardingEnd">Terima kasih. Yang menyimpulkan proses pendaftaran.</string>
+
+
+
+
+    <!--JSON GOALS-->
+    <string name="askGoalName">Apa yang Anda menabung untuk?</string>
+    <string name="askGoalImage">Menambahkan foto tujuan tabungan Anda untuk membantu Anda tetap termotivasi
+, Atau tekan melompat:</string>
+    <string name="askGoalImageTake">Tekan pada kotak biru ...</string>
+    <string name="askKnowGoalAmount">Apakah Anda tahu berapa banyak yang Anda butuhkan untuk menyimpan?</string>
+    <string name="askGoalAmount">Besar! Cukup ketik jumlah yang ingin Anda simpan.</string>
+    <string name="infoDontKnowAmount">Tidak masalah.</string>
+    <string name="askKnowGoalDate">Itu adalah tujuan besar. Mari kita menabung kemudian. Apakah Anda memiliki tanggal yang ingin Anda simpan dengan ini?</string>
+    <string name="askGoalDate">Bila Anda ingin menyelamatkan ini banyak?</string>
+    <string name="askGoalWeeklySaveAmount">Berapa banyak Anda dapat menyimpan setiap minggu?</string>
+    <string name="askGoalSaveAmountOther">Berapa banyak Anda dapat menyimpan?</string>
+    <string name="askGoalPriorSave">Telah disimpan sesuatu menuju tujuan ini belum?</string>
+    <string name="askPriorSavedAmount">Berapa banyak yang telah Anda sudah diselamatkan?</string>
+    <string name="verifyGoalAmount">Jika Anda menyimpan Rp $ (weeklyGoal) setiap minggu Anda akan menghemat cukup untuk mendapatkan Anda $ (savingsGoal) di $ (totalWeeks) minggu.</string>
+    <string name="validationFail">Maaf, saya tidak mengerti itu dan belum diajarkan bagaimana menanganinya belum.</string>
+    <string name="validationFailDate">Maaf, saya tidak mengerti itu dan belum diajarkan bagaimana menanganinya belum.</string>
+    <string name="validationFailSaveAmountOther">Maaf, saya tidak mengerti itu dan belum diajarkan bagaimana menanganinya belum.</string>
+    <string name="validationFailPriorSavedAmount">Maaf, saya tidak mengerti itu dan belum diajarkan bagaimana menanganinya belum.</string>
+    <string name="infoGoalEnd">Terima kasih. Yang menyimpulkan proses penetapan tujuan.</string>
+
+    <!--Buttons-->
+    <string name="knowAmountY">Iya nih</string>
+    <string name="knowAmountN">Tidak</string>
+
+   <!--JSON CHALLENGES-->
+    <string name="toes">Anda dapat menyentuh jari-jari kaki Anda?</string>
+    <string name="night">Dapatkah Anda mendarat di matahari di malam hari?</string>
+
+    <!--Savings-->
+    <string name="savingsAskType">Apakah Anda ingin menambah tabungan Anda atau menarik diri dari mereka?</string>
+    <string name="savingsAskSaveAmount">Berapa banyak yang Anda ingin menambahkan?</string>
+    <string name="savingsInfoInvalidAmount">Maaf, tapi saya tidak mengerti itu. Silakan coba lagi.</string>
+    <string name="savingsCongratulate">Kerja bagus! Setiap bit penting.</string>
+    <string name="savingsAskWithdrawAmount">Itu terlalu buruk. Berapa banyak yang Anda ingin menarik?</string>
+    <string name="savingsInfoWithdrawInvalidAmount">Saya minta maaf, tapi saya tidak mengerti itu. Silakan coba lagi.</string>
+    <string name="savingsConsole">Jangan khawatir. Hal akan lebih baik di masa depan. Berikut adalah tip bermanfaat.</string>
+
+    <!--Tips-->
+    <string name="Tone">Tip satu, tip berikutnya?</string>
+    <string name="Ttwo">Tips kedua, ujung berikutnya?</string>
+    <string name="Tthree">Tip tiga, ujung berikutnya?</string>
+    <string name="Tfour">Tip empat</string>
+    <string name="infoTipsEnd">Terima kasih.</string>
+
+    <!--Terms and Conditions-->
+    <string name="termsAndConditions">
+Syarat dan Ketentuan adalah seperangkat aturan dan pedoman bahwa pengguna harus menyetujui untuk menggunakan situs web atau aplikasi mobile. Ini bertindak sebagai kontrak hukum antara Anda (perusahaan) yang memiliki situs web atau aplikasi mobile dan pengguna yang mengakses situs web dan aplikasi mobile.
+Terserah Anda untuk menetapkan aturan dan pedoman bahwa pengguna harus menyetujui.</string>
+    <string name="agree">Saya setuju</string>
+    <string name="disagree">Saya tidak setuju</string>
+
+
 
 </resources>

@@ -41,7 +41,7 @@ public class GoalActivity extends ApplicationActivity {
     private LinearLayout coachScreen;
 
     private LeftRightConversation coachView;
-    //private JSONConversation coachController;
+   // private JSONConversation coachController;
     private GoalAnswers coachController;
     private ImageView currentImage;
     Goal goal;
@@ -83,7 +83,7 @@ public class GoalActivity extends ApplicationActivity {
                     @Override
                     public void onClick(View v) {
                         coachController.save(null);
-                        Intent intent = new Intent(GoalActivity.this,GoalsActivity.class);
+                        Intent intent = new Intent(GoalActivity.this,MainActivity.class);
                         intent.putExtra("responses", (HashMap<String, String>) responses);
                         startActivity(intent);
 

@@ -71,8 +71,15 @@ public class OnBoardingActivity extends ApplicationActivity {
         coachController = new JSONConversation(this,R.raw.onboarding);
 
         Map<String, String> vars = coachController.getVars();
-        vars.put("askName", getString(R.string.app_name));
-
+        vars.put("askName", getString(R.string.askName));
+        vars.put("askMobileNumber",getString(R.string.askMobileNumber));
+        vars.put("askPasswordOne",getString(R.string.askPasswordOne));
+        vars.put("askPasswordTwo",getString(R.string.askPasswordTwo));
+        vars.put("validationFailName",getString(R.string.validationFailName));
+        vars.put("validationFailNumber",getString(R.string.validationFailNumber));
+        vars.put("validationFailPassword",getString(R.string.validationFailPassword));
+        vars.put("validationFailPasswordMatch",getString(R.string.validationFailPasswordMatch));
+        vars.put("infoOnboardingEnd",getString(R.string.infoOnboardingEnd));
 
 
 
