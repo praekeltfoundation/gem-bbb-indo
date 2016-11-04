@@ -239,7 +239,7 @@ public class JSONConversation {
         } else if (current.type == ConversationNode.NodeType.choice) {
             Map<String,View.OnClickListener> listeners = new HashMap<String,View.OnClickListener>();
             for (final ConversationNode.AnswerNode choice: current.answers){
-                listeners.put(choice.value, new View.OnClickListener() {
+                listeners.put(parseStringVars(choice.text), new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         state = State.Correct;
