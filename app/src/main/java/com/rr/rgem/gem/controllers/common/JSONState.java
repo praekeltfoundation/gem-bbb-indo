@@ -55,7 +55,7 @@ public class JSONState {
         return conversationView;
     }
 
-    private String parseStringVars(String str)
+    public String parseStringVars(String str)
     {
         Map<String,String> varMap = getController().getVars();
         if (str == null || str.equals("")) return "";

@@ -203,8 +203,32 @@
     <string name="infoGoalEnd">Terima kasih. Yang menyimpulkan proses penetapan tujuan.</string>
 
     <!--Buttons-->
+    <string name="Skip">Melewatkan</string>
+    <string name="Capture">Menangkap</string>
     <string name="knowAmountY">Iya nih</string>
     <string name="knowAmountN">Tidak</string>
+    <string name="knowDateY">Iya nih</string>
+    <string name="knowDateN">Tidak</string>
+    <string name="hasSavedY">Iya nih</string>
+    <string name="hasSavedN">Tidak</string>
+    <string name="otherSaveAmount">Lain</string>
+    <string name="goalCheckRT">Mengurangi Waktu</string>
+    <string name="goalCheckRA">Mengurangi jumlah</string>
+    <string name="five">500</string>
+    <string name="thousand">1000</string>
+    <string name="thousandFive">1500</string>
+    <string name="twoThousand">2000</string>
+    <string name="Save">Menyimpan</string>
+    <string name="WithdrawButton">Menarik</string>
+
+    <string name="ToneY">Iya nih</string>
+    <string name="ToneN">Tidak</string>
+    <string name="TtwoY">Iya nih</string>
+    <string name="TtwoN">Tidak</string>
+    <string name="TthreeY">Iya nih</string>
+    <string name="TthreeN">Tidak</string>
+    <string name="TfourY">Iya nih</string>
+
 
    <!--JSON CHALLENGES-->
     <string name="toes">Anda dapat menyentuh jari-jari kaki Anda?</string>

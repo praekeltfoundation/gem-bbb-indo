@@ -4,8 +4,8 @@
     "text": "$(savingsAskType)",
     "type": "choice",
     "answers": [
-      {"name":"savingsType","value":"save","text":"Save","next":"savingsAskSaveAmount"},
-      {"name":"savingsType","value":"withdraw","text":"Withdraw","next":"savingsAskWithdrawAmount"}
+      {"name":"Save","value":"save","text":"$(Save)","next":"savingsAskSaveAmount"},
+      {"name":"WithdrawButton","value":"withdraw","text":"$(WithdrawButton)","next":"savingsAskWithdrawAmount"}
     ]
   },
   {

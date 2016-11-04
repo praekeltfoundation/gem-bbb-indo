@@ -87,12 +87,25 @@ public class Factory {
         vars.put("validationFailSaveAmountOther",context.getResources().getString(R.string.validationFailSaveAmountOther));
         vars.put("validationFailPriorSavedAmount",context.getResources().getString(R.string.validationFailPriorSavedAmount));
         vars.put("infoGoalEnd",context.getResources().getString(R.string.infoGoalEnd));
-
         //Buttons
-        Map<String, String> varsButtons = controller.getResponseMap();
-        varsButtons.put("knowAmountY", context.getResources().getString(R.string.knowAmountY));
-        varsButtons.put("knowAmountN", context.getResources().getString(R.string.knowAmountN));
-        //vars.put("askGoalImage",context.getResources().getString(R.string.askGoalImage));
+        vars.put("Skip", context.getResources().getString(R.string.Skip));
+        vars.put("Capture", context.getResources().getString(R.string.Capture));
+        vars.put("knowAmountY", context.getResources().getString(R.string.knowAmountY));
+        vars.put("knowAmountN", context.getResources().getString(R.string.knowAmountN));
+        vars.put("knowDateY", context.getResources().getString(R.string.knowDateY));
+        vars.put("knowDateN", context.getResources().getString(R.string.knowAmountN));
+        vars.put("hasSavedY", context.getResources().getString(R.string.hasSavedY));
+        vars.put("hasSavedN", context.getResources().getString(R.string.hasSavedN));
+        vars.put("otherSaveAmount", context.getResources().getString(R.string.otherSaveAmount));
+        vars.put("goalCheckRT", context.getResources().getString(R.string.goalCheckRT));
+        vars.put("goalCheckRA", context.getResources().getString(R.string.goalCheckRA));
+        vars.put("goalCheckOk", context.getResources().getString(R.string.goalCheckOk));
+        vars.put("five", context.getResources().getString(R.string.five));
+        vars.put("thousand", context.getResources().getString(R.string.thousand));
+        vars.put("thousandFive", context.getResources().getString(R.string.thousandFive));
+        vars.put("twoThousand", context.getResources().getString(R.string.twoThousand));
+
+
 
         state.setConversationView(conversation);
         state.setController(controller);

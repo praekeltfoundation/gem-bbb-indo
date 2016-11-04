@@ -64,6 +64,9 @@ public class SavingsActivity extends ApplicationActivity {
         vars.put("savingsAskWithdrawAmount", getString(R.string.savingsAskWithdrawAmount));
         vars.put("savingsInfoWithdrawInvalidAmount", getString(R.string.savingsInfoWithdrawInvalidAmount));
         vars.put("savingsConsole", getString(R.string.savingsConsole));
+        //Button
+        vars.put("Save", getString(R.string.save));
+        vars.put("WithdrawButton", getString(R.string.WithdrawButton));
 
 
 

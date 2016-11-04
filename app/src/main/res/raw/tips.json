@@ -6,8 +6,8 @@
           "completed":"no",
           "type": "choice",
           "answers": [
-            { "name": "yes", "value": "yes", "text":"Yes", "next": "T2"},
-            { "name": "no", "value": "no", "text":"No", "next": "infoTipsEnd"}
+            { "name": "ToneY", "value": "yes", "text":"$(ToneY)", "next": "T2"},
+            { "name": "ToneN", "value": "no", "text":"$(ToneN)", "next": "infoTipsEnd"}
           ]
 
         },
@@ -17,8 +17,8 @@
           "completed":"no",
           "type": "choice",
           "answers": [
-            { "name": "yes", "value": "yes", "text":"Yes", "next": "T3"},
-            { "name": "no", "value": "no", "text":"No", "next": "infoTipsEnd"}
+            { "name": "TtwoY", "value": "yes", "text":"$(TtwoY)", "next": "T3"},
+            { "name": "TtwoN", "value": "no", "text":"$(TtwoN)", "next": "infoTipsEnd"}
           ]
 
 
@@ -29,8 +29,8 @@
           "completed":"no",
           "type": "choice",
           "answers": [
-            { "name": "yes", "value": "yes", "text":"Yes", "next": "T4"},
-            { "name": "no", "value": "no", "text":"No", "next": "infoTipsEnd"}
+            { "name": "TthreeY", "value": "yes", "text":"$(TthreeY)", "next": "T4"},
+            { "name": "TthreeN", "value": "no", "text":"$(TthreeN)", "next": "infoTipsEnd"}
           ]
         },
         {
@@ -39,7 +39,7 @@
           "completed":"no",
           "type": "choice",
           "answers": [
-            { "name": "yes", "value": "Done", "text":"Yes", "next": "infoTipsEnd"}
+            { "name": "TfourY", "value": "Done", "text":"$(TfourY)", "next": "infoTipsEnd"}
           ]
 
         },

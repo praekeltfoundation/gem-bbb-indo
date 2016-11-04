@@ -56,6 +56,14 @@ public class TipsActivity extends ApplicationActivity {
         vars.put("Tthree", getString(R.string.Tthree));
         vars.put("Tfour",getString(R.string.Tfour));
         vars.put("infoTipsEnd", getString(R.string.infoTipsEnd));
+        //Button
+        vars.put("ToneY", getString(R.string.ToneY));
+        vars.put("ToneN", getString(R.string.ToneN));
+        vars.put("TtwoY", getString(R.string.TtwoY));
+        vars.put("TtwoN", getString(R.string.TtwoN));
+        vars.put("TthreeY", getString(R.string.TthreeY));
+        vars.put("TthreeN", getString(R.string.TthreeN));
+        vars.put("TfourY", getString(R.string.TfourY));
 
 
         coachController.setDoneCallback(new ConvoCallback() {

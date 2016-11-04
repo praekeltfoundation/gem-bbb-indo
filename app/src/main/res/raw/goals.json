@@ -10,8 +10,8 @@
     "type": "choice",
     "text": "$(askGoalImage)",
     "answers": [
-      { "name": "Capture", "value": "Capture", "text":"Capture", "next": "askGoalImageTake"},
-      { "name": "Skip", "value": "Skip", "text":"Skip", "next": "askKnowGoalAmount"}
+      { "name": "Capture", "value": " ", "text":"$(Capture)", "next": "askGoalImageTake"},
+      { "name": "Skip", "value": "Skip", "text":"$(Skip)", "next": "askKnowGoalAmount"}
     ]
   },
   {
@@ -47,8 +47,8 @@
     "type": "choice",
     "text": "$(askKnowGoalDate)",
     "answers": [
-      { "name": "knowDate", "value": "yes", "text":"Yes", "next": "askGoalDate"},
-      { "name": "knowDate", "value": "no", "text":"No", "next": "askGoalWeeklySaveAmount"}
+      { "name": "knowDateY", "value": "yes", "text":"$(knowDateY)", "next": "askGoalDate"},
+      { "name": "knowDateN", "value": "no", "text":"$(knowDateN)", "next": "askGoalWeeklySaveAmount"}
     ]
   },
   {
@@ -63,11 +63,11 @@
     "type": "choice",
     "text": "$(askGoalWeeklySaveAmount)",
     "answers": [
-      { "name": "weeklySaveAmount", "value":  "500", "text":"Yes", "next": "askGoalPriorSave"},
-      { "name": "weeklySaveAmount", "value": "1000", "text":"Yes", "next": "askGoalPriorSave"},
-      { "name": "weeklySaveAmount", "value": "1500", "text":"Yes", "next": "askGoalPriorSave"},
-      { "name": "weeklySaveAmount", "value": "2000", "text":"Yes", "next": "askGoalPriorSave"},
-      { "name": "otherSaveAmount", "value": "other", "text": "Other", "next": "askGoalSaveAmountOther"}
+      { "name": "five", "value":  "500", "text":"$(five)", "next": "askGoalPriorSave"},
+      { "name": "thousnad", "value": "1000", "text":"$(thousand)", "next": "askGoalPriorSave"},
+      { "name": "thousandFive", "value": "1500", "text":"$(thousandFive)", "next": "askGoalPriorSave"},
+      { "name": "twoThousand", "value": "2000", "text":"$(twoThousand)", "next": "askGoalPriorSave"},
+      { "name": "otherSaveAmount", "value": "other", "text": "$(otherSaveAmount)", "next": "askGoalSaveAmountOther"}
     ]
   },
   {
@@ -82,8 +82,8 @@
     "type": "choice",
     "text": "$(askGoalPriorSave)",
     "answers": [
-      { "name": "hasSaved", "value": "yes", "text":"Yes", "next": "askPriorSavedAmount"},
-      { "name": "hasSaved", "value": "no", "text":"No", "next": "verifyGoalAmount"}
+      { "name": "hasSavedY", "value": "yes", "text":"$(hasSavedY)", "next": "askPriorSavedAmount"},
+      { "name": "hasSavedN", "value": "no", "text":"$(hasSavedN)", "next": "verifyGoalAmount"}
     ]
   },
   {
@@ -99,9 +99,9 @@
     "text": "$(verifyGoalAmount)",
     "error": "validationFailPriorSavedAmount",
     "answers": [
-      { "name": "goalCheck", "value": "reduceWeek", "text":"Reduce Time", "next": "askKnowGoalDate"},
-      { "name": "goalCheck", "value": "reduceAmount", "text":"Reduce Amount", "next": "askPriorSavedAmount"},
-      { "name": "goalCheck", "value": "ok", "text":"OK", "next": "infoGoalEnd"}
+      { "name": "goalCheckRT", "value": "reduceWeek", "text":"$(goalCheckRT)", "next": "askKnowGoalDate"},
+      { "name": "goalCheckRA", "value": "reduceAmount", "text":"$(goalCheckRA)", "next": "askPriorSavedAmount"},
+      { "name": "goalCheckOk", "value": "ok", "text":"$(goalCheckOk)", "next": "infoGoalEnd"}
     ]
   },
   {

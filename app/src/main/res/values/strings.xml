@@ -207,8 +207,35 @@
     <string name="infoGoalEnd">Thank you. That concludes the goal-setting process.</string>
 
     <!--Buttons-->
+    <string name="Skip">Skip</string>
+    <string name="Capture">Capture</string>
     <string name="knowAmountY">Yes</string>
     <string name="knowAmountN">No</string>
+    <string name="knowDateY">Yes</string>
+    <string name="knowDateN">No</string>
+    <string name="hasSavedY">Yes</string>
+    <string name="hasSavedN">No</string>
+    <string name="otherSaveAmount">Other</string>
+    <string name="goalCheckRT">Reduce Time</string>
+    <string name="goalCheckRA">Reduce Amount</string>
+    <string name="goalCheckOk">Ok</string>
+    <string name="five">500</string>
+    <string name="thousand">1000</string>
+    <string name="thousandFive">1500</string>
+    <string name="twoThousand">2000</string>
+    <string name="Save">Save</string>
+    <string name="WithdrawButton">Withdraw</string>
+
+    <string name="ToneY">Yes</string>
+    <string name="ToneN">No</string>
+    <string name="TtwoY">Yes</string>
+    <string name="TtwoN">No</string>
+    <string name="TthreeY">Yes</string>
+    <string name="TthreeN">No</string>
+    <string name="TfourY">Yes</string>
+
+
+
 
 
     <!--JSON CHALLENGES-->

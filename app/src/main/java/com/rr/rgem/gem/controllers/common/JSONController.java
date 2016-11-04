@@ -313,7 +313,7 @@ public class JSONController {
             Map<String, View.OnClickListener> listeners = new HashMap<String, View.OnClickListener>();
             for (final ConversationNode.AnswerNode choice: current.answers)
             {
-                listeners.put(choice.value, new View.OnClickListener() {
+                listeners.put(getState().parseStringVars(choice.text), new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         if(JSONController.this.answerProcess.choiceAnswer(answer,choice.value)) {
