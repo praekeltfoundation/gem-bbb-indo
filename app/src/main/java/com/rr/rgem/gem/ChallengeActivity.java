@@ -78,8 +78,12 @@ public class ChallengeActivity extends ApplicationActivity{
         cmsService.retrieveChallenge(1).enqueue(new Callback<Challenge>() {
             @Override
             public void onResponse(Call<Challenge> call, Response<Challenge> response) {
-                challenge = response.body();
-                initChallenge();
+                if (response.isSuccessful()) {
+                    challenge = response.body();
+                    initChallenge();
+                } else {
+                    Utils.toast(ChallengeActivity.this, "Challenge could not be loaded.");
+                }
             }
 
             @Override
