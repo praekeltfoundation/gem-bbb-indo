@@ -1,5 +1,6 @@
 package com.nike.dooit.views.profile;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
@@ -13,7 +14,10 @@ import android.view.View;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.nike.dooit.DooitApplication;
 import com.nike.dooit.R;
+import com.nike.dooit.models.User;
 import com.nike.dooit.util.DooitSharedPreferences;
+import com.nike.dooit.util.Persisted;
+import com.nike.dooit.views.helpers.activity.DooitActivityBuilder;
 import com.nike.dooit.views.settings.SettingsActivity;
 
 import javax.inject.Inject;
@@ -35,7 +39,8 @@ public class ProfileActivity extends AppCompatActivity {
     AppBarLayout appBarLayout;
 
     @Inject
-    DooitSharedPreferences dooitSharedPreferences;
+    Persisted persisted;
+    User user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,9 +59,11 @@ public class ProfileActivity extends AppCompatActivity {
                 }
             });
         }
-        setTitle("John");
+        user = persisted.loadUser();
 
-        profileImage.setImageURI("https://cdnd.icons8.com/wp-content/uploads/2015/06/android_vector.jpg");
+        setTitle(user.getUsername());
+
+        profileImage.setImageURI(user.getProfile().getProfile_image_url());
         appBarLayout.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
             boolean isShow = false;
             int scrollRange = -1;
@@ -70,7 +77,7 @@ public class ProfileActivity extends AppCompatActivity {
                     isShow = true;
                     profileImage.setVisibility(View.GONE);
                 } else if (isShow) {
-                    getSupportActionBar().setTitle("");
+                    setTitle("");
                     isShow = false;
                     profileImage.setVisibility(View.VISIBLE);
                 }
@@ -98,11 +105,28 @@ public class ProfileActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_settings:
-                startActivity(new Intent(this, SettingsActivity.class));
+                SettingsActivity.Builder.create(this).startActivity();
                 break;
             default:
                 return super.onOptionsItemSelected(item);
         }
         return true;
+    }
+
+    public static class Builder extends DooitActivityBuilder<Builder> {
+        protected Builder(Context context) {
+            super(context);
+        }
+
+        public static Builder create(Context context) {
+            Builder builder = new Builder(context);
+            return builder;
+        }
+
+        @Override
+        protected Intent createIntent(Context context) {
+            return new Intent(context, ProfileActivity.class);
+        }
+
     }
 }

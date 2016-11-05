@@ -1,5 +1,6 @@
 package com.nike.dooit.views.settings;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -11,6 +12,7 @@ import com.nike.dooit.DooitApplication;
 import com.nike.dooit.R;
 import com.nike.dooit.util.DooitSharedPreferences;
 import com.nike.dooit.views.RootActivity;
+import com.nike.dooit.views.helpers.activity.DooitActivityBuilder;
 
 import javax.inject.Inject;
 
@@ -70,5 +72,23 @@ public class SettingsActivity extends AppCompatActivity {
                 .setTitle(getString(R.string.title_activity_privacy_policy))
                 .setUrl(Constants.PRIVACY_URL)
                 .startActivity();
+    }
+
+
+    public static class Builder extends DooitActivityBuilder<Builder> {
+        protected Builder(Context context) {
+            super(context);
+        }
+
+        public static Builder create(Context context) {
+            Builder builder = new Builder(context);
+            return builder;
+        }
+
+        @Override
+        protected Intent createIntent(Context context) {
+            return new Intent(context, SettingsActivity.class);
+        }
+
     }
 }
