@@ -7,16 +7,29 @@ import android.support.v4.content.res.ResourcesCompat;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.style.ForegroundColorSpan;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import com.nike.dooit.DooitApplication;
 import com.nike.dooit.R;
+import com.nike.dooit.api.DooitAPIError;
+import com.nike.dooit.api.DooitErrorHandler;
+import com.nike.dooit.api.managers.AuthenticationManager;
+import com.nike.dooit.api.responses.AuthenticationResponse;
+import com.nike.dooit.api.responses.OnboardingResponse;
+import com.nike.dooit.models.Profile;
+import com.nike.dooit.models.User;
+import com.nike.dooit.util.DooitSharedPreferences;
 import com.nike.dooit.views.DooitActivity;
 import com.nike.dooit.views.helpers.activity.DooitActivityBuilder;
+import com.nike.dooit.views.main.MainActivity;
+
+import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import rx.functions.Action1;
 
 public class RegistrationActivity extends DooitActivity {
 
@@ -25,6 +38,21 @@ public class RegistrationActivity extends DooitActivity {
 
     @BindView(R.id.activity_registration_login_text_view)
     TextView textViewLogin;
+
+    @BindView(R.id.activity_registration_name_text_edit)
+    EditText name;
+
+    @BindView(R.id.activity_registration_password_edit_text)
+    EditText password;
+
+    @BindView(R.id.activity_registration_number_text_edit)
+    EditText number;
+
+    @Inject
+    AuthenticationManager authenticationManager;
+
+    @Inject
+    DooitSharedPreferences dooitSharedPreferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,9 +77,46 @@ public class RegistrationActivity extends DooitActivity {
 
     }
 
+    @OnClick(R.id.activity_registration_register_button)
+    public void register() {
+        authenticationManager.onboard(getUser(), new DooitErrorHandler() {
+            @Override
+            public void onError(DooitAPIError error) {
+
+            }
+        }).subscribe(new Action1<OnboardingResponse>() {
+            @Override
+            public void call(OnboardingResponse onboardingResponse) {
+                authenticationManager.login(name.getText().toString(), password.getText().toString(), new DooitErrorHandler() {
+                    @Override
+                    public void onError(DooitAPIError error) {
+
+                    }
+                }).subscribe(new Action1<AuthenticationResponse>() {
+                    @Override
+                    public void call(AuthenticationResponse authenticationResponse) {
+                        dooitSharedPreferences.setComplex(DooitSharedPreferences.USER, authenticationResponse.getUser());
+                        dooitSharedPreferences.setComplex(DooitSharedPreferences.TOKEN, authenticationResponse.getToken());
+                        MainActivity.Builder.create(RegistrationActivity.this).startActivity();
+                    }
+                });
+            }
+        });
+    }
+
     @OnClick(R.id.activity_registration_login_text_view)
     public void openLogin() {
         LoginActivity.Builder.create(this).startActivity();
+    }
+
+    public User getUser() {
+        User user = new User();
+        user.setUsername(name.getText().toString());
+        user.setPassword(password.getText().toString());
+        Profile profile = new Profile();
+        profile.setMobile(number.getText().toString());
+        user.setProfile(profile);
+        return user;
     }
 
 
