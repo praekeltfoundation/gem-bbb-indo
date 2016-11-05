@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <color name="primary_text_default_material_dark">#141313</color>
-    <color name="primary_text_default_material_light">#547cff</color>
-    <integer name="min_password_length">8</integer>
-    <string name="default_service_url"><![CDATA[http://gem-bbb.seed.p16n.org]]></string>
-</resources>
