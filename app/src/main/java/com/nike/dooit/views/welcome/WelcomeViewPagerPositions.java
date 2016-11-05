@@ -2,6 +2,8 @@ package com.nike.dooit.views.welcome;
 
 import android.support.annotation.DrawableRes;
 
+import com.nike.dooit.R;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -10,9 +12,9 @@ import java.util.Map;
  */
 
 public enum WelcomeViewPagerPositions {
-    ONE(0, android.R.drawable.sym_def_app_icon),
-    TWO(1, android.R.drawable.sym_def_app_icon),
-    THREE(2, android.R.drawable.sym_def_app_icon);
+    ONE(0, R.color.purple),
+    TWO(1, R.color.purple),
+    THREE(2, R.color.purple);
 
     private static Map<Integer, WelcomeViewPagerPositions> map = new HashMap<Integer, WelcomeViewPagerPositions>();
 
@@ -25,7 +27,7 @@ public enum WelcomeViewPagerPositions {
     private final int value;
     private final Integer imageRes;
 
-    WelcomeViewPagerPositions(int value, @DrawableRes Integer iconRes) {
+    WelcomeViewPagerPositions(int value, /*@DrawableRes*/ Integer iconRes) {
         this.value = value;
         this.imageRes = iconRes;
     }

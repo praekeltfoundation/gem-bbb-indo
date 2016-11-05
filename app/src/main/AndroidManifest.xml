@@ -12,18 +12,24 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme.NoActionBar">
-        <activity android:name=".views.RootActivity">
+        <activity
+            android:name=".views.RootActivity"
+            android:theme="@style/AppTheme.FullscreenTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".views.welcome.WelcomeActivity" />
+        <activity
+            android:name=".views.welcome.WelcomeActivity"
+            android:theme="@style/AppTheme.FullscreenTheme" />
         <activity
             android:name=".views.onboarding.RegistrationActivity"
             android:theme="@style/AppTheme.FullscreenTheme" />
-        <activity android:name=".views.onboarding.LoginActivity" />
+        <activity
+            android:name=".views.onboarding.LoginActivity"
+            android:theme="@style/AppTheme.FullscreenTheme" />
         <activity
             android:name=".views.main.MainActivity"
             android:label="@string/title_activity_main"

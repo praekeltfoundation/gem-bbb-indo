@@ -4,7 +4,12 @@ import android.content.Context;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
 
+import com.nike.dooit.R;
 import com.nike.dooit.views.main.MainViewPagerPositions;
 import com.nike.dooit.views.main.fragments.BotFragment;
 
@@ -36,12 +41,42 @@ public class MainTabAdapter extends FragmentStatePagerAdapter {
             case TIPS:
                 fragment = new BotFragment().newInstance();
                 break;
+            default:
+                fragment = new BotFragment().newInstance();
+                break;
         }
-        return null;
+        return fragment;
     }
 
     @Override
     public int getCount() {
-        return 0;
+        return MainViewPagerPositions.values().length;
+    }
+
+
+    @Override
+    public CharSequence getPageTitle(int position) {
+        if (MainViewPagerPositions.getValueOf(position).getTitleRes() == null)
+            return "";
+        return context.getString(MainViewPagerPositions.getValueOf(position).getTitleRes());
+    }
+
+    public View getTabView(int position) {
+        // Given you have a custom layout in `res/layout/custom_tab.xml` with a TextView and ImageView
+        View tabView = LayoutInflater.from(context).inflate(R.layout.tab_custom, null);
+        tabView.setTag(MainViewPagerPositions.getValueOf(position).getTitleRes());
+        ImageView img = (ImageView) tabView.findViewById(R.id.tab_custom_icon);
+        TextView title = (TextView) tabView.findViewById(R.id.tab_custom_title);
+        Integer imgR = MainViewPagerPositions.getValueOf(position).getIconRes();
+        if (imgR != null)
+            img.setImageResource(imgR);
+        else
+            img.setVisibility(View.GONE);
+        Integer stringR = MainViewPagerPositions.getValueOf(position).getTitleRes();
+        if (stringR != null)
+            title.setText(getPageTitle(position));
+        else
+            title.setVisibility(View.GONE);
+        return tabView;
     }
 }

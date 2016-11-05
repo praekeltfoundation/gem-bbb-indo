@@ -1,5 +1,7 @@
 package com.nike.dooit.models;
 
+import java.util.List;
+
 /**
  * Created by herman on 2016/11/05.
  */
@@ -9,13 +11,13 @@ public class User {
     private String is_superuser;
     private String last_login;
     private String id;
-    private String[] user_permissions;
+    private List<String> user_permissions;
     private String first_name;
     private String username;
     private String date_joined;
     private String email;
     private String last_name;
-    private String[] groups;
+    private List<String> groups;
     private Profile profile;
 
     public String getIs_staff() {
@@ -58,11 +60,11 @@ public class User {
         this.id = id;
     }
 
-    public String[] getUser_permissions() {
+    public List<String> getUser_permissions() {
         return user_permissions;
     }
 
-    public void setUser_permissions(String[] user_permissions) {
+    public void setUser_permissions(List<String> user_permissions) {
         this.user_permissions = user_permissions;
     }
 
@@ -106,11 +108,11 @@ public class User {
         this.last_name = last_name;
     }
 
-    public String[] getGroups() {
+    public List<String> getGroups() {
         return groups;
     }
 
-    public void setGroups(String[] groups) {
+    public void setGroups(List<String> groups) {
         this.groups = groups;
     }
 
