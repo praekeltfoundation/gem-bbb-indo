@@ -1,13 +1,194 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/activity_registration"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
+    android:background="@color/purple"
     tools:context="com.nike.dooit.views.onboarding.RegistrationActivity">
 
-</RelativeLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="24dp">
+
+        <TextView
+            android:id="@+id/activity_registration_title"
+            style="@style/AppTheme.TextView.Regular.ExtraLarge"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="24dp"
+            android:text="Registration"
+            android:textColor="@color/white" />
+
+        <TextView
+            android:id="@+id/activity_registration_name_text_view"
+            style="@style/AppTheme.TextView.Medium.MediumHeading"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/activity_registration_title"
+            android:text="Name"
+            android:textAllCaps="true" />
+
+        <EditText
+            android:id="@+id/activity_registration_name_text_edit"
+            android:layout_width="match_parent"
+            android:layout_height="32dp"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/activity_registration_name_text_view"
+            android:layout_marginTop="4dp"
+            android:background="@color/white"
+            android:ems="10"
+            android:inputType="textPersonName" />
+
+        <TextView
+            android:id="@+id/activity_registration_name_example_text_edit"
+            style="@style/AppTheme.TextView.Medium.ExtraSmall"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/activity_registration_name_text_edit"
+            android:layout_marginTop="4dp"
+            android:text="Example: Aulia D" />
+
+        <TextView
+            android:id="@+id/activity_registration_age_text_view"
+            style="@style/AppTheme.TextView.Medium.MediumHeading"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/activity_registration_name_example_text_edit"
+            android:layout_marginTop="16dp"
+            android:text="How old are you?"
+            android:textAllCaps="true"
+            android:visibility="gone" />
+
+
+        <EditText
+            android:id="@+id/activity_registration_age_text_edit"
+            android:layout_width="wrap_content"
+            android:layout_height="32dp"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/activity_registration_age_text_view"
+            android:layout_marginTop="4dp"
+            android:background="@color/white"
+            android:ems="10"
+            android:inputType="numberSigned"
+            android:visibility="gone" />
+
+        <TextView
+            android:id="@+id/activity_registration_age_example_text_view"
+            style="@style/AppTheme.TextView.Medium.ExtraSmall"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/activity_registration_age_text_edit"
+            android:layout_marginTop="4dp"
+            android:text="Example: 16"
+            android:visibility="gone" />
+
+        <TextView
+            android:id="@+id/activity_registration_number_text_view"
+            style="@style/AppTheme.TextView.Medium.MediumHeading"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/activity_registration_age_example_text_view"
+            android:layout_marginTop="16dp"
+            android:text="Mobile Number"
+            android:textAllCaps="true" />
+
+        <EditText
+            android:id="@+id/activity_registration_number_text_edit"
+            android:layout_width="match_parent"
+            android:layout_height="32dp"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/activity_registration_number_text_view"
+            android:layout_marginTop="4dp"
+            android:background="@color/white"
+            android:ems="10"
+            android:inputType="text" />
+
+        <TextView
+            android:id="@+id/activity_registration_number_example_text_edit"
+            style="@style/AppTheme.TextView.Medium.ExtraSmall"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/activity_registration_number_text_edit"
+            android:layout_marginTop="4dp"
+            android:text="Example: 1234567890" />
+
+        <TextView
+            android:id="@+id/activity_registration_password_text_view"
+            style="@style/AppTheme.TextView.Medium.MediumHeading"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/activity_registration_number_example_text_edit"
+            android:layout_marginTop="16dp"
+            android:text="Password"
+            android:textAllCaps="true" />
+
+        <EditText
+            android:id="@+id/activity_registration_password_text_edit"
+            android:layout_width="match_parent"
+            android:layout_height="32dp"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/activity_registration_password_text_view"
+            android:layout_marginTop="4dp"
+            android:background="@color/white"
+            android:ems="10"
+            android:inputType="textPassword" />
+
+        <TextView
+            android:id="@+id/activity_registration_password_example_text_edit"
+            style="@style/AppTheme.TextView.Medium.ExtraSmall"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/activity_registration_password_text_edit"
+            android:layout_marginTop="4dp"
+            android:text="Must have atleast 6 characters" />
+
+        <TextView
+            android:id="@+id/activity_registration_t_c_text_view"
+            style="@style/AppTheme.TextView.Medium.Small"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/activity_registration_password_example_text_edit"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="32dp"
+            android:text="@string/reg_t_c"
+            android:textColor="@color/white" />
+
+
+        <Button
+            android:id="@+id/activity_registration_register_button"
+            style="@style/Widget.AppCompat.Button.Borderless"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/activity_registration_t_c_text_view"
+            android:layout_marginEnd="18dp"
+            android:layout_marginStart="18dp"
+            android:layout_marginTop="8dp"
+            android:background="@color/yellow"
+            android:text="Register"
+            android:textAllCaps="true"
+            android:textColor="@color/purple"
+            android:textSize="@dimen/k_font_xx_large" />
+
+        <TextView
+            android:id="@+id/activity_registration_login_text_view"
+            style="@style/AppTheme.TextView.Medium.Small"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/activity_registration_register_button"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="8dp"
+            android:text="@string/already_registered_log_in" />
+    </RelativeLayout>
+</ScrollView>

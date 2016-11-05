@@ -9,4 +9,7 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="lets_start">let\'s start</string>
+    <string name="reg_t_c">By clicking register, you are agreeing\n to our Terms &amp; Condition</string>
+    <string name="already_registered_log_in">Already registered? Log in</string>
+    <string name="forgot_password">Forgot password?</string>
 </resources>
