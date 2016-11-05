@@ -77,7 +77,6 @@ public class ProfileActivity extends AppCompatActivity {
                     isShow = true;
                     profileImage.setVisibility(View.GONE);
                 } else if (isShow) {
-                    setTitle("");
                     isShow = false;
                     profileImage.setVisibility(View.VISIBLE);
                 }
@@ -88,6 +87,7 @@ public class ProfileActivity extends AppCompatActivity {
     @Override
     public void setTitle(CharSequence title) {
         collapsingToolbarLayout.setTitle(title);
+        super.setTitle(title);
     }
 
     @Override

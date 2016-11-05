@@ -12,6 +12,9 @@ import android.widget.TextView;
 import com.nike.dooit.R;
 import com.nike.dooit.views.main.MainViewPagerPositions;
 import com.nike.dooit.views.main.fragments.BotFragment;
+import com.nike.dooit.views.main.fragments.ChallengeFragment;
+import com.nike.dooit.views.main.fragments.TargetFragment;
+import com.nike.dooit.views.main.fragments.TipsFragment;
 
 /**
  * Created by wsche on 2016/11/05.
@@ -30,19 +33,19 @@ public class MainTabAdapter extends FragmentStatePagerAdapter {
         Fragment fragment;
         switch (MainViewPagerPositions.getValueOf(position)) {
             case BOT:
-                fragment = new BotFragment().newInstance();
+                fragment = BotFragment.newInstance();
                 break;
             case TARGET:
-                fragment = new BotFragment().newInstance();
+                fragment = TargetFragment.newInstance();
                 break;
             case CHALLENGE:
-                fragment = new BotFragment().newInstance();
+                fragment = ChallengeFragment.newInstance();
                 break;
             case TIPS:
-                fragment = new BotFragment().newInstance();
+                fragment = TipsFragment.newInstance();
                 break;
             default:
-                fragment = new BotFragment().newInstance();
+                fragment = BotFragment.newInstance();
                 break;
         }
         return fragment;

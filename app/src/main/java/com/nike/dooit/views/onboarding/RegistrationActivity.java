@@ -20,6 +20,7 @@ import com.nike.dooit.api.responses.OnboardingResponse;
 import com.nike.dooit.models.Profile;
 import com.nike.dooit.models.User;
 import com.nike.dooit.util.DooitSharedPreferences;
+import com.nike.dooit.util.Persisted;
 import com.nike.dooit.views.DooitActivity;
 import com.nike.dooit.views.helpers.activity.DooitActivityBuilder;
 import com.nike.dooit.views.main.MainActivity;
@@ -52,7 +53,7 @@ public class RegistrationActivity extends DooitActivity {
     AuthenticationManager authenticationManager;
 
     @Inject
-    DooitSharedPreferences dooitSharedPreferences;
+    Persisted persisted;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -95,8 +96,8 @@ public class RegistrationActivity extends DooitActivity {
                 }).subscribe(new Action1<AuthenticationResponse>() {
                     @Override
                     public void call(AuthenticationResponse authenticationResponse) {
-                        dooitSharedPreferences.setComplex(DooitSharedPreferences.USER, authenticationResponse.getUser());
-                        dooitSharedPreferences.setComplex(DooitSharedPreferences.TOKEN, authenticationResponse.getToken());
+                        persisted.saveUser(authenticationResponse.getUser());
+                        persisted.saveToken(authenticationResponse.getToken());
                         MainActivity.Builder.create(RegistrationActivity.this).startActivity();
                     }
                 });
