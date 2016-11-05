@@ -4,9 +4,12 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
+import com.nike.dooit.R;
 import com.nike.dooit.DooitApplication;
 import com.nike.dooit.util.DooitSharedPreferences;
 import com.nike.dooit.views.main.MainActivity;
+import com.nike.dooit.R;
+import com.nike.dooit.views.profile.ProfileActivity;
 import com.nike.dooit.views.welcome.WelcomeActivity;
 
 import javax.inject.Inject;

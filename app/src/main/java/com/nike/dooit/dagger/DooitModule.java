@@ -4,6 +4,7 @@ import android.app.Application;
 
 import com.nike.dooit.DooitApplication;
 import com.nike.dooit.api.managers.AuthenticationManager;
+import com.nike.dooit.api.managers.ChallengeManager;
 import com.nike.dooit.api.managers.TipManager;
 import com.nike.dooit.api.managers.UserManager;
 import com.nike.dooit.util.DooitSharedPreferences;
@@ -28,9 +29,11 @@ public class DooitModule {
 
     @Provides
     @Singleton
-    AuthenticationManager provideAuthenticationManager() {
-        return new AuthenticationManager(application);
-    }
+    AuthenticationManager provideAuthenticationManager() { return new AuthenticationManager(application); }
+
+    @Provides
+    @Singleton
+    ChallengeManager provideChallengeManager() { return new ChallengeManager(application); }
 
     @Provides
     @Singleton

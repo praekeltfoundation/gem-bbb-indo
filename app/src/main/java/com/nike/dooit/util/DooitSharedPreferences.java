@@ -118,5 +118,9 @@ public class DooitSharedPreferences {
         SharedPreferences.Editor editor = sharedPreferences().edit();
         editor.putString(key, new Gson().toJson(value));
         editor.apply();
+    public void clear() {
+        for (String key : sharedPreferences().getAll().keySet()) {
+            remove(key);
+        }
     }
 }
