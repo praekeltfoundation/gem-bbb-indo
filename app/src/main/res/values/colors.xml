@@ -12,5 +12,6 @@
     <color name="toolbarBarTitleColor">@color/yellow</color>
     <color name="toolbarBarSubTitleColor">@color/yellow</color>
     <color name="heading">@color/yellow</color>
-    <color name="transparent" type="color">#00ffffff</item>
+    <color name="transparent" type="color">#00ffffff</color>
+    <color name="tabtextcolor">#000</color>
 </resources>

@@ -5,7 +5,7 @@ import java.util.List;
 /**
  * Created by herman on 2016/11/05.
  */
-public class User implements Serializable {
+public class User {
     private String is_staff;
     private String is_active;
     private String is_superuser;

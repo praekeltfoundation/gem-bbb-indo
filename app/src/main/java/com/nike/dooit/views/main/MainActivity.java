@@ -14,6 +14,7 @@ import android.view.View;
 import com.nike.dooit.R;
 import com.nike.dooit.views.helpers.activity.DooitActivityBuilder;
 import com.nike.dooit.views.main.adapters.MainTabAdapter;
+import com.nike.dooit.views.profile.ProfileActivity;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -59,7 +60,20 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void openProfile() {
+        ProfileActivity.Builder.create(this).startActivity();
+    }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        return true;
+    }
+
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        return super.onOptionsItemSelected(item);
     }
 
     public static class Builder extends DooitActivityBuilder<MainActivity.Builder> {
@@ -79,17 +93,5 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
-    }
-
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        return super.onOptionsItemSelected(item);
-    }
 
 }

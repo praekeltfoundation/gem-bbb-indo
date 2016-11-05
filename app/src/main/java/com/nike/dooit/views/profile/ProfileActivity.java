@@ -1,5 +1,6 @@
 package com.nike.dooit.views.profile;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
@@ -9,12 +10,12 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.TextView;
 
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.nike.dooit.DooitApplication;
 import com.nike.dooit.R;
 import com.nike.dooit.util.DooitSharedPreferences;
+import com.nike.dooit.views.helpers.activity.DooitActivityBuilder;
 import com.nike.dooit.views.settings.SettingsActivity;
 
 import javax.inject.Inject;
@@ -37,7 +38,6 @@ public class ProfileActivity extends AppCompatActivity {
         if (getSupportActionBar() != null) {
             getSupportActionBar().setHomeAsUpIndicator(android.R.drawable.ic_delete);
         }
-
 
 
         profileImage = (SimpleDraweeView) findViewById(R.id.profile_image);
@@ -81,4 +81,22 @@ public class ProfileActivity extends AppCompatActivity {
         }
         return true;
     }
+
+    public static class Builder extends DooitActivityBuilder<ProfileActivity.Builder> {
+        protected Builder(Context context) {
+            super(context);
+        }
+
+        public static ProfileActivity.Builder create(Context context) {
+            ProfileActivity.Builder builder = new ProfileActivity.Builder(context);
+            return builder;
+        }
+
+        @Override
+        protected Intent createIntent(Context context) {
+            return new Intent(context, ProfileActivity.class);
+        }
+
+    }
+
 }
