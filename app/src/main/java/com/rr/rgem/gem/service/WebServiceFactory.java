@@ -5,6 +5,9 @@ import android.util.Log;
 import com.google.gson.GsonBuilder;
 import com.rr.rgem.gem.image.ImageDownloader;
 import com.rr.rgem.gem.service.model.AuthToken;
+import com.rr.rgem.gem.service.serializers.DateTimeSerializer;
+
+import org.joda.time.DateTime;
 
 import java.io.IOException;
 import java.net.MalformedURLException;
@@ -64,7 +67,11 @@ public class WebServiceFactory {
         return new Retrofit.Builder()
                 .baseUrl(baseUrl)
                 .callbackExecutor(new MainThreadExecutor())
-                .addConverterFactory(GsonConverterFactory.create(new GsonBuilder().setDateFormat("yyyy-MM-dd'T'HH:mm:ss").create()));
+                .addConverterFactory(GsonConverterFactory.create(
+                        new GsonBuilder()
+                            .registerTypeAdapter(DateTime.class, new DateTimeSerializer())
+                            .create()
+                ));
     }
 
     /**
@@ -74,7 +81,11 @@ public class WebServiceFactory {
     public AuthService createAuthService() {
         return new Retrofit.Builder()
                 .baseUrl(baseUrl)
-                .addConverterFactory(GsonConverterFactory.create())
+                .addConverterFactory(GsonConverterFactory.create(
+                        new GsonBuilder()
+                                .registerTypeAdapter(DateTime.class, new DateTimeSerializer())
+                                .create()
+                ))
                 .callbackExecutor(new MainThreadExecutor())
                 .client(createHttpClientBuilder(false).build())
                 .build()
@@ -85,14 +96,21 @@ public class WebServiceFactory {
         return retrofitBuilder
                 .client(clientBuilder.build())
                 .addConverterFactory(GsonConverterFactory.create(
-                        new GsonBuilder().setDateFormat("yyyy-MM-dd'T'HH:mm:ss").create()))
+                        new GsonBuilder()
+                                .registerTypeAdapter(DateTime.class, new DateTimeSerializer())
+                                .create()
+                ))
                 .build()
                 .create(serviceClass);
     }
 
     public Retrofit createRetrofit() {
         return retrofitBuilder
-                .addConverterFactory(GsonConverterFactory.create(new GsonBuilder().setDateFormat("yyyy-MM-dd'T'HH:mm:ss").create()))
+                .addConverterFactory(GsonConverterFactory.create(
+                        new GsonBuilder()
+                                .registerTypeAdapter(DateTime.class, new DateTimeSerializer())
+                                .create()
+                ))
                 .build();
     }
 
