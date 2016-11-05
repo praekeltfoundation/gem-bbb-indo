@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
+    <color name="white">@android:color/white</color>
     <color name="colorPrimary">@android:color/white</color>
     <color name="colorPrimaryDark">#67ffffff</color>
     <color name="colorAccent">@color/pink</color>
@@ -9,6 +11,7 @@
     <color name="yellow">#FDDF5B</color>
     <color name="toolbarBarTitleColor">#000</color>
     <color name="toolbarBarSubTitleColor">#000</color>
+    <color name="heading">@color/yellow</color>
 
     <item name="transparent" type="color">#00ffffff</item>
  </resources>

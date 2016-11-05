@@ -6,10 +6,10 @@
     <dimen name="app_bar_height">180dp</dimen>
     <dimen name="text_margin">16dp</dimen>
 
-    <dimen name="k_font_extra_small">10sp</dimen>
-    <dimen name="k_font_small">13sp</dimen>
-    <dimen name="k_font_medium">18sp</dimen>
-    <dimen name="k_font_large">32sp</dimen>
-    <dimen name="k_font_extra_large">41sp</dimen>
-    <dimen name="k_font_xx_large">52sp</dimen>
+    <dimen name="k_font_xx_large">30dp</dimen>
+    <dimen name="k_font_extra_large">21dp</dimen>
+    <dimen name="k_font_large">18dp</dimen>
+    <dimen name="k_font_medium">15dp</dimen>
+    <dimen name="k_font_small">12dp</dimen>
+    <dimen name="k_font_extra_small">8dp</dimen>
 </resources>

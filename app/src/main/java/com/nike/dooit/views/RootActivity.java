@@ -6,13 +6,14 @@ import android.os.Bundle;
 
 import com.nike.dooit.R;
 import com.nike.dooit.views.profile.ProfileActivity;
+import com.nike.dooit.views.welcome.WelcomeActivity;
 
 public class RootActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_root);
+
 
         startActivity(new Intent(this, ProfileActivity.class));
     }
