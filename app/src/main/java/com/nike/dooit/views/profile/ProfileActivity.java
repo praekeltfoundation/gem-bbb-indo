@@ -9,7 +9,6 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.TextView;
 
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.nike.dooit.DooitApplication;
@@ -19,12 +18,21 @@ import com.nike.dooit.views.settings.SettingsActivity;
 
 import javax.inject.Inject;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 /**
  * Created by Bernhard Müller on 2016/07/22.
  */
 public class ProfileActivity extends AppCompatActivity {
+    @BindView(R.id.profile_image)
     SimpleDraweeView profileImage;
+    @BindView(R.id.toolbar_layout)
     CollapsingToolbarLayout collapsingToolbarLayout;
+    @BindView(R.id.toolbar)
+    Toolbar toolbar;
+    @BindView(R.id.app_bar)
+    AppBarLayout appBarLayout;
 
     @Inject
     DooitSharedPreferences dooitSharedPreferences;
@@ -34,18 +42,21 @@ public class ProfileActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
         ((DooitApplication) getApplication()).component.inject(this);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        ButterKnife.bind(this);
         setSupportActionBar(toolbar);
-
         if (getSupportActionBar() != null) {
-            getSupportActionBar().setHomeAsUpIndicator(android.R.drawable.ic_delete);
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setHomeAsUpIndicator(android.R.drawable.sym_def_app_icon);
+            toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    finish();
+                }
+            });
         }
+        setTitle("John");
 
-
-
-        profileImage = (SimpleDraweeView) findViewById(R.id.profile_image);
         profileImage.setImageURI("https://cdnd.icons8.com/wp-content/uploads/2015/06/android_vector.jpg");
-        AppBarLayout appBarLayout = (AppBarLayout) findViewById(R.id.app_bar);
         appBarLayout.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
             boolean isShow = false;
             int scrollRange = -1;
@@ -65,6 +76,16 @@ public class ProfileActivity extends AppCompatActivity {
                 }
             }
         });
+    }
+
+    @Override
+    public void setTitle(CharSequence title) {
+        collapsingToolbarLayout.setTitle(title);
+    }
+
+    @Override
+    public void setTitle(int titleId) {
+        setTitle(getString(titleId));
     }
 
     @Override

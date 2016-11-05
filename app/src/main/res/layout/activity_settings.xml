@@ -34,7 +34,8 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/app_bar"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true"
         android:fillViewport="true"
         android:paddingBottom="@dimen/activity_vertical_margin"
         android:paddingEnd="@dimen/activity_horizontal_margin"
@@ -51,7 +52,6 @@
                 android:id="@+id/settings_account_title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="8dp"
                 android:ellipsize="end"
                 android:maxLines="1"
                 android:text="Your account"
@@ -64,9 +64,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/settings_account_title"
-                android:layout_marginBottom="8dp"
-                android:enabled="false"
+                android:background="?attr/selectableItemBackground"
                 android:maxLines="1"
+                android:paddingBottom="8dp"
+                android:paddingTop="8dp"
                 android:text="Change name"
                 android:textColor="@color/purple"
                 android:textSize="@dimen/k_font_medium"
@@ -77,7 +78,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="0.5dp"
                 android:layout_below="@+id/settings_account_change_name"
-                android:layout_marginBottom="8dp"
                 android:background="@color/grey" />
 
             <TextView
@@ -85,9 +85,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/settings_account_change_name_separator"
-                android:layout_marginBottom="8dp"
-                android:enabled="false"
+                android:background="?attr/selectableItemBackground"
                 android:maxLines="1"
+                android:paddingBottom="8dp"
+                android:paddingTop="8dp"
                 android:text="Change password"
                 android:textColor="@color/purple"
                 android:textSize="@dimen/k_font_medium"
@@ -98,7 +99,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="0.5dp"
                 android:layout_below="@+id/settings_account_change_password"
-                android:layout_marginBottom="8dp"
                 android:background="@color/grey" />
 
             <TextView
@@ -106,10 +106,12 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/settings_account_change_password_separator"
-                android:layout_marginBottom="8dp"
-                android:enabled="false"
+                android:background="?attr/selectableItemBackground"
                 android:maxLines="1"
+                android:paddingBottom="8dp"
+                android:paddingTop="8dp"
                 android:text="Sign out"
+                android:textAlignment="viewStart"
                 android:textColor="@color/purple"
                 android:textSize="@dimen/k_font_medium"
                 android:textStyle="bold" />
@@ -119,7 +121,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/settings_account_sign_out"
-                android:layout_marginBottom="8dp"
                 android:layout_marginTop="16dp"
                 android:ellipsize="end"
                 android:maxLines="1"
@@ -133,9 +134,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/settings_notifications"
-                android:layout_marginBottom="8dp"
-                android:enabled="false"
+                android:background="?attr/selectableItemBackground"
                 android:maxLines="1"
+                android:paddingBottom="8dp"
+                android:paddingTop="8dp"
                 android:text="Notification A"
                 android:textColor="@color/purple"
                 android:textSize="@dimen/k_font_medium"
@@ -146,7 +148,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="0.5dp"
                 android:layout_below="@+id/settings_notifications_a"
-                android:layout_marginBottom="8dp"
                 android:background="@color/grey" />
 
             <android.support.v7.widget.SwitchCompat
@@ -154,9 +155,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/settings_notifications_a_separator"
-                android:layout_marginBottom="8dp"
-                android:enabled="false"
+                android:background="?attr/selectableItemBackground"
                 android:maxLines="1"
+                android:paddingBottom="8dp"
+                android:paddingTop="8dp"
                 android:text="Notification B"
                 android:textColor="@color/purple"
                 android:textSize="@dimen/k_font_medium"
@@ -167,7 +169,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="0.5dp"
                 android:layout_below="@+id/settings_notifications_b"
-                android:layout_marginBottom="8dp"
                 android:background="@color/grey" />
 
             <android.support.v7.widget.SwitchCompat
@@ -175,9 +176,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/settings_notifications_b_separator"
-                android:layout_marginBottom="8dp"
-                android:enabled="false"
+                android:background="?attr/selectableItemBackground"
                 android:maxLines="1"
+                android:paddingBottom="8dp"
+                android:paddingTop="8dp"
                 android:text="Notification C"
                 android:textColor="@color/purple"
                 android:textSize="@dimen/k_font_medium"
@@ -188,7 +190,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="0.5dp"
                 android:layout_below="@+id/settings_notifications_c"
-                android:layout_marginBottom="8dp"
                 android:background="@color/grey" />
 
             <android.support.v7.widget.SwitchCompat
@@ -196,9 +197,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/settings_notifications_c_separator"
-                android:layout_marginBottom="8dp"
-                android:enabled="false"
+                android:background="?attr/selectableItemBackground"
                 android:maxLines="1"
+                android:paddingBottom="8dp"
+                android:paddingTop="8dp"
                 android:text="Notification D"
                 android:textColor="@color/purple"
                 android:textSize="@dimen/k_font_medium"
@@ -209,7 +211,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/settings_notifications_d"
-                android:layout_marginBottom="8dp"
                 android:layout_marginTop="16dp"
                 android:ellipsize="end"
                 android:maxLines="1"
@@ -223,9 +224,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/settings_about"
-                android:layout_marginBottom="8dp"
-                android:enabled="false"
+                android:background="?attr/selectableItemBackground"
+                android:clickable="true"
                 android:maxLines="1"
+                android:paddingBottom="8dp"
+                android:paddingTop="8dp"
                 android:text="Help"
                 android:textColor="@color/purple"
                 android:textSize="@dimen/k_font_medium"
@@ -236,7 +239,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="0.5dp"
                 android:layout_below="@+id/settings_about_help"
-                android:layout_marginBottom="8dp"
                 android:background="@color/grey" />
 
             <TextView
@@ -244,9 +246,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/settings_about_help_separator"
-                android:layout_marginBottom="8dp"
-                android:enabled="false"
+                android:background="?attr/selectableItemBackground"
+                android:clickable="true"
                 android:maxLines="1"
+                android:paddingBottom="8dp"
+                android:paddingTop="8dp"
                 android:text="Report A Problem"
                 android:textColor="@color/purple"
                 android:textSize="@dimen/k_font_medium"
@@ -257,7 +261,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="0.5dp"
                 android:layout_below="@+id/settings_about_report"
-                android:layout_marginBottom="8dp"
                 android:background="@color/grey" />
 
             <TextView
@@ -265,9 +268,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/settings_about_report_separator"
-                android:layout_marginBottom="8dp"
-                android:enabled="false"
+                android:background="?attr/selectableItemBackground"
+                android:clickable="true"
                 android:maxLines="1"
+                android:paddingBottom="8dp"
+                android:paddingTop="8dp"
                 android:text="Feedback"
                 android:textColor="@color/purple"
                 android:textSize="@dimen/k_font_medium"
@@ -278,7 +283,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="0.5dp"
                 android:layout_below="@+id/settings_about_feedback"
-                android:layout_marginBottom="8dp"
                 android:background="@color/grey" />
 
             <TextView
@@ -286,9 +290,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/settings_about_feedback_separator"
-                android:layout_marginBottom="8dp"
-                android:enabled="false"
+                android:background="?attr/selectableItemBackground"
+                android:clickable="true"
                 android:maxLines="1"
+                android:paddingBottom="8dp"
+                android:paddingTop="8dp"
                 android:text="Terms &amp; Conditions"
                 android:textColor="@color/purple"
                 android:textSize="@dimen/k_font_medium"
@@ -299,7 +305,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="0.5dp"
                 android:layout_below="@+id/settings_about_terms"
-                android:layout_marginBottom="8dp"
                 android:background="@color/grey" />
 
             <TextView
@@ -307,9 +312,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/settings_about_terms_separator"
-                android:layout_marginBottom="8dp"
-                android:enabled="false"
+                android:background="?attr/selectableItemBackground"
+                android:clickable="true"
                 android:maxLines="1"
+                android:paddingBottom="8dp"
+                android:paddingTop="8dp"
                 android:text="Privacy Policy"
                 android:textColor="@color/purple"
                 android:textSize="@dimen/k_font_medium"

@@ -2,17 +2,17 @@ package com.nike.dooit.views.main;
 
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 
 import com.nike.dooit.R;
+import com.nike.dooit.views.DooitActivity;
 import com.nike.dooit.views.main.adapters.MainTabAdapter;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends DooitActivity {
 
     @BindView(R.id.toolbar)
     Toolbar toolbar;

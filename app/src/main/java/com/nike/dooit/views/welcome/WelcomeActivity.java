@@ -62,6 +62,6 @@ public class WelcomeActivity extends AppCompatActivity {
 
     @OnClick(R.id.activity_welcome_button)
     public void start() {
-        RegistrationActivity.Builder.create(this).startActivity();
+//        RegistrationActivity.Builder.create(this).startActivity();
     }
 }
