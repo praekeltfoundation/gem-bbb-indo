@@ -11,6 +11,7 @@ import com.nike.dooit.models.User;
 
 import javax.inject.Inject;
 
+import okhttp3.Request;
 import rx.Observable;
 
 /**
@@ -24,8 +25,12 @@ public class AuthenticationManager extends DooitManager {
     @Inject
     public AuthenticationManager(Application application) {
         super(application);
-
         authenticationAPI = retrofit.create(AuthenticationAPI.class);
+    }
+
+    @Override
+    protected Request.Builder addTokenToRequest(Request.Builder requestBuilder) {
+        return requestBuilder;
     }
 
     public Observable<AuthenticationResponse> login(String username, String password, DooitErrorHandler errorHandler) {

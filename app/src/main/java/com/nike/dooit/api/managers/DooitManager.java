@@ -62,15 +62,14 @@ public class DooitManager {
             public Response intercept(Chain chain) throws IOException {
                 Request original = chain.request();
 
-                String token = sharedPreferences.getString(DooitSharedPreferences.TOKEN, "");
+
 
                 Request.Builder requestBuilder = original.newBuilder()
                         .url(original.url())
                         .addHeader("Accept", "application/json")
                         .method(original.method(), original.body());
 
-                if (token != null && !token.isEmpty())
-                    requestBuilder.addHeader("Authorization", "Token " + token);
+                requestBuilder = addTokenToRequest(requestBuilder);
 
                 Request request = requestBuilder.build();
                 return chain.proceed(request);
@@ -90,6 +89,13 @@ public class DooitManager {
                                 .create())
                 )
                 .build();
+    }
+
+    protected Request.Builder addTokenToRequest(Request.Builder requestBuilder) {
+        String token = sharedPreferences.getString(DooitSharedPreferences.TOKEN, "");
+        if (token != null && !token.isEmpty())
+            requestBuilder.addHeader("Authorization", "Token " + token);
+        return requestBuilder;
     }
 
     private <T> Observable<T> addErrorHandling(Observable<T> observable,
