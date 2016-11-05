@@ -4,6 +4,7 @@ import android.app.Application;
 
 import com.nike.dooit.DooitApplication;
 import com.nike.dooit.api.managers.AuthenticationManager;
+import com.nike.dooit.api.managers.FileUploadManager;
 import com.nike.dooit.api.managers.TipManager;
 import com.nike.dooit.api.managers.UserManager;
 import com.nike.dooit.util.DooitSharedPreferences;
@@ -50,4 +51,9 @@ public class DooitModule {
         return new DooitSharedPreferences(application);
     }
 
+    @Provides
+    @Singleton
+    FileUploadManager provideFileUploadManager() {
+        return new FileUploadManager(application);
+    }
 }

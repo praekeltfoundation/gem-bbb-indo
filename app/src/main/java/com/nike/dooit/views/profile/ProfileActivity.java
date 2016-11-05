@@ -19,6 +19,9 @@ import com.nike.dooit.views.settings.SettingsActivity;
 
 import javax.inject.Inject;
 
+/**
+ * Created by Bernhard Müller on 2016/07/22.
+ */
 public class ProfileActivity extends AppCompatActivity {
     SimpleDraweeView profileImage;
     CollapsingToolbarLayout collapsingToolbarLayout;

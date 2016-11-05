@@ -15,6 +15,9 @@ import javax.inject.Inject;
 
 import butterknife.OnClick;
 
+/**
+ * Created by Bernhard Müller on 2016/07/22.
+ */
 public class SettingsActivity extends AppCompatActivity {
     @Inject
     DooitSharedPreferences dooitSharedPreferences;
