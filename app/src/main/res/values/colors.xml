@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#3F51B5</color>
-    <color name="colorPrimaryDark">#303F9F</color>
-    <color name="colorAccent">#FF4081</color>
-</resources>
+    <color name="colorPrimary">@android:color/white</color>
+    <color name="colorPrimaryDark">#67ffffff</color>
+    <color name="colorAccent">@color/pink</color>
+    <color name="purple">#391563</color>
+    <color name="pink">#E93988</color>
+    <color name="yellow">#FDDF5B</color>
+    <color name="toolbarBarTitleColor">#000</color>
+    <color name="toolbarBarSubTitleColor">#000</color>
+ </resources>
