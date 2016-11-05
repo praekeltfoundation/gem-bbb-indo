@@ -1,16 +1,16 @@
 [
   {
     "name": "savingsAskType",
-    "text": "Do you want to add to your savings or withdraw from them?",
+    "text": "$(savingsAskType)",
     "type": "choice",
     "answers": [
-      {"name":"savingsType","value":"save","text":"Save","next":"savingsAskSaveAmount"},
-      {"name":"savingsType","value":"withdraw","text":"Withdraw","next":"savingsAskWithdrawAmount"}
+      {"name":"Save","value":"save","text":"$(Save)","next":"savingsAskSaveAmount"},
+      {"name":"WithdrawButton","value":"withdraw","text":"$(WithdrawButton)","next":"savingsAskWithdrawAmount"}
     ]
   },
   {
     "name": "savingsAskSaveAmount",
-    "text": "How much do you want to add?",
+    "text": "$(savingsAskSaveAmount)",
     "type": "currency",
     "error": "savingsInfoInvalidAmount",
     "answers": [
@@ -19,18 +19,18 @@
   },
   {
     "name": "savingsInfoInvalidAmount",
-    "text": "I'm sorry, but I don't understand that. Please try again.",
+    "text": "$(savingsInfoInvalidAmount)",
     "type": "info",
     "next": "savingsAskSaveAmount"
   },
   {
     "name": "savingsCongratulate",
-    "text": "Good job! Every bit counts.",
+    "text": "$(savingsCongratulate)",
     "type": "info"
   },
   {
     "name": "savingsAskWithdrawAmount",
-    "text": "That's too bad. How much do you want to withdraw?",
+    "text": "$(savingsAskWithdrawAmount)",
     "type": "currency",
     "error": "savingsInfoWithdrawInvalidAmount",
     "answers": [
@@ -39,13 +39,13 @@
   },
   {
     "name": "savingsInfoWithdrawInvalidAmount",
-    "text": "I'm sorry, but I don't understand that. Please try again.",
+    "text": "$(savingsInfoWithdrawInvalidAmount)",
     "type": "info",
     "next": "savingsAskWithdrawAmount"
   },
   {
     "name": "savingsConsole",
-    "text": "Don't worry. Things will be better in the future. Here's a helpful tip.",
+    "text": "$(savingsConsole)",
     "type": "info"
   }
 ]

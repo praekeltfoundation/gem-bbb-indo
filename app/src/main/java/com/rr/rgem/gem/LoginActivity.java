@@ -85,7 +85,7 @@ public class LoginActivity extends ApplicationActivity {
         buttonLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Utils.toast(LoginActivity.this, "Login clicked");
+                Utils.toast(LoginActivity.this, getString(R.string.loginClicked));
 
                 String username = editUsername.getText().toString();
                 String password = editPassword.getText().toString();
@@ -187,7 +187,7 @@ public class LoginActivity extends ApplicationActivity {
 
     boolean usernameValid(String username) {
         if (username == null || username.isEmpty()) {
-            textViewUsername.setError("Username is empty");
+            textViewUsername.setError(getString(R.string.usernameIsEmpty));
             return false;
         }
         return true;
@@ -195,7 +195,7 @@ public class LoginActivity extends ApplicationActivity {
 
     boolean passwordValid(String password) {
         if (password == null || password.isEmpty()) {
-            textViewPassword.setError("Password is empty");
+            textViewPassword.setError(getString(R.string.passwordIsEmpty));
             return false;
         }
         return true;

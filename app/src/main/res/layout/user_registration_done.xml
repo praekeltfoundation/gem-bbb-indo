@@ -47,18 +47,18 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|center_horizontal"
         android:layout_marginTop="40dp"
-        android:text="DONE" />
+        android:text="@string/Done" />
 
     <Button
         android:id="@+id/buttonRegistrationUndo"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|center_horizontal"
-        android:text="Deregister" />
+        android:text="@string/Deregister" />
 
     <Button
         android:id="@+id/buttonUpload"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Upload" />
+        android:text="@string/Upload" />
 </LinearLayout>

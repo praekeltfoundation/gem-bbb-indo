@@ -1,6 +1,9 @@
 package com.rr.rgem.gem;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
@@ -8,6 +11,7 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
+import android.util.DisplayMetrics;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -30,6 +34,8 @@ import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 
 /**
@@ -51,16 +57,33 @@ public class OnBoardingActivity extends ApplicationActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        navigation = new GEMNavigation(this);
-        Utils.toast(this,"starting OnBoarding activity");
+         navigation = new GEMNavigation(this);
+
+
+        Utils.toast(this,getString(R.string.startOnbaordActivity));
         coachScreen = (LinearLayout) navigation.addLayout(R.layout.conversational_layout);
         contentLayout = (RelativeLayout) coachScreen.findViewById(R.id.container);
         coachView = new LeftRightConversation(contentLayout);
         Message start = new Message(1, "2016", true, Message.ResponseType.FreeForm, null);
-        start.setTitle("Lets Get Started!!!");
+        start.setTitle(getString(R.string.LetsGetStarted));
         coachView.addFreeFormPlain(start);
 
         coachController = new JSONConversation(this,R.raw.onboarding);
+
+        Map<String, String> vars = coachController.getVars();
+        vars.put("askName", getString(R.string.askName));
+        vars.put("askMobileNumber",getString(R.string.askMobileNumber));
+        vars.put("askPasswordOne",getString(R.string.askPasswordOne));
+        vars.put("askPasswordTwo",getString(R.string.askPasswordTwo));
+        vars.put("validationFailName",getString(R.string.validationFailName));
+        vars.put("validationFailNumber",getString(R.string.validationFailNumber));
+        vars.put("validationFailPassword",getString(R.string.validationFailPassword));
+        vars.put("validationFailPasswordMatch",getString(R.string.validationFailPasswordMatch));
+        vars.put("infoOnboardingEnd",getString(R.string.infoOnboardingEnd));
+
+
+
+
         Map<String, ConvoCallback> callbacks =  coachController.getFnMap();
         callbacks.put("checkPasswordMatch", new ConvoCallback() {
             @Override
@@ -73,12 +96,14 @@ public class OnBoardingActivity extends ApplicationActivity {
                 }
             }
         });
+
+
         coachController.setDoneCallback(new ConvoCallback() {
             @Override
             public String callback(Map<String, String> vars, Map<String, String> responses) {
 
                 Message summary = new Message(1, "2016", true, Message.ResponseType.FreeForm, null);
-                summary.setTitle("SUMMARY:");
+                summary.setTitle(getString(R.string.SUMMARY));
                 coachView.addFreeFormPlain(summary);
 
                 for (String key: responses.keySet()) {
@@ -96,7 +121,7 @@ public class OnBoardingActivity extends ApplicationActivity {
                         // TODO: add movement to next activity
                         //Intent intent = new Intent(OnBoardingActivity.this, ChallengeActivity.class);
                         //startActivity(intent);
-                        Utils.toast(OnBoardingActivity.this,"Conversation done");
+                        Utils.toast(OnBoardingActivity.this,getString(R.string.conversationDone));
                         //GoalActivity.goToChallenges();
                         //conversationActivity conActivity;
                         //conversationActivity.
@@ -126,7 +151,7 @@ public class OnBoardingActivity extends ApplicationActivity {
         };
 
         Message message = new Message(1, "2016", true, Message.ResponseType.ImageUpload, null);
-        message.setTitle("Set a profile picture: ");
+        message.setTitle(getString(R.string.setProfilePicture));
         currentImage = coachView.addImageUploadQuestion(message, listener);
         currentImageName = ImageHelper.PROFILE_IMAGE_FILENAME;
     }

@@ -6,8 +6,9 @@
   "deactivation_date": "2016-10-27T18:00:00Z",
   "questions": [
     {
+      "name": "toes",
       "id": 1,
-      "text": "Can you touch your toes?",
+      "text": "$(toes)",
       "options": [
         {
           "id": 1,
@@ -21,8 +22,9 @@
       ]
     },
     {
+      "name": "night",
       "id": 2,
-      "text": "Can you land on the sun at night?",
+      "text": "$(night)",
       "options": [
         {
           "id": 3,

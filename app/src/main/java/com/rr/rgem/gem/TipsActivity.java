@@ -41,14 +41,31 @@ public class TipsActivity extends ApplicationActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         navigation = new GEMNavigation(this);
-        Utils.toast(this, "starting Tips activity");
+        Utils.toast(this, getString(R.string.startingTipsActivity));
         coachScreen = (LinearLayout) navigation.addLayout(R.layout.conversational_layout);
         contentLayout = (RelativeLayout) coachScreen.findViewById(R.id.container);
         coachView = new LeftRightConversation(contentLayout);
         Message start = new Message(1, "2016", true, Message.ResponseType.FreeForm, null);
-        start.setTitle("These are short tips that are sent by the coach,which are really useful for the user.");
+        start.setTitle(getString(R.string.shortTips));
         coachView.addFreeFormPlain(start);
         coachController = new JSONConversation(this, R.raw.tips);
+
+        Map<String, String> vars = coachController.getVars();
+        vars.put("Tone", getString(R.string.Tone));
+        vars.put("Ttwo",getString(R.string.Ttwo));
+        vars.put("Tthree", getString(R.string.Tthree));
+        vars.put("Tfour",getString(R.string.Tfour));
+        vars.put("infoTipsEnd", getString(R.string.infoTipsEnd));
+        //Button
+        vars.put("ToneY", getString(R.string.ToneY));
+        vars.put("ToneN", getString(R.string.ToneN));
+        vars.put("TtwoY", getString(R.string.TtwoY));
+        vars.put("TtwoN", getString(R.string.TtwoN));
+        vars.put("TthreeY", getString(R.string.TthreeY));
+        vars.put("TthreeN", getString(R.string.TthreeN));
+        vars.put("TfourY", getString(R.string.TfourY));
+
+
         coachController.setDoneCallback(new ConvoCallback() {
 
 

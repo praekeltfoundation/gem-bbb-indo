@@ -46,7 +46,7 @@ public class GEMNavigation implements NavigationView.OnNavigationItemSelectedLis
         this.container = container;
         Toolbar toolbar = (Toolbar) container.findViewById(R.id.toolbar);
         if(toolbar==null){
-            Utils.toast(container, "the toolbar could not be found in the supplied container argument");
+            Utils.toast(container, container.getResources().getString(R.string.toolBarNotSupplied));
             return;
         }
         container.setSupportActionBar(toolbar);
@@ -86,7 +86,7 @@ public class GEMNavigation implements NavigationView.OnNavigationItemSelectedLis
     public View addLayout(int id){
         RelativeLayout inner = (RelativeLayout)container.findViewById(R.id.content_main);
         if(inner==null){
-            Utils.toast(container,"the main content view could not be found");
+            Utils.toast(container,container.getResources().getString(R.string.contentNotSupplied));
             return null;
         }
         LayoutInflater factory = LayoutInflater.from(container);

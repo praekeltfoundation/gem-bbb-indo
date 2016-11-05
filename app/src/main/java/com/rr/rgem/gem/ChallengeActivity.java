@@ -71,7 +71,7 @@ public class ChallengeActivity extends ApplicationActivity{
             user = persist.loadUser();
         }
         challengeMainLayout = (LinearLayout)this.findViewById(R.id.challengeMainLayout);
-        Utils.toast(this, "starting current challenge activity");
+        Utils.toast(this, getString(R.string.startingchallengesActivity));
 
         WebServiceFactory factory = ((WebServiceApplication) getApplication()).getWebServiceFactory();
         cmsService = factory.createService(CMSService.class);
@@ -88,7 +88,7 @@ public class ChallengeActivity extends ApplicationActivity{
 
             @Override
             public void onFailure(Call<Challenge> call, Throwable t) {
-                Utils.toast(ChallengeActivity.this, "Challenge could not be loaded.");
+                Utils.toast(ChallengeActivity.this, getString(R.string.challengeCouldNotBeLoaded));
             }
         });
 
@@ -100,7 +100,7 @@ public class ChallengeActivity extends ApplicationActivity{
     {
         questions = challenge.getQuestions().listIterator();
         if (!questions.hasNext()) {
-            Utils.toast(this, "Challenge has no questions.");
+            Utils.toast(this, getString(R.string.challengeHasNoQuestions));
             return;
         }
         currentQuestion = questions.next();
@@ -115,7 +115,7 @@ public class ChallengeActivity extends ApplicationActivity{
                         currentQuestion = questions.next();
                         displayQuestion();
                     } else {
-                        Utils.toast(ChallengeActivity.this, "Congratulations! Challenge complete.");
+                        Utils.toast(ChallengeActivity.this, getString(R.string.congratulationsChallengecomplete));
                         submitAnswers();
                         Handler handler = new Handler(getMainLooper());
                         handler.postDelayed(new Runnable() {
@@ -160,7 +160,7 @@ public class ChallengeActivity extends ApplicationActivity{
     void submitAnswers()
     {
         if (user == null) {
-            Utils.toast(ChallengeActivity.this, "User not logged in, cannot submit.");
+            Utils.toast(ChallengeActivity.this,getString(R.string.userNoLoggedInCannotSubmit));
             return;
         }
         Entry entry = new Entry(user.getId(), challenge.getId());
@@ -169,15 +169,15 @@ public class ChallengeActivity extends ApplicationActivity{
             @Override
             public void onResponse(Call<Entry> call, Response<Entry> response) {
                 if (response.isSuccessful()){
-                    Utils.toast(ChallengeActivity.this, "Answers response successfully sent.");
+                    Utils.toast(ChallengeActivity.this, getString(R.string.answersResponseSuccessfullySent));
                 } else {
-                    Utils.toast(ChallengeActivity.this, "Answers sent, but unsuccessful.");
+                    Utils.toast(ChallengeActivity.this,getString(R.string.answersSentButUnsuccessful));
                 }
             }
 
             @Override
             public void onFailure(Call<Entry> call, Throwable t) {
-                Utils.toast(ChallengeActivity.this, "Failed to send answers.");
+                Utils.toast(ChallengeActivity.this, getString(R.string.failedToSendAnswers));
             }
         });
     }
@@ -207,14 +207,14 @@ public class ChallengeActivity extends ApplicationActivity{
     private boolean checkAnswer()
     {
         if (selectedOption == null) {
-            Utils.toast(ChallengeActivity.this, "No answer selected.");
+            Utils.toast(ChallengeActivity.this, getString(R.string.noAnswerSelected));
         } else {
             participantAnswerList.add(new ParticipantAnswer(currentQuestion, selectedOption));
             if (selectedOption.getCorrect()) {
-                Utils.toast(ChallengeActivity.this, "Answer correct.");
+                Utils.toast(ChallengeActivity.this, getString(R.string.answerCorrect));
                 return true;
             } else {
-                Utils.toast(ChallengeActivity.this, "Answer incorrect.");
+                Utils.toast(ChallengeActivity.this, getString(R.string.answerIncorrect));
             }
         }
         return false;

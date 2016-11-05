@@ -1,7 +1,7 @@
 [
   {
     "name":"askName",
-    "text":"Welcome to dooit! What is your name?",
+    "text":"$(askName)",
     "type":"initials",
     "error": "validationFailName",
     "answers":[
@@ -11,7 +11,7 @@
   },
   {
     "name":"askMobileNumber",
-    "text":"What is your mobile number? ",
+    "text":"$(askMobileNumber) ",
     "type":"mobile",
     "error": "validationFailNumber",
     "answers":[
@@ -21,7 +21,7 @@
   },
   {
     "name":"askPasswordOne",
-    "text":"We need you to create a password so that I can make sure it is always you who is accessing your savings information. Reply with a password 8 letters or digits long. Dont worry I'll hide what you're typing so noone can see. ",
+    "text":"$(askPasswordOne) ",
     "type":"password",
     "error": "validationFailPassword",
     "answers":[
@@ -31,7 +31,7 @@
   },
   {
     "name":"askPasswordTwo",
-    "text":"Will you type it one more time so that I can check if I have saved it correctly? ",
+    "text":"$(askPasswordTwo)",
     "completed":"no",
     "type":"password",
     "error": "validationFailPasswordMatch",
@@ -43,31 +43,31 @@
   {
     "name": "validationFailName",
     "type": "info",
-    "text": "Sorry, I don't understand that and haven't been taught how to handle it yet.",
+    "text": "$(validationFailName)",
     "next": "askName"
   },
   {
     "name": "validationFailNumber",
     "type": "info",
-    "text": "Sorry, I don't understand that and haven't been taught how to handle it yet.",
+    "text": "$(validationFailNumber)",
     "next": "askMobileNumber"
   },
   {
     "name": "validationFailPassword",
     "type": "info",
-    "text": "Invalid answer. Please enter 8 or more characters(letters/numbers/special characters(- . _ ` ~ @ # $ & *)).",
+    "text": "$(validationFailPassword)",
     "next": "askPasswordOne"
   },
   {
     "name": "validationFailPasswordMatch",
     "type": "info",
-    "text": "Passwords must match.",
+    "text": "$(validationFailPasswordMatch)",
     "next": "askPasswordOne"
   },
   {
     "name": "infoOnboardingEnd",
     "type": "info",
-    "text": "Thank you. That concludes the registration process."
+    "text": "$(infoOnboardingEnd)"
   }
 
 

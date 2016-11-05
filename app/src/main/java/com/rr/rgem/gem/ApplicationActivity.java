@@ -109,12 +109,12 @@ public class ApplicationActivity extends AppCompatActivity {
      * @param imageFile
      */
     protected void uploadImage(String urlTemplate, File imageFile) {
-        Utils.toast(this, "Uploading Image");
+        Utils.toast(this,getString(R.string.UploadingImage));
         Persisted persisted = new Persisted(this);
         User user = persisted.loadUser();
 
         if (!user.hasId()) {
-            Utils.toast(this, "User id not set");
+            Utils.toast(this, getString(R.string.userIdnotSet));
             return;
         }
 
@@ -134,12 +134,12 @@ public class ApplicationActivity extends AppCompatActivity {
         uploader.send(url, mediaType, imageFile, new FileUploader.UploadCallback() {
             @Override
             public void onComplete() {
-                Utils.toast(ApplicationActivity.this, "File Upload Success");
+                Utils.toast(ApplicationActivity.this, getString(R.string.fileUploadSuccess));
             }
 
             @Override
             public void onFailure() {
-                Utils.toast(ApplicationActivity.this, "File Upload Failed");
+                Utils.toast(ApplicationActivity.this, getString(R.string.fileUploadFailed));
             }
         });
     }

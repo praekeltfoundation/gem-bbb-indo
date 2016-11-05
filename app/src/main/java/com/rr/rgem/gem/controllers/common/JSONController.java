@@ -154,7 +154,7 @@ public class JSONController {
             //v.setGravity(Gravity.END);
             //v.setEnabled(false);
         }else{
-            Utils.toast(activity,"Invalid answer. Please enter a valid answer.");
+            Utils.toast(activity, activity.getResources().getString(R.string.inValidAnswer));
             //getState().setState(JSONState.State.Incorrect);
             //getState().sendChallenges(activity, "Invalid answer. Please enter a valid answer.");
 
@@ -167,7 +167,7 @@ public class JSONController {
         getState().setState(JSONState.State.Correct);
         current = getState().getNodeMap().get(getNextNode(answer.next));
         responseMap.put(answer.name, response);
-        getState().sendChallenges(activity, "You answered: " + response);
+        getState().sendChallenges(activity, activity.getResources().getString(R.string.youAnswered) + response);
         v.setGravity(Gravity.END);
         v.setEnabled(false);
     }
@@ -313,14 +313,14 @@ public class JSONController {
             Map<String, View.OnClickListener> listeners = new HashMap<String, View.OnClickListener>();
             for (final ConversationNode.AnswerNode choice: current.answers)
             {
-                listeners.put(choice.value, new View.OnClickListener() {
+                listeners.put(getState().parseStringVars(choice.text), new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         if(JSONController.this.answerProcess.choiceAnswer(answer,choice.value)) {
                             JSONController.this.getState().setState(JSONState.State.Correct);
                             responseMap.put(choice.name, choice.value);
                             current = JSONController.this.getState().getNodeMap().get(getNextNode(choice.next));
-                            JSONController.this.getState().sendChallenges(activity, "You selected: " + ((Button) v).getText());
+                            JSONController.this.getState().sendChallenges(activity, activity.getResources().getString(R.string.youSelected) + ((Button) v).getText());
                             choice.setResponse(choice.value);
                             answer.setResponse(choice.value);
                             JSONController.this.saveJson();
@@ -343,7 +343,7 @@ public class JSONController {
                         JSONController.this.getState().setState(JSONState.State.Correct);
                         responseMap.put(choice.name, choice.value);
                         current = JSONController.this.getState().getNodeMap().get(getNextNode(choice.next));
-                        JSONController.this.getState().sendChallenges(activity, "You selected: " + choice.getResponse());
+                        JSONController.this.getState().sendChallenges(activity,activity.getResources().getString(R.string.youSelected)+ choice.getResponse());
                         choice.setResponse(choice.value);
                         answer.setResponse(choice.value);
                         break; /// TODO: at first choice recorded

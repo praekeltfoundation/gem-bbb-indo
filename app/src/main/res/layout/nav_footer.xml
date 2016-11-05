@@ -5,21 +5,21 @@
     android:id="@+id/navFooter">
 
     <Button
-        android:text="Goal"
+        android:text="@string/Goal"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/goalBtn"
         android:layout_weight="1" />
 
     <Button
-        android:text="Challenge"
+        android:text="@string/Challenge"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/challengeBtn"
         android:layout_weight="1" />
 
     <Button
-        android:text="Button"
+        android:text="@string/Button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/tipBtn"

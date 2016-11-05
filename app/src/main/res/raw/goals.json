@@ -2,126 +2,135 @@
   {
     "name": "askGoalName",
     "type": "text",
-    "text": "What are you saving for?",
+    "text": " $(askGoalName) ",
     "answers": [ {"name": "goalName", "next": "askGoalImage" } ]
   },
   {
     "name": "askGoalImage",
+    "type": "choice",
+    "text": "$(askGoalImage)",
+    "answers": [
+      { "name": "Capture", "value": " ", "text":"$(Capture)", "next": "askGoalImageTake"},
+      { "name": "Skip", "value": "Skip", "text":"$(Skip)", "next": "askKnowGoalAmount"}
+    ]
+  },
+  {
+    "name": "askGoalImageTake",
     "type": "imageUpload",
-    "text": "Add an image for your savings goal to help keep you motivated:",
+    "text": "$(askGoalImageTake)",
     "answers": [ {"name": "goalImage", "next": "askKnowGoalAmount" } ]
   },
   {
     "name": "askKnowGoalAmount",
     "type": "choice",
-    "text": "Do you know how much you need to save?",
+    "text": "$(askKnowGoalAmount)",
     "answers": [
-      { "name": "knowAmount", "value": "yes", "text":"Yes", "next": "askGoalAmount"},
-      { "name": "knowAmount", "value": "no", "text":"No", "next": "askGoalWeeklySaveAmount"}
+      { "name": "knowAmountY", "value": "yes", "text":"$(knowAmountY)", "next": "askGoalAmount"},
+      { "name": "knowAmountN", "value": "no", "text":"$(knowAmountN)", "next": "askGoalWeeklySaveAmount"}
     ]
   },
   {
     "name": "askGoalAmount",
     "type": "currency",
-    "text": "Great! Just type the amount that you want to save.",
+    "text": "$(askGoalAmount)",
     "error": "validationFail",
     "answers": [ { "name": "goalAmount", "next": "askKnowGoalDate" } ]
   },
   {
     "name": "infoDontKnowAmount",
     "type": "info",
-    "text": "No problem.",
+    "text": "$(infoDontKnowAmount)",
     "next": "askGoalWeeklySaveAmount"
   },
   {
     "name": "askKnowGoalDate",
     "type": "choice",
-    "text": "That's a big goal. Let's get saving then. Do you have a date that you want to save this by?",
+    "text": "$(askKnowGoalDate)",
     "answers": [
-      { "name": "knowDate", "value": "yes", "text":"Yes", "next": "askGoalDate"},
-      { "name": "knowDate", "value": "no", "text":"No", "next": "askGoalWeeklySaveAmount"}
+      { "name": "knowDateY", "value": "yes", "text":"$(knowDateY)", "next": "askGoalDate"},
+      { "name": "knowDateN", "value": "no", "text":"$(knowDateN)", "next": "askGoalWeeklySaveAmount"}
     ]
   },
   {
     "name": "askGoalDate",
     "type": "date",
-    "text": "When would you like to have saved this much?",
+    "text": "$(askGoalDate)",
     "error": "validationFailDate",
     "answers": [ { "name": "goalDate", "next": "verifyGoalAmount" } ]
   },
   {
     "name": "askGoalWeeklySaveAmount",
     "type": "choice",
-    "text": " How much can you save each week?",
+    "text": "$(askGoalWeeklySaveAmount)",
     "answers": [
-      { "name": "weeklySaveAmount", "value":  "500", "text":"Yes", "next": "askGoalPriorSave"},
-      { "name": "weeklySaveAmount", "value": "1000", "text":"Yes", "next": "askGoalPriorSave"},
-      { "name": "weeklySaveAmount", "value": "1500", "text":"Yes", "next": "askGoalPriorSave"},
-      { "name": "weeklySaveAmount", "value": "2000", "text":"Yes", "next": "askGoalPriorSave"},
-      { "name": "otherSaveAmount", "value": "other", "text": "Other", "next": "askGoalSaveAmountOther"}
+      { "name": "five", "value":  "500", "text":"$(five)", "next": "askGoalPriorSave"},
+      { "name": "thousnad", "value": "1000", "text":"$(thousand)", "next": "askGoalPriorSave"},
+      { "name": "thousandFive", "value": "1500", "text":"$(thousandFive)", "next": "askGoalPriorSave"},
+      { "name": "twoThousand", "value": "2000", "text":"$(twoThousand)", "next": "askGoalPriorSave"},
+      { "name": "otherSaveAmount", "value": "other", "text": "$(otherSaveAmount)", "next": "askGoalSaveAmountOther"}
     ]
   },
   {
     "name": "askGoalSaveAmountOther",
     "type": "currency",
-    "text": "How much can you save?",
+    "text": "$(askGoalSaveAmountOther)",
     "error": "validationFailSaveAmountOther",
     "answers": [ { "name": "weeklySaveAmount", "next": "askGoalPriorSave" } ]
   },
   {
     "name": "askGoalPriorSave",
     "type": "choice",
-    "text": "Have you saved anything towards this goal yet?",
+    "text": "$(askGoalPriorSave)",
     "answers": [
-      { "name": "hasSaved", "value": "yes", "text":"Yes", "next": "askPriorSavedAmount"},
-      { "name": "hasSaved", "value": "no", "text":"No", "next": "verifyGoalAmount"}
+      { "name": "hasSavedY", "value": "yes", "text":"$(hasSavedY)", "next": "askPriorSavedAmount"},
+      { "name": "hasSavedN", "value": "no", "text":"$(hasSavedN)", "next": "verifyGoalAmount"}
     ]
   },
   {
     "name": "askPriorSavedAmount",
     "type": "currency",
-    "text": "How much have you already saved?",
+    "text": "$(askPriorSavedAmount)",
     "error": "validationFailPriorSavedAmount",
     "answers": [ { "name": "priorSaveAmount", "next": "infoGoalEnd" } ]
   },
   {
     "name": "verifyGoalAmount",
     "type": "choice",
-    "text": "If you save Rp $(weeklyGoal) each week you’ll save enough to get your $(savingsGoal) in $(totalWeeks) weeks.",
+    "text": "$(verifyGoalAmount)",
     "error": "validationFailPriorSavedAmount",
     "answers": [
-      { "name": "goalCheck", "value": "reduceWeek", "text":"Reduce Time", "next": "askKnowGoalDate"},
-      { "name": "goalCheck", "value": "reduceAmount", "text":"Reduce Amount", "next": "askPriorSavedAmount"},
-      { "name": "goalCheck", "value": "ok", "text":"OK", "next": "infoGoalEnd"}
+      { "name": "goalCheckRT", "value": "reduceWeek", "text":"$(goalCheckRT)", "next": "askKnowGoalDate"},
+      { "name": "goalCheckRA", "value": "reduceAmount", "text":"$(goalCheckRA)", "next": "askPriorSavedAmount"},
+      { "name": "goalCheckOk", "value": "ok", "text":"$(goalCheckOk)", "next": "infoGoalEnd"}
     ]
   },
   {
     "name": "validationFail",
     "type": "info",
-    "text": "Sorry, I don't understand that and haven't been taught how to handle it yet.",
+    "text": "$(validationFail)",
     "next": "askGoalAmount"
   },
   {
     "name": "validationFailDate",
     "type": "info",
-    "text": "Sorry, I don't understand that and haven't been taught how to handle it yet.",
+    "text": "$(validationFailDate)",
     "next": "askGoalDate"
   },
   {
   "name": "validationFailSaveAmountOther",
   "type": "info",
-  "text": "Sorry, I don't understand that and haven't been taught how to handle it yet.",
+  "text": "$(validationFailSaveAmountOther)",
   "next": "askGoalSaveAmountOther"
   },
   {
   "name": "validationFailPriorSavedAmount",
   "type": "info",
-  "text": "Sorry, I don't understand that and haven't been taught how to handle it yet.",
+  "text": "$(validationFailPriorSavedAmount)",
   "next": "askPriorSavedAmount"
 },
   {
     "name": "infoGoalEnd",
     "type": "end",
-    "text": "Thank you. That concludes the goal-setting process."
+    "text": "$(infoGoalEnd)"
   }
 ]

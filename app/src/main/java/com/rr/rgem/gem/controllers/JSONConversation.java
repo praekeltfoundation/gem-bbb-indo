@@ -13,6 +13,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
+import com.rr.rgem.gem.R;
 import com.rr.rgem.gem.controllers.common.JSONController;
 import com.rr.rgem.gem.models.ConversationNode;
 import com.rr.rgem.gem.models.ConvoCallback;
@@ -163,7 +164,7 @@ public class JSONConversation {
     {
         if (current.type == ConversationNode.NodeType.text) {
             final ConversationNode.AnswerNode answer = current.answers[0];
-            conversationView.addTextInputQuestion(questionId,current.text, new TextView.OnEditorActionListener() {
+            conversationView.addTextInputQuestion(questionId, parseStringVars(current.text), new TextView.OnEditorActionListener() {
                 @Override
                 public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                 if (actionId == EditorInfo.IME_ACTION_DONE || event.getKeyCode() == KeyEvent.KEYCODE_ENTER)
@@ -173,7 +174,7 @@ public class JSONConversation {
                         state = State.Correct;
                         responseMap.put(answer.name, v.getText().toString());
                         current = nodeMap.get(getNextNode(answer.next));
-                        sendChallenges(conversationActivity, conversationView, "You answered: " + v.getText());
+                        sendChallenges(conversationActivity, conversationView, conversationActivity.getResources().getString(R.string.youAnswered) + v.getText());
                         v.setGravity(Gravity.RIGHT);
                         v.setEnabled(false);
                         return true;
@@ -182,7 +183,7 @@ public class JSONConversation {
                     {
                         state = State.Correct;
                         current = nodeMap.get(getNextNode(current.error));
-                        sendChallenges(conversationActivity, conversationView, "Invalid answer. Please enter a valid answer.");
+                        sendChallenges(conversationActivity, conversationView, conversationActivity.getResources().getString(R.string.inValidAnswer));
                         v.setGravity(Gravity.RIGHT);
                         v.setEnabled(false);
                         return false;
@@ -191,7 +192,7 @@ public class JSONConversation {
                     {
                         state = State.Incorrect;
 
-                        sendChallenges(conversationActivity, conversationView, "Invalid answer. Please enter a valid answer.");
+                        sendChallenges(conversationActivity, conversationView, conversationActivity.getResources().getString(R.string.inValidAnswer));
                         return false;
                     }
                 }
@@ -200,7 +201,7 @@ public class JSONConversation {
             });
         } else if(current.type == ConversationNode.NodeType.currency){
             final ConversationNode.AnswerNode answer = current.answers[0];
-            conversationView.addTextInputQuestion(questionId,current.text, new TextView.OnEditorActionListener() {
+            conversationView.addTextInputQuestion(questionId, parseStringVars(current.text), new TextView.OnEditorActionListener() {
                 @Override
                 public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                 if (actionId == EditorInfo.IME_ACTION_DONE || event.getKeyCode() == KeyEvent.KEYCODE_ENTER)
@@ -210,7 +211,7 @@ public class JSONConversation {
                         state = State.Correct;
                         responseMap.put(answer.name, v.getText().toString());
                         current = nodeMap.get(getNextNode(answer.next));
-                        sendChallenges(conversationActivity, conversationView, "You answered: " + v.getText());
+                        sendChallenges(conversationActivity, conversationView, conversationActivity.getResources().getString(R.string.youAnswered) + v.getText());
                         v.setGravity(Gravity.RIGHT);
                         v.setEnabled(false);
                         return true;
@@ -219,7 +220,7 @@ public class JSONConversation {
                     {
                         state = State.Correct;
                         current = nodeMap.get(getNextNode(current.error));
-                        sendChallenges(conversationActivity, conversationView, "Invalid answer. Please enter a valid answer.");
+                        sendChallenges(conversationActivity, conversationView, conversationActivity.getResources().getString(R.string.inValidAnswer));
                         v.setGravity(Gravity.RIGHT);
                         v.setEnabled(false);
                         return false;
@@ -228,7 +229,7 @@ public class JSONConversation {
                     {
                         state = State.Incorrect;
 
-                        sendChallenges(conversationActivity, conversationView, "Invalid answer. Please enter a valid answer.");
+                        sendChallenges(conversationActivity, conversationView, conversationActivity.getResources().getString(R.string.inValidAnswer));
                         return false;
                     }
                 }
@@ -238,13 +239,13 @@ public class JSONConversation {
         } else if (current.type == ConversationNode.NodeType.choice) {
             Map<String,View.OnClickListener> listeners = new HashMap<String,View.OnClickListener>();
             for (final ConversationNode.AnswerNode choice: current.answers){
-                listeners.put(choice.value, new View.OnClickListener() {
+                listeners.put(parseStringVars(choice.text), new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         state = State.Correct;
                         responseMap.put(choice.name, choice.value);
                         current = nodeMap.get(getNextNode(choice.next));
-                        sendChallenges(conversationActivity, conversationView, "You selected: " + ((Button) v).getText());
+                        sendChallenges(conversationActivity, conversationView, conversationActivity.getResources().getString(R.string.youSelected) + ((Button) v).getText());
 
                         for (int j = 0; j < ((ViewGroup) v.getParent()).getChildCount(); ++j)
                         {
@@ -259,7 +260,7 @@ public class JSONConversation {
             }
         } else if (current.type == ConversationNode.NodeType.date) {
             final ConversationNode.AnswerNode answer = current.answers[0];
-            conversationView.addTextInputQuestion(questionId,current.text, new TextView.OnEditorActionListener() {
+            conversationView.addTextInputQuestion(questionId, parseStringVars(current.text), new TextView.OnEditorActionListener() {
                 @Override
                 public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                     if (actionId == EditorInfo.IME_ACTION_DONE || event.getKeyCode() == KeyEvent.KEYCODE_ENTER)
@@ -269,7 +270,7 @@ public class JSONConversation {
                             state = State.Correct;
                             responseMap.put(answer.name, v.getText().toString());
                             current = nodeMap.get(getNextNode(answer.next));
-                            sendChallenges(conversationActivity, conversationView, "You answered: " + v.getText());
+                            sendChallenges(conversationActivity, conversationView, conversationActivity.getResources().getString(R.string.youAnswered) + v.getText());
                             v.setGravity(Gravity.RIGHT);
                             v.setEnabled(false);
                             return true;
@@ -278,7 +279,7 @@ public class JSONConversation {
                         {
                             state = State.Correct;
                             current = nodeMap.get(getNextNode(current.error));
-                            sendChallenges(conversationActivity, conversationView, "Invalid answer. Please enter a valid answer.");
+                            sendChallenges(conversationActivity, conversationView, conversationActivity.getResources().getString(R.string.inValidAnswer));
                             v.setGravity(Gravity.RIGHT);
                             v.setEnabled(false);
                             return false;
@@ -287,7 +288,7 @@ public class JSONConversation {
                         {
                             state = State.Incorrect;
 
-                            sendChallenges(conversationActivity, conversationView, "Invalid answer. Please enter a valid answer.");
+                            sendChallenges(conversationActivity, conversationView, conversationActivity.getResources().getString(R.string.inValidAnswer));
                             return false;
                         }
                     }
@@ -311,10 +312,10 @@ public class JSONConversation {
                 current = null;
                 state = State.Complete;
             }
-            sendChallenges(conversationActivity, conversationView, "Info");
+            sendChallenges(conversationActivity, conversationView, conversationActivity.getResources().getString(R.string.info));
         }else if (current.type == ConversationNode.NodeType.initials) {
             final ConversationNode.AnswerNode answer = current.answers[0];
-            conversationView.addTextInputQuestion(questionId,current.text, new TextView.OnEditorActionListener() {
+            conversationView.addTextInputQuestion(questionId, parseStringVars(current.text), new TextView.OnEditorActionListener() {
                 @Override
                 public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                     if (actionId == EditorInfo.IME_ACTION_DONE || event.getKeyCode() == KeyEvent.KEYCODE_ENTER)
@@ -324,7 +325,7 @@ public class JSONConversation {
                             state = State.Correct;
                             responseMap.put(answer.name, v.getText().toString());
                             current = nodeMap.get(getNextNode(answer.next));
-                            sendChallenges(conversationActivity, conversationView, "You answered: " + v.getText());
+                            sendChallenges(conversationActivity, conversationView, conversationActivity.getResources().getString(R.string.youAnswered) + v.getText());
                             v.setGravity(Gravity.RIGHT);
                             v.setEnabled(false);
                             return true;
@@ -333,7 +334,7 @@ public class JSONConversation {
                         {
                             state = State.Correct;
                             current = nodeMap.get(getNextNode(current.error));
-                            sendChallenges(conversationActivity, conversationView, "Invalid answer. Please enter a valid answer.");
+                            sendChallenges(conversationActivity, conversationView,conversationActivity.getResources().getString(R.string.inValidAnswer));
                             v.setGravity(Gravity.RIGHT);
                             v.setEnabled(false);
                             return false;
@@ -342,7 +343,7 @@ public class JSONConversation {
                         {
                             state = State.Incorrect;
 
-                            sendChallenges(conversationActivity, conversationView, "Invalid answer. Please enter a valid answer.");
+                            sendChallenges(conversationActivity, conversationView, conversationActivity.getResources().getString(R.string.inValidAnswer));
                             return false;
                         }
                     }
@@ -351,7 +352,7 @@ public class JSONConversation {
             });
         }else if (current.type == ConversationNode.NodeType.mobile) {
             final ConversationNode.AnswerNode answer = current.answers[0];
-            conversationView.addTextInputQuestion(questionId,current.text, new TextView.OnEditorActionListener() {
+            conversationView.addTextInputQuestion(questionId, parseStringVars(current.text), new TextView.OnEditorActionListener() {
                 @Override
                 public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                     if (actionId == EditorInfo.IME_ACTION_DONE || event.getKeyCode() == KeyEvent.KEYCODE_ENTER)
@@ -361,7 +362,7 @@ public class JSONConversation {
                             state = State.Correct;
                             responseMap.put(answer.name, v.getText().toString());
                             current = nodeMap.get(getNextNode(answer.next));
-                            sendChallenges(conversationActivity, conversationView, "You answered: " + v.getText());
+                            sendChallenges(conversationActivity, conversationView, conversationActivity.getResources().getString(R.string.youAnswered) + v.getText());
                             v.setGravity(Gravity.RIGHT);
                             v.setEnabled(false);
                             return true;
@@ -370,7 +371,7 @@ public class JSONConversation {
                         {
                             state = State.Correct;
                             current = nodeMap.get(getNextNode(current.error));
-                            sendChallenges(conversationActivity, conversationView, "Invalid answer. Please enter a valid answer.");
+                            sendChallenges(conversationActivity, conversationView, conversationActivity.getResources().getString(R.string.inValidAnswer));
                             v.setGravity(Gravity.RIGHT);
                             v.setEnabled(false);
                             return false;
@@ -379,7 +380,7 @@ public class JSONConversation {
                         {
                             state = State.Incorrect;
 
-                            sendChallenges(conversationActivity, conversationView, "Invalid answer. Please enter a valid answer.");
+                            sendChallenges(conversationActivity, conversationView, conversationActivity.getResources().getString(R.string.inValidAnswer));
                             return false;
                         }
                     }
@@ -388,7 +389,7 @@ public class JSONConversation {
             });
         }else if (current.type == ConversationNode.NodeType.password) {
             final ConversationNode.AnswerNode answer = current.answers[0];
-            conversationView.addPasswordMessage(questionId,current.text, new TextView.OnEditorActionListener() {
+            conversationView.addPasswordMessage(questionId, parseStringVars(current.text), new TextView.OnEditorActionListener() {
                 @Override
                 public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                     if (actionId == EditorInfo.IME_ACTION_DONE || event.getKeyCode() == KeyEvent.KEYCODE_ENTER)
@@ -399,7 +400,7 @@ public class JSONConversation {
                             state = State.Correct;
                             responseMap.put(answer.name, v.getText().toString());
                             current = nodeMap.get(getNextNode(answer.next));
-                            sendChallenges(conversationActivity, conversationView, "Saved");
+                            sendChallenges(conversationActivity, conversationView, conversationActivity.getResources().getString(R.string.saved));
                             v.setGravity(Gravity.RIGHT);
                             v.setEnabled(false);
                             return true;
@@ -408,7 +409,7 @@ public class JSONConversation {
                         {
                             state = State.Correct;
                             current = nodeMap.get(getNextNode(current.error));
-                            sendChallenges(conversationActivity, conversationView, "Invalid answer. Please enter a valid answer.");
+                            sendChallenges(conversationActivity, conversationView,conversationActivity.getResources().getString(R.string.inValidAnswer));
                             v.setGravity(Gravity.RIGHT);
                             v.setEnabled(false);
                             return false;
@@ -417,16 +418,16 @@ public class JSONConversation {
                         {
                             state = State.Incorrect;
 
-                            sendChallenges(conversationActivity, conversationView, "Invalid answer. Please enter a valid answer.");
+                            sendChallenges(conversationActivity, conversationView, conversationActivity.getResources().getString(R.string.inValidAnswer));
                             return false;
                         }
                     }
                     return false;
                 }
-            },"Type password here...");
+            },conversationActivity.getResources().getString(R.string.typePasswordHere));
         } else if (current.type == ConversationNode.NodeType.passwordTwo) {
             final ConversationNode.AnswerNode answer = current.answers[0];
-            conversationView.addPasswordMessage(questionId,current.text, new TextView.OnEditorActionListener() {
+            conversationView.addPasswordMessage(questionId, parseStringVars(current.text), new TextView.OnEditorActionListener() {
                 @Override
                 public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                     if (actionId == EditorInfo.IME_ACTION_DONE || event.getKeyCode() == KeyEvent.KEYCODE_ENTER)
@@ -439,7 +440,7 @@ public class JSONConversation {
                             state = State.Correct;
                             responseMap.put(answer.name, v.getText().toString());
                             current = nodeMap.get(getNextNode(answer.next));
-                            sendChallenges(conversationActivity, conversationView, "Saved");
+                            sendChallenges(conversationActivity, conversationView, conversationActivity.getResources().getString(R.string.saved));
                             v.setGravity(Gravity.RIGHT);
                             v.setEnabled(false);
                             return true;
@@ -448,7 +449,7 @@ public class JSONConversation {
                         {
                             state = State.Correct;
                             current = nodeMap.get(getNextNode(current.error));
-                            sendChallenges(conversationActivity, conversationView, "Invalid answer. Please enter a valid answer.");
+                            sendChallenges(conversationActivity, conversationView, conversationActivity.getResources().getString(R.string.inValidAnswer));
                             v.setGravity(Gravity.RIGHT);
                             v.setEnabled(false);
                             return false;
@@ -457,13 +458,13 @@ public class JSONConversation {
                         {
                             state = State.Incorrect;
 
-                            sendChallenges(conversationActivity, conversationView, "Invalid answer. Please enter a valid answer.");
+                            sendChallenges(conversationActivity, conversationView, conversationActivity.getResources().getString(R.string.inValidAnswer));
                             return false;
                         }
                     }
                     return false;
                 }
-            },"Type password here...");
+            },conversationActivity.getResources().getString(R.string.typePasswordHere));
         }
 
         conversationView.scroll();

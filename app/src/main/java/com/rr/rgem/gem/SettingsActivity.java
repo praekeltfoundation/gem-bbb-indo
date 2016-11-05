@@ -32,7 +32,7 @@ public class SettingsActivity extends ApplicationActivity {
         buttonSignOut.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Utils.toast(SettingsActivity.this, "Logging out");
+                Utils.toast(SettingsActivity.this, getString(R.string.login_out_progress));
                 signOut();
             }
         });
@@ -47,7 +47,7 @@ public class SettingsActivity extends ApplicationActivity {
                 String newUrl = editViewUrl.getText().toString();
 
                 if (!Patterns.WEB_URL.matcher(newUrl).matches()) {
-                    Utils.toast(SettingsActivity.this, "URL is not valid");
+                    Utils.toast(SettingsActivity.this, getString(R.string.server_url_not_valid));
                     return;
                 }
 
@@ -62,6 +62,17 @@ public class SettingsActivity extends ApplicationActivity {
                     // Return to previous activity
                     SettingsActivity.this.finish();
                 }
+            }
+        });
+
+
+        Button changeLanguageButton=(Button)findViewById(R.id.changeLanguage);
+        changeLanguageButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(SettingsActivity.this, Language_Selection.class);
+                startActivity(intent);
+                SettingsActivity.this.finish();
             }
         });
     }

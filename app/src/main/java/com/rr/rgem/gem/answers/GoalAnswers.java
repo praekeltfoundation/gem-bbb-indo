@@ -5,6 +5,7 @@ import android.content.Context;
 import com.rr.rgem.gem.ChallengeActivity;
 import com.rr.rgem.gem.GoalActivity;
 import com.rr.rgem.gem.Persisted;
+import com.rr.rgem.gem.R;
 import com.rr.rgem.gem.controllers.common.JSONController;
 import com.rr.rgem.gem.controllers.common.JSONState;
 import com.rr.rgem.gem.models.ConversationNode;
