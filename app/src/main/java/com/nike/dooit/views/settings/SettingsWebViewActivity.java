@@ -15,10 +15,10 @@ import android.webkit.WebView;
 import android.widget.ProgressBar;
 
 import com.nike.dooit.R;
+import com.nike.dooit.views.helpers.activity.DooitActivityBuilder;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import me.kalido.android.helpers.activity.KalidoActivityBuilder;
 
 /**
  * Created by Bernhard Müller on 2016/07/22.
@@ -38,7 +38,6 @@ public class SettingsWebViewActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings_web_view);
         ButterKnife.bind(this);
-        S
         setSupportActionBar(toolbar);
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -90,7 +89,7 @@ public class SettingsWebViewActivity extends AppCompatActivity {
                 activeNetwork.isConnectedOrConnecting();
     }
 
-    public static class Builder extends KalidoActivityBuilder<Builder> {
+    public static class Builder extends DooitActivityBuilder<Builder> {
 
         protected Builder(Context context) {
             super(context);

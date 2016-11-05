@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
+import com.nike.dooit.Constants;
 import com.nike.dooit.DooitApplication;
 import com.nike.dooit.R;
 import com.nike.dooit.util.DooitSharedPreferences;
@@ -35,6 +36,17 @@ public class SettingsActivity extends AppCompatActivity {
 
     @OnClick(R.id.settings_about_terms)
     public void terms(View view) {
+        SettingsWebViewActivity.Builder.create(this)
+                .setTitle(getString(R.string.title_activity_terms_and_conditions))
+                .setUrl(Constants.TERMS_URL)
+                .startActivity();
+    }
 
+    @OnClick(R.id.settings_about_privacy)
+    public void privacy(View view) {
+        SettingsWebViewActivity.Builder.create(this)
+                .setTitle(getString(R.string.title_activity_privacy_policy))
+                .setUrl(Constants.PRIVACY_URL)
+                .startActivity();
     }
 }

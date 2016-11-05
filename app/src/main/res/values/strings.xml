@@ -15,4 +15,6 @@
     <string name="reg_t_c">By clicking register, you are agreeing\n to our Terms &amp; Condition</string>
     <string name="already_registered_log_in">Already registered? Log in</string>
     <string name="forgot_password">Forgot password?</string>
+    <string name="title_activity_terms_and_conditions">Terms &amp; Conditions</string>
+    <string name="title_activity_privacy_policy">Privacy Policy</string>
 </resources>
