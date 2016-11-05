@@ -3,6 +3,8 @@ package com.nike.dooit.dagger;
 import com.nike.dooit.DooitApplication;
 import com.nike.dooit.RootActivity;
 import com.nike.dooit.api.managers.DooitManager;
+import com.nike.dooit.views.profile.ProfileActivity;
+import com.nike.dooit.views.settings.SettingsActivity;
 
 import javax.inject.Singleton;
 
@@ -20,4 +22,8 @@ public interface DooitComponent {
     void inject(RootActivity rootActivity);
 
     void inject(DooitApplication dooitApplication);
+
+    void inject(ProfileActivity profileActivity);
+
+    void inject(SettingsActivity settingsActivity);
 }

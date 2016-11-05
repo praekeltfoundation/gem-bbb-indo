@@ -13,10 +13,8 @@ import javax.inject.Singleton;
 @Singleton
 public class DooitSharedPreferences {
 
-    private static final String SHARED_PREFERENCES_NAME = "dooit-shared-preferences";
-
     public static final String TOKEN = "token";
-
+    private static final String SHARED_PREFERENCES_NAME = "dooit-shared-preferences";
     public Context context;
 
     public DooitSharedPreferences(Context context) {
@@ -105,5 +103,11 @@ public class DooitSharedPreferences {
         SharedPreferences.Editor editor = sharedPreferences().edit();
         editor.putBoolean(key, value);
         editor.apply();
+    }
+
+    public void clear() {
+        for (String key : sharedPreferences().getAll().keySet()) {
+            remove(key);
+        }
     }
 }

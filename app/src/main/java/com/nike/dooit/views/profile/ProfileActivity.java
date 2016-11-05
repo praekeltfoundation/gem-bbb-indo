@@ -12,23 +12,33 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.facebook.drawee.view.SimpleDraweeView;
+import com.nike.dooit.DooitApplication;
 import com.nike.dooit.R;
+import com.nike.dooit.util.DooitSharedPreferences;
 import com.nike.dooit.views.settings.SettingsActivity;
+
+import javax.inject.Inject;
 
 public class ProfileActivity extends AppCompatActivity {
     SimpleDraweeView profileImage;
     CollapsingToolbarLayout collapsingToolbarLayout;
 
+    @Inject
+    DooitSharedPreferences dooitSharedPreferences;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
+        ((DooitApplication) getApplication()).component.inject(this);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
         if (getSupportActionBar() != null) {
             getSupportActionBar().setHomeAsUpIndicator(android.R.drawable.ic_delete);
         }
+
+
 
         profileImage = (SimpleDraweeView) findViewById(R.id.profile_image);
         profileImage.setImageURI("https://cdnd.icons8.com/wp-content/uploads/2015/06/android_vector.jpg");
