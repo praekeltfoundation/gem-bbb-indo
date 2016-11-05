@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">Dooit</string>
+    <string name="title_activity_main">Dooit</string>
+
+    <string name="main_tab_text_1">TARGET</string>
+    <string name="main_tab_text_2">TANTAGAN</string>
+    <string name="main_tab_text_3">TIPS</string>
+
+    <string name="lets_start">AYO MULAI</string>
+</resources>
