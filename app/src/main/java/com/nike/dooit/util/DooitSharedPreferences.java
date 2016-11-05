@@ -17,9 +17,6 @@ public class DooitSharedPreferences {
 
     private static final String SHARED_PREFERENCES_NAME = "dooit-shared-preferences";
 
-    public static final String TOKEN = "token";
-    public static final String USER = "user";
-
     public Context context;
 
     public DooitSharedPreferences(Context context) {

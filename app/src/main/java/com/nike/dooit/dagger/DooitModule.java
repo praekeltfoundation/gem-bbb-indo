@@ -5,9 +5,11 @@ import android.app.Application;
 import com.nike.dooit.DooitApplication;
 import com.nike.dooit.api.managers.AuthenticationManager;
 import com.nike.dooit.api.managers.ChallengeManager;
+import com.nike.dooit.api.managers.FileUploadManager;
 import com.nike.dooit.api.managers.TipManager;
 import com.nike.dooit.api.managers.UserManager;
 import com.nike.dooit.util.DooitSharedPreferences;
+import com.nike.dooit.util.Persisted;
 
 import javax.inject.Singleton;
 
@@ -29,11 +31,15 @@ public class DooitModule {
 
     @Provides
     @Singleton
-    AuthenticationManager provideAuthenticationManager() { return new AuthenticationManager(application); }
+    AuthenticationManager provideAuthenticationManager() {
+        return new AuthenticationManager(application);
+    }
 
     @Provides
     @Singleton
-    ChallengeManager provideChallengeManager() { return new ChallengeManager(application); }
+    ChallengeManager provideChallengeManager() {
+        return new ChallengeManager(application);
+    }
 
     @Provides
     @Singleton
@@ -49,8 +55,19 @@ public class DooitModule {
 
     @Provides
     @Singleton
+    Persisted providePersisted() {
+        return new Persisted(application);
+    }
+
+    @Provides
+    @Singleton
     DooitSharedPreferences provideDooitSharedPreferences() {
         return new DooitSharedPreferences(application);
     }
 
+    @Provides
+    @Singleton
+    FileUploadManager provideFileUploadManager() {
+        return new FileUploadManager(application);
+    }
 }

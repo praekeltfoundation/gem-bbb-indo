@@ -38,7 +38,6 @@
                 android:background="@color/purple"
                 app:layout_collapseMode="pin"
                 app:popupTheme="@style/AppTheme.PopupOverlay"
-                app:subtitleTextAppearance="@style/AppTheme.Toolbar.SubTitle.Yellow"
                 app:titleTextAppearance="@style/AppTheme.Toolbar.Title.Yellow" />
 
             <RelativeLayout

@@ -10,6 +10,7 @@ import com.nike.dooit.DooitApplication;
 import com.nike.dooit.api.DooitErrorHandler;
 import com.nike.dooit.api.serializers.DateTimeSerializer;
 import com.nike.dooit.util.DooitSharedPreferences;
+import com.nike.dooit.util.Persisted;
 
 import org.joda.time.DateTime;
 
@@ -91,10 +92,12 @@ public class DooitManager {
                 .build();
     }
 
+    @Inject
+    Persisted persisted;
+
     protected Request.Builder addTokenToRequest(Request.Builder requestBuilder) {
-        String token = sharedPreferences.getString(DooitSharedPreferences.TOKEN, "");
-        if (token != null && !token.isEmpty())
-            requestBuilder.addHeader("Authorization", "Token " + token);
+        if (persisted.hasToken())
+            requestBuilder.addHeader("Authorization", "Token " + persisted.getToken());
         return requestBuilder;
     }
 
