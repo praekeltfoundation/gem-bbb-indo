@@ -3,6 +3,8 @@ package com.nike.dooit.util;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import com.google.gson.Gson;
+
 import java.util.Set;
 
 import javax.inject.Singleton;
@@ -16,6 +18,7 @@ public class DooitSharedPreferences {
     private static final String SHARED_PREFERENCES_NAME = "dooit-shared-preferences";
 
     public static final String TOKEN = "token";
+    public static final String USER = "user";
 
     public Context context;
 
@@ -57,6 +60,10 @@ public class DooitSharedPreferences {
 
     public Boolean getBoolean(String key, Boolean def) {
         return sharedPreferences().getBoolean(key, def);
+    }
+
+    public <T> T getComplex(String key, Class<T> clazz) {
+        return new Gson().fromJson(getString(key, ""), clazz);
     }
 
     public void setString(String key, String value) {
@@ -104,6 +111,12 @@ public class DooitSharedPreferences {
     public void setBoolean(String key, Boolean value) {
         SharedPreferences.Editor editor = sharedPreferences().edit();
         editor.putBoolean(key, value);
+        editor.apply();
+    }
+
+    public void setComplex(String key, Object value) {
+        SharedPreferences.Editor editor = sharedPreferences().edit();
+        editor.putString(key, new Gson().toJson(value));
         editor.apply();
     }
 }

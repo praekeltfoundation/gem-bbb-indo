@@ -1,21 +1,24 @@
 package com.nike.dooit.views.welcome;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 
 import com.nike.dooit.R;
+import com.nike.dooit.views.DooitActivity;
+import com.nike.dooit.views.helpers.activity.DooitActivityBuilder;
 import com.nike.dooit.views.onboarding.RegistrationActivity;
-import com.nike.dooit.views.welcome.WelcomeTabAdapter.WelcomeTabAdapter;
+import com.nike.dooit.views.welcome.adapter.WelcomeTabAdapter;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import me.relex.circleindicator.CircleIndicator;
 
-public class WelcomeActivity extends AppCompatActivity {
+public class WelcomeActivity extends DooitActivity {
 
     @BindView(R.id.activity_welcome_view_pager)
     ViewPager viewPager;
@@ -63,5 +66,23 @@ public class WelcomeActivity extends AppCompatActivity {
     @OnClick(R.id.activity_welcome_button)
     public void start() {
         RegistrationActivity.Builder.create(this).startActivity();
+    }
+
+
+    public static class Builder extends DooitActivityBuilder<WelcomeActivity.Builder> {
+        protected Builder(Context context) {
+            super(context);
+        }
+
+        public static WelcomeActivity.Builder create(Context context) {
+            WelcomeActivity.Builder builder = new WelcomeActivity.Builder(context);
+            return builder;
+        }
+
+        @Override
+        protected Intent createIntent(Context context) {
+            return new Intent(context, WelcomeActivity.class);
+        }
+
     }
 }

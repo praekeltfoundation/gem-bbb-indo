@@ -16,4 +16,5 @@ public class DooitActivity extends AppCompatActivity {
     public Locale getLocal() {
         return Locale.getDefault();
     }
+
 }

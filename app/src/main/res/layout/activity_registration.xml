@@ -9,6 +9,7 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
+        android:focusableInTouchMode="true"
         android:layout_height="wrap_content"
         android:padding="24dp">
 
@@ -162,6 +163,7 @@
             android:layout_below="@+id/activity_registration_password_example_text_edit"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="32dp"
+            android:gravity="center_horizontal"
             android:text="@string/reg_t_c"
             android:textColor="@color/white" />
 

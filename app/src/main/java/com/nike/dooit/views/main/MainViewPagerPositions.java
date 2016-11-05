@@ -44,15 +44,14 @@ public enum MainViewPagerPositions {
         return value;
     }
 
-    public
     @StringRes
-    int getTitleRes() {
+    public Integer getTitleRes() {
         return titleRes;
     }
 
-    public
     @DrawableRes
-    int getIconRes() {
+    public Integer getIconRes() {
         return iconRes;
     }
+
 }

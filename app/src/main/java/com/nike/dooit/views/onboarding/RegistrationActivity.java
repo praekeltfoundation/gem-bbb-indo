@@ -9,6 +9,7 @@ import android.text.SpannableString;
 import android.text.style.ForegroundColorSpan;
 import android.widget.TextView;
 
+import com.nike.dooit.DooitApplication;
 import com.nike.dooit.R;
 import com.nike.dooit.views.DooitActivity;
 import com.nike.dooit.views.helpers.activity.DooitActivityBuilder;
@@ -29,6 +30,7 @@ public class RegistrationActivity extends DooitActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registration);
+        ((DooitApplication) getApplication()).component.inject(this);
         ButterKnife.bind(this);
 
         Spannable spanTc = new SpannableString(getString(R.string.reg_t_c));
@@ -49,6 +51,24 @@ public class RegistrationActivity extends DooitActivity {
 
     @OnClick(R.id.activity_registration_login_text_view)
     public void openLogin() {
+        LoginActivity.Builder.create(this).startActivity();
+    }
+
+
+    public static class Builder extends DooitActivityBuilder<Builder> {
+        protected Builder(Context context) {
+            super(context);
+        }
+
+        public static Builder create(Context context) {
+            Builder builder = new Builder(context);
+            return builder;
+        }
+
+        @Override
+        protected Intent createIntent(Context context) {
+            return new Intent(context, RegistrationActivity.class);
+        }
 
     }
 }

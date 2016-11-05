@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">Dooit</string>
-    <string name="title_activity_main">Dooit</string>
+    <string name="title_activity_main">dooit</string>
 
     <string name="main_tab_text_1">TARGET</string>
     <string name="main_tab_text_2">CHALLENGE</string>

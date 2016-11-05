@@ -10,6 +10,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:focusableInTouchMode="true"
         android:padding="24dp">
 
         <TextView
@@ -34,7 +35,7 @@
             android:textAllCaps="true" />
 
         <EditText
-            android:id="@+id/activity_login_name_text_edit"
+            android:id="@+id/activity_login_name_edit_text"
             android:layout_width="match_parent"
             android:layout_height="32dp"
             android:layout_alignParentStart="true"
@@ -50,7 +51,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
-            android:layout_below="@+id/activity_login_name_text_edit"
+            android:layout_below="@+id/activity_login_name_edit_text"
             android:layout_marginTop="4dp"
             android:text="Example: Aulia D" />
 
@@ -103,7 +104,7 @@
             android:textAllCaps="true" />
 
         <EditText
-            android:id="@+id/activity_login_password_text_edit"
+            android:id="@+id/activity_login_password_edit_text"
             android:layout_width="match_parent"
             android:layout_height="32dp"
             android:layout_alignParentStart="true"
@@ -119,7 +120,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
-            android:layout_below="@+id/activity_login_password_text_edit"
+            android:layout_below="@+id/activity_login_password_edit_text"
             android:layout_marginTop="4dp"
             android:text="Must have atleast 6 characters" />
 
@@ -149,6 +150,6 @@
             android:textAllCaps="true"
             android:textColor="@color/purple"
             android:textSize="@dimen/k_font_xx_large" />
- 
+
     </RelativeLayout>
 </ScrollView>

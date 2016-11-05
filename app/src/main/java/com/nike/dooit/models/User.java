@@ -1,9 +1,11 @@
 package com.nike.dooit.models;
 
+import java.io.Serializable;
+
 /**
  * Created by herman on 2016/11/05.
  */
-public class User {
+public class User implements Serializable {
     private String is_staff;
     private String is_active;
     private String is_superuser;

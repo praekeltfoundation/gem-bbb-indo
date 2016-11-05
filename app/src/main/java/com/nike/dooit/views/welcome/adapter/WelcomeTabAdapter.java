@@ -1,4 +1,4 @@
-package com.nike.dooit.views.welcome.WelcomeTabAdapter;
+package com.nike.dooit.views.welcome.adapter;
 
 import android.content.Context;
 import android.support.v4.app.Fragment;
