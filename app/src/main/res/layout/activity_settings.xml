@@ -1,0 +1,320 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_settings"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true"
+    tools:context="com.nike.dooit.views.settings.SettingsActivity">
+
+    <android.support.design.widget.AppBarLayout
+        android:id="@+id/app_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/AppTheme.AppBarOverlay"
+        app:elevation="0dp">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="?attr/colorPrimary"
+            app:contentInsetLeft="0dp"
+            app:contentInsetStart="0dp"
+            app:layout_scrollFlags="scroll|enterAlways"
+            app:popupTheme="@style/AppTheme.PopupOverlay"
+            app:subtitleTextAppearance="@style/AppTheme.Toolbar.SubTitle"
+            app:titleMarginStart="0dp"
+            app:titleTextAppearance="@style/AppTheme.Toolbar.Title.Center"
+            tools:title="Settings" />
+
+    </android.support.design.widget.AppBarLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/app_bar"
+        android:fillViewport="true"
+        android:paddingBottom="@dimen/activity_vertical_margin"
+        android:paddingEnd="@dimen/activity_horizontal_margin"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin"
+        android:paddingStart="@dimen/activity_horizontal_margin"
+        android:paddingTop="@dimen/activity_vertical_margin">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/settings_account_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:text="Your account"
+                android:textAllCaps="true"
+                android:textColor="@color/grey"
+                android:textSize="@dimen/k_font_small" />
+
+            <TextView
+                android:id="@+id/settings_account_change_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/settings_account_title"
+                android:layout_marginBottom="8dp"
+                android:enabled="false"
+                android:maxLines="1"
+                android:text="Change name"
+                android:textColor="@color/purple"
+                android:textSize="@dimen/k_font_medium"
+                android:textStyle="bold" />
+
+            <View
+                android:id="@+id/settings_account_change_name_separator"
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:layout_below="@+id/settings_account_change_name"
+                android:layout_marginBottom="8dp"
+                android:background="@color/grey" />
+
+            <TextView
+                android:id="@+id/settings_account_change_password"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/settings_account_change_name_separator"
+                android:layout_marginBottom="8dp"
+                android:enabled="false"
+                android:maxLines="1"
+                android:text="Change password"
+                android:textColor="@color/purple"
+                android:textSize="@dimen/k_font_medium"
+                android:textStyle="bold" />
+
+            <View
+                android:id="@+id/settings_account_change_password_separator"
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:layout_below="@+id/settings_account_change_password"
+                android:layout_marginBottom="8dp"
+                android:background="@color/grey" />
+
+            <TextView
+                android:id="@+id/settings_account_sign_out"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/settings_account_change_password_separator"
+                android:layout_marginBottom="8dp"
+                android:enabled="false"
+                android:maxLines="1"
+                android:text="Sign out"
+                android:textColor="@color/purple"
+                android:textSize="@dimen/k_font_medium"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/settings_notifications"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/settings_account_sign_out"
+                android:layout_marginBottom="8dp"
+                android:layout_marginTop="16dp"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:text="Notifications"
+                android:textAllCaps="true"
+                android:textColor="@color/grey"
+                android:textSize="@dimen/k_font_small" />
+
+            <android.support.v7.widget.SwitchCompat
+                android:id="@+id/settings_notifications_a"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/settings_notifications"
+                android:layout_marginBottom="8dp"
+                android:enabled="false"
+                android:maxLines="1"
+                android:text="Notification A"
+                android:textColor="@color/purple"
+                android:textSize="@dimen/k_font_medium"
+                android:textStyle="bold" />
+
+            <View
+                android:id="@+id/settings_notifications_a_separator"
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:layout_below="@+id/settings_notifications_a"
+                android:layout_marginBottom="8dp"
+                android:background="@color/grey" />
+
+            <android.support.v7.widget.SwitchCompat
+                android:id="@+id/settings_notifications_b"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/settings_notifications_a_separator"
+                android:layout_marginBottom="8dp"
+                android:enabled="false"
+                android:maxLines="1"
+                android:text="Notification B"
+                android:textColor="@color/purple"
+                android:textSize="@dimen/k_font_medium"
+                android:textStyle="bold" />
+
+            <View
+                android:id="@+id/settings_notifications_b_separator"
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:layout_below="@+id/settings_notifications_b"
+                android:layout_marginBottom="8dp"
+                android:background="@color/grey" />
+
+            <android.support.v7.widget.SwitchCompat
+                android:id="@+id/settings_notifications_c"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/settings_notifications_b_separator"
+                android:layout_marginBottom="8dp"
+                android:enabled="false"
+                android:maxLines="1"
+                android:text="Notification C"
+                android:textColor="@color/purple"
+                android:textSize="@dimen/k_font_medium"
+                android:textStyle="bold" />
+
+            <View
+                android:id="@+id/settings_notifications_c_separator"
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:layout_below="@+id/settings_notifications_c"
+                android:layout_marginBottom="8dp"
+                android:background="@color/grey" />
+
+            <android.support.v7.widget.SwitchCompat
+                android:id="@+id/settings_notifications_d"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/settings_notifications_c_separator"
+                android:layout_marginBottom="8dp"
+                android:enabled="false"
+                android:maxLines="1"
+                android:text="Notification D"
+                android:textColor="@color/purple"
+                android:textSize="@dimen/k_font_medium"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/settings_about"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/settings_notifications_d"
+                android:layout_marginBottom="8dp"
+                android:layout_marginTop="16dp"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:text="About &amp; Help"
+                android:textAllCaps="true"
+                android:textColor="@color/grey"
+                android:textSize="@dimen/k_font_small" />
+
+            <TextView
+                android:id="@+id/settings_about_help"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/settings_about"
+                android:layout_marginBottom="8dp"
+                android:enabled="false"
+                android:maxLines="1"
+                android:text="Help"
+                android:textColor="@color/purple"
+                android:textSize="@dimen/k_font_medium"
+                android:textStyle="bold" />
+
+            <View
+                android:id="@+id/settings_about_help_separator"
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:layout_below="@+id/settings_about_help"
+                android:layout_marginBottom="8dp"
+                android:background="@color/grey" />
+
+            <TextView
+                android:id="@+id/settings_about_report"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/settings_about_help_separator"
+                android:layout_marginBottom="8dp"
+                android:enabled="false"
+                android:maxLines="1"
+                android:text="Report A Problem"
+                android:textColor="@color/purple"
+                android:textSize="@dimen/k_font_medium"
+                android:textStyle="bold" />
+
+            <View
+                android:id="@+id/settings_about_report_separator"
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:layout_below="@+id/settings_about_report"
+                android:layout_marginBottom="8dp"
+                android:background="@color/grey" />
+
+            <TextView
+                android:id="@+id/settings_about_feedback"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/settings_about_report_separator"
+                android:layout_marginBottom="8dp"
+                android:enabled="false"
+                android:maxLines="1"
+                android:text="Feedback"
+                android:textColor="@color/purple"
+                android:textSize="@dimen/k_font_medium"
+                android:textStyle="bold" />
+
+            <View
+                android:id="@+id/settings_about_feedback_separator"
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:layout_below="@+id/settings_about_feedback"
+                android:layout_marginBottom="8dp"
+                android:background="@color/grey" />
+
+            <TextView
+                android:id="@+id/settings_about_terms"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/settings_about_feedback_separator"
+                android:layout_marginBottom="8dp"
+                android:enabled="false"
+                android:maxLines="1"
+                android:text="Terms &amp; Conditions"
+                android:textColor="@color/purple"
+                android:textSize="@dimen/k_font_medium"
+                android:textStyle="bold" />
+
+            <View
+                android:id="@+id/settings_about_terms_separator"
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:layout_below="@+id/settings_about_terms"
+                android:layout_marginBottom="8dp"
+                android:background="@color/grey" />
+
+            <TextView
+                android:id="@+id/settings_about_privacy"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/settings_about_terms_separator"
+                android:layout_marginBottom="8dp"
+                android:enabled="false"
+                android:maxLines="1"
+                android:text="Privacy Policy"
+                android:textColor="@color/purple"
+                android:textSize="@dimen/k_font_medium"
+                android:textStyle="bold" />
+
+        </RelativeLayout>
+    </ScrollView>
+</RelativeLayout>
