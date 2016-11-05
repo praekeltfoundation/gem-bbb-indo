@@ -27,6 +27,8 @@ public class Challenge {
 
     private List<Question> questions = new ArrayList<Question>();
 
+    public long getId() { return this.id; }
+
     public String getName() {
         return name;
     }

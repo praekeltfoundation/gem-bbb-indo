@@ -14,6 +14,7 @@ import android.widget.TextView;
 import com.google.gson.Gson;
 import com.rr.rgem.gem.models.Answer;
 import com.rr.rgem.gem.models.Challenge;
+import com.rr.rgem.gem.models.Entry;
 import com.rr.rgem.gem.models.ParticipantAnswer;
 import com.rr.rgem.gem.models.Question;
 import com.rr.rgem.gem.navigation.GEMNavigation;
@@ -77,8 +78,12 @@ public class ChallengeActivity extends ApplicationActivity{
         cmsService.retrieveChallenge(1).enqueue(new Callback<Challenge>() {
             @Override
             public void onResponse(Call<Challenge> call, Response<Challenge> response) {
-                challenge = response.body();
-                initChallenge();
+                if (response.isSuccessful()) {
+                    challenge = response.body();
+                    initChallenge();
+                } else {
+                    Utils.toast(ChallengeActivity.this, "Challenge could not be loaded.");
+                }
             }
 
             @Override
@@ -158,9 +163,11 @@ public class ChallengeActivity extends ApplicationActivity{
             Utils.toast(ChallengeActivity.this,getString(R.string.userNoLoggedInCannotSubmit));
             return;
         }
-        cmsService.createParticipantAnswers(participantAnswerList).enqueue(new Callback<List<ParticipantAnswer>>() {
+        Entry entry = new Entry(user.getId(), challenge.getId());
+        entry.setAnswers(participantAnswerList);
+        cmsService.createEntries(entry).enqueue(new Callback<Entry>() {
             @Override
-            public void onResponse(Call<List<ParticipantAnswer>> call, Response<List<ParticipantAnswer>> response) {
+            public void onResponse(Call<Entry> call, Response<Entry> response) {
                 if (response.isSuccessful()){
                     Utils.toast(ChallengeActivity.this, getString(R.string.answersResponseSuccessfullySent));
                 } else {
@@ -169,7 +176,7 @@ public class ChallengeActivity extends ApplicationActivity{
             }
 
             @Override
-            public void onFailure(Call<List<ParticipantAnswer>> call, Throwable t) {
+            public void onFailure(Call<Entry> call, Throwable t) {
                 Utils.toast(ChallengeActivity.this, getString(R.string.failedToSendAnswers));
             }
         });
@@ -202,11 +209,7 @@ public class ChallengeActivity extends ApplicationActivity{
         if (selectedOption == null) {
             Utils.toast(ChallengeActivity.this, getString(R.string.noAnswerSelected));
         } else {
-            if (user == null) {
-                participantAnswerList.add(new ParticipantAnswer(currentQuestion, selectedOption));
-            } else {
-                participantAnswerList.add(new ParticipantAnswer(user.getId(), currentQuestion, selectedOption));
-            }
+            participantAnswerList.add(new ParticipantAnswer(currentQuestion, selectedOption));
             if (selectedOption.getCorrect()) {
                 Utils.toast(ChallengeActivity.this, getString(R.string.answerCorrect));
                 return true;
