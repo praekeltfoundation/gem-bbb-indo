@@ -16,4 +16,7 @@ public interface TipAPI {
     @GET("/api/tips/")
     Observable<List<Tip>> getTips();
 
+    @GET("/api/tips/favourites/")
+    Observable<List<Tip>> getFavourites();
+
 }
