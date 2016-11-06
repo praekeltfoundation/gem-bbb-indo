@@ -12,4 +12,5 @@
     <dimen name="k_font_medium">15dp</dimen>
     <dimen name="k_font_small">12dp</dimen>
     <dimen name="k_font_extra_small">8dp</dimen>
+    <dimen name="challenge_margins">8dp</dimen>
 </resources>

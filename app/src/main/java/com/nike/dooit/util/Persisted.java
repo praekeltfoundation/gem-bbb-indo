@@ -5,6 +5,7 @@ import android.text.TextUtils;
 import android.util.Log;
 
 import com.nike.dooit.DooitApplication;
+import com.nike.dooit.models.Challenge;
 import com.nike.dooit.models.Token;
 import com.nike.dooit.models.User;
 
@@ -16,6 +17,7 @@ import javax.inject.Inject;
 public class Persisted {
     private static final String TOKEN = "token";
     private static final String USER = "user";
+    private static final String CHALLENGE = "challenge";
     private static final String TAG = "Persisted";
     @Inject
     DooitSharedPreferences dooitSharedPreferences;
@@ -39,7 +41,7 @@ public class Persisted {
         return user;
     }
 
-    public void saveUser(User user) {
+    public void setCurrentUser(User user) {
         dooitSharedPreferences.setComplex(USER, user);
         Log.d(TAG, String.format("Saving: %s", user));
     }
@@ -54,7 +56,7 @@ public class Persisted {
         return token != null && !TextUtils.isEmpty(token.getToken());
     }
 
-    public Token loadToken() {
+    private Token loadToken() {
         Token token = dooitSharedPreferences.getComplex(TOKEN, Token.class);
         Log.d(TAG, String.format("Loadings: %s", token));
         return token;
@@ -71,6 +73,23 @@ public class Persisted {
 
     public void clearToken() {
         dooitSharedPreferences.remove(TOKEN);
+    }
+
+    public void setActiveChallenge(Challenge activeChallenge) {
+        dooitSharedPreferences.setComplex(CHALLENGE, activeChallenge);
+    }
+
+    public Object getCurrentChallenge() {
+        return loadCurrentChallenge();
+    }
+
+    private Challenge loadCurrentChallenge() {
+        return dooitSharedPreferences.getComplex(TOKEN, Challenge.class);
+    }
+
+    public boolean hasCurrentChallenge() {
+        Challenge challenge = loadCurrentChallenge();
+        return challenge != null;
     }
 }
 

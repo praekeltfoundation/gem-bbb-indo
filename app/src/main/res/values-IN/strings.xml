@@ -20,5 +20,6 @@
     <string name="reg_t_c">Dengan mengklik register, Anda setuju dengan Persyaratan dan Kondisi kami></string>
     <string name="already_registered_log_in">Sudah terdaftar? Masuk</string>
     <string name="forgot_password">Lupa kata sandi?</string>
+    <string name="challenge_t_c">Dengan mengambil tantangan ini Anda menyetujui Syarat dan Ketentuan kami</string>
 
 </resources>

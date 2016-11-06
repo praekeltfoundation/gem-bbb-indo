@@ -65,17 +65,14 @@
 
         <Button
             android:id="@+id/activity_profile_image_next_button"
-            style="@style/Widget.AppCompat.Button.Borderless"
+            style="@style/AppTheme.Button.Big.Yellow"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/activity_profile_image_skip_text_view"
             android:layout_marginEnd="18dp"
             android:layout_marginStart="18dp"
             android:layout_marginTop="8dp"
-            android:background="@color/yellow"
             android:text="Next"
-            android:textAllCaps="true"
-            android:textColor="@color/purple"
-            android:textSize="@dimen/k_font_xx_large" />
+            android:textAllCaps="true" />
     </RelativeLayout>
 </android.support.design.widget.CoordinatorLayout>

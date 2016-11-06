@@ -2,6 +2,7 @@ package com.nike.dooit.dagger;
 
 import com.nike.dooit.DooitApplication;
 import com.nike.dooit.api.managers.DooitManager;
+import com.nike.dooit.views.main.fragments.ChallengeFragment;
 import com.nike.dooit.views.onboarding.ProfileImageActivity;
 import com.nike.dooit.views.onboarding.RegistrationActivity;
 import com.nike.dooit.util.Persisted;
@@ -41,4 +42,6 @@ public interface DooitComponent {
     void inject(ProfileImageActivity o);
 
     void inject(Persisted o);
+
+    void inject(ChallengeFragment o);
 }

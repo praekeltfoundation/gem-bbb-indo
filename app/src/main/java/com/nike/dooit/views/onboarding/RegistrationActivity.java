@@ -96,7 +96,7 @@ public class RegistrationActivity extends DooitActivity {
                 }).subscribe(new Action1<AuthenticationResponse>() {
                     @Override
                     public void call(AuthenticationResponse authenticationResponse) {
-                        persisted.saveUser(authenticationResponse.getUser());
+                        persisted.setCurrentUser(authenticationResponse.getUser());
                         persisted.saveToken(authenticationResponse.getToken());
                         ProfileImageActivity.Builder.create(RegistrationActivity.this).startActivity();
                     }

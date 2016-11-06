@@ -12,7 +12,6 @@ import com.nike.dooit.api.DooitAPIError;
 import com.nike.dooit.api.DooitErrorHandler;
 import com.nike.dooit.api.managers.AuthenticationManager;
 import com.nike.dooit.api.responses.AuthenticationResponse;
-import com.nike.dooit.util.DooitSharedPreferences;
 import com.nike.dooit.util.Persisted;
 import com.nike.dooit.views.DooitActivity;
 import com.nike.dooit.views.helpers.activity.DooitActivityBuilder;
@@ -60,7 +59,7 @@ public class LoginActivity extends DooitActivity {
         }).subscribe(new Action1<AuthenticationResponse>() {
             @Override
             public void call(AuthenticationResponse authenticationResponse) {
-                persisted.saveUser(authenticationResponse.getUser());
+                persisted.setCurrentUser(authenticationResponse.getUser());
                 persisted.saveToken(authenticationResponse.getToken());
                 MainActivity.Builder.create(LoginActivity.this).startActivity();
             }

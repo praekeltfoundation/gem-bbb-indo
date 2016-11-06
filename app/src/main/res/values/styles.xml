@@ -17,6 +17,7 @@
         <item name="android:windowFullscreen">true</item>
         <item name="android:windowNoTitle">true</item>
     </style>
+
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
@@ -40,6 +41,29 @@
     <style name="AppTheme.Toolbar.SubTitle" parent="TextAppearance.Widget.AppCompat.Toolbar.Subtitle">
         <item name="android:textColor">@color/toolbarBarSubTitleColor</item>
         <item name="android:gravity">center_horizontal</item>
+    </style>
+
+    <style name="AppTheme.Button" parent="@style/Widget.AppCompat.Button.Borderless">
+
+    </style>
+
+    <style name="AppTheme.Button.Big" parent="AppTheme.Button">
+        <item name="android:textSize">@dimen/k_font_xx_large</item>
+    </style>
+
+    <style name="AppTheme.Button.Big.Yellow" parent="AppTheme.Button.Big">
+        <item name="android:background">@color/yellow</item>
+        <item name="android:textColor">@color/purple</item>
+    </style>
+
+    <style name="AppTheme.Button.Big.Purble" parent="AppTheme.Button.Big">
+        <item name="android:background">@color/purple</item>
+        <item name="android:textColor">@color/yellow</item>
+    </style>
+
+    <style name="AppTheme.HorsontalProgress" parent="Widget.AppCompat.ProgressBar.Horizontal">
+        <item name="colorAccent">@color/light_blue</item>
+        <item name="android:progressBackgroundTint">@color/grey</item>
     </style>
 
 </resources>

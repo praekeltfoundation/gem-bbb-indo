@@ -2,17 +2,20 @@ package com.nike.dooit.models;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
  * Created by herman on 2016/11/05.
  */
 
-public class Challenge {
+public class Challenge implements Serializable {
     private String id;
     private String name;
-    @SerializedName("activation_date") private String activationDate;
-    @SerializedName("deactivation_date") private String deactivationDate;
+    @SerializedName("activation_date")
+    private String activationDate;
+    @SerializedName("deactivation_date")
+    private String deactivationDate;
     private String type;
     private List<Question> questions;
 

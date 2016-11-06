@@ -52,7 +52,7 @@ public class ProfileImageActivity extends DooitActivity {
     FileUploadManager fileUploadManager;
 
     @Inject
-    Persisted persisted; 
+    Persisted persisted;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -99,6 +99,10 @@ public class ProfileImageActivity extends DooitActivity {
 
     @OnClick(R.id.activity_profile_image_next_button)
     public void uploadProfileImage() {
+        if (!getIntent().hasExtra(INTENT_IMAGE_URI)) {
+            Toast.makeText(this, "Upload image of click Skip", Toast.LENGTH_SHORT).show();
+            return;
+        }
         User user = persisted.getCurrentUser();
         fileUploadManager.upload(user.getId(), getIntent().getStringExtra(INTENT_MIME_TYPE), new File(((Uri) getIntent().getParcelableExtra(INTENT_IMAGE_URI)).toString()), new DooitErrorHandler() {
             @Override
