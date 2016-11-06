@@ -1,5 +1,7 @@
 package com.nike.dooit.models;
 
+import com.google.gson.annotations.SerializedName;
+
 import org.joda.time.DateTime;
 
 import java.util.List;
@@ -12,13 +14,13 @@ public class Entry {
 
     private int user;
     private int challenge;
-    private DateTime date_completed = new DateTime();
+    @SerializedName("date_completed") private DateTime dateCompleted = new DateTime();
     private List<ParticipantAnswer> answers;
 
     public Entry(int user, int challenge, List<ParticipantAnswer> answers) {
         this.user = user;
         this.challenge = challenge;
-        this.date_completed = new DateTime();
+        this.dateCompleted = new DateTime();
         this.answers = answers;
     }
 
@@ -38,12 +40,12 @@ public class Entry {
         this.challenge = challenge;
     }
 
-    public DateTime getDate_completed() {
-        return date_completed;
+    public DateTime getDateCompleted() {
+        return dateCompleted;
     }
 
-    public void setDate_completed(DateTime date_completed) {
-        this.date_completed = date_completed;
+    public void setDateCompleted(DateTime dateCompleted) {
+        this.dateCompleted = dateCompleted;
     }
 
     public List<ParticipantAnswer> getAnswers() {

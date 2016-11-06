@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.nike.dooit.R;
 
@@ -14,13 +15,19 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class WelcomeFragment extends Fragment {
-    private static final String RESOURCE = "resource";
+    private static final String IMAGE_RESOURCE = "image_resource";
+    private static final String TEXT_RESOURCE = "text_resource";
 
     @BindView(R.id.fragment_welcome_image)
     ImageView imageView;
 
+    @BindView(R.id.fragment_welcome_text)
+    TextView textView;
+
     @DrawableRes
     private int resource;
+
+    private int textResource;
 
     public WelcomeFragment() {
         // Required empty public constructor
@@ -32,10 +39,11 @@ public class WelcomeFragment extends Fragment {
      *
      * @return A new instance of fragment WelcomeFragment.
      */
-    public static WelcomeFragment newInstance(@DrawableRes int res) {
+    public static WelcomeFragment newInstance(@DrawableRes int imageRes, int textRes) {
         WelcomeFragment fragment = new WelcomeFragment();
         Bundle args = new Bundle();
-        args.putInt(RESOURCE, res);
+        args.putInt(IMAGE_RESOURCE, imageRes);
+        args.putInt(TEXT_RESOURCE, textRes);
         fragment.setArguments(args);
         return fragment;
     }
@@ -44,7 +52,8 @@ public class WelcomeFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            resource = getArguments().getInt(RESOURCE);
+            resource = getArguments().getInt(IMAGE_RESOURCE);
+            textResource = getArguments().getInt(TEXT_RESOURCE);
         }
     }
 
@@ -54,6 +63,7 @@ public class WelcomeFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_welcome, container, false);
         ButterKnife.bind(this, view);
         imageView.setImageResource(resource);
+        textView.setText(textResource);
         return view;
     }
 

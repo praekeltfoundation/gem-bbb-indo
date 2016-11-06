@@ -9,4 +9,13 @@
         android:layout_width="match_parent"
         android:src="@android:drawable/sym_def_app_icon"
         android:layout_height="match_parent" />
+
+    <TextView
+        android:text="@string/welcome_page_empty"
+        style="@style/AppTheme.TextView.Medium.MediumHeading"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/fragment_welcome_text"
+        android:textAlignment="center"
+        android:layout_gravity="center_vertical" />
 </FrameLayout>

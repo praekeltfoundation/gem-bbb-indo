@@ -1,33 +1,36 @@
 package com.nike.dooit.models;
 
+import com.google.gson.annotations.SerializedName;
+
 /**
  * Created by herman on 2016/11/05.
  */
 
 public class Profile
 {
-    private String id;
-    private String profile_image_url;
+
+    public static final int MALE = 0;
+    public static final int FEMALE = 1;
+
+    private int age;
+    private int gender;
     private String mobile;
+    @SerializedName("profile_image_url") private String profileImageUrl;
 
-    public String getId ()
-    {
-        return id;
+    public int getAge() {
+        return age;
     }
 
-    public void setId (String id)
-    {
-        this.id = id;
+    public void setAge(int age) {
+        this.age = age;
     }
 
-    public String getProfile_image_url ()
-{
-    return profile_image_url;
-}
+    public int getGender() {
+        return gender;
+    }
 
-    public void setProfile_image_url (String profile_image_url)
-    {
-        this.profile_image_url = profile_image_url;
+    public void setGender(int gender) {
+        this.gender = gender;
     }
 
     public String getMobile ()
@@ -38,5 +41,15 @@ public class Profile
     public void setMobile (String mobile)
     {
         this.mobile = mobile;
+    }
+
+    public String getProfileImageUrl()
+{
+    return profileImageUrl;
+}
+
+    public void setProfileImageUrl(String profileImageUrl)
+    {
+        this.profileImageUrl = profileImageUrl;
     }
 }

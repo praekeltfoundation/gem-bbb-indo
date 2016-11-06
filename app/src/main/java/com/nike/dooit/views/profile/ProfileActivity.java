@@ -67,7 +67,7 @@ public class ProfileActivity extends AppCompatActivity {
 
         setTitle(user.getUsername());
 
-        profileImage.setImageURI(user.getProfile().getProfile_image_url());
+        profileImage.setImageURI(user.getProfile().getProfileImageUrl());
      }
 
     @Override

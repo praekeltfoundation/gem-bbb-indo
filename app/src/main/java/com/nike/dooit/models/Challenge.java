@@ -1,5 +1,7 @@
 package com.nike.dooit.models;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.util.List;
 
 /**
@@ -8,11 +10,11 @@ import java.util.List;
 
 public class Challenge {
     private String id;
-    private String activation_date;
     private String name;
-    private List<Question> questions;
+    @SerializedName("activation_date") private String activationDate;
+    @SerializedName("deactivation_date") private String deactivationDate;
     private String type;
-    private String deactivation_date;
+    private List<Question> questions;
 
     public String getId() {
         return id;
@@ -22,12 +24,12 @@ public class Challenge {
         this.id = id;
     }
 
-    public String getActivation_date() {
-        return activation_date;
+    public String getActivationDate() {
+        return activationDate;
     }
 
-    public void setActivation_date(String activation_date) {
-        this.activation_date = activation_date;
+    public void setActivationDate(String activationDate) {
+        this.activationDate = activationDate;
     }
 
     public String getName() {
@@ -54,11 +56,11 @@ public class Challenge {
         this.type = type;
     }
 
-    public String getDeactivation_date() {
-        return deactivation_date;
+    public String getDeactivationDate() {
+        return deactivationDate;
     }
 
-    public void setDeactivation_date(String deactivation_date) {
-        this.deactivation_date = deactivation_date;
+    public void setDeactivationDate(String deactivationDate) {
+        this.deactivationDate = deactivationDate;
     }
 }
