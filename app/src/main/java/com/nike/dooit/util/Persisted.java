@@ -33,7 +33,7 @@ public class Persisted {
         dooitSharedPreferences.setString(name, state);
     }
 
-    public User loadUser() {
+    public User getCurrentUser() {
         User user = dooitSharedPreferences.getComplex(USER, User.class);
         Log.d(TAG, String.format("Loading: %s", user));
         return user;

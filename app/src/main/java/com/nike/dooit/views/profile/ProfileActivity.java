@@ -7,12 +7,9 @@ import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.TextView;
 
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.nike.dooit.DooitApplication;
@@ -21,8 +18,6 @@ import com.nike.dooit.models.User;
 import com.nike.dooit.util.Persisted;
 import com.nike.dooit.views.helpers.activity.DooitActivityBuilder;
 import com.nike.dooit.views.settings.SettingsActivity;
-
-import java.lang.reflect.Field;
 
 import javax.inject.Inject;
 
@@ -63,7 +58,7 @@ public class ProfileActivity extends AppCompatActivity {
                 }
             });
         }
-        user = persisted.loadUser();
+        user = persisted.getCurrentUser();
 
         setTitle(user.getUsername());
 

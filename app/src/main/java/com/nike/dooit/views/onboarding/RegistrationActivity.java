@@ -9,10 +9,15 @@ import android.text.SpannableString;
 import android.text.style.ForegroundColorSpan;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.nike.dooit.DooitApplication;
 import com.nike.dooit.R;
+import com.nike.dooit.api.DooitAPIError;
+import com.nike.dooit.api.DooitErrorHandler;
 import com.nike.dooit.api.managers.AuthenticationManager;
+import com.nike.dooit.api.responses.AuthenticationResponse;
+import com.nike.dooit.api.responses.OnboardingResponse;
 import com.nike.dooit.models.Profile;
 import com.nike.dooit.models.User;
 import com.nike.dooit.util.Persisted;
@@ -24,6 +29,7 @@ import javax.inject.Inject;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import rx.functions.Action1;
 
 public class RegistrationActivity extends DooitActivity {
 
@@ -72,8 +78,32 @@ public class RegistrationActivity extends DooitActivity {
     }
 
     @OnClick(R.id.activity_registration_register_button)
-    public void navigateToProfileImage() {
-        ProfileImageActivity.Builder.create(this, name.getText().toString(), password.getText().toString(), number.getText().toString()).startActivity();
+    public void register() {
+        authenticationManager.onboard(getUser(), new DooitErrorHandler() {
+            @Override
+            public void onError(DooitAPIError error) {
+                Toast.makeText(RegistrationActivity.this, "Unable to register", Toast.LENGTH_SHORT).show();
+
+            }
+        }).subscribe(new Action1<OnboardingResponse>() {
+            @Override
+            public void call(OnboardingResponse onboardingResponse) {
+                authenticationManager.login(getUser().getUsername(), getUser().getPassword(), new DooitErrorHandler() {
+                    @Override
+                    public void onError(DooitAPIError error) {
+                        Toast.makeText(RegistrationActivity.this, "Unable to Log in", Toast.LENGTH_SHORT).show();
+                    }
+                }).subscribe(new Action1<AuthenticationResponse>() {
+                    @Override
+                    public void call(AuthenticationResponse authenticationResponse) {
+                        persisted.saveUser(authenticationResponse.getUser());
+                        persisted.saveToken(authenticationResponse.getToken());
+                        ProfileImageActivity.Builder.create(RegistrationActivity.this).startActivity();
+                    }
+                });
+
+            }
+        });
     }
 
 

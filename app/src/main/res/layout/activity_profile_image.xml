@@ -51,7 +51,7 @@
             android:src="@android:drawable/sym_def_app_icon" />
 
         <TextView
-            android:id="@+id/activity_profile_image_t_c_text_view"
+            android:id="@+id/activity_profile_image_skip_text_view"
             style="@style/AppTheme.TextView.Medium.Small"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -64,11 +64,11 @@
 
 
         <Button
-            android:id="@+id/activity_profile_image_register_button"
+            android:id="@+id/activity_profile_image_next_button"
             style="@style/Widget.AppCompat.Button.Borderless"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/activity_profile_image_t_c_text_view"
+            android:layout_below="@+id/activity_profile_image_skip_text_view"
             android:layout_marginEnd="18dp"
             android:layout_marginStart="18dp"
             android:layout_marginTop="8dp"

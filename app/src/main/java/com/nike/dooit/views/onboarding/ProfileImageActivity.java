@@ -17,10 +17,7 @@ import com.nike.dooit.api.DooitAPIError;
 import com.nike.dooit.api.DooitErrorHandler;
 import com.nike.dooit.api.managers.AuthenticationManager;
 import com.nike.dooit.api.managers.FileUploadManager;
-import com.nike.dooit.api.responses.AuthenticationResponse;
 import com.nike.dooit.api.responses.EmptyResponse;
-import com.nike.dooit.api.responses.OnboardingResponse;
-import com.nike.dooit.models.Profile;
 import com.nike.dooit.models.User;
 import com.nike.dooit.util.Persisted;
 import com.nike.dooit.util.RequestCodes;
@@ -39,9 +36,6 @@ import rx.functions.Action1;
 
 public class ProfileImageActivity extends DooitActivity {
 
-    private static final String INTENT_USERNAME = "username";
-    private static final String INTENT_PASSWORD = "password";
-    private static final String INTENT_NUMBER = "number";
     private static final String INTENT_MIME_TYPE = "mime_type";
     private static final String INTENT_IMAGE_URI = "image_uri";
 
@@ -71,17 +65,6 @@ public class ProfileImageActivity extends DooitActivity {
 
     }
 
-
-    public User getUser() {
-        User user = new User();
-        user.setUsername(getIntent().getStringExtra(INTENT_USERNAME));
-        user.setPassword(getIntent().getStringExtra(INTENT_PASSWORD));
-        Profile profile = new Profile();
-        profile.setMobile(getIntent().getStringExtra(INTENT_NUMBER));
-        user.setProfile(profile);
-        return user;
-    }
-
     @OnClick(R.id.activity_profile_image_profile_image)
     public void takeImage() {
         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
@@ -90,43 +73,26 @@ public class ProfileImageActivity extends DooitActivity {
         }
     }
 
-    @OnClick({R.id.activity_profile_image_t_c_text_view,
-            R.id.activity_profile_image_register_button})
-    public void register() {
-        authenticationManager.onboard(getUser(), new DooitErrorHandler() {
+    @OnClick(R.id.activity_profile_image_next_button)
+    public void uploadProfileImage() {
+        User user = persisted.getCurrentUser();
+        fileUploadManager.upload(user.getId(), getIntent().getStringExtra(INTENT_MIME_TYPE), new File(((Uri) getIntent().getParcelableExtra(INTENT_IMAGE_URI)).toString()), new DooitErrorHandler() {
             @Override
             public void onError(DooitAPIError error) {
-
+                Toast.makeText(ProfileImageActivity.this, "Unable to upload Image", Toast.LENGTH_SHORT).show();
             }
-        }).subscribe(new Action1<OnboardingResponse>() {
+        }).subscribe(new Action1<EmptyResponse>() {
             @Override
-            public void call(OnboardingResponse onboardingResponse) {
-                fileUploadManager.upload(onboardingResponse.getId() + "", getIntent().getStringExtra(INTENT_MIME_TYPE), new File(((Uri)getIntent().getParcelableExtra(INTENT_IMAGE_URI)).toString()), new DooitErrorHandler() {
-                    @Override
-                    public void onError(DooitAPIError error) {
-                        Toast.makeText(ProfileImageActivity.this, "Unable to upload Image", Toast.LENGTH_SHORT).show();
-                    }
-                }).subscribe(new Action1<EmptyResponse>() {
-                    @Override
-                    public void call(EmptyResponse emptyResponse) {
-                        authenticationManager.login(getUser().getUsername(), getUser().getPassword(), new DooitErrorHandler() {
-                            @Override
-                            public void onError(DooitAPIError error) {
-                                Toast.makeText(ProfileImageActivity.this, "Unable to register", Toast.LENGTH_SHORT).show();
-                            }
-                        }).subscribe(new Action1<AuthenticationResponse>() {
-                            @Override
-                            public void call(AuthenticationResponse authenticationResponse) {
-                                persisted.saveUser(authenticationResponse.getUser());
-                                persisted.saveToken(authenticationResponse.getToken());
-                                MainActivity.Builder.create(ProfileImageActivity.this).startActivity();
-                            }
-                        });
-                    }
-                });
-
+            public void call(EmptyResponse emptyResponse) {
+                MainActivity.Builder.create(ProfileImageActivity.this).startActivity();
             }
         });
+    }
+
+    @OnClick(R.id.activity_profile_image_skip_text_view)
+    public void skip() {
+        MainActivity.Builder.create(ProfileImageActivity.this).startActivity();
+
     }
 
     @Override
@@ -166,11 +132,8 @@ public class ProfileImageActivity extends DooitActivity {
             super(context);
         }
 
-        public static ProfileImageActivity.Builder create(Context context, String username, String password, String number) {
+        public static ProfileImageActivity.Builder create(Context context) {
             ProfileImageActivity.Builder builder = new ProfileImageActivity.Builder(context);
-            builder.setUsername(username);
-            builder.setPassword(password);
-            builder.setNumber(number);
             return builder;
         }
 
@@ -179,19 +142,5 @@ public class ProfileImageActivity extends DooitActivity {
             return new Intent(context, ProfileImageActivity.class);
         }
 
-        public void setUsername(String username) {
-            intent.putExtra(INTENT_USERNAME, username);
-
-        }
-
-        public void setPassword(String password) {
-            intent.putExtra(INTENT_PASSWORD, password);
-
-        }
-
-        public void setNumber(String number) {
-            intent.putExtra(INTENT_NUMBER, number);
-
-        }
     }
 }
