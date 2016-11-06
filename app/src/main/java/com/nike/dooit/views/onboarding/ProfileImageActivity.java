@@ -18,6 +18,8 @@ import com.nike.dooit.api.DooitErrorHandler;
 import com.nike.dooit.api.managers.AuthenticationManager;
 import com.nike.dooit.api.managers.FileUploadManager;
 import com.nike.dooit.api.responses.EmptyResponse;
+import com.nike.dooit.helpers.permissions.PermissionCallback;
+import com.nike.dooit.helpers.permissions.PermissionsHelper;
 import com.nike.dooit.models.User;
 import com.nike.dooit.util.Persisted;
 import com.nike.dooit.util.RequestCodes;
@@ -52,6 +54,9 @@ public class ProfileImageActivity extends DooitActivity {
     @Inject
     Persisted persisted;
 
+    @Inject
+    PermissionsHelper permissionsHelper;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -67,10 +72,32 @@ public class ProfileImageActivity extends DooitActivity {
 
     @OnClick(R.id.activity_profile_image_profile_image)
     public void takeImage() {
-        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
-            startActivityForResult(takePictureIntent, RequestCodes.REPONSE_CAMERA_REQUEST_PROFILE_IMAGE);
-        }
+        permissionsHelper.askForPermission(this, PermissionsHelper.D_WRITE_EXTERNAL_STORAGE, new PermissionCallback() {
+            @Override
+            public void permissionGranted() {
+                permissionsHelper.askForPermission(ProfileImageActivity.this, PermissionsHelper.D_CAMERA, new PermissionCallback() {
+                    @Override
+                    public void permissionGranted() {
+                        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                        if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
+                            startActivityForResult(takePictureIntent, RequestCodes.REPONSE_CAMERA_REQUEST_PROFILE_IMAGE);
+                        }
+                    }
+
+                    @Override
+                    public void permissionRefused() {
+                        Toast.makeText(ProfileImageActivity.this, "Can't take profile image without camera permission", Toast.LENGTH_SHORT).show();
+                    }
+                });
+            }
+
+            @Override
+            public void permissionRefused() {
+                Toast.makeText(ProfileImageActivity.this, "Can't take profile image without storage permission", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+
     }
 
     @OnClick(R.id.activity_profile_image_next_button)

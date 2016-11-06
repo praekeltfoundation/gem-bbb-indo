@@ -8,6 +8,7 @@ import com.nike.dooit.api.managers.ChallengeManager;
 import com.nike.dooit.api.managers.FileUploadManager;
 import com.nike.dooit.api.managers.TipManager;
 import com.nike.dooit.api.managers.UserManager;
+import com.nike.dooit.helpers.permissions.PermissionsHelper;
 import com.nike.dooit.util.DooitSharedPreferences;
 import com.nike.dooit.util.Persisted;
 
@@ -57,6 +58,12 @@ public class DooitModule {
     @Singleton
     Persisted providePersisted() {
         return new Persisted(application);
+    }
+
+    @Provides
+    @Singleton
+    PermissionsHelper providePermissionsHelper() {
+        return new PermissionsHelper();
     }
 
     @Provides
