@@ -8,28 +8,29 @@ import com.google.gson.annotations.SerializedName;
 
 public class Profile
 {
-    private String id;
-    @SerializedName("profile_image_url") private String profileImageUrl;
+
+    public static final int MALE = 0;
+    public static final int FEMALE = 1;
+
+    private int age;
+    private int gender;
     private String mobile;
+    @SerializedName("profile_image_url") private String profileImageUrl;
 
-    public String getId ()
-    {
-        return id;
+    public int getAge() {
+        return age;
     }
 
-    public void setId (String id)
-    {
-        this.id = id;
+    public void setAge(int age) {
+        this.age = age;
     }
 
-    public String getProfileImageUrl()
-{
-    return profileImageUrl;
-}
+    public int getGender() {
+        return gender;
+    }
 
-    public void setProfileImageUrl(String profileImageUrl)
-    {
-        this.profileImageUrl = profileImageUrl;
+    public void setGender(int gender) {
+        this.gender = gender;
     }
 
     public String getMobile ()
@@ -40,5 +41,15 @@ public class Profile
     public void setMobile (String mobile)
     {
         this.mobile = mobile;
+    }
+
+    public String getProfileImageUrl()
+{
+    return profileImageUrl;
+}
+
+    public void setProfileImageUrl(String profileImageUrl)
+    {
+        this.profileImageUrl = profileImageUrl;
     }
 }
