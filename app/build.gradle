@@ -28,9 +28,24 @@ android {
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
+        debug {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+    productFlavors {
+        staging {
+            applicationId "com.nike.dooit.staging"
+        }
+        production {
+            applicationId "com.nike.dooit"
+        }
+        automation {
+            applicationId "com.nike.dooit.automation"
         }
     }
 }
