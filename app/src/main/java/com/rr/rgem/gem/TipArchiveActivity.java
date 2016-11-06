@@ -2,8 +2,13 @@ package com.rr.rgem.gem;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
+import android.graphics.Color;
+import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
+import android.support.v4.graphics.drawable.DrawableCompat;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -27,6 +32,7 @@ import com.rr.rgem.gem.views.Utils;
 
 import java.io.IOException;
 import java.net.MalformedURLException;
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -48,6 +54,7 @@ public class TipArchiveActivity extends ApplicationActivity {
     private GEMNavigation navigation;
     private CMSService service;
     private LinearLayout tipScreen;
+    private SharedPreferences sharedPreferences;
     //private TabHost tabHost;
 
     @BindView(R.id.tipTabHost) TabHost tabHost;
@@ -64,6 +71,8 @@ public class TipArchiveActivity extends ApplicationActivity {
         navigation = new GEMNavigation(this);
         tipScreen = (LinearLayout) navigation.addLayout(R.layout.tip_archive);
 
+        sharedPreferences = this.getPreferences(Context.MODE_PRIVATE);
+
         ButterKnife.bind(this);
 
         // Initialize Tabs
@@ -72,9 +81,45 @@ public class TipArchiveActivity extends ApplicationActivity {
         tabHost.addTab(tabHost.newTabSpec(TAB_FAVOURITES)
                 .setContent(new TipListScreen(this, new TipFactory() {
                     @Override
-                    public void loadTips(TipCallback callback) {
-                        // TODO: Tip Favourites
-                        callback.onEmpty();
+                    public void loadTips(final TipCallback callback) {
+                        Log.d(TAG, "TipCallback loading tips");
+                        TipArchiveActivity.this.service.listTips().enqueue(new Callback<List<TipArticle>>() {
+                            @Override
+                            public void onResponse(Call<List<TipArticle>> call, Response<List<TipArticle>> response) {
+                                Log.d(TAG, "Loading tips status " + response.code());
+                                if (response.isSuccessful()) {
+                                    List<TipArticle> tips = response.body();
+                                    List<TipArticle> favourites = new ArrayList<TipArticle>();
+
+                                    for (TipArticle tip : tips) {
+                                        if(sharedPreferences.getBoolean("Tip" + tip.getId() + "_isFavourite", false)) {
+                                            favourites.add(tip);
+                                        }
+                                    }
+
+                                    if (favourites.isEmpty()) {
+                                        callback.onEmpty();
+                                    } else {
+                                        callback.onLoad(favourites);
+                                    }
+                                } else {
+                                    // TODO: Handle error
+                                    try {
+                                        Log.d(TAG, "Tips not loaded " + response.errorBody().string());
+                                    } catch (IOException e) {
+                                        Log.d(TAG, "IO Exception while reading tips error body", e);
+                                    }
+                                    callback.onEmpty();
+                                }
+
+                            }
+                            @Override
+                            public void onFailure(Call<List<TipArticle>> call, Throwable t) {
+                                // TODO: Handle error
+                                Log.d(TAG, "Loading tips exception", t);
+                                callback.onEmpty();
+                            }
+                        });
                     }
                 }))
                 .setIndicator(getResources().getString(R.string.favourites))
@@ -197,7 +242,8 @@ public class TipArchiveActivity extends ApplicationActivity {
         }
 
         private void addTipCard(final TipArticle tip) {
-            View view = LayoutInflater.from(tipContainer.getContext()).inflate(R.layout.tip_card, null);
+            final View view = LayoutInflater.from(tipContainer.getContext()).inflate(R.layout.tip_card, null);
+            view.setTag(Integer.toString(tip.getId()));
             // Params required for cards to resize on add
             LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 1.0f);
 
@@ -216,10 +262,12 @@ public class TipArchiveActivity extends ApplicationActivity {
             TextView title = (TextView) view.findViewById(R.id.tipTitle);
             RelativeLayout tipCardHead = (RelativeLayout) view.findViewById(R.id.tipCardHead);
             final ImageView tipCardImage = (ImageView) view.findViewById(R.id.tipCardImage);
-            ImageView favBtn = (ImageView) view.findViewById(R.id.favBtn);
+            final ImageView favBtn = (ImageView) view.findViewById(R.id.favBtn);
             ImageView shareBtn = (ImageView) view.findViewById(R.id.shareBtn);
 
             title.setText(tip.getTitle());
+            tip.setFavourite(sharedPreferences.getBoolean("Tip" + tip.getId() + "_isFavourite", false));
+            setFavButtonColor(favBtn, tip.isFavourite());
             try {
                 if (tip.hasCoverImageUrl()) {
                     // Attempt to get image from internal storage
@@ -261,6 +309,7 @@ public class TipArchiveActivity extends ApplicationActivity {
             favBtn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    toggleTipFavourite(TipListScreen.this, tip, Integer.toString(tip.getId()));
                     Utils.toast(context, String.format("'%s' FAVOURITE clicked...", tip.getTitle()));
                 }
             });
@@ -273,6 +322,45 @@ public class TipArchiveActivity extends ApplicationActivity {
             });
 
             cardCount++;
+        }
+
+        private void setFavButtonColor(ImageView favBtn, boolean favourite)
+        {
+            if(favourite)
+                DrawableCompat.setTint(favBtn.getDrawable(), Color.YELLOW);
+            else
+                DrawableCompat.setTint(favBtn.getDrawable(), Color.BLACK);
+        }
+
+        private void toggleTipFavourite(TipListScreen list, TipArticle tip, String tag) {
+
+            int tracker = tabHost.getCurrentTab();
+
+            tabHost.setCurrentTab(2);
+            View cardAll = tabHost.getChildAt(0).findViewWithTag(tag);
+            tabHost.setCurrentTab(1);
+            View cardFav = tabHost.getChildAt(0).findViewWithTag(tag);
+
+            if(tip.isFavourite()) {
+                tip.setFavourite(false);
+                sharedPreferences.edit().putBoolean("Tip" + tip.getId() + "_isFavourite", false).apply();
+                setFavButtonColor((ImageView) cardAll.findViewById(R.id.favBtn), false);
+
+                if(cardFav != null)
+                    setFavButtonColor((ImageView) cardFav.findViewById(R.id.favBtn), false);
+            }
+            else {
+                tip.setFavourite(true);
+                sharedPreferences.edit().putBoolean("Tip" + tip.getId() + "_isFavourite", true).apply();
+                setFavButtonColor((ImageView) cardAll.findViewById(R.id.favBtn), true);
+
+                if(cardFav == null)
+                    list.addTipCard(tip);
+                else
+                    setFavButtonColor((ImageView) cardFav.findViewById(R.id.favBtn), true);
+            }
+
+            tabHost.setCurrentTab(tracker);
         }
 
         private ViewGroup newRow() {

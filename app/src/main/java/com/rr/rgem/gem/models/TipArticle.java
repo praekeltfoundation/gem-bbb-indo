@@ -21,6 +21,8 @@ public class TipArticle {
 
     List<String> tags;
 
+    boolean favourite;
+
     public int getId() {
         return id;
     }
@@ -64,6 +66,10 @@ public class TipArticle {
     public void setTags(List<String> tags) {
         this.tags = tags;
     }
+
+    public void setFavourite(boolean favourite) { this.favourite = favourite; }
+
+    public boolean isFavourite() { return favourite; }
 
     @Override
     public String toString() {
