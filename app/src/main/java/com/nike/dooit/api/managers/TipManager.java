@@ -29,4 +29,8 @@ public class TipManager extends DooitManager {
     public Observable<List<Tip>> retrieveTips(DooitErrorHandler errorHandler) {
         return useNetwork(tipAPI.getTips(), errorHandler);
     }
+
+    public Observable<List<Tip>> retrieveFavourites(DooitErrorHandler errorHandler) {
+        return useNetwork(tipAPI.getFavourites(), errorHandler);
+    }
 }

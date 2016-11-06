@@ -12,6 +12,10 @@
     <string name="welcome_page_2">Pantau capaianmu menuju tujuan menabungmu!</string>
     <string name="welcome_page_3">Dapatkan hadiah untuk kegigihan kalian dalam menabung!</string>
 
+    <!-- Tips -->
+    <string name="tips_tab_favourites">Favorit</string>
+    <string name="tips_tab_all">Semua</string>
+
     <string name="lets_start">AYO MULAI</string>
     <string name="reg_t_c">Dengan mengklik register, Anda setuju dengan Persyaratan dan Kondisi kami></string>
     <string name="already_registered_log_in">Sudah terdaftar? Masuk</string>
