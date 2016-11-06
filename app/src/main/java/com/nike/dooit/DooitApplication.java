@@ -7,6 +7,7 @@ import com.facebook.drawee.backends.pipeline.Fresco;
 import com.nike.dooit.dagger.DaggerDooitComponent;
 import com.nike.dooit.dagger.DooitComponent;
 import com.nike.dooit.dagger.DooitModule;
+
 import io.fabric.sdk.android.Fabric;
 
 /**
@@ -20,9 +21,10 @@ public class DooitApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-        Fabric.with(this, new Crashlytics());
+        if (!Constants.DEBUG) {
+            Fabric.with(this, new Crashlytics());
+        }
         Fresco.initialize(this);
-
         component = DaggerDooitComponent.builder()
                 .dooitModule(new DooitModule(this))
                 .build();

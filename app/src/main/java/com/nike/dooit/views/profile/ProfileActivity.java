@@ -7,9 +7,12 @@ import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.nike.dooit.DooitApplication;
@@ -18,6 +21,8 @@ import com.nike.dooit.models.User;
 import com.nike.dooit.util.Persisted;
 import com.nike.dooit.views.helpers.activity.DooitActivityBuilder;
 import com.nike.dooit.views.settings.SettingsActivity;
+
+import java.lang.reflect.Field;
 
 import javax.inject.Inject;
 
@@ -63,25 +68,7 @@ public class ProfileActivity extends AppCompatActivity {
         setTitle(user.getUsername());
 
         profileImage.setImageURI(user.getProfile().getProfileImageUrl());
-        appBarLayout.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
-            boolean isShow = false;
-            int scrollRange = -1;
-
-            @Override
-            public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
-                if (scrollRange == -1) {
-                    scrollRange = appBarLayout.getTotalScrollRange();
-                }
-                if (scrollRange + verticalOffset == 0) {
-                    isShow = true;
-                    profileImage.setVisibility(View.GONE);
-                } else if (isShow) {
-                    isShow = false;
-                    profileImage.setVisibility(View.VISIBLE);
-                }
-            }
-        });
-    }
+     }
 
     @Override
     public void setTitle(CharSequence title) {

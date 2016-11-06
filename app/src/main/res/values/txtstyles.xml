@@ -22,7 +22,7 @@
         <item name="android:textSize">@dimen/k_font_large</item>
     </style>
 
-    <style name="AppTheme.TextView.Regular.Regular" parent="AppTheme.TextView.Regular">
+    <style name="AppTheme.TextView.Regular.Medium" parent="AppTheme.TextView.Regular">
         <item name="android:textSize">@dimen/k_font_medium</item>
     </style>
 
@@ -46,7 +46,7 @@
         <item name="android:textColor">@color/heading</item>
     </style>
 
-    <style name="AppTheme.TextView.Regular.RegularHeading" parent="AppTheme.TextView.Regular.Regular">
+    <style name="AppTheme.TextView.Regular.MediumHeading" parent="AppTheme.TextView.Regular.Medium">
         <item name="android:textColor">@color/heading</item>
     </style>
 
