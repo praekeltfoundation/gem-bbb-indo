@@ -48,7 +48,7 @@
             android:layout_height="32dp"
             android:layout_alignBottom="@+id/activity_profile_image_profile_image"
             android:layout_alignEnd="@+id/activity_profile_image_profile_image"
-            android:src="@android:drawable/sym_def_app_icon" />
+            android:src="@drawable/plus" />
 
         <TextView
             android:id="@+id/activity_profile_image_skip_text_view"
