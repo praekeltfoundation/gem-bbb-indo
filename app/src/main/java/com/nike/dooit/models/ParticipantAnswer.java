@@ -1,5 +1,7 @@
 package com.nike.dooit.models;
 
+import com.google.gson.annotations.SerializedName;
+
 import org.joda.time.DateTime;
 
 /**
@@ -9,13 +11,13 @@ import org.joda.time.DateTime;
 public class ParticipantAnswer {
 
     private int question;
-    private int selected_option;
-    private DateTime date_answered = new DateTime();
+    @SerializedName("selected_option") private int selectedOption;
+    @SerializedName("date_answered") private DateTime dateAnswered = new DateTime();
 
-    public ParticipantAnswer(int question, int selected_option) {
+    public ParticipantAnswer(int question, int selectedOption) {
         this.question = question;
-        this.selected_option = selected_option;
-        this.date_answered = new DateTime();
+        this.selectedOption = selectedOption;
+        this.dateAnswered = new DateTime();
     }
 
     public int getQuestion() {
@@ -26,19 +28,19 @@ public class ParticipantAnswer {
         this.question = question;
     }
 
-    public int getSelected_option() {
-        return selected_option;
+    public int getSelectedOption() {
+        return selectedOption;
     }
 
-    public void setSelected_option(int selected_option) {
-        this.selected_option = selected_option;
+    public void setSelectedOption(int selectedOption) {
+        this.selectedOption = selectedOption;
     }
 
-    public DateTime getDate_answered() {
-        return date_answered;
+    public DateTime getDateAnswered() {
+        return dateAnswered;
     }
 
-    public void setDate_answered(DateTime date_answered) {
-        this.date_answered = date_answered;
+    public void setDateAnswered(DateTime dateAnswered) {
+        this.dateAnswered = dateAnswered;
     }
 }

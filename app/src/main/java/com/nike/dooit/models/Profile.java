@@ -1,5 +1,7 @@
 package com.nike.dooit.models;
 
+import com.google.gson.annotations.SerializedName;
+
 /**
  * Created by herman on 2016/11/05.
  */
@@ -7,7 +9,7 @@ package com.nike.dooit.models;
 public class Profile
 {
     private String id;
-    private String profile_image_url;
+    @SerializedName("profile_image_url") private String profileImageUrl;
     private String mobile;
 
     public String getId ()
@@ -20,14 +22,14 @@ public class Profile
         this.id = id;
     }
 
-    public String getProfile_image_url ()
+    public String getProfileImageUrl()
 {
-    return profile_image_url;
+    return profileImageUrl;
 }
 
-    public void setProfile_image_url (String profile_image_url)
+    public void setProfileImageUrl(String profileImageUrl)
     {
-        this.profile_image_url = profile_image_url;
+        this.profileImageUrl = profileImageUrl;
     }
 
     public String getMobile ()

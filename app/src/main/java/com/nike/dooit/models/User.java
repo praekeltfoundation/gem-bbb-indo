@@ -1,57 +1,18 @@
 package com.nike.dooit.models;
 
-import java.util.List;
+import com.google.gson.annotations.SerializedName;
 
 /**
  * Created by herman on 2016/11/05.
  */
 public class User {
-    private String is_staff;
-    private String is_active;
-    private String is_superuser;
-    private String last_login;
     private String id;
-    private List<String> user_permissions;
-    private String first_name;
     private String username;
     private String password;
-    private String date_joined;
     private String email;
-    private String last_name;
-    private List<String> groups;
+    @SerializedName("first_name") private String firstName;
+    @SerializedName("last_name") private String lastName;
     private Profile profile;
-
-    public String getIs_staff() {
-        return is_staff;
-    }
-
-    public void setIs_staff(String is_staff) {
-        this.is_staff = is_staff;
-    }
-
-    public String getIs_active() {
-        return is_active;
-    }
-
-    public void setIs_active(String is_active) {
-        this.is_active = is_active;
-    }
-
-    public String getIs_superuser() {
-        return is_superuser;
-    }
-
-    public void setIs_superuser(String is_superuser) {
-        this.is_superuser = is_superuser;
-    }
-
-    public String getLast_login() {
-        return last_login;
-    }
-
-    public void setLast_login(String last_login) {
-        this.last_login = last_login;
-    }
 
     public String getId() {
         return id;
@@ -61,20 +22,12 @@ public class User {
         this.id = id;
     }
 
-    public List<String> getUser_permissions() {
-        return user_permissions;
+    public String getFirstName() {
+        return firstName;
     }
 
-    public void setUser_permissions(List<String> user_permissions) {
-        this.user_permissions = user_permissions;
-    }
-
-    public String getFirst_name() {
-        return first_name;
-    }
-
-    public void setFirst_name(String first_name) {
-        this.first_name = first_name;
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
     }
 
     public String getUsername() {
@@ -93,14 +46,6 @@ public class User {
         this.password = password;
     }
 
-    public String getDate_joined() {
-        return date_joined;
-    }
-
-    public void setDate_joined(String date_joined) {
-        this.date_joined = date_joined;
-    }
-
     public String getEmail() {
         return email;
     }
@@ -109,20 +54,12 @@ public class User {
         this.email = email;
     }
 
-    public String getLast_name() {
-        return last_name;
+    public String getLastName() {
+        return lastName;
     }
 
-    public void setLast_name(String last_name) {
-        this.last_name = last_name;
-    }
-
-    public List<String> getGroups() {
-        return groups;
-    }
-
-    public void setGroups(List<String> groups) {
-        this.groups = groups;
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
     }
 
     public Profile getProfile() {

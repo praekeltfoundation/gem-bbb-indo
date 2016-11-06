@@ -12,8 +12,8 @@ public class Tip {
 
     private int id;
     private String title;
-    private String article_url;
-    private String cover_image_url;
+    @SerializedName("article_url") private String articleUrl;
+    @SerializedName("cover_image_url") private String coverImageUrl;
     private List<String> tags;
 
     public int getId() {
@@ -32,20 +32,20 @@ public class Tip {
         this.title = title;
     }
 
-    public String getArticle_url() {
-        return article_url;
+    public String getArticleUrl() {
+        return articleUrl;
     }
 
-    public void setArticle_url(String article_url) {
-        this.article_url = article_url;
+    public void setArticleUrl(String articleUrl) {
+        this.articleUrl = articleUrl;
     }
 
-    public String getCover_image_url() {
-        return cover_image_url;
+    public String getCoverImageUrl() {
+        return coverImageUrl;
     }
 
-    public void setCover_image_url(String cover_image_url) {
-        this.cover_image_url = cover_image_url;
+    public void setCoverImageUrl(String coverImageUrl) {
+        this.coverImageUrl = coverImageUrl;
     }
 
     public List<String> getTags() {

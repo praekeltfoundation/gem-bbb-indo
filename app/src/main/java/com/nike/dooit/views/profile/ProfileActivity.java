@@ -15,7 +15,6 @@ import com.facebook.drawee.view.SimpleDraweeView;
 import com.nike.dooit.DooitApplication;
 import com.nike.dooit.R;
 import com.nike.dooit.models.User;
-import com.nike.dooit.util.DooitSharedPreferences;
 import com.nike.dooit.util.Persisted;
 import com.nike.dooit.views.helpers.activity.DooitActivityBuilder;
 import com.nike.dooit.views.settings.SettingsActivity;
@@ -63,7 +62,7 @@ public class ProfileActivity extends AppCompatActivity {
 
         setTitle(user.getUsername());
 
-        profileImage.setImageURI(user.getProfile().getProfile_image_url());
+        profileImage.setImageURI(user.getProfile().getProfileImageUrl());
         appBarLayout.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
             boolean isShow = false;
             int scrollRange = -1;
