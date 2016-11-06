@@ -12,9 +12,9 @@ import java.util.Map;
  */
 
 public enum WelcomeViewPagerPositions {
-    ONE(0, R.color.purple),
-    TWO(1, R.color.purple),
-    THREE(2, R.color.purple);
+    ONE(0, R.color.purple, R.string.welcome_page_1),
+    TWO(1, R.color.purple, R.string.welcome_page_2),
+    THREE(2, R.color.purple, R.string.welcome_page_3);
 
     private static Map<Integer, WelcomeViewPagerPositions> map = new HashMap<Integer, WelcomeViewPagerPositions>();
 
@@ -26,10 +26,12 @@ public enum WelcomeViewPagerPositions {
 
     private final int value;
     private final Integer imageRes;
+    private final Integer textRes;
 
-    WelcomeViewPagerPositions(int value, /*@DrawableRes*/ Integer iconRes) {
+    WelcomeViewPagerPositions(int value, /*@DrawableRes*/ Integer iconRes, Integer textRes) {
         this.value = value;
         this.imageRes = iconRes;
+        this.textRes = textRes;
     }
 
     public static WelcomeViewPagerPositions getValueOf(int value) {
@@ -44,5 +46,9 @@ public enum WelcomeViewPagerPositions {
     @DrawableRes
     int getImageRes() {
         return imageRes;
+    }
+
+    public Integer getTextRes() {
+        return textRes;
     }
 }
