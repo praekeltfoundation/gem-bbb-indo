@@ -52,10 +52,7 @@ public class ProfileImageActivity extends DooitActivity {
     FileUploadManager fileUploadManager;
 
     @Inject
-    Persisted persisted;
-
-    @Inject
-    PermissionsHelper permissionsHelper;
+    Persisted persisted; 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

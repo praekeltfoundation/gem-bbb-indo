@@ -21,7 +21,7 @@ import javax.inject.Inject;
 public class DooitActivity extends AppCompatActivity {
 
     @Inject
-    PermissionsHelper permissionsHelper;
+    protected PermissionsHelper permissionsHelper;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
