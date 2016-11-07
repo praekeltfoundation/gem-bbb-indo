@@ -2,6 +2,8 @@ package com.nike.dooit.models;
 
 import com.google.gson.annotations.SerializedName;
 
+import org.joda.time.DateTime;
+
 import java.io.Serializable;
 import java.util.List;
 
@@ -13,9 +15,9 @@ public class Challenge implements Serializable {
     private String id;
     private String name;
     @SerializedName("activation_date")
-    private String activationDate;
+    private DateTime activationDate;
     @SerializedName("deactivation_date")
-    private String deactivationDate;
+    private DateTime deactivationDate;
     private String type;
     private List<Question> questions;
 
@@ -27,11 +29,11 @@ public class Challenge implements Serializable {
         this.id = id;
     }
 
-    public String getActivationDate() {
+    public DateTime getActivationDate() {
         return activationDate;
     }
 
-    public void setActivationDate(String activationDate) {
+    public void setActivationDate(DateTime activationDate) {
         this.activationDate = activationDate;
     }
 
@@ -59,11 +61,11 @@ public class Challenge implements Serializable {
         this.type = type;
     }
 
-    public String getDeactivationDate() {
+    public DateTime getDeactivationDate() {
         return deactivationDate;
     }
 
-    public void setDeactivationDate(String deactivationDate) {
+    public void setDeactivationDate(DateTime deactivationDate) {
         this.deactivationDate = deactivationDate;
     }
 }
