@@ -16,6 +16,14 @@ public class Tip {
     @SerializedName("cover_image_url") private String coverImageUrl;
     private List<String> tags;
 
+    public Tip() {
+        // Empty constructor
+    }
+
+    public Tip(String title) {
+        this.title = title;
+    }
+
     public int getId() {
         return id;
     }
