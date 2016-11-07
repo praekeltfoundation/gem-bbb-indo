@@ -10,7 +10,7 @@ import android.view.View;
 import com.nike.dooit.Constants;
 import com.nike.dooit.DooitApplication;
 import com.nike.dooit.R;
-import com.nike.dooit.util.DooitSharedPreferences;
+import com.nike.dooit.helpers.DooitSharedPreferences;
 import com.nike.dooit.views.RootActivity;
 import com.nike.dooit.views.helpers.activity.DooitActivityBuilder;
 

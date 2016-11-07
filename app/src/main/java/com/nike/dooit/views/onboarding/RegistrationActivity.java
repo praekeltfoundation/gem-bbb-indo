@@ -21,7 +21,7 @@ import com.nike.dooit.api.responses.AuthenticationResponse;
 import com.nike.dooit.api.responses.OnboardingResponse;
 import com.nike.dooit.models.Profile;
 import com.nike.dooit.models.User;
-import com.nike.dooit.util.Persisted;
+import com.nike.dooit.helpers.Persisted;
 import com.nike.dooit.views.DooitActivity;
 import com.nike.dooit.views.helpers.activity.DooitActivityBuilder;
 

@@ -9,8 +9,8 @@ import com.nike.dooit.Constants;
 import com.nike.dooit.DooitApplication;
 import com.nike.dooit.api.DooitErrorHandler;
 import com.nike.dooit.api.serializers.DateTimeSerializer;
-import com.nike.dooit.util.DooitSharedPreferences;
-import com.nike.dooit.util.Persisted;
+import com.nike.dooit.helpers.DooitSharedPreferences;
+import com.nike.dooit.helpers.Persisted;
 
 import org.joda.time.DateTime;
 

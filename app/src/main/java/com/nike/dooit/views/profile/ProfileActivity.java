@@ -4,17 +4,16 @@ import android.app.Activity;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
-import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.design.widget.AppBarLayout;
-import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.facebook.drawee.view.SimpleDraweeView;
@@ -27,8 +26,8 @@ import com.nike.dooit.api.responses.EmptyResponse;
 import com.nike.dooit.helpers.permissions.PermissionCallback;
 import com.nike.dooit.helpers.permissions.PermissionsHelper;
 import com.nike.dooit.models.User;
-import com.nike.dooit.util.Persisted;
-import com.nike.dooit.util.RequestCodes;
+import com.nike.dooit.helpers.Persisted;
+import com.nike.dooit.helpers.RequestCodes;
 import com.nike.dooit.views.DooitActivity;
 import com.nike.dooit.views.helpers.activity.DooitActivityBuilder;
 import com.nike.dooit.views.settings.SettingsActivity;
@@ -52,12 +51,12 @@ public class ProfileActivity extends DooitActivity {
 
     @BindView(R.id.activity_profile_image)
     SimpleDraweeView profileImage;
-    @BindView(R.id.toolbar_layout)
-    CollapsingToolbarLayout collapsingToolbarLayout;
     @BindView(R.id.toolbar)
     Toolbar toolbar;
     @BindView(R.id.app_bar)
     AppBarLayout appBarLayout;
+    @BindView(R.id.toolbar_title)
+    TextView toolbarTitle;
 
     @Inject
     Persisted persisted;
@@ -66,6 +65,7 @@ public class ProfileActivity extends DooitActivity {
     FileUploadManager fileUploadManager;
 
     User user;
+    Uri cameraUri;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,6 +77,7 @@ public class ProfileActivity extends DooitActivity {
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_d_close);
+            getSupportActionBar().setTitle("");
             toolbar.setNavigationOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -89,17 +90,31 @@ public class ProfileActivity extends DooitActivity {
         setTitle(user.getUsername());
 
         profileImage.setImageURI(user.getProfile().getProfileImageUrl());
+        appBarLayout.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
+            boolean isShow = false;
+            int scrollRange = -1;
+
+            @Override
+            public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
+                if (Math.abs(verticalOffset) > appBarLayout.getHeight() * 0.4) {
+                    isShow = true;
+                    profileImage.setVisibility(View.GONE);
+                } else if (Math.abs(verticalOffset) < appBarLayout.getHeight() * 0.4) {
+                    isShow = false;
+                    profileImage.setVisibility(View.VISIBLE);
+                }
+            }
+        });
     }
 
     @Override
     public void setTitle(CharSequence title) {
-        collapsingToolbarLayout.setTitle(title);
-        super.setTitle(title);
+        toolbarTitle.setText(title);
     }
 
     @Override
     public void setTitle(int titleId) {
-        setTitle(getString(titleId));
+        toolbarTitle.setText(titleId);
     }
 
     @Override
@@ -164,26 +179,9 @@ public class ProfileActivity extends DooitActivity {
 
     }
 
-    public static Uri getRealPathFromURI(Context context, Uri contentUri) {
-        try {
-            Cursor cursor = context.getContentResolver().query(contentUri, null, null, null, null);
-            if (cursor == null) {
-                return contentUri;
-            } else {
-                cursor.moveToFirst();
-                int index = cursor.getColumnIndex(MediaStore.Images.ImageColumns.DATA);
-                return Uri.parse(cursor.getString(index));
-            }
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
-        return contentUri;
-    }
-
-
     //@OnActivityResult(requestCode = RequestCodes.REPONSE_CAMERA_REQUEST_PROFILE_IMAGE)
     void onActivityResultCameraProfileImage(Intent data) {
-        Uri cameraUri = data.getData();
+        cameraUri = data.getData();
         if (cameraUri == null) {
             try {
                 cameraUri = Uri.parse(MediaStore.Images.Media.insertImage(getContentResolver(), (Bitmap) data.getExtras().get("data"), "", ""));
@@ -191,13 +189,13 @@ public class ProfileActivity extends DooitActivity {
 
             }
         }
+        profileImage.setImageURI(cameraUri);
         ContentResolver cR = this.getContentResolver();
         getIntent().putExtra(INTENT_MIME_TYPE, cR.getType(cameraUri));
-        cameraUri = getRealPathFromURI(this, cameraUri);
-        getIntent().putExtra(INTENT_IMAGE_URI, cameraUri);
-        profileImage.setImageURI(cameraUri);
+        Uri imageUri = getRealPathFromURI(cameraUri);
+        getIntent().putExtra(INTENT_IMAGE_URI, imageUri);
         User user = persisted.getCurrentUser();
-        fileUploadManager.upload(user.getId(), getIntent().getStringExtra(INTENT_MIME_TYPE), new File(cameraUri.getPath()), new DooitErrorHandler() {
+        fileUploadManager.upload(user.getId(), getIntent().getStringExtra(INTENT_MIME_TYPE), new File(imageUri.getPath()), new DooitErrorHandler() {
             @Override
             public void onError(DooitAPIError error) {
                 Toast.makeText(ProfileActivity.this, "Unable to uploadProfileImage Image", Toast.LENGTH_SHORT).show();
@@ -205,6 +203,9 @@ public class ProfileActivity extends DooitActivity {
         }).subscribe(new Action1<EmptyResponse>() {
             @Override
             public void call(EmptyResponse emptyResponse) {
+                User user = persisted.getCurrentUser();
+                user.getProfile().setProfileImageUrl(cameraUri.toString());
+                persisted.setCurrentUser(user);
             }
         });
     }

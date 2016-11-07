@@ -19,8 +19,8 @@ import com.nike.dooit.R;
 import com.nike.dooit.api.DooitAPIError;
 import com.nike.dooit.api.DooitErrorHandler;
 import com.nike.dooit.api.managers.ChallengeManager;
+import com.nike.dooit.helpers.Persisted;
 import com.nike.dooit.models.Challenge;
-import com.nike.dooit.util.Persisted;
 import com.nike.dooit.views.main.fragments.challenge.ChallengeQuizQuestionFragment;
 
 import java.util.List;
@@ -111,13 +111,14 @@ public class ChallengeFragment extends Fragment {
                     challenge = challenges.get(0);
                     persisted.setActiveChallenge(challenge);
 
-                    getActivity().runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            name.setText(challenge.getName());
+                    if (getActivity() != null)
+                        getActivity().runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                name.setText(challenge.getName());
 
-                        }
-                    });
+                            }
+                        });
 
                 }
             }
