@@ -16,6 +16,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.SearchView;
 import android.widget.TabHost;
 import android.widget.TextView;
 
@@ -74,6 +75,47 @@ public class TipArchiveActivity extends ApplicationActivity {
         sharedPreferences = this.getPreferences(Context.MODE_PRIVATE);
 
         ButterKnife.bind(this);
+
+        SearchView searchBar = (SearchView) tipScreen.findViewById(R.id.tipSearchBar);
+
+        searchBar.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+
+             @Override
+             public boolean onQueryTextSubmit(String query) {
+                 LinearLayout container = (LinearLayout) tipScreen.findViewById(R.id.tipContainer);
+
+                 for (int i = 0; i < container.getChildCount(); ++i) {
+                     TextView text = (TextView) container.getChildAt(i).findViewById(R.id.tipTitle);
+                     if (!text.getText().toString().contains(query))
+                        container.getChildAt(i).setVisibility(View.GONE);
+                     else
+                         container.getChildAt(i).setVisibility(View.VISIBLE);
+                 }
+
+                 return false;
+             }
+
+             @Override
+             public boolean onQueryTextChange(String newText) {
+                 return false;
+             }
+
+        });
+
+        searchBar.setOnCloseListener(new SearchView.OnCloseListener() {
+            @Override
+            public boolean onClose() {
+
+                LinearLayout container = (LinearLayout) tipScreen.findViewById(R.id.tipContainer);
+
+                for (int i = 0; i < container.getChildCount(); ++i) {
+                    TextView text = (TextView) container.getChildAt(i).findViewById(R.id.tipTitle);
+                    container.getChildAt(i).setVisibility(View.VISIBLE);
+                }
+
+                return false;
+            }
+        });
 
         // Initialize Tabs
         tabHost.setup();
