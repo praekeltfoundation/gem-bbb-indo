@@ -19,6 +19,19 @@ android {
     compileSdkVersion project.compileSdkVersion.toInteger()
     buildToolsVersion project.buildToolsVersion
 
+    Properties properties = new Properties()
+    properties.load(project.rootProject.file('local.properties').newDataInputStream())
+    def keystore = properties.getProperty('keystore', null)
+
+    signingConfigs {
+        config {
+            keyAlias 'dooit'
+            keyPassword keystore
+            storeFile file('./../../dooit.jks')
+            storePassword keystore
+        }
+    }
+
     defaultConfig {
         applicationId "com.nike.dooit"
         minSdkVersion project.minSdkVersion.toInteger()
