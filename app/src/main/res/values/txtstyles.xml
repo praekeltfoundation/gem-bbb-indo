@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="AppTheme.TextView" parent="@android:style/TextAppearance">
+
+    </style>
+
+    <style name="AppTheme.TextView.Regular" parent="AppTheme.TextView">
+      <!--  <item name="android:fontFamily">sans-serif</item>-->
+        <item name="android:textColor">@color/white</item>
+        <item name="fontPath">fonts/LondrinaSolid-Regular.ttf</item>
+    </style>
+
+    <style name="AppTheme.TextView.Regular.ExtraExtraLarge" parent="AppTheme.TextView.Regular">
+        <item name="android:textSize">@dimen/k_font_xx_large</item>
+    </style>
+
+    <style name="AppTheme.TextView.Regular.ExtraLarge" parent="AppTheme.TextView.Regular">
+        <item name="android:textSize">@dimen/k_font_extra_large</item>
+    </style>
+
+    <style name="AppTheme.TextView.Regular.Large" parent="AppTheme.TextView.Regular">
+        <item name="android:textSize">@dimen/k_font_large</item>
+    </style>
+
+    <style name="AppTheme.TextView.Regular.Medium" parent="AppTheme.TextView.Regular">
+        <item name="android:textSize">@dimen/k_font_medium</item>
+    </style>
+
+    <style name="AppTheme.TextView.Regular.Small" parent="AppTheme.TextView.Regular">
+        <item name="android:textSize">@dimen/k_font_small</item>
+    </style>
+
+    <style name="AppTheme.TextView.Regular.ExtraSmall" parent="AppTheme.TextView.Regular">
+        <item name="android:textSize">@dimen/k_font_extra_small</item>
+    </style>
+
+    <style name="AppTheme.TextView.Regular.ExtraLargeHeading" parent="AppTheme.TextView.Regular.ExtraLarge">
+        <item name="android:textColor">@color/heading</item>
+    </style>
+
+    <style name="AppTheme.TextView.Regular.ExtraLarge.Bold" parent="AppTheme.TextView.Regular.ExtraLarge">
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="AppTheme.TextView.Regular.LargeHeading" parent="AppTheme.TextView.Regular.Large">
+        <item name="android:textColor">@color/heading</item>
+    </style>
+
+    <style name="AppTheme.TextView.Regular.MediumHeading" parent="AppTheme.TextView.Regular.Medium">
+        <item name="android:textColor">@color/heading</item>
+    </style>
+
+    <style name="AppTheme.TextView.Regular.SmallHeading" parent="AppTheme.TextView.Regular.Small">
+        <item name="android:textColor">@color/heading</item>
+    </style>
+
+    <style name="AppTheme.TextView.Regular.ExtraSmallHeading" parent="AppTheme.TextView.Regular">
+        <item name="android:textSize">@dimen/k_font_extra_small</item>
+    </style>
+</resources>

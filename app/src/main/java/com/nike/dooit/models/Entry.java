@@ -1,0 +1,58 @@
+package com.nike.dooit.models;
+
+import com.google.gson.annotations.SerializedName;
+
+import org.joda.time.DateTime;
+
+import java.util.List;
+
+/**
+ * Created by herman on 2016/11/05.
+ */
+
+public class Entry {
+
+    private int user;
+    private int challenge;
+    @SerializedName("date_completed") private DateTime dateCompleted = new DateTime();
+    private List<ParticipantAnswer> answers;
+
+    public Entry(int user, int challenge, List<ParticipantAnswer> answers) {
+        this.user = user;
+        this.challenge = challenge;
+        this.dateCompleted = new DateTime();
+        this.answers = answers;
+    }
+
+    public int getUser() {
+        return user;
+    }
+
+    public void setUser(int user) {
+        this.user = user;
+    }
+
+    public int getChallenge() {
+        return challenge;
+    }
+
+    public void setChallenge(int challenge) {
+        this.challenge = challenge;
+    }
+
+    public DateTime getDateCompleted() {
+        return dateCompleted;
+    }
+
+    public void setDateCompleted(DateTime dateCompleted) {
+        this.dateCompleted = dateCompleted;
+    }
+
+    public List<ParticipantAnswer> getAnswers() {
+        return answers;
+    }
+
+    public void setAnswers(List<ParticipantAnswer> answers) {
+        this.answers = answers;
+    }
+}

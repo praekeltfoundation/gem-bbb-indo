@@ -1,272 +1,36 @@
 <resources>
-    <string name="app_name">dooit</string>
+    <string name="app_name">Dooit</string>
+    <string name="title_activity_main">dooit</string>
+    <string name="title_activity_profile">Profile</string>
+    <string name="title_activity_settings">Settings</string>
+    <string name="title_activity_terms_and_conditions">Terms &amp; Conditions</string>
+    <string name="title_activity_privacy_policy">Privacy Policy</string>
+    <string name="action_settings">Settings</string>
 
-    <string name="navigation_drawer_open">Open navigation drawer</string>
-    <string name="navigation_drawer_close">Close navigation drawer</string>
-    <string name="invalid_password_length">Please use a password longer than 8 characters</string>
-    <string name="invalid_username_length">The username is too short</string>
-    <string name="invalid_mobile_number">Invalid mobile number</string>
-    <string name="congratulations_registered">Congratulations you have registered for dooit!</string>
-    <string name="Chanllenge_receiver_Text">Have you participated in this weeks challenge?</string>
-    <string name="Progress_Tracked_receiver_Text">Hi Name. I see you haven\'t saved in the last two weeks. What happened?</string>
-    <string name="currency_unit">Rp</string>
-    <string name="currency_side">left</string>
-    <string name="action_settings"></string>
+    <string name="main_tab_text_1">TARGET</string>
+    <string name="main_tab_text_2">CHALLENGE</string>
+    <string name="main_tab_text_3">TIPS</string>
 
-    <string name="youAnswered">You answered:</string>
-    <string name="inValidAnswer">Invalid answer. Please enter a valid answer.</string>
-    <string name="youSelected">You selected: </string>
-    <string name="info">Info</string>
-    <string name="saved">Saved</string>
-    <string name="typePasswordHere">Type Password Here...</string>
-    <string name="challenges">challenges</string>
-    <string name="onboarding">onboarding</string>
-    <string name="goals">goals</string>
-    <string name="toolBarNotSupplied">The toolbar could not be found in the supplied container argument</string>
-    <string name="contentNotSupplied">The main content view could not be found</string>
-    <string name="typeAnswerHere">Type answer here...</string>
-    <string name="name">name</string>
-    <string name="datePicker">datePicker</string>
-    <string name="textField">textField</string>
-    <string name="Passwordfield">Passwordfield</string>
-    <string name="image">image</string>
+    <!-- Welcome -->
+    <string name="welcome_page_empty">Welcome Page</string>
+    <string name="welcome_page_1">Use Dooit to help you save money!</string>
+    <string name="welcome_page_2">Monitor performance towards your savings goal!</string>
+    <string name="welcome_page_3">Get rewards for your persistence in saving!</string>
 
+    <!-- Tips -->
+    <string name="tips_tab_favourites">Favourites</string>
+    <string name="tips_tab_all">All</string>
 
-
-
-    <!--Goals Strings-->
-    <string name="startingGoalsActivity">starting Goals activity</string>
-    <string name="LetsGetStarted">Lets Get Started!!!</string>
-    <string name="SUMMARY">SUMMARY:</string>
-    <string name="AMOUNT">AMOUNT:</string>
-    <string name="dialog">dialog</string>
-    <string name="noUploadingImage">No Upload URL set, not uploading image</string>
-
-
-
-    <!--Challenges Strings-->
-    <string name="startingchallengesActivity">Starting current challenge activity.</string>
-    <string name="challengeCouldNotBeLoaded">Challenge could not be loaded.</string>
-    <string name="challengeHasNoQuestions">Challenge has no questions.</string>
-    <string name="congratulationsChallengecomplete">Congratulations! Challenge complete.</string>
-    <string name="userNoLoggedInCannotSubmit">User not logged in, cannot submit.</string>
-    <string name="answersResponseSuccessfullySent">Answers response successfully sent.</string>
-    <string name="answersSentButUnsuccessful">Answers sent, but unsuccessful.</string>
-    <string name="failedToSendAnswers">Failed to send answers.</string>
-    <string name="noAnswerSelected">No answer selected.</string>
-    <string name="answerCorrect">Answer correct.</string>
-    <string name="answerIncorrect"> Answer incorrect.</string>
-
-    <!--Tips Strings-->
-    <string name="startingTipsActivity"> Starting Tips activity.</string>
-    <string name="shortTips"> These are short tips that are sent by the coach,which are really useful for the user.</string>
-    <string name="startingArticleActivity"> Starting Tip Article activity.</string>
-    <string name="startingTipsArchiveActivity">Starting Tips Archive activity.</string>
-    <string name="articleClicked">ARTICLE clicked...</string>
-    <string name="favClicked">FAVOURITE clicked...</string>
-    <string name="shareClicked">SHARE clicked...</string>
-
-<!--Application Activity-->
-    <string name="UploadingImage">Uploading Image...</string>
-    <string name="userIdnotSet">User id not set</string>
-    <string name="fileUploadSuccess">File Upload Success</string>
-    <string name="fileUploadFailed">File Upload Failed</string>
-
-    <!--Login Activity-->
-   <string name="loginClicked">Login clicked</string>
-    <string name="usernameIsEmpty">Username is empty</string>
-    <string name="passwordIsEmpty">Password is empty</string>
-
-    <!--MainActivity-->
-    <string name="mainTextAfterReg">Hello you have registered and set your goals;swipe right or left to navigate further</string>
-
-    <!--OnboardingActivity-->
-    <string name="startOnbaordActivity">Starting OnBoarding activity</string>
-    <string name="conversationDone">Conversation done</string>
-    <string name="setProfilePicture">Set a profile picture:</string>
-
-
-    <!-- Savings-->
-    <string name="startingSavingsActivity">Starting Savings activity</string>
-
-    <!--Layout strings-->
-    <string name="check">Check</string>
-    <string name="averageSavings">Average savings</string>
-    <string name="weeklySavings">Weekly Savings</string>
-    <string name="totalSaved">TOTAL SAVED</string>
-    <string name="Goal">Goal</string>
-    <string name="Challenge">Challenge</string>
-    <string name="Button">Button</string>
-    <string name="Amount">Amount</string>
-    <string name="Withdraw">Withdraw</string>
-    <string name="Add">ADD</string>
-    <string name="TipCard">Tip Card</string>
-    <string name="Done">Done</string>
-    <string name="Deregister">Deregister</string>
-    <string name="Upload">Upload</string>
-    <string name="createYourAccount">Create Your Account</string>
-    <string name="REGISTER">REGISTER</string>
-
-    <!--Drawer words-->
-    <string name="Profile">Profile</string>
-    <string name="registration">Registration</string>
-    <string name="Savings">Savings</string>
-    <string name="Share">Share</string>
-    <string name="Notifications">Notifications</string>
-    <string name="Tools">Tools</string>
-    <string name="SETTINGS">SETTINGS</string>
-    <string name="HELP">HELP</string>
-    <string name="TAC">TERMS AND CONDITIONS</string>
-
-    <string name="GOALS">GOALS</string>
-    <string name="CHALLENGES">CHALLENGES</string>
-    <string name="TIPS">TIPS</string>
-    <string name="TA">TIP ARCHIVE</string>
-    <string name="LOGIN">LOGIN</string>
-    <string name="INVITE">INVITE</string>
-
-    <!-- Registration -->
-    <string name="register_notice">By clicking register you agree to our Terms &amp; Conditions</string>
-    <string name="registration_already_registered">Already registered? Log In</string>
-    <string name="registrationing">Registering...</string>
-    <string name="registrationFailed">Registration failed</string>
-    <string name="registrationError">Registration error</string>
-
-
-    <!-- Registration Complete -->
-    <string name="registration_complete_heading">You are registered!</string>
-    <string name="registration_complete_subheading">Upload profile photo</string>
-
-    <!-- Login -->
-    <string name="username">Name</string>
-    <string name="username_hint">ex: Aida</string>
-    <string name="mobile_number">Mobile Number</string>
-    <string name="password">Password</string>
-    <string name="login">Log In</string>
-    <string name="login_progress">Logging in...</string>
-    <string name="login_out_progress">Logging out...</string>
-    <string name="login_success">Login Successful</string>
-    <string name="login_failed">Login Failed</string>
-    <string name="login_debug_url">Using %s</string>
-
-    <string name="profile_image_progress">Retrieving profile image...</string>
-    <string name="profile_image_success">Profile Image Successful</string>
-    <string name="profile_image_failed">Profile Image Failed</string>
-
-    <string name="challenge_next">Next</string>
-    <string name="challenge_done">Done</string>
-    <string name="goals_not_yet">"No goals yet..."</string>
-    <string name="favourites">Favourites</string>
-    <string name="all">All</string>
-    <string name="no_tips">No Tips to show...</string>
-    <string name="loading">Loading...</string>
-
-    <!-- Settings -->
-    <string name="settings">Settings</string>
-    <string name="signout">Sign Out</string>
-    <string name="save">Save</string>
-    <string name="server_url">Server url</string>
-    <string name="server_url_not_valid">URL is not valid</string>
-    <string name="title_activity_language_selection">Select a Langauge</string>
-    <string name="changeLanguage">Change Language</string>
-    <string name="title_activity_language__selection">Language_Selection</string>
-
-
-
-
-    <!--JSON ONBOARDING-->
-    <string name="askName">Welcome to dooit! What is your name?</string>
-    <string name="askMobileNumber">What is mobile number?</string>
-    <string name="askPasswordOne">We need you to create a password so that I can make sure it is always you who is accessing your savings information. Reply with a password 8 letters or digits long. Dont worry I will hide what you are typing so noone can see. </string>
-    <string name="askPasswordTwo">Will you type it one more time so that I can check if I have saved it correctly?</string>
-    <string name="validationFailName">Sorry, I do not understand that and have not been taught how to handle it yet.</string>
-    <string name="validationFailNumber">Sorry, I do not understand that and have not been taught how to handle it yet.</string>
-    <string name="validationFailPassword">Invalid answer. Please enter 8 or more characters(letters/numbers/special characters(- . _ ` ~ @ # $ &amp; *)).</string>
-    <string name="validationFailPasswordMatch">Passwords must match.</string>
-    <string name="infoOnboardingEnd">Thank you. That concludes the registration process.</string>
-
-
-    <!--JSON GOALS-->
-    <string name="askGoalName">What are you saving for?</string>
-    <string name="askGoalImage">Add an image for your savings goal to help keep you motivated,or press skip:</string>
-    <string name="askGoalImageTake">Tap on the blue square...</string>
-    <string name="askKnowGoalAmount">Do you know how much you need to save? </string>
-    <string name="askGoalAmount">Great! Just type the amount that you want to save.</string>
-    <string name="infoDontKnowAmount">No problem.</string>
-    <string name="askKnowGoalDate">That is a big goal. Let us get saving then. Do you have a date that you want to save this by?</string>
-    <string name="askGoalDate">When would you like to have saved this much?</string>
-    <string name="askGoalWeeklySaveAmount">How much can you save each week?</string>
-    <string name="askGoalSaveAmountOther">How much can you save?</string>
-    <string name="askGoalPriorSave">Have you saved anything towards this goal yet?</string>
-    <string name="askPriorSavedAmount">How much have you already saved?</string>
-    <string name="verifyGoalAmount">If you save Rp $(weeklyGoal) each week you will save enough to get your $(savingsGoal) in $(totalWeeks) weeks.</string>
-    <string name="validationFail">Sorry, I do not understand that and have not been taught how to handle it yet.</string>
-    <string name="validationFailDate">Sorry, I do not understand that and have not  been taught how to handle it yet.</string>
-    <string name="validationFailSaveAmountOther">Sorry, I do not understand that and have not t been taught how to handle it yet.</string>
-    <string name="validationFailPriorSavedAmount">Sorry, I do not understand that and have not  been taught how to handle it yet.</string>
-    <string name="infoGoalEnd">Thank you. That concludes the goal-setting process.</string>
-
-    <!--Buttons-->
-    <string name="Skip">Skip</string>
-    <string name="Capture">Capture</string>
-    <string name="knowAmountY">Yes</string>
-    <string name="knowAmountN">No</string>
-    <string name="knowDateY">Yes</string>
-    <string name="knowDateN">No</string>
-    <string name="hasSavedY">Yes</string>
-    <string name="hasSavedN">No</string>
-    <string name="otherSaveAmount">Other</string>
-    <string name="goalCheckRT">Reduce Time</string>
-    <string name="goalCheckRA">Reduce Amount</string>
-    <string name="goalCheckOk">Ok</string>
-    <string name="five">500</string>
-    <string name="thousand">1000</string>
-    <string name="thousandFive">1500</string>
-    <string name="twoThousand">2000</string>
-    <string name="Save">Save</string>
-    <string name="WithdrawButton">Withdraw</string>
-
-    <string name="ToneY">Yes</string>
-    <string name="ToneN">No</string>
-    <string name="TtwoY">Yes</string>
-    <string name="TtwoN">No</string>
-    <string name="TthreeY">Yes</string>
-    <string name="TthreeN">No</string>
-    <string name="TfourY">Yes</string>
-
-
-
-
-
-    <!--JSON CHALLENGES-->
-    <string name="toes">Can you touch your toes?</string>
-    <string name="night">Can you land on the sun at night?</string>
-
-    <!--Savings-->
-    <string name="savingsAskType">Do you want to add to your savings or withdraw from them?</string>
-    <string name="savingsAskSaveAmount">How much do you want to add?</string>
-    <string name="savingsInfoInvalidAmount">I am sorry, but I do not understand that. Please try again.</string>
-    <string name="savingsCongratulate">Good job! Every bit counts.</string>
-    <string name="savingsAskWithdrawAmount">That is too bad. How much do you want to withdraw?</string>
-    <string name="savingsInfoWithdrawInvalidAmount">I am sorry, but I do not understand that. Please try again.</string>
-    <string name="savingsConsole">Do not worry. Things will be better in the future. Here is a helpful tip.</string>
-
-    <!--Tips-->
-    <string name="Tone">Tip one, next tip?</string>
-    <string name="Ttwo">Tip two, next tip?</string>
-    <string name="Tthree">Tip three,next tip?</string>
-    <string name="Tfour">Tip one, next tip?</string>
-    <string name="infoTipsEnd">Thank you.</string>
-
-
-    <!--Terms and Conditions-->
-    <string name="termsAndConditions">Terms and Conditions are a set of rules and guidelines that a user must agree to in order to use your website or mobile app. It acts as a legal contract between you (the company) who has the website or mobile app and the user who access your website and mobile app.
-It is up to you to set the rules and guidelines that the user must agree to. You can think of your Terms and Conditions agreement as the legal agreement where you maintain your rights to exclude users from your app in the event that they abuse your app, and where you maintain your legal rights against potential app abusers, and so on.
-</string>
-    <string name="agree">I agree</string>
-    <string name="disagree">I disagree</string>
-
-
-
-
+    <string name="lets_start">let\'s start</string>
+    <string name="reg_t_c">By clicking register, you are agreeing\n to our Terms &amp; Condition</string>
+    <string name="reg_example_name">Example: Aulia Dharmaningtyas</string>
+    <string name="reg_example_name_error_1">Name can\'t be blank</string>
+    <string name="reg_example_number">Example: 1234567890</string>
+    <string name="reg_example_number_error_1">Mobile Number can\'t be blank</string>
+    <string name="reg_example_password">Must have at least 6 characters</string>
+    <string name="reg_example_password_error_1">Password can\'t be blank</string>
+    <string name="already_registered_log_in">Already registered? Log in</string>
+    <string name="forgot_password">Forgot password?</string>
+    <string name="challenge_t_c">By taking this challenge you\nagree to our Terms &amp; Conditions</string>
+    <string name="register">Register</string>
 </resources>
