@@ -75,7 +75,7 @@ public class ProfileActivity extends DooitActivity {
         setSupportActionBar(toolbar);
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-            getSupportActionBar().setHomeAsUpIndicator(R.drawable.back_arrow_invert);
+            getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_d_close);
             toolbar.setNavigationOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -135,14 +135,14 @@ public class ProfileActivity extends DooitActivity {
 
                     @Override
                     public void permissionRefused() {
-                        Toast.makeText(ProfileActivity.this, "Can't take profile image without camera permission", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(ProfileActivity.this, "Can't take ic_d_profile image without camera permission", Toast.LENGTH_SHORT).show();
                     }
                 });
             }
 
             @Override
             public void permissionRefused() {
-                Toast.makeText(ProfileActivity.this, "Can't take profile image without storage permission", Toast.LENGTH_SHORT).show();
+                Toast.makeText(ProfileActivity.this, "Can't take ic_d_profile image without storage permission", Toast.LENGTH_SHORT).show();
             }
         });
 

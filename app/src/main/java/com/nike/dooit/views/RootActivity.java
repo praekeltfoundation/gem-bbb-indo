@@ -23,9 +23,9 @@ public class RootActivity extends AppCompatActivity {
 
         //If the user has logged in
         if (persisted.hasToken()) {
-            MainActivity.Builder.create(this).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP).startActivity();
+            MainActivity.Builder.create(this).startActivityClearTop();
         } else {
-            WelcomeActivity.Builder.create(this).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP).startActivity();
+            WelcomeActivity.Builder.create(this).startActivityClearTop();
         }
     }
 }

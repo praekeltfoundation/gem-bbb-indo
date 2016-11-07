@@ -83,14 +83,14 @@ public class ProfileImageActivity extends DooitActivity {
 
                     @Override
                     public void permissionRefused() {
-                        Toast.makeText(ProfileImageActivity.this, "Can't take profile image without camera permission", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(ProfileImageActivity.this, "Can't take ic_d_profile image without camera permission", Toast.LENGTH_SHORT).show();
                     }
                 });
             }
 
             @Override
             public void permissionRefused() {
-                Toast.makeText(ProfileImageActivity.this, "Can't take profile image without storage permission", Toast.LENGTH_SHORT).show();
+                Toast.makeText(ProfileImageActivity.this, "Can't take ic_d_profile image without storage permission", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -112,14 +112,14 @@ public class ProfileImageActivity extends DooitActivity {
         }).subscribe(new Action1<EmptyResponse>() {
             @Override
             public void call(EmptyResponse emptyResponse) {
-                MainActivity.Builder.create(ProfileImageActivity.this).startActivity();
+                MainActivity.Builder.create(ProfileImageActivity.this).startActivityClearTop();
             }
         });
     }
 
     @OnClick(R.id.activity_profile_image_skip_text_view)
     public void skip() {
-        MainActivity.Builder.create(ProfileImageActivity.this).startActivity();
+        MainActivity.Builder.create(ProfileImageActivity.this).startActivityClearTop();
 
     }
 

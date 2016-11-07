@@ -13,7 +13,7 @@ import java.util.Map;
  */
 
 public enum MainViewPagerPositions {
-    BOT(0, null, R.drawable.bot),
+    BOT(0, null, R.drawable.ic_d_bot),
     TARGET(1, R.string.main_tab_text_1, null),
     CHALLENGE(2, R.string.main_tab_text_2, null),
     TIPS(3, R.string.main_tab_text_3, null);

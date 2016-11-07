@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.v4.content.res.ResourcesCompat;
 import android.text.Spannable;
 import android.text.SpannableString;
+import android.text.TextUtils;
 import android.text.style.ForegroundColorSpan;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -48,6 +49,16 @@ public class RegistrationActivity extends DooitActivity {
     @BindView(R.id.activity_registration_number_text_edit)
     EditText number;
 
+    @BindView(R.id.activity_registration_name_example_text_edit)
+    TextView nameHint;
+
+    @BindView(R.id.activity_registration_number_example_text_edit)
+    TextView numberHint;
+
+    @BindView(R.id.activity_registration_password_example_text_edit)
+    TextView passwordHint;
+
+
     @Inject
     AuthenticationManager authenticationManager;
 
@@ -79,6 +90,10 @@ public class RegistrationActivity extends DooitActivity {
 
     @OnClick(R.id.activity_registration_register_button)
     public void register() {
+
+        if (!detailsValid())
+            return;
+
         authenticationManager.onboard(getUser(), new DooitErrorHandler() {
             @Override
             public void onError(DooitAPIError error) {
@@ -98,7 +113,7 @@ public class RegistrationActivity extends DooitActivity {
                     public void call(AuthenticationResponse authenticationResponse) {
                         persisted.setCurrentUser(authenticationResponse.getUser());
                         persisted.saveToken(authenticationResponse.getToken());
-                        ProfileImageActivity.Builder.create(RegistrationActivity.this).startActivity();
+                        ProfileImageActivity.Builder.create(RegistrationActivity.this).startActivityClearTop();
                     }
                 });
 
@@ -106,10 +121,14 @@ public class RegistrationActivity extends DooitActivity {
         });
     }
 
+    private boolean detailsValid() {
+        return isNameValid() & isNumberValid() & isPasswordValid();
+    }
+
 
     @OnClick(R.id.activity_registration_login_text_view)
     public void openLogin() {
-        LoginActivity.Builder.create(this).startActivity();
+        LoginActivity.Builder.create(this).startActivityClearTop();
     }
 
     public User getUser() {
@@ -120,6 +139,45 @@ public class RegistrationActivity extends DooitActivity {
         profile.setMobile(number.getText().toString());
         user.setProfile(profile);
         return user;
+    }
+
+    public boolean isNameValid() {
+        boolean valid;
+        valid = !TextUtils.isEmpty(name.getText());
+        if (!valid) {
+            nameHint.setText(R.string.reg_example_name_error_1);
+            nameHint.setTextColor(ResourcesCompat.getColor(getResources(), android.R.color.holo_red_light, getTheme()));
+        } else {
+            nameHint.setText(R.string.reg_example_name);
+            nameHint.setTextColor(ResourcesCompat.getColor(getResources(), R.color.white, getTheme()));
+        }
+        return valid;
+    }
+
+    public boolean isNumberValid() {
+        boolean valid;
+        valid = !TextUtils.isEmpty(number.getText());
+        if (!valid) {
+            numberHint.setText(R.string.reg_example_number_error_1);
+            numberHint.setTextColor(ResourcesCompat.getColor(getResources(), android.R.color.holo_red_light, getTheme()));
+        } else {
+            numberHint.setText(R.string.reg_example_number);
+            numberHint.setTextColor(ResourcesCompat.getColor(getResources(), R.color.white, getTheme()));
+        }
+        return valid;
+    }
+
+    public boolean isPasswordValid() {
+        boolean valid;
+        valid = !TextUtils.isEmpty(password.getText());
+        if (!valid) {
+            passwordHint.setText(R.string.reg_example_password_error_1);
+            passwordHint.setTextColor(ResourcesCompat.getColor(getResources(), android.R.color.holo_red_light, getTheme()));
+        } else {
+            passwordHint.setText(R.string.reg_example_password);
+            passwordHint.setTextColor(ResourcesCompat.getColor(getResources(), R.color.white, getTheme()));
+        }
+        return valid;
     }
 
 

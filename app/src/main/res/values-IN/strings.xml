@@ -2,6 +2,11 @@
     <string name="app_name">Dooit</string>
     <string name="title_activity_main">Dooit</string>
 
+
+
+
+
+
     <string name="main_tab_text_1">TARGET</string>
     <string name="main_tab_text_2">TANTAGAN</string>
     <string name="main_tab_text_3">TIPS</string>
@@ -18,8 +23,15 @@
 
     <string name="lets_start">AYO MULAI</string>
     <string name="reg_t_c">Dengan mengklik register, Anda setuju dengan Persyaratan dan Kondisi kami></string>
+    <string name="reg_example_name">Contoh: Aulia Dharmaningtyas</string>
+    <string name="reg_example_name_error_1">Nama tidak boleh kosong</string>
+    <string name="reg_example_number">Contoh: 1234567890</string>
+    <string name="reg_example_number_error_1">Nomor ponsel tidak boleh kosong</string>
+    <string name="reg_example_password">Harus memiliki minimal 6 karakter</string>
+    <string name="reg_example_password_error_1">Password tidak boleh kosong</string>
     <string name="already_registered_log_in">Sudah terdaftar? Masuk</string>
     <string name="forgot_password">Lupa kata sandi?</string>
     <string name="challenge_t_c">Dengan mengambil tantangan ini Anda menyetujui Syarat dan Ketentuan kami</string>
+    <string name="register">Daftar</string>
 
 </resources>

@@ -9,30 +9,34 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:focusableInTouchMode="true"
         android:layout_height="wrap_content"
+        android:focusableInTouchMode="true"
         android:padding="24dp">
 
         <TextView
             android:id="@+id/activity_registration_title"
-            style="@style/AppTheme.TextView.Regular.ExtraLarge"
+            style="@style/AppTheme.TextView.Regular.ExtraExtraLarge"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="24dp"
             android:text="Registration"
-            android:textColor="@color/white" />
+            android:textColor="@color/white"
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/activity_registration_name_text_view"
-            style="@style/AppTheme.TextView.Medium.MediumHeading"
+            style="@style/AppTheme.TextView.Regular.MediumHeading"
+            fontPath="fonts/Lato-Regular.ttf"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
             android:layout_below="@+id/activity_registration_title"
+            android:layout_marginTop="16dp"
             android:text="Name"
-            android:textAllCaps="true" />
+            android:textAllCaps="true"
+            android:textStyle="bold" />
 
         <EditText
             android:id="@+id/activity_registration_name_text_edit"
@@ -47,17 +51,18 @@
 
         <TextView
             android:id="@+id/activity_registration_name_example_text_edit"
-            style="@style/AppTheme.TextView.Medium.ExtraSmall"
+            style="@style/AppTheme.TextView.Regular.ExtraSmall"
+            fontPath="fonts/Lato-Regular.ttf"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
             android:layout_below="@+id/activity_registration_name_text_edit"
             android:layout_marginTop="4dp"
-            android:text="Example: Aulia D" />
+            android:text="@string/reg_example_name" />
 
         <TextView
             android:id="@+id/activity_registration_age_text_view"
-            style="@style/AppTheme.TextView.Medium.MediumHeading"
+            style="@style/AppTheme.TextView.Regular.MediumHeading"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
@@ -82,7 +87,7 @@
 
         <TextView
             android:id="@+id/activity_registration_age_example_text_view"
-            style="@style/AppTheme.TextView.Medium.ExtraSmall"
+            style="@style/AppTheme.TextView.Regular.ExtraSmall"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
@@ -93,14 +98,16 @@
 
         <TextView
             android:id="@+id/activity_registration_number_text_view"
-            style="@style/AppTheme.TextView.Medium.MediumHeading"
+            style="@style/AppTheme.TextView.Regular.MediumHeading"
+            fontPath="fonts/Lato-Regular.ttf"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
             android:layout_below="@+id/activity_registration_age_example_text_view"
             android:layout_marginTop="16dp"
             android:text="Mobile Number"
-            android:textAllCaps="true" />
+            android:textAllCaps="true"
+            android:textStyle="bold" />
 
         <EditText
             android:id="@+id/activity_registration_number_text_edit"
@@ -115,24 +122,27 @@
 
         <TextView
             android:id="@+id/activity_registration_number_example_text_edit"
-            style="@style/AppTheme.TextView.Medium.ExtraSmall"
+            style="@style/AppTheme.TextView.Regular.ExtraSmall"
+            fontPath="fonts/Lato-Regular.ttf"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
             android:layout_below="@+id/activity_registration_number_text_edit"
             android:layout_marginTop="4dp"
-            android:text="Example: 1234567890" />
+            android:text="@string/reg_example_number" />
 
         <TextView
             android:id="@+id/activity_registration_password_text_view"
-            style="@style/AppTheme.TextView.Medium.MediumHeading"
+            style="@style/AppTheme.TextView.Regular.MediumHeading"
+            fontPath="fonts/Lato-Regular.ttf"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
             android:layout_below="@+id/activity_registration_number_example_text_edit"
             android:layout_marginTop="16dp"
             android:text="Password"
-            android:textAllCaps="true" />
+            android:textAllCaps="true"
+            android:textStyle="bold" />
 
         <EditText
             android:id="@+id/activity_registration_password_edit_text"
@@ -147,17 +157,19 @@
 
         <TextView
             android:id="@+id/activity_registration_password_example_text_edit"
-            style="@style/AppTheme.TextView.Medium.ExtraSmall"
+            style="@style/AppTheme.TextView.Regular.ExtraSmall"
+            fontPath="fonts/Lato-Regular.ttf"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
             android:layout_below="@+id/activity_registration_password_edit_text"
             android:layout_marginTop="4dp"
-            android:text="Must have atleast 6 characters" />
+            android:text="@string/reg_example_password" />
 
         <TextView
             android:id="@+id/activity_registration_t_c_text_view"
-            style="@style/AppTheme.TextView.Medium.Small"
+            style="@style/AppTheme.TextView.Regular.Small"
+            fontPath="fonts/Lato-Regular.ttf"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/activity_registration_password_example_text_edit"
@@ -178,11 +190,12 @@
             android:layout_marginStart="18dp"
             android:layout_marginTop="8dp"
             android:text="Register"
-            android:textAllCaps="true"  />
+            android:textAllCaps="true" />
 
         <TextView
             android:id="@+id/activity_registration_login_text_view"
-            style="@style/AppTheme.TextView.Medium.Small"
+            style="@style/AppTheme.TextView.Regular.Small"
+            fontPath="fonts/Lato-Regular.ttf"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/activity_registration_register_button"

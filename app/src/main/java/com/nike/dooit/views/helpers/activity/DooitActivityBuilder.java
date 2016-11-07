@@ -50,6 +50,17 @@ public abstract class DooitActivityBuilder<T extends DooitActivityBuilder> {
         return true;
     }
 
+    public void startActivityClearTop() throws IncompleteBuilderException {
+        if (checkIntentCompleteness()) {
+            if (context instanceof DooitActivity)
+                ((DooitActivity) context).dismissDialog();
+
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            context.startActivity(intent);
+        } else
+            throw new IncompleteBuilderException("Not all required intent values provided");
+    }
+
     public void startActivity() throws IncompleteBuilderException {
         if (checkIntentCompleteness()) {
             if (context instanceof DooitActivity)

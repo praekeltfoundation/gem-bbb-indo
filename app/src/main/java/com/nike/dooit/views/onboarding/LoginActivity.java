@@ -61,7 +61,7 @@ public class LoginActivity extends DooitActivity {
             public void call(AuthenticationResponse authenticationResponse) {
                 persisted.setCurrentUser(authenticationResponse.getUser());
                 persisted.saveToken(authenticationResponse.getToken());
-                MainActivity.Builder.create(LoginActivity.this).startActivity();
+                MainActivity.Builder.create(LoginActivity.this).startActivityClearTop();
             }
         });
     }

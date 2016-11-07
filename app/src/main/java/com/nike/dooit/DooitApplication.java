@@ -9,6 +9,7 @@ import com.nike.dooit.dagger.DooitComponent;
 import com.nike.dooit.dagger.DooitModule;
 
 import io.fabric.sdk.android.Fabric;
+import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
 
 /**
  * Created by herman on 2016/11/05.
@@ -29,5 +30,11 @@ public class DooitApplication extends Application {
                 .dooitModule(new DooitModule(this))
                 .build();
         component.inject(this);
+
+        CalligraphyConfig.initDefault(new CalligraphyConfig.Builder()
+                .setDefaultFontPath("fonts/LondrinaSolid-Regular.ttf")
+                .setFontAttrId(R.attr.fontPath)
+                .build()
+        );
     }
 }

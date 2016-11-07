@@ -48,11 +48,11 @@
             android:layout_height="32dp"
             android:layout_alignBottom="@+id/activity_profile_image_profile_image"
             android:layout_alignEnd="@+id/activity_profile_image_profile_image"
-            android:src="@drawable/plus" />
+            android:src="@drawable/ic_d_plus" />
 
         <TextView
             android:id="@+id/activity_profile_image_skip_text_view"
-            style="@style/AppTheme.TextView.Medium.Small"
+            style="@style/AppTheme.TextView.Regular.Small"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/activity_profile_image_profile_image"
