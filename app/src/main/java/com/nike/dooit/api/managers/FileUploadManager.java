@@ -28,11 +28,6 @@ public class FileUploadManager extends DooitManager {
         fileUploadAPI = retrofit.create(FileUploadAPI.class);
     }
 
-    @Override
-    protected Request.Builder addTokenToRequest(Request.Builder requestBuilder) {
-        return requestBuilder;
-    }
-
     public Observable<EmptyResponse> upload(String userId, String mediaType, File file, DooitErrorHandler errorHandler) {
         MediaType mediaTypeHeader = MediaType.parse(mediaType);
         String filename = file.getName();

@@ -18,6 +18,6 @@ import rx.Observable;
  */
 public interface FileUploadAPI {
 
-    @POST("/api/ic_d_profile-image/{id}/")
+    @POST("/api/profile-image/{id}/")
     Observable<EmptyResponse> upload(@Path("id") String id, @Body RequestBody requestBody, @Header("Content-Disposition") String contentDisposition);
 }
