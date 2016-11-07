@@ -42,7 +42,7 @@ android {
     }
     productFlavors {
         staging {
-            applicationId "com.nike.dooit.staging"
+             applicationId "com.nike.dooit.staging"
         }
         production {
             applicationId "com.nike.dooit"
@@ -78,12 +78,6 @@ dependencies {
          exclude group: 'com.android.support', module: 'support-annotations'
          exclude module: 'recyclerview-v7'
      }*/
-
-
-
-
-
-
 
     compile('com.crashlytics.sdk.android:crashlytics:2.6.5@aar') {
         transitive = true;
