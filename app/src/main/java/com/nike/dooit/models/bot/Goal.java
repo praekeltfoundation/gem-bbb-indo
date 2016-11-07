@@ -26,7 +26,7 @@ public class Goal extends BaseBotModel {
 
     public ArrayList<Answer> getAnswers() {
         if (answers == null)
-            return null;
+            return new ArrayList<>();
         return new ArrayList<>(answers);
     }
 }
