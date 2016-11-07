@@ -10,4 +10,10 @@
         android:layout_height="match_parent"
         android:text="TARGET" />
 
+    <Button
+        android:id="@+id/fragment_target_button"
+        android:layout_width="match_parent"
+        android:layout_gravity="center"
+        android:text="Start BOT"
+        android:layout_height="wrap_content" />
 </FrameLayout>

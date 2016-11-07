@@ -11,7 +11,7 @@ import android.widget.TextView;
 
 import com.nike.dooit.R;
 import com.nike.dooit.views.main.MainViewPagerPositions;
-import com.nike.dooit.views.main.fragments.BotFragment;
+import com.nike.dooit.views.main.fragments.bot.BotFragment;
 import com.nike.dooit.views.main.fragments.ChallengeFragment;
 import com.nike.dooit.views.main.fragments.TargetFragment;
 import com.nike.dooit.views.main.fragments.TipsFragment;
