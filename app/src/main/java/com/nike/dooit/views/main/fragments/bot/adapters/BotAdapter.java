@@ -59,4 +59,8 @@ public class BotAdapter extends RecyclerView.Adapter<BaseBotViewHolder> {
             notifyItemInserted(pos);
         }
     }
+
+    public ArrayList<BaseBotModel> getDataSet() {
+        return dataSet;
+    }
 }

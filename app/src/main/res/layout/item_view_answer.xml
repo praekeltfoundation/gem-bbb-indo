@@ -7,7 +7,7 @@
 
     <TextView
         android:id="@+id/item_view_answer_text"
-        style="@style/AppTheme.TextView.Regular.Medium"
+        style="@style/AppTheme.TextView.Regular.Large"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@color/light_blue"

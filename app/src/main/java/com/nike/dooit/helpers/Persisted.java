@@ -8,6 +8,10 @@ import com.nike.dooit.DooitApplication;
 import com.nike.dooit.models.Challenge;
 import com.nike.dooit.models.Token;
 import com.nike.dooit.models.User;
+import com.nike.dooit.models.bot.BaseBotModel;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.inject.Inject;
 
@@ -18,6 +22,7 @@ public class Persisted {
     private static final String TOKEN = "token";
     private static final String USER = "user";
     private static final String CHALLENGE = "challenge";
+    private static final String BOT = "bot";
     private static final String TAG = "Persisted";
     @Inject
     DooitSharedPreferences dooitSharedPreferences;
@@ -27,12 +32,12 @@ public class Persisted {
         ((DooitApplication) application).component.inject(this);
     }
 
-    public String loadConvState(String name) {
-        return dooitSharedPreferences.getString(name, "");
+    public ArrayList<BaseBotModel> loadConversationState() {
+        return (ArrayList<BaseBotModel>) dooitSharedPreferences.getComplex(BOT, ArrayList.class);
     }
 
-    public void saveConvState(String name, String state) {
-        dooitSharedPreferences.setString(name, state);
+    public void saveConversationState(List<BaseBotModel> conversation) {
+        dooitSharedPreferences.setComplex(BOT, conversation);
     }
 
     public User getCurrentUser() {

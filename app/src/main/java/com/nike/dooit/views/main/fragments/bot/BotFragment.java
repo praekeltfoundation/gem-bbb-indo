@@ -6,7 +6,6 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -16,14 +15,16 @@ import android.view.ViewGroup;
 import com.greenfrvr.hashtagview.HashtagView;
 import com.nike.dooit.DooitApplication;
 import com.nike.dooit.R;
+import com.nike.dooit.helpers.Persisted;
 import com.nike.dooit.helpers.bot.BotFeed;
 import com.nike.dooit.models.bot.Answer;
 import com.nike.dooit.models.bot.BaseBotModel;
 import com.nike.dooit.models.bot.Goal;
 import com.nike.dooit.models.enums.BotType;
 import com.nike.dooit.views.main.fragments.MainFragment;
-import com.nike.dooit.views.main.fragments.bot.adapters.AnswerAdapter;
 import com.nike.dooit.views.main.fragments.bot.adapters.BotAdapter;
+
+import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -38,6 +39,9 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
     RecyclerView conversationRecyclerView;
     @BindView(R.id.fragment_bot_answer_hash_view)
     HashtagView answerView;
+
+    @Inject
+    Persisted persisted;
 
     BotType type = BotType.DEFAULT;
     BotFeed feed;
@@ -79,9 +83,6 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        answerView.setBackgroundColor(R.color.light_blue);
-        answerView.setEllipsize(HashtagView.ELLIPSIZE_END);
-        answerView.setItemTextColor(R.color.black);
         answerView.addOnTagClickListener(this);
         conversationRecyclerView.setHasFixedSize(true);
         conversationRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -107,6 +108,7 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
                 Goal goal = (Goal) feed.getFirstItem();
                 currentModel = goal;
                 getBotAdapter().addItem(goal);
+                persisted.saveConversationState(getBotAdapter().getDataSet());
                 answerView.setData(goal.getAnswers(), new HashtagView.DataStateTransform<Answer>() {
                     @Override
                     public CharSequence prepareSelected(Answer item) {
@@ -139,6 +141,7 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
         switch (type) {
             case GOAL:
                 getBotAdapter().addItem(answer);
+                persisted.saveConversationState(getBotAdapter().getDataSet());
                 currentModel = feed.getItem(answer.getNext());
                 answerView.setData(((Goal) currentModel).getAnswers(), new HashtagView.DataStateTransform<Answer>() {
                     @Override
@@ -151,6 +154,8 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
                         return item.getText(getContext());
                     }
                 });
+                break;
+            case SAVINGS:
                 break;
         }
     }
