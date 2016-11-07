@@ -1,11 +1,10 @@
 package com.nike.dooit.views;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
 import com.nike.dooit.DooitApplication;
-import com.nike.dooit.util.Persisted;
+import com.nike.dooit.helpers.Persisted;
 import com.nike.dooit.views.main.MainActivity;
 import com.nike.dooit.views.welcome.WelcomeActivity;
 

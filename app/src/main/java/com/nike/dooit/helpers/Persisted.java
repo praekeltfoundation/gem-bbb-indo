@@ -1,4 +1,4 @@
-package com.nike.dooit.util;
+package com.nike.dooit.helpers;
 
 import android.app.Application;
 import android.text.TextUtils;

@@ -1,4 +1,4 @@
-package com.nike.dooit.util;
+package com.nike.dooit.helpers;
 
 /**
  * Created by wsche on 2016/11/06.

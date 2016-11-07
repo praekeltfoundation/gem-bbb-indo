@@ -1,4 +1,4 @@
-package com.nike.dooit.util;
+package com.nike.dooit.helpers;
 
 import android.content.Context;
 import android.content.SharedPreferences;
