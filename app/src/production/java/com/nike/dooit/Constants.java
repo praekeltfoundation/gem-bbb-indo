@@ -6,9 +6,10 @@ package com.nike.dooit;
 
 public class Constants {
 
-    public static final Boolean DEBUG = true;
+    public static final Boolean DEBUG = false;
     //    public static final String BASE_URL = "http://gem-bbb.seed.p16n.org";
-    public static final String BASE_URL = "http://gem-bbb.seed.p16n.org";
+    public static final String BASE_URL = "http:/" +
+            "/gem-bbb.seed.p16n.org";
 
     public static final String TERMS_URL = "http://gem-bbb.seed.p16n.org/terms.html";
     public static final String PRIVACY_URL = "http://gem-bbb.seed.p16n.org/privacy.html";
