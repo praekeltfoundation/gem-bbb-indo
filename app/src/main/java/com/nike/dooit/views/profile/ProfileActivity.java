@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
@@ -163,23 +164,40 @@ public class ProfileActivity extends DooitActivity {
 
     }
 
+    public static Uri getRealPathFromURI(Context context, Uri contentUri) {
+        try {
+            Cursor cursor = context.getContentResolver().query(contentUri, null, null, null, null);
+            if (cursor == null) {
+                return contentUri;
+            } else {
+                cursor.moveToFirst();
+                int index = cursor.getColumnIndex(MediaStore.Images.ImageColumns.DATA);
+                return Uri.parse(cursor.getString(index));
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return contentUri;
+    }
+
+
     //@OnActivityResult(requestCode = RequestCodes.REPONSE_CAMERA_REQUEST_PROFILE_IMAGE)
     void onActivityResultCameraProfileImage(Intent data) {
         Uri cameraUri = data.getData();
         if (cameraUri == null) {
             try {
                 cameraUri = Uri.parse(MediaStore.Images.Media.insertImage(getContentResolver(), (Bitmap) data.getExtras().get("data"), "", ""));
-
             } catch (Throwable ex) {
 
             }
         }
-        getIntent().putExtra(INTENT_IMAGE_URI, cameraUri);
         ContentResolver cR = this.getContentResolver();
         getIntent().putExtra(INTENT_MIME_TYPE, cR.getType(cameraUri));
+        cameraUri = getRealPathFromURI(this, cameraUri);
+        getIntent().putExtra(INTENT_IMAGE_URI, cameraUri);
         profileImage.setImageURI(cameraUri);
         User user = persisted.getCurrentUser();
-        fileUploadManager.upload(user.getId(), getIntent().getStringExtra(INTENT_MIME_TYPE), new File(((Uri) getIntent().getParcelableExtra(INTENT_IMAGE_URI)).toString()), new DooitErrorHandler() {
+        fileUploadManager.upload(user.getId(), getIntent().getStringExtra(INTENT_MIME_TYPE), new File(cameraUri.getPath()), new DooitErrorHandler() {
             @Override
             public void onError(DooitAPIError error) {
                 Toast.makeText(ProfileActivity.this, "Unable to uploadProfileImage Image", Toast.LENGTH_SHORT).show();
