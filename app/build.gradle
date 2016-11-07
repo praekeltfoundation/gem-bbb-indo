@@ -21,7 +21,7 @@ android {
 
     Properties properties = new Properties()
     properties.load(project.rootProject.file('local.properties').newDataInputStream())
-    def keystore = properties.getProperty('keystore', null)
+    String keystore = properties.getProperty('keystore', null)
 
     signingConfigs {
         config {
@@ -46,11 +46,11 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
         release {
+            signingConfig signingConfigs.config
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-            ext.betaDistributionReleaseNotesFilePath="app/release-notes.txt"
-            ext.betaDistributionEmailsFilePath="app/beta_emails.txt"
-            ext.betaDistributionGroupAliases="dooit-testers"
+            ext.betaDistributionReleaseNotesFilePath = "app/release-notes.txt"
+            ext.betaDistributionEmailsFilePath = "app/beta_emails.txt"
         }
     }
     productFlavors {
@@ -91,12 +91,6 @@ dependencies {
          exclude group: 'com.android.support', module: 'support-annotations'
          exclude module: 'recyclerview-v7'
      }*/
-
-
-
-
-
-
 
     compile('com.crashlytics.sdk.android:crashlytics:2.6.5@aar') {
         transitive = true;
