@@ -23,8 +23,8 @@ android {
         applicationId "com.nike.dooit"
         minSdkVersion project.minSdkVersion.toInteger()
         targetSdkVersion project.targetSdkVersion.toInteger()
-        versionCode 1
-        versionName project.version.toString()
+        versionCode project.version.toInteger()
+        versionName project.versionName.toString()
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
@@ -35,6 +35,9 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            ext.betaDistributionReleaseNotesFilePath="app/release-notes.txt"
+            ext.betaDistributionEmailsFilePath="app/beta_emails.txt"
+            ext.betaDistributionGroupAliases="dooit-testers"
         }
     }
     productFlavors {
