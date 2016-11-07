@@ -75,7 +75,6 @@ public class TipsListFragment extends Fragment {
         for (int i = 0; i < 13; i++) {
             tips.add(new Tip("Tip " + i));
         }
-
         recyclerView.setAdapter(new TipsAdapter(tips));
 
 
