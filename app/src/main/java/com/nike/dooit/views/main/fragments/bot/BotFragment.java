@@ -13,6 +13,7 @@ import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.greenfrvr.hashtagview.HashtagView;
 import com.nike.dooit.DooitApplication;
 import com.nike.dooit.R;
 import com.nike.dooit.helpers.bot.BotFeed;
@@ -32,11 +33,11 @@ import butterknife.ButterKnife;
  * Use the {@link BotFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class BotFragment extends MainFragment implements AnswerAdapter.AnswerSelectedListener {
+public class BotFragment extends MainFragment implements HashtagView.TagsClickListener {
     @BindView(R.id.fragment_bot_conversation_recycler_view)
     RecyclerView conversationRecyclerView;
-    @BindView(R.id.fragment_bot_answer_recycler_view)
-    RecyclerView answerRecyclerView;
+    @BindView(R.id.fragment_bot_answer_hash_view)
+    HashtagView answerView;
 
     BotType type = BotType.DEFAULT;
     BotFeed feed;
@@ -78,10 +79,10 @@ public class BotFragment extends MainFragment implements AnswerAdapter.AnswerSel
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        answerRecyclerView.setHasFixedSize(true);
-        answerRecyclerView.setLayoutManager(new StaggeredGridLayoutManager(8, StaggeredGridLayoutManager.VERTICAL));
-        answerRecyclerView.setItemAnimator(new DefaultItemAnimator());
-        answerRecyclerView.setAdapter(new AnswerAdapter(getContext()));
+        answerView.setBackgroundColor(R.color.light_blue);
+        answerView.setEllipsize(HashtagView.ELLIPSIZE_END);
+        answerView.setItemTextColor(R.color.black);
+        answerView.addOnTagClickListener(this);
         conversationRecyclerView.setHasFixedSize(true);
         conversationRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         conversationRecyclerView.setItemAnimator(new DefaultItemAnimator());
@@ -106,7 +107,17 @@ public class BotFragment extends MainFragment implements AnswerAdapter.AnswerSel
                 Goal goal = (Goal) feed.getFirstItem();
                 currentModel = goal;
                 getBotAdapter().addItem(goal);
-                getAnswersAdapter().setItems(goal.getAnswers());
+                answerView.setData(goal.getAnswers(), new HashtagView.DataStateTransform<Answer>() {
+                    @Override
+                    public CharSequence prepareSelected(Answer item) {
+                        return item.getText(getContext());
+                    }
+
+                    @Override
+                    public CharSequence prepare(Answer item) {
+                        return item.getText(getContext());
+                    }
+                });
                 break;
         }
     }
@@ -115,27 +126,31 @@ public class BotFragment extends MainFragment implements AnswerAdapter.AnswerSel
         this.type = type;
     }
 
-    public AnswerAdapter getAnswersAdapter() {
-        if (answerRecyclerView != null) {
-            return (AnswerAdapter) answerRecyclerView.getAdapter();
-        }
-        return null;
-    }
-
     public BotAdapter getBotAdapter() {
-        if (answerRecyclerView != null) {
+        if (conversationRecyclerView != null) {
             return (BotAdapter) conversationRecyclerView.getAdapter();
         }
         return null;
     }
 
     @Override
-    public void onClick(View view, Answer answer) {
+    public void onItemClicked(Object item) {
+        Answer answer = (Answer) item;
         switch (type) {
             case GOAL:
                 getBotAdapter().addItem(answer);
                 currentModel = feed.getItem(answer.getNext());
-                getAnswersAdapter().setItems(((Goal) currentModel).getAnswers());
+                answerView.setData(((Goal) currentModel).getAnswers(), new HashtagView.DataStateTransform<Answer>() {
+                    @Override
+                    public CharSequence prepareSelected(Answer item) {
+                        return item.getText(getContext());
+                    }
+
+                    @Override
+                    public CharSequence prepare(Answer item) {
+                        return item.getText(getContext());
+                    }
+                });
                 break;
         }
     }
