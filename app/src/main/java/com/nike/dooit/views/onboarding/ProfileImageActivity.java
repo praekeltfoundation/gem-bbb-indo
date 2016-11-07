@@ -112,6 +112,9 @@ public class ProfileImageActivity extends DooitActivity {
         }).subscribe(new Action1<EmptyResponse>() {
             @Override
             public void call(EmptyResponse emptyResponse) {
+                User user = persisted.getCurrentUser();
+                user.getProfile().setProfileImageUrl(cameraUri.toString());
+                persisted.setCurrentUser(user);
                 MainActivity.Builder.create(ProfileImageActivity.this).startActivityClearTop();
             }
         });
@@ -137,21 +140,21 @@ public class ProfileImageActivity extends DooitActivity {
 
     }
 
+    Uri cameraUri;
     // @OnActivityResult(requestCode = RequestCodes.REPONSE_CAMERA_REQUEST_PROFILE_IMAGE)
     void onActivityResultCameraProfileImage(Intent data) {
-        Uri cameraUri = data.getData();
+        cameraUri = data.getData();
         if (cameraUri == null) {
             try {
                 cameraUri = Uri.parse(MediaStore.Images.Media.insertImage(getContentResolver(), (Bitmap) data.getExtras().get("data"), "", ""));
-
             } catch (Throwable ex) {
 
             }
         }
-        getIntent().putExtra(INTENT_IMAGE_URI, cameraUri);
         ContentResolver cR = this.getContentResolver();
-        getIntent().putExtra(INTENT_MIME_TYPE, cR.getType(cameraUri));
         simpleDraweeView.setImageURI(cameraUri);
+        getIntent().putExtra(INTENT_MIME_TYPE, cR.getType(cameraUri));
+        getIntent().putExtra(INTENT_IMAGE_URI, getRealPathFromURI(cameraUri));
     }
 
     public static class Builder extends DooitActivityBuilder<ProfileImageActivity.Builder> {
