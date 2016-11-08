@@ -13,4 +13,8 @@
     <dimen name="k_font_small">12dp</dimen>
     <dimen name="k_font_extra_small">8dp</dimen>
     <dimen name="challenge_margins">8dp</dimen>
+
+    <!-- Tips -->
+    <dimen name="tip_card_margin">16dp</dimen>
+    <dimen name="tip_card_title_margin">16dp</dimen>
 </resources>
