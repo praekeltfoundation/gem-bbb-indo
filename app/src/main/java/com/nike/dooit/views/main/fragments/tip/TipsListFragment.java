@@ -3,8 +3,8 @@ package com.nike.dooit.views.main.fragments.tip;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -36,7 +36,7 @@ public class TipsListFragment extends Fragment {
     TipManager tipManager;
 
     TipsAdapter adapter;
-    StaggeredGridLayoutManager gridManager;
+    GridLayoutManager gridManager;
 
     public TipsListFragment() {
         // Required empty public constructor
@@ -80,13 +80,25 @@ public class TipsListFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_tips_list, container, false);
         ButterKnife.bind(this, view);
-        gridManager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
+
+        gridManager = new GridLayoutManager(getContext(), 2);
+        gridManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
+            @Override
+            public int getSpanSize(int position) {
+                return position % 3 == 0 ? 2 : 1;
+            }
+        });
+
         recyclerView.setLayoutManager(gridManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
+
+        // Dummy Data
         List<Tip> tips = new ArrayList<>();
         tips.add(new Tip("Tip 1"));
         tips.add(new Tip("Tip 2"));
         tips.add(new Tip("Tip 3"));
+        // ----------
+
         adapter = new TipsAdapter(getContext(), tips);
         recyclerView.setAdapter(adapter);
 
