@@ -1,7 +1,6 @@
 package com.nike.dooit.views.main.fragments;
 
 import android.os.Bundle;
-import android.os.Parcel;
 import android.os.Parcelable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -23,7 +22,7 @@ import com.nike.dooit.api.DooitErrorHandler;
 import com.nike.dooit.api.managers.ChallengeManager;
 import com.nike.dooit.helpers.Persisted;
 import com.nike.dooit.models.Challenge;
-import com.nike.dooit.views.main.fragments.challenge.ChallengeQuizQuestionFragment;
+import com.nike.dooit.views.main.fragments.challenge.fragments.ChallengeQuizQuestionFragment;
 
 import java.util.ArrayList;
 import java.util.List;

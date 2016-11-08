@@ -9,5 +9,5 @@
     android:layout_marginLeft="16dp"
     android:layout_marginRight="16dp"
     app:layoutManager="LinearLayoutManager"
-    tools:context="com.nike.dooit.views.main.fragments.challenge.ChallengeQuizQuestionFragment"
+    tools:context="com.nike.dooit.views.main.fragments.challenge.fragments.ChallengeQuizQuestionFragment"
     tools:listitem="@layout/fragment_challengequizquestion" />

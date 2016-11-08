@@ -15,8 +15,7 @@ import com.nike.dooit.models.Question;
 import com.nike.dooit.views.DooitActivity;
 import com.nike.dooit.views.helpers.activity.DooitActivityBuilder;
 import com.nike.dooit.views.main.adapters.MainTabAdapter;
-import com.nike.dooit.views.main.fragments.challenge.ChallengeQuizQuestionFragment;
-import com.nike.dooit.views.main.fragments.challenge.dummy.DummyContent;
+import com.nike.dooit.views.main.fragments.challenge.fragments.ChallengeQuizQuestionFragment;
 import com.nike.dooit.views.profile.ProfileActivity;
 
 import butterknife.BindView;

@@ -1,4 +1,4 @@
-package com.nike.dooit.views.main.fragments.challenge;
+package com.nike.dooit.views.main.fragments.challenge.fragments;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -11,14 +11,10 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.nike.dooit.R;
-import com.nike.dooit.models.Challenge;
 import com.nike.dooit.models.Question;
-import com.nike.dooit.views.main.fragments.challenge.dummy.DummyContent;
-import com.nike.dooit.views.main.fragments.challenge.dummy.DummyContent.DummyItem;
+import com.nike.dooit.views.main.fragments.challenge.adapters.ChallengeQuestionRecyclerViewAdapter;
 
 import java.util.List;
-
-import butterknife.ButterKnife;
 
 /**
  * A fragment representing a list of Items.

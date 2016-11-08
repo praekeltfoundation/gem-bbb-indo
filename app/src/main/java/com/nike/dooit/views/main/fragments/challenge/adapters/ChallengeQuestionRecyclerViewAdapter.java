@@ -1,4 +1,4 @@
-package com.nike.dooit.views.main.fragments.challenge;
+package com.nike.dooit.views.main.fragments.challenge.adapters;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -6,18 +6,18 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.TextView;
 
 import com.nike.dooit.R;
 import com.nike.dooit.models.Question;
 import com.nike.dooit.views.main.fragments.challenge.dummy.DummyContent.DummyItem;
+import com.nike.dooit.views.main.fragments.challenge.fragments.ChallengeQuizQuestionFragment;
 
 import java.util.List;
 
 /**
  * {@link RecyclerView.Adapter} that can display a {@link DummyItem} and makes a call to the
- * specified {@link com.nike.dooit.views.main.fragments.challenge.ChallengeQuizQuestionFragment.OnListFragmentInteractionListener}.
+ * specified {@link ChallengeQuizQuestionFragment.OnListFragmentInteractionListener}.
  * TODO: Replace the implementation with code for your data type.
  */
 public class ChallengeQuestionRecyclerViewAdapter extends RecyclerView.Adapter<ChallengeQuestionRecyclerViewAdapter.ViewHolder> {
