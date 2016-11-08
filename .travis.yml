@@ -20,15 +20,15 @@ android:
 before_install:
  - chmod +x gradlew
 
-licenses:
- - 'android-sdk-license-c81a61d9'
- - 'android-sdk-preview-license-.+'
- - 'android-sdk-license-.+'
- - 'google-gdk-license-.+'
- - 'intel-android-extra-license.+'
+#licenses:
+# - 'android-sdk-license-c81a61d9'
+# - 'android-sdk-preview-license-.+'
+# - 'android-sdk-license-.+'
+# - 'google-gdk-license-.+'
+# - 'intel-android-extra-license.+'
 
-before_script:
- - android update sdk --no-ui --filter build-tools-25.0.0,android-25,extra-android-m2repository
+#before_script:
+# - android update sdk --no-ui --filter build-tools-25.0.0,android-25,extra-android-m2repository
 
 script:
-  - ./gradlew build connectedCheck --stacktrace
+  - ./gradlew build --stacktrace
