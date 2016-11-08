@@ -21,8 +21,10 @@ before_install:
  - chmod +x gradlew
 
 licenses:
-    - 'android-sdk-license-.+'
-    - 'google-gdk-license-.+'
+ - 'android-sdk-preview-license-.+'
+ - 'android-sdk-license-.+'
+ - 'google-gdk-license-.+'
+ - 'intel-android-extra-license.+'
 
 script:
   - ./gradlew build
