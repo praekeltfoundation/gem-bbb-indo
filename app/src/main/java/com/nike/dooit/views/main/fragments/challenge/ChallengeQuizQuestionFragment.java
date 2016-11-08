@@ -12,8 +12,13 @@ import android.view.ViewGroup;
 
 import com.nike.dooit.R;
 import com.nike.dooit.models.Challenge;
+import com.nike.dooit.models.Question;
 import com.nike.dooit.views.main.fragments.challenge.dummy.DummyContent;
 import com.nike.dooit.views.main.fragments.challenge.dummy.DummyContent.DummyItem;
+
+import java.util.List;
+
+import butterknife.ButterKnife;
 
 /**
  * A fragment representing a list of Items.
@@ -25,8 +30,10 @@ public class ChallengeQuizQuestionFragment extends Fragment {
 
     // TODO: Customize parameter argument names
     private static final String ARG_COLUMN_COUNT = "column-count";
+    private static final String ARG_QUESTIONS = "questions";
     // TODO: Customize parameters
     private int mColumnCount = 1;
+    private List<Question> mQuestions = null;
     private OnListFragmentInteractionListener mListener;
 
     /**
@@ -51,16 +58,19 @@ public class ChallengeQuizQuestionFragment extends Fragment {
 
         if (getArguments() != null) {
             mColumnCount = getArguments().getInt(ARG_COLUMN_COUNT);
+            mQuestions = getArguments().getParcelableArrayList(ARG_QUESTIONS);
         }
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_challengequizquestion_list, container, false);
+        System.out.println("Creating recycler");
+        View view = inflater.inflate(R.layout.fragment_challengequizquestion, container, false);
 
         // Set the adapter
         if (view instanceof RecyclerView) {
+            System.out.println("View is recycler");
             Context context = view.getContext();
             RecyclerView recyclerView = (RecyclerView) view;
             if (mColumnCount <= 1) {
@@ -68,7 +78,7 @@ public class ChallengeQuizQuestionFragment extends Fragment {
             } else {
                 recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
             }
-            recyclerView.setAdapter(new ChallengeQuestionRecyclerViewAdapter(DummyContent.ITEMS, mListener));
+            recyclerView.setAdapter(new ChallengeQuestionRecyclerViewAdapter(mQuestions, mListener));
         }
         return view;
     }
@@ -103,6 +113,6 @@ public class ChallengeQuizQuestionFragment extends Fragment {
      */
     public interface OnListFragmentInteractionListener {
         // TODO: Update argument type and name
-        void onListFragmentInteraction(DummyItem item);
+        void onListFragmentInteraction(Question item);
     }
 }

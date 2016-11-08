@@ -4,9 +4,13 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import com.nike.dooit.R;
+import com.nike.dooit.models.Question;
 import com.nike.dooit.views.main.fragments.challenge.dummy.DummyContent.DummyItem;
 
 import java.util.List;
@@ -18,10 +22,11 @@ import java.util.List;
  */
 public class ChallengeQuestionRecyclerViewAdapter extends RecyclerView.Adapter<ChallengeQuestionRecyclerViewAdapter.ViewHolder> {
 
-    private final List<DummyItem> mValues;
+    private final List<Question> mValues;
     private final ChallengeQuizQuestionFragment.OnListFragmentInteractionListener mListener;
 
-    public ChallengeQuestionRecyclerViewAdapter(List<DummyItem> items, ChallengeQuizQuestionFragment.OnListFragmentInteractionListener listener) {
+    public ChallengeQuestionRecyclerViewAdapter(List<Question> items, ChallengeQuizQuestionFragment.OnListFragmentInteractionListener listener) {
+        System.out.println("Creating recycler");
         mValues = items;
         mListener = listener;
     }
@@ -36,8 +41,10 @@ public class ChallengeQuestionRecyclerViewAdapter extends RecyclerView.Adapter<C
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
         holder.mItem = mValues.get(position);
-        holder.mIdView.setText(mValues.get(position).id);
-        holder.mContentView.setText(mValues.get(position).content);
+        holder.mTitleView.setText(holder.mItem.getText());
+        holder.mProgressCounterView.setText(String.format("Question %d/%d", 1, getItemCount()));
+//            mOptionListView = (LinearLayout) view.findViewById(R.id.fragment_challengequizquestion_list);
+//            mCheckButtonView = (Button) view.findViewById(R.id.fragment_challengequizquestion_checkbutton);
 
         holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -58,20 +65,25 @@ public class ChallengeQuestionRecyclerViewAdapter extends RecyclerView.Adapter<C
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         public final View mView;
-        public final TextView mIdView;
-        public final TextView mContentView;
-        public DummyItem mItem;
+        public final TextView mTitleView;
+        public final TextView mProgressCounterView;
+        public final LinearLayout mOptionListView;
+        public final Button mCheckButtonView;
+        public Question mItem;
 
         public ViewHolder(View view) {
             super(view);
             mView = view;
-            mIdView = (TextView) view.findViewById(R.id.id);
-            mContentView = (TextView) view.findViewById(R.id.content);
+
+            mTitleView = (TextView) view.findViewById(R.id.fragment_challengequizquestion_title);
+            mProgressCounterView = (TextView) view.findViewById(R.id.fragment_challengequizquestion_progresscounter);
+            mOptionListView = (LinearLayout) view.findViewById(R.id.fragment_challengequizquestion_list);
+            mCheckButtonView = (Button) view.findViewById(R.id.fragment_challengequizquestion_checkbutton);
         }
 
         @Override
         public String toString() {
-            return super.toString() + " '" + mContentView.getText() + "'";
+            return super.toString() + " '" + mTitleView.getText() + "'";
         }
     }
 }

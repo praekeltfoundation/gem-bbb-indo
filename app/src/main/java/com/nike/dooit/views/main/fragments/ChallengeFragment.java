@@ -1,6 +1,8 @@
 package com.nike.dooit.views.main.fragments;
 
 import android.os.Bundle;
+import android.os.Parcel;
+import android.os.Parcelable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
@@ -23,6 +25,7 @@ import com.nike.dooit.helpers.Persisted;
 import com.nike.dooit.models.Challenge;
 import com.nike.dooit.views.main.fragments.challenge.ChallengeQuizQuestionFragment;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -90,9 +93,10 @@ public class ChallengeFragment extends Fragment {
         ButterKnife.bind(this, view);
         progressBar = (ProgressBar) view.getRootView().findViewById(R.id.fragment_challenge_progress_progress_bar);
 
-        if (persisted.hasCurrentChallenge()) {
-            startChallenge();
-        }
+//        if (persisted.hasCurrentChallenge()) {
+//            challenge = (Challenge) persisted.getCurrentChallenge();
+//            startChallenge();
+//        }
         return view;
     }
 
@@ -127,10 +131,19 @@ public class ChallengeFragment extends Fragment {
 
     @OnClick(R.id.fragment_challenge_register_button)
     void startChallenge() {
+        System.out.println("Starting challenge");
         FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
+        ChallengeQuizQuestionFragment fragment = ChallengeQuizQuestionFragment.newInstance();
+
+//        if (challenge != null) {
+            System.out.println("Passing question arg");
+            Bundle args = new Bundle();
+            args.putParcelableArrayList("questions", new ArrayList<Parcelable>(challenge.getQuestions()));
+            fragment.setArguments(args);
+//        }
 
         //ft.setCustomAnimations(R.anim.slide_in_left, R.anim.slide_out_right);
-        ft.replace(R.id.fragment_challenge_container, ChallengeQuizQuestionFragment.newInstance(), "fragment_challenge");
+        ft.replace(R.id.fragment_challenge_container, fragment, "fragment_challenge");
 
         ft.commit();
     }

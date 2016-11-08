@@ -11,6 +11,7 @@ import android.view.MenuItem;
 import android.view.View;
 
 import com.nike.dooit.R;
+import com.nike.dooit.models.Question;
 import com.nike.dooit.views.DooitActivity;
 import com.nike.dooit.views.helpers.activity.DooitActivityBuilder;
 import com.nike.dooit.views.main.adapters.MainTabAdapter;
@@ -79,7 +80,7 @@ public class MainActivity extends DooitActivity implements ChallengeQuizQuestion
     }
 
     @Override
-    public void onListFragmentInteraction(DummyContent.DummyItem item) {
+    public void onListFragmentInteraction(Question item) {
 
     }
 
