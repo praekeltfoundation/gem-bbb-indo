@@ -68,7 +68,7 @@ public class TipsFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_tips, container, false);
         ButterKnife.bind(this, view);
 
-        TipsTabAdapter adapter = new TipsTabAdapter(getActivity().getSupportFragmentManager(), getContext());
+        TipsTabAdapter adapter = new TipsTabAdapter(getChildFragmentManager(), getContext());
         viewPager.setAdapter(adapter);
         tabLayout.setupWithViewPager(viewPager);
 
