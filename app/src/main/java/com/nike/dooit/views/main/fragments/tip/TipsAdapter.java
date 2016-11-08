@@ -48,6 +48,7 @@ public class TipsAdapter extends RecyclerView.Adapter<TipViewHolder> {
     }
 
     public void updateTips(List<Tip> tips) {
-
+        this.tips = tips;
+        notifyDataSetChanged();
     }
 }
