@@ -16,7 +16,6 @@ import com.nike.dooit.api.DooitAPIError;
 import com.nike.dooit.api.DooitErrorHandler;
 import com.nike.dooit.api.managers.TipManager;
 import com.nike.dooit.models.Tip;
-import com.nike.dooit.views.main.fragments.TipsFragment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,7 +36,6 @@ public class TipsListFragment extends Fragment {
     TipManager tipManager;
 
     TipsAdapter adapter;
-
     StaggeredGridLayoutManager gridManager;
 
     public TipsListFragment() {
@@ -64,6 +62,19 @@ public class TipsListFragment extends Fragment {
     }
 
     @Override
+    public void onResume() {
+        super.onResume();
+        // TODO: Look in persist for fragments. API Retrieve otherwise.
+        retrieveTips();
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        // TODO: Delete tips from Persist
+    }
+
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
@@ -79,18 +90,28 @@ public class TipsListFragment extends Fragment {
         adapter = new TipsAdapter(tips);
         recyclerView.setAdapter(adapter);
 
+        retrieveTips();
+
+        return view;
+    }
+
+    private void retrieveTips() {
         tipManager.retrieveTips(new DooitErrorHandler() {
             @Override
             public void onError(DooitAPIError error) {
                 Toast.makeText(getContext(), "Error retrieving tips.", Toast.LENGTH_SHORT);
             }
-        }).subscribe(new Action1<List<Tip>>() {
-            @Override
-            public void call(List<Tip> tips) {
-                adapter.updateTips(tips);
-            }
-        });
-
-        return view;
+        })
+                .subscribe(new Action1<List<Tip>>() {
+                    @Override
+                    public void call(final List<Tip> tips) {
+                        getActivity().runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                adapter.updateTips(tips);
+                            }
+                        });
+                    }
+                });
     }
 }
