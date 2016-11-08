@@ -5,6 +5,11 @@
     <color name="colorPrimary">@android:color/white</color>
     <color name="colorPrimaryDark">@color/yellow</color>
     <color name="colorAccent">@color/pink</color>
+    <color name="colorQuizSubtitle">@color/grey</color>
+    <color name="colorQuizText">@color/black</color>
+    <color name="colorQuizOption">@color/white</color>
+    <color name="colorQuizAccent">@color/light_blue</color>
+    <color name="colorQuizButtonText">@color/white</color>
     <color name="purple">#391563</color>
     <color name="pink">#E93988</color>
     <color name="grey">#828282</color>

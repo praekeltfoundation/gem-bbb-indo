@@ -58,4 +58,19 @@
     <style name="AppTheme.TextView.Regular.ExtraSmallHeading" parent="AppTheme.TextView.Regular">
         <item name="android:textSize">@dimen/k_font_extra_small</item>
     </style>
+
+    <style name="AppTheme.TextView.Quiz.Title" parent="AppTheme.TextView.Regular.ExtraLarge">
+        <item name="android:textColor">@color/colorQuizText</item>
+        <item name="android:textAlignment">center</item>
+    </style>
+
+    <style name="AppTheme.TextView.Quiz.Subtitle" parent="AppTheme.TextView.Regular.Medium">
+        <item name="android:textColor">@color/colorQuizSubtitle</item>
+        <item name="android:textAlignment">center</item>
+    </style>
+
+    <style name="AppTheme.TextView.Quiz.Button" parent="AppTheme.TextView.Regular.Medium">
+        <item name="android:textColor">@color/colorQuizButtonText</item>
+        <item name="android:textAlignment">center</item>
+    </style>
 </resources>
