@@ -87,7 +87,7 @@ public class TipsListFragment extends Fragment {
         tips.add(new Tip("Tip 1"));
         tips.add(new Tip("Tip 2"));
         tips.add(new Tip("Tip 3"));
-        adapter = new TipsAdapter(tips);
+        adapter = new TipsAdapter(getContext(), tips);
         recyclerView.setAdapter(adapter);
 
         retrieveTips();

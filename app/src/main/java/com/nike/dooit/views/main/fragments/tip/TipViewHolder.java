@@ -1,6 +1,7 @@
 package com.nike.dooit.views.main.fragments.tip;
 
 import android.support.v7.widget.RecyclerView;
+import android.text.SpannableString;
 import android.view.View;
 import android.widget.TextView;
 
@@ -24,6 +25,10 @@ public class TipViewHolder extends RecyclerView.ViewHolder {
     }
 
     public void setTitle(String title) {
+        titleView.setText(title);
+    }
+
+    public void setTitle(SpannableString title) {
         titleView.setText(title);
     }
 }
