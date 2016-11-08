@@ -4,12 +4,21 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.nike.dooit.R;
 import com.nike.dooit.models.Challenge;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnCheckedChanged;
+import butterknife.OnClick;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -27,7 +36,27 @@ public class ChallengeRegisterFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private Challenge challenge;
 
-    private OnFragmentInteractionListener mListener;
+//    private OnFragmentInteractionListener mListener;
+    @BindView(R.id.fragment_challenge_image_image_view)
+    ImageView topImage;
+
+    @BindView(R.id.fragment_challenge_sub_title_text_view)
+    TextView title;
+
+    @BindView(R.id.fragment_challenge_name_text_view)
+    TextView name;
+
+    @BindView(R.id.fragment_challenge_expire_date_text_view)
+    TextView date;
+
+    @BindView(R.id.fragment_challenge_instruction_text_vew)
+    TextView instruction;
+
+    @BindView(R.id.fragment_challenge_t_c_text_view)
+    TextView tc;
+
+    @BindView(R.id.fragment_challenge_register_button)
+    Button register;
 
     public ChallengeRegisterFragment() {
         // Required empty public constructor
@@ -58,32 +87,50 @@ public class ChallengeRegisterFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.fragment_challenge_register, container, false);
+        ButterKnife.bind(this, view);
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_challenge_register, container, false);
+        return view;
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        name.setText(challenge.getName());
+    }
+
+    @OnClick(R.id.fragment_challenge_register_button)
+    void startChallenge() {
+        FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
+
+        //ft.setCustomAnimations(R.anim.slide_in_left, R.anim.slide_out_right);
+        ft.replace(R.id.fragment_challenge_container, ChallengeQuizQuestionFragment.newInstance());
+
+        ft.commit();
     }
 
     // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {
-        if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
-        }
+//        if (mListener != null) {
+//            mListener.onFragmentInteraction(uri);
+//        }
     }
 
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        if (context instanceof OnFragmentInteractionListener) {
-            mListener = (OnFragmentInteractionListener) context;
-        } else {
-            throw new RuntimeException(context.toString()
-                    + " must implement OnFragmentInteractionListener");
-        }
+//        if (context instanceof OnFragmentInteractionListener) {
+//            mListener = (OnFragmentInteractionListener) context;
+//        } else {
+//            throw new RuntimeException(context.toString()
+//                    + " must implement OnFragmentInteractionListener");
+//        }
     }
 
     @Override
     public void onDetach() {
         super.onDetach();
-        mListener = null;
+//        mListener = null;
     }
 
     /**
@@ -96,8 +143,8 @@ public class ChallengeRegisterFragment extends Fragment {
      * "http://developer.android.com/training/basics/fragments/communicating.html"
      * >Communicating with Other Fragments</a> for more information.
      */
-    public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
-        void onFragmentInteraction(Uri uri);
-    }
+//    public interface OnFragmentInteractionListener {
+//        // TODO: Update argument type and name
+//        void onFragmentInteraction(Uri uri);
+//    }
 }

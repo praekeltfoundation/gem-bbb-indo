@@ -3,10 +3,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context="com.nike.dooit.views.main.fragments.ChallengeFragment">
+    tools:context="com.nike.dooit.views.main.fragments.challenge.fragments.ChallengeRegisterFragment">
 
     <RelativeLayout
-        android:id="@+id/fragment_challenge_container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">

@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.nike.dooit.R;
+import com.nike.dooit.models.Challenge;
 import com.nike.dooit.models.Question;
 import com.nike.dooit.views.main.fragments.challenge.adapters.ChallengeQuestionRecyclerViewAdapter;
 
@@ -26,10 +27,10 @@ public class ChallengeQuizQuestionFragment extends Fragment {
 
     // TODO: Customize parameter argument names
     private static final String ARG_COLUMN_COUNT = "column-count";
-    private static final String ARG_QUESTIONS = "questions";
+    private static final String ARG_CHALLENGE = "challenge";
     // TODO: Customize parameters
     private int mColumnCount = 1;
-    private List<Question> mQuestions = null;
+    private Challenge mChallenge = null;
     private OnListFragmentInteractionListener mListener;
 
     /**
@@ -54,7 +55,7 @@ public class ChallengeQuizQuestionFragment extends Fragment {
 
         if (getArguments() != null) {
             mColumnCount = getArguments().getInt(ARG_COLUMN_COUNT);
-            mQuestions = getArguments().getParcelableArrayList(ARG_QUESTIONS);
+            mChallenge = getArguments().getParcelable(ARG_CHALLENGE);
         }
     }
 
@@ -74,7 +75,7 @@ public class ChallengeQuizQuestionFragment extends Fragment {
             } else {
                 recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
             }
-            recyclerView.setAdapter(new ChallengeQuestionRecyclerViewAdapter(mQuestions, mListener));
+            recyclerView.setAdapter(new ChallengeQuestionRecyclerViewAdapter(mChallenge.getQuestions(), mListener));
         }
         return view;
     }
