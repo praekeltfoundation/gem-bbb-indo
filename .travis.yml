@@ -26,5 +26,8 @@ licenses:
  - 'google-gdk-license-.+'
  - 'intel-android-extra-license.+'
 
+before_script:
+ - android update sdk --no-ui --filter build-tools-25.0.0,android-25,extra-android-m2repository
+
 script:
-  - ./gradlew build
+  - ./gradlew build connectedCheck --stacktrace
