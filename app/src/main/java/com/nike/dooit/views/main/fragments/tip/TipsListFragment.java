@@ -16,6 +16,7 @@ import com.nike.dooit.api.DooitAPIError;
 import com.nike.dooit.api.DooitErrorHandler;
 import com.nike.dooit.api.managers.TipManager;
 import com.nike.dooit.models.Tip;
+import com.nike.dooit.views.main.fragments.tip.providers.TipProvider;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,12 +30,16 @@ import rx.functions.Action1;
 
 public class TipsListFragment extends Fragment {
 
+    private static final String POS = "pos";
+
     @BindView(R.id.fragment_tips_list_recyclerview)
     RecyclerView recyclerView;
 
     @Inject
     TipManager tipManager;
 
+    TipsViewPagerPositions pos;
+    TipProvider tipProvider;
     TipsAdapter adapter;
     GridLayoutManager gridManager;
 
@@ -48,9 +53,10 @@ public class TipsListFragment extends Fragment {
      *
      * @return A new instance of fragment TipsListFragment.
      */
-    public static TipsListFragment newInstance() {
+    public static TipsListFragment newInstance(int pos) {
         TipsListFragment fragment = new TipsListFragment();
         Bundle args = new Bundle();
+        args.putInt(POS, pos);
         fragment.setArguments(args);
         return fragment;
     }
@@ -59,6 +65,10 @@ public class TipsListFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         ((DooitApplication) getActivity().getApplication()).component.inject(this);
+        if (getArguments() != null) {
+            pos = TipsViewPagerPositions.getValueOf(getArguments().getInt(POS));
+            tipProvider = pos.newProvider(tipManager);
+        }
     }
 
     @Override
@@ -108,7 +118,7 @@ public class TipsListFragment extends Fragment {
     }
 
     private void retrieveTips() {
-        tipManager.retrieveTips(new DooitErrorHandler() {
+        tipProvider.retrieveTips(new DooitErrorHandler() {
             @Override
             public void onError(DooitAPIError error) {
                 Toast.makeText(getContext(), "Error retrieving tips.", Toast.LENGTH_SHORT);

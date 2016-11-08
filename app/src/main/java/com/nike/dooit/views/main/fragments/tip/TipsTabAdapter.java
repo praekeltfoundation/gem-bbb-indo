@@ -29,11 +29,11 @@ public class TipsTabAdapter extends FragmentStatePagerAdapter {
     public Fragment getItem(int position) {
         switch (TipsViewPagerPositions.getValueOf(position)) {
             case FAVOURITES:
-                return TipsListFragment.newInstance();
+                return TipsListFragment.newInstance(TipsViewPagerPositions.FAVOURITES.getValue());
             case ALL:
-                return TipsListFragment.newInstance();
+                return TipsListFragment.newInstance(TipsViewPagerPositions.ALL.getValue());
             default:
-                return TipsListFragment.newInstance();
+                return TipsListFragment.newInstance(TipsViewPagerPositions.ALL.getValue());
         }
     }
 
