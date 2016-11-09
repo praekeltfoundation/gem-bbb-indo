@@ -3,6 +3,8 @@ package com.nike.dooit.views.main.fragments.challenge.fragments;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,7 +12,9 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.nike.dooit.R;
+import com.nike.dooit.models.Option;
 import com.nike.dooit.models.Question;
+import com.nike.dooit.views.main.fragments.challenge.adapters.ChallengeQuizOptionsListAdapter;
 import com.nike.dooit.views.main.fragments.challenge.adapters.ChallengeQuizPagerAdapter;
 
 import butterknife.BindView;
@@ -31,12 +35,13 @@ public class ChallengeQuizQuestionFragment extends ListFragment {
     private int mColumnCount = 1;
     private Question mQuestion = null;
     private OnListFragmentInteractionListener mListener;
+    private RecyclerView.Adapter mAdapter;
 
     @BindView(R.id.fragment_challengequizquestion_title)
     TextView title;
 
-    @BindView(R.id.fragment_challengequizquestion_list)
-    LinearLayout optionList;
+    @BindView(R.id.option_recycler_view)
+    RecyclerView optionList;
 
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
@@ -78,6 +83,8 @@ public class ChallengeQuizQuestionFragment extends ListFragment {
         View view = inflater.inflate(R.layout.fragment_challengequizquestion, container, false);
         ButterKnife.bind(this, view);
         title.setText(mQuestion.getText());
+        optionList.setAdapter(new ChallengeQuizOptionsListAdapter(mQuestion, mListener));
+        optionList.setLayoutManager(new LinearLayoutManager(getContext()));
         return view;
     }
 
@@ -111,6 +118,6 @@ public class ChallengeQuizQuestionFragment extends ListFragment {
      */
     public interface OnListFragmentInteractionListener {
         // TODO: Update argument type and name
-        void onListFragmentInteraction(Question item);
+        void onListFragmentInteraction(Option item);
     }
 }
