@@ -8,6 +8,8 @@ import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import com.nike.dooit.R;
 import com.nike.dooit.models.Challenge;
@@ -33,6 +35,12 @@ public class ChallengeQuizFragment extends Fragment {
     private Challenge mChallenge;
 
     private ChallengeQuizPagerAdapter mAdapter;
+
+    @BindView(R.id.fragment_challenge_quiz_progressbar)
+    ProgressBar mProgressBar;
+
+    @BindView(R.id.fragment_challenge_quiz_progresscounter)
+    TextView mProgressCounter;
 
     @BindView(R.id.fragment_challenge_quiz_pager)
     ViewPager mPager;
@@ -75,6 +83,7 @@ public class ChallengeQuizFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_challenge_quiz, container, false);
         ButterKnife.bind(this, view);
         mPager.setAdapter(mAdapter);
+        mProgressCounter.setText(String.format("Question 1/%d", mChallenge.getQuestions().size()));
         return view;
     }
 

@@ -6,10 +6,14 @@ import android.support.v4.app.ListFragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.nike.dooit.R;
 import com.nike.dooit.models.Question;
+import com.nike.dooit.views.main.fragments.challenge.adapters.ChallengeQuizPagerAdapter;
 
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 /**
@@ -27,6 +31,12 @@ public class ChallengeQuizQuestionFragment extends ListFragment {
     private int mColumnCount = 1;
     private Question mQuestion = null;
     private OnListFragmentInteractionListener mListener;
+
+    @BindView(R.id.fragment_challengequizquestion_title)
+    TextView title;
+
+    @BindView(R.id.fragment_challengequizquestion_list)
+    LinearLayout optionList;
 
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
@@ -65,8 +75,9 @@ public class ChallengeQuizQuestionFragment extends ListFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_challengequizquestion_list, container, false);
+        View view = inflater.inflate(R.layout.fragment_challengequizquestion, container, false);
         ButterKnife.bind(this, view);
+        title.setText(mQuestion.getText());
         return view;
     }
 
