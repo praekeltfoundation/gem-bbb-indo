@@ -2,20 +2,15 @@ package com.nike.dooit.views.main.fragments.challenge.fragments;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
+import android.support.v4.app.ListFragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.nike.dooit.R;
-import com.nike.dooit.models.Challenge;
 import com.nike.dooit.models.Question;
-import com.nike.dooit.views.main.fragments.challenge.adapters.ChallengeQuestionRecyclerViewAdapter;
 
-import java.util.List;
+import butterknife.ButterKnife;
 
 /**
  * A fragment representing a list of Items.
@@ -23,14 +18,14 @@ import java.util.List;
  * Activities containing this fragment MUST implement the {@link OnListFragmentInteractionListener}
  * interface.
  */
-public class ChallengeQuizQuestionFragment extends Fragment {
+public class ChallengeQuizQuestionFragment extends ListFragment {
 
     // TODO: Customize parameter argument names
     private static final String ARG_COLUMN_COUNT = "column-count";
-    private static final String ARG_CHALLENGE = "challenge";
+    private static final String ARG_QUESTION = "question";
     // TODO: Customize parameters
     private int mColumnCount = 1;
-    private Challenge mChallenge = null;
+    private Question mQuestion = null;
     private OnListFragmentInteractionListener mListener;
 
     /**
@@ -42,9 +37,17 @@ public class ChallengeQuizQuestionFragment extends Fragment {
 
     // TODO: Customize parameter initialization
     @SuppressWarnings("unused")
-    public static ChallengeQuizQuestionFragment newInstance( ) {
+    public static ChallengeQuizQuestionFragment newInstance() {
         ChallengeQuizQuestionFragment fragment = new ChallengeQuizQuestionFragment();
         Bundle args = new Bundle();
+        fragment.setArguments(args);
+        return fragment;
+    }
+
+    public static ChallengeQuizQuestionFragment newInstance(Question question) {
+        ChallengeQuizQuestionFragment fragment = new ChallengeQuizQuestionFragment();
+        Bundle args = new Bundle();
+        args.putParcelable("question", question);
         fragment.setArguments(args);
         return fragment;
     }
@@ -55,28 +58,15 @@ public class ChallengeQuizQuestionFragment extends Fragment {
 
         if (getArguments() != null) {
             mColumnCount = getArguments().getInt(ARG_COLUMN_COUNT);
-            mChallenge = getArguments().getParcelable(ARG_CHALLENGE);
+            mQuestion = getArguments().getParcelable(ARG_QUESTION);
         }
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        System.out.println("Creating recycler");
-        View view = inflater.inflate(R.layout.fragment_challengequizquestion, container, false);
-
-        // Set the adapter
-        if (view instanceof RecyclerView) {
-            System.out.println("View is recycler");
-            Context context = view.getContext();
-            RecyclerView recyclerView = (RecyclerView) view;
-            if (mColumnCount <= 1) {
-                recyclerView.setLayoutManager(new LinearLayoutManager(context));
-            } else {
-                recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
-            }
-            recyclerView.setAdapter(new ChallengeQuestionRecyclerViewAdapter(mChallenge.getQuestions(), mListener));
-        }
+        View view = inflater.inflate(R.layout.fragment_challengequizquestion_list, container, false);
+        ButterKnife.bind(this, view);
         return view;
     }
 
