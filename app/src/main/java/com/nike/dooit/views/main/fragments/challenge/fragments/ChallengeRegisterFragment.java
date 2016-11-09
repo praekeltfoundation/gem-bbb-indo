@@ -104,7 +104,7 @@ public class ChallengeRegisterFragment extends Fragment {
         FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
 
         //ft.setCustomAnimations(R.anim.slide_in_left, R.anim.slide_out_right);
-        ft.replace(R.id.fragment_challenge_container, ChallengeQuizQuestionFragment.newInstance());
+        ft.replace(R.id.fragment_challenge_container, ChallengeQuizFragment.newInstance(challenge));
 
         ft.commit();
     }

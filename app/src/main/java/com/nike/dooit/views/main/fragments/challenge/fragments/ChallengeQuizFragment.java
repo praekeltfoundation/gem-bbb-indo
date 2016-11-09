@@ -13,6 +13,9 @@ import com.nike.dooit.R;
 import com.nike.dooit.models.Challenge;
 import com.nike.dooit.views.main.fragments.challenge.adapters.ChallengeQuizPagerAdapter;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
@@ -30,7 +33,9 @@ public class ChallengeQuizFragment extends Fragment {
     private Challenge mChallenge;
 
     private ChallengeQuizPagerAdapter mAdapter;
-    private ViewPager mPager;
+
+    @BindView(R.id.fragment_challenge_quiz_pager)
+    ViewPager mPager;
 
     private OnFragmentInteractionListener mListener;
 
@@ -60,13 +65,17 @@ public class ChallengeQuizFragment extends Fragment {
         if (getArguments() != null) {
             mChallenge = getArguments().getParcelable(ARG_CHALLENGE);
         }
+        mAdapter = new ChallengeQuizPagerAdapter(getChildFragmentManager(), getContext(), mChallenge);
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_challenge_quiz, container, false);
+        View view = inflater.inflate(R.layout.fragment_challenge_quiz, container, false);
+        ButterKnife.bind(this, view);
+        mPager.setAdapter(mAdapter);
+        return view;
     }
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -82,8 +91,8 @@ public class ChallengeQuizFragment extends Fragment {
         if (context instanceof OnFragmentInteractionListener) {
             mListener = (OnFragmentInteractionListener) context;
         } else {
-            throw new RuntimeException(context.toString()
-                    + " must implement OnFragmentInteractionListener");
+//            throw new RuntimeException(context.toString()
+//                    + " must implement OnFragmentInteractionListener");
         }
     }
 
