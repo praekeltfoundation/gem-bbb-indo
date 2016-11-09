@@ -9,15 +9,15 @@ import android.os.Parcelable;
 
 public class Option implements Parcelable {
 
-    private String id;
+    private long id;
     private String text;
     private String correct;
 
-    public String getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(long id) {
         this.id = id;
     }
 
@@ -38,7 +38,7 @@ public class Option implements Parcelable {
     }
 
     protected Option(Parcel in) {
-        id = in.readString();
+        id = in.readLong();
         text = in.readString();
         correct = in.readString();
     }
@@ -50,7 +50,7 @@ public class Option implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(id);
+        dest.writeLong(id);
         dest.writeString(text);
         dest.writeString(correct);
     }
