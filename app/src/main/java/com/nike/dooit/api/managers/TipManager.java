@@ -4,6 +4,7 @@ import android.app.Application;
 
 import com.nike.dooit.api.DooitErrorHandler;
 import com.nike.dooit.api.interfaces.TipAPI;
+import com.nike.dooit.api.responses.EmptyResponse;
 import com.nike.dooit.models.Tip;
 
 import java.util.List;
@@ -32,5 +33,13 @@ public class TipManager extends DooitManager {
 
     public Observable<List<Tip>> retrieveFavourites(DooitErrorHandler errorHandler) {
         return useNetwork(tipAPI.getFavourites(), errorHandler);
+    }
+
+    public Observable<EmptyResponse> favourite(int id, DooitErrorHandler errorHandler) {
+        return useNetwork(tipAPI.favourite(id), errorHandler);
+    }
+
+    public Observable<EmptyResponse> unfavourite(int id, DooitErrorHandler errorHandler) {
+        return useNetwork(tipAPI.unfavourite(id), errorHandler);
     }
 }

@@ -10,6 +10,9 @@ import android.widget.Toast;
 
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.nike.dooit.R;
+import com.nike.dooit.api.DooitAPIError;
+import com.nike.dooit.api.DooitErrorHandler;
+import com.nike.dooit.api.managers.TipManager;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -33,8 +36,12 @@ public class TipViewHolder extends RecyclerView.ViewHolder {
     @BindView(R.id.card_tip_share)
     ImageView shareView;
 
-    public TipViewHolder(View itemView) {
+    int id;
+    TipManager tipManager;
+
+    public TipViewHolder(View itemView, TipManager tipManager) {
         super(itemView);
+        this.tipManager = tipManager;
         ButterKnife.bind(this, itemView);
     }
 
@@ -44,7 +51,13 @@ public class TipViewHolder extends RecyclerView.ViewHolder {
     }
 
     @OnClick(R.id.card_tip_fav)
-    public void favouriteTip(View view) {
+    public void favouriteTip(final View view) {
+        tipManager.favourite(id, new DooitErrorHandler() {
+            @Override
+            public void onError(DooitAPIError error) {
+
+            }
+        });
         Toast.makeText(view.getContext(), titleView.getText().toString() + " faved", Toast.LENGTH_SHORT).show();
     }
 
@@ -55,6 +68,10 @@ public class TipViewHolder extends RecyclerView.ViewHolder {
 
     public void setImageUri(Uri uri) {
         imageView.setImageURI(uri);
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public void setTitle(String title) {

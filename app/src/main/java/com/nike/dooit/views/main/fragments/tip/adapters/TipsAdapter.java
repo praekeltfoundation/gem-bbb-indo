@@ -1,5 +1,6 @@
 package com.nike.dooit.views.main.fragments.tip.adapters;
 
+import android.app.Application;
 import android.content.Context;
 import android.net.Uri;
 import android.support.v4.content.res.ResourcesCompat;
@@ -11,12 +12,16 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.nike.dooit.DooitApplication;
 import com.nike.dooit.R;
+import com.nike.dooit.api.managers.TipManager;
 import com.nike.dooit.models.Tip;
 import com.nike.dooit.views.main.fragments.tip.TipViewHolder;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.inject.Inject;
 
 /**
  * Created by Wimpie Victor on 2016/11/07.
@@ -27,13 +32,17 @@ public class TipsAdapter extends RecyclerView.Adapter<TipViewHolder> {
     private Context context;
     private List<Tip> tips = new ArrayList<>();
 
-    public TipsAdapter(Context context) {
+    @Inject
+    TipManager tipManager;
+
+    public TipsAdapter(DooitApplication application) {
         super();
-        this.context = context;
+        application.component.inject(this);
+        this.context = application.getApplicationContext();
     }
 
-    public TipsAdapter(Context context, List<Tip> tips) {
-        this(context);
+    public TipsAdapter(DooitApplication application, List<Tip> tips) {
+        this(application);
         this.tips = tips;
     }
 
@@ -46,12 +55,15 @@ public class TipsAdapter extends RecyclerView.Adapter<TipViewHolder> {
     public TipViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.card_tip, parent, false);
-        return new TipViewHolder(view);
+        return new TipViewHolder(view, tipManager);
     }
 
     @Override
     public void onBindViewHolder(TipViewHolder holder, int position) {
         Tip tip = tips.get(position);
+
+        // Id
+        holder.setId(tip.getId());
 
         // Title
         String readMore = context.getString(R.string.tips_card_read_more);

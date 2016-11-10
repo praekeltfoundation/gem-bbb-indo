@@ -103,14 +103,7 @@ public class TipsListFragment extends Fragment {
         recyclerView.setLayoutManager(gridManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
 
-        // Dummy Data
-        List<Tip> tips = new ArrayList<>();
-        tips.add(new Tip("Tip 1"));
-        tips.add(new Tip("Tip 2"));
-        tips.add(new Tip("Tip 3"));
-        // ----------
-
-        adapter = new TipsAdapter(getContext(), tips);
+        adapter = new TipsAdapter((DooitApplication) getActivity().getApplication());
         recyclerView.setAdapter(adapter);
 
         retrieveTips();
