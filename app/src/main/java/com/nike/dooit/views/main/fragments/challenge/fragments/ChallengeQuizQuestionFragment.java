@@ -60,7 +60,7 @@ public class ChallengeQuizQuestionFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_challengequizquestion, container, false);
         ButterKnife.bind(this, view);
         title.setText(mQuestion.getText());
-        RecyclerView.Adapter adapter = new ChallengeQuizOptionsListAdapter(mQuestion);
+        RecyclerView.Adapter adapter = new ChallengeQuizOptionsListAdapter(mQuestion, optionList);
         optionList.setAdapter(adapter);
         optionList.setLayoutManager(new LinearLayoutManager(getContext()));
         return view;

@@ -12,23 +12,50 @@ import com.nike.dooit.views.main.fragments.challenge.viewholders.QuizOptionViewH
 
 import java.util.List;
 
-import butterknife.BindView;
-
 /**
  * Created by Rudolph Jacobs on 2016-11-09.
  */
 
 public class ChallengeQuizOptionsListAdapter extends RecyclerView.Adapter<QuizOptionViewHolder> {
+    public interface OnOptionSelectedListener {
+        void onSelected(int position);
+    }
     private Question mQuestion;
     private List<Option> mOptionList;
+    private int selectedIdx;
+    public OnOptionSelectedListener optionSelectedListener;
 
-    @BindView(R.id.option_recycler_view) RecyclerView recycler;
+    RecyclerView recycler;
 
-    public ChallengeQuizOptionsListAdapter(Question question) {
+    public ChallengeQuizOptionsListAdapter(Question question, final RecyclerView recycler) {
         mQuestion = question;
         if (question != null) {
             mOptionList = question.getOptions();
         }
+        selectedIdx = -1;
+        this.recycler = recycler;
+        optionSelectedListener = new OnOptionSelectedListener() {
+            @Override
+            public void onSelected(int position) {
+                if (recycler != null) {
+                    if (selectedIdx >= 0 && selectedIdx < getItemCount()) {
+                        QuizOptionViewHolder oldView = (QuizOptionViewHolder) recycler.findViewHolderForAdapterPosition(selectedIdx);
+                        if (oldView != null) {
+                            oldView.setSelected(false);
+                        }
+                    }
+                    if (position >= 0 && position < getItemCount()) {
+                        QuizOptionViewHolder newView = (QuizOptionViewHolder) recycler.findViewHolderForAdapterPosition(position);
+                        if (newView != null) {
+                            newView.setSelected(true);
+                        }
+                    }
+                    selectedIdx = position;
+                } else {
+                    System.out.println("No recycler.");
+                }
+            }
+        };
     }
 
     @Override public int getItemCount() {
@@ -46,11 +73,12 @@ public class ChallengeQuizOptionsListAdapter extends RecyclerView.Adapter<QuizOp
     @Override public QuizOptionViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.fragment_challengequizquestion_option, parent, false);
-        return new QuizOptionViewHolder(view);
+        return new QuizOptionViewHolder(view, this);
     }
 
     @Override public void onBindViewHolder(final QuizOptionViewHolder holder, int position) {
         final Option item = mOptionList.get(position);
         holder.populate(item);
+        holder.setSelected(position == selectedIdx);
     }
 }
