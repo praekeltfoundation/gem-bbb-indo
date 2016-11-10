@@ -54,15 +54,19 @@
     <style name="AppTheme.Button.Big.Yellow" parent="AppTheme.Button.Big">
         <item name="android:background">@drawable/button_bkg_yellow</item>
         <item name="android:textColor">@color/purple</item>
+        <item name="android:foreground">?android:attr/selectableItemBackground</item>
     </style>
 
     <style name="AppTheme.Button.Big.Purple" parent="AppTheme.Button.Big">
         <item name="android:background">@drawable/button_bkg_purple</item>
+        <item name="android:textColor">@color/yellow</item>
+        <item name="android:foreground">?android:attr/selectableItemBackground</item>
     </style>
 
     <style name="AppTheme.Button.Big.Black" parent="AppTheme.Button.Big">
         <item name="android:background">@drawable/button_bkg_black</item>
         <item name="android:textColor">@color/yellow</item>
+        <item name="android:foreground">?android:attr/selectableItemBackground</item>
     </style>
 
     <style name="AppTheme.HorsontalProgress" parent="Widget.AppCompat.ProgressBar.Horizontal">
