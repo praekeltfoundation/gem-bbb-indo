@@ -4,11 +4,13 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
+import android.support.v4.app.ListFragment;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 
 import com.nike.dooit.R;
 import com.nike.dooit.models.Option;
@@ -16,13 +18,17 @@ import com.nike.dooit.models.Question;
 import com.nike.dooit.views.DooitActivity;
 import com.nike.dooit.views.helpers.activity.DooitActivityBuilder;
 import com.nike.dooit.views.main.adapters.MainTabAdapter;
+import com.nike.dooit.views.main.fragments.challenge.adapters.ChallengeQuizOptionsListAdapter;
 import com.nike.dooit.views.main.fragments.challenge.fragments.ChallengeQuizQuestionFragment;
 import com.nike.dooit.views.profile.ProfileActivity;
 
+import java.lang.annotation.Annotation;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnItemSelected;
 
-public class MainActivity extends DooitActivity implements ChallengeQuizQuestionFragment.OnListFragmentInteractionListener {
+public class MainActivity extends DooitActivity {
 
     @BindView(R.id.toolbar)
     Toolbar toolbar;
@@ -77,11 +83,6 @@ public class MainActivity extends DooitActivity implements ChallengeQuizQuestion
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         return super.onOptionsItemSelected(item);
-    }
-
-    @Override
-    public void onListFragmentInteraction(Option item) {
-
     }
 
     public static class Builder extends DooitActivityBuilder<MainActivity.Builder> {
