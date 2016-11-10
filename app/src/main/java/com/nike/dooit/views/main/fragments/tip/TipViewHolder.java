@@ -4,11 +4,13 @@ import android.support.v7.widget.RecyclerView;
 import android.text.SpannableString;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.nike.dooit.R;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 /**
  * Created by Wimpie Victor on 2016/11/07.
@@ -22,6 +24,11 @@ public class TipViewHolder extends RecyclerView.ViewHolder {
     public TipViewHolder(View itemView) {
         super(itemView);
         ButterKnife.bind(this, itemView);
+    }
+
+    @OnClick(R.id.card_tip_title)
+    public void startArticle(View view) {
+        Toast.makeText(view.getContext(), titleView.getText().toString() + " clicked", Toast.LENGTH_SHORT).show();
     }
 
     public void setTitle(String title) {
