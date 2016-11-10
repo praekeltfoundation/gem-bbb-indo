@@ -1,4 +1,4 @@
-package com.nike.dooit.views.main.fragments.tip;
+package com.nike.dooit.views.main.fragments.tip.adapters;
 
 import android.content.Context;
 import android.support.v4.app.Fragment;
@@ -9,6 +9,8 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.nike.dooit.R;
+import com.nike.dooit.views.main.fragments.tip.TipsListFragment;
+import com.nike.dooit.views.main.fragments.tip.TipsViewPagerPositions;
 
 /**
  * Created by Wimpie Victor on 2016/11/07.

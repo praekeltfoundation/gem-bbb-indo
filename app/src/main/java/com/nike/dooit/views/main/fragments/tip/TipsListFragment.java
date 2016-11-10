@@ -16,6 +16,7 @@ import com.nike.dooit.api.DooitAPIError;
 import com.nike.dooit.api.DooitErrorHandler;
 import com.nike.dooit.api.managers.TipManager;
 import com.nike.dooit.models.Tip;
+import com.nike.dooit.views.main.fragments.tip.adapters.TipsAdapter;
 import com.nike.dooit.views.main.fragments.tip.providers.TipProvider;
 
 import java.util.ArrayList;

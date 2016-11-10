@@ -1,4 +1,4 @@
-package com.nike.dooit.views.main.fragments.tip;
+package com.nike.dooit.views.main.fragments.tip.adapters;
 
 import android.content.Context;
 import android.support.v4.content.res.ResourcesCompat;
@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 
 import com.nike.dooit.R;
 import com.nike.dooit.models.Tip;
+import com.nike.dooit.views.main.fragments.tip.TipViewHolder;
 
 import java.util.ArrayList;
 import java.util.List;

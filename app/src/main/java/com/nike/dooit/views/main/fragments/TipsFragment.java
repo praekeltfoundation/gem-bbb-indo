@@ -12,7 +12,7 @@ import android.view.ViewGroup;
 
 import com.nike.dooit.R;
 import com.nike.dooit.api.managers.TipManager;
-import com.nike.dooit.views.main.fragments.tip.TipsTabAdapter;
+import com.nike.dooit.views.main.fragments.tip.adapters.TipsTabAdapter;
 
 import javax.inject.Inject;
 
