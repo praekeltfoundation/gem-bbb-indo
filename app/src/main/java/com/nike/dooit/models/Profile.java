@@ -12,8 +12,8 @@ public class Profile
     public static final int MALE = 0;
     public static final int FEMALE = 1;
 
-    private int age;
-    private int gender;
+    private Integer age;
+    private Integer gender;
     private String mobile;
     @SerializedName("profile_image_url") private String profileImageUrl;
 

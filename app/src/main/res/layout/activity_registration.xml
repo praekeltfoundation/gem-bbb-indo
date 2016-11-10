@@ -63,19 +63,21 @@
         <TextView
             android:id="@+id/activity_registration_age_text_view"
             style="@style/AppTheme.TextView.Regular.MediumHeading"
+            fontPath="fonts/Lato-Regular.ttf"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
             android:layout_below="@+id/activity_registration_name_example_text_edit"
             android:layout_marginTop="16dp"
-            android:text="How old are you?"
+            android:text="@string/reg_age"
+            android:textStyle="bold"
             android:textAllCaps="true"
-            android:visibility="gone" />
+             />
 
 
         <EditText
             android:id="@+id/activity_registration_age_text_edit"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="32dp"
             android:layout_alignParentStart="true"
             android:layout_below="@+id/activity_registration_age_text_view"
@@ -83,7 +85,7 @@
             android:background="@color/white"
             android:ems="10"
             android:inputType="numberSigned"
-            android:visibility="gone" />
+             />
 
         <TextView
             android:id="@+id/activity_registration_age_example_text_view"
@@ -93,8 +95,39 @@
             android:layout_alignParentStart="true"
             android:layout_below="@+id/activity_registration_age_text_edit"
             android:layout_marginTop="4dp"
-            android:text="Example: 16"
-            android:visibility="gone" />
+            android:text="@string/reg_example_age"
+             />
+
+        <RadioGroup
+            android:id="@+id/activity_registration_gender_radiogroup"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:layout_below="@+id/activity_registration_age_example_text_view"
+            android:layout_marginTop="16dp">
+
+            <RadioButton
+                android:text="@string/reg_gender_boy"
+                fontPath="fonts/Lato-Regular.ttf"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:id="@+id/radioButton2"
+                android:textColor="@color/yellow"
+                android:textAllCaps="true"
+                android:textAppearance="@style/AppTheme.TextView.Regular.MediumHeading"/>
+
+            <RadioButton
+                android:text="@string/reg_gender_girl"
+                fontPath="fonts/Lato-Regular.ttf"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:id="@+id/radioButton3"
+                android:textColor="@color/yellow"
+                android:textAllCaps="true"
+                android:textAppearance="@style/AppTheme.TextView.Regular.MediumHeading"/>
+        </RadioGroup>
 
         <TextView
             android:id="@+id/activity_registration_number_text_view"
@@ -103,7 +136,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
-            android:layout_below="@+id/activity_registration_age_example_text_view"
+            android:layout_below="@+id/activity_registration_gender_radiogroup"
             android:layout_marginTop="16dp"
             android:text="Mobile Number"
             android:textAllCaps="true"
