@@ -112,7 +112,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:id="@+id/radioButton2"
+                android:id="@+id/activity_registration_gender_boy"
                 android:textColor="@color/yellow"
                 android:textAllCaps="true"
                 android:textAppearance="@style/AppTheme.TextView.Regular.MediumHeading"/>
@@ -123,7 +123,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:id="@+id/radioButton3"
+                android:id="@+id/activity_registration_gender_girl"
                 android:textColor="@color/yellow"
                 android:textAllCaps="true"
                 android:textAppearance="@style/AppTheme.TextView.Regular.MediumHeading"/>
@@ -136,7 +136,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
-            android:layout_below="@+id/activity_registration_gender_radiogroup"
+            android:layout_below="@id/activity_registration_gender_radiogroup"
             android:layout_marginTop="16dp"
             android:text="Mobile Number"
             android:textAllCaps="true"

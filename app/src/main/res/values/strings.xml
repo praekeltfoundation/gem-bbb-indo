@@ -28,6 +28,7 @@
     <string name="reg_example_name_error_1">Name can\'t be blank</string>
     <string name="reg_age">How old are you?</string>
     <string name="reg_example_age">Example: 16</string>
+    <string name="reg_example_age_error_1">Age can\'t be blank</string>
     <string name="reg_gender">Gender</string>
     <string name="reg_gender_boy">Boy</string>
     <string name="reg_gender_girl">Girl</string>
