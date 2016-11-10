@@ -26,8 +26,7 @@
                 android:id="@+id/option_recycler_view"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:scrollbars="vertical"
-                android:background="@drawable/challenge_option_list_selector" />
+                android:scrollbars="vertical" />
         </ScrollView>
 
     </LinearLayout>
