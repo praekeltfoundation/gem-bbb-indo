@@ -1,10 +1,17 @@
 [
   {
+    "name": "goalGreeting",
+    "type": "multilineText",
+    "text": " $(goalGreeting) ",
+    "answers": [
+      {"name": "greeting", "next": "askGoalName", "text":"$(greeting)" } ]
+  },
+  {
     "name": "askGoalName",
-    "type": "text",
+    "type": "goalSelection",
     "text": " $(askGoalName) ",
     "answers": [
-      {"name": "goalName", "next": "askGoalImage", "text":"$(addOwnGoal)" } ]
+      {"name": "goalName", "next": "askGoalImage", "text":"$(addOwnGoal)", "type": "inlineEdit", "removeOnSelect": "askGoalName" } ]
   },
   {
     "name": "askGoalImage",

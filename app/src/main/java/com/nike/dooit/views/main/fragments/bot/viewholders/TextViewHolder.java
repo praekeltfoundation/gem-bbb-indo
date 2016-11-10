@@ -16,11 +16,11 @@ import butterknife.ButterKnife;
  * Created by Bernhard Müller on 11/7/2016.
  */
 
-public class AnswerViewHolder extends BaseBotViewHolder<Answer> {
-    @BindView(R.id.item_view_bot_answer_text)
+public class TextViewHolder extends BaseBotViewHolder<Answer> {
+    @BindView(R.id.item_view_bot_text)
     TextView textView;
 
-    public AnswerViewHolder(View itemView) {
+    public TextViewHolder(View itemView) {
         super(itemView);
         ButterKnife.bind(this, itemView);
     }

@@ -10,6 +10,7 @@ import android.text.TextUtils;
 public class BaseBotModel {
     private String text;
     private String name;
+    protected String type;
 
     String getResourceString(Context context, String jsonResourceName) {
         if (TextUtils.isEmpty(jsonResourceName))
@@ -24,5 +25,9 @@ public class BaseBotModel {
 
     public String getName() {
         return name;
+    }
+
+    public String getType() {
+        return type;
     }
 }

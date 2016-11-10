@@ -36,6 +36,7 @@
 
 
     <!--JSON GOALS-->
+    <string name="goalGreeting">Hello %s.;My Name is Dooit. I\'m gonna help  you save!</string>
     <string name="askGoalName">What are you saving for?</string>
     <string name="askGoalImage">Add an image for your savings goal to help keep you motivated,or press skip:</string>
     <string name="askGoalImageTake">Tap on the blue square…</string>
@@ -56,6 +57,7 @@
     <string name="infoGoalEnd">Thank you. That concludes the goal-setting process.</string>
 
     <!--Buttons-->
+    <string name="greeting">Hola!</string>
     <string name="Skip">Skip</string>
     <string name="Capture">Capture</string>
     <string name="knowAmountY">Yes</string>

@@ -17,12 +17,7 @@ public class Goal extends BaseBotModel {
 //        { "name": "Skip", "value": "Skip", "text":"$(Skip)", "next": "askKnowGoalAmount"}
 //        ]
 //    },
-    private String type;
     private List<Answer> answers;
-
-    public String getType() {
-        return type;
-    }
 
     public ArrayList<Answer> getAnswers() {
         if (answers == null)

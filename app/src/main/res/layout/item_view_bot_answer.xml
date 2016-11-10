@@ -6,7 +6,7 @@
     android:orientation="vertical">
 
     <TextView
-        android:id="@+id/item_view_answer_text"
+        android:id="@+id/item_view_bot_answer_text"
         style="@style/AppTheme.TextView.Regular.Large"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

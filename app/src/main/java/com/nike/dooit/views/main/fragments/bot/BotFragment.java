@@ -6,6 +6,7 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -102,12 +103,31 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
     public void onActive() {
         super.onActive();
         switch (type) {
+            case DEFAULT:
+                feed = new BotFeed<>(getContext());
+                feed.parse(R.raw.goals, Goal.class);
+                Goal item = (Goal) feed.getFirstItem();
+                currentModel = item;
+                getBotAdapter().setItem(item);
+                persisted.saveConversationState(getBotAdapter().getDataSet());
+                answerView.setData(item.getAnswers(), new HashtagView.DataStateTransform<Answer>() {
+                    @Override
+                    public CharSequence prepareSelected(Answer item) {
+                        return item.getText(getContext());
+                    }
+
+                    @Override
+                    public CharSequence prepare(Answer item) {
+                        return item.getText(getContext());
+                    }
+                });
+                break;
             case GOAL:
                 feed = new BotFeed<>(getContext());
                 feed.parse(R.raw.goals, Goal.class);
-                Goal goal = (Goal) feed.getFirstItem();
+                Goal goal = (Goal) feed.getItem(((Goal) feed.getFirstItem()).getAnswers().get(0).getNext());
                 currentModel = goal;
-                getBotAdapter().addItem(goal);
+                getBotAdapter().setItem(currentModel);
                 persisted.saveConversationState(getBotAdapter().getDataSet());
                 answerView.setData(goal.getAnswers(), new HashtagView.DataStateTransform<Answer>() {
                     @Override
@@ -139,24 +159,32 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
     public void onItemClicked(Object item) {
         Answer answer = (Answer) item;
         switch (type) {
+            case DEFAULT:
             case GOAL:
-                getBotAdapter().addItem(answer);
+                getBotAdapter().setItem(answer);
+                if (!TextUtils.isEmpty(answer.getRemoveOnSelect())) {
+                    BaseBotModel model = feed.getItem(answer.getRemoveOnSelect());
+                    getBotAdapter().removeItem(model);
+                }
                 persisted.saveConversationState(getBotAdapter().getDataSet());
-                currentModel = feed.getItem(answer.getNext());
-                answerView.setData(((Goal) currentModel).getAnswers(), new HashtagView.DataStateTransform<Answer>() {
-                    @Override
-                    public CharSequence prepareSelected(Answer item) {
-                        return item.getText(getContext());
-                    }
+//                if (TextUtils.isEmpty(answer.getType())) {
+                    currentModel = feed.getItem(answer.getNext());
+                    answerView.setData(((Goal) currentModel).getAnswers(), new HashtagView.DataStateTransform<Answer>() {
+                        @Override
+                        public CharSequence prepareSelected(Answer item) {
+                            return item.getText(getContext());
+                        }
 
-                    @Override
-                    public CharSequence prepare(Answer item) {
-                        return item.getText(getContext());
-                    }
-                });
+                        @Override
+                        public CharSequence prepare(Answer item) {
+                            return item.getText(getContext());
+                        }
+                    });
+//                }
                 break;
             case SAVINGS:
                 break;
         }
+        persisted.saveConversationState(getBotAdapter().getDataSet());
     }
 }

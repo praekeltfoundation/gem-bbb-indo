@@ -37,6 +37,7 @@
 
     <!--JSON GOALS-->
     <!--TODO: TRANSLATE-->
+    <string name="greeting">Hola!</string>
     <string name="askGoalName">What are you saving for?</string>
     <string name="askGoalImage">Add an image for your savings goal to help keep you motivated,or press skip:</string>
     <string name="askGoalImageTake">Tap on the blue square…</string>
