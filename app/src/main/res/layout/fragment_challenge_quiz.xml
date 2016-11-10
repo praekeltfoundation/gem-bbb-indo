@@ -4,25 +4,24 @@
     android:layout_height="match_parent"
     tools:context="com.nike.dooit.views.main.fragments.challenge.fragments.ChallengeQuizFragment">
 
-    <!-- TODO: Update blank fragment layout -->
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_margin="@dimen/challenge_margins">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            tools:layout_marginLeft="4dp"
-            android:layout_marginRight="4dp">
+            tools:layout_marginStart="4dp"
+            android:layout_marginEnd="4dp">
 
             <ProgressBar
                 style="?android:attr/progressBarStyleHorizontal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/fragment_challenge_quiz_progressbar"
-                android:layout_weight="1" />
+                android:id="@+id/fragment_challenge_quiz_progressbar"  />
 
         </LinearLayout>
 
