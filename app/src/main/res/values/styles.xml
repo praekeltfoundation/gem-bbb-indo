@@ -52,12 +52,16 @@
     </style>
 
     <style name="AppTheme.Button.Big.Yellow" parent="AppTheme.Button.Big">
-        <item name="android:background">@color/yellow</item>
+        <item name="android:background">@drawable/button_bkg_yellow</item>
         <item name="android:textColor">@color/purple</item>
     </style>
 
-    <style name="AppTheme.Button.Big.Purble" parent="AppTheme.Button.Big">
-        <item name="android:background">@color/purple</item>
+    <style name="AppTheme.Button.Big.Purple" parent="AppTheme.Button.Big">
+        <item name="android:background">@drawable/button_bkg_purple</item>
+    </style>
+
+    <style name="AppTheme.Button.Big.Black" parent="AppTheme.Button.Big">
+        <item name="android:background">@drawable/button_bkg_black</item>
         <item name="android:textColor">@color/yellow</item>
     </style>
 
