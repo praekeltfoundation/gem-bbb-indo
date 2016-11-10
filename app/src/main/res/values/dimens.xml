@@ -16,7 +16,8 @@
 
     <!-- Tips -->
     <dimen name="tip_card_margin">16dp</dimen>
-    <dimen name="tip_card_image_height">128dp</dimen>
-    <dimen name="tip_card_image_height_2">164dp</dimen>
+    <dimen name="tip_card_image_height">180dp</dimen>
+    <dimen name="tip_card_image_height_2">200dp</dimen>
     <dimen name="tip_card_title_margin">16dp</dimen>
+    <dimen name="tip_card_icon_margin">8dp</dimen>
 </resources>
