@@ -56,6 +56,10 @@ public class Tip {
         this.coverImageUrl = coverImageUrl;
     }
 
+    public boolean hasCoverImageUrl() {
+        return coverImageUrl != null && coverImageUrl != "";
+    }
+
     public List<String> getTags() {
         return tags;
     }

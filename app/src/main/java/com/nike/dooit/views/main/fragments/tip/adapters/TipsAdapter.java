@@ -1,6 +1,7 @@
 package com.nike.dooit.views.main.fragments.tip.adapters;
 
 import android.content.Context;
+import android.net.Uri;
 import android.support.v4.content.res.ResourcesCompat;
 import android.support.v7.widget.RecyclerView;
 import android.text.SpannableString;
@@ -52,6 +53,7 @@ public class TipsAdapter extends RecyclerView.Adapter<TipViewHolder> {
     public void onBindViewHolder(TipViewHolder holder, int position) {
         Tip tip = tips.get(position);
 
+        // Title
         String readMore = context.getString(R.string.tips_card_read_more);
 
         SpannableString st = new SpannableString(tip.getTitle() + " " + readMore);
@@ -65,6 +67,16 @@ public class TipsAdapter extends RecyclerView.Adapter<TipViewHolder> {
         st.setSpan(colorSpan, start, end, SpannableString.SPAN_EXCLUSIVE_INCLUSIVE);
 
         holder.setTitle(st);
+
+        // Image
+        if (tip.hasCoverImageUrl()) {
+            Uri uri = Uri.parse(tip.getCoverImageUrl());
+            holder.setImageUri(uri);
+        }
+
+        if (position % 3 == 0) {
+
+        }
     }
 
     public void updateTips(List<Tip> tips) {

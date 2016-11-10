@@ -1,11 +1,13 @@
 package com.nike.dooit.views.main.fragments.tip;
 
+import android.net.Uri;
 import android.support.v7.widget.RecyclerView;
 import android.text.SpannableString;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.facebook.drawee.view.SimpleDraweeView;
 import com.nike.dooit.R;
 
 import butterknife.BindView;
@@ -18,6 +20,9 @@ import butterknife.OnClick;
 
 public class TipViewHolder extends RecyclerView.ViewHolder {
 
+    @BindView(R.id.card_tip_image)
+    SimpleDraweeView imageView;
+
     @BindView(R.id.card_tip_title)
     TextView titleView;
 
@@ -29,6 +34,10 @@ public class TipViewHolder extends RecyclerView.ViewHolder {
     @OnClick(R.id.card_tip_title)
     public void startArticle(View view) {
         Toast.makeText(view.getContext(), titleView.getText().toString() + " clicked", Toast.LENGTH_SHORT).show();
+    }
+
+    public void setImageUri(Uri uri) {
+        imageView.setImageURI(uri);
     }
 
     public void setTitle(String title) {
