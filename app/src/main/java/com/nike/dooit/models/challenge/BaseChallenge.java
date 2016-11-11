@@ -15,16 +15,19 @@ import java.io.Serializable;
  */
 
 public abstract class BaseChallenge implements Parcelable, Serializable {
+    /*** Variables ***/
     private long id;
     private String name;
     @SerializedName("activation_date") private DateTime activationDate;
     @SerializedName("deactivation_date") private DateTime deactivationDate;
     private ChallengeType type;
 
+    /*** Constructors ***/
     BaseChallenge() {
         // Mandatory empty constructor
     }
 
+    /*** Getters/Setters ***/
     public long getId() {
         return id;
     }
@@ -64,6 +67,8 @@ public abstract class BaseChallenge implements Parcelable, Serializable {
     public void setDeactivationDate(DateTime deactivationDate) {
         this.deactivationDate = deactivationDate;
     }
+
+    /*** Parcelable methods ***/
 
     protected BaseChallenge(Parcel in) {
         id = in.readLong();
