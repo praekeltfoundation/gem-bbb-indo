@@ -136,12 +136,13 @@ public class TipsListFragment extends Fragment {
                 .subscribe(new Action1<List<Tip>>() {
                     @Override
                     public void call(final List<Tip> tips) {
-                        getActivity().runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                adapter.updateTips(tips);
-                            }
-                        });
+                        if (getActivity() != null)
+                            getActivity().runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    adapter.updateTips(tips);
+                                }
+                            });
                     }
                 });
     }
