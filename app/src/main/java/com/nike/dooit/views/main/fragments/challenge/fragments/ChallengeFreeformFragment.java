@@ -1,7 +1,5 @@
 package com.nike.dooit.views.main.fragments.challenge.fragments;
 
-import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -12,7 +10,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.nike.dooit.R;
-import com.nike.dooit.models.Challenge;
+import com.nike.dooit.models.challenge.FreeformChallenge;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -25,7 +23,7 @@ import butterknife.ButterKnife;
 public class ChallengeFreeformFragment extends Fragment {
     private static final String ARG_CHALLENGE = "challenge";
 
-    private Challenge challenge;
+    private FreeformChallenge challenge;
 
     @BindView(R.id.fragment_challenge_freeform_title) TextView title;
     @BindView(R.id.fragment_challenge_freeform_submission) EditText submissionBox;
@@ -43,7 +41,7 @@ public class ChallengeFreeformFragment extends Fragment {
      * @return A new instance of fragment ChallengeFreeformFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static ChallengeFreeformFragment newInstance(Challenge challenge) {
+    public static ChallengeFreeformFragment newInstance(FreeformChallenge challenge) {
         ChallengeFreeformFragment fragment = new ChallengeFreeformFragment();
         Bundle args = new Bundle();
         args.putParcelable(ARG_CHALLENGE, challenge);

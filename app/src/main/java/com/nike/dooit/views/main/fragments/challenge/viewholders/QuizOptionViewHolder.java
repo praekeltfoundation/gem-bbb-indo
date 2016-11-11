@@ -8,6 +8,8 @@ import android.widget.RadioButton;
 
 import com.nike.dooit.R;
 import com.nike.dooit.models.Option;
+import com.nike.dooit.models.challenge.QuizChallenge;
+import com.nike.dooit.models.challenge.QuizChallengeOption;
 import com.nike.dooit.views.main.fragments.challenge.adapters.ChallengeQuizOptionsListAdapter;
 
 import butterknife.BindView;
@@ -18,7 +20,7 @@ import butterknife.ButterKnife;
  */
 
 public class QuizOptionViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-    private Option option;
+    private QuizChallengeOption option;
     private ChallengeQuizOptionsListAdapter adapter;
 
     @BindView(R.id.option_text) RadioButton radio;
@@ -31,7 +33,7 @@ public class QuizOptionViewHolder extends RecyclerView.ViewHolder implements Vie
         this.adapter = adapter;
     }
 
-    public void populate(final Option item) {
+    public void populate(final QuizChallengeOption item) {
         option = item;
         radio.setText(option.getText());
     }

@@ -11,6 +11,8 @@ import android.widget.TextView;
 
 import com.nike.dooit.R;
 import com.nike.dooit.models.Question;
+import com.nike.dooit.models.challenge.QuizChallenge;
+import com.nike.dooit.models.challenge.QuizChallengeQuestion;
 import com.nike.dooit.views.main.fragments.challenge.adapters.ChallengeQuizOptionsListAdapter;
 
 import butterknife.BindView;
@@ -19,7 +21,7 @@ import butterknife.ButterKnife;
 public class ChallengeQuizQuestionFragment extends Fragment {
     private static final String ARG_QUESTION = "question";
 
-    private Question mQuestion = null;
+    private QuizChallengeQuestion mQuestion = null;
 
     @BindView(R.id.fragment_challengequizquestion_title) TextView title;
     @BindView(R.id.option_recycler_view) RecyclerView optionList;
@@ -39,7 +41,7 @@ public class ChallengeQuizQuestionFragment extends Fragment {
         return fragment;
     }
 
-    public static ChallengeQuizQuestionFragment newInstance(Question question) {
+    public static ChallengeQuizQuestionFragment newInstance(QuizChallengeQuestion question) {
         ChallengeQuizQuestionFragment fragment = new ChallengeQuizQuestionFragment();
         Bundle args = new Bundle();
         args.putParcelable("question", question);

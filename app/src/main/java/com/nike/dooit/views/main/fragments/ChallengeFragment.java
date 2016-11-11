@@ -1,7 +1,6 @@
 package com.nike.dooit.views.main.fragments;
 
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -10,11 +9,6 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.FrameLayout;
-import android.widget.ImageView;
-import android.widget.ProgressBar;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.nike.dooit.DooitApplication;
@@ -23,18 +17,14 @@ import com.nike.dooit.api.DooitAPIError;
 import com.nike.dooit.api.DooitErrorHandler;
 import com.nike.dooit.api.managers.ChallengeManager;
 import com.nike.dooit.helpers.Persisted;
-import com.nike.dooit.models.Challenge;
-import com.nike.dooit.views.main.fragments.challenge.fragments.ChallengeQuizQuestionFragment;
+import com.nike.dooit.models.challenge.BaseChallenge;
 import com.nike.dooit.views.main.fragments.challenge.fragments.ChallengeRegisterFragment;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
 
-import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 import rx.functions.Action1;
 
 public class ChallengeFragment extends Fragment {
@@ -45,7 +35,7 @@ public class ChallengeFragment extends Fragment {
     @Inject
     Persisted persisted;
 
-    Challenge challenge;
+    BaseChallenge challenge;
 
     public ChallengeFragment() {
         // Required empty public constructor
@@ -84,11 +74,11 @@ public class ChallengeFragment extends Fragment {
         challengeManager.retrieveChallenges(new DooitErrorHandler() {
             @Override
             public void onError(DooitAPIError error) {
-            Toast.makeText(getContext(), "Could not retrieve challenges", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), "Could not retrieve challenges", Toast.LENGTH_SHORT).show();
             }
-        }).subscribe(new Action1<List<Challenge>>() {
+        }).subscribe(new Action1<List<BaseChallenge>>() {
             @Override
-            public void call(List<Challenge> challenges) {
+            public void call(List<BaseChallenge> challenges) {
                 if (challenges.size() > 0) {
                     challenge = challenges.get(0);
                     persisted.setActiveChallenge(challenge);

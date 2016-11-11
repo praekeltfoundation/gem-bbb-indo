@@ -7,6 +7,8 @@ import android.support.v4.app.FragmentStatePagerAdapter;
 
 import com.nike.dooit.models.Challenge;
 import com.nike.dooit.models.Question;
+import com.nike.dooit.models.challenge.QuizChallenge;
+import com.nike.dooit.models.challenge.QuizChallengeQuestion;
 import com.nike.dooit.views.main.fragments.challenge.fragments.ChallengeQuizQuestionFragment;
 
 import java.util.List;
@@ -17,10 +19,10 @@ import java.util.List;
 
 public class ChallengeQuizPagerAdapter extends FragmentStatePagerAdapter {
     private Context context;
-    private Challenge challenge;
-    private List<Question> questions;
+    private QuizChallenge challenge;
+    private List<QuizChallengeQuestion> questions;
 
-    public ChallengeQuizPagerAdapter(FragmentManager fm, Context context, Challenge challenge) {
+    public ChallengeQuizPagerAdapter(FragmentManager fm, Context context, QuizChallenge challenge) {
         super(fm);
         this.context = context;
         this.challenge = challenge;

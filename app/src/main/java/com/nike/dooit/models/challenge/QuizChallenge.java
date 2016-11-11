@@ -13,16 +13,24 @@ import java.util.List;
  */
 
 public class QuizChallenge extends BaseChallenge {
-    List<Question> questions = new ArrayList<>();
+    List<QuizChallengeQuestion> questions = new ArrayList<>();
 
     QuizChallenge() {
         // Mandatory empty constructor
     }
 
+    public List<QuizChallengeQuestion> getQuestions() {
+        return questions;
+    }
+
+    public void setQuestions(List<QuizChallengeQuestion> questions) {
+        this.questions = questions;
+    }
+
     protected QuizChallenge(Parcel in) {
         super(in);
         if (in.readByte() == 0x01) {
-            questions = new ArrayList<Question>();
+            questions = new ArrayList<QuizChallengeQuestion>();
             in.readList(questions, Question.class.getClassLoader());
         } else {
             questions = null;

@@ -13,6 +13,7 @@ import android.widget.Toast;
 
 import com.nike.dooit.R;
 import com.nike.dooit.models.Challenge;
+import com.nike.dooit.models.challenge.QuizChallenge;
 import com.nike.dooit.views.main.fragments.challenge.adapters.ChallengeQuizPagerAdapter;
 
 import butterknife.BindView;
@@ -27,7 +28,7 @@ import butterknife.OnClick;
 public class ChallengeQuizFragment extends Fragment {
     private static final String ARG_CHALLENGE = "challenge";
 
-    private Challenge mChallenge;
+    private QuizChallenge mChallenge;
     private ChallengeQuizPagerAdapter mAdapter;
 
     @BindView(R.id.fragment_challenge_quiz_progressbar) ProgressBar mProgressBar;
@@ -46,7 +47,7 @@ public class ChallengeQuizFragment extends Fragment {
      * @param challenge Quiz type challenge.
      * @return A new instance of fragment ChallengeQuizFragment.
      */
-    public static ChallengeQuizFragment newInstance(Challenge challenge) {
+    public static ChallengeQuizFragment newInstance(QuizChallenge challenge) {
         ChallengeQuizFragment fragment = new ChallengeQuizFragment();
         Bundle args = new Bundle();
         args.putParcelable(ARG_CHALLENGE, challenge);

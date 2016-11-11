@@ -8,6 +8,9 @@ import android.view.ViewGroup;
 import com.nike.dooit.R;
 import com.nike.dooit.models.Option;
 import com.nike.dooit.models.Question;
+import com.nike.dooit.models.challenge.QuizChallenge;
+import com.nike.dooit.models.challenge.QuizChallengeOption;
+import com.nike.dooit.models.challenge.QuizChallengeQuestion;
 import com.nike.dooit.views.main.fragments.challenge.viewholders.QuizOptionViewHolder;
 
 import java.util.List;
@@ -20,14 +23,14 @@ public class ChallengeQuizOptionsListAdapter extends RecyclerView.Adapter<QuizOp
     public interface OnOptionSelectedListener {
         void onSelected(int position);
     }
-    private Question mQuestion;
-    private List<Option> mOptionList;
+    private QuizChallengeQuestion mQuestion;
+    private List<QuizChallengeOption> mOptionList;
     private int selectedIdx;
     public OnOptionSelectedListener optionSelectedListener;
 
     RecyclerView recycler;
 
-    public ChallengeQuizOptionsListAdapter(Question question, final RecyclerView recycler) {
+    public ChallengeQuizOptionsListAdapter(QuizChallengeQuestion question, final RecyclerView recycler) {
         mQuestion = question;
         if (question != null) {
             mOptionList = question.getOptions();
@@ -77,7 +80,7 @@ public class ChallengeQuizOptionsListAdapter extends RecyclerView.Adapter<QuizOp
     }
 
     @Override public void onBindViewHolder(final QuizOptionViewHolder holder, int position) {
-        final Option item = mOptionList.get(position);
+        final QuizChallengeOption item = mOptionList.get(position);
         holder.populate(item);
         holder.setSelected(position == selectedIdx);
     }

@@ -14,6 +14,11 @@ import android.widget.TextView;
 
 import com.nike.dooit.R;
 import com.nike.dooit.models.Challenge;
+import com.nike.dooit.models.challenge.BaseChallenge;
+import com.nike.dooit.models.challenge.FreeformChallenge;
+import com.nike.dooit.models.challenge.QuizChallenge;
+
+import java.io.InvalidClassException;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -22,9 +27,6 @@ import butterknife.OnClick;
 
 /**
  * A simple {@link Fragment} subclass.
- * Activities that contain this fragment must implement the
- * {@link ChallengeRegisterFragment.OnFragmentInteractionListener} interface
- * to handle interaction events.
  * Use the {@link ChallengeRegisterFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
@@ -34,7 +36,7 @@ public class ChallengeRegisterFragment extends Fragment {
     private static final String ARG_CHALLENGE = "challenge";
 
     // TODO: Rename and change types of parameters
-    private Challenge challenge;
+    private BaseChallenge challenge;
 
 //    private OnFragmentInteractionListener mListener;
     @BindView(R.id.fragment_challenge_image_image_view)
@@ -102,9 +104,18 @@ public class ChallengeRegisterFragment extends Fragment {
     @OnClick(R.id.fragment_challenge_register_button)
     void startChallenge() {
         FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
+        Fragment fragment;
+
+        if (challenge instanceof QuizChallenge) {
+            fragment = ChallengeQuizFragment.newInstance((QuizChallenge) challenge);
+        } else if (challenge instanceof FreeformChallenge) {
+            fragment = ChallengeFreeformFragment.newInstance((FreeformChallenge) challenge);
+        } else {
+            throw new RuntimeException("Invalid challenge type provided");
+        }
 
         //ft.setCustomAnimations(R.anim.slide_in_left, R.anim.slide_out_right);
-        ft.replace(R.id.fragment_challenge_container, ChallengeQuizFragment.newInstance(challenge));
+        ft.replace(R.id.fragment_challenge_container, fragment);
 
         ft.commit();
     }
