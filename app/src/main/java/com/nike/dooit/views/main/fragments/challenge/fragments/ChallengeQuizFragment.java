@@ -68,7 +68,7 @@ public class ChallengeQuizFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_challenge_quiz, container, false);
         ButterKnife.bind(this, view);
         mPager.setAdapter(mAdapter);
-        mProgressCounter.setText(String.format("Question 1/%d", mChallenge.getQuestions().size()));
+        mProgressCounter.setText(String.format("Question %d/%d", mPager.getCurrentItem(), mChallenge.getQuestions().size()));
         return view;
     }
 
