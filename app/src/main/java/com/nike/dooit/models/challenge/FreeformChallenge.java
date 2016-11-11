@@ -3,6 +3,7 @@ package com.nike.dooit.models.challenge;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.google.gson.annotations.SerializedName;
 import com.nike.dooit.models.Question;
 
 import java.util.ArrayList;
@@ -12,6 +13,7 @@ import java.util.ArrayList;
  */
 
 public class FreeformChallenge extends BaseChallenge {
+    @SerializedName("freetext_question") FreeformChallengeQuestion question;
 
     FreeformChallenge() {
         // Mandatory empty constructor
@@ -19,6 +21,11 @@ public class FreeformChallenge extends BaseChallenge {
 
     protected FreeformChallenge(Parcel in) {
         super(in);
+        if (in.readByte() == 0x1) {
+            question = in.readParcelable(FreeformChallengeQuestion.class.getClassLoader());
+        } else {
+            question = null;
+        }
     }
 
     @Override
@@ -29,6 +36,12 @@ public class FreeformChallenge extends BaseChallenge {
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         super.writeToParcel(dest, flags);
+        if (question == null) {
+            dest.writeByte((byte) 0x0);
+        } else {
+            dest.writeByte((byte) 0x1);
+            dest.writeParcelable(question, flags);
+        }
     }
 
     @SuppressWarnings("unused")
