@@ -25,4 +25,18 @@
         android:padding="4dp"
         android:textColor="@color/black"
         tools:text="Blank Answer" />
+
+
+    <TextView
+        android:id="@+id/item_view_bot_text_2"
+        style="@style/AppTheme.TextView.Regular.Large"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/item_view_bot_text"
+        android:layout_marginTop="5dp"
+        android:layout_toRightOf="@+id/item_view_bot_icon"
+        android:background="@drawable/rounded_squre_light_blue"
+        android:padding="4dp"
+        android:textColor="@color/black"
+        tools:text="Blank Answer" />
 </RelativeLayout>

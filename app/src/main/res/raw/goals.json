@@ -2,7 +2,8 @@
   {
     "name": "goalGreeting",
     "type": "multilineText",
-    "text": " $(goalGreeting) ",
+    "text": "$(goalGreeting)",
+    "textParams": ["USERNAME"],
     "answers": [
       {"name": "greeting", "next": "askGoalName", "text":"$(greeting)" } ]
   },
@@ -11,7 +12,7 @@
     "type": "goalSelection",
     "text": " $(askGoalName) ",
     "answers": [
-      {"name": "goalName", "next": "askGoalImage", "text":"$(addOwnGoal)", "type": "inlineEdit", "removeOnSelect": "askGoalName" } ]
+      {"name": "goalName", "next": "askGoalImage", "text":"$(addOwnGoal)", "type": "inlineEdit", "changeOnSelect": ["askGoalName", "$(askGoalNameInput)"], "inlineEditHint": "$(type_name_hint)" } ]
   },
   {
     "name": "askGoalImage",

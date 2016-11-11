@@ -21,9 +21,12 @@ import com.nike.dooit.helpers.bot.BotFeed;
 import com.nike.dooit.models.bot.Answer;
 import com.nike.dooit.models.bot.BaseBotModel;
 import com.nike.dooit.models.bot.Goal;
+import com.nike.dooit.models.enums.BotMessageType;
 import com.nike.dooit.models.enums.BotType;
 import com.nike.dooit.views.main.fragments.MainFragment;
 import com.nike.dooit.views.main.fragments.bot.adapters.BotAdapter;
+
+import java.util.ArrayList;
 
 import javax.inject.Inject;
 
@@ -88,7 +91,7 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
         conversationRecyclerView.setHasFixedSize(true);
         conversationRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         conversationRecyclerView.setItemAnimator(new DefaultItemAnimator());
-        conversationRecyclerView.setAdapter(new BotAdapter(getContext()));
+        conversationRecyclerView.setAdapter(new BotAdapter(getContext(), this));
 
     }
 
@@ -161,14 +164,23 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
         switch (type) {
             case DEFAULT:
             case GOAL:
-                getBotAdapter().setItem(answer);
                 if (!TextUtils.isEmpty(answer.getRemoveOnSelect())) {
                     BaseBotModel model = feed.getItem(answer.getRemoveOnSelect());
                     getBotAdapter().removeItem(model);
                 }
+                if (answer.getChangeOnSelect() != null) {
+                    BaseBotModel model = feed.getItem(answer.getChangeOnSelect().first);
+                    model.setText(answer.getChangeOnSelect().second);
+                    model.setType(BotMessageType.TEXT);
+                    getBotAdapter().removeItem(model);
+                    getBotAdapter().addItem(model);
+                }
+                getBotAdapter().addItem(answer);
                 persisted.saveConversationState(getBotAdapter().getDataSet());
-//                if (TextUtils.isEmpty(answer.getType())) {
+                if (TextUtils.isEmpty(answer.getType())
+                        || BotMessageType.getValueOf(answer.getType()).equals(BotMessageType.ANSWER)) {
                     currentModel = feed.getItem(answer.getNext());
+                    getBotAdapter().addItem(currentModel);
                     answerView.setData(((Goal) currentModel).getAnswers(), new HashtagView.DataStateTransform<Answer>() {
                         @Override
                         public CharSequence prepareSelected(Answer item) {
@@ -180,7 +192,9 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
                             return item.getText(getContext());
                         }
                     });
-//                }
+                } else {
+                    answerView.setData(new ArrayList<>());
+                }
                 break;
             case SAVINGS:
                 break;

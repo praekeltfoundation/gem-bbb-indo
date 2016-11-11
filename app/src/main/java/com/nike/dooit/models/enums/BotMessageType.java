@@ -14,7 +14,8 @@ public enum BotMessageType {
     TEXT(1),
     MULTILINETEXT(2),
     GOALSELECTION(3),
-    ANSWER(4);
+    ANSWER(4),
+    INLINEEDIT(5);
 
     private static Map<Integer, BotMessageType> map = new HashMap<>();
 

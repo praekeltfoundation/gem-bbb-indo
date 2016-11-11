@@ -5,11 +5,15 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
+import com.greenfrvr.hashtagview.HashtagView;
 import com.nike.dooit.R;
 import com.nike.dooit.models.bot.BaseBotModel;
 import com.nike.dooit.models.enums.BotMessageType;
 import com.nike.dooit.views.main.fragments.bot.viewholders.AnswerViewHolder;
 import com.nike.dooit.views.main.fragments.bot.viewholders.BaseBotViewHolder;
+import com.nike.dooit.views.main.fragments.bot.viewholders.InlineEditViewHolder;
+import com.nike.dooit.views.main.fragments.bot.viewholders.MultiLineTextViewHolder;
+import com.nike.dooit.views.main.fragments.bot.viewholders.TextViewHolder;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,19 +25,26 @@ import java.util.List;
 public class BotAdapter extends RecyclerView.Adapter<BaseBotViewHolder> {
     Context context;
     ArrayList<BaseBotModel> dataSet = new ArrayList<>();
+    HashtagView.TagsClickListener tagsClickListener;
 
-    public BotAdapter(Context context) {
+    public BotAdapter(Context context, HashtagView.TagsClickListener tagsClickListener) {
         this.context = context;
+        this.tagsClickListener = tagsClickListener;
     }
 
     @Override
     public BaseBotViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         switch (BotMessageType.getValueOf(viewType)) {
             case TEXT:
+                return new TextViewHolder(LayoutInflater.from(context).inflate(R.layout.item_view_bot_text, parent, false));
             case MULTILINETEXT:
+                return new MultiLineTextViewHolder(LayoutInflater.from(context).inflate(R.layout.item_view_bot_multi_line_text, parent, false));
             case GOALSELECTION:
+                return new TextViewHolder(LayoutInflater.from(context).inflate(R.layout.item_view_bot_text, parent, false));
             case ANSWER:
                 return new AnswerViewHolder(LayoutInflater.from(context).inflate(R.layout.item_view_bot_answer, parent, false));
+            case INLINEEDIT:
+                return new InlineEditViewHolder(LayoutInflater.from(context).inflate(R.layout.item_view_bot_inline_edit, parent, false), this, tagsClickListener);
             case UNDEFINED:
             default:
                 return null;
@@ -65,6 +76,12 @@ public class BotAdapter extends RecyclerView.Adapter<BaseBotViewHolder> {
         dataSet.clear();
         notifyItemRangeRemoved(0, size);
 
+        int pos = dataSet.size();
+        dataSet.add(pos, item);
+        notifyItemInserted(pos);
+    }
+
+    public synchronized void addItem(BaseBotModel item) {
         int pos = dataSet.size();
         dataSet.add(pos, item);
         notifyItemInserted(pos);

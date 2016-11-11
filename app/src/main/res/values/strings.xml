@@ -44,7 +44,8 @@
 
     <!--JSON GOALS-->
     <string name="goalGreeting">Hello %s.;My Name is Dooit. I\'m gonna help  you save!</string>
-    <string name="askGoalName">What are you saving for?</string>
+    <string name="askGoalName">Select the goal you want to save for, please.</string>
+    <string name="askGoalNameInput">What do you want to save for?</string>
     <string name="askGoalImage">Add an image for your savings goal to help keep you motivated,or press skip:</string>
     <string name="askGoalImageTake">Tap on the blue square…</string>
     <string name="askKnowGoalAmount">Do you know how much you need to save? </string>
@@ -84,6 +85,7 @@
     <string name="Save">Save</string>
     <string name="WithdrawButton">Withdraw</string>
     <string name="addOwnGoal">Add own goal</string>
+    <string name="type_name_hint">type name…</string>
 
     <string name="ToneY">Yes</string>
     <string name="ToneN">No</string>

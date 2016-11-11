@@ -29,12 +29,6 @@ public class TextViewHolder extends BaseBotViewHolder<Answer> {
     public void populate(BaseBotModel model) {
         this.dataModel = model;
         textView.setText(dataModel.getText(getContext()));
-        itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(getContext(), getModel().getNext(), Toast.LENGTH_LONG).show();
-            }
-        });
     }
 
     public Context getContext() {
