@@ -16,15 +16,22 @@
     <string name="welcome_page_1">Use Dooit to help you save money!</string>
     <string name="welcome_page_2">Monitor performance towards your savings goal!</string>
     <string name="welcome_page_3">Get rewards for your persistence in saving!</string>
+    <string name="lets_start">let\'s start</string>
 
     <!-- Tips -->
     <string name="tips_tab_favourites">Favourites</string>
     <string name="tips_tab_all">All</string>
 
-    <string name="lets_start">let\'s start</string>
+    <!-- Registration -->
     <string name="reg_t_c">By clicking register, you are agreeing\n to our Terms &amp; Condition</string>
     <string name="reg_example_name">Example: Aulia Dharmaningtyas</string>
     <string name="reg_example_name_error_1">Name can\'t be blank</string>
+    <string name="reg_age">How old are you?</string>
+    <string name="reg_example_age">Example: 16</string>
+    <string name="reg_example_age_error_1">Age can\'t be blank</string>
+    <string name="reg_gender">Gender</string>
+    <string name="reg_gender_boy">Boy</string>
+    <string name="reg_gender_girl">Girl</string>
     <string name="reg_example_number">Example: 1234567890</string>
     <string name="reg_example_number_error_1">Mobile Number can\'t be blank</string>
     <string name="reg_example_password">Must have at least 6 characters</string>

@@ -9,6 +9,7 @@ import android.text.SpannableString;
 import android.text.TextUtils;
 import android.text.style.ForegroundColorSpan;
 import android.widget.EditText;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -43,6 +44,12 @@ public class RegistrationActivity extends DooitActivity {
     @BindView(R.id.activity_registration_name_text_edit)
     EditText name;
 
+    @BindView(R.id.activity_registration_age_text_edit)
+    EditText age;
+
+    @BindView(R.id.activity_registration_gender_radiogroup)
+    RadioGroup gender;
+
     @BindView(R.id.activity_registration_password_edit_text)
     EditText password;
 
@@ -51,6 +58,9 @@ public class RegistrationActivity extends DooitActivity {
 
     @BindView(R.id.activity_registration_name_example_text_edit)
     TextView nameHint;
+
+    @BindView(R.id.activity_registration_age_example_text_view)
+    TextView ageHint;
 
     @BindView(R.id.activity_registration_number_example_text_edit)
     TextView numberHint;
@@ -74,6 +84,9 @@ public class RegistrationActivity extends DooitActivity {
 
         Spannable spanTc = new SpannableString(getString(R.string.reg_t_c));
         Spannable spanLogin = new SpannableString(getString(R.string.already_registered_log_in));
+
+        // Default gender
+        gender.check(R.id.activity_registration_gender_boy);
 
         if (!getLocal().getCountry().equals("in")) {
             spanTc.setSpan(new ForegroundColorSpan(ResourcesCompat.getColor(getResources(), R.color.pink, getTheme())), spanTc.length() - 17, spanTc.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
@@ -122,7 +135,7 @@ public class RegistrationActivity extends DooitActivity {
     }
 
     private boolean detailsValid() {
-        return isNameValid() & isNumberValid() & isPasswordValid();
+        return isNameValid() & isAgeValid() & isNumberValid() & isPasswordValid();
     }
 
 
@@ -135,9 +148,22 @@ public class RegistrationActivity extends DooitActivity {
         User user = new User();
         user.setUsername(name.getText().toString());
         user.setPassword(password.getText().toString());
+
         Profile profile = new Profile();
         profile.setMobile(number.getText().toString());
+        profile.setAge(Integer.parseInt(age.getText().toString()));
+
+        switch (gender.getCheckedRadioButtonId()) {
+            case R.id.activity_registration_gender_boy:
+                profile.setGender(Profile.MALE);
+                break;
+            case R.id.activity_registration_gender_girl:
+                profile.setGender(Profile.FEMALE);
+                break;
+        }
+
         user.setProfile(profile);
+
         return user;
     }
 
@@ -150,6 +176,19 @@ public class RegistrationActivity extends DooitActivity {
         } else {
             nameHint.setText(R.string.reg_example_name);
             nameHint.setTextColor(ResourcesCompat.getColor(getResources(), R.color.white, getTheme()));
+        }
+        return valid;
+    }
+
+    public boolean isAgeValid() {
+        boolean valid;
+        valid = !TextUtils.isEmpty(age.getText());
+        if (!valid) {
+            ageHint.setText(R.string.reg_example_age_error_1);
+            ageHint.setTextColor(ResourcesCompat.getColor(getResources(), android.R.color.holo_red_light, getTheme()));
+        } else {
+            ageHint.setText(R.string.reg_example_age);
+            ageHint.setTextColor(ResourcesCompat.getColor(getResources(), R.color.white, getTheme()));
         }
         return valid;
     }
