@@ -3,6 +3,7 @@ package com.nike.dooit.views.main.fragments.tip;
 import android.net.Uri;
 import android.support.v7.widget.RecyclerView;
 import android.text.SpannableString;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -23,6 +24,8 @@ import butterknife.OnClick;
  */
 
 public class TipViewHolder extends RecyclerView.ViewHolder {
+
+    private static final String TAG = "TipViewHolder";
 
     @BindView(R.id.card_tip_image)
     SimpleDraweeView imageView;
@@ -55,9 +58,9 @@ public class TipViewHolder extends RecyclerView.ViewHolder {
         tipManager.favourite(id, new DooitErrorHandler() {
             @Override
             public void onError(DooitAPIError error) {
-
+                
             }
-        });
+        }).subscribe();
         Toast.makeText(view.getContext(), titleView.getText().toString() + " faved", Toast.LENGTH_SHORT).show();
     }
 
