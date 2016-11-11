@@ -16,15 +16,23 @@
     <string name="welcome_page_1">Gunakan Dooit untuk membantu kalian menabung!</string>
     <string name="welcome_page_2">Pantau capaianmu menuju tujuan menabungmu!</string>
     <string name="welcome_page_3">Dapatkan hadiah untuk kegigihan kalian dalam menabung!</string>
+    <string name="lets_start">ayo mulai</string>
 
     <!-- Tips -->
     <string name="tips_tab_favourites">Favorit</string>
     <string name="tips_tab_all">Semua</string>
+    <string name="tips_card_read_more">Baca lebih banyak</string>
 
-    <string name="lets_start">AYO MULAI</string>
+    <!-- Registration -->
     <string name="reg_t_c">Dengan mengklik register, Anda setuju dengan Persyaratan dan Kondisi kami></string>
     <string name="reg_example_name">Contoh: Aulia Dharmaningtyas</string>
     <string name="reg_example_name_error_1">Nama tidak boleh kosong</string>
+    <string name="reg_age">Berapakah umur Anda?</string>
+    <string name="reg_example_age">Contoh: 16</string>
+    <string name="reg_example_age_error_1">Umur tidak boleh kosong</string>
+    <string name="reg_gender">Jenis kelamin</string>
+    <string name="reg_gender_boy">Laki-laki</string>
+    <string name="reg_gender_girl">Gadis</string>
     <string name="reg_example_number">Contoh: 1234567890</string>
     <string name="reg_example_number_error_1">Nomor ponsel tidak boleh kosong</string>
     <string name="reg_example_password">Harus memiliki minimal 6 karakter</string>
