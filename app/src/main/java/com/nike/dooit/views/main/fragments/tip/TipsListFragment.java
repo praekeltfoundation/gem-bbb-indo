@@ -6,6 +6,8 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
@@ -58,10 +60,21 @@ public class TipsListFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
         ((DooitApplication) getActivity().getApplication()).component.inject(this);
         if (getArguments() != null) {
             pos = TipsViewPagerPositions.getValueOf(getArguments().getInt(POS));
             tipProvider = pos.newProvider((DooitApplication) getActivity().getApplication());
+        }
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+        if (tipProvider.hasTips()) {
+            adapter.updateTips(tipProvider.loadTips());
+        } else {
+            retrieveTips();
         }
     }
 
@@ -74,7 +87,6 @@ public class TipsListFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        // TODO: Look in persist for fragments. API Retrieve otherwise.
         if (tipProvider.hasTips()) {
             adapter.updateTips(tipProvider.loadTips());
         } else {
@@ -85,7 +97,6 @@ public class TipsListFragment extends Fragment {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        // TODO: Delete tips from Persist
         tipProvider.clearTips();
     }
 

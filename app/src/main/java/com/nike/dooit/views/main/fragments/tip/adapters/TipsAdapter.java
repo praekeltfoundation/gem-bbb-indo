@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 import com.nike.dooit.DooitApplication;
 import com.nike.dooit.R;
 import com.nike.dooit.api.managers.TipManager;
+import com.nike.dooit.helpers.Persisted;
 import com.nike.dooit.models.Tip;
 import com.nike.dooit.views.main.fragments.tip.TipViewHolder;
 
@@ -33,6 +34,9 @@ public class TipsAdapter extends RecyclerView.Adapter<TipViewHolder> {
 
     @Inject
     TipManager tipManager;
+
+    @Inject
+    Persisted persisted;
 
     public TipsAdapter(DooitApplication application) {
         super();
@@ -54,7 +58,7 @@ public class TipsAdapter extends RecyclerView.Adapter<TipViewHolder> {
     public TipViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.card_tip, parent, false);
-        return new TipViewHolder(view, tipManager);
+        return new TipViewHolder(view);
     }
 
     @Override

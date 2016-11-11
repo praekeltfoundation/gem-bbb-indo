@@ -63,4 +63,6 @@ public interface DooitComponent {
     void inject(TipProvider o);
 
     void inject(TipsAdapter o);
+
+    void inject(TipViewHolder o);
 }
