@@ -217,13 +217,11 @@
             android:id="@+id/activity_registration_register_button"
             style="@style/AppTheme.Button.Big.Yellow"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
             android:layout_below="@+id/activity_registration_t_c_text_view"
-            android:layout_marginEnd="18dp"
-            android:layout_marginStart="18dp"
             android:layout_marginTop="8dp"
             android:text="Register"
-            android:textAllCaps="true" />
+            android:textAllCaps="true"
+            android:layout_height="wrap_content" />
 
         <TextView
             android:id="@+id/activity_registration_login_text_view"
