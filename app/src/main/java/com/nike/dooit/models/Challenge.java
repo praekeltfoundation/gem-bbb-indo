@@ -4,6 +4,7 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 import com.google.gson.annotations.SerializedName;
+import com.nike.dooit.models.enums.ChallengeType;
 
 import org.joda.time.DateTime;
 
@@ -22,7 +23,7 @@ public class Challenge implements Serializable, Parcelable {
     private DateTime activationDate;
     @SerializedName("deactivation_date")
     private DateTime deactivationDate;
-    private String type;
+    private ChallengeType type;
     private List<Question> questions;
 
     public String getId() {
@@ -57,11 +58,11 @@ public class Challenge implements Serializable, Parcelable {
         this.questions = questions;
     }
 
-    public String getType() {
+    public ChallengeType getType() {
         return type;
     }
 
-    public void setType(String type) {
+    public void setType(ChallengeType type) {
         this.type = type;
     }
 
@@ -78,7 +79,7 @@ public class Challenge implements Serializable, Parcelable {
         name = in.readString();
         activationDate = (DateTime) in.readValue(DateTime.class.getClassLoader());
         deactivationDate = (DateTime) in.readValue(DateTime.class.getClassLoader());
-        type = in.readString();
+        type = (ChallengeType) in.readValue(ChallengeType.class.getClassLoader());
         if (in.readByte() == 0x01) {
             questions = new ArrayList<Question>();
             in.readList(questions, Question.class.getClassLoader());
@@ -98,7 +99,7 @@ public class Challenge implements Serializable, Parcelable {
         dest.writeString(name);
         dest.writeValue(activationDate);
         dest.writeValue(deactivationDate);
-        dest.writeString(type);
+        dest.writeValue(type);
         if (questions == null) {
             dest.writeByte((byte) (0x00));
         } else {
