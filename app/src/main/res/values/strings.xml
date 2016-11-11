@@ -21,6 +21,7 @@
     <!-- Tips -->
     <string name="tips_tab_favourites">Favourites</string>
     <string name="tips_tab_all">All</string>
+    <string name="tips_card_read_more">Read more</string>
 
     <!-- Registration -->
     <string name="reg_t_c">By clicking register, you are agreeing\n to our Terms &amp; Condition</string>
