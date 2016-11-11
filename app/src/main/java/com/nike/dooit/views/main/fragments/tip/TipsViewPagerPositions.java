@@ -1,7 +1,7 @@
 package com.nike.dooit.views.main.fragments.tip;
 
+import com.nike.dooit.DooitApplication;
 import com.nike.dooit.R;
-import com.nike.dooit.api.managers.TipManager;
 import com.nike.dooit.views.main.fragments.tip.providers.AllTips;
 import com.nike.dooit.views.main.fragments.tip.providers.FavouriteTips;
 import com.nike.dooit.views.main.fragments.tip.providers.TipProvider;
@@ -45,12 +45,12 @@ public enum TipsViewPagerPositions {
         return titleRes;
     }
 
-    public TipProvider newProvider(TipManager tipManager) {
+    public TipProvider newProvider(DooitApplication application) {
         switch (this) {
             case ALL:
-                return new AllTips(tipManager);
+                return new AllTips(application);
             case FAVOURITES:
-                return new FavouriteTips(tipManager);
+                return new FavouriteTips(application);
             default:
                 return null;
         }

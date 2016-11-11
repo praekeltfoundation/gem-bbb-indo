@@ -3,7 +3,6 @@ package com.nike.dooit.views.main.fragments.tip;
 import android.net.Uri;
 import android.support.v7.widget.RecyclerView;
 import android.text.SpannableString;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;

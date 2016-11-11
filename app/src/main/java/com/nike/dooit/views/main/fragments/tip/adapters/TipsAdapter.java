@@ -1,6 +1,5 @@
 package com.nike.dooit.views.main.fragments.tip.adapters;
 
-import android.app.Application;
 import android.content.Context;
 import android.net.Uri;
 import android.support.v4.content.res.ResourcesCompat;
@@ -94,5 +93,9 @@ public class TipsAdapter extends RecyclerView.Adapter<TipViewHolder> {
     public void updateTips(List<Tip> tips) {
         this.tips = tips;
         notifyDataSetChanged();
+    }
+
+    public List<Tip> getTips() {
+        return tips;
     }
 }

@@ -14,15 +14,11 @@ import com.nike.dooit.DooitApplication;
 import com.nike.dooit.R;
 import com.nike.dooit.api.DooitAPIError;
 import com.nike.dooit.api.DooitErrorHandler;
-import com.nike.dooit.api.managers.TipManager;
 import com.nike.dooit.models.Tip;
 import com.nike.dooit.views.main.fragments.tip.adapters.TipsAdapter;
 import com.nike.dooit.views.main.fragments.tip.providers.TipProvider;
 
-import java.util.ArrayList;
 import java.util.List;
-
-import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -35,9 +31,6 @@ public class TipsListFragment extends Fragment {
 
     @BindView(R.id.fragment_tips_list_recyclerview)
     RecyclerView recyclerView;
-
-    @Inject
-    TipManager tipManager;
 
     TipsViewPagerPositions pos;
     TipProvider tipProvider;
@@ -68,21 +61,32 @@ public class TipsListFragment extends Fragment {
         ((DooitApplication) getActivity().getApplication()).component.inject(this);
         if (getArguments() != null) {
             pos = TipsViewPagerPositions.getValueOf(getArguments().getInt(POS));
-            tipProvider = pos.newProvider(tipManager);
+            tipProvider = pos.newProvider((DooitApplication) getActivity().getApplication());
         }
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        tipProvider.saveTips(adapter.getTips());
     }
 
     @Override
     public void onResume() {
         super.onResume();
         // TODO: Look in persist for fragments. API Retrieve otherwise.
-        retrieveTips();
+        if (tipProvider.hasTips()) {
+            adapter.updateTips(tipProvider.loadTips());
+        } else {
+            retrieveTips();
+        }
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
         // TODO: Delete tips from Persist
+        tipProvider.clearTips();
     }
 
     @Override
