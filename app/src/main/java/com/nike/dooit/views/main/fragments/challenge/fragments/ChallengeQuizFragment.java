@@ -12,7 +12,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.nike.dooit.R;
-import com.nike.dooit.models.Challenge;
 import com.nike.dooit.models.challenge.QuizChallenge;
 import com.nike.dooit.views.main.fragments.challenge.adapters.ChallengeQuizPagerAdapter;
 

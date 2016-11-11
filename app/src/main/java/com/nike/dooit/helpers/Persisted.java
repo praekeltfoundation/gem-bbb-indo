@@ -5,7 +5,6 @@ import android.text.TextUtils;
 import android.util.Log;
 
 import com.nike.dooit.DooitApplication;
-import com.nike.dooit.models.Challenge;
 import com.nike.dooit.models.Token;
 import com.nike.dooit.models.User;
 import com.nike.dooit.models.bot.BaseBotModel;

@@ -7,8 +7,6 @@ import android.widget.LinearLayout;
 import android.widget.RadioButton;
 
 import com.nike.dooit.R;
-import com.nike.dooit.models.Option;
-import com.nike.dooit.models.challenge.QuizChallenge;
 import com.nike.dooit.models.challenge.QuizChallengeOption;
 import com.nike.dooit.views.main.fragments.challenge.adapters.ChallengeQuizOptionsListAdapter;
 

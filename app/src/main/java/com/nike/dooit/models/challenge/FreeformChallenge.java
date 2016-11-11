@@ -4,9 +4,6 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 import com.google.gson.annotations.SerializedName;
-import com.nike.dooit.models.Question;
-
-import java.util.ArrayList;
 
 /**
  * Created by Rudolph Jacobs on 2016-11-11.

@@ -13,16 +13,12 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.nike.dooit.R;
-import com.nike.dooit.models.Challenge;
 import com.nike.dooit.models.challenge.BaseChallenge;
 import com.nike.dooit.models.challenge.FreeformChallenge;
 import com.nike.dooit.models.challenge.QuizChallenge;
 
-import java.io.InvalidClassException;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnCheckedChanged;
 import butterknife.OnClick;
 
 /**

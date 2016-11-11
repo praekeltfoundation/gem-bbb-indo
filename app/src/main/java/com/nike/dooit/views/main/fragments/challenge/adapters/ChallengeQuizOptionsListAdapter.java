@@ -6,9 +6,6 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.nike.dooit.R;
-import com.nike.dooit.models.Option;
-import com.nike.dooit.models.Question;
-import com.nike.dooit.models.challenge.QuizChallenge;
 import com.nike.dooit.models.challenge.QuizChallengeOption;
 import com.nike.dooit.models.challenge.QuizChallengeQuestion;
 import com.nike.dooit.views.main.fragments.challenge.viewholders.QuizOptionViewHolder;

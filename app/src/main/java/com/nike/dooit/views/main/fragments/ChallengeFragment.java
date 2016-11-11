@@ -62,7 +62,7 @@ public class ChallengeFragment extends Fragment {
         ButterKnife.bind(this, view);
 
 ////        if (persisted.hasCurrentChallenge()) {
-////            challenge = (Challenge) persisted.getCurrentChallenge();
+////            challenge = (BaseChallenge) persisted.getCurrentChallenge();
 ////            startChallenge();
 ////        }
         return view;

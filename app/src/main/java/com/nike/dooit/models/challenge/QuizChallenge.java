@@ -3,8 +3,6 @@ package com.nike.dooit.models.challenge;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import com.nike.dooit.models.Question;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,7 +29,7 @@ public class QuizChallenge extends BaseChallenge {
         super(in);
         if (in.readByte() == 0x01) {
             questions = new ArrayList<QuizChallengeQuestion>();
-            in.readList(questions, Question.class.getClassLoader());
+            in.readList(questions, QuizChallengeQuestion.class.getClassLoader());
         } else {
             questions = null;
         }
