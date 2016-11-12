@@ -12,12 +12,16 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.nike.dooit.R;
+import com.nike.dooit.models.challenge.ParticipantAnswer;
 import com.nike.dooit.models.challenge.QuizChallenge;
 import com.nike.dooit.models.challenge.QuizChallengeOption;
 import com.nike.dooit.models.challenge.QuizChallengeQuestion;
 import com.nike.dooit.views.main.fragments.challenge.adapters.ChallengeQuizPagerAdapter;
 import com.nike.dooit.views.main.fragments.challenge.interfaces.OnOptionSelectedListener;
 import com.nike.dooit.views.main.fragments.challenge.interfaces.OnOptionChangeListener;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -35,6 +39,7 @@ public class ChallengeQuizFragment extends Fragment implements OnOptionChangeLis
     private ChallengeQuizPagerAdapter mAdapter;
     private QuizChallengeQuestion currentQuestion = null;
     private QuizChallengeOption currentOption = null;
+    private List<ParticipantAnswer> answers = new ArrayList<ParticipantAnswer>();
 
     @BindView(R.id.fragment_challenge_quiz_progressbar) ProgressBar mProgressBar;
     @BindView(R.id.fragment_challenge_quiz_progresscounter) TextView mProgressCounter;
@@ -80,6 +85,10 @@ public class ChallengeQuizFragment extends Fragment implements OnOptionChangeLis
     }
 
     @OnClick(R.id.fragment_challenge_quiz_checkbutton) public void checkAnswer() {
+        if (currentOption == null) {
+            Toast.makeText(getContext(), "You must select an answer", Toast.LENGTH_SHORT).show();
+            return;
+        }
         Toast.makeText(
                 getContext(),
                 String.format("Q: \"%s\"; A: \"%s\"",
@@ -89,9 +98,11 @@ public class ChallengeQuizFragment extends Fragment implements OnOptionChangeLis
 
         if (currentOption.getCorrect()) {
             Toast.makeText(getContext(), "A winner is you", Toast.LENGTH_SHORT).show();
+            captureAnswer(currentQuestion, currentOption);
             nextQuestion();
         } else {
             Toast.makeText(getContext(), "My name is Error", Toast.LENGTH_SHORT).show();
+            captureAnswer(currentQuestion, currentOption);
         }
     }
 
@@ -100,7 +111,12 @@ public class ChallengeQuizFragment extends Fragment implements OnOptionChangeLis
         currentOption = option;
     }
 
+    public void captureAnswer(QuizChallengeQuestion question, QuizChallengeOption option) {
+        answers.add(new ParticipantAnswer(question.getId(), option.getId()));
+    }
+
     public void nextQuestion() {
+        currentOption = null;
         int idx = mPager.getCurrentItem() + 1;
         if (idx < mPager.getChildCount()) {
             mPager.setCurrentItem(idx + 1);
