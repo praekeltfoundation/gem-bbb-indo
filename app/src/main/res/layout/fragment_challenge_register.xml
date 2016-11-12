@@ -90,7 +90,7 @@
 
         <Button
             android:id="@+id/fragment_challenge_register_button"
-            style="@style/AppTheme.Button.Big.Purble"
+            style="@style/AppTheme.Button.Big.Purple"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/fragment_challenge_t_c_text_view"
