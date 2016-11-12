@@ -7,15 +7,20 @@
     <ImageView
         android:id="@+id/fragment_welcome_image"
         android:layout_width="match_parent"
-        android:src="@android:drawable/sym_def_app_icon"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:src="@color/yellow" />
 
     <TextView
-        android:text="@string/welcome_page_empty"
-        style="@style/AppTheme.TextView.Regular.MediumHeading"
+        android:id="@+id/fragment_welcome_text"
+        style="@style/AppTheme.TextView.Regular.ExtraLarge"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/fragment_welcome_text"
+        android:layout_gravity="bottom"
+        android:layout_marginStart="24dp"
+        android:layout_marginEnd="24dp"
+        android:layout_marginBottom="88dp"
+        android:lines="3"
+        android:text="@string/welcome_page_empty"
         android:textAlignment="center"
-        android:layout_gravity="center_vertical" />
+        android:textColor="@color/black" />
 </FrameLayout>
