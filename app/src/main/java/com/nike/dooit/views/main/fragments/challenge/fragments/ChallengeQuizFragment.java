@@ -86,10 +86,26 @@ public class ChallengeQuizFragment extends Fragment implements OnOptionChangeLis
                 currentQuestion != null ? currentQuestion.getText() : "<NONE>",
                 currentOption != null ? currentOption.getText() : "<NONE>"),
                 Toast.LENGTH_SHORT).show();
+
+        if (currentOption.getCorrect()) {
+            Toast.makeText(getContext(), "A winner is you", Toast.LENGTH_SHORT).show();
+            nextQuestion();
+        } else {
+            Toast.makeText(getContext(), "My name is Error", Toast.LENGTH_SHORT).show();
+        }
     }
 
     @Override public void onOptionChange(QuizChallengeQuestion question, QuizChallengeOption option) {
         currentQuestion = question;
         currentOption = option;
+    }
+
+    public void nextQuestion() {
+        int idx = mPager.getCurrentItem() + 1;
+        if (idx < mPager.getChildCount()) {
+            mPager.setCurrentItem(idx + 1);
+        } else {
+            Toast.makeText(getContext(), "You have completed all questions", Toast.LENGTH_SHORT).show();
+        }
     }
 }
