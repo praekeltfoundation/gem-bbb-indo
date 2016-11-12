@@ -1,6 +1,6 @@
 package com.nike.dooit.api.interfaces;
 
-import com.nike.dooit.models.Entry;
+import com.nike.dooit.models.challenge.QuizChallengeEntry;
 import com.nike.dooit.models.challenge.BaseChallenge;
 
 import java.util.List;
@@ -24,7 +24,7 @@ public interface ChallengeAPI {
     Observable<BaseChallenge> getChallenge(@Path("id") int id);
 
     @POST("/api/entries/")
-    Observable<Entry> postEntry(@Body Entry entry);
+    Observable<QuizChallengeEntry> postEntry(@Body QuizChallengeEntry quizChallengeEntry);
 
 
 }

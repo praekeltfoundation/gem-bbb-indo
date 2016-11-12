@@ -1,23 +1,28 @@
-package com.nike.dooit.models;
+package com.nike.dooit.models.challenge;
 
 import com.google.gson.annotations.SerializedName;
 
 import org.joda.time.DateTime;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
  * Created by herman on 2016/11/05.
  */
 
-public class Entry {
+public class QuizChallengeEntry implements Serializable {
 
     private int user;
     private int challenge;
     @SerializedName("date_completed") private DateTime dateCompleted = new DateTime();
     private List<ParticipantAnswer> answers;
 
-    public Entry(int user, int challenge, List<ParticipantAnswer> answers) {
+    public QuizChallengeEntry() {
+        // Mandatory empty constructor
+    }
+
+    public QuizChallengeEntry(int user, int challenge, List<ParticipantAnswer> answers) {
         this.user = user;
         this.challenge = challenge;
         this.dateCompleted = new DateTime();
