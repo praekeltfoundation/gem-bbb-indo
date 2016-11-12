@@ -1,32 +1,47 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     tools:context="com.nike.dooit.views.main.fragments.target.TargetFragment">
 
-    <TextView
-        android:id="@+id/fragment_target_goal_name_text_view"
-        style="@style/AppTheme.TextView.Regular.Large"
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center_horizontal"
-        android:textColor="@color/black"
-        android:text="Goal Name" />
+        android:orientation="vertical">
 
-    <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        <View
+            android:id="@+id/view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_alignBottom="@+id/fragment_target_withdraw_button"
+            android:layout_alignParentTop="true"
+            android:background="@color/yellow" />
+
+        <TextView
+            android:id="@+id/fragment_target_goal_name_text_view"
+            style="@style/AppTheme.TextView.Regular.ExtraLarge"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_marginTop="24dp"
+            android:gravity="center_horizontal"
+            android:text="Goal Name"
+            android:textColor="@color/black"
+            android:textStyle="bold" />
 
         <android.support.v4.view.ViewPager
             android:id="@+id/fragment_target_targets_view_pagers"
             android:layout_width="wrap_content"
-            android:layout_height="200dp" />
+            android:layout_height="200dp"
+            android:layout_below="@+id/fragment_target_goal_name_text_view" />
 
         <ImageButton
             android:id="@+id/fragment_target_left_image_button"
             android:layout_width="48dp"
             android:layout_height="48dp"
+            android:layout_alignBottom="@+id/fragment_target_targets_view_pagers"
+            android:layout_alignStart="@+id/fragment_target_targets_view_pagers"
+            android:layout_alignTop="@+id/fragment_target_targets_view_pagers"
             android:layout_gravity="center_vertical|start"
             android:background="?android:selectableItemBackground"
             android:src="@drawable/ic_d_left_chevron" />
@@ -35,74 +50,121 @@
             android:id="@+id/fragment_target_right_image_button"
             android:layout_width="48dp"
             android:layout_height="48dp"
+            android:layout_alignBottom="@+id/fragment_target_targets_view_pagers"
+            android:layout_alignEnd="@+id/fragment_target_targets_view_pagers"
+            android:layout_alignTop="@+id/fragment_target_targets_view_pagers"
             android:layout_gravity="center_vertical|end"
             android:background="?android:selectableItemBackground"
             android:src="@drawable/ic_d_right_chevron" />
 
-    </FrameLayout>
 
+        <TextView
+            android:id="@+id/fragment_target_saved"
+            style="@style/AppTheme.TextView.Regular"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/fragment_target_targets_view_pagers"
+            android:gravity="center_horizontal"
+            android:text="saved"
+            android:textColor="@color/black" />
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center_horizontal"
-        android:text="saved" />
+        <TextView
+            android:id="@+id/fragment_target_saved_text_view"
+            style="@style/AppTheme.TextView.Regular.ExtraLarge"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/fragment_target_saved"
+            android:gravity="center_horizontal"
+            android:text="Rp 38.000"
+            android:textColor="@color/black"
+            android:textStyle="bold" />
 
-    <TextView
-        style="@style/AppTheme.TextView.Regular.Large"
-        android:id="@+id/fragment_target_saved_text_view"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center_horizontal"
-        android:textColor="@color/black"
-        android:text="Rp 38.000" />
+        <TextView
+            android:id="@+id/fragment_target_total_text_view"
+            style="@style/AppTheme.TextView.Regular"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/fragment_target_saved_text_view"
+            android:gravity="center_horizontal"
+            android:text="of Rp 50.000"
+            android:textColor="@color/black" />
 
-    <TextView
-        android:id="@+id/fragment_target_total_text_view"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center_horizontal"
-        android:textColor="@color/black"
-        android:text="of Rp 50.000" />
+        <Button
+            android:id="@+id/fragment_target_save_button"
+            style="@style/AppTheme.Button.Big.LightBlue"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/fragment_target_total_text_view"
+            android:layout_gravity="center"
+            android:layout_marginEnd="18dp"
+            android:layout_marginStart="18dp"
+            android:layout_marginTop="16dp"
+            android:text="@string/save" />
 
-    <!--    <com.nike.dooit.views.custom.ArcProgressBar
-            android:id="@+id/fragment_target_goal_progress_arc_progress_bar"
-            android:layout_width="120dp"
-            android:layout_height="120dp"
-            android:layout_gravity="center_horizontal"
-            app:arc_unfinished_color="@color/light_grey"
-            app:arc_finished_color="@color/light_blue"
-            app:arc_text_color="@color/black"
-            app:arc_progress="40"/>-->
+        <Button
+            android:id="@+id/fragment_target_withdraw_button"
+            style="@style/AppTheme.Button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/fragment_target_save_button"
+            android:layout_gravity="center"
+            android:text="@string/withdraw"
+            android:textColor="@color/grey"
+            android:textStyle="bold" />
 
-    <Button
-        android:id="@+id/fragment_target_save_button"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:text="@string/save" />
+        <TextView
+            android:id="@+id/fragment_target_savings_history"
+            style="@style/AppTheme.TextView.Regular.Medium"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/view"
+            android:layout_marginTop="16dp"
+            android:gravity="center_horizontal"
+            android:text="@string/savings_history"
+            android:textAllCaps="true"
+            android:textColor="@color/black" />
 
-    <Button
-        android:id="@+id/fragment_target_withdraw_button"
-        style="@style/AppTheme.Button"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:text="@string/withdraw" />
+        <TextView
+            android:id="@+id/fragment_target_weeks"
+            style="@style/AppTheme.TextView.Regular.Small"
+            fontPath="fonts/Lato-Regular.ttf"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/fragment_target_savings_history"
+            android:gravity="center_horizontal"
+            android:text="@string/weeks"
+            android:textColor="@color/black" />
 
-    <TextView
-        style="@style/AppTheme.TextView.Regular.Large"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center_horizontal"
-        android:textColor="@color/black"
-        android:text="@string/savings_history" />
+        <TextView
+            android:id="@+id/fragment_target_legend_goals"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/fragment_target_weeks"
+            android:layout_toStartOf="@+id/fragment_target_legend_average"
+            android:drawableStart="@drawable/ic_d_target_legend_goals"
+            android:gravity="center_vertical"
+            android:text="Goals" />
 
-    <TextView
-        style="@style/AppTheme.TextView.Regular.Medium"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center_horizontal"
-        android:textColor="@color/black"
-        android:text="@string/weeks" />
-</LinearLayout>
+        <TextView
+            android:id="@+id/fragment_target_legend_average"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/fragment_target_weeks"
+            android:layout_centerHorizontal="true"
+            android:drawableStart="@drawable/ic_d_target_legend_average"
+            android:gravity="center_vertical"
+            android:text="Average" />
+
+        <TextView
+            android:id="@+id/fragment_target_legend_saved"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/fragment_target_weeks"
+            android:layout_toEndOf="@+id/fragment_target_legend_average"
+            android:drawableStart="@drawable/ic_d_target_legend_saved"
+            android:gravity="center_vertical"
+            android:text="Saved" />
+
+    </RelativeLayout>
+</android.support.v4.widget.NestedScrollView>
