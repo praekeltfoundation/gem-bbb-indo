@@ -13,7 +13,11 @@ import android.widget.Toast;
 
 import com.nike.dooit.R;
 import com.nike.dooit.models.challenge.QuizChallenge;
+import com.nike.dooit.models.challenge.QuizChallengeOption;
+import com.nike.dooit.models.challenge.QuizChallengeQuestion;
 import com.nike.dooit.views.main.fragments.challenge.adapters.ChallengeQuizPagerAdapter;
+import com.nike.dooit.views.main.fragments.challenge.interfaces.OnOptionSelectedListener;
+import com.nike.dooit.views.main.fragments.challenge.interfaces.OnOptionChangeListener;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -24,11 +28,13 @@ import butterknife.OnClick;
  * Use the {@link ChallengeQuizFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class ChallengeQuizFragment extends Fragment {
+public class ChallengeQuizFragment extends Fragment implements OnOptionChangeListener {
     private static final String ARG_CHALLENGE = "challenge";
 
     private QuizChallenge mChallenge;
     private ChallengeQuizPagerAdapter mAdapter;
+    private QuizChallengeQuestion currentQuestion = null;
+    private QuizChallengeOption currentOption = null;
 
     @BindView(R.id.fragment_challenge_quiz_progressbar) ProgressBar mProgressBar;
     @BindView(R.id.fragment_challenge_quiz_progresscounter) TextView mProgressCounter;
@@ -60,6 +66,7 @@ public class ChallengeQuizFragment extends Fragment {
             mChallenge = getArguments().getParcelable(ARG_CHALLENGE);
         }
         mAdapter = new ChallengeQuizPagerAdapter(getChildFragmentManager(), getContext(), mChallenge);
+        mAdapter.setOnOptionChangeListener(this);
     }
 
     @Override public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -73,6 +80,16 @@ public class ChallengeQuizFragment extends Fragment {
     }
 
     @OnClick(R.id.fragment_challenge_quiz_checkbutton) public void checkAnswer() {
-        Toast.makeText(getContext(), "Checking answer", Toast.LENGTH_SHORT).show();
+        Toast.makeText(
+                getContext(),
+                String.format("Q: \"%s\"; A: \"%s\"",
+                currentQuestion != null ? currentQuestion.getText() : "<NONE>",
+                currentOption != null ? currentOption.getText() : "<NONE>"),
+                Toast.LENGTH_SHORT).show();
+    }
+
+    @Override public void onOptionChange(QuizChallengeQuestion question, QuizChallengeOption option) {
+        currentQuestion = question;
+        currentOption = option;
     }
 }

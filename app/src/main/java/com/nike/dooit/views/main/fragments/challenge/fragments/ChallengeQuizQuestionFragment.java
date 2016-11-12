@@ -12,6 +12,7 @@ import android.widget.TextView;
 import com.nike.dooit.R;
 import com.nike.dooit.models.challenge.QuizChallengeQuestion;
 import com.nike.dooit.views.main.fragments.challenge.adapters.ChallengeQuizOptionsListAdapter;
+import com.nike.dooit.views.main.fragments.challenge.interfaces.OnOptionChangeListener;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -20,6 +21,7 @@ public class ChallengeQuizQuestionFragment extends Fragment {
     private static final String ARG_QUESTION = "question";
 
     private QuizChallengeQuestion mQuestion = null;
+    private OnOptionChangeListener optionChangeListener = null;
 
     @BindView(R.id.fragment_challengequizquestion_title) TextView title;
     @BindView(R.id.option_recycler_view) RecyclerView optionList;
@@ -61,8 +63,13 @@ public class ChallengeQuizQuestionFragment extends Fragment {
         ButterKnife.bind(this, view);
         title.setText(mQuestion.getText());
         RecyclerView.Adapter adapter = new ChallengeQuizOptionsListAdapter(mQuestion, optionList);
+        ((ChallengeQuizOptionsListAdapter) adapter).setOptionChangeListener(optionChangeListener);
         optionList.setAdapter(adapter);
         optionList.setLayoutManager(new LinearLayoutManager(getContext()));
         return view;
+    }
+
+    public void setOnOptionChangeListener(OnOptionChangeListener listener) {
+        this.optionChangeListener = listener;
     }
 }
