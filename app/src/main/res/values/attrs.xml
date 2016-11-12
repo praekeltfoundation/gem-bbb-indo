@@ -19,6 +19,7 @@
 
         <attr name="arc_bottom_text" format="string" />
         <attr name="arc_bottom_text_size" format="dimension" />
+        <attr name="arc_bottom_text_margin_top" format="dimension" />
     </declare-styleable>
 
 </resources>

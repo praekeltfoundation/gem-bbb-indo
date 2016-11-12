@@ -42,6 +42,8 @@ public class ArcProgressBar extends View {
     private final float default_bottom_text_size;
     private final float default_stroke_width;
     private final String default_suffix_text;
+    private float default_text_size;
+    private float default_bottom_text_margin_top = 0;
     private final int default_max = 100;
     private final float default_arc_angle = 360 * 0.8f;
     private final int min_size;
@@ -62,7 +64,7 @@ public class ArcProgressBar extends View {
     private String suffixText = "%";
     private float suffixTextPadding;
     private float arcBottomHeight;
-    private float default_text_size;
+    private float bottomTextMarginTop;
 
     public ArcProgressBar(Context context) {
         this(context, null);
@@ -105,6 +107,7 @@ public class ArcProgressBar extends View {
         suffixTextPadding = attributes.getDimension(R.styleable.ArcProgress_arc_suffix_text_padding, default_suffix_padding);
         bottomTextSize = attributes.getDimension(R.styleable.ArcProgress_arc_bottom_text_size, default_bottom_text_size);
         bottomText = attributes.getString(R.styleable.ArcProgress_arc_bottom_text);
+        bottomTextMarginTop = attributes.getDimension(R.styleable.ArcProgress_arc_bottom_text_margin_top, default_bottom_text_margin_top);
     }
 
     protected void initPainters() {
@@ -281,7 +284,6 @@ public class ArcProgressBar extends View {
         canvas.drawArc(rectF, finishedStartAngle, finishedSweepAngle, false, paint);
 
 
-
         if (arcBottomHeight == 0) {
             float radius = getWidth() / 2f;
             float angle = (360 - arcAngle) / 2f;
@@ -289,7 +291,7 @@ public class ArcProgressBar extends View {
         }
 
         textPaint.setTextSize(bottomTextSize);
-        float bottomTextBaseline = getHeight() - arcBottomHeight - (textPaint.descent() + textPaint.ascent()) / 2;
+        float bottomTextBaseline = getHeight() + bottomTextMarginTop - arcBottomHeight - (textPaint.descent() + textPaint.ascent()) / 2;
         canvas.drawText(getBottomText(), (getWidth() - textPaint.measureText(getBottomText())) / 2.0f, bottomTextBaseline, textPaint);
     }
 
