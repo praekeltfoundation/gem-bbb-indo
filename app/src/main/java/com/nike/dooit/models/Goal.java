@@ -13,6 +13,7 @@ public class Goal {
 
     private String name;
     private double value;
+    private double target;
     private String image;
     @SerializedName("start_date") private Date startDate;
     @SerializedName("end_date") private Date endDate;
@@ -32,6 +33,14 @@ public class Goal {
 
     public void setValue(double value) {
         this.value = value;
+    }
+
+    public double getTarget() {
+        return target;
+    }
+
+    public void setTarget(double target) {
+        this.target = target;
     }
 
     public String getImage() {
