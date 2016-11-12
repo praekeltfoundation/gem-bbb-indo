@@ -89,4 +89,20 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:text="@string/withdraw" />
+
+    <TextView
+        style="@style/AppTheme.TextView.Regular.Large"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:textColor="@color/black"
+        android:text="@string/savings_history" />
+
+    <TextView
+        style="@style/AppTheme.TextView.Regular.Medium"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:textColor="@color/black"
+        android:text="@string/weeks" />
 </LinearLayout>

@@ -109,5 +109,7 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="save">+ Tambah</string>
     <string name="withdraw">- Tarik</string>
+    <string name="savings_history">Savings History</string>
+    <string name="weeks">Weeks</string>
 
 </resources>

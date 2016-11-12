@@ -106,8 +106,18 @@ public class TargetFragment extends MainFragment {
     }
 
     @OnClick(R.id.fragment_target_save_button)
-    public void buttonClick(View view) {
+    public void buttonClick() {
         startBot(BotType.GOAL);
+    }
+
+    @OnClick(R.id.fragment_target_left_image_button)
+    public void onLeftClick() {
+        viewPager.setCurrentItem(Math.max(0, viewPager.getCurrentItem() - 1));
+    }
+
+    @OnClick(R.id.fragment_target_right_image_button)
+    public void onRightClick() {
+        viewPager.setCurrentItem(Math.min(goals.size(), viewPager.getCurrentItem() + 1));
     }
 
     private void populateGoal(Goal goal) {
