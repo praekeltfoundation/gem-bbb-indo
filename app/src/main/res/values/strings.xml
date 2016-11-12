@@ -105,4 +105,7 @@
     <string name="toes">Can you touch your toes?</string>
     <string name="night">Can you land on the sun at night?</string>
 
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
 </resources>

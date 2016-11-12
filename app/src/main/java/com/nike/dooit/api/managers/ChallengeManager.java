@@ -4,8 +4,8 @@ import android.app.Application;
 
 import com.nike.dooit.api.DooitErrorHandler;
 import com.nike.dooit.api.interfaces.ChallengeAPI;
-import com.nike.dooit.models.Challenge;
 import com.nike.dooit.models.Entry;
+import com.nike.dooit.models.challenge.BaseChallenge;
 
 import java.util.List;
 
@@ -27,11 +27,11 @@ public class ChallengeManager extends DooitManager {
         challengeAPI = retrofit.create(ChallengeAPI.class);
     }
 
-    public Observable<List<Challenge>> retrieveChallenges(DooitErrorHandler errorHandler) {
+    public Observable<List<BaseChallenge>> retrieveChallenges(DooitErrorHandler errorHandler) {
         return useNetwork(challengeAPI.getChallenges(), errorHandler);
     }
 
-    public Observable<Challenge> retrieveChallenge(int challengeId, DooitErrorHandler errorHandler) {
+    public Observable<BaseChallenge> retrieveChallenge(int challengeId, DooitErrorHandler errorHandler) {
         return useNetwork(challengeAPI.getChallenge(challengeId), errorHandler);
     }
 

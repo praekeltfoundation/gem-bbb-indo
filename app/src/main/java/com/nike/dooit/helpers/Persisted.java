@@ -5,11 +5,11 @@ import android.text.TextUtils;
 import android.util.Log;
 
 import com.nike.dooit.DooitApplication;
-import com.nike.dooit.models.Challenge;
 import com.nike.dooit.models.Tip;
 import com.nike.dooit.models.Token;
 import com.nike.dooit.models.User;
 import com.nike.dooit.models.bot.BaseBotModel;
+import com.nike.dooit.models.challenge.BaseChallenge;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -85,7 +85,7 @@ public class Persisted {
         dooitSharedPreferences.remove(TOKEN);
     }
 
-    public void setActiveChallenge(Challenge activeChallenge) {
+    public void setActiveChallenge(BaseChallenge activeChallenge) {
         dooitSharedPreferences.setComplex(CHALLENGE, activeChallenge);
     }
 
@@ -93,12 +93,12 @@ public class Persisted {
         return loadCurrentChallenge();
     }
 
-    private Challenge loadCurrentChallenge() {
-        return dooitSharedPreferences.getComplex(TOKEN, Challenge.class);
+    private BaseChallenge loadCurrentChallenge() {
+        return dooitSharedPreferences.getComplex(TOKEN, BaseChallenge.class);
     }
 
     public boolean hasCurrentChallenge() {
-        Challenge challenge = loadCurrentChallenge();
+        BaseChallenge challenge = loadCurrentChallenge();
         return challenge != null;
     }
 
