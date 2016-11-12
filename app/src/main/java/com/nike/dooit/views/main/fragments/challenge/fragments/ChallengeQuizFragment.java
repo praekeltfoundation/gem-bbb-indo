@@ -2,6 +2,7 @@ package com.nike.dooit.views.main.fragments.challenge.fragments;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -122,6 +123,10 @@ public class ChallengeQuizFragment extends Fragment implements OnOptionChangeLis
             mPager.setCurrentItem(idx + 1);
         } else {
             Toast.makeText(getContext(), "You have completed all questions", Toast.LENGTH_SHORT).show();
+            FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
+            Fragment fragment = ChallengeNoneFragment.newInstance();
+            ft.replace(R.id.fragment_challenge_container, fragment);
+            ft.commit();
         }
     }
 }

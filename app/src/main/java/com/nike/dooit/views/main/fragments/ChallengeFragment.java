@@ -18,6 +18,7 @@ import com.nike.dooit.api.DooitErrorHandler;
 import com.nike.dooit.api.managers.ChallengeManager;
 import com.nike.dooit.helpers.Persisted;
 import com.nike.dooit.models.challenge.BaseChallenge;
+import com.nike.dooit.views.main.fragments.challenge.fragments.ChallengeNoneFragment;
 import com.nike.dooit.views.main.fragments.challenge.fragments.ChallengeRegisterFragment;
 
 import java.util.List;
@@ -79,20 +80,25 @@ public class ChallengeFragment extends Fragment {
         }).subscribe(new Action1<List<BaseChallenge>>() {
             @Override
             public void call(List<BaseChallenge> challenges) {
-                if (challenges.size() > 0) {
-                    challenge = challenges.get(0);
-                    persisted.setActiveChallenge(challenge);
+            if (challenges.size() > 0) {
+                challenge = challenges.get(0);
+                persisted.setActiveChallenge(challenge);
 
-                    if (getActivity().findViewById(R.id.fragment_challenge_container) != null) {
-                        FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
-                        Fragment fragment = ChallengeRegisterFragment.newInstance();
-                        Bundle args = new Bundle();
-                        args.putParcelable("challenge", challenge);
-                        fragment.setArguments(args);
-                        ft.replace(R.id.fragment_challenge_container, fragment);
-                        ft.commit();
-                    }
+                if (getActivity().findViewById(R.id.fragment_challenge_container) != null) {
+                    FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
+                    Fragment fragment = ChallengeRegisterFragment.newInstance();
+                    Bundle args = new Bundle();
+                    args.putParcelable("challenge", challenge);
+                    fragment.setArguments(args);
+                    ft.replace(R.id.fragment_challenge_container, fragment);
+                    ft.commit();
                 }
+            } else {
+                FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
+                Fragment fragment = ChallengeNoneFragment.newInstance();
+                ft.replace(R.id.fragment_challenge_container, fragment);
+                ft.commit();
+            }
             }
         });
     }
