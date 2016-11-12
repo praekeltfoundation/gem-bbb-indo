@@ -1,0 +1,45 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.nike.dooit.views.main.fragments.challenge.fragments.ChallengeQuizFragment">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/fragment_challenge_freeform_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/text_margin"
+            android:layout_alignParentTop="true"
+            android:textAppearance="@style/AppTheme.TextView.Quiz.Title"
+            android:text="This is the title of the question?"
+            android:textAlignment="center" />
+
+        <EditText
+            android:id="@+id/fragment_challenge_freeform_submission"
+            android:inputType="textMultiLine"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_below="@+id/fragment_challenge_freeform_title"
+            android:layout_above="@+id/fragment_challenge_freeform_submitbutton"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:background="@color/white"
+            android:ems="10" />
+
+        <Button
+            android:id="@+id/fragment_challenge_freeform_submitbutton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_margin="@dimen/challenge_margins"
+            style="@style/AppTheme.Button.Big.LightBlue"
+            android:text="Submit" />
+
+    </RelativeLayout>
+
+</FrameLayout>
