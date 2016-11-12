@@ -5,9 +5,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.facebook.drawee.view.SimpleDraweeView;
 import com.nike.dooit.R;
 import com.nike.dooit.models.Goal;
-import com.nike.dooit.views.main.MainActivity;
+import com.nike.dooit.views.custom.ArcProgressBar;
 
 import java.util.List;
 
@@ -27,13 +28,16 @@ public class TargetPagerAdapter extends PagerAdapter {
     public Object instantiateItem(ViewGroup container, int position) {
         LayoutInflater inflater = LayoutInflater.from(container.getContext());
         ViewGroup layout = (ViewGroup) inflater.inflate(R.layout.fragment_target_progress, container, false);
+
+        ((ArcProgressBar) layout.findViewById(R.id.fragment_target_progress_view)).setProgress((int) ((goals.get(position).getValue() / goals.get(position).getTarget()) * 100));
+        ((SimpleDraweeView) layout.findViewById(R.id.fragment_target_progress_image)).setImageURI(goals.get(position).getImage());
         container.addView(layout);
         return layout;
     }
 
     @Override
     public void destroyItem(ViewGroup container, int position, Object object) {
-        container.removeView((View)object);
+        container.removeView((View) object);
     }
 
     @Override

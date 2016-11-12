@@ -14,9 +14,12 @@ public class Goal {
     private String name;
     private double value;
     private double target;
+    @SerializedName("image_url")
     private String image;
-    @SerializedName("start_date") private Date startDate;
-    @SerializedName("end_date") private Date endDate;
+    @SerializedName("start_date")
+    private Date startDate;
+    @SerializedName("end_date")
+    private Date endDate;
     private List<GoalTransaction> transactions;
 
     public String getName() {

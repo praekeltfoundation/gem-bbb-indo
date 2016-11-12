@@ -1,16 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
 
     <com.facebook.drawee.view.SimpleDraweeView
-        android:id="@+id/activity_profile_image_profile_image"
+        android:id="@+id/fragment_target_progress_image"
         android:layout_width="120dp"
         android:layout_height="120dp"
-        android:scaleType="fitXY"
+        android:layout_gravity="center"
         android:padding="20dp"
+        android:scaleType="fitXY"
         app:placeholderImage="@drawable/placeholder"
         app:placeholderImageScaleType="fitXY"
         app:roundAsCircle="true" />
@@ -20,9 +21,10 @@
         class="com.nike.dooit.views.custom.ArcProgressBar"
         android:layout_width="120dp"
         android:layout_height="120dp"
+        android:layout_gravity="center"
+        app:arc_bottom_text_margin_top="5dp"
         app:arc_finished_color="@color/light_blue"
         app:arc_progress="10"
         app:arc_text_color="@color/black"
-        app:arc_bottom_text_margin_top="5dp" 
         app:arc_unfinished_color="@color/light_grey_alpha" />
 </FrameLayout>
