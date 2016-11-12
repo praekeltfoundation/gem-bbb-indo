@@ -13,7 +13,7 @@ import com.nike.dooit.R;
 import com.nike.dooit.views.main.MainViewPagerPositions;
 import com.nike.dooit.views.main.fragments.bot.BotFragment;
 import com.nike.dooit.views.main.fragments.ChallengeFragment;
-import com.nike.dooit.views.main.fragments.TargetFragment;
+import com.nike.dooit.views.main.fragments.target.TargetFragment;
 import com.nike.dooit.views.main.fragments.TipsFragment;
 
 /**

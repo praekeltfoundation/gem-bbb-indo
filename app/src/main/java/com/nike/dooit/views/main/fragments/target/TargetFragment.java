@@ -1,8 +1,6 @@
-package com.nike.dooit.views.main.fragments;
+package com.nike.dooit.views.main.fragments.target;
 
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -12,7 +10,7 @@ import android.view.ViewGroup;
 import com.nike.dooit.DooitApplication;
 import com.nike.dooit.R;
 import com.nike.dooit.models.enums.BotType;
-import com.nike.dooit.views.main.MainViewPagerPositions;
+import com.nike.dooit.views.main.fragments.MainFragment;
 
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -52,7 +50,7 @@ public class TargetFragment extends MainFragment {
         getActivity().getMenuInflater().inflate(R.menu.menu_main_target, menu);
     }
 
-    @OnClick(R.id.fragment_target_button)
+    @OnClick(R.id.fragment_target_save_button)
     public void buttonClick(View view) {
         startBot(BotType.GOAL);
     }
