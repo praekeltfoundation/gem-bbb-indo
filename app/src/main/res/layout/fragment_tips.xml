@@ -1,39 +1,66 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.nike.dooit.views.main.fragments.TargetFragment"
-    android:orientation="vertical">
+    tools:context="com.nike.dooit.views.main.fragments.TargetFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-
-    <android.support.design.widget.TabLayout
+    <RelativeLayout
+        android:id="@+id/fragment_tips_head"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/fragment_tips_tablayout"
-        android:background="@color/yellow"
-        app:tabBackground="@drawable/tab_tips_background"
-        app:tabTextAppearance="@style/AppTheme.TextView.Regular.ExtraLarge">
+        android:background="@color/yellow">
 
-        <android.support.design.widget.TabItem
+        <AutoCompleteTextView
+            android:id="@+id/fragment_tips_search_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/bkg_edit_text"
+            android:drawableEnd="@drawable/ic_d_search" />
+
+        <TextView
+            android:id="@+id/fragment_tips_search_hint"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Left" />
+            android:layout_below="@+id/fragment_tips_search_view"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginTop="8dp"
+            android:text="@string/tips_search_hint" />
 
-        <android.support.design.widget.TabItem
-            android:layout_width="wrap_content"
+        <android.support.design.widget.TabLayout
+            android:id="@+id/fragment_tips_tablayout"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Center" />
+            android:layout_below="@+id/fragment_tips_search_hint"
+            android:layout_marginTop="8dp"
+            android:background="@color/yellow"
+            app:tabBackground="@drawable/tab_tips_background"
+            app:tabTextAppearance="@style/AppTheme.TextView.Regular.ExtraLarge">
 
-        <android.support.design.widget.TabItem
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Right" />
-    </android.support.design.widget.TabLayout>
+            <android.support.design.widget.TabItem
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Left" />
+
+            <android.support.design.widget.TabItem
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Center" />
+
+            <android.support.design.widget.TabItem
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Right" />
+        </android.support.design.widget.TabLayout>
+    </RelativeLayout>
 
     <android.support.v4.view.ViewPager
+        android:id="@+id/fragment_tips_viewpager"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/fragment_tips_viewpager"></android.support.v4.view.ViewPager>
-</LinearLayout>
+        android:layout_below="@+id/fragment_tips_head"></android.support.v4.view.ViewPager>
+</RelativeLayout>
