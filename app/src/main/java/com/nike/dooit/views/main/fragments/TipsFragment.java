@@ -1,17 +1,18 @@
 package com.nike.dooit.views.main.fragments;
 
 import android.os.Bundle;
+import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
+import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TabHost;
 
 import com.nike.dooit.R;
 import com.nike.dooit.api.managers.TipManager;
-import com.nike.dooit.views.main.tabs.TipTabContent;
+import com.nike.dooit.views.main.fragments.tip.adapters.TipsTabAdapter;
 
 import javax.inject.Inject;
 
@@ -22,8 +23,6 @@ import butterknife.ButterKnife;
 public class TipsFragment extends Fragment {
 
     private static final String TAG = "TipArchive";
-    private static final String TAB_FAVOURITES = "favourites";
-    private static final String TAB_ALL = "all";
 
     @BindString(R.string.tips_tab_favourites)
     String favouritesTitle;
@@ -31,8 +30,11 @@ public class TipsFragment extends Fragment {
     @BindString(R.string.tips_tab_all)
     String allTitle;
 
-    @BindView(R.id.fragment_tips_tabhost)
-    TabHost tabHost;
+    @BindView(R.id.fragment_tips_tablayout)
+    TabLayout tabLayout;
+
+    @BindView(R.id.fragment_tips_viewpager)
+    ViewPager viewPager;
 
     @Inject
     TipManager tipManager;
@@ -66,15 +68,14 @@ public class TipsFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_tips, container, false);
         ButterKnife.bind(this, view);
 
-        tabHost.setup();
+        TipsTabAdapter adapter = new TipsTabAdapter(getChildFragmentManager(), getContext());
+        viewPager.setAdapter(adapter);
+        tabLayout.setupWithViewPager(viewPager);
 
-        tabHost.addTab(tabHost.newTabSpec(TAB_FAVOURITES)
-                .setContent(new TipTabContent(getContext()))
-                .setIndicator(favouritesTitle));
-
-        tabHost.addTab(tabHost.newTabSpec(TAB_ALL)
-                .setContent(new TipTabContent(getContext()))
-                .setIndicator(allTitle));
+        for (int i = 0; i < tabLayout.getTabCount(); i++) {
+            TabLayout.Tab tab = tabLayout.getTabAt(i);
+            tab.setCustomView(adapter.getTabView(i));
+        }
 
         return view;
     }

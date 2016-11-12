@@ -1,5 +1,6 @@
-Added design for Registration Screen
-Added design for Registration Profile Image Screen
-Added design for Login Screen
-Added Basic Navigation
-Added Custom Fonts
+Implemented Registration
+Added Age and Gender to Registration
+Implemented Login
+Implemented Signout from Settings
+Implemented Tips listing
+Implemented Tip Favourites
