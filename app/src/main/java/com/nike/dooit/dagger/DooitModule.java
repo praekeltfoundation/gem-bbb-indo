@@ -7,6 +7,7 @@ import com.nike.dooit.DooitApplication;
 import com.nike.dooit.api.managers.AuthenticationManager;
 import com.nike.dooit.api.managers.ChallengeManager;
 import com.nike.dooit.api.managers.FileUploadManager;
+import com.nike.dooit.api.managers.GoalManager;
 import com.nike.dooit.api.managers.TipManager;
 import com.nike.dooit.api.managers.UserManager;
 import com.nike.dooit.helpers.bot.BotFeed;
@@ -61,6 +62,12 @@ public class DooitModule {
     @Singleton
     UserManager provideUserManager() {
         return new UserManager(application);
+    }
+
+    @Provides
+    @Singleton
+    GoalManager provideGoalManager() {
+        return new GoalManager(application);
     }
 
     @Provides
