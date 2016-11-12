@@ -12,33 +12,35 @@ import java.io.Serializable;
 
 public class ParticipantAnswer implements Serializable {
 
-    private int question;
-    @SerializedName("selected_option") private int selectedOption;
-    @SerializedName("date_answered") private DateTime dateAnswered = new DateTime();
+    private long question;
+    @SerializedName("selected_option")
+    private long selectedOption;
+    @SerializedName("date_answered")
+    private DateTime dateAnswered = new DateTime();
 
     public ParticipantAnswer() {
         // Mandatory empty constructor
     }
 
-    public ParticipantAnswer(int question, int selectedOption) {
+    public ParticipantAnswer(long question, long selectedOption) {
         this.question = question;
         this.selectedOption = selectedOption;
         this.dateAnswered = new DateTime();
     }
 
-    public int getQuestion() {
+    public long getQuestion() {
         return question;
     }
 
-    public void setQuestion(int question) {
+    public void setQuestion(long question) {
         this.question = question;
     }
 
-    public int getSelectedOption() {
+    public long getSelectedOption() {
         return selectedOption;
     }
 
-    public void setSelectedOption(int selectedOption) {
+    public void setSelectedOption(long selectedOption) {
         this.selectedOption = selectedOption;
     }
 
