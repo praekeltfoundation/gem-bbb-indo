@@ -20,7 +20,6 @@
         android:id="@+id/content_main_tab_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        app:tabGravity="center" />
+        android:layout_alignParentBottom="true" />
 
 </RelativeLayout>

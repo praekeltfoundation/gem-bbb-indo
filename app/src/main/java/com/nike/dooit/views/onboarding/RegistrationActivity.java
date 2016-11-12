@@ -107,6 +107,8 @@ public class RegistrationActivity extends DooitActivity {
         if (!detailsValid())
             return;
 
+        hideKeyboard();
+
         authenticationManager.onboard(getUser(), new DooitErrorHandler() {
             @Override
             public void onError(DooitAPIError error) {
