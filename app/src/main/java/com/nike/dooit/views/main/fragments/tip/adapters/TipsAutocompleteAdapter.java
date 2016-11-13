@@ -19,7 +19,7 @@ import java.util.List;
  * Created by Wimpie Victor on 2016/11/12.
  */
 
-public class TipsAutoCompleteAdapter extends ArrayAdapter<Tip> implements ITipsAdapter {
+public class TipsAutoCompleteAdapter extends ArrayAdapter<Tip> implements TipsAdapter {
 
     private List<Tip> tipsAll = new ArrayList<>();
 

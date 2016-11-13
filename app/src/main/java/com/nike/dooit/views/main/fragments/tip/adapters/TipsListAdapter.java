@@ -29,7 +29,7 @@ import javax.inject.Inject;
  * Created by Wimpie Victor on 2016/11/07.
  */
 
-public class TipsListAdapter extends RecyclerView.Adapter<TipViewHolder> implements Filterable, ITipsAdapter {
+public class TipsListAdapter extends RecyclerView.Adapter<TipViewHolder> implements Filterable, TipsAdapter {
 
     private Context context;
     private List<Tip> tipsAll = new ArrayList<>();
@@ -90,10 +90,6 @@ public class TipsListAdapter extends RecyclerView.Adapter<TipViewHolder> impleme
         if (tip.hasCoverImageUrl()) {
             Uri uri = Uri.parse(tip.getCoverImageUrl());
             holder.setImageUri(uri);
-        }
-
-        if (position % 3 == 0) {
-
         }
     }
 
