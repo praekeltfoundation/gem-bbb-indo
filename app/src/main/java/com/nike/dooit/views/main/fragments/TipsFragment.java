@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AutoCompleteTextView;
+import android.widget.Toast;
 
 import com.nike.dooit.R;
 import com.nike.dooit.api.managers.TipManager;
@@ -83,6 +84,14 @@ public class TipsFragment extends Fragment implements OnTipsAvailableListener {
 
         searchAdapter = new TipsAutoCompleteAdapter(getContext(), R.layout.list_tips_item);
         searchView.setAdapter(searchAdapter);
+        searchView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Tip tip = searchAdapter.getItem(position);
+                Toast.makeText(getContext(),
+                        String.format("Opening '%s'", tip.getTitle()), Toast.LENGTH_SHORT).show();
+            }
+        });
 
         TipsTabAdapter adapter = new TipsTabAdapter(getChildFragmentManager(), getContext(), this);
         viewPager.setAdapter(adapter);
@@ -95,7 +104,7 @@ public class TipsFragment extends Fragment implements OnTipsAvailableListener {
 
         return view;
     }
-
+    
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
