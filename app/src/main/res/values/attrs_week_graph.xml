@@ -4,5 +4,6 @@
         <attr name="gw_bar_width" format="dimension" />
         <attr name="gw_bar_marginStart" format="dimension" />
         <attr name="gw_bar_marginEnd" format="dimension" />
+        <attr name="gw_bar_textHeight" format="dimension" />
     </declare-styleable>
 </resources>

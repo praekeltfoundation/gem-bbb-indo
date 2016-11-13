@@ -3,26 +3,32 @@ package com.nike.dooit.views.custom;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.util.AttributeSet;
 import android.view.Gravity;
 import android.view.View;
+import android.view.ViewTreeObserver;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.nike.dooit.R;
 
-import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Locale;
+import java.util.Map;
 
 
 /**
  * TODO: document your custom view class.
  */
 public class WeekGraph extends LinearLayout {
-    private int mBarWidth = 0, mBarMarginStart = 0, mBarMarginEnd = 0;
+    private int mBarWidth = 0, mBarMarginStart = 0, mBarMarginEnd = 0, mBarTextHeight = 0;
     private Drawable mBarDrawable;
-    private ArrayList<Float> mValues = new ArrayList<>();
+    private LinkedHashMap<String, Float> mValues = new LinkedHashMap<>();
     private Float maxValue = 0f;
+
+    int parentWidth, parentHeight;
 
     public WeekGraph(Context context) {
         super(context);
@@ -49,6 +55,9 @@ public class WeekGraph extends LinearLayout {
         mBarWidth = a.getDimensionPixelSize(
                 R.styleable.WeekGraph_gw_bar_width,
                 mBarWidth);
+        mBarTextHeight = a.getDimensionPixelSize(
+                R.styleable.WeekGraph_gw_bar_textHeight,
+                mBarTextHeight);
         mBarMarginStart = a.getDimensionPixelSize(
                 R.styleable.WeekGraph_gw_bar_marginStart,
                 mBarMarginStart);
@@ -64,44 +73,61 @@ public class WeekGraph extends LinearLayout {
 
         a.recycle();
 
+
         if (isInEditMode()) {
-            mValues = new ArrayList<Float>() {{
-                add(1908.0f);
-                add(5329.0f);
-                add(7696.0f);
-                add(4389.0f);
-                add(4089.0f);
-                add(7648.0f);
-                add(3788.0f);
-                add(6025.0f);
-                add(6488.0f);
-                add(8907.0f);
-                add(6262.0f);
-                add(7305.0f);
-                add(2209.0f);
-                add(2498.0f);
-                add(8069.0f);
-                add(5342.0f);
+            mValues = new LinkedHashMap() {{
+                put("1", 1908.0f);
+                put("2", 5329.0f);
+                put("3", 7696.0f);
+                put("4", 4389.0f);
+                put("5", 4089.0f);
+                put("6", 7648.0f);
+                put("7", 3788.0f);
+                put("8", 6025.0f);
+                put("9", 6488.0f);
+                put("10", 8907.0f);
+                put("11", 6262.0f);
+                put("12", 7305.0f);
+                put("13", 2209.0f);
+                put("14", 2498.0f);
+                put("15", 8069.0f);
+                put("16", 5342.0f);
             }};
         }
+
+        getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+            @Override
+            public void onGlobalLayout() {
+
+                removeAllViews();
+                createViews();
+
+                if (mValues.size() > 0)
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+                        getViewTreeObserver().removeOnGlobalLayoutListener(this);
+                    } else {
+                        getViewTreeObserver().removeGlobalOnLayoutListener(this);
+                    }
+            }
+        });
     }
 
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-        int parentWidth = MeasureSpec.getSize(widthMeasureSpec);
-        int parentHeight = MeasureSpec.getSize(heightMeasureSpec);
+        parentWidth = MeasureSpec.getSize(widthMeasureSpec);
+        parentHeight = MeasureSpec.getSize(heightMeasureSpec);
         this.setMeasuredDimension(parentWidth, parentHeight);
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
-        createView();
     }
 
-    private void createView() {
-        for (int k = 0; k < mValues.size(); k++) {
-            if (mValues.get(k) > maxValue)
-                maxValue = mValues.get(k);
+    private void createViews() {
+        for (Map.Entry<String, Float> value : mValues.entrySet()) {
+            if (value.getValue() > maxValue)
+                maxValue = value.getValue();
         }
 
-        for (int i = 0; i < mValues.size(); i++) {
+        for (Map.Entry<String, Float> value : mValues.entrySet()) {
+
             LinearLayout viewGroup = new LinearLayout(getContext());
             viewGroup.setOrientation(VERTICAL);
             LinearLayout.LayoutParams paramsViewGroup = new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
@@ -112,28 +138,27 @@ public class WeekGraph extends LinearLayout {
             viewGroup.setLayoutParams(paramsViewGroup);
 
             View bar = new View(getContext());
-            LinearLayout.LayoutParams paramsBar = new LayoutParams(mBarWidth, (int) (getMeasuredHeight() * (mValues.get(i) / maxValue)));
+            LinearLayout.LayoutParams paramsBar = new LayoutParams(mBarWidth, (int) ((parentHeight - mBarTextHeight) * (value.getValue() / maxValue)));
             bar.setLayoutParams(paramsBar);
             bar.setBackground(mBarDrawable);
             viewGroup.addView(bar);
 
             TextView text = new TextView(getContext());
             text.setGravity(Gravity.CENTER);
-            LinearLayout.LayoutParams paramsText = new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
+            LinearLayout.LayoutParams paramsText = new LayoutParams(LayoutParams.MATCH_PARENT, mBarTextHeight);
             text.setLayoutParams(paramsText);
-            text.setText(String.format(Locale.getDefault(), "%d", i));
+            text.setText(String.format(Locale.getDefault(), "%s", value.getKey()));
             viewGroup.addView(text);
 
             addView(viewGroup);
         }
     }
 
-    public ArrayList<Float> getValues() {
+    public LinkedHashMap<String, Float> getValues() {
         return mValues;
     }
 
-    public void setValues(ArrayList<Float> values) {
+    public void setValues(LinkedHashMap<String, Float> values) {
         this.mValues = values;
-        removeAllViews();
     }
 }

@@ -23,6 +23,7 @@ import com.nike.dooit.views.main.fragments.target.adapters.TargetPagerAdapter;
 
 import java.text.NumberFormat;
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -152,41 +153,23 @@ public class TargetFragment extends MainFragment {
                             });
                     }
                 });
-        bars.setValues(new ArrayList<Float>() {{
-            add(1908.0f);
-            add(5329.0f);
-            add(7696.0f);
-            add(4389.0f);
-            add(4089.0f);
-            add(7648.0f);
-            add(3788.0f);
-            add(6025.0f);
-            add(6488.0f);
-            add(8907.0f);
-            add(6262.0f);
-            add(7305.0f);
-            add(2209.0f);
-            add(2498.0f);
-            add(8069.0f);
-            add(5342.0f);
-            add(3000.0f);
-            add(7323.0f);
-            add(1578.0f);
-            add(8005.0f);
-            add(3647.0f);
-            add(7013.0f);
-            add(4735.0f);
-            add(8345.0f);
-            add(6558.0f);
-            add(5203.0f);
-            add(4034.0f);
-            add(5574.0f);
-            add(4451.0f);
-            add(5617.0f);
-            add(3865.0f);
-            add(2642.0f);
-            add(3043.0f);
-            add(4603.0f);
+        bars.setValues(new LinkedHashMap() {{
+            put("1", 1908.0f);
+            put("2", 5329.0f);
+            put("3", 7696.0f);
+            put("4", 4389.0f);
+            put("5", 4089.0f);
+            put("6", 7648.0f);
+            put("7", 3788.0f);
+            put("8", 6025.0f);
+            put("9", 6488.0f);
+            put("10", 8907.0f);
+            put("11", 6262.0f);
+            put("12", 7305.0f);
+            put("13", 2209.0f);
+            put("14", 2498.0f);
+            put("15", 8069.0f);
+            put("16", 5342.0f);
         }});
     }
 }

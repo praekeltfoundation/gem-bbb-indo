@@ -181,6 +181,7 @@
                 app:gw_bar_drawable="@drawable/week_bar"
                 app:gw_bar_marginEnd="0dp"
                 app:gw_bar_marginStart="5dp"
+                app:gw_bar_textHeight="20dp"
                 app:gw_bar_width="24dp" />
         </HorizontalScrollView>
     </RelativeLayout>
