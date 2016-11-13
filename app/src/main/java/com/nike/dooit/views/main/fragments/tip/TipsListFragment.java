@@ -5,6 +5,7 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -29,6 +30,7 @@ import rx.functions.Action1;
 
 public class TipsListFragment extends Fragment {
 
+    private static final String TAG = "TipsListFragment";
     private static final String POS = "pos";
 
     @BindView(R.id.fragment_tips_list_recyclerview)
@@ -37,6 +39,7 @@ public class TipsListFragment extends Fragment {
     TipsViewPagerPositions pos;
     TipProvider tipProvider;
     TipsAdapter adapter;
+    OnTipsAvailableListener listener;
     GridLayoutManager gridManager;
 
     public TipsListFragment() {
@@ -72,7 +75,9 @@ public class TipsListFragment extends Fragment {
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
         if (tipProvider.hasTips()) {
-            adapter.updateTips(tipProvider.loadTips());
+            List<Tip> tips = tipProvider.loadTips();
+            adapter.updateTips(tips);
+            notifyTipLoaded(tips);
         } else {
             retrieveTips();
         }
@@ -88,7 +93,9 @@ public class TipsListFragment extends Fragment {
     public void onResume() {
         super.onResume();
         if (tipProvider.hasTips()) {
-            adapter.updateTips(tipProvider.loadTips());
+            List<Tip> tips = tipProvider.loadTips();
+            adapter.updateTips(tips);
+            notifyTipLoaded(tips);
         } else {
             retrieveTips();
         }
@@ -103,7 +110,6 @@ public class TipsListFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_tips_list, container, false);
         ButterKnife.bind(this, view);
 
@@ -126,6 +132,28 @@ public class TipsListFragment extends Fragment {
         return view;
     }
 
+    public void onSearch(String constraint) {
+        Log.d("TipListFragment", "On Search");
+    }
+
+    public void onPageSelected() {
+        Log.d(TAG, "onPageSelected");
+//        notifyTipLoaded();
+    }
+
+    public void onPageDeselected() {
+        Log.d(TAG, "onPageDeselected");
+    }
+
+    public void setOnTipsLoadedListener(OnTipsAvailableListener listener) {
+        this.listener = listener;
+    }
+
+    private void notifyTipLoaded(List<Tip> tips) {
+        if (listener != null)
+            listener.onTipsAvailable(tips);
+    }
+
     private void retrieveTips() {
         tipProvider.retrieveTips(new DooitErrorHandler() {
             @Override
@@ -136,13 +164,15 @@ public class TipsListFragment extends Fragment {
                 .subscribe(new Action1<List<Tip>>() {
                     @Override
                     public void call(final List<Tip> tips) {
-                        if (getActivity() != null)
+                        if (getActivity() != null) {
                             getActivity().runOnUiThread(new Runnable() {
                                 @Override
                                 public void run() {
                                     adapter.updateTips(tips);
+                                    notifyTipLoaded(tips);
                                 }
                             });
+                        }
                     }
                 });
     }

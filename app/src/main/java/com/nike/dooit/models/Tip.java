@@ -67,4 +67,9 @@ public class Tip {
     public void setTags(List<String> tags) {
         this.tags = tags;
     }
+
+    @Override
+    public String toString() {
+        return title;
+    }
 }

@@ -10,6 +10,8 @@ import android.text.style.RelativeSizeSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Filter;
+import android.widget.Filterable;
 
 import com.nike.dooit.DooitApplication;
 import com.nike.dooit.R;
@@ -27,10 +29,11 @@ import javax.inject.Inject;
  * Created by Wimpie Victor on 2016/11/07.
  */
 
-public class TipsAdapter extends RecyclerView.Adapter<TipViewHolder> {
+public class TipsAdapter extends RecyclerView.Adapter<TipViewHolder> implements Filterable, ITipsAdapter {
 
     private Context context;
-    private List<Tip> tips = new ArrayList<>();
+    private List<Tip> tipsAll = new ArrayList<>();
+    private TipsFilter filter;
 
     @Inject
     TipManager tipManager;
@@ -46,12 +49,12 @@ public class TipsAdapter extends RecyclerView.Adapter<TipViewHolder> {
 
     public TipsAdapter(DooitApplication application, List<Tip> tips) {
         this(application);
-        this.tips = tips;
+        this.tipsAll = tips;
     }
 
     @Override
     public int getItemCount() {
-        return tips.size();
+        return tipsAll.size();
     }
 
     @Override
@@ -63,7 +66,7 @@ public class TipsAdapter extends RecyclerView.Adapter<TipViewHolder> {
 
     @Override
     public void onBindViewHolder(TipViewHolder holder, int position) {
-        Tip tip = tips.get(position);
+        Tip tip = tipsAll.get(position);
 
         // Id
         holder.setId(tip.getId());
@@ -94,12 +97,37 @@ public class TipsAdapter extends RecyclerView.Adapter<TipViewHolder> {
         }
     }
 
+    @Override
+    public Filter getFilter() {
+        return new Filter() {
+            @Override
+            protected FilterResults performFiltering(CharSequence constraint) {
+                return null;
+            }
+
+            @Override
+            protected void publishResults(CharSequence constraint, FilterResults results) {
+
+            }
+        };
+    }
+
     public void updateTips(List<Tip> tips) {
-        this.tips = tips;
+        this.tipsAll = tips;
         notifyDataSetChanged();
     }
 
+    @Override
+    public List<Tip> getAllTips() {
+        return null;
+    }
+
+    @Override
+    public void updateAllTips(List<Tip> tips) {
+
+    }
+
     public List<Tip> getTips() {
-        return tips;
+        return tipsAll;
     }
 }
