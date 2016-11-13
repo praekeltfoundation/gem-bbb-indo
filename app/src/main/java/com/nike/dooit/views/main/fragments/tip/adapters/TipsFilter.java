@@ -4,6 +4,7 @@ import android.widget.Filter;
 
 import com.nike.dooit.models.Tip;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -22,8 +23,18 @@ public class TipsFilter extends Filter {
     protected FilterResults performFiltering(CharSequence constraint) {
         if (constraint != null) {
             FilterResults results = new FilterResults();
-            results.values = adapter.getAllTips();
-            results.count = adapter.getAllTips().size();
+            List<Tip> suggestions = new ArrayList<>();
+            String c = constraint.toString().toLowerCase();
+
+            for (Tip tip : adapter.getAllTips()) {
+                String title = tip.getTitle().toLowerCase();
+                if (title.contains(c)) {
+                    suggestions.add(tip);
+                }
+            }
+
+            results.values = suggestions;
+            results.count = suggestions.size();
             return results;
         } else {
             return new FilterResults();
