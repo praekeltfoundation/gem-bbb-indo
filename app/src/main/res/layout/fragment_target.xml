@@ -31,11 +31,11 @@
             android:textStyle="bold" />
 
         <android.support.v4.view.ViewPager
-            android:layout_marginTop="24dp"
             android:id="@+id/fragment_target_targets_view_pagers"
             android:layout_width="wrap_content"
             android:layout_height="200dp"
-            android:layout_below="@+id/fragment_target_goal_name_text_view" />
+            android:layout_below="@+id/fragment_target_goal_name_text_view"
+            android:layout_marginTop="24dp" />
 
         <ImageButton
             android:id="@+id/fragment_target_left_image_button"
@@ -46,7 +46,9 @@
             android:layout_alignTop="@+id/fragment_target_targets_view_pagers"
             android:layout_gravity="center_vertical|start"
             android:background="?android:selectableItemBackground"
-            android:src="@drawable/ic_d_left_chevron" />
+            android:src="@drawable/ic_d_left_chevron"
+            android:visibility="gone"
+            tools:visibility="visible" />
 
         <ImageButton
             android:id="@+id/fragment_target_right_image_button"
@@ -57,7 +59,9 @@
             android:layout_alignTop="@+id/fragment_target_targets_view_pagers"
             android:layout_gravity="center_vertical|end"
             android:background="?android:selectableItemBackground"
-            android:src="@drawable/ic_d_right_chevron" />
+            android:src="@drawable/ic_d_right_chevron"
+            android:visibility="gone"
+            tools:visibility="visible" />
 
 
         <TextView

@@ -5,8 +5,10 @@ import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -52,9 +54,12 @@ public class TargetFragment extends MainFragment {
     TextView total;
     @BindView(R.id.fragment_target_savings_plan_message)
     TextView targetMessage;
-
     @BindView(R.id.fragment_target_week_graph_view)
     WeekGraph bars;
+    @BindView(R.id.fragment_target_left_image_button)
+    ImageButton leftTarget;
+    @BindView(R.id.fragment_target_right_image_button)
+    ImageButton rightTarget;
 
     @BindString(R.string.savings_message)
     String savingsMessage;
@@ -100,6 +105,18 @@ public class TargetFragment extends MainFragment {
             @Override
             public void onPageSelected(int position) {
                 populateGoal(goals.get(position));
+
+                if (position == 0)
+                    leftTarget.setVisibility(View.GONE);
+                else
+                    leftTarget.setVisibility(View.VISIBLE);
+
+                if (position == goals.size())
+                    rightTarget.setVisibility(View.GONE);
+                else
+                    rightTarget.setVisibility(View.VISIBLE);
+
+
             }
 
             @Override
@@ -119,9 +136,15 @@ public class TargetFragment extends MainFragment {
         getActivity().getMenuInflater().inflate(R.menu.menu_main_target, menu);
     }
 
-    @OnClick(R.id.fragment_target_save_button)
-    public void buttonClick() {
-        startBot(BotType.GOAL);
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.menu_main_target_add_goal:
+                startBot(BotType.GOAL);
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 
     @OnClick(R.id.fragment_target_left_image_button)
@@ -161,6 +184,8 @@ public class TargetFragment extends MainFragment {
                                 public void run() {
                                     adapter.updateGoals(goals);
                                     populateGoal(goals.get(0));
+                                    if (goals.size() > 0)
+                                        rightTarget.setVisibility(View.VISIBLE);
                                 }
                             });
                     }
