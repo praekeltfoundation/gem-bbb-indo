@@ -76,7 +76,7 @@ public class TipsListFragment extends Fragment {
         super.onCreateOptionsMenu(menu, inflater);
         if (tipProvider.hasTips()) {
             List<Tip> tips = tipProvider.loadTips();
-            adapter.updateTips(tips);
+            adapter.updateAllTips(tips);
             notifyTipLoaded(tips);
         } else {
             retrieveTips();
@@ -94,7 +94,7 @@ public class TipsListFragment extends Fragment {
         super.onResume();
         if (tipProvider.hasTips()) {
             List<Tip> tips = tipProvider.loadTips();
-            adapter.updateTips(tips);
+            adapter.updateAllTips(tips);
             notifyTipLoaded(tips);
         } else {
             retrieveTips();
@@ -168,7 +168,7 @@ public class TipsListFragment extends Fragment {
                             getActivity().runOnUiThread(new Runnable() {
                                 @Override
                                 public void run() {
-                                    adapter.updateTips(tips);
+                                    adapter.updateAllTips(tips);
                                     notifyTipLoaded(tips);
                                 }
                             });

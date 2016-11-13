@@ -108,19 +108,16 @@ public class TipsListAdapter extends RecyclerView.Adapter<TipViewHolder> impleme
         };
     }
 
-    public void updateTips(List<Tip> tips) {
-        this.tipsAll = tips;
-        notifyDataSetChanged();
-    }
-
     @Override
     public List<Tip> getAllTips() {
-        return null;
+        return tipsAll;
     }
 
     @Override
     public void updateAllTips(List<Tip> tips) {
-
+        tipsAll.clear();
+        tipsAll.addAll(tips);
+        notifyDataSetChanged();
     }
 
     public List<Tip> getTips() {

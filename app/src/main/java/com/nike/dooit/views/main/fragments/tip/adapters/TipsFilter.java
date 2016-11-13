@@ -46,7 +46,7 @@ public class TipsFilter extends Filter {
         if (results != null && results.count > 0) {
             adapter.setNotifyOnChange(false);
             adapter.clear();
-            // Avoids cast warning
+            //  Avoids cast warning
             List<?> tips = (List<?>) results.values;
             for (Object obj : tips) {
                 if (obj instanceof Tip) {
