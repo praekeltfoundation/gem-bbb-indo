@@ -17,6 +17,7 @@ import com.nike.dooit.api.DooitErrorHandler;
 import com.nike.dooit.api.managers.TipManager;
 import com.nike.dooit.api.responses.EmptyResponse;
 import com.nike.dooit.helpers.Persisted;
+import com.nike.dooit.views.tip.TipArticleActivity;
 
 import javax.inject.Inject;
 
@@ -52,6 +53,7 @@ public class TipViewHolder extends RecyclerView.ViewHolder {
     Persisted persisted;
 
     int id;
+    String articleUrl;
 
     public TipViewHolder(View itemView) {
         super(itemView);
@@ -65,7 +67,12 @@ public class TipViewHolder extends RecyclerView.ViewHolder {
 
     @OnClick(R.id.card_tip_title)
     public void startArticle(View view) {
-        Toast.makeText(view.getContext(), titleView.getText().toString() + " clicked", Toast.LENGTH_SHORT).show();
+        Toast.makeText(view.getContext(),
+                String.format("Opening '%s'", titleView.getText().toString()),
+                Toast.LENGTH_SHORT).show();
+        TipArticleActivity.Builder.create(getContext())
+                .putArticleUrl(articleUrl)
+                .startActivity();
     }
 
     @OnClick(R.id.card_tip_fav)
@@ -103,5 +110,9 @@ public class TipViewHolder extends RecyclerView.ViewHolder {
 
     public void setTitle(SpannableString title) {
         titleView.setText(title);
+    }
+
+    public void setArticleUrl(String articleUrl) {
+        this.articleUrl = articleUrl;
     }
 }

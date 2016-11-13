@@ -86,6 +86,9 @@ public class TipsListAdapter extends RecyclerView.Adapter<TipViewHolder> impleme
 
         holder.setTitle(st);
 
+        // Article
+        holder.setArticleUrl(tip.getArticleUrl());
+
         // Image
         if (tip.hasCoverImageUrl()) {
             Uri uri = Uri.parse(tip.getCoverImageUrl());

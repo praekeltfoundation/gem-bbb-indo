@@ -20,6 +20,7 @@ import com.nike.dooit.models.Tip;
 import com.nike.dooit.views.main.fragments.tip.OnTipsAvailableListener;
 import com.nike.dooit.views.main.fragments.tip.adapters.TipsAutoCompleteAdapter;
 import com.nike.dooit.views.main.fragments.tip.adapters.TipsTabAdapter;
+import com.nike.dooit.views.tip.TipArticleActivity;
 
 import java.util.List;
 
@@ -90,6 +91,7 @@ public class TipsFragment extends Fragment implements OnTipsAvailableListener {
                 Tip tip = searchAdapter.getItem(position);
                 Toast.makeText(getContext(),
                         String.format("Opening '%s'", tip.getTitle()), Toast.LENGTH_SHORT).show();
+                startArticle(tip);
             }
         });
 
@@ -116,5 +118,11 @@ public class TipsFragment extends Fragment implements OnTipsAvailableListener {
     public void onTipsAvailable(List<Tip> tips) {
         Log.d(TAG, "Updating Tips");
         searchAdapter.updateAllTips(tips);
+    }
+
+    private void startArticle(Tip tip) {
+        TipArticleActivity.Builder.create(getActivity())
+            .putArticleUrl(tip.getArticleUrl())
+            .startActivity();
     }
 }

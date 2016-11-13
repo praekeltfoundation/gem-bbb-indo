@@ -18,6 +18,7 @@ import com.nike.dooit.views.onboarding.ProfileImageActivity;
 import com.nike.dooit.views.onboarding.RegistrationActivity;
 import com.nike.dooit.views.profile.ProfileActivity;
 import com.nike.dooit.views.settings.SettingsActivity;
+import com.nike.dooit.views.tip.TipArticleActivity;
 
 import javax.inject.Singleton;
 
@@ -65,4 +66,6 @@ public interface DooitComponent {
     void inject(TipsListAdapter o);
 
     void inject(TipViewHolder o);
+
+    void inject(TipArticleActivity o);
 }
