@@ -23,7 +23,7 @@
         android:layout_height="120dp"
         android:layout_gravity="center"
         app:arc_bottom_text_margin_top="8dp"
-        app:arc_finished_color="@color/light_blue"
+        app:arc_finished_color="@color/light_blue_alpha"
         app:arc_progress="10"
         app:arc_text_color="@color/black"
         app:arc_unfinished_color="@color/light_grey_alpha" />

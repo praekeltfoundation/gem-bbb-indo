@@ -1,4 +1,5 @@
 <android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -166,5 +167,21 @@
             android:gravity="center_vertical"
             android:text="Saved" />
 
+        <HorizontalScrollView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/fragment_target_legend_saved">
+
+            <com.nike.dooit.views.custom.WeekGraph
+                android:id="@+id/fragment_target_week_graph_view"
+                android:layout_width="wrap_content"
+                android:layout_height="150dp"
+                android:background="#fff"
+                android:orientation="horizontal"
+                app:gw_bar_drawable="@drawable/week_bar"
+                app:gw_bar_marginEnd="0dp"
+                app:gw_bar_marginStart="5dp"
+                app:gw_bar_width="24dp" />
+        </HorizontalScrollView>
     </RelativeLayout>
 </android.support.v4.widget.NestedScrollView>

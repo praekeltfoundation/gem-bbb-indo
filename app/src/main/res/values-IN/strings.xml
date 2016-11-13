@@ -106,4 +106,11 @@
     <string name="toes">Can you touch your toes?</string>
     <string name="night">Can you land on the sun at night?</string>
 
+    <!-- TARGET -->
+    <string name="save">+ tambah</string>
+    <string name="withdraw">- tarik</string>
+    <string name="savings_history">Tabungan Sejarah</string>
+    <string name="weeks">Minggu</string>
+    <string name="add_goal">ADD TUJUAN</string>
+
 </resources>

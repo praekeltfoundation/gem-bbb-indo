@@ -17,6 +17,7 @@ import com.nike.dooit.api.DooitErrorHandler;
 import com.nike.dooit.api.managers.GoalManager;
 import com.nike.dooit.models.Goal;
 import com.nike.dooit.models.enums.BotType;
+import com.nike.dooit.views.custom.WeekGraph;
 import com.nike.dooit.views.main.fragments.MainFragment;
 import com.nike.dooit.views.main.fragments.target.adapters.TargetPagerAdapter;
 
@@ -44,6 +45,9 @@ public class TargetFragment extends MainFragment {
     TextView saved;
     @BindView(R.id.fragment_target_total_text_view)
     TextView total;
+
+    @BindView(R.id.fragment_target_week_graph_view)
+    WeekGraph bars;
 
     private TargetPagerAdapter adapter;
 
@@ -148,5 +152,41 @@ public class TargetFragment extends MainFragment {
                             });
                     }
                 });
+        bars.setValues(new ArrayList<Float>() {{
+            add(1908.0f);
+            add(5329.0f);
+            add(7696.0f);
+            add(4389.0f);
+            add(4089.0f);
+            add(7648.0f);
+            add(3788.0f);
+            add(6025.0f);
+            add(6488.0f);
+            add(8907.0f);
+            add(6262.0f);
+            add(7305.0f);
+            add(2209.0f);
+            add(2498.0f);
+            add(8069.0f);
+            add(5342.0f);
+            add(3000.0f);
+            add(7323.0f);
+            add(1578.0f);
+            add(8005.0f);
+            add(3647.0f);
+            add(7013.0f);
+            add(4735.0f);
+            add(8345.0f);
+            add(6558.0f);
+            add(5203.0f);
+            add(4034.0f);
+            add(5574.0f);
+            add(4451.0f);
+            add(5617.0f);
+            add(3865.0f);
+            add(2642.0f);
+            add(3043.0f);
+            add(4603.0f);
+        }});
     }
 }
