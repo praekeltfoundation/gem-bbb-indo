@@ -43,6 +43,15 @@
     <string name="challenge_t_c">Dengan mengambil tantangan ini Anda menyetujui Syarat dan Ketentuan kami</string>
     <string name="register">Daftar</string>
 
+    <!--LOGIN-->
+    <string name="login_title">Masuk</string>
+    <string name="invalid_credentials">Tidak dapat login dengan mandat yang diberikan.</string>
+    <string name="login_name">Nama</string>
+    <string name="login_password">Kata sandi</string>
+    <string name="login_example_name">Contoh: Aulia Dharmaningtyas</string>
+    <string name="login_example_name_error_1">Nama tidak boleh kosong</string>
+    <string name="login_example_password">Harus memiliki minimal 6 karakter</string>
+    <string name="login_example_password_error_1">Password tidak boleh kosong</string>
 
     <!--JSON GOALS-->
     <!--TODO: TRANSLATE-->

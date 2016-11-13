@@ -43,6 +43,15 @@
     <string name="challenge_t_c">By taking this challenge you\nagree to our Terms &amp; Conditions</string>
     <string name="register">Register</string>
 
+    <!--LOGIN-->
+    <string name="login_title">Log in</string>
+    <string name="invalid_credentials">Unable to log in with provided credentials.</string>
+    <string name="login_name">Name</string>
+    <string name="login_password">Password</string>
+    <string name="login_example_name">Example: Aulia Dharmaningtyas</string>
+    <string name="login_example_name_error_1">Name can\'t be blank</string>
+    <string name="login_example_password">Must have at least 6 characters</string>
+    <string name="login_example_password_error_1">Password can\'t be blank</string>
 
     <!--JSON GOALS-->
     <string name="askGoalName">What are you saving for?</string>
