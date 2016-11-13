@@ -18,7 +18,7 @@ import com.nike.dooit.R;
 import com.nike.dooit.api.DooitAPIError;
 import com.nike.dooit.api.DooitErrorHandler;
 import com.nike.dooit.models.Tip;
-import com.nike.dooit.views.main.fragments.tip.adapters.TipsAdapter;
+import com.nike.dooit.views.main.fragments.tip.adapters.TipsListAdapter;
 import com.nike.dooit.views.main.fragments.tip.providers.TipProvider;
 
 import java.util.List;
@@ -38,7 +38,7 @@ public class TipsListFragment extends Fragment {
 
     TipsViewPagerPositions pos;
     TipProvider tipProvider;
-    TipsAdapter adapter;
+    TipsListAdapter adapter;
     OnTipsAvailableListener listener;
     GridLayoutManager gridManager;
 
@@ -124,7 +124,7 @@ public class TipsListFragment extends Fragment {
         recyclerView.setLayoutManager(gridManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
 
-        adapter = new TipsAdapter((DooitApplication) getActivity().getApplication());
+        adapter = new TipsListAdapter((DooitApplication) getActivity().getApplication());
         recyclerView.setAdapter(adapter);
 
         retrieveTips();

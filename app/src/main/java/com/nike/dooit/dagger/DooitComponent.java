@@ -11,7 +11,7 @@ import com.nike.dooit.views.main.fragments.TargetFragment;
 import com.nike.dooit.views.main.fragments.TipsFragment;
 import com.nike.dooit.views.main.fragments.tip.TipViewHolder;
 import com.nike.dooit.views.main.fragments.tip.TipsListFragment;
-import com.nike.dooit.views.main.fragments.tip.adapters.TipsAdapter;
+import com.nike.dooit.views.main.fragments.tip.adapters.TipsListAdapter;
 import com.nike.dooit.views.main.fragments.tip.providers.TipProvider;
 import com.nike.dooit.views.onboarding.LoginActivity;
 import com.nike.dooit.views.onboarding.ProfileImageActivity;
@@ -62,7 +62,7 @@ public interface DooitComponent {
 
     void inject(TipProvider o);
 
-    void inject(TipsAdapter o);
+    void inject(TipsListAdapter o);
 
     void inject(TipViewHolder o);
 }
