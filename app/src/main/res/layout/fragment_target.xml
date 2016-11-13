@@ -20,17 +20,18 @@
 
         <TextView
             android:id="@+id/fragment_target_goal_name_text_view"
-            style="@style/AppTheme.TextView.Regular.ExtraLarge"
+            style="@style/AppTheme.TextView.Regular.XXXLarge"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
-            android:layout_marginTop="24dp"
+            android:layout_marginTop="6dp"
             android:gravity="center_horizontal"
             android:text="Goal Name"
             android:textColor="@color/black"
             android:textStyle="bold" />
 
         <android.support.v4.view.ViewPager
+            android:layout_marginTop="24dp"
             android:id="@+id/fragment_target_targets_view_pagers"
             android:layout_width="wrap_content"
             android:layout_height="200dp"
@@ -67,11 +68,12 @@
             android:layout_below="@+id/fragment_target_targets_view_pagers"
             android:gravity="center_horizontal"
             android:text="saved"
-            android:textColor="@color/black" />
+            android:textColor="@color/black"
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/fragment_target_saved_text_view"
-            style="@style/AppTheme.TextView.Regular.ExtraLarge"
+            style="@style/AppTheme.TextView.Regular.XXXLarge"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/fragment_target_saved"
@@ -88,7 +90,8 @@
             android:layout_below="@+id/fragment_target_saved_text_view"
             android:gravity="center_horizontal"
             android:text="of Rp 50.000"
-            android:textColor="@color/black" />
+            android:textColor="@color/black"
+            android:textStyle="bold" />
 
         <Button
             android:id="@+id/fragment_target_save_button"
@@ -135,7 +138,7 @@
             android:layout_below="@+id/fragment_target_savings_history"
             android:gravity="center_horizontal"
             android:text="@string/weeks"
-            android:textColor="@color/black" />
+            android:textColor="@color/grey" />
 
         <TextView
             android:id="@+id/fragment_target_legend_goals"
@@ -168,9 +171,11 @@
             android:text="Saved" />
 
         <HorizontalScrollView
-            android:layout_width="wrap_content"
+            android:id="@+id/fragment_target_savings_graph"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/fragment_target_legend_saved">
+            android:layout_below="@+id/fragment_target_legend_saved"
+            tools:background="@color/purple">
 
             <com.nike.dooit.views.custom.WeekGraph
                 android:id="@+id/fragment_target_week_graph_view"
@@ -178,11 +183,51 @@
                 android:layout_height="150dp"
                 android:background="#fff"
                 android:orientation="horizontal"
+                app:gw_bar_avgColor="@color/grey"
+                app:gw_bar_avgHeight="2dp"
                 app:gw_bar_drawable="@drawable/week_bar"
                 app:gw_bar_marginEnd="0dp"
                 app:gw_bar_marginStart="5dp"
+                app:gw_bar_targetColor="@color/yellow"
+                app:gw_bar_targetHeight="2dp"
                 app:gw_bar_textHeight="20dp"
                 app:gw_bar_width="24dp" />
         </HorizontalScrollView>
+
+        <TextView
+            android:id="@+id/fragment_target_savings_plan"
+            style="@style/AppTheme.TextView.Regular.Medium"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/fragment_target_savings_graph"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="24dp"
+            android:text="@string/savings_plan"
+            android:textAllCaps="true"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/fragment_target_savings_plan_message"
+            style="@style/AppTheme.TextView.Regular.Medium"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/fragment_target_savings_plan"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="8dp"
+            android:text="@string/savings_message"
+            android:textAlignment="center" />
+
+        <TextView
+            android:id="@+id/fragment_target_savings_plan_edit"
+            style="@style/AppTheme.TextView.Regular.Medium"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/fragment_target_savings_plan_message"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="24dp"
+            android:text="@string/edit_savings_plan"
+            android:textAlignment="center"
+            android:textAllCaps="true"
+            android:textColor="@color/grey" />
     </RelativeLayout>
 </android.support.v4.widget.NestedScrollView>

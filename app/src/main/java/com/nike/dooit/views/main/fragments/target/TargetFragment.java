@@ -21,13 +21,17 @@ import com.nike.dooit.views.custom.WeekGraph;
 import com.nike.dooit.views.main.fragments.MainFragment;
 import com.nike.dooit.views.main.fragments.target.adapters.TargetPagerAdapter;
 
+import org.joda.time.Weeks;
+
 import java.text.NumberFormat;
 import java.util.ArrayList;
+import java.util.Currency;
 import java.util.LinkedHashMap;
 import java.util.List;
 
 import javax.inject.Inject;
 
+import butterknife.BindString;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -46,9 +50,14 @@ public class TargetFragment extends MainFragment {
     TextView saved;
     @BindView(R.id.fragment_target_total_text_view)
     TextView total;
+    @BindView(R.id.fragment_target_savings_plan_message)
+    TextView targetMessage;
 
     @BindView(R.id.fragment_target_week_graph_view)
     WeekGraph bars;
+
+    @BindString(R.string.savings_message)
+    String savingsMessage;
 
     private TargetPagerAdapter adapter;
 
@@ -106,7 +115,7 @@ public class TargetFragment extends MainFragment {
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
-        getActivity().getMenuInflater().inflate(R.menu.menu_main, menu);
+        menu.clear();
         getActivity().getMenuInflater().inflate(R.menu.menu_main_target, menu);
     }
 
@@ -130,6 +139,9 @@ public class TargetFragment extends MainFragment {
         NumberFormat format = NumberFormat.getCurrencyInstance();
         saved.setText(format.format(goal.getValue()));
         total.setText(String.format("of %s", format.format(goal.getTarget())));
+        int weeks = Weeks.weeksBetween(goal.getStartDate(), goal.getEndDate()).getWeeks();
+        double toSavePerWeek = goal.getTarget() / weeks;
+        targetMessage.setText(String.format(savingsMessage, Currency.getInstance(getLocal()).getCurrencyCode(), toSavePerWeek, goal.getTarget(), weeks));
     }
 
     private void retrieveGoals() {
@@ -154,22 +166,24 @@ public class TargetFragment extends MainFragment {
                     }
                 });
         bars.setValues(new LinkedHashMap() {{
-            put("1", 1908.0f);
-            put("2", 5329.0f);
-            put("3", 7696.0f);
-            put("4", 4389.0f);
-            put("5", 4089.0f);
-            put("6", 7648.0f);
-            put("7", 3788.0f);
-            put("8", 6025.0f);
-            put("9", 6488.0f);
-            put("10", 8907.0f);
-            put("11", 6262.0f);
-            put("12", 7305.0f);
-            put("13", 2209.0f);
-            put("14", 2498.0f);
-            put("15", 8069.0f);
-            put("16", 5342.0f);
+            put("1", 3.0f);
+            put("2", 13.0f);
+            put("3", 17.0f);
+            put("4", 4.0f);
+            put("5", 1.0f);
+            put("6", 19.0f);
+            put("7", 16.0f);
+            put("8", 10.0f);
+            put("9", 18.0f);
+            put("10", 6.0f);
+            put("11", 7.0f);
+            put("12", 2.0f);
+            put("13", 9.0f);
+            put("14", 5.0f);
+            put("15", 15.0f);
+            put("16", 11.0f);
         }});
+
+        bars.setGoal(16.0f);
     }
 }

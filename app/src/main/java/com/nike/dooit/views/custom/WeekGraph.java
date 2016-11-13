@@ -2,18 +2,20 @@ package com.nike.dooit.views.custom;
 
 import android.content.Context;
 import android.content.res.TypedArray;
+import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
+import android.support.annotation.ColorInt;
 import android.util.AttributeSet;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewTreeObserver;
+import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.nike.dooit.R;
 
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Locale;
 import java.util.Map;
@@ -22,11 +24,13 @@ import java.util.Map;
 /**
  * TODO: document your custom view class.
  */
-public class WeekGraph extends LinearLayout {
-    private int mBarWidth = 0, mBarMarginStart = 0, mBarMarginEnd = 0, mBarTextHeight = 0;
+public class WeekGraph extends FrameLayout {
+    private int mBarWidth = 0, mBarMarginStart = 0, mBarMarginEnd = 0, mBarTextHeight = 0, mBarAverageHeight = 0, mBarTargetHeight = 0;
     private Drawable mBarDrawable;
     private LinkedHashMap<String, Float> mValues = new LinkedHashMap<>();
-    private Float maxValue = 0f;
+    private Float mMaxValue = 0f, mGoal = 0f;
+    @ColorInt
+    private int mBarTargetColor = Color.GREEN, mBarAverageColor = Color.YELLOW;
 
     int parentWidth, parentHeight;
 
@@ -64,6 +68,18 @@ public class WeekGraph extends LinearLayout {
         mBarMarginEnd = a.getDimensionPixelSize(
                 R.styleable.WeekGraph_gw_bar_marginEnd,
                 mBarMarginEnd);
+        mBarAverageHeight = a.getDimensionPixelSize(
+                R.styleable.WeekGraph_gw_bar_avgHeight,
+                mBarAverageHeight);
+        mBarTargetHeight = a.getDimensionPixelSize(
+                R.styleable.WeekGraph_gw_bar_targetHeight,
+                mBarTargetHeight);
+        mBarTargetColor = a.getColor(
+                R.styleable.WeekGraph_gw_bar_targetColor,
+                mBarTargetColor);
+        mBarAverageColor = a.getColor(
+                R.styleable.WeekGraph_gw_bar_avgColor,
+                mBarAverageColor);
 
         if (a.hasValue(R.styleable.WeekGraph_gw_bar_drawable)) {
             mBarDrawable = a.getDrawable(
@@ -99,15 +115,14 @@ public class WeekGraph extends LinearLayout {
             @Override
             public void onGlobalLayout() {
 
-                removeAllViews();
-                createViews();
-
-                if (mValues.size() > 0)
+                if (mValues.size() > 0) {
+                    createViews();
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
                         getViewTreeObserver().removeOnGlobalLayoutListener(this);
                     } else {
                         getViewTreeObserver().removeGlobalOnLayoutListener(this);
                     }
+                }
             }
         });
     }
@@ -121,16 +136,25 @@ public class WeekGraph extends LinearLayout {
     }
 
     private void createViews() {
+        removeAllViews();
+        Float totalValue = 0f;
+        mMaxValue = mGoal;
         for (Map.Entry<String, Float> value : mValues.entrySet()) {
-            if (value.getValue() > maxValue)
-                maxValue = value.getValue();
+            if (value.getValue() > mMaxValue)
+                mMaxValue = value.getValue();
+
+            totalValue += value.getValue();
         }
 
+        LinearLayout viewContainer = new LinearLayout(getContext());
+        LinearLayout.LayoutParams paramsViewContainer = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
+        viewContainer.setOrientation(LinearLayout.HORIZONTAL);
+        viewContainer.setLayoutParams(paramsViewContainer);
         for (Map.Entry<String, Float> value : mValues.entrySet()) {
 
             LinearLayout viewGroup = new LinearLayout(getContext());
-            viewGroup.setOrientation(VERTICAL);
-            LinearLayout.LayoutParams paramsViewGroup = new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
+            viewGroup.setOrientation(LinearLayout.VERTICAL);
+            LinearLayout.LayoutParams paramsViewGroup = new LinearLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
             paramsViewGroup.weight = 1.0f;
             paramsViewGroup.gravity = Gravity.BOTTOM;
             paramsViewGroup.setMarginStart(mBarMarginStart);
@@ -138,20 +162,39 @@ public class WeekGraph extends LinearLayout {
             viewGroup.setLayoutParams(paramsViewGroup);
 
             View bar = new View(getContext());
-            LinearLayout.LayoutParams paramsBar = new LayoutParams(mBarWidth, (int) ((parentHeight - mBarTextHeight) * (value.getValue() / maxValue)));
+            LinearLayout.LayoutParams paramsBar = new LinearLayout.LayoutParams(mBarWidth, (int) ((parentHeight - mBarTextHeight) * (value.getValue() / mMaxValue)));
             bar.setLayoutParams(paramsBar);
             bar.setBackground(mBarDrawable);
             viewGroup.addView(bar);
 
             TextView text = new TextView(getContext());
             text.setGravity(Gravity.CENTER);
-            LinearLayout.LayoutParams paramsText = new LayoutParams(LayoutParams.MATCH_PARENT, mBarTextHeight);
+            LinearLayout.LayoutParams paramsText = new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, mBarTextHeight);
             text.setLayoutParams(paramsText);
             text.setText(String.format(Locale.getDefault(), "%s", value.getKey()));
             viewGroup.addView(text);
 
-            addView(viewGroup);
+            viewContainer.addView(viewGroup);
         }
+
+        View average = new View(getContext());
+        FrameLayout.LayoutParams paramsAvarage = new FrameLayout.LayoutParams(LayoutParams.MATCH_PARENT, mBarAverageHeight);
+        paramsAvarage.gravity = Gravity.BOTTOM;
+        paramsAvarage.bottomMargin = (int) ((parentHeight - mBarTextHeight) * ((totalValue / mValues.size()) / mMaxValue)) + mBarTextHeight;
+        average.setBackgroundColor(mBarAverageColor);
+        average.setLayoutParams(paramsAvarage);
+        addView(average);
+
+        View target = new View(getContext());
+        FrameLayout.LayoutParams paramsGoal = new FrameLayout.LayoutParams(LayoutParams.MATCH_PARENT, mBarTargetHeight);
+        paramsGoal.gravity = Gravity.BOTTOM;
+        paramsGoal.bottomMargin = (int) ((parentHeight - mBarTextHeight) * (mGoal / mMaxValue)) + mBarTextHeight;
+        target.setBackgroundColor(mBarTargetColor);
+        target.setLayoutParams(paramsGoal);
+        addView(target);
+
+        addView(viewContainer);
+
     }
 
     public LinkedHashMap<String, Float> getValues() {
@@ -160,5 +203,15 @@ public class WeekGraph extends LinearLayout {
 
     public void setValues(LinkedHashMap<String, Float> values) {
         this.mValues = values;
+        requestLayout();
+    }
+
+    public Float getGoal() {
+        return mGoal;
+    }
+
+    public void setGoal(Float mGoal) {
+        this.mGoal = mGoal;
+        requestLayout();
     }
 }

@@ -6,6 +6,7 @@
     <dimen name="app_bar_height">220dp</dimen>
     <dimen name="text_margin">16dp</dimen>
 
+    <dimen name="k_font_xxx_large">40dp</dimen>
     <dimen name="k_font_xx_large">30dp</dimen>
     <dimen name="k_font_extra_large">21dp</dimen>
     <dimen name="k_font_large">18dp</dimen>
