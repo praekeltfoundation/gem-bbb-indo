@@ -138,7 +138,6 @@ public class TipsListFragment extends Fragment {
 
     public void onPageSelected() {
         Log.d(TAG, "onPageSelected");
-//        notifyTipLoaded();
     }
 
     public void onPageDeselected() {
