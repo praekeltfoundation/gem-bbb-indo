@@ -77,7 +77,7 @@ public class TipsListFragment extends Fragment {
         if (tipProvider.hasTips()) {
             List<Tip> tips = tipProvider.loadTips();
             adapter.updateAllTips(tips);
-            notifyTipLoaded(tips);
+            notifyTipsLoaded(tips);
         } else {
             retrieveTips();
         }
@@ -95,7 +95,7 @@ public class TipsListFragment extends Fragment {
         if (tipProvider.hasTips()) {
             List<Tip> tips = tipProvider.loadTips();
             adapter.updateAllTips(tips);
-            notifyTipLoaded(tips);
+            notifyTipsLoaded(tips);
         } else {
             retrieveTips();
         }
@@ -148,7 +148,7 @@ public class TipsListFragment extends Fragment {
         this.listener = listener;
     }
 
-    private void notifyTipLoaded(List<Tip> tips) {
+    private void notifyTipsLoaded(List<Tip> tips) {
         if (listener != null)
             listener.onTipsAvailable(tips);
     }
@@ -168,7 +168,7 @@ public class TipsListFragment extends Fragment {
                                 @Override
                                 public void run() {
                                     adapter.updateAllTips(tips);
-                                    notifyTipLoaded(tips);
+                                    notifyTipsLoaded(tips);
                                 }
                             });
                         }
