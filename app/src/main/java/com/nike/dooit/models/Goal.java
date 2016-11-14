@@ -2,6 +2,8 @@ package com.nike.dooit.models;
 
 import com.google.gson.annotations.SerializedName;
 
+import org.joda.time.DateTime;
+
 import java.util.Date;
 import java.util.List;
 
@@ -13,9 +15,13 @@ public class Goal {
 
     private String name;
     private double value;
+    private double target;
+    @SerializedName("image_url")
     private String image;
-    @SerializedName("start_date") private Date startDate;
-    @SerializedName("end_date") private Date endDate;
+    @SerializedName("start_date")
+    private DateTime startDate;
+    @SerializedName("end_date")
+    private DateTime endDate;
     private List<GoalTransaction> transactions;
 
     public String getName() {
@@ -34,6 +40,14 @@ public class Goal {
         this.value = value;
     }
 
+    public double getTarget() {
+        return target;
+    }
+
+    public void setTarget(double target) {
+        this.target = target;
+    }
+
     public String getImage() {
         return image;
     }
@@ -42,19 +56,19 @@ public class Goal {
         this.image = image;
     }
 
-    public Date getStartDate() {
+    public DateTime getStartDate() {
         return startDate;
     }
 
-    public void setStartDate(Date startDate) {
+    public void setStartDate(DateTime startDate) {
         this.startDate = startDate;
     }
 
-    public Date getEndDate() {
+    public DateTime getEndDate() {
         return endDate;
     }
 
-    public void setEndDate(Date endDate) {
+    public void setEndDate(DateTime endDate) {
         this.endDate = endDate;
     }
 
