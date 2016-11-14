@@ -11,17 +11,18 @@
         android:layout_height="wrap_content"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-        <ImageView
-            android:id="@+id/fragment_challenge_image_image_view"
+        <com.facebook.drawee.view.SimpleDraweeView
+            android:id="@+id/fragment_challenge_register_image"
             android:layout_width="match_parent"
-            android:layout_height="200dp"
+            android:layout_height="@dimen/tip_card_image_height"
+            app:placeholderImage="@color/purple"
             android:background="@color/purple" />
 
         <TextView
             android:id="@+id/fragment_challenge_sub_title_text_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/fragment_challenge_image_image_view"
+            android:layout_below="@+id/fragment_challenge_register_image"
             android:layout_centerHorizontal="true"
             android:layout_marginEnd="@dimen/challenge_margins"
             android:layout_marginStart="@dimen/challenge_margins"
