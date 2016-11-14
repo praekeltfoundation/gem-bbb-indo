@@ -30,6 +30,13 @@ public class TipsFilter extends Filter {
                 String title = tip.getTitle().toLowerCase();
                 if (title.contains(c)) {
                     suggestions.add(tip);
+                    continue;
+                }
+                for (String tag : tip.getTags()) {
+                    if (tag.toLowerCase().contains(c)) {
+                        suggestions.add(tip);
+                        break;
+                    }
                 }
             }
 
