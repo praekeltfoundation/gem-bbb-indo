@@ -30,6 +30,14 @@ public class ParticipantAnswer implements Serializable {
         this.dateAnswered = new DateTime();
     }
 
+    public ParticipantAnswer(long user, long challenge, long question, long selectedOption) {
+        this.user = user;
+        this.challenge = challenge;
+        this.question = question;
+        this.selectedOption = selectedOption;
+        this.dateAnswered = new DateTime();
+    }
+
     public long getParticipant() {
         return participant;
     }
