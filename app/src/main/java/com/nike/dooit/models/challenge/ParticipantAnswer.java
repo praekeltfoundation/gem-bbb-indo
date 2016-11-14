@@ -11,7 +11,9 @@ import java.io.Serializable;
  */
 
 public class ParticipantAnswer implements Serializable {
-
+    private Long participant;
+    private Long user;
+    private Long challenge;
     private long question;
     @SerializedName("selected_option")
     private long selectedOption;
@@ -26,6 +28,30 @@ public class ParticipantAnswer implements Serializable {
         this.question = question;
         this.selectedOption = selectedOption;
         this.dateAnswered = new DateTime();
+    }
+
+    public long getParticipant() {
+        return participant;
+    }
+
+    public void setParticipant(long participant) {
+        this.participant = participant;
+    }
+
+    public long getUser() {
+        return user;
+    }
+
+    public void setUser(long user) {
+        this.user = user;
+    }
+
+    public long getChallenge() {
+        return challenge;
+    }
+
+    public void setChallenge(long challenge) {
+        this.challenge = challenge;
     }
 
     public long getQuestion() {
