@@ -1,8 +1,10 @@
 package com.nike.dooit.views.main.fragments.bot.viewholders;
 
 import android.content.Context;
+import android.text.InputType;
 import android.view.KeyEvent;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -10,8 +12,6 @@ import android.widget.Toast;
 import com.greenfrvr.hashtagview.HashtagView;
 import com.nike.dooit.R;
 import com.nike.dooit.models.bot.Answer;
-import com.nike.dooit.models.bot.BaseBotModel;
-import com.nike.dooit.models.bot.InputAnswer;
 import com.nike.dooit.views.main.fragments.bot.adapters.BotAdapter;
 
 import butterknife.BindView;
@@ -35,22 +35,24 @@ public class InlineEditViewHolder extends BaseBotViewHolder<Answer> {
     }
 
     @Override
-    public void populate(BaseBotModel model) {
+    public void populate(Answer model) {
         this.dataModel = model;
         editText.setHint(dataModel.getInlineEditHint(getContext()));
-        editText.setOnKeyListener(new View.OnKeyListener() {
-            @Override
-            public boolean onKey(View v, int keyCode, KeyEvent event) {
-                return false;
-            }
-        });
+        editText.setImeActionLabel("Done", KeyEvent.KEYCODE_ENTER);
+        editText.setInputType(InputType.TYPE_CLASS_TEXT);
+        if (botAdapter.getItemCount() - 1 == getAdapterPosition()) {
+            showKeyboard(editText);
+        }
         editText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                if (KeyEvent.KEYCODE_ENTER == event.getKeyCode()) {
-                    InputAnswer inputAnswer = new InputAnswer();
-                    inputAnswer.setText(v.getText().toString());
+                if (KeyEvent.KEYCODE_ENTER == actionId) {
+                    dismissKeyboard(editText);
+                    Answer inputAnswer = new Answer();
+                    inputAnswer.setValue(v.getText().toString());
                     inputAnswer.setName(v.getText().toString());
+                    inputAnswer.setRemoveOnSelect(dataModel.getName());
+                    inputAnswer.setNext(dataModel.getNext());
                     tagsClickListener.onItemClicked(inputAnswer);
                     return true;
                 }

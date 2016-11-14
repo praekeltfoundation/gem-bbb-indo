@@ -53,10 +53,12 @@
     <string name="login_example_password_error_1">Password can\'t be blank</string>
 
     <!--JSON GOALS-->
-    <string name="goalGreeting">Hello %s.;My Name is Dooit. I\'m gonna help  you save!</string>
+    <string name="goalGreeting">Hello %s.</string>
+    <string name="goalIntroduction">My Name is Dooit. I\'m gonna help  you save!</string>
     <string name="askGoalName">Select the goal you want to save for, please.</string>
     <string name="askGoalNameInput">What do you want to save for?</string>
-    <string name="askGoalImage">Add an image for your savings goal to help keep you motivated,or press skip:</string>
+    <string name="goalNameCongrats">Great choice!</string>
+    <string name="askGoalImage">Add an image for your savings goal to help keep you motivated</string>
     <string name="askGoalImageTake">Tap on the blue square…</string>
     <string name="askKnowGoalAmount">Do you know how much you need to save? </string>
     <string name="askGoalAmount">Great! Just type the amount that you want to save.</string>
@@ -77,7 +79,8 @@
     <!--Buttons-->
     <string name="greeting">Hola!</string>
     <string name="Skip">Skip</string>
-    <string name="Capture">Capture</string>
+    <string name="Capture">Add photo</string>
+    <string name="Gallery">Select from gallery</string>
     <string name="knowAmountY">Yes</string>
     <string name="knowAmountN">No</string>
     <string name="knowDateY">Yes</string>

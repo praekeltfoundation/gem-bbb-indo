@@ -12,10 +12,9 @@ import java.util.Map;
 public enum BotMessageType {
     UNDEFINED(0),
     TEXT(1),
-    MULTILINETEXT(2),
-    GOALSELECTION(3),
-    ANSWER(4),
-    INLINEEDIT(5);
+    GOALSELECTION(2),
+    ANSWER(3),
+    INLINEEDIT(4);
 
     private static Map<Integer, BotMessageType> map = new HashMap<>();
 

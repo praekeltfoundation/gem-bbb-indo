@@ -1,5 +1,7 @@
 package com.nike.dooit.models.bot;
 
+import android.content.Context;
+import android.text.TextUtils;
 import android.util.Pair;
 
 import com.nike.dooit.models.enums.BotMessageType;
@@ -13,6 +15,7 @@ public class Answer extends BaseBotModel {
     private String next;
     private String removeOnSelect;
     private String[] changeOnSelect;
+    protected String inlineEditHint;
 
     public Answer() {
         type = BotMessageType.ANSWER.name();
@@ -22,8 +25,23 @@ public class Answer extends BaseBotModel {
         return next;
     }
 
+    public void setNext(String next) {
+        this.next = next;
+    }
+
+    @Override
+    public String getText(Context context) {
+        if (TextUtils.isEmpty(text))
+            return getValue();
+        return super.getText(context);
+    }
+
     public String getValue() {
         return value;
+    }
+
+    public void setValue(String value) {
+        this.value = value;
     }
 
     public String getRemoveOnSelect() {
@@ -34,5 +52,13 @@ public class Answer extends BaseBotModel {
         if (changeOnSelect != null && changeOnSelect.length == 2)
             return new Pair<String, String>(changeOnSelect[0], changeOnSelect[1]);
         return null;
+    }
+
+    public String getInlineEditHint(Context context) {
+        return getResourceString(context, inlineEditHint);
+    }
+
+    public void setRemoveOnSelect(String removeOnSelect) {
+        this.removeOnSelect = removeOnSelect;
     }
 }

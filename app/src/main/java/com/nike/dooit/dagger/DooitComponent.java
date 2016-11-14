@@ -6,10 +6,10 @@ import com.nike.dooit.helpers.Persisted;
 import com.nike.dooit.views.DooitActivity;
 import com.nike.dooit.views.RootActivity;
 import com.nike.dooit.views.main.fragments.ChallengeFragment;
-import com.nike.dooit.views.main.fragments.target.TargetFragment;
 import com.nike.dooit.views.main.fragments.TipsFragment;
 import com.nike.dooit.views.main.fragments.bot.BotFragment;
-import com.nike.dooit.views.main.fragments.bot.viewholders.MultiLineTextViewHolder;
+import com.nike.dooit.views.main.fragments.bot.viewholders.TextViewHolder;
+import com.nike.dooit.views.main.fragments.target.TargetFragment;
 import com.nike.dooit.views.main.fragments.tip.TipViewHolder;
 import com.nike.dooit.views.main.fragments.tip.TipsListFragment;
 import com.nike.dooit.views.main.fragments.tip.adapters.TipsAdapter;
@@ -59,7 +59,7 @@ public interface DooitComponent {
 
     void inject(TipsFragment o);
 
-    void inject(MultiLineTextViewHolder o);
+    void inject(TextViewHolder o);
 
     void inject(TipsListFragment o);
 

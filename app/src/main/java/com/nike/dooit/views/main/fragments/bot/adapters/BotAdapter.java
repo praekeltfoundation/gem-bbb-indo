@@ -12,7 +12,6 @@ import com.nike.dooit.models.enums.BotMessageType;
 import com.nike.dooit.views.main.fragments.bot.viewholders.AnswerViewHolder;
 import com.nike.dooit.views.main.fragments.bot.viewholders.BaseBotViewHolder;
 import com.nike.dooit.views.main.fragments.bot.viewholders.InlineEditViewHolder;
-import com.nike.dooit.views.main.fragments.bot.viewholders.MultiLineTextViewHolder;
 import com.nike.dooit.views.main.fragments.bot.viewholders.TextViewHolder;
 
 import java.util.ArrayList;
@@ -37,8 +36,6 @@ public class BotAdapter extends RecyclerView.Adapter<BaseBotViewHolder> {
         switch (BotMessageType.getValueOf(viewType)) {
             case TEXT:
                 return new TextViewHolder(LayoutInflater.from(context).inflate(R.layout.item_view_bot_text, parent, false));
-            case MULTILINETEXT:
-                return new MultiLineTextViewHolder(LayoutInflater.from(context).inflate(R.layout.item_view_bot_multi_line_text, parent, false));
             case GOALSELECTION:
                 return new TextViewHolder(LayoutInflater.from(context).inflate(R.layout.item_view_bot_text, parent, false));
             case ANSWER:
@@ -71,11 +68,14 @@ public class BotAdapter extends RecyclerView.Adapter<BaseBotViewHolder> {
         return dataSet.size();
     }
 
-    public synchronized void setItem(BaseBotModel item) {
+    public void clear() {
         int size = dataSet.size();
         dataSet.clear();
         notifyItemRangeRemoved(0, size);
+    }
 
+    public synchronized void setItem(BaseBotModel item) {
+        clear();
         int pos = dataSet.size();
         dataSet.add(pos, item);
         notifyItemInserted(pos);

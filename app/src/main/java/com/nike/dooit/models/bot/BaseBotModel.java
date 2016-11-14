@@ -1,7 +1,9 @@
 package com.nike.dooit.models.bot;
 
 import android.content.Context;
+import android.content.res.Resources;
 import android.text.TextUtils;
+import android.util.Log;
 
 import com.nike.dooit.models.enums.BotMessageType;
 
@@ -13,14 +15,18 @@ public class BaseBotModel {
     protected String text;
     protected String name;
     protected String type;
-    protected String inlineEditHint;
-    protected String[] textParams;
+    protected String[] textParams = new String[0];
 
     String getResourceString(Context context, String jsonResourceName) {
         if (TextUtils.isEmpty(jsonResourceName))
             return jsonResourceName;
-        String resourceString = jsonResourceName.replace("$(", "").replace(")", "").replaceAll(" +", "");
-        return context.getString(context.getResources().getIdentifier(resourceString, "string", context.getPackageName()));
+        try {
+            String resourceString = jsonResourceName.replace("$(", "").replace(")", "").replaceAll(" +", "");
+            return context.getString(context.getResources().getIdentifier(resourceString, "string", context.getPackageName()));
+        } catch (Resources.NotFoundException ex) {
+            Log.d("PARSING", jsonResourceName);
+            throw ex;
+        }
     }
 
     public String getText(Context context) {
@@ -31,23 +37,23 @@ public class BaseBotModel {
         return name;
     }
 
+    public void setName(String name) {
+        this.name = name;
+    }
+
     public String getType() {
         return type;
     }
 
-    public String[] getTextParams() {
-        return textParams;
+    public void setType(BotMessageType type) {
+        this.type = type.name();
     }
 
-    public String getInlineEditHint(Context context) {
-        return getResourceString(context, inlineEditHint);
+    public String[] getTextParams() {
+        return textParams == null ? new String[0] : textParams;
     }
 
     public void setText(String text) {
         this.text = text;
-    }
-
-    public void setType(BotMessageType type) {
-        this.type = type.name();
     }
 }

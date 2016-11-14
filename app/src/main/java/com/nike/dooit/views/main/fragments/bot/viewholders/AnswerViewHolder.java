@@ -26,7 +26,7 @@ public class AnswerViewHolder extends BaseBotViewHolder<Answer> {
     }
 
     @Override
-    public void populate(BaseBotModel model) {
+    public void populate(Answer model) {
         this.dataModel = model;
         textView.setText(dataModel.getText(getContext()));
         itemView.setOnClickListener(new View.OnClickListener() {

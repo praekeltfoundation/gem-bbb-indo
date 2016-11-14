@@ -1,9 +1,15 @@
 [
   {
     "name": "goalGreeting",
-    "type": "multilineText",
+    "type": "text",
     "text": "$(goalGreeting)",
     "textParams": ["USERNAME"],
+    "autoNext": "goalIntroduction"
+  },
+  {
+    "name": "goalIntroduction",
+    "type": "text",
+    "text": "$(goalIntroduction)",
     "answers": [
       {"name": "greeting", "next": "askGoalName", "text":"$(greeting)" } ]
   },
@@ -12,26 +18,26 @@
     "type": "goalSelection",
     "text": " $(askGoalName) ",
     "answers": [
-      {"name": "goalName", "next": "askGoalImage", "text":"$(addOwnGoal)", "type": "inlineEdit", "changeOnSelect": ["askGoalName", "$(askGoalNameInput)"], "inlineEditHint": "$(type_name_hint)" } ]
+      {"name": "goalName", "next": "goalNameCongrats", "text":"$(addOwnGoal)", "type": "inlineEdit", "changeOnSelect": ["askGoalName", "$(askGoalNameInput)"], "inlineEditHint": "$(type_name_hint)" } ]
+  },
+  {
+    "name": "goalNameCongrats",
+    "type": "text",
+    "text": "$(goalNameCongrats)",
+    "autoNext": "askGoalImage"
   },
   {
     "name": "askGoalImage",
-    "type": "choice",
+    "type": "text",
     "text": "$(askGoalImage)",
     "answers": [
-      { "name": "Capture", "value": " ", "text":"$(Capture)", "next": "askGoalImageTake"},
-      { "name": "Skip", "value": "Skip", "text":"$(Skip)", "next": "askKnowGoalAmount"}
+      { "name": "Capture", "text":"$(Capture)", "type": "imageUpload", "nextOnFinish": "askKnowGoalAmount"},
+      { "name": "Gallery", "text":"$(Gallery)", "type": "imageUpload", "nextOnFinish": "askKnowGoalAmount"}
     ]
   },
   {
-    "name": "askGoalImageTake",
-    "type": "imageUpload",
-    "text": "$(askGoalImageTake)",
-    "answers": [ {"name": "goalImage", "next": "askKnowGoalAmount" } ]
-  },
-  {
     "name": "askKnowGoalAmount",
-    "type": "choice",
+    "type": "text",
     "text": "$(askKnowGoalAmount)",
     "answers": [
       { "name": "knowAmountY", "value": "yes", "text":"$(knowAmountY)", "next": "askGoalAmount"},
@@ -40,10 +46,10 @@
   },
   {
     "name": "askGoalAmount",
-    "type": "currency",
+    "type": "text",
     "text": "$(askGoalAmount)",
     "error": "validationFail",
-    "answers": [ { "name": "goalAmount", "next": "askKnowGoalDate" } ]
+    "answers": [ { "name": "goalAmount", "next": "askKnowGoalDate", "type":"currency" } ]
   },
   {
     "name": "infoDontKnowAmount",

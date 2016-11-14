@@ -20,7 +20,7 @@ import com.nike.dooit.helpers.Persisted;
 import com.nike.dooit.helpers.bot.BotFeed;
 import com.nike.dooit.models.bot.Answer;
 import com.nike.dooit.models.bot.BaseBotModel;
-import com.nike.dooit.models.bot.Goal;
+import com.nike.dooit.models.bot.Node;
 import com.nike.dooit.models.enums.BotMessageType;
 import com.nike.dooit.models.enums.BotType;
 import com.nike.dooit.views.main.fragments.MainFragment;
@@ -108,41 +108,13 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
         switch (type) {
             case DEFAULT:
                 feed = new BotFeed<>(getContext());
-                feed.parse(R.raw.goals, Goal.class);
-                Goal item = (Goal) feed.getFirstItem();
-                currentModel = item;
-                getBotAdapter().setItem(item);
-                persisted.saveConversationState(getBotAdapter().getDataSet());
-                answerView.setData(item.getAnswers(), new HashtagView.DataStateTransform<Answer>() {
-                    @Override
-                    public CharSequence prepareSelected(Answer item) {
-                        return item.getText(getContext());
-                    }
-
-                    @Override
-                    public CharSequence prepare(Answer item) {
-                        return item.getText(getContext());
-                    }
-                });
+                feed.parse(R.raw.goals, Node.class);
+                getAndAddNode(null);
                 break;
             case GOAL:
                 feed = new BotFeed<>(getContext());
-                feed.parse(R.raw.goals, Goal.class);
-                Goal goal = (Goal) feed.getItem(((Goal) feed.getFirstItem()).getAnswers().get(0).getNext());
-                currentModel = goal;
-                getBotAdapter().setItem(currentModel);
-                persisted.saveConversationState(getBotAdapter().getDataSet());
-                answerView.setData(goal.getAnswers(), new HashtagView.DataStateTransform<Answer>() {
-                    @Override
-                    public CharSequence prepareSelected(Answer item) {
-                        return item.getText(getContext());
-                    }
-
-                    @Override
-                    public CharSequence prepare(Answer item) {
-                        return item.getText(getContext());
-                    }
-                });
+                feed.parse(R.raw.goals, Node.class);
+                getAndAddNode("askGoalName");
                 break;
         }
     }
@@ -165,8 +137,11 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
             case DEFAULT:
             case GOAL:
                 if (!TextUtils.isEmpty(answer.getRemoveOnSelect())) {
-                    BaseBotModel model = feed.getItem(answer.getRemoveOnSelect());
-                    getBotAdapter().removeItem(model);
+                    for (BaseBotModel model : new ArrayList<>(getBotAdapter().getDataSet())) {
+                        if (answer.getRemoveOnSelect().equals(model.getName())) {
+                            getBotAdapter().removeItem(model);
+                        }
+                    }
                 }
                 if (answer.getChangeOnSelect() != null) {
                     BaseBotModel model = feed.getItem(answer.getChangeOnSelect().first);
@@ -179,19 +154,7 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
                 persisted.saveConversationState(getBotAdapter().getDataSet());
                 if (TextUtils.isEmpty(answer.getType())
                         || BotMessageType.getValueOf(answer.getType()).equals(BotMessageType.ANSWER)) {
-                    currentModel = feed.getItem(answer.getNext());
-                    getBotAdapter().addItem(currentModel);
-                    answerView.setData(((Goal) currentModel).getAnswers(), new HashtagView.DataStateTransform<Answer>() {
-                        @Override
-                        public CharSequence prepareSelected(Answer item) {
-                            return item.getText(getContext());
-                        }
-
-                        @Override
-                        public CharSequence prepare(Answer item) {
-                            return item.getText(getContext());
-                        }
-                    });
+                    getAndAddNode(answer.getNext());
                 } else {
                     answerView.setData(new ArrayList<>());
                 }
@@ -200,5 +163,37 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
                 break;
         }
         persisted.saveConversationState(getBotAdapter().getDataSet());
+    }
+
+    private void getAndAddNode(String name) {
+        getAndAddNode(name, false);
+    }
+
+    private void getAndAddNode(String name, boolean iconHidden) {
+        if (TextUtils.isEmpty(name)) {
+            currentModel = feed.getFirstItem();
+            getBotAdapter().clear();
+        } else
+            currentModel = feed.getItem(name);
+        Node node = (Node) currentModel;
+        node.setIconHidden(iconHidden);
+        getBotAdapter().addItem(currentModel);
+        persisted.saveConversationState(getBotAdapter().getDataSet());
+        answerView.setData(new ArrayList<>());
+        if (node.getAnswers().size() > 0) {
+            answerView.setData(node.getAnswers(), new HashtagView.DataStateTransform<Answer>() {
+                @Override
+                public CharSequence prepareSelected(Answer item) {
+                    return item.getText(getContext());
+                }
+
+                @Override
+                public CharSequence prepare(Answer item) {
+                    return item.getText(getContext());
+                }
+            });
+        } else if (!TextUtils.isEmpty(node.getAutoNext())) {
+            getAndAddNode(node.getAutoNext(), true);
+        }
     }
 }
