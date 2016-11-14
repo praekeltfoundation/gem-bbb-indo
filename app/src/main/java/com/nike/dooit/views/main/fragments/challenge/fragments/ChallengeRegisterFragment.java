@@ -111,7 +111,12 @@ public class ChallengeRegisterFragment extends Fragment {
         Fragment fragment;
 
         if (challenge instanceof QuizChallenge) {
-            fragment = ChallengeQuizFragment.newInstance((QuizChallenge) challenge);
+            if (((QuizChallenge) challenge).getQuestions() != null &&
+                    ((QuizChallenge) challenge).getQuestions().size() > 0) {
+                fragment = ChallengeQuizFragment.newInstance((QuizChallenge) challenge);
+            } else {
+                fragment = ChallengeNoneFragment.newInstance(getString(R.string.challenge_quiz_no_questions));
+            }
         } else if (challenge instanceof FreeformChallenge) {
             fragment = ChallengeFreeformFragment.newInstance((FreeformChallenge) challenge);
         } else {

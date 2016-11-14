@@ -41,6 +41,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
+import butterknife.Unbinder;
 import rx.functions.Action1;
 
 /**
@@ -61,11 +62,16 @@ public class ChallengeQuizFragment extends Fragment implements OnOptionChangeLis
     private QuizChallengeQuestion currentQuestion = null;
     private QuizChallengeOption currentOption = null;
     private List<ParticipantAnswer> answers = new ArrayList<ParticipantAnswer>();
+    private Unbinder unbinder = null;
 
-    @BindView(R.id.fragment_challenge_quiz_progressbar) ProgressBar mProgressBar;
-    @BindView(R.id.fragment_challenge_quiz_progresscounter) TextView mProgressCounter;
-    @BindView(R.id.fragment_challenge_quiz_pager) ViewPager mPager;
-    @BindView(R.id.fragment_challenge_quiz_checkbutton) Button checkButton;
+    @BindView(R.id.fragment_challenge_quiz_progressbar)
+    ProgressBar mProgressBar;
+    @BindView(R.id.fragment_challenge_quiz_progresscounter)
+    TextView mProgressCounter;
+    @BindView(R.id.fragment_challenge_quiz_pager)
+    ViewPager mPager;
+    @BindView(R.id.fragment_challenge_quiz_checkbutton)
+    Button checkButton;
 
     public ChallengeQuizFragment() {
         // Required empty public constructor
@@ -86,7 +92,8 @@ public class ChallengeQuizFragment extends Fragment implements OnOptionChangeLis
         return fragment;
     }
 
-    @Override public void onCreate(Bundle savedInstanceState) {
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
             mChallenge = getArguments().getParcelable(ARG_CHALLENGE);
@@ -96,19 +103,29 @@ public class ChallengeQuizFragment extends Fragment implements OnOptionChangeLis
         mAdapter.setOnOptionChangeListener(this);
     }
 
-    @Override public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_challenge_quiz, container, false);
-        ButterKnife.bind(this, view);
+        unbinder = ButterKnife.bind(this, view);
         mPager.setAdapter(mAdapter);
         mProgressCounter.setText(String.format("Question %d/%d", mPager.getCurrentItem(), mChallenge.getQuestions().size()));
         return view;
     }
 
-    @OnClick(R.id.fragment_challenge_quiz_checkbutton) public void checkAnswer() {
+    @Override
+    public void onDestroyView() {
+        if (unbinder != null) {
+            unbinder.unbind();
+        }
+        super.onDestroyView();
+    }
+
+    @OnClick(R.id.fragment_challenge_quiz_checkbutton)
+    public void checkAnswer() {
         if (currentOption == null) {
-            Toast.makeText(getContext(), "You must select an answer", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getContext(), R.string.challenge_quiz_select_option_required, Toast.LENGTH_SHORT).show();
             return;
         }
         Toast.makeText(
@@ -128,7 +145,8 @@ public class ChallengeQuizFragment extends Fragment implements OnOptionChangeLis
         }
     }
 
-    @Override public void onOptionChange(QuizChallengeQuestion question, QuizChallengeOption option) {
+    @Override
+    public void onOptionChange(QuizChallengeQuestion question, QuizChallengeOption option) {
         currentQuestion = question;
         currentOption = option;
     }
