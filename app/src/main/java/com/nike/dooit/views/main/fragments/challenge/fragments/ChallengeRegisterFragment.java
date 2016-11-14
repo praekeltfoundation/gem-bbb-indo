@@ -1,17 +1,23 @@
 package com.nike.dooit.views.main.fragments.challenge.fragments;
 
 import android.content.Context;
+import android.graphics.drawable.Animatable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.facebook.drawee.interfaces.DraweeController;
+import com.facebook.drawee.interfaces.DraweeHierarchy;
+import com.facebook.drawee.view.DraweeView;
+import com.facebook.drawee.view.SimpleDraweeView;
 import com.nike.dooit.R;
 import com.nike.dooit.models.challenge.BaseChallenge;
 import com.nike.dooit.models.challenge.FreeformChallenge;
@@ -35,8 +41,8 @@ public class ChallengeRegisterFragment extends Fragment {
     private BaseChallenge challenge;
 
 //    private OnFragmentInteractionListener mListener;
-    @BindView(R.id.fragment_challenge_image_image_view)
-    ImageView topImage;
+    @BindView(R.id.fragment_challenge_register_image)
+    SimpleDraweeView topImage;
 
     @BindView(R.id.fragment_challenge_sub_title_text_view)
     TextView title;
@@ -96,6 +102,7 @@ public class ChallengeRegisterFragment extends Fragment {
         super.onStart();
         name.setText(challenge.getName());
         date.setText(challenge.getDeactivationDate().toLocalDateTime().toString("yyyy-MM-dd HH:mm"));
+        topImage.setImageURI(challenge.getImageURL());
     }
 
     @OnClick(R.id.fragment_challenge_register_button)
