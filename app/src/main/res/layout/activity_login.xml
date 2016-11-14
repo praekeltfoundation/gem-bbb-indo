@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_login"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/purple"
+    tools:context="com.nike.dooit.views.onboarding.LoginActivity">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:focusableInTouchMode="true"
+        android:padding="24dp">
+
+        <TextView
+            android:id="@+id/activity_login_title"
+            style="@style/AppTheme.TextView.Regular.ExtraLarge"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="24dp"
+            android:text="Log in"
+            android:textColor="@color/white" />
+
+        <TextView
+            android:id="@+id/activity_login_name_text_view"
+            style="@style/AppTheme.TextView.Regular.MediumHeading"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/activity_login_title"
+            android:text="Name"
+            android:textAllCaps="true" />
+
+        <EditText
+            android:id="@+id/activity_login_name_edit_text"
+            android:layout_width="match_parent"
+            android:layout_height="32dp"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/activity_login_name_text_view"
+            android:layout_marginTop="4dp"
+            android:background="@color/white"
+            android:ems="10"
+            android:inputType="textPersonName" />
+
+        <TextView
+            android:id="@+id/activity_login_name_example_text_edit"
+            style="@style/AppTheme.TextView.Regular.ExtraSmall"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/activity_login_name_edit_text"
+            android:layout_marginTop="4dp"
+            android:text="Example: Aulia D" />
+
+        <TextView
+            android:id="@+id/activity_login_age_text_view"
+            style="@style/AppTheme.TextView.Regular.MediumHeading"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/activity_login_name_example_text_edit"
+            android:layout_marginTop="16dp"
+            android:text="How old are you?"
+            android:textAllCaps="true"
+            android:visibility="gone" />
+
+
+        <EditText
+            android:id="@+id/activity_login_age_text_edit"
+            android:layout_width="wrap_content"
+            android:layout_height="32dp"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/activity_login_age_text_view"
+            android:layout_marginTop="4dp"
+            android:background="@color/white"
+            android:ems="10"
+            android:inputType="numberSigned"
+            android:visibility="gone" />
+
+        <TextView
+            android:id="@+id/activity_login_age_example_text_view"
+            style="@style/AppTheme.TextView.Regular.ExtraSmall"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/activity_login_age_text_edit"
+            android:layout_marginTop="4dp"
+            android:text="Example: 16"
+            android:visibility="gone" />
+
+
+        <TextView
+            android:id="@+id/activity_login_password_text_view"
+            style="@style/AppTheme.TextView.Regular.MediumHeading"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/activity_login_age_example_text_view"
+            android:layout_marginTop="16dp"
+            android:text="Password"
+            android:textAllCaps="true" />
+
+        <EditText
+            android:id="@+id/activity_login_password_edit_text"
+            android:layout_width="match_parent"
+            android:layout_height="32dp"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/activity_login_password_text_view"
+            android:layout_marginTop="4dp"
+            android:background="@color/white"
+            android:ems="10"
+            android:inputType="textPassword" />
+
+        <TextView
+            android:id="@+id/activity_login_password_example_text_edit"
+            style="@style/AppTheme.TextView.Regular.ExtraSmall"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/activity_login_password_edit_text"
+            android:layout_marginTop="4dp"
+            android:text="Must have atleast 6 characters" />
+
+        <TextView
+            android:id="@+id/activity_login_forgot_text_view"
+            style="@style/AppTheme.TextView.Regular.Small"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/activity_login_password_example_text_edit"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="32dp"
+            android:text="@string/forgot_password"
+            android:textColor="@color/pink" />
+
+
+        <Button
+            android:id="@+id/activity_login_login_button"
+            style="@style/Widget.AppCompat.Button.Borderless"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/activity_login_forgot_text_view"
+            android:layout_marginEnd="18dp"
+            android:layout_marginStart="18dp"
+            android:layout_marginTop="8dp"
+            android:background="@color/yellow"
+            android:text="Log in"
+            android:textAllCaps="true"
+            android:textColor="@color/purple"
+            android:textSize="@dimen/k_font_xx_large" />
+
+    </RelativeLayout>
+</ScrollView>

@@ -1,0 +1,19 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.nike.dooit.views.main.fragments.TargetFragment">
+
+    <!-- TODO: Update blank fragment layout -->
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:text="TARGET" />
+
+    <Button
+        android:id="@+id/fragment_target_button"
+        android:layout_width="match_parent"
+        android:layout_gravity="center"
+        android:text="Start BOT"
+        android:layout_height="wrap_content" />
+</FrameLayout>

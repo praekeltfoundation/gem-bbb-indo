@@ -1,53 +1,102 @@
 <resources>
-    <string name="app_name">dooit</string>
+    <string name="app_name">Dooit</string>
+    <string name="title_activity_main">dooit</string>
+    <string name="title_activity_profile">Profile</string>
+    <string name="title_activity_settings">Settings</string>
+    <string name="title_activity_terms_and_conditions">Terms &amp; Conditions</string>
+    <string name="title_activity_privacy_policy">Privacy Policy</string>
+    <string name="action_settings">Settings</string>
 
-    <string name="navigation_drawer_open">Open navigation drawer</string>
-    <string name="navigation_drawer_close">Close navigation drawer</string>
-    <string name="invalid_password_length">Please use a password longer than 8 characters</string>
-    <string name="invalid_username_length">The username is too short</string>
-    <string name="invalid_mobile_number">Invalid mobile number</string>
-    <string name="congratulations_registered">Congratulations you have registered for dooit!</string>
-    <string name="Chanllenge_receiver_Text">Have you participated in this weeks challenge?</string>
-    <string name="Progress_Tracked_receiver_Text">I see you have not saved. Whats happened?</string>
-    <string name="currency_unit">Rp</string>
-    <string name="currency_side">left</string>
-    <string name="action_settings"></string>
+    <string name="main_tab_text_1">TARGET</string>
+    <string name="main_tab_text_2">CHALLENGE</string>
+    <string name="main_tab_text_3">TIPS</string>
+
+    <!-- Welcome -->
+    <string name="welcome_page_empty">Welcome Page</string>
+    <string name="welcome_page_1">Use Dooit to help you save money!</string>
+    <string name="welcome_page_2">Monitor performance towards your savings goal!</string>
+    <string name="welcome_page_3">Get rewards for your persistence in saving!</string>
+    <string name="lets_start">let\'s start</string>
+
+    <!-- Tips -->
+    <string name="tips_tab_favourites">Favourites</string>
+    <string name="tips_tab_all">All</string>
+    <string name="tips_card_read_more">Read more</string>
 
     <!-- Registration -->
-    <string name="registration">Registration</string>
-    <string name="register_notice">By clicking register you agree to our Terms &amp; Conditions</string>
-    <string name="registration_already_registered">Already registered? Log In</string>
+    <string name="reg_t_c">By clicking register, you are agreeing\n to our Terms &amp; Condition</string>
+    <string name="reg_example_name">Example: Aulia Dharmaningtyas</string>
+    <string name="reg_example_name_error_1">Name can\'t be blank</string>
+    <string name="reg_age">How old are you?</string>
+    <string name="reg_example_age">Example: 16</string>
+    <string name="reg_example_age_error_1">Age can\'t be blank</string>
+    <string name="reg_gender">Gender</string>
+    <string name="reg_gender_boy">Boy</string>
+    <string name="reg_gender_girl">Girl</string>
+    <string name="reg_example_number">Example: 1234567890</string>
+    <string name="reg_example_number_error_1">Mobile Number can\'t be blank</string>
+    <string name="reg_example_password">Must have at least 6 characters</string>
+    <string name="reg_example_password_error_1">Password can\'t be blank</string>
+    <string name="already_registered_log_in">Already registered? Log in</string>
+    <string name="forgot_password">Forgot password?</string>
+    <string name="challenge_t_c">By taking this challenge you\nagree to our Terms &amp; Conditions</string>
+    <string name="register">Register</string>
 
-    <!-- Registration Complete -->
-    <string name="registration_complete_heading">You are registered!</string>
-    <string name="registration_complete_subheading">Upload profile photo</string>
 
-    <!-- Login -->
-    <string name="username">Name</string>
-    <string name="username_hint">ex: Aida</string>
-    <string name="mobile_number">Mobile Number</string>
-    <string name="password">Password</string>
-    <string name="login">Log In</string>
-    <string name="login_progress">Logging in...</string>
-    <string name="login_success">Login Successful</string>
-    <string name="login_failed">Login Failed</string>
-    <string name="login_debug_url">Using %s</string>
+    <!--JSON GOALS-->
+    <string name="askGoalName">What are you saving for?</string>
+    <string name="askGoalImage">Add an image for your savings goal to help keep you motivated,or press skip:</string>
+    <string name="askGoalImageTake">Tap on the blue square…</string>
+    <string name="askKnowGoalAmount">Do you know how much you need to save? </string>
+    <string name="askGoalAmount">Great! Just type the amount that you want to save.</string>
+    <string name="infoDontKnowAmount">No problem.</string>
+    <string name="askKnowGoalDate">That is a big goal. Let us get saving then. Do you have a date that you want to save this by?</string>
+    <string name="askGoalDate">When would you like to have saved this much?</string>
+    <string name="askGoalWeeklySaveAmount">How much can you save each week?</string>
+    <string name="askGoalSaveAmountOther">How much can you save?</string>
+    <string name="askGoalPriorSave">Have you saved anything towards this goal yet?</string>
+    <string name="askPriorSavedAmount">How much have you already saved?</string>
+    <string name="verifyGoalAmount">If you save Rp $(weeklyGoal) each week you will save enough to get your $(savingsGoal) in $(totalWeeks) weeks.</string>
+    <string name="validationFail">Sorry, I do not understand that and have not been taught how to handle it yet.</string>
+    <string name="validationFailDate">Sorry, I do not understand that and have not  been taught how to handle it yet.</string>
+    <string name="validationFailSaveAmountOther">Sorry, I do not understand that and have not t been taught how to handle it yet.</string>
+    <string name="validationFailPriorSavedAmount">Sorry, I do not understand that and have not  been taught how to handle it yet.</string>
+    <string name="infoGoalEnd">Thank you. That concludes the goal-setting process.</string>
 
-    <string name="profile_image_progress">Retrieving profile image...</string>
-    <string name="profile_image_success">Profile Image Successful</string>
-    <string name="profile_image_failed">Profile Image Failed</string>
+    <!--Buttons-->
+    <string name="Skip">Skip</string>
+    <string name="Capture">Capture</string>
+    <string name="knowAmountY">Yes</string>
+    <string name="knowAmountN">No</string>
+    <string name="knowDateY">Yes</string>
+    <string name="knowDateN">No</string>
+    <string name="hasSavedY">Yes</string>
+    <string name="hasSavedN">No</string>
+    <string name="otherSaveAmount">Other</string>
+    <string name="goalCheckRT">Reduce Time</string>
+    <string name="goalCheckRA">Reduce Amount</string>
+    <string name="goalCheckOk">Ok</string>
+    <string name="five">500</string>
+    <string name="thousand">1000</string>
+    <string name="thousandFive">1500</string>
+    <string name="twoThousand">2000</string>
+    <string name="Save">Save</string>
+    <string name="WithdrawButton">Withdraw</string>
+    <string name="addOwnGoal">Add own goal</string>
 
-    <string name="challenge_next">Next</string>
-    <string name="challenge_done">Done</string>
-    <string name="goals_not_yet">"No goals yet..."</string>
-    <string name="favourites">Favourites</string>
-    <string name="all">All</string>
-    <string name="no_tips">No Tips to show...</string>
-    <string name="loading">Loading...</string>
+    <string name="ToneY">Yes</string>
+    <string name="ToneN">No</string>
+    <string name="TtwoY">Yes</string>
+    <string name="TtwoN">No</string>
+    <string name="TthreeY">Yes</string>
+    <string name="TthreeN">No</string>
+    <string name="TfourY">Yes</string>
 
-    <!-- Settings -->
-    <string name="settings">Settings</string>
-    <string name="signout">Sign Out</string>
-    <string name="server_url">Server url</string>
+    <!--JSON CHALLENGES-->
+    <string name="toes">Can you touch your toes?</string>
+    <string name="night">Can you land on the sun at night?</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>

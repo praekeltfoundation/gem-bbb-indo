@@ -1,0 +1,30 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.nike.dooit.views.main.fragments.bot.BotFragment">
+
+    <com.nike.dooit.views.custom.DesignSafeRecyclerView
+        android:id="@+id/fragment_bot_conversation_recycler_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/fragment_bot_answer_hash_view"
+        android:layout_marginBottom="4dp"
+
+        app:stackFromEnd="true" />
+
+    <com.greenfrvr.hashtagview.HashtagView
+        android:id="@+id/fragment_bot_answer_hash_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true"
+        android:padding="4dp"
+        app:selectionMode="false"
+        app:tagBackground="@drawable/rounded_squre_light_blue"
+        app:tagEllipsize="end"
+        app:tagTextColor="@color/black"
+        app:tagTextGravity="center"
+        app:tagTextSize="@dimen/k_font_medium" />
+</RelativeLayout>

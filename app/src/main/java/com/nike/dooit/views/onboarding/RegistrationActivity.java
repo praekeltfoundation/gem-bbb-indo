@@ -1,0 +1,239 @@
+package com.nike.dooit.views.onboarding;
+
+import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
+import android.support.v4.content.res.ResourcesCompat;
+import android.text.Spannable;
+import android.text.SpannableString;
+import android.text.TextUtils;
+import android.text.style.ForegroundColorSpan;
+import android.widget.EditText;
+import android.widget.RadioGroup;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import com.nike.dooit.DooitApplication;
+import com.nike.dooit.R;
+import com.nike.dooit.api.DooitAPIError;
+import com.nike.dooit.api.DooitErrorHandler;
+import com.nike.dooit.api.managers.AuthenticationManager;
+import com.nike.dooit.api.responses.AuthenticationResponse;
+import com.nike.dooit.api.responses.OnboardingResponse;
+import com.nike.dooit.models.Profile;
+import com.nike.dooit.models.User;
+import com.nike.dooit.helpers.Persisted;
+import com.nike.dooit.views.DooitActivity;
+import com.nike.dooit.views.helpers.activity.DooitActivityBuilder;
+
+import javax.inject.Inject;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
+import rx.functions.Action1;
+
+public class RegistrationActivity extends DooitActivity {
+
+    @BindView(R.id.activity_registration_t_c_text_view)
+    TextView textViewTC;
+
+    @BindView(R.id.activity_registration_login_text_view)
+    TextView textViewLogin;
+
+    @BindView(R.id.activity_registration_name_text_edit)
+    EditText name;
+
+    @BindView(R.id.activity_registration_age_text_edit)
+    EditText age;
+
+    @BindView(R.id.activity_registration_gender_radiogroup)
+    RadioGroup gender;
+
+    @BindView(R.id.activity_registration_password_edit_text)
+    EditText password;
+
+    @BindView(R.id.activity_registration_number_text_edit)
+    EditText number;
+
+    @BindView(R.id.activity_registration_name_example_text_edit)
+    TextView nameHint;
+
+    @BindView(R.id.activity_registration_age_example_text_view)
+    TextView ageHint;
+
+    @BindView(R.id.activity_registration_number_example_text_edit)
+    TextView numberHint;
+
+    @BindView(R.id.activity_registration_password_example_text_edit)
+    TextView passwordHint;
+
+
+    @Inject
+    AuthenticationManager authenticationManager;
+
+    @Inject
+    Persisted persisted;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_registration);
+        ((DooitApplication) getApplication()).component.inject(this);
+        ButterKnife.bind(this);
+
+        Spannable spanTc = new SpannableString(getString(R.string.reg_t_c));
+        Spannable spanLogin = new SpannableString(getString(R.string.already_registered_log_in));
+
+        // Default gender
+        gender.check(R.id.activity_registration_gender_boy);
+
+        if (!getLocal().getCountry().equals("in")) {
+            spanTc.setSpan(new ForegroundColorSpan(ResourcesCompat.getColor(getResources(), R.color.pink, getTheme())), spanTc.length() - 17, spanTc.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+            spanLogin.setSpan(new ForegroundColorSpan(ResourcesCompat.getColor(getResources(), R.color.pink, getTheme())), spanLogin.length() - 6, spanLogin.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+        }
+        textViewTC.setText(spanTc);
+        textViewLogin.setText(spanLogin);
+    }
+
+    @OnClick(R.id.activity_registration_t_c_text_view)
+    public void openTC() {
+
+    }
+
+    @OnClick(R.id.activity_registration_register_button)
+    public void register() {
+
+        if (!detailsValid())
+            return;
+
+        authenticationManager.onboard(getUser(), new DooitErrorHandler() {
+            @Override
+            public void onError(DooitAPIError error) {
+                Toast.makeText(RegistrationActivity.this, "Unable to register", Toast.LENGTH_SHORT).show();
+
+            }
+        }).subscribe(new Action1<OnboardingResponse>() {
+            @Override
+            public void call(OnboardingResponse onboardingResponse) {
+                authenticationManager.login(getUser().getUsername(), getUser().getPassword(), new DooitErrorHandler() {
+                    @Override
+                    public void onError(DooitAPIError error) {
+                        Toast.makeText(RegistrationActivity.this, "Unable to Log in", Toast.LENGTH_SHORT).show();
+                    }
+                }).subscribe(new Action1<AuthenticationResponse>() {
+                    @Override
+                    public void call(AuthenticationResponse authenticationResponse) {
+                        persisted.setCurrentUser(authenticationResponse.getUser());
+                        persisted.saveToken(authenticationResponse.getToken());
+                        ProfileImageActivity.Builder.create(RegistrationActivity.this).startActivityClearTop();
+                    }
+                });
+
+            }
+        });
+    }
+
+    private boolean detailsValid() {
+        return isNameValid() & isAgeValid() & isNumberValid() & isPasswordValid();
+    }
+
+
+    @OnClick(R.id.activity_registration_login_text_view)
+    public void openLogin() {
+        LoginActivity.Builder.create(this).startActivityClearTop();
+    }
+
+    public User getUser() {
+        User user = new User();
+        user.setUsername(name.getText().toString());
+        user.setPassword(password.getText().toString());
+
+        Profile profile = new Profile();
+        profile.setMobile(number.getText().toString());
+        profile.setAge(Integer.parseInt(age.getText().toString()));
+
+        switch (gender.getCheckedRadioButtonId()) {
+            case R.id.activity_registration_gender_boy:
+                profile.setGender(Profile.MALE);
+                break;
+            case R.id.activity_registration_gender_girl:
+                profile.setGender(Profile.FEMALE);
+                break;
+        }
+
+        user.setProfile(profile);
+
+        return user;
+    }
+
+    public boolean isNameValid() {
+        boolean valid;
+        valid = !TextUtils.isEmpty(name.getText());
+        if (!valid) {
+            nameHint.setText(R.string.reg_example_name_error_1);
+            nameHint.setTextColor(ResourcesCompat.getColor(getResources(), android.R.color.holo_red_light, getTheme()));
+        } else {
+            nameHint.setText(R.string.reg_example_name);
+            nameHint.setTextColor(ResourcesCompat.getColor(getResources(), R.color.white, getTheme()));
+        }
+        return valid;
+    }
+
+    public boolean isAgeValid() {
+        boolean valid;
+        valid = !TextUtils.isEmpty(age.getText());
+        if (!valid) {
+            ageHint.setText(R.string.reg_example_age_error_1);
+            ageHint.setTextColor(ResourcesCompat.getColor(getResources(), android.R.color.holo_red_light, getTheme()));
+        } else {
+            ageHint.setText(R.string.reg_example_age);
+            ageHint.setTextColor(ResourcesCompat.getColor(getResources(), R.color.white, getTheme()));
+        }
+        return valid;
+    }
+
+    public boolean isNumberValid() {
+        boolean valid;
+        valid = !TextUtils.isEmpty(number.getText());
+        if (!valid) {
+            numberHint.setText(R.string.reg_example_number_error_1);
+            numberHint.setTextColor(ResourcesCompat.getColor(getResources(), android.R.color.holo_red_light, getTheme()));
+        } else {
+            numberHint.setText(R.string.reg_example_number);
+            numberHint.setTextColor(ResourcesCompat.getColor(getResources(), R.color.white, getTheme()));
+        }
+        return valid;
+    }
+
+    public boolean isPasswordValid() {
+        boolean valid;
+        valid = !TextUtils.isEmpty(password.getText());
+        if (!valid) {
+            passwordHint.setText(R.string.reg_example_password_error_1);
+            passwordHint.setTextColor(ResourcesCompat.getColor(getResources(), android.R.color.holo_red_light, getTheme()));
+        } else {
+            passwordHint.setText(R.string.reg_example_password);
+            passwordHint.setTextColor(ResourcesCompat.getColor(getResources(), R.color.white, getTheme()));
+        }
+        return valid;
+    }
+
+
+    public static class Builder extends DooitActivityBuilder<Builder> {
+        protected Builder(Context context) {
+            super(context);
+        }
+
+        public static Builder create(Context context) {
+            Builder builder = new Builder(context);
+            return builder;
+        }
+
+        @Override
+        protected Intent createIntent(Context context) {
+            return new Intent(context, RegistrationActivity.class);
+        }
+
+    }
+}

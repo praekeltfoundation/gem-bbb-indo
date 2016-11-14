@@ -1,0 +1,6 @@
+Implemented Registration
+Added Age and Gender to Registration
+Implemented Login
+Implemented Signout from Settings
+Implemented Tips listing
+Implemented Tip Favourites
