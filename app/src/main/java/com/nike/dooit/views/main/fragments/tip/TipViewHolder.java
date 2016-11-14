@@ -21,6 +21,7 @@ import com.nike.dooit.views.tip.TipArticleActivity;
 
 import javax.inject.Inject;
 
+import butterknife.BindString;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -33,6 +34,12 @@ import rx.functions.Action1;
 public class TipViewHolder extends RecyclerView.ViewHolder {
 
     private static final String TAG = TipViewHolder.class.getName();
+
+    @BindString(R.string.tips_article_opening)
+    String openingArticleText;
+
+    @BindString(R.string.tips_article_add_fav)
+    String addFavArticleText;
 
     @BindView(R.id.card_tip_image)
     SimpleDraweeView imageView;
@@ -53,6 +60,7 @@ public class TipViewHolder extends RecyclerView.ViewHolder {
     Persisted persisted;
 
     int id;
+    String title;
     String articleUrl;
 
     public TipViewHolder(View itemView) {
@@ -68,7 +76,7 @@ public class TipViewHolder extends RecyclerView.ViewHolder {
     @OnClick(R.id.card_tip_title)
     public void startArticle(View view) {
         Toast.makeText(view.getContext(),
-                String.format("Opening '%s'", titleView.getText().toString()),
+                String.format(openingArticleText, titleView.getText().toString()),
                 Toast.LENGTH_SHORT).show();
         TipArticleActivity.Builder.create(getContext())
                 .putArticleUrl(articleUrl)
@@ -88,12 +96,13 @@ public class TipViewHolder extends RecyclerView.ViewHolder {
                 persisted.clearFavourites();
             }
         });
-        Toast.makeText(getContext(), titleView.getText().toString() + " faved", Toast.LENGTH_SHORT).show();
+        Toast.makeText(getContext(), String.format(addFavArticleText,
+                titleView.getText().toString()), Toast.LENGTH_SHORT).show();
     }
 
     @OnClick(R.id.card_tip_share)
     public void shareTip(View view) {
-        Toast.makeText(view.getContext(), titleView.getText().toString() + " shared", Toast.LENGTH_SHORT).show();
+
     }
 
     public void setImageUri(Uri uri) {

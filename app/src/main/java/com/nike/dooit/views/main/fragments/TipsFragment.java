@@ -40,6 +40,9 @@ public class TipsFragment extends Fragment implements OnTipsAvailableListener {
     @BindString(R.string.tips_tab_all)
     String allTitle;
 
+    @BindString(R.string.tips_article_opening)
+    String openingArticleText;
+
     @BindView(R.id.fragment_tips_search_view)
     AutoCompleteTextView searchView;
 
@@ -90,7 +93,7 @@ public class TipsFragment extends Fragment implements OnTipsAvailableListener {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Tip tip = searchAdapter.getItem(position);
                 Toast.makeText(getContext(),
-                        String.format("Opening '%s'", tip.getTitle()), Toast.LENGTH_SHORT).show();
+                        String.format(openingArticleText, tip.getTitle()), Toast.LENGTH_SHORT).show();
                 startArticle(tip);
             }
         });
@@ -106,7 +109,7 @@ public class TipsFragment extends Fragment implements OnTipsAvailableListener {
 
         return view;
     }
-    
+
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
@@ -122,7 +125,7 @@ public class TipsFragment extends Fragment implements OnTipsAvailableListener {
 
     private void startArticle(Tip tip) {
         TipArticleActivity.Builder.create(getActivity())
-            .putArticleUrl(tip.getArticleUrl())
-            .startActivity();
+                .putArticleUrl(tip.getArticleUrl())
+                .startActivity();
     }
 }
