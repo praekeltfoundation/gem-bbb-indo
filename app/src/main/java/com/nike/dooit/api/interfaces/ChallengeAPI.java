@@ -26,5 +26,4 @@ public interface ChallengeAPI {
     @POST("/api/entries/")
     Observable<QuizChallengeEntry> postEntry(@Body QuizChallengeEntry quizChallengeEntry);
 
-
 }

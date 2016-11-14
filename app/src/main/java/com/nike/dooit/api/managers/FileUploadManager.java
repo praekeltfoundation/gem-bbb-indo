@@ -4,7 +4,6 @@ import android.app.Application;
 
 import com.nike.dooit.api.DooitErrorHandler;
 import com.nike.dooit.api.interfaces.FileUploadAPI;
-import com.nike.dooit.api.managers.DooitManager;
 import com.nike.dooit.api.responses.EmptyResponse;
 
 import java.io.File;
@@ -12,7 +11,6 @@ import java.io.File;
 import javax.inject.Inject;
 
 import okhttp3.MediaType;
-import okhttp3.Request;
 import okhttp3.RequestBody;
 import rx.Observable;
 
@@ -28,7 +26,7 @@ public class FileUploadManager extends DooitManager {
         fileUploadAPI = retrofit.create(FileUploadAPI.class);
     }
 
-    public Observable<EmptyResponse> upload(String userId, String mediaType, File file, DooitErrorHandler errorHandler) {
+    public Observable<EmptyResponse> upload(long userId, String mediaType, File file, DooitErrorHandler errorHandler) {
         MediaType mediaTypeHeader = MediaType.parse(mediaType);
         String filename = file.getName();
         return useNetwork(fileUploadAPI.upload(userId, RequestBody.create(mediaTypeHeader, file), "attachment;filename=\"" + filename + "\""), errorHandler);
