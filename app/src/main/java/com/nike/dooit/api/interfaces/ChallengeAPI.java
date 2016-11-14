@@ -1,5 +1,6 @@
 package com.nike.dooit.api.interfaces;
 
+import com.nike.dooit.models.challenge.ParticipantFreeformAnswer;
 import com.nike.dooit.models.challenge.QuizChallengeEntry;
 import com.nike.dooit.models.challenge.BaseChallenge;
 
@@ -25,5 +26,8 @@ public interface ChallengeAPI {
 
     @POST("/api/entries/")
     Observable<QuizChallengeEntry> postEntry(@Body QuizChallengeEntry quizChallengeEntry);
+
+    @POST("/api/participantfreetext/")
+    Observable<ParticipantFreeformAnswer> postParticipantFreeform(@Body ParticipantFreeformAnswer answer);
 
 }

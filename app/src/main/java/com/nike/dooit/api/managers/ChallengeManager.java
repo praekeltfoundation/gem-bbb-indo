@@ -4,6 +4,7 @@ import android.app.Application;
 
 import com.nike.dooit.api.DooitErrorHandler;
 import com.nike.dooit.api.interfaces.ChallengeAPI;
+import com.nike.dooit.models.challenge.ParticipantFreeformAnswer;
 import com.nike.dooit.models.challenge.QuizChallengeEntry;
 import com.nike.dooit.models.challenge.BaseChallenge;
 
@@ -37,5 +38,9 @@ public class ChallengeManager extends DooitManager {
 
     public Observable<QuizChallengeEntry> createEntry(QuizChallengeEntry quizChallengeEntry, DooitErrorHandler errorHandler) {
         return useNetwork(challengeAPI.postEntry(quizChallengeEntry), errorHandler);
+    }
+
+    public Observable<ParticipantFreeformAnswer> createParticipantFreeformAnswer(ParticipantFreeformAnswer answer, DooitErrorHandler errorHandler) {
+        return useNetwork(challengeAPI.postParticipantFreeform(answer), errorHandler);
     }
 }
