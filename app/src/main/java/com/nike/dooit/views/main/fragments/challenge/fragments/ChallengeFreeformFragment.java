@@ -11,6 +11,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.nike.dooit.DooitApplication;
 import com.nike.dooit.R;
 import com.nike.dooit.api.DooitAPIError;
 import com.nike.dooit.api.DooitErrorHandler;
@@ -69,6 +70,7 @@ public class ChallengeFreeformFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        ((DooitApplication) getActivity().getApplication()).component.inject(this);
         if (getArguments() != null) {
             challenge = getArguments().getParcelable(ARG_CHALLENGE);
             question = challenge.getQuestion();
@@ -80,7 +82,7 @@ public class ChallengeFreeformFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_challenge_freeform, container, false);
         ButterKnife.bind(this, view);
-        title.setText(challenge.getName());
+        title.setText(question != null ? question.getText() : "No question");
         return view;
     }
 
@@ -93,12 +95,14 @@ public class ChallengeFreeformFragment extends Fragment {
         challengeManager.createParticipantFreeformAnswer(answer, new DooitErrorHandler() {
             @Override
             public void onError(DooitAPIError error) {
-                Toast.makeText(getContext(), "Could not submit challenge entry", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(getContext(), "Could not submit challenge entry", Toast.LENGTH_SHORT).show();
+                System.out.println("Could not submit challenge entry");
             }
         }).subscribe(new Action1<ParticipantFreeformAnswer>() {
             @Override
             public void call(ParticipantFreeformAnswer answer) {
-                Toast.makeText(getContext(), "Entry submitted", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(getContext(), "Entry submitted", Toast.LENGTH_SHORT).show();
+                System.out.println("Entry submitted");
             }
         });
     }
