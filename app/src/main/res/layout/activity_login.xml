@@ -4,7 +4,7 @@
     android:id="@+id/activity_login"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/purple"
+    android:background="@drawable/pattern_01"
     tools:context="com.nike.dooit.views.onboarding.LoginActivity">
 
     <RelativeLayout
@@ -50,6 +50,7 @@
             style="@style/AppTheme.TextView.Regular.ExtraSmall"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textColor="@color/white"
             android:layout_alignParentStart="true"
             android:layout_below="@+id/activity_login_name_edit_text"
             android:layout_marginTop="4dp"
@@ -81,6 +82,7 @@
             android:id="@+id/activity_login_password_example_text_view"
             style="@style/AppTheme.TextView.Regular.ExtraSmall"
             android:layout_width="wrap_content"
+            android:textColor="@color/white"
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
             android:layout_below="@+id/activity_login_password_edit_text"

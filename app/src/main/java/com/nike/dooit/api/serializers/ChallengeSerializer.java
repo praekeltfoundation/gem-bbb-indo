@@ -1,7 +1,7 @@
 package com.nike.dooit.api.serializers;
 
 import com.google.gson.TypeAdapterFactory;
-import com.google.gson.typeadapters.RuntimeTypeAdapterFactory;
+import com.nike.dooit.adapter.RuntimeTypeAdapterFactory;
 import com.nike.dooit.models.challenge.BaseChallenge;
 import com.nike.dooit.models.challenge.FreeformChallenge;
 import com.nike.dooit.models.challenge.QuizChallenge;
