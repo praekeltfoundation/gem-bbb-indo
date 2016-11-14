@@ -98,5 +98,8 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="challenge_no_question">No question</string>
+    <string name="challenge_freeform_submit">Submitting freeform answer</string>
+    <string name="challenge_all_questions_complete">You have completed all questions</string>
 
 </resources>

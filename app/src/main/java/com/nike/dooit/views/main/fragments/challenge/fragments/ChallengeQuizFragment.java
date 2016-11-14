@@ -5,6 +5,7 @@ import android.os.DropBoxManager;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -48,6 +49,7 @@ import rx.functions.Action1;
  * create an instance of this fragment.
  */
 public class ChallengeQuizFragment extends Fragment implements OnOptionChangeListener {
+    private static final String TAG = "ChallengeQuiz";
     private static final String ARG_CHALLENGE = "challenge";
 
     @Inject
@@ -144,12 +146,12 @@ public class ChallengeQuizFragment extends Fragment implements OnOptionChangeLis
         challengeManager.createEntry(entry, new DooitErrorHandler() {
             @Override
             public void onError(DooitAPIError error) {
-                Toast.makeText(getContext(), "Could not submit challenge entry", Toast.LENGTH_SHORT).show();
+                Log.d(TAG, "Could not submit challenge entry");
             }
         }).subscribe(new Action1<QuizChallengeEntry>() {
             @Override
             public void call(QuizChallengeEntry entry) {
-                Toast.makeText(getContext(), "Entry submitted", Toast.LENGTH_SHORT).show();
+                Log.d(TAG, "Entry submitted");
             }
         });
     }
@@ -160,7 +162,7 @@ public class ChallengeQuizFragment extends Fragment implements OnOptionChangeLis
         if (idx < mPager.getChildCount()) {
             mPager.setCurrentItem(idx + 1);
         } else {
-            Toast.makeText(getContext(), "You have completed all questions", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getContext(), R.string.challenge_all_questions_complete, Toast.LENGTH_SHORT).show();
             submitParticipantEntry();
             FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
             Fragment fragment = ChallengeNoneFragment.newInstance();

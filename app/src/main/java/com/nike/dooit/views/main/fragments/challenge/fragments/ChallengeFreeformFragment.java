@@ -3,6 +3,7 @@ package com.nike.dooit.views.main.fragments.challenge.fragments;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -34,6 +35,7 @@ import rx.functions.Action1;
  * create an instance of this fragment.
  */
 public class ChallengeFreeformFragment extends Fragment {
+    private static final String TAG = "ChallengeFreeform";
     private static final String ARG_CHALLENGE = "challenge";
 
     @Inject
@@ -82,7 +84,7 @@ public class ChallengeFreeformFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_challenge_freeform, container, false);
         ButterKnife.bind(this, view);
-        title.setText(question != null ? question.getText() : "No question");
+        title.setText(question != null ? question.getText() : getString(R.string.challenge_no_question));
         return view;
     }
 
@@ -95,21 +97,19 @@ public class ChallengeFreeformFragment extends Fragment {
         challengeManager.createParticipantFreeformAnswer(answer, new DooitErrorHandler() {
             @Override
             public void onError(DooitAPIError error) {
-//                Toast.makeText(getContext(), "Could not submit challenge entry", Toast.LENGTH_SHORT).show();
-                System.out.println("Could not submit challenge entry");
+                Log.d(TAG, "Could not submit challenge entry");
             }
         }).subscribe(new Action1<ParticipantFreeformAnswer>() {
             @Override
             public void call(ParticipantFreeformAnswer answer) {
-//                Toast.makeText(getContext(), "Entry submitted", Toast.LENGTH_SHORT).show();
-                System.out.println("Entry submitted");
+                Log.d(TAG, "Entry submitted");
             }
         });
     }
 
     @OnClick(R.id.fragment_challenge_freeform_submitbutton)
     public void submitFreeformAnswer() {
-        Toast.makeText(getContext(), "Submitting freeform answer", Toast.LENGTH_SHORT).show();
+        Toast.makeText(getContext(), R.string.challenge_freeform_submit, Toast.LENGTH_SHORT).show();
         submitAnswer(submissionBox.getText().toString());
         FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
         Fragment fragment = ChallengeNoneFragment.newInstance();
