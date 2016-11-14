@@ -26,6 +26,7 @@ import com.nike.dooit.models.challenge.QuizChallenge;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import butterknife.Unbinder;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -33,14 +34,11 @@ import butterknife.OnClick;
  * create an instance of this fragment.
  */
 public class ChallengeRegisterFragment extends Fragment {
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_CHALLENGE = "challenge";
 
-    // TODO: Rename and change types of parameters
     private BaseChallenge challenge;
+    private Unbinder unbinder = null;
 
-//    private OnFragmentInteractionListener mListener;
     @BindView(R.id.fragment_challenge_register_image)
     SimpleDraweeView topImage;
 
@@ -92,9 +90,17 @@ public class ChallengeRegisterFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_challenge_register, container, false);
-        ButterKnife.bind(this, view);
+        unbinder = ButterKnife.bind(this, view);
         // Inflate the layout for this fragment
         return view;
+    }
+
+    @Override
+    public void onDestroyView() {
+        if (unbinder != null) {
+            unbinder.unbind();
+        }
+        super.onDestroyView();
     }
 
     @Override
