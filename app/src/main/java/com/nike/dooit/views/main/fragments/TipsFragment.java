@@ -32,7 +32,7 @@ import butterknife.ButterKnife;
 
 public class TipsFragment extends Fragment implements OnTipsAvailableListener {
 
-    private static final String TAG = "TipArchive";
+    private static final String TAG = TipsFragment.class.getName();
 
     @BindString(R.string.tips_tab_favourites)
     String favouritesTitle;

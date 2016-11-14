@@ -32,7 +32,7 @@ import rx.functions.Action1;
 
 public class TipViewHolder extends RecyclerView.ViewHolder {
 
-    private static final String TAG = "TipViewHolder";
+    private static final String TAG = TipViewHolder.class.getName();
 
     @BindView(R.id.card_tip_image)
     SimpleDraweeView imageView;

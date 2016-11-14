@@ -30,7 +30,7 @@ import rx.functions.Action1;
 
 public class TipsListFragment extends Fragment {
 
-    private static final String TAG = "TipsListFragment";
+    private static final String TAG = TipsListFragment.class.getName();
     private static final String POS = "pos";
 
     @BindView(R.id.fragment_tips_list_recyclerview)

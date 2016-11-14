@@ -27,7 +27,7 @@ public class Persisted {
     private static final String BOT = "bot";
     private static final String TIPS = "tips";
     private static final String FAVOURITES = "favourites";
-    private static final String TAG = "Persisted";
+    private static final String TAG = Persisted.class.getName();
 
     @Inject
     DooitSharedPreferences dooitSharedPreferences;
