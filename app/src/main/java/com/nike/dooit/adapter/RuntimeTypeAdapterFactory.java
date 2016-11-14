@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.google.gson.typeadapters;
+package com.nike.dooit.adapter;
 
 import java.io.IOException;
 import java.util.LinkedHashMap;

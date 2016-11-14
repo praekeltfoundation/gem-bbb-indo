@@ -12,6 +12,8 @@ import com.nike.dooit.models.enums.BotType;
 import com.nike.dooit.views.main.MainViewPagerPositions;
 import com.nike.dooit.views.main.fragments.bot.BotFragment;
 
+import java.util.Locale;
+
 /**
  * Created by Bernhard Müller on 11/7/2016.
  */
@@ -33,10 +35,15 @@ public class MainFragment extends Fragment {
 
     }
 
-    void startBot(BotType botType) {
+    protected void startBot(BotType botType) {
         ViewPager viewPager = (ViewPager) getActivity().findViewById(R.id.content_main_view_pager);
         BotFragment botFragment = (BotFragment) viewPager.getAdapter().instantiateItem(viewPager, MainViewPagerPositions.BOT.getValue());
         botFragment.setBotType(botType);
         viewPager.setCurrentItem(MainViewPagerPositions.BOT.getValue());
     }
+
+    public Locale getLocal() {
+        return Locale.getDefault();
+    }
+
 }

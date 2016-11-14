@@ -119,4 +119,5 @@ dependencies {
     annotationProcessor 'com.google.dagger:dagger-compiler:2.7'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.4.0'
     compile 'com.github.JakeWharton:ViewPagerIndicator:2.4.1'
+    compile 'com.facebook.fresco:imagepipeline-okhttp3:0.14.1'
 }
