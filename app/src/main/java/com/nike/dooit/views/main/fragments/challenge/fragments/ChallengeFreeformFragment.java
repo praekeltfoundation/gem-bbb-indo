@@ -2,18 +2,21 @@ package com.nike.dooit.views.main.fragments.challenge.fragments;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.nike.dooit.R;
 import com.nike.dooit.models.challenge.FreeformChallenge;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -64,5 +67,14 @@ public class ChallengeFreeformFragment extends Fragment {
         ButterKnife.bind(this, view);
         title.setText(challenge.getName());
         return view;
+    }
+
+    @OnClick(R.id.fragment_challenge_freeform_submitbutton)
+    public void submitFreeformAnswer() {
+        Toast.makeText(getContext(), "Submitting freeform answer", Toast.LENGTH_SHORT).show();
+        FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
+        Fragment fragment = ChallengeNoneFragment.newInstance();
+        ft.replace(R.id.fragment_challenge_container, fragment);
+        ft.commit();
     }
 }
