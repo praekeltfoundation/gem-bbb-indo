@@ -9,6 +9,8 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.nike.dooit.DooitApplication;
@@ -25,7 +27,9 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.Unbinder;
 import rx.functions.Action1;
 
 public class ChallengeFragment extends Fragment {
@@ -36,7 +40,15 @@ public class ChallengeFragment extends Fragment {
     @Inject
     Persisted persisted;
 
+    @BindView(R.id.fragment_challenge_loadingprogress)
+    ProgressBar progressBar;
+
+    @BindView(R.id.fragment_challenge_loadingtext)
+    TextView progressText;
+
     BaseChallenge challenge;
+
+    Unbinder unbinder;
 
     public ChallengeFragment() {
         // Required empty public constructor
@@ -60,13 +72,24 @@ public class ChallengeFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_challenge_loading, container, false);
-        ButterKnife.bind(this, view);
-
+        unbinder = ButterKnife.bind(this, view);
+        progressBar.setVisibility(View.VISIBLE);
+        progressText.setVisibility(View.VISIBLE);
 ////        if (persisted.hasCurrentChallenge()) {
 ////            challenge = (BaseChallenge) persisted.getCurrentChallenge();
 ////            startChallenge();
 ////        }
         return view;
+    }
+
+    @Override
+    public void onDestroyView() {
+        progressBar.setVisibility(View.GONE);
+        progressText.setVisibility(View.GONE);
+        if (unbinder != null) {
+            unbinder.unbind();
+        }
+        super.onDestroyView();
     }
 
     @Override
@@ -80,25 +103,33 @@ public class ChallengeFragment extends Fragment {
         }).subscribe(new Action1<List<BaseChallenge>>() {
             @Override
             public void call(List<BaseChallenge> challenges) {
-            if (challenges.size() > 0) {
-                challenge = challenges.get(0);
-                persisted.setActiveChallenge(challenge);
+                if (challenges.size() > 0) {
+                    challenge = challenges.get(0);
+                    persisted.setActiveChallenge(challenge);
 
-                if (getActivity().findViewById(R.id.fragment_challenge_container) != null) {
+                    if (getActivity().findViewById(R.id.fragment_challenge_container) != null) {
+                        FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
+                        Fragment fragment = ChallengeRegisterFragment.newInstance();
+                        Bundle args = new Bundle();
+                        args.putParcelable("challenge", challenge);
+                        fragment.setArguments(args);
+                        ft.replace(R.id.fragment_challenge_container, fragment);
+                        ft.commit();
+                    }
+                } else {
                     FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
-                    Fragment fragment = ChallengeRegisterFragment.newInstance();
-                    Bundle args = new Bundle();
-                    args.putParcelable("challenge", challenge);
-                    fragment.setArguments(args);
+                    Fragment fragment = ChallengeNoneFragment.newInstance();
                     ft.replace(R.id.fragment_challenge_container, fragment);
                     ft.commit();
                 }
-            } else {
-                FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
-                Fragment fragment = ChallengeNoneFragment.newInstance();
-                ft.replace(R.id.fragment_challenge_container, fragment);
-                ft.commit();
-            }
+                getActivity().runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        progressBar.setVisibility(View.GONE);
+                        progressText.setVisibility(View.GONE);
+
+                    }
+                });
             }
         });
     }
