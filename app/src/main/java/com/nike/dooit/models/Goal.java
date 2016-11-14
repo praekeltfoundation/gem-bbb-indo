@@ -5,6 +5,7 @@ import com.google.gson.annotations.SerializedName;
 import org.joda.time.DateTime;
 
 import java.util.Date;
+import java.util.LinkedHashMap;
 import java.util.List;
 
 /**
@@ -23,6 +24,8 @@ public class Goal {
     @SerializedName("end_date")
     private DateTime endDate;
     private List<GoalTransaction> transactions;
+    @SerializedName("weekly_totals")
+    private LinkedHashMap<String, Float> weeklyTotals;
 
     public String getName() {
         return name;
@@ -78,5 +81,13 @@ public class Goal {
 
     public void setTransactions(List<GoalTransaction> transactions) {
         this.transactions = transactions;
+    }
+
+    public LinkedHashMap<String, Float> getWeeklyTotals() {
+        return weeklyTotals;
+    }
+
+    public void setWeeklyTotals(LinkedHashMap<String, Float> weeklyTotals) {
+        this.weeklyTotals = weeklyTotals;
     }
 }

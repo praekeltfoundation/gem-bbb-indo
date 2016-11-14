@@ -2,6 +2,7 @@ package com.nike.dooit.views.main.fragments.target;
 
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -164,6 +165,7 @@ public class TargetFragment extends MainFragment {
         total.setText(String.format("of %s", format.format(goal.getTarget())));
         int weeks = Weeks.weeksBetween(goal.getStartDate(), goal.getEndDate()).getWeeks();
         double toSavePerWeek = goal.getTarget() / weeks;
+        bars.setValues(goal.getWeeklyTotals());
         targetMessage.setText(String.format(savingsMessage, Currency.getInstance(getLocal()).getCurrencyCode(), toSavePerWeek, goal.getTarget(), weeks));
     }
 
@@ -190,24 +192,6 @@ public class TargetFragment extends MainFragment {
                             });
                     }
                 });
-        bars.setValues(new LinkedHashMap() {{
-            put("1", 3.0f);
-            put("2", 13.0f);
-            put("3", 17.0f);
-            put("4", 4.0f);
-            put("5", 1.0f);
-            put("6", 19.0f);
-            put("7", 16.0f);
-            put("8", 10.0f);
-            put("9", 18.0f);
-            put("10", 6.0f);
-            put("11", 7.0f);
-            put("12", 2.0f);
-            put("13", 9.0f);
-            put("14", 5.0f);
-            put("15", 15.0f);
-            put("16", 11.0f);
-        }});
 
         bars.setGoal(16.0f);
     }
