@@ -1,6 +1,7 @@
 package com.nike.dooit.views.main.fragments.challenge.fragments;
 
 import android.os.Bundle;
+import android.os.DropBoxManager;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
@@ -12,21 +13,34 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.nike.dooit.DooitApplication;
 import com.nike.dooit.R;
+import com.nike.dooit.api.DooitAPIError;
+import com.nike.dooit.api.DooitErrorHandler;
+import com.nike.dooit.api.managers.ChallengeManager;
+import com.nike.dooit.api.managers.UserManager;
+import com.nike.dooit.helpers.Persisted;
 import com.nike.dooit.models.challenge.ParticipantAnswer;
 import com.nike.dooit.models.challenge.QuizChallenge;
+import com.nike.dooit.models.challenge.QuizChallengeEntry;
 import com.nike.dooit.models.challenge.QuizChallengeOption;
 import com.nike.dooit.models.challenge.QuizChallengeQuestion;
 import com.nike.dooit.views.main.fragments.challenge.adapters.ChallengeQuizPagerAdapter;
 import com.nike.dooit.views.main.fragments.challenge.interfaces.OnOptionSelectedListener;
 import com.nike.dooit.views.main.fragments.challenge.interfaces.OnOptionChangeListener;
 
+import org.joda.time.DateTime;
+
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+
+import rx.functions.Action1;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -36,6 +50,10 @@ import butterknife.OnClick;
 public class ChallengeQuizFragment extends Fragment implements OnOptionChangeListener {
     private static final String ARG_CHALLENGE = "challenge";
 
+    @Inject
+    Persisted persisted;
+    @Inject
+    ChallengeManager challengeManager;
     private QuizChallenge mChallenge;
     private ChallengeQuizPagerAdapter mAdapter;
     private QuizChallengeQuestion currentQuestion = null;
@@ -71,6 +89,7 @@ public class ChallengeQuizFragment extends Fragment implements OnOptionChangeLis
         if (getArguments() != null) {
             mChallenge = getArguments().getParcelable(ARG_CHALLENGE);
         }
+        ((DooitApplication) getActivity().getApplication()).component.inject(this);
         mAdapter = new ChallengeQuizPagerAdapter(getChildFragmentManager(), getContext(), mChallenge);
         mAdapter.setOnOptionChangeListener(this);
     }
@@ -113,7 +132,26 @@ public class ChallengeQuizFragment extends Fragment implements OnOptionChangeLis
     }
 
     public void captureAnswer(QuizChallengeQuestion question, QuizChallengeOption option) {
-        answers.add(new ParticipantAnswer(question.getId(), option.getId()));
+        answers.add(new ParticipantAnswer(persisted.getCurrentUser().getId(), mChallenge.getId(), question.getId(), option.getId()));
+    }
+
+    public void submitParticipantEntry() {
+        QuizChallengeEntry entry = new QuizChallengeEntry();
+        entry.setUser(persisted.getCurrentUser().getId());
+        entry.setChallenge(mChallenge.getId());
+        entry.setDateCompleted(new DateTime());
+        entry.setAnswers(answers);
+        challengeManager.createEntry(entry, new DooitErrorHandler() {
+            @Override
+            public void onError(DooitAPIError error) {
+                Toast.makeText(getContext(), "Could not submit challenge entry", Toast.LENGTH_SHORT).show();
+            }
+        }).subscribe(new Action1<QuizChallengeEntry>() {
+            @Override
+            public void call(QuizChallengeEntry entry) {
+                Toast.makeText(getContext(), "Entry submitted", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     public void nextQuestion() {
@@ -123,6 +161,7 @@ public class ChallengeQuizFragment extends Fragment implements OnOptionChangeLis
             mPager.setCurrentItem(idx + 1);
         } else {
             Toast.makeText(getContext(), "You have completed all questions", Toast.LENGTH_SHORT).show();
+            submitParticipantEntry();
             FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
             Fragment fragment = ChallengeNoneFragment.newInstance();
             ft.replace(R.id.fragment_challenge_container, fragment);
