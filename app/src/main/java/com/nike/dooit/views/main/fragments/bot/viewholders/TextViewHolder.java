@@ -44,7 +44,7 @@ public class TextViewHolder extends BaseBotViewHolder<Node> {
     public void populate(Node model) {
         this.dataModel = model;
 
-        String[] data = dataModel.getText(getContext()).split(";", 2);
+        String text = dataModel.getText(getContext());
         String[] params = dataModel.getTextParams();
         for (int i = 0; i < params.length; i++) {
             String param = params[i];
@@ -63,10 +63,10 @@ public class TextViewHolder extends BaseBotViewHolder<Node> {
                 }
             }
         }
-        if (data[0].contains("%s"))
-            textView.setText(String.format(data[0], params));
+        if (text.contains("%s"))
+            textView.setText(String.format(text, params));
         else
-            textView.setText(data[0]);
+            textView.setText(text);
         RelativeLayout.LayoutParams lp = ((RelativeLayout.LayoutParams) textView.getLayoutParams());
         if (dataModel.isIconHidden()) {
             botIcon.setVisibility(View.GONE);

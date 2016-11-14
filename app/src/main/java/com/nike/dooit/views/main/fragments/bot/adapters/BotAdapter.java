@@ -17,6 +17,7 @@ import com.nike.dooit.views.main.fragments.bot.viewholders.AnswerInlineTextEditV
 import com.nike.dooit.views.main.fragments.bot.viewholders.AnswerTextCurrencyViewHolder;
 import com.nike.dooit.views.main.fragments.bot.viewholders.AnswerViewHolder;
 import com.nike.dooit.views.main.fragments.bot.viewholders.BaseBotViewHolder;
+import com.nike.dooit.views.main.fragments.bot.viewholders.GoalVerificationViewHolder;
 import com.nike.dooit.views.main.fragments.bot.viewholders.TextViewHolder;
 
 import java.util.ArrayList;
@@ -60,6 +61,8 @@ public class BotAdapter extends RecyclerView.Adapter<BaseBotViewHolder> {
                 return new AnswerInlineDateEditViewHolder(LayoutInflater.from(context).inflate(R.layout.item_view_bot_inline_edit, parent, false), this, tagsClickListener);
             case TEXTCURRENCY:
                 return new AnswerTextCurrencyViewHolder(LayoutInflater.from(context).inflate(R.layout.item_view_bot_answer, parent, false), this);
+            case GOALVERIFICATION:
+                return new GoalVerificationViewHolder(LayoutInflater.from(context).inflate(R.layout.item_view_bot_text, parent, false), this);
             case UNDEFINED:
             default:
                 return new TextViewHolder(LayoutInflater.from(context).inflate(R.layout.item_view_bot_text, parent, false), this);

@@ -208,13 +208,15 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
         } else
             currentModel = feed.getItem(name);
         Node node = (Node) currentModel;
-        node.setIconHidden(iconHidden);
-        if (!BotMessageType.BLANK.equals(BotMessageType.getValueOf(currentModel.getType()))) {
-            getBotAdapter().addItem(currentModel);
+        if (node != null) {
+            node.setIconHidden(iconHidden);
+            if (!BotMessageType.BLANK.equals(BotMessageType.getValueOf(currentModel.getType()))) {
+                getBotAdapter().addItem(currentModel);
+            }
+            conversationRecyclerView.scrollToPosition(getBotAdapter().getItemCount() - 1);
+            persisted.saveConversationState(type, getBotAdapter().getDataSet());
+            addAnswerOptions(node);
         }
-        conversationRecyclerView.scrollToPosition(getBotAdapter().getItemCount() - 1);
-        persisted.saveConversationState(type, getBotAdapter().getDataSet());
-        addAnswerOptions(node);
     }
 
     private void addAnswerOptions(Node node) {

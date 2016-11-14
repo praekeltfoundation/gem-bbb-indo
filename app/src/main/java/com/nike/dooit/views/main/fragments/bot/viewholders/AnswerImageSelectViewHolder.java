@@ -121,44 +121,19 @@ public class AnswerImageSelectViewHolder extends BaseBotViewHolder<Answer> {
 
             }
         }
-        ContentResolver cR = getContext().getContentResolver();
-        String type = cR.getType(imageUri);
         Uri pathUri = getRealPathFromURI(imageUri);
         selectView.setImageURI(imageUri);
-        User user = persisted.getCurrentUser();
         File file = new File(pathUri.getPath());
         if (file.length() > 0) {
-            showProgressDialog(R.string.uploading);
-            fileUploadManager.upload(user.getId(), type, file, new DooitErrorHandler() {
-                @Override
-                public void onError(DooitAPIError error) {
-                    dismissDialog();
-                    runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            Toast.makeText(getContext(), "Unable to upload goal Image", Toast.LENGTH_SHORT).show();
-                        }
-                    });
-                }
-            }).subscribe(new Action1<EmptyResponse>() {
-                @Override
-                public void call(EmptyResponse emptyResponse) {
-                    runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            dismissDialog();
-                            Answer answer = new Answer();
-                            answer.setName(dataModel.getName());
-                            answer.setType(BotMessageType.IMAGE);
-                            answer.setValue(imageUri.toString());
-                            answer.setNext(dataModel.getNextOnFinish());
-                            answer.setRemoveOnSelect(dataModel.getName());
-                            answer.setText(null);
-                            tagsClickListener.onItemClicked(answer);
-                        }
-                    });
-                }
-            });
+            dismissDialog();
+            Answer answer = new Answer();
+            answer.setName(dataModel.getName());
+            answer.setType(BotMessageType.IMAGE);
+            answer.setValue(imageUri.toString());
+            answer.setNext(dataModel.getNextOnFinish());
+            answer.setRemoveOnSelect(dataModel.getName());
+            answer.setText(null);
+            tagsClickListener.onItemClicked(answer);
         }
     }
 

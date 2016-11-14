@@ -22,7 +22,8 @@ public enum BotMessageType {
     INLINENUMBER(9),
     INLINECURRENCY(10),
     INLINEDATE(11),
-    TEXTCURRENCY(12);
+    TEXTCURRENCY(12),
+    GOALVERIFICATION(13);
 
     private static Map<Integer, BotMessageType> map = new HashMap<>();
 

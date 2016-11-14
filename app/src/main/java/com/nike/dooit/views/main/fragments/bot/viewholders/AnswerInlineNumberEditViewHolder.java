@@ -36,6 +36,7 @@ public class AnswerInlineNumberEditViewHolder extends BaseBotViewHolder<Answer> 
     @Override
     public void populate(Answer model) {
         this.dataModel = model;
+        editText.setText("");
         editText.setHint(dataModel.getInlineEditHint(getContext()));
         editText.setImeActionLabel("Done", KeyEvent.KEYCODE_ENTER);
         editText.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL);

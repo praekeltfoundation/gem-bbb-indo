@@ -67,7 +67,7 @@
     <string name="askGoalSaveAmountOther">How much can you save?</string>
     <string name="askGoalPriorSave">Have you saved anything towards this goal yet?</string>
     <string name="askPriorSavedAmount">How much have you already saved?</string>
-    <string name="verifyGoalAmount">If you save Rp $(weeklyGoal) each week you will save enough to get your $(savingsGoal) in $(totalWeeks) weeks.</string>
+    <string name="verifyGoalAmount">If you save Rp %1$s each week you will save enough to get your %2$s in %3$s weeks.</string>
     <string name="validationFail">Sorry, I do not understand that and have not been taught how to handle it yet.</string>
     <string name="validationFailDate">Sorry, I do not understand that and have not  been taught how to handle it yet.</string>
     <string name="validationFailSaveAmountOther">Sorry, I do not understand that and have not t been taught how to handle it yet.</string>
@@ -96,6 +96,11 @@
     <string name="Save">Save</string>
     <string name="WithdrawButton">Withdraw</string>
     <string name="addOwnGoal">Add own goal</string>
+
+    <string name="acceptGoal">Accept goal</string>
+    <string name="changeDate">Change date</string>
+    <string name="changeAmount">Change amount</string>
+    <string name="startOver">Start over</string>
     <string name="type_name_hint">Type name…</string>
     <string name="type_number_hint">Type number…</string>
     <string name="type_currency_hint">Type amount…</string>

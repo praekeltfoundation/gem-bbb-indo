@@ -10,6 +10,7 @@ import com.nike.dooit.views.main.fragments.ChallengeFragment;
 import com.nike.dooit.views.main.fragments.TipsFragment;
 import com.nike.dooit.views.main.fragments.bot.BotFragment;
 import com.nike.dooit.views.main.fragments.bot.viewholders.AnswerImageSelectViewHolder;
+import com.nike.dooit.views.main.fragments.bot.viewholders.GoalVerificationViewHolder;
 import com.nike.dooit.views.main.fragments.bot.viewholders.TextViewHolder;
 import com.nike.dooit.views.main.fragments.target.TargetFragment;
 import com.nike.dooit.views.main.fragments.tip.TipViewHolder;
@@ -74,4 +75,6 @@ public interface DooitComponent {
     void inject(TipViewHolder o);
 
     void inject(AnswerImageSelectViewHolder o);
+
+    void inject(GoalVerificationViewHolder o);
 }
