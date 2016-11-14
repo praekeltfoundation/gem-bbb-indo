@@ -4,10 +4,10 @@
     android:layout_width="match_parent" android:layout_height="match_parent">
 
     <TextView
-        android:text="No challenge available. Please try again soon!"
+        android:id="@+id/fragment_challenge_none_text"
+        android:text="@string/challenge_none_available"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:id="@+id/fragment_challenge_none_text"
         android:textAppearance="@style/AppTheme.TextView.Quiz.Title" />
 </FrameLayout>
