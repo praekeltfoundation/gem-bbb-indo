@@ -20,6 +20,7 @@ public class Node extends BaseBotModel {
     private String autoNext;
     private List<Answer> answers;
     private boolean iconHidden;
+    private String autoAnswer;
 
     public ArrayList<Answer> getAnswers() {
         if (answers == null)
@@ -41,5 +42,9 @@ public class Node extends BaseBotModel {
 
     public boolean isIconHidden() {
         return iconHidden;
+    }
+
+    public CharSequence getAutoAnswer() {
+        return autoAnswer;
     }
 }

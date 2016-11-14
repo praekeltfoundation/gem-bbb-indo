@@ -9,9 +9,10 @@ import com.greenfrvr.hashtagview.HashtagView;
 import com.nike.dooit.R;
 import com.nike.dooit.models.bot.BaseBotModel;
 import com.nike.dooit.models.enums.BotMessageType;
+import com.nike.dooit.views.main.fragments.bot.viewholders.AnswerImageSelectViewHolder;
+import com.nike.dooit.views.main.fragments.bot.viewholders.AnswerInlineEditViewHolder;
 import com.nike.dooit.views.main.fragments.bot.viewholders.AnswerViewHolder;
 import com.nike.dooit.views.main.fragments.bot.viewholders.BaseBotViewHolder;
-import com.nike.dooit.views.main.fragments.bot.viewholders.InlineEditViewHolder;
 import com.nike.dooit.views.main.fragments.bot.viewholders.TextViewHolder;
 
 import java.util.ArrayList;
@@ -41,10 +42,15 @@ public class BotAdapter extends RecyclerView.Adapter<BaseBotViewHolder> {
             case ANSWER:
                 return new AnswerViewHolder(LayoutInflater.from(context).inflate(R.layout.item_view_bot_answer, parent, false));
             case INLINEEDIT:
-                return new InlineEditViewHolder(LayoutInflater.from(context).inflate(R.layout.item_view_bot_inline_edit, parent, false), this, tagsClickListener);
+                return new AnswerInlineEditViewHolder(LayoutInflater.from(context).inflate(R.layout.item_view_bot_inline_edit, parent, false), this, tagsClickListener);
+            case CAMERAUPLOAD:
+            case GALLERYUPLOAD:
+                return new AnswerImageSelectViewHolder(LayoutInflater.from(context).inflate(R.layout.item_view_bot_select_image, parent, false), this, tagsClickListener);
+            case IMAGE:
+                return new AnswerImageSelectViewHolder(LayoutInflater.from(context).inflate(R.layout.item_view_bot_image, parent, false), this, tagsClickListener);
             case UNDEFINED:
             default:
-                return null;
+                return new TextViewHolder(LayoutInflater.from(context).inflate(R.layout.item_view_bot_text, parent, false));
         }
     }
 

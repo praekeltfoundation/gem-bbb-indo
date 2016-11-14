@@ -178,20 +178,30 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
         Node node = (Node) currentModel;
         node.setIconHidden(iconHidden);
         getBotAdapter().addItem(currentModel);
+        conversationRecyclerView.scrollToPosition(getBotAdapter().getItemCount() - 1);
         persisted.saveConversationState(getBotAdapter().getDataSet());
         answerView.setData(new ArrayList<>());
         if (node.getAnswers().size() > 0) {
-            answerView.setData(node.getAnswers(), new HashtagView.DataStateTransform<Answer>() {
-                @Override
-                public CharSequence prepareSelected(Answer item) {
-                    return item.getText(getContext());
-                }
+            if (TextUtils.isEmpty(node.getAutoAnswer())) {
+                answerView.setData(node.getAnswers(), new HashtagView.DataStateTransform<Answer>() {
+                    @Override
+                    public CharSequence prepareSelected(Answer item) {
+                        return item.getText(getContext());
+                    }
 
-                @Override
-                public CharSequence prepare(Answer item) {
-                    return item.getText(getContext());
+                    @Override
+                    public CharSequence prepare(Answer item) {
+                        return item.getText(getContext());
+                    }
+                });
+            } else {
+                for (Answer answer : node.getAnswers()) {
+                    if (node.getAutoAnswer().equals(answer.getName())) {
+                        onItemClicked(answer);
+                        return;
+                    }
                 }
-            });
+            }
         } else if (!TextUtils.isEmpty(node.getAutoNext())) {
             getAndAddNode(node.getAutoNext(), true);
         }

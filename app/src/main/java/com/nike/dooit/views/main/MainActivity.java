@@ -10,11 +10,15 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
+import com.nike.dooit.DooitApplication;
 import com.nike.dooit.R;
+import com.nike.dooit.helpers.activity.result.ActivityForResultHelper;
 import com.nike.dooit.views.DooitActivity;
 import com.nike.dooit.views.helpers.activity.DooitActivityBuilder;
 import com.nike.dooit.views.main.adapters.MainTabAdapter;
 import com.nike.dooit.views.profile.ProfileActivity;
+
+import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -31,11 +35,14 @@ public class MainActivity extends DooitActivity {
     TabLayout tabLayout;
 
     MainTabAdapter mainTabAdapter;
+    @Inject
+    ActivityForResultHelper activityForResultHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        ((DooitApplication) getApplication()).component.inject(this);
         ButterKnife.bind(this);
         setSupportActionBar(toolbar);
         if (getSupportActionBar() != null) {
@@ -70,6 +77,11 @@ public class MainActivity extends DooitActivity {
         return true;
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (!activityForResultHelper.onActivityResult(requestCode, resultCode, data))
+            super.onActivityResult(requestCode, resultCode, data);
+    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {

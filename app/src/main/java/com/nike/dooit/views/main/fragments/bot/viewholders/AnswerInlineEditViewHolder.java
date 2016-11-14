@@ -21,13 +21,13 @@ import butterknife.ButterKnife;
  * Created by Bernhard Müller on 11/7/2016.
  */
 
-public class InlineEditViewHolder extends BaseBotViewHolder<Answer> {
+public class AnswerInlineEditViewHolder extends BaseBotViewHolder<Answer> {
     @BindView(R.id.item_view_bot_inline_edit_view)
     EditText editText;
     BotAdapter botAdapter;
     HashtagView.TagsClickListener tagsClickListener;
 
-    public InlineEditViewHolder(View itemView, BotAdapter botAdapter, HashtagView.TagsClickListener tagsClickListener) {
+    public AnswerInlineEditViewHolder(View itemView, BotAdapter botAdapter, HashtagView.TagsClickListener tagsClickListener) {
         super(itemView);
         this.botAdapter = botAdapter;
         this.tagsClickListener = tagsClickListener;
@@ -57,12 +57,6 @@ public class InlineEditViewHolder extends BaseBotViewHolder<Answer> {
                     return true;
                 }
                 return false;
-            }
-        });
-        itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(getContext(), getModel().getNext(), Toast.LENGTH_LONG).show();
             }
         });
     }

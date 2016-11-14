@@ -18,7 +18,15 @@
     "type": "goalSelection",
     "text": " $(askGoalName) ",
     "answers": [
-      {"name": "goalName", "next": "goalNameCongrats", "text":"$(addOwnGoal)", "type": "inlineEdit", "changeOnSelect": ["askGoalName", "$(askGoalNameInput)"], "inlineEditHint": "$(type_name_hint)" } ]
+      {"name": "goalNameOption", "next": "askGoalNameInput", "text":"$(addOwnGoal)" } ]
+  },
+  {
+    "name": "askGoalNameInput",
+    "type": "text",
+    "text": " $(askGoalNameInput) ",
+    "autoAnswer": "goalName",
+    "answers": [
+      {"name": "goalName", "next": "goalNameCongrats", "type": "inlineEdit", "inlineEditHint": "$(type_name_hint)" } ]
   },
   {
     "name": "goalNameCongrats",
@@ -31,8 +39,17 @@
     "type": "text",
     "text": "$(askGoalImage)",
     "answers": [
-      { "name": "Capture", "text":"$(Capture)", "type": "imageUpload", "nextOnFinish": "askKnowGoalAmount"},
-      { "name": "Gallery", "text":"$(Gallery)", "type": "imageUpload", "nextOnFinish": "askKnowGoalAmount"}
+      { "name": "Capture", "text":"$(Capture)", "type": "CameraUpload", "nextOnFinish": "askKnowGoalAmount", "removeOnSelect": "Capture"},
+      { "name": "Gallery", "text":"$(Gallery)", "type": "GalleryUpload", "nextOnFinish": "askKnowGoalAmount", "removeOnSelect": "Gallery"}
+    ]
+  },
+  {
+    "name": "askGoalImageConfirm",
+    "type": "text",
+    "text": "$(askGoalImageConfirm)",
+    "answers": [
+      { "name": "Change", "text":"$(Change)", "next": "askKnowGoalAmount" },
+      { "name": "Accept", "text":"$(Accept)", "next": "askKnowGoalAmount" }
     ]
   },
   {

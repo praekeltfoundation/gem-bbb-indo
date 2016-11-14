@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:fresco="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="8dp"
+    android:gravity="right"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:background=""
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <com.facebook.drawee.view.SimpleDraweeView
+            android:id="@+id/item_view_bot_image"
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            android:background="@drawable/rounded_squre_light_blue"
+            android:padding="2dp"
+            fresco:actualImageScaleType="fitCenter"
+            fresco:fadeDuration="300"
+            fresco:placeholderImage="@android:drawable/sym_def_app_icon"
+            fresco:placeholderImageScaleType="fitCenter"
+            fresco:roundBottomLeft="true"
+            fresco:roundBottomRight="true"
+            fresco:roundTopLeft="true"
+            fresco:roundTopRight="true"
+            fresco:roundedCornerRadius="4dp"
+            tools:visibility="visible" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="24dp"
+            android:layout_alignEnd="@+id/item_view_bot_image"
+            android:layout_alignStart="@+id/item_view_bot_image"
+            android:layout_below="@+id/item_view_bot_image"
+            android:padding="2dp"
+            android:src="@android:drawable/sym_def_app_icon" />
+    </RelativeLayout>
+</RelativeLayout>

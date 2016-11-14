@@ -63,10 +63,8 @@ public class TargetFragment extends MainFragment {
 
     @BindString(R.string.savings_message)
     String savingsMessage;
-
-    private TargetPagerAdapter adapter;
-
     List<Goal> goals;
+    private TargetPagerAdapter adapter;
 
     public TargetFragment() {
         // Required empty public constructor
@@ -183,9 +181,10 @@ public class TargetFragment extends MainFragment {
                                 @Override
                                 public void run() {
                                     adapter.updateGoals(goals);
-                                    populateGoal(goals.get(0));
-                                    if (goals.size() > 0)
+                                    if (goals.size() > 0) {
+                                        populateGoal(goals.get(0));
                                         rightTarget.setVisibility(View.VISIBLE);
+                                    }
                                 }
                             });
                     }
