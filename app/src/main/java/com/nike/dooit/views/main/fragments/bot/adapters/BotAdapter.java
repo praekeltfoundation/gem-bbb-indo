@@ -11,8 +11,10 @@ import com.nike.dooit.models.bot.BaseBotModel;
 import com.nike.dooit.models.enums.BotMessageType;
 import com.nike.dooit.views.main.fragments.bot.viewholders.AnswerImageSelectViewHolder;
 import com.nike.dooit.views.main.fragments.bot.viewholders.AnswerImageViewHolder;
+import com.nike.dooit.views.main.fragments.bot.viewholders.AnswerInlineDateEditViewHolder;
 import com.nike.dooit.views.main.fragments.bot.viewholders.AnswerInlineNumberEditViewHolder;
 import com.nike.dooit.views.main.fragments.bot.viewholders.AnswerInlineTextEditViewHolder;
+import com.nike.dooit.views.main.fragments.bot.viewholders.AnswerTextCurrencyViewHolder;
 import com.nike.dooit.views.main.fragments.bot.viewholders.AnswerViewHolder;
 import com.nike.dooit.views.main.fragments.bot.viewholders.BaseBotViewHolder;
 import com.nike.dooit.views.main.fragments.bot.viewholders.TextViewHolder;
@@ -38,9 +40,9 @@ public class BotAdapter extends RecyclerView.Adapter<BaseBotViewHolder> {
     public BaseBotViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         switch (BotMessageType.getValueOf(viewType)) {
             case TEXT:
-                return new TextViewHolder(LayoutInflater.from(context).inflate(R.layout.item_view_bot_text, parent, false));
+                return new TextViewHolder(LayoutInflater.from(context).inflate(R.layout.item_view_bot_text, parent, false), this);
             case GOALSELECTION:
-                return new TextViewHolder(LayoutInflater.from(context).inflate(R.layout.item_view_bot_text, parent, false));
+                return new TextViewHolder(LayoutInflater.from(context).inflate(R.layout.item_view_bot_text, parent, false), this);
             case ANSWER:
                 return new AnswerViewHolder(LayoutInflater.from(context).inflate(R.layout.item_view_bot_answer, parent, false));
             case INLINETEXT:
@@ -52,9 +54,15 @@ public class BotAdapter extends RecyclerView.Adapter<BaseBotViewHolder> {
                 return new AnswerImageViewHolder(LayoutInflater.from(context).inflate(R.layout.item_view_bot_image, parent, false), this, tagsClickListener);
             case INLINENUMBER:
                 return new AnswerInlineNumberEditViewHolder(LayoutInflater.from(context).inflate(R.layout.item_view_bot_inline_edit, parent, false), this, tagsClickListener);
+            case INLINECURRENCY:
+                return new AnswerInlineNumberEditViewHolder(LayoutInflater.from(context).inflate(R.layout.item_view_bot_inline_edit_currency, parent, false), this, tagsClickListener);
+            case INLINEDATE:
+                return new AnswerInlineDateEditViewHolder(LayoutInflater.from(context).inflate(R.layout.item_view_bot_inline_edit, parent, false), this, tagsClickListener);
+            case TEXTCURRENCY:
+                return new AnswerTextCurrencyViewHolder(LayoutInflater.from(context).inflate(R.layout.item_view_bot_answer, parent, false), this);
             case UNDEFINED:
             default:
-                return new TextViewHolder(LayoutInflater.from(context).inflate(R.layout.item_view_bot_text, parent, false));
+                return new TextViewHolder(LayoutInflater.from(context).inflate(R.layout.item_view_bot_text, parent, false), this);
         }
     }
 

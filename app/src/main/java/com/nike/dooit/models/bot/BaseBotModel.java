@@ -12,10 +12,15 @@ import com.nike.dooit.models.enums.BotMessageType;
  */
 
 public class BaseBotModel {
+    protected final String classType;
     protected String text;
     protected String name;
     protected String type;
     protected String[] textParams = new String[0];
+
+    public BaseBotModel(String classType) {
+        this.classType = classType;
+    }
 
     String getResourceString(Context context, String jsonResourceName) {
         if (TextUtils.isEmpty(jsonResourceName))
@@ -55,5 +60,9 @@ public class BaseBotModel {
 
     public void setText(String text) {
         this.text = text;
+    }
+
+    public String getClassType() {
+        return classType;
     }
 }

@@ -10,6 +10,7 @@ import android.widget.TextView;
 import com.greenfrvr.hashtagview.HashtagView;
 import com.nike.dooit.R;
 import com.nike.dooit.models.bot.Answer;
+import com.nike.dooit.models.enums.BotMessageType;
 import com.nike.dooit.views.main.fragments.bot.adapters.BotAdapter;
 
 import butterknife.BindView;
@@ -51,6 +52,7 @@ public class AnswerInlineTextEditViewHolder extends BaseBotViewHolder<Answer> {
                     inputAnswer.setName(dataModel.getName());
                     inputAnswer.setRemoveOnSelect(dataModel.getName());
                     inputAnswer.setNext(dataModel.getNextOnFinish());
+                    inputAnswer.setType(BotMessageType.getValueOf(dataModel.getTypeOnFinish()));
                     tagsClickListener.onItemClicked(inputAnswer);
                     return true;
                 }

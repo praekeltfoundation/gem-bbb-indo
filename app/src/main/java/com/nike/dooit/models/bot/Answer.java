@@ -17,9 +17,12 @@ public class Answer extends BaseBotModel {
     private String removeOnSelect;
     private String[] changeOnSelect;
     protected String inlineEditHint;
+    private String typeOnFinish;
 
     public Answer() {
+        super(Answer.class.toString());
         type = BotMessageType.ANSWER.name();
+        typeOnFinish = type;
     }
 
     public String getNext() {
@@ -69,5 +72,13 @@ public class Answer extends BaseBotModel {
 
     public void setNextOnFinish(String nextOnFinish) {
         this.nextOnFinish = nextOnFinish;
+    }
+
+    public String getTypeOnFinish() {
+        return typeOnFinish;
+    }
+
+    public void setTypeOnFinish(String typeOnFinish) {
+        this.typeOnFinish = typeOnFinish;
     }
 }

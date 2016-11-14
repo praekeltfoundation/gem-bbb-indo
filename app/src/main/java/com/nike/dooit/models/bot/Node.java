@@ -22,6 +22,10 @@ public class Node extends BaseBotModel {
     private boolean iconHidden;
     private String autoAnswer;
 
+    public Node() {
+        super(Node.class.toString());
+    }
+
     public ArrayList<Answer> getAnswers() {
         if (answers == null)
             return new ArrayList<>();
@@ -36,12 +40,12 @@ public class Node extends BaseBotModel {
         this.autoNext = autoNext;
     }
 
-    public void setIconHidden(boolean iconHidden) {
-        this.iconHidden = iconHidden;
-    }
-
     public boolean isIconHidden() {
         return iconHidden;
+    }
+
+    public void setIconHidden(boolean iconHidden) {
+        this.iconHidden = iconHidden;
     }
 
     public CharSequence getAutoAnswer() {

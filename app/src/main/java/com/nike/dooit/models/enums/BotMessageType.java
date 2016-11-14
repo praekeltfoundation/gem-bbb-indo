@@ -19,7 +19,10 @@ public enum BotMessageType {
     CAMERAUPLOAD(6),
     IMAGE(7),
     BLANK(8),
-    INLINENUMBER(9);
+    INLINENUMBER(9),
+    INLINECURRENCY(10),
+    INLINEDATE(11),
+    TEXTCURRENCY(12);
 
     private static Map<Integer, BotMessageType> map = new HashMap<>();
 

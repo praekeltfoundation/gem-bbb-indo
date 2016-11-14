@@ -10,6 +10,7 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -71,7 +72,6 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setHasOptionsMenu(true);
         ((DooitApplication) getActivity().getApplication()).component.inject(this);
     }
 
@@ -98,8 +98,17 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
+        menu.clear();
         getActivity().getMenuInflater().inflate(R.menu.menu_main, menu);
         getActivity().getMenuInflater().inflate(R.menu.menu_main_bot, menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == R.id.menu_main_bot_clear) {
+            persisted.clearConversation();
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     @Override
@@ -109,11 +118,34 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
             case DEFAULT:
                 feed = new BotFeed<>(getContext());
                 feed.parse(R.raw.goals, Node.class);
-                getAndAddNode(null);
                 break;
             case GOAL:
                 feed = new BotFeed<>(getContext());
                 feed.parse(R.raw.goals, Node.class);
+                break;
+        }
+
+        if (persisted.hasConversation(type)) {
+            ArrayList<BaseBotModel> data = persisted.loadConversationState(type);
+            if (data.size() > 0) {
+                getBotAdapter().clear();
+                getBotAdapter().addItems(data);
+                conversationRecyclerView.scrollToPosition(getBotAdapter().getItemCount() - 1);
+                BaseBotModel m = data.get(data.size() - 1);
+                if (m instanceof Node)
+                    addAnswerOptions((Node) data.get(data.size() - 1));
+                else if (m instanceof Answer) {
+                    getBotAdapter().removeItem(m);
+                    onItemClicked(m);
+                }
+                return;
+            }
+        }
+        switch (type) {
+            case DEFAULT:
+                getAndAddNode(null);
+                break;
+            case GOAL:
                 getAndAddNode("askGoalName");
                 break;
         }
@@ -151,7 +183,8 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
                     getBotAdapter().addItem(model);
                 }
                 getBotAdapter().addItem(answer);
-                persisted.saveConversationState(getBotAdapter().getDataSet());
+                conversationRecyclerView.scrollToPosition(getBotAdapter().getItemCount() - 1);
+                persisted.saveConversationState(type, getBotAdapter().getDataSet());
                 if (!TextUtils.isEmpty(answer.getNext())) {
                     getAndAddNode(answer.getNext());
                 } else {
@@ -161,7 +194,7 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
             case SAVINGS:
                 break;
         }
-        persisted.saveConversationState(getBotAdapter().getDataSet());
+        persisted.saveConversationState(type, getBotAdapter().getDataSet());
     }
 
     private void getAndAddNode(String name) {
@@ -179,8 +212,12 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
         if (!BotMessageType.BLANK.equals(BotMessageType.getValueOf(currentModel.getType()))) {
             getBotAdapter().addItem(currentModel);
         }
-        conversationRecyclerView.scrollToPosition(0);
-        persisted.saveConversationState(getBotAdapter().getDataSet());
+        conversationRecyclerView.scrollToPosition(getBotAdapter().getItemCount() - 1);
+        persisted.saveConversationState(type, getBotAdapter().getDataSet());
+        addAnswerOptions(node);
+    }
+
+    private void addAnswerOptions(Node node) {
         answerView.setData(new ArrayList<>());
         if (node.getAnswers().size() > 0) {
             if (TextUtils.isEmpty(node.getAutoAnswer())) {

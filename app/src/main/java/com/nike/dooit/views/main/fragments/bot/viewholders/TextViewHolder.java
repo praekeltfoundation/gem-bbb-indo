@@ -9,7 +9,10 @@ import android.widget.TextView;
 import com.nike.dooit.DooitApplication;
 import com.nike.dooit.R;
 import com.nike.dooit.helpers.Persisted;
+import com.nike.dooit.models.bot.Answer;
+import com.nike.dooit.models.bot.BaseBotModel;
 import com.nike.dooit.models.bot.Node;
+import com.nike.dooit.views.main.fragments.bot.adapters.BotAdapter;
 
 import javax.inject.Inject;
 
@@ -28,8 +31,11 @@ public class TextViewHolder extends BaseBotViewHolder<Node> {
     @Inject
     Persisted persisted;
 
-    public TextViewHolder(View itemView) {
+    BotAdapter botAdapter;
+
+    public TextViewHolder(View itemView, BotAdapter botAdapter) {
         super(itemView);
+        this.botAdapter = botAdapter;
         ((DooitApplication) getContext().getApplicationContext()).component.inject(this);
         ButterKnife.bind(this, itemView);
     }
@@ -48,6 +54,13 @@ public class TextViewHolder extends BaseBotViewHolder<Node> {
                 params[i] = persisted.getCurrentUser().getFirstName();
             } else if ("LASTNAME".equals(param)) {
                 params[i] = persisted.getCurrentUser().getLastName();
+            } else {
+                for (BaseBotModel baseBotModel : botAdapter.getDataSet()) {
+                    if (baseBotModel.getClassType().equals(Answer.class.toString())
+                            && param.equals(baseBotModel.getName())) {
+                        params[i] = ((Answer) baseBotModel).getValue();
+                    }
+                }
             }
         }
         if (data[0].contains("%s"))

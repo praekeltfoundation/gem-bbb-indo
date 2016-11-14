@@ -62,8 +62,7 @@
     <string name="askGoalImageConfirm">Add an image for your savings goal to help keep you motivated</string>
     <string name="askGoalAmount">How much do you need to save?</string>
     <string name="infoDontKnowAmount">No problem.</string>
-    <string name="askKnowGoalDate">That is a big goal. Let us get saving then. Do you have a date that you want to save this by?</string>
-    <string name="askGoalDate">When would you like to have saved this much?</string>
+    <string name="askGoalDate">What date would you need to save Rp %s by?</string>
     <string name="askGoalWeeklySaveAmount">How much can you save each week?</string>
     <string name="askGoalSaveAmountOther">How much can you save?</string>
     <string name="askGoalPriorSave">Have you saved anything towards this goal yet?</string>
@@ -82,24 +81,26 @@
     <string name="Change">Change photo</string>
     <string name="Accept">I\'m good</string>
     <string name="Gallery">Select from gallery</string>
-    <string name="knowAmountY">Yes</string>
-    <string name="knowAmountN">No</string>
-    <string name="knowDateY">Yes</string>
-    <string name="knowDateN">No</string>
-    <string name="hasSavedY">Yes</string>
-    <string name="hasSavedN">No</string>
+    <string name="addDate">Add date</string>
+    <string name="unknownDate">I don\'t know</string>
+    <string name="addAmount">Add amount</string>
+    <string name="nope">Nope</string>
     <string name="otherSaveAmount">Other</string>
     <string name="goalCheckRT">Reduce Time</string>
     <string name="goalCheckRA">Reduce Amount</string>
     <string name="goalCheckOk">Ok</string>
-    <string name="five">500</string>
-    <string name="thousand">1000</string>
-    <string name="thousandFive">1500</string>
-    <string name="twoThousand">2000</string>
+    <string name="five">Rp 500</string>
+    <string name="thousand">Rp 1000</string>
+    <string name="thousandFive">Rp 1500</string>
+    <string name="twoThousand">Rp 2000</string>
     <string name="Save">Save</string>
     <string name="WithdrawButton">Withdraw</string>
     <string name="addOwnGoal">Add own goal</string>
-    <string name="type_name_hint">type name…</string>
+    <string name="type_name_hint">Type name…</string>
+    <string name="type_number_hint">Type number…</string>
+    <string name="type_currency_hint">Type amount…</string>
+    <string name="type_date_hint">Type date…</string>
+
 
     <string name="ToneY">Yes</string>
     <string name="ToneN">No</string>
