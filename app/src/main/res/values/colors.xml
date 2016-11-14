@@ -4,10 +4,17 @@
     <color name="colorPrimary">@color/purple</color>
     <color name="colorPrimaryDark">@color/purple</color>
     <color name="colorAccent">@color/pink</color>
+    <color name="colorQuizSubtitle">@color/grey</color>
+    <color name="colorQuizText">@color/black</color>
+    <color name="colorQuizOption">@color/white</color>
+    <color name="colorQuizAccent">@color/light_blue</color>
+    <color name="colorQuizButtonText">@color/white</color>
     <color name="white">@android:color/white</color>
     <color name="black">@android:color/black</color>
     <color name="purple">#391563</color>
-    <color name="pink">#FF3E8D</color>
+    <color name="pink">#E93988</color>
+    <color name="light_grey">#CCC</color>
+    <color name="light_grey_alpha">#82cccccc</color>
     <color name="grey">#828282</color>
     <color name="yellow">#FDDF5B</color>
     <color name="green">#B9D154</color>
@@ -19,5 +26,10 @@
     <color name="transparent" type="color">#00ffffff</color>
     <color name="tabtextcolor">@color/black</color>
     <color name="divider">@color/grey</color>
-    <color name="profileSettingsTitle">@color/black</color>
+    <color name="profileSettingsTitle">@color/black</color>  <color name="black">#000</color>
+    <color name="light_blue">#00bfe6</color>
+
+    <!-- Tips -->
+    <color name="tips_tab_background_selected">@color/yellow</color>
+    <color name="tips_tab_background_unselected">@color/light_grey</color>
 </resources>

@@ -12,11 +12,11 @@ import com.nike.dooit.views.DooitActivity;
 import com.nike.dooit.views.helpers.activity.DooitActivityBuilder;
 import com.nike.dooit.views.onboarding.RegistrationActivity;
 import com.nike.dooit.views.welcome.adapter.WelcomeTabAdapter;
+import com.viewpagerindicator.CirclePageIndicator;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import me.relex.circleindicator.CircleIndicator;
 
 public class WelcomeActivity extends DooitActivity {
 
@@ -24,7 +24,7 @@ public class WelcomeActivity extends DooitActivity {
     ViewPager viewPager;
 
     @BindView(R.id.activity_welcome_indicator)
-    CircleIndicator circleIndicator;
+    CirclePageIndicator circleIndicator;
 
     @BindView(R.id.activity_welcome_button)
     Button button;

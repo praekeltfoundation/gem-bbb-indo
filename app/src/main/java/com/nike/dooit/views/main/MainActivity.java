@@ -14,14 +14,12 @@ import com.nike.dooit.R;
 import com.nike.dooit.views.DooitActivity;
 import com.nike.dooit.views.helpers.activity.DooitActivityBuilder;
 import com.nike.dooit.views.main.adapters.MainTabAdapter;
-import com.nike.dooit.views.main.fragments.challenge.ChallengeQuizQuestionFragment;
-import com.nike.dooit.views.main.fragments.challenge.dummy.DummyContent;
 import com.nike.dooit.views.profile.ProfileActivity;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class MainActivity extends DooitActivity implements ChallengeQuizQuestionFragment.OnListFragmentInteractionListener {
+public class MainActivity extends DooitActivity {
 
     @BindView(R.id.toolbar)
     Toolbar toolbar;
@@ -76,11 +74,6 @@ public class MainActivity extends DooitActivity implements ChallengeQuizQuestion
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         return super.onOptionsItemSelected(item);
-    }
-
-    @Override
-    public void onListFragmentInteraction(DummyContent.DummyItem item) {
-
     }
 
     public static class Builder extends DooitActivityBuilder<MainActivity.Builder> {

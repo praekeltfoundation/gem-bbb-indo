@@ -5,12 +5,14 @@ import android.text.TextUtils;
 import android.util.Log;
 
 import com.nike.dooit.DooitApplication;
-import com.nike.dooit.models.Challenge;
+import com.nike.dooit.models.Tip;
 import com.nike.dooit.models.Token;
 import com.nike.dooit.models.User;
 import com.nike.dooit.models.bot.BaseBotModel;
+import com.nike.dooit.models.challenge.BaseChallenge;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -23,7 +25,10 @@ public class Persisted {
     private static final String USER = "user";
     private static final String CHALLENGE = "challenge";
     private static final String BOT = "bot";
+    private static final String TIPS = "tips";
+    private static final String FAVOURITES = "favourites";
     private static final String TAG = "Persisted";
+
     @Inject
     DooitSharedPreferences dooitSharedPreferences;
 
@@ -80,7 +85,7 @@ public class Persisted {
         dooitSharedPreferences.remove(TOKEN);
     }
 
-    public void setActiveChallenge(Challenge activeChallenge) {
+    public void setActiveChallenge(BaseChallenge activeChallenge) {
         dooitSharedPreferences.setComplex(CHALLENGE, activeChallenge);
     }
 
@@ -88,13 +93,58 @@ public class Persisted {
         return loadCurrentChallenge();
     }
 
-    private Challenge loadCurrentChallenge() {
-        return dooitSharedPreferences.getComplex(TOKEN, Challenge.class);
+    private BaseChallenge loadCurrentChallenge() {
+        return dooitSharedPreferences.getComplex(TOKEN, BaseChallenge.class);
     }
 
     public boolean hasCurrentChallenge() {
-        Challenge challenge = loadCurrentChallenge();
+        BaseChallenge challenge = loadCurrentChallenge();
         return challenge != null;
+    }
+
+    public List<Tip> getTips() {
+        return loadTips(TIPS);
+    }
+
+    public void setTips(List<Tip> tips) {
+        saveTips(TIPS, tips);
+    }
+
+    public boolean hasTips() {
+        return !loadTips(TIPS).isEmpty();
+    }
+
+    public void clearTips() {
+        dooitSharedPreferences.remove(TIPS);
+    }
+
+    public List<Tip> getFavouriteTips() {
+        return loadTips(FAVOURITES);
+    }
+
+    public void setFavourites(List<Tip> tips) {
+        saveTips(FAVOURITES, tips);
+    }
+
+    public boolean hasFavourites() {
+        return !loadTips(FAVOURITES).isEmpty();
+    }
+
+    public void clearFavourites() {
+        dooitSharedPreferences.remove(FAVOURITES);
+    }
+
+    private List<Tip> loadTips(String prefKey) {
+        Tip[] tips = dooitSharedPreferences.getComplex(prefKey, Tip[].class);
+        if (tips != null) {
+            return new ArrayList<Tip>(Arrays.asList(tips));
+        } else {
+            return new ArrayList<Tip>();
+        }
+    }
+
+    private void saveTips(String prefKey, List<Tip> tips) {
+        dooitSharedPreferences.setComplex(prefKey, tips.toArray());
     }
 }
 

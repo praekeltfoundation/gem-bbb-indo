@@ -46,32 +46,4 @@ public class DooitAPIError extends Throwable {
     public Throwable getCause() {
         return cause;
     }
-
-    public boolean isResourceNotFound() {
-        return "ResourceNotFound".equals(getErrorCode());
-    }
-
-    public boolean isServerException() {
-        return cause instanceof HttpException && getErrorMessage() != null && !getErrorMessage().isEmpty();
-    }
-
-    public boolean isDuplicateIntroduction() {
-        return "Duplicate introduction".equals(getErrorMessage());
-    }
-
-    public boolean isDuplicatePhoneNumber() {
-        return "duplicate phone_number".equals(getErrorMessage());
-    }
-
-    public boolean isDuplicateEmail() {
-        return "duplicate email".equals(getErrorMessage());
-    }
-
-    public boolean isUserDeleted() {
-        return getCause() != null && getCause() instanceof HttpException && (((HttpException) getCause()).code() == 410);
-    }
-
-    public boolean isTokenExpired() {
-        return "InvalidCredentials".equals(getErrorCode());
-    }
 }

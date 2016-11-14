@@ -1,7 +1,7 @@
 package com.nike.dooit.api.interfaces;
 
-import com.nike.dooit.models.Challenge;
 import com.nike.dooit.models.Entry;
+import com.nike.dooit.models.challenge.BaseChallenge;
 
 import java.util.List;
 
@@ -18,10 +18,10 @@ import rx.Observable;
 public interface ChallengeAPI {
 
     @GET("/api/challenges/")
-    Observable<List<Challenge>> getChallenges();
+    Observable<List<BaseChallenge>> getChallenges();
 
     @GET("/api/challenges/{id}/")
-    Observable<Challenge> getChallenge(@Path("id") int id);
+    Observable<BaseChallenge> getChallenge(@Path("id") int id);
 
     @POST("/api/entries/")
     Observable<Entry> postEntry(@Body Entry entry);
