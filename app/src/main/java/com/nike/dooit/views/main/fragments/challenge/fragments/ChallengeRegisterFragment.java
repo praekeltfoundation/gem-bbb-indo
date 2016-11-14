@@ -95,6 +95,7 @@ public class ChallengeRegisterFragment extends Fragment {
     public void onStart() {
         super.onStart();
         name.setText(challenge.getName());
+        date.setText(challenge.getDeactivationDate().toLocalDateTime().toString("yyyy-MM-dd HH:mm"));
     }
 
     @OnClick(R.id.fragment_challenge_register_button)
