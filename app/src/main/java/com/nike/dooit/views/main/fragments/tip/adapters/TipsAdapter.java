@@ -29,7 +29,6 @@ import javax.inject.Inject;
 
 public class TipsAdapter extends RecyclerView.Adapter<TipViewHolder> {
 
-    private Context context;
     private List<Tip> tips = new ArrayList<>();
 
     @Inject
@@ -41,7 +40,6 @@ public class TipsAdapter extends RecyclerView.Adapter<TipViewHolder> {
     public TipsAdapter(DooitApplication application) {
         super();
         application.component.inject(this);
-        this.context = application.getApplicationContext();
     }
 
     public TipsAdapter(DooitApplication application, List<Tip> tips) {
@@ -69,12 +67,12 @@ public class TipsAdapter extends RecyclerView.Adapter<TipViewHolder> {
         holder.setId(tip.getId());
 
         // Title
-        String readMore = context.getString(R.string.tips_card_read_more);
+        String readMore = holder.getContext().getString(R.string.tips_card_read_more);
 
         SpannableString st = new SpannableString(tip.getTitle() + " " + readMore);
         RelativeSizeSpan sizeSpan = new RelativeSizeSpan(0.8f);
         ForegroundColorSpan colorSpan = new ForegroundColorSpan(ResourcesCompat.getColor(
-                context.getResources(), R.color.grey, context.getTheme()));
+                holder.getContext().getResources(), R.color.grey, holder.getContext().getTheme()));
         int start = tip.getTitle().length();
         int end = start + 1 + readMore.length(); // Add 1 for space
 

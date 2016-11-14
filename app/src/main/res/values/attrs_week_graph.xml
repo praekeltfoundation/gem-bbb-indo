@@ -1,0 +1,13 @@
+<resources>
+    <declare-styleable name="WeekGraph">
+        <attr name="gw_bar_drawable" format="reference" />
+        <attr name="gw_bar_width" format="dimension" />
+        <attr name="gw_bar_marginStart" format="dimension" />
+        <attr name="gw_bar_marginEnd" format="dimension" />
+        <attr name="gw_bar_textHeight" format="dimension" />
+        <attr name="gw_bar_avgHeight" format="dimension" />
+        <attr name="gw_bar_targetHeight" format="dimension" />
+        <attr name="gw_bar_avgColor" format="color" />
+        <attr name="gw_bar_targetColor" format="color" />
+    </declare-styleable>
+</resources>

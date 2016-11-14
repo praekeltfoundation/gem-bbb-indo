@@ -4,7 +4,7 @@
     android:id="@+id/activity_registration"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/purple"
+    android:background="@drawable/pattern_01"
     tools:context="com.nike.dooit.views.onboarding.RegistrationActivity">
 
     <RelativeLayout
@@ -58,7 +58,8 @@
             android:layout_alignParentStart="true"
             android:layout_below="@+id/activity_registration_name_text_edit"
             android:layout_marginTop="4dp"
-            android:text="@string/reg_example_name" />
+            android:text="@string/reg_example_name"
+            android:textColor="@color/white" />
 
         <TextView
             android:id="@+id/activity_registration_age_text_view"
@@ -70,9 +71,8 @@
             android:layout_below="@+id/activity_registration_name_example_text_edit"
             android:layout_marginTop="16dp"
             android:text="@string/reg_age"
-            android:textStyle="bold"
             android:textAllCaps="true"
-             />
+            android:textStyle="bold" />
 
 
         <EditText
@@ -84,8 +84,7 @@
             android:layout_marginTop="4dp"
             android:background="@color/white"
             android:ems="10"
-            android:inputType="numberSigned"
-             />
+            android:inputType="numberSigned" />
 
         <TextView
             android:id="@+id/activity_registration_age_example_text_view"
@@ -96,37 +95,37 @@
             android:layout_below="@+id/activity_registration_age_text_edit"
             android:layout_marginTop="4dp"
             android:text="@string/reg_example_age"
-             />
+            android:textColor="@color/white" />
 
         <RadioGroup
             android:id="@+id/activity_registration_gender_radiogroup"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="horizontal"
             android:layout_below="@+id/activity_registration_age_example_text_view"
-            android:layout_marginTop="16dp">
+            android:layout_marginTop="8dp"
+            android:orientation="horizontal">
 
             <RadioButton
-                android:text="@string/reg_gender_boy"
-                fontPath="fonts/Lato-Regular.ttf"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
                 android:id="@+id/activity_registration_gender_boy"
-                android:textColor="@color/yellow"
-                android:textAllCaps="true"
-                android:textAppearance="@style/AppTheme.TextView.Regular.MediumHeading"/>
-
-            <RadioButton
-                android:text="@string/reg_gender_girl"
                 fontPath="fonts/Lato-Regular.ttf"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:id="@+id/activity_registration_gender_girl"
-                android:textColor="@color/yellow"
+                android:text="@string/reg_gender_boy"
                 android:textAllCaps="true"
-                android:textAppearance="@style/AppTheme.TextView.Regular.MediumHeading"/>
+                android:textAppearance="@style/AppTheme.TextView.Regular.MediumHeading"
+                android:textColor="@color/yellow" />
+
+            <RadioButton
+                android:id="@+id/activity_registration_gender_girl"
+                fontPath="fonts/Lato-Regular.ttf"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/reg_gender_girl"
+                android:textAllCaps="true"
+                android:textAppearance="@style/AppTheme.TextView.Regular.MediumHeading"
+                android:textColor="@color/yellow" />
         </RadioGroup>
 
         <TextView
@@ -137,7 +136,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
             android:layout_below="@id/activity_registration_gender_radiogroup"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="8dp"
             android:text="Mobile Number"
             android:textAllCaps="true"
             android:textStyle="bold" />
@@ -162,7 +161,8 @@
             android:layout_alignParentStart="true"
             android:layout_below="@+id/activity_registration_number_text_edit"
             android:layout_marginTop="4dp"
-            android:text="@string/reg_example_number" />
+            android:text="@string/reg_example_number"
+            android:textColor="@color/white" />
 
         <TextView
             android:id="@+id/activity_registration_password_text_view"
@@ -197,7 +197,8 @@
             android:layout_alignParentStart="true"
             android:layout_below="@+id/activity_registration_password_edit_text"
             android:layout_marginTop="4dp"
-            android:text="@string/reg_example_password" />
+            android:text="@string/reg_example_password"
+            android:textColor="@color/white" />
 
         <TextView
             android:id="@+id/activity_registration_t_c_text_view"
@@ -217,11 +218,11 @@
             android:id="@+id/activity_registration_register_button"
             style="@style/AppTheme.Button.Big.Yellow"
             android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:layout_below="@+id/activity_registration_t_c_text_view"
             android:layout_marginTop="8dp"
             android:text="Register"
-            android:textAllCaps="true"
-            android:layout_height="wrap_content" />
+            android:textAllCaps="true" />
 
         <TextView
             android:id="@+id/activity_registration_login_text_view"
@@ -232,6 +233,7 @@
             android:layout_below="@+id/activity_registration_register_button"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="8dp"
-            android:text="@string/already_registered_log_in" />
+            android:text="@string/already_registered_log_in"
+            android:textColor="@color/white" />
     </RelativeLayout>
 </ScrollView>

@@ -4,7 +4,7 @@
     android:id="@+id/activity_login"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/purple"
+    android:background="@drawable/pattern_01"
     tools:context="com.nike.dooit.views.onboarding.LoginActivity">
 
     <RelativeLayout
@@ -21,7 +21,7 @@
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="24dp"
-            android:text="Log in"
+            android:text="@string/login_title"
             android:textColor="@color/white" />
 
         <TextView
@@ -31,7 +31,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
             android:layout_below="@+id/activity_login_title"
-            android:text="Name"
+            android:text="@string/login_name"
             android:textAllCaps="true" />
 
         <EditText
@@ -46,51 +46,15 @@
             android:inputType="textPersonName" />
 
         <TextView
-            android:id="@+id/activity_login_name_example_text_edit"
+            android:id="@+id/activity_login_name_example_text_view"
             style="@style/AppTheme.TextView.Regular.ExtraSmall"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textColor="@color/white"
             android:layout_alignParentStart="true"
             android:layout_below="@+id/activity_login_name_edit_text"
             android:layout_marginTop="4dp"
-            android:text="Example: Aulia D" />
-
-        <TextView
-            android:id="@+id/activity_login_age_text_view"
-            style="@style/AppTheme.TextView.Regular.MediumHeading"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
-            android:layout_below="@+id/activity_login_name_example_text_edit"
-            android:layout_marginTop="16dp"
-            android:text="How old are you?"
-            android:textAllCaps="true"
-            android:visibility="gone" />
-
-
-        <EditText
-            android:id="@+id/activity_login_age_text_edit"
-            android:layout_width="wrap_content"
-            android:layout_height="32dp"
-            android:layout_alignParentStart="true"
-            android:layout_below="@+id/activity_login_age_text_view"
-            android:layout_marginTop="4dp"
-            android:background="@color/white"
-            android:ems="10"
-            android:inputType="numberSigned"
-            android:visibility="gone" />
-
-        <TextView
-            android:id="@+id/activity_login_age_example_text_view"
-            style="@style/AppTheme.TextView.Regular.ExtraSmall"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
-            android:layout_below="@+id/activity_login_age_text_edit"
-            android:layout_marginTop="4dp"
-            android:text="Example: 16"
-            android:visibility="gone" />
-
+            android:text="@string/login_example_name" />
 
         <TextView
             android:id="@+id/activity_login_password_text_view"
@@ -98,9 +62,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
-            android:layout_below="@+id/activity_login_age_example_text_view"
+            android:layout_below="@+id/activity_login_name_example_text_view"
             android:layout_marginTop="16dp"
-            android:text="Password"
+            android:text="@string/login_password"
             android:textAllCaps="true" />
 
         <EditText
@@ -115,21 +79,22 @@
             android:inputType="textPassword" />
 
         <TextView
-            android:id="@+id/activity_login_password_example_text_edit"
+            android:id="@+id/activity_login_password_example_text_view"
             style="@style/AppTheme.TextView.Regular.ExtraSmall"
             android:layout_width="wrap_content"
+            android:textColor="@color/white"
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
             android:layout_below="@+id/activity_login_password_edit_text"
             android:layout_marginTop="4dp"
-            android:text="Must have atleast 6 characters" />
+            android:text="@string/login_example_password" />
 
         <TextView
             android:id="@+id/activity_login_forgot_text_view"
             style="@style/AppTheme.TextView.Regular.Small"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/activity_login_password_example_text_edit"
+            android:layout_below="@+id/activity_login_password_example_text_view"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="32dp"
             android:text="@string/forgot_password"

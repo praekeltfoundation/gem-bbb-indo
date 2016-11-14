@@ -1,19 +1,237 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.nike.dooit.views.main.fragments.TargetFragment">
+    tools:context="com.nike.dooit.views.main.fragments.target.TargetFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="TARGET" />
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
 
-    <Button
-        android:id="@+id/fragment_target_button"
-        android:layout_width="match_parent"
-        android:layout_gravity="center"
-        android:text="Start BOT"
-        android:layout_height="wrap_content" />
-</FrameLayout>
+        <View
+            android:id="@+id/view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_alignBottom="@+id/fragment_target_withdraw_button"
+            android:layout_alignParentTop="true"
+            android:background="@color/yellow" />
+
+        <TextView
+            android:id="@+id/fragment_target_goal_name_text_view"
+            style="@style/AppTheme.TextView.Regular.XXXLarge"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_marginTop="6dp"
+            android:gravity="center_horizontal"
+            android:text="Goal Name"
+            android:textColor="@color/black"
+            android:textStyle="bold" />
+
+        <android.support.v4.view.ViewPager
+            android:id="@+id/fragment_target_targets_view_pagers"
+            android:layout_width="wrap_content"
+            android:layout_height="200dp"
+            android:layout_below="@+id/fragment_target_goal_name_text_view"
+            android:layout_marginTop="24dp" />
+
+        <ImageButton
+            android:id="@+id/fragment_target_left_image_button"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_alignBottom="@+id/fragment_target_targets_view_pagers"
+            android:layout_alignStart="@+id/fragment_target_targets_view_pagers"
+            android:layout_alignTop="@+id/fragment_target_targets_view_pagers"
+            android:layout_gravity="center_vertical|start"
+            android:background="?android:selectableItemBackground"
+            android:src="@drawable/ic_d_left_chevron"
+            android:visibility="gone"
+            tools:visibility="visible" />
+
+        <ImageButton
+            android:id="@+id/fragment_target_right_image_button"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_alignBottom="@+id/fragment_target_targets_view_pagers"
+            android:layout_alignEnd="@+id/fragment_target_targets_view_pagers"
+            android:layout_alignTop="@+id/fragment_target_targets_view_pagers"
+            android:layout_gravity="center_vertical|end"
+            android:background="?android:selectableItemBackground"
+            android:src="@drawable/ic_d_right_chevron"
+            android:visibility="gone"
+            tools:visibility="visible" />
+
+
+        <TextView
+            android:id="@+id/fragment_target_saved"
+            style="@style/AppTheme.TextView.Regular"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/fragment_target_targets_view_pagers"
+            android:gravity="center_horizontal"
+            android:text="saved"
+            android:textColor="@color/black"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/fragment_target_saved_text_view"
+            style="@style/AppTheme.TextView.Regular.XXXLarge"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/fragment_target_saved"
+            android:gravity="center_horizontal"
+            android:text="Rp 38.000"
+            android:textColor="@color/black"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/fragment_target_total_text_view"
+            style="@style/AppTheme.TextView.Regular"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/fragment_target_saved_text_view"
+            android:gravity="center_horizontal"
+            android:text="of Rp 50.000"
+            android:textColor="@color/black"
+            android:textStyle="bold" />
+
+        <Button
+            android:id="@+id/fragment_target_save_button"
+            style="@style/AppTheme.Button.Big.LightBlue"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/fragment_target_total_text_view"
+            android:layout_gravity="center"
+            android:layout_marginEnd="18dp"
+            android:layout_marginStart="18dp"
+            android:layout_marginTop="16dp"
+            android:text="@string/save" />
+
+        <Button
+            android:id="@+id/fragment_target_withdraw_button"
+            style="@style/AppTheme.Button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/fragment_target_save_button"
+            android:layout_gravity="center"
+            android:text="@string/withdraw"
+            android:textColor="@color/grey"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/fragment_target_savings_history"
+            style="@style/AppTheme.TextView.Regular.Medium"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/view"
+            android:layout_marginTop="16dp"
+            android:gravity="center_horizontal"
+            android:text="@string/savings_history"
+            android:textAllCaps="true"
+            android:textColor="@color/black" />
+
+        <TextView
+            android:id="@+id/fragment_target_weeks"
+            style="@style/AppTheme.TextView.Regular.Small"
+            fontPath="fonts/Lato-Regular.ttf"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/fragment_target_savings_history"
+            android:gravity="center_horizontal"
+            android:text="@string/weeks"
+            android:textColor="@color/grey" />
+
+        <TextView
+            android:id="@+id/fragment_target_legend_goals"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/fragment_target_weeks"
+            android:layout_toStartOf="@+id/fragment_target_legend_average"
+            android:drawableStart="@drawable/ic_d_target_legend_goals"
+            android:gravity="center_vertical"
+            android:text="Goals" />
+
+        <TextView
+            android:id="@+id/fragment_target_legend_average"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/fragment_target_weeks"
+            android:layout_centerHorizontal="true"
+            android:drawableStart="@drawable/ic_d_target_legend_average"
+            android:gravity="center_vertical"
+            android:text="Average" />
+
+        <TextView
+            android:id="@+id/fragment_target_legend_saved"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/fragment_target_weeks"
+            android:layout_toEndOf="@+id/fragment_target_legend_average"
+            android:drawableStart="@drawable/ic_d_target_legend_saved"
+            android:gravity="center_vertical"
+            android:text="Saved" />
+
+        <HorizontalScrollView
+            android:id="@+id/fragment_target_savings_graph"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/fragment_target_legend_saved"
+            tools:background="@color/purple">
+
+            <com.nike.dooit.views.custom.WeekGraph
+                android:id="@+id/fragment_target_week_graph_view"
+                android:layout_width="wrap_content"
+                android:layout_height="150dp"
+                android:background="#fff"
+                android:orientation="horizontal"
+                app:gw_bar_avgColor="@color/grey"
+                app:gw_bar_avgHeight="2dp"
+                app:gw_bar_drawable="@drawable/week_bar"
+                app:gw_bar_marginEnd="0dp"
+                app:gw_bar_marginStart="5dp"
+                app:gw_bar_targetColor="@color/yellow"
+                app:gw_bar_targetHeight="2dp"
+                app:gw_bar_textHeight="20dp"
+                app:gw_bar_width="24dp" />
+        </HorizontalScrollView>
+
+        <TextView
+            android:id="@+id/fragment_target_savings_plan"
+            style="@style/AppTheme.TextView.Regular.Medium"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/fragment_target_savings_graph"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="24dp"
+            android:text="@string/savings_plan"
+            android:textAllCaps="true"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/fragment_target_savings_plan_message"
+            style="@style/AppTheme.TextView.Regular.Medium"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/fragment_target_savings_plan"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="8dp"
+            android:text="@string/savings_message"
+            android:textAlignment="center" />
+
+        <TextView
+            android:id="@+id/fragment_target_savings_plan_edit"
+            style="@style/AppTheme.TextView.Regular.Medium"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/fragment_target_savings_plan_message"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="24dp"
+            android:text="@string/edit_savings_plan"
+            android:textAlignment="center"
+            android:textAllCaps="true"
+            android:textColor="@color/grey" />
+    </RelativeLayout>
+</android.support.v4.widget.NestedScrollView>

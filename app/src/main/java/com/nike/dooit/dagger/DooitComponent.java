@@ -7,7 +7,7 @@ import com.nike.dooit.views.DooitActivity;
 import com.nike.dooit.views.RootActivity;
 import com.nike.dooit.views.main.fragments.bot.BotFragment;
 import com.nike.dooit.views.main.fragments.ChallengeFragment;
-import com.nike.dooit.views.main.fragments.TargetFragment;
+import com.nike.dooit.views.main.fragments.target.TargetFragment;
 import com.nike.dooit.views.main.fragments.TipsFragment;
 import com.nike.dooit.views.main.fragments.challenge.fragments.ChallengeFreeformFragment;
 import com.nike.dooit.views.main.fragments.challenge.fragments.ChallengeQuizFragment;

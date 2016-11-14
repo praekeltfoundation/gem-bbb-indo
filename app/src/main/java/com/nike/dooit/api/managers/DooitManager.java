@@ -64,8 +64,6 @@ public class DooitManager {
             public Response intercept(Chain chain) throws IOException {
                 Request original = chain.request();
 
-
-
                 Request.Builder requestBuilder = original.newBuilder()
                         .url(original.url())
                         .addHeader("Accept", "application/json")
