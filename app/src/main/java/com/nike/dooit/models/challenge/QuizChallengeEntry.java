@@ -13,8 +13,8 @@ import java.util.List;
 
 public class QuizChallengeEntry implements Serializable {
 
-    private int user;
-    private int challenge;
+    private long user;
+    private long challenge;
     @SerializedName("date_completed") private DateTime dateCompleted = new DateTime();
     private List<ParticipantAnswer> answers;
 
@@ -22,26 +22,26 @@ public class QuizChallengeEntry implements Serializable {
         // Mandatory empty constructor
     }
 
-    public QuizChallengeEntry(int user, int challenge, List<ParticipantAnswer> answers) {
+    public QuizChallengeEntry(long user, long challenge, List<ParticipantAnswer> answers) {
         this.user = user;
         this.challenge = challenge;
         this.dateCompleted = new DateTime();
         this.answers = answers;
     }
 
-    public int getUser() {
+    public long getUser() {
         return user;
     }
 
-    public void setUser(int user) {
+    public void setUser(long user) {
         this.user = user;
     }
 
-    public int getChallenge() {
+    public long getChallenge() {
         return challenge;
     }
 
-    public void setChallenge(int challenge) {
+    public void setChallenge(long challenge) {
         this.challenge = challenge;
     }
 
