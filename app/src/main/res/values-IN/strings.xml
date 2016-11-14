@@ -78,6 +78,8 @@
     <!--Buttons-->
     <string name="Skip">Skip</string>
     <string name="Capture">Capture</string>
+    <string name="Change">Change photo</string>
+    <string name="Accept">I\'m good</string>
     <string name="knowAmountY">Yes</string>
     <string name="knowAmountN">No</string>
     <string name="knowDateY">Yes</string>

@@ -14,10 +14,12 @@ public enum BotMessageType {
     TEXT(1),
     GOALSELECTION(2),
     ANSWER(3),
-    INLINEEDIT(4),
+    INLINETEXT(4),
     GALLERYUPLOAD(5),
     CAMERAUPLOAD(6),
-    IMAGE(7);
+    IMAGE(7),
+    BLANK(8),
+    INLINENUMBER(9);
 
     private static Map<Integer, BotMessageType> map = new HashMap<>();
 

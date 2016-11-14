@@ -152,8 +152,7 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
                 }
                 getBotAdapter().addItem(answer);
                 persisted.saveConversationState(getBotAdapter().getDataSet());
-                if (TextUtils.isEmpty(answer.getType())
-                        || BotMessageType.getValueOf(answer.getType()).equals(BotMessageType.ANSWER)) {
+                if (!TextUtils.isEmpty(answer.getNext())) {
                     getAndAddNode(answer.getNext());
                 } else {
                     answerView.setData(new ArrayList<>());
@@ -177,8 +176,10 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
             currentModel = feed.getItem(name);
         Node node = (Node) currentModel;
         node.setIconHidden(iconHidden);
-        getBotAdapter().addItem(currentModel);
-        conversationRecyclerView.scrollToPosition(getBotAdapter().getItemCount() - 1);
+        if (!BotMessageType.BLANK.equals(BotMessageType.getValueOf(currentModel.getType()))) {
+            getBotAdapter().addItem(currentModel);
+        }
+        conversationRecyclerView.scrollToPosition(0);
         persisted.saveConversationState(getBotAdapter().getDataSet());
         answerView.setData(new ArrayList<>());
         if (node.getAnswers().size() > 0) {

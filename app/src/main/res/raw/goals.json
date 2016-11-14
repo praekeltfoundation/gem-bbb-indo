@@ -26,7 +26,7 @@
     "text": " $(askGoalNameInput) ",
     "autoAnswer": "goalName",
     "answers": [
-      {"name": "goalName", "next": "goalNameCongrats", "type": "inlineEdit", "inlineEditHint": "$(type_name_hint)" } ]
+      {"name": "goalName", "nextOnFinish": "goalNameCongrats", "type": "inlineText", "inlineEditHint": "$(type_name_hint)" } ]
   },
   {
     "name": "goalNameCongrats",
@@ -39,26 +39,16 @@
     "type": "text",
     "text": "$(askGoalImage)",
     "answers": [
-      { "name": "Capture", "text":"$(Capture)", "type": "CameraUpload", "nextOnFinish": "askKnowGoalAmount", "removeOnSelect": "Capture"},
-      { "name": "Gallery", "text":"$(Gallery)", "type": "GalleryUpload", "nextOnFinish": "askKnowGoalAmount", "removeOnSelect": "Gallery"}
+      { "name": "Capture", "text":"$(Capture)", "type": "CameraUpload", "nextOnFinish": "askGoalImageConfirm", "removeOnSelect": "Capture"},
+      { "name": "Gallery", "text":"$(Gallery)", "type": "GalleryUpload", "nextOnFinish": "askGoalImageConfirm", "removeOnSelect": "Gallery"}
     ]
   },
   {
     "name": "askGoalImageConfirm",
-    "type": "text",
-    "text": "$(askGoalImageConfirm)",
+    "type": "blank",
     "answers": [
-      { "name": "Change", "text":"$(Change)", "next": "askKnowGoalAmount" },
-      { "name": "Accept", "text":"$(Accept)", "next": "askKnowGoalAmount" }
-    ]
-  },
-  {
-    "name": "askKnowGoalAmount",
-    "type": "text",
-    "text": "$(askKnowGoalAmount)",
-    "answers": [
-      { "name": "knowAmountY", "value": "yes", "text":"$(knowAmountY)", "next": "askGoalAmount"},
-      { "name": "knowAmountN", "value": "no", "text":"$(knowAmountN)", "next": "askGoalWeeklySaveAmount"}
+      { "name": "Change", "text":"$(Change)", "next": "askGoalAmount" },
+      { "name": "Accept", "text":"$(Accept)", "next": "askGoalAmount" }
     ]
   },
   {
@@ -66,7 +56,7 @@
     "type": "text",
     "text": "$(askGoalAmount)",
     "error": "validationFail",
-    "answers": [ { "name": "goalAmount", "next": "askKnowGoalDate", "type":"currency" } ]
+    "answers": [ { "name": "goalAmount", "nextOnFinish": "askKnowGoalDate", "type":"inlineNumber" } ]
   },
   {
     "name": "infoDontKnowAmount",

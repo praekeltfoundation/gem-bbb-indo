@@ -59,9 +59,8 @@
     <string name="askGoalNameInput">What do you want to save for?</string>
     <string name="goalNameCongrats">Great choice!</string>
     <string name="askGoalImage">Add an image for your savings goal to help keep you motivated</string>
-    <string name="askGoalImageTake">Tap on the blue square…</string>
-    <string name="askKnowGoalAmount">Do you know how much you need to save? </string>
-    <string name="askGoalAmount">Great! Just type the amount that you want to save.</string>
+    <string name="askGoalImageConfirm">Add an image for your savings goal to help keep you motivated</string>
+    <string name="askGoalAmount">How much do you need to save?</string>
     <string name="infoDontKnowAmount">No problem.</string>
     <string name="askKnowGoalDate">That is a big goal. Let us get saving then. Do you have a date that you want to save this by?</string>
     <string name="askGoalDate">When would you like to have saved this much?</string>
@@ -80,6 +79,8 @@
     <string name="greeting">Hola!</string>
     <string name="Skip">Skip</string>
     <string name="Capture">Add photo</string>
+    <string name="Change">Change photo</string>
+    <string name="Accept">I\'m good</string>
     <string name="Gallery">Select from gallery</string>
     <string name="knowAmountY">Yes</string>
     <string name="knowAmountN">No</string>

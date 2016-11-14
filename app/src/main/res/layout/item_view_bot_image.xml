@@ -9,9 +9,9 @@
     android:orientation="vertical">
 
     <RelativeLayout
-        android:background=""
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:background="@color/white">
 
         <com.facebook.drawee.view.SimpleDraweeView
             android:id="@+id/item_view_bot_image"

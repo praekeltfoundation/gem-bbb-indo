@@ -4,10 +4,8 @@ import android.content.Context;
 import android.text.InputType;
 import android.view.KeyEvent;
 import android.view.View;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.greenfrvr.hashtagview.HashtagView;
 import com.nike.dooit.R;
@@ -21,13 +19,13 @@ import butterknife.ButterKnife;
  * Created by Bernhard Müller on 11/7/2016.
  */
 
-public class AnswerInlineEditViewHolder extends BaseBotViewHolder<Answer> {
+public class AnswerInlineNumberEditViewHolder extends BaseBotViewHolder<Answer> {
     @BindView(R.id.item_view_bot_inline_edit_view)
     EditText editText;
     BotAdapter botAdapter;
     HashtagView.TagsClickListener tagsClickListener;
 
-    public AnswerInlineEditViewHolder(View itemView, BotAdapter botAdapter, HashtagView.TagsClickListener tagsClickListener) {
+    public AnswerInlineNumberEditViewHolder(View itemView, BotAdapter botAdapter, HashtagView.TagsClickListener tagsClickListener) {
         super(itemView);
         this.botAdapter = botAdapter;
         this.tagsClickListener = tagsClickListener;
@@ -39,7 +37,7 @@ public class AnswerInlineEditViewHolder extends BaseBotViewHolder<Answer> {
         this.dataModel = model;
         editText.setHint(dataModel.getInlineEditHint(getContext()));
         editText.setImeActionLabel("Done", KeyEvent.KEYCODE_ENTER);
-        editText.setInputType(InputType.TYPE_CLASS_TEXT);
+        editText.setInputType(InputType.TYPE_CLASS_NUMBER);
         if (botAdapter.getItemCount() - 1 == getAdapterPosition()) {
             showKeyboard(editText);
         }
@@ -50,9 +48,9 @@ public class AnswerInlineEditViewHolder extends BaseBotViewHolder<Answer> {
                     dismissKeyboard(editText);
                     Answer inputAnswer = new Answer();
                     inputAnswer.setValue(v.getText().toString());
-                    inputAnswer.setName(v.getText().toString());
+                    inputAnswer.setName(dataModel.getName());
                     inputAnswer.setRemoveOnSelect(dataModel.getName());
-                    inputAnswer.setNext(dataModel.getNext());
+                    inputAnswer.setNext(dataModel.getNextOnFinish());
                     tagsClickListener.onItemClicked(inputAnswer);
                     return true;
                 }

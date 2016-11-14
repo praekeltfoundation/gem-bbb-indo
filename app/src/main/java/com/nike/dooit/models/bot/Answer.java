@@ -13,6 +13,7 @@ import com.nike.dooit.models.enums.BotMessageType;
 public class Answer extends BaseBotModel {
     private String value;
     private String next;
+    private String nextOnFinish;
     private String removeOnSelect;
     private String[] changeOnSelect;
     protected String inlineEditHint;
@@ -60,5 +61,13 @@ public class Answer extends BaseBotModel {
 
     public void setRemoveOnSelect(String removeOnSelect) {
         this.removeOnSelect = removeOnSelect;
+    }
+
+    public String getNextOnFinish() {
+        return nextOnFinish;
+    }
+
+    public void setNextOnFinish(String nextOnFinish) {
+        this.nextOnFinish = nextOnFinish;
     }
 }
