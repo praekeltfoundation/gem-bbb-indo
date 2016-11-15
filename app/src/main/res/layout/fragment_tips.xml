@@ -18,9 +18,10 @@
             android:layout_marginLeft="8dp"
             android:layout_marginRight="8dp"
             android:layout_marginTop="8dp"
-            android:inputType="text"
             android:background="@color/light_grey"
-            android:drawableEnd="@drawable/ic_d_search" />
+            android:drawableEnd="@drawable/ic_d_search"
+            android:imeOptions="actionDone"
+            android:inputType="text" />
 
         <TextView
             android:id="@+id/fragment_tips_search_hint"

@@ -5,19 +5,21 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
+import android.view.inputmethod.EditorInfo;
 import android.widget.AutoCompleteTextView;
+import android.widget.TextView;
 
 import com.nike.dooit.R;
 import com.nike.dooit.api.managers.TipManager;
 import com.nike.dooit.models.Tip;
 import com.nike.dooit.views.main.fragments.tip.OnTipsAvailableListener;
-import com.nike.dooit.views.main.fragments.tip.TipsListFragment;
+import com.nike.dooit.views.main.fragments.tip.TipsViewPagerPositions;
 import com.nike.dooit.views.main.fragments.tip.adapters.TipsAutoCompleteAdapter;
 import com.nike.dooit.views.main.fragments.tip.adapters.TipsTabAdapter;
 
@@ -28,6 +30,8 @@ import javax.inject.Inject;
 import butterknife.BindString;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnEditorAction;
+import butterknife.OnPageChange;
 
 public class TipsFragment extends Fragment implements OnTipsAvailableListener {
 
@@ -88,16 +92,6 @@ public class TipsFragment extends Fragment implements OnTipsAvailableListener {
 
         searchAdapter = new TipsAutoCompleteAdapter(getContext(), R.layout.list_tips_item);
         searchView.setAdapter(searchAdapter);
-        searchView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                TipsListFragment fragment = tipsTabAdapter.getPrimaryItem();
-                if (fragment != null) {
-                    String constraint = searchAdapter.getItem(position);
-                    tipsTabAdapter.getPrimaryItem().onSearch(constraint);
-                }
-            }
-        });
 
         tipsTabAdapter = new TipsTabAdapter(getChildFragmentManager(), getContext(), this);
         viewPager.setAdapter(tipsTabAdapter);
@@ -108,7 +102,28 @@ public class TipsFragment extends Fragment implements OnTipsAvailableListener {
             tab.setCustomView(tipsTabAdapter.getTabView(i));
         }
 
+        // Set initial search hint
+        String hint = getString(TipsViewPagerPositions.getValueOf(
+                viewPager.getCurrentItem()).getSearchRes());
+        searchView.setHint(hint);
+
         return view;
+    }
+
+    @OnEditorAction(R.id.fragment_tips_search_view)
+    public boolean onSearchSubmit(TextView v, int actionId, KeyEvent event) {
+        if (actionId == EditorInfo.IME_ACTION_DONE) {
+            String constraint = v.getText().toString();
+            tipsTabAdapter.getPrimaryItem().onSearch(constraint);
+            return true;
+        }
+        return false;
+    }
+
+    @OnPageChange(R.id.fragment_tips_viewpager)
+    public void onPageSelected(int position) {
+        TipsViewPagerPositions pos = TipsViewPagerPositions.getValueOf(position);
+        searchView.setHint(getString(pos.getSearchRes()));
     }
 
     @Override
