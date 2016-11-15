@@ -6,9 +6,11 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.nike.dooit.R;
+import com.nike.dooit.views.main.fragments.tip.OnTipsAvailableListener;
 import com.nike.dooit.views.main.fragments.tip.TipsListFragment;
 import com.nike.dooit.views.main.fragments.tip.TipsViewPagerPositions;
 
@@ -21,22 +23,50 @@ public class TipsTabAdapter extends FragmentStatePagerAdapter {
     private static final int COUNT = 2;
 
     private Context context;
+    private OnTipsAvailableListener listener;
+    private TipsListFragment current;
 
-    public TipsTabAdapter(FragmentManager fm, Context context) {
+    public TipsTabAdapter(FragmentManager fm, Context context, OnTipsAvailableListener listener) {
         super(fm);
         this.context = context;
+        this.listener = listener;
     }
 
     @Override
     public Fragment getItem(int position) {
+        TipsListFragment fragment;
         switch (TipsViewPagerPositions.getValueOf(position)) {
             case FAVOURITES:
-                return TipsListFragment.newInstance(TipsViewPagerPositions.FAVOURITES.getValue());
+                fragment = TipsListFragment.newInstance(TipsViewPagerPositions.FAVOURITES.getValue());
+                break;
             case ALL:
-                return TipsListFragment.newInstance(TipsViewPagerPositions.ALL.getValue());
+                fragment = TipsListFragment.newInstance(TipsViewPagerPositions.ALL.getValue());
+                break;
             default:
-                return TipsListFragment.newInstance(TipsViewPagerPositions.ALL.getValue());
+                fragment = TipsListFragment.newInstance(TipsViewPagerPositions.ALL.getValue());
         }
+        fragment.setOnTipsLoadedListener(listener);
+        return fragment;
+    }
+
+    @Override
+    public void setPrimaryItem(ViewGroup container, int position, Object object) {
+        if (current != object) {
+            if (current != null) {
+                current.setOnTipsLoadedListener(null);
+                current.onPageDeselected();
+            }
+            current = (TipsListFragment) object;
+            if (current != null) {
+                current.setOnTipsLoadedListener(listener);
+                current.onPageSelected();
+            }
+        }
+        super.setPrimaryItem(container, position, object);
+    }
+
+    public TipsListFragment getPrimaryItem() {
+        return current;
     }
 
     @Override

@@ -14,8 +14,8 @@ import java.util.Map;
  */
 
 public enum TipsViewPagerPositions {
-    FAVOURITES(0, R.string.tips_tab_favourites),
-    ALL(1, R.string.tips_tab_all);
+    FAVOURITES(0, R.string.tips_tab_favourites, R.string.tips_search_placeholder_fav),
+    ALL(1, R.string.tips_tab_all, R.string.tips_search_placeholder_all);
 
     private static Map<Integer, TipsViewPagerPositions> map = new HashMap<Integer, TipsViewPagerPositions>();
 
@@ -27,10 +27,12 @@ public enum TipsViewPagerPositions {
 
     private final int value;
     private final int titleRes;
+    private final int searchRes;
 
-    TipsViewPagerPositions(int value, int titleRes) {
+    TipsViewPagerPositions(int value, int titleRes, int searchRes) {
         this.value = value;
         this.titleRes = titleRes;
+        this.searchRes = searchRes;
     }
 
     public static TipsViewPagerPositions getValueOf(int value) {
@@ -43,6 +45,10 @@ public enum TipsViewPagerPositions {
 
     public int getTitleRes() {
         return titleRes;
+    }
+
+    public int getSearchRes() {
+        return searchRes;
     }
 
     public TipProvider newProvider(DooitApplication application) {
