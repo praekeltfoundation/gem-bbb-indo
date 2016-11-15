@@ -43,4 +43,8 @@ public class ChallengeManager extends DooitManager {
     public Observable<ParticipantFreeformAnswer> createParticipantFreeformAnswer(ParticipantFreeformAnswer answer, DooitErrorHandler errorHandler) {
         return useNetwork(challengeAPI.postParticipantFreeform(answer), errorHandler);
     }
+
+    public Observable<ParticipantFreeformAnswer> fetchParticipantFreeformAnswer(long challengeID, DooitErrorHandler errorHandler) {
+        return useNetwork(challengeAPI.fetchParticipantFreeform(challengeID), errorHandler);
+    }
 }
