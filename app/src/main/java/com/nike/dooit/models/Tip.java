@@ -14,6 +14,8 @@ public class Tip {
     private String title;
     @SerializedName("article_url") private String articleUrl;
     @SerializedName("cover_image_url") private String coverImageUrl;
+    @SerializedName("is_favourite")
+    private boolean isFavourite;
     private List<String> tags;
 
     public Tip() {
@@ -66,6 +68,14 @@ public class Tip {
 
     public void setTags(List<String> tags) {
         this.tags = tags;
+    }
+
+    public boolean isFavourite() {
+        return isFavourite;
+    }
+
+    public void setFavourite(boolean favourite) {
+        isFavourite = favourite;
     }
 
     @Override
