@@ -23,6 +23,7 @@ import java.util.List;
 public class TipsAutoCompleteAdapter extends ArrayAdapter<String> implements TipsAdapter {
 
     private List<Tip> tipsAll = new ArrayList<>();
+    private TipsAutoCompleteFilter filter;
 
     public TipsAutoCompleteAdapter(Context context, int resource) {
         super(context, resource);
@@ -54,6 +55,8 @@ public class TipsAutoCompleteAdapter extends ArrayAdapter<String> implements Tip
     @NonNull
     @Override
     public Filter getFilter() {
-        return new TipsAutoCompleteFilter(this);
+        if (filter == null)
+            filter = new TipsAutoCompleteFilter(this);
+        return filter;
     }
 }

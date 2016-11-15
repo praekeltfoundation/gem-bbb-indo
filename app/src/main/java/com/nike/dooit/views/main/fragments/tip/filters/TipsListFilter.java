@@ -4,6 +4,7 @@ import android.widget.Filter;
 
 import com.nike.dooit.models.Tip;
 import com.nike.dooit.views.main.fragments.tip.adapters.TipsAutoCompleteAdapter;
+import com.nike.dooit.views.main.fragments.tip.adapters.TipsListAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,11 +13,11 @@ import java.util.List;
  * Created by Wimpie Victor on 2016/11/12.
  */
 
-public class TipsFilter extends Filter {
+public class TipsListFilter extends Filter {
 
-    private TipsAutoCompleteAdapter adapter;
+    private TipsListAdapter adapter;
 
-    public TipsFilter(TipsAutoCompleteAdapter adapter) {
+    public TipsListFilter(TipsListAdapter adapter) {
         this.adapter = adapter;
     }
 
@@ -52,8 +53,6 @@ public class TipsFilter extends Filter {
     @Override
     protected void publishResults(CharSequence constraint, FilterResults results) {
         if (results != null && results.count > 0) {
-            adapter.setNotifyOnChange(false);
-            adapter.clear();
             //  Avoids cast warning
             List<?> tips = (List<?>) results.values;
             for (Object obj : tips) {

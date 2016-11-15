@@ -18,8 +18,8 @@ import com.nike.dooit.R;
 import com.nike.dooit.api.managers.TipManager;
 import com.nike.dooit.helpers.Persisted;
 import com.nike.dooit.models.Tip;
+import com.nike.dooit.views.main.fragments.tip.filters.TipsListFilter;
 import com.nike.dooit.views.main.fragments.tip.viewholders.TipViewHolder;
-import com.nike.dooit.views.main.fragments.tip.filters.TipsFilter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,8 +33,9 @@ import javax.inject.Inject;
 public class TipsListAdapter extends RecyclerView.Adapter<TipViewHolder> implements Filterable, TipsAdapter {
 
     private Context context;
+    private List<Tip> tipsFiltered = new ArrayList<>();
     private List<Tip> tipsAll = new ArrayList<>();
-    private TipsFilter filter;
+    private TipsListFilter filter;
 
     @Inject
     TipManager tipManager;
@@ -99,17 +100,21 @@ public class TipsListAdapter extends RecyclerView.Adapter<TipViewHolder> impleme
 
     @Override
     public Filter getFilter() {
-        return new Filter() {
-            @Override
-            protected FilterResults performFiltering(CharSequence constraint) {
-                return null;
-            }
+        if (filter == null)
+            filter = new TipsListFilter(this);
+        return filter;
+    }
 
-            @Override
-            protected void publishResults(CharSequence constraint, FilterResults results) {
+    public void clearFiltered() {
+        tipsFiltered.clear();
+    }
 
-            }
-        };
+    public void addFiltered(Tip tip) {
+        tipsFiltered.add(tip);
+    }
+
+    public Tip getFiltered(int index) {
+        return tipsFiltered.get(index);
     }
 
     @Override
