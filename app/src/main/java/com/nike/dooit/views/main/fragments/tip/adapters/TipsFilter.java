@@ -57,12 +57,12 @@ public class TipsFilter extends Filter {
             List<?> tips = (List<?>) results.values;
             for (Object obj : tips) {
                 if (obj instanceof Tip) {
-                    adapter.add((Tip) obj);
+                    //adapter.add((Tip) obj);
                 }
             }
         } else if (constraint == null) {
             // No filter
-            adapter.addAll(adapter.getAllTips());
+            //adapter.addAll(adapter.getAllTips());
         }
     }
 }

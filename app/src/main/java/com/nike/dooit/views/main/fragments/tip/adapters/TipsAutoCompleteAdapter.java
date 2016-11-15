@@ -19,7 +19,7 @@ import java.util.List;
  * Created by Wimpie Victor on 2016/11/12.
  */
 
-public class TipsAutoCompleteAdapter extends ArrayAdapter<Tip> implements TipsAdapter {
+public class TipsAutoCompleteAdapter extends ArrayAdapter<String> implements TipsAdapter {
 
     private List<Tip> tipsAll = new ArrayList<>();
 
@@ -33,10 +33,10 @@ public class TipsAutoCompleteAdapter extends ArrayAdapter<Tip> implements TipsAd
         if (convertView == null) {
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.list_tips_item, parent, false);
         }
-        Tip tip = getItem(position);
+        String suggestion = getItem(position);
 
         TextView textView = (TextView) convertView.findViewById(R.id.list_tips_item_text_view);
-        textView.setText(tip.getTitle());
+        textView.setText(suggestion);
 
         return convertView;
     }
@@ -53,6 +53,6 @@ public class TipsAutoCompleteAdapter extends ArrayAdapter<Tip> implements TipsAd
     @NonNull
     @Override
     public Filter getFilter() {
-        return new TipsFilter(this);
+        return new TipsAutoCompleteFilter(this);
     }
 }
