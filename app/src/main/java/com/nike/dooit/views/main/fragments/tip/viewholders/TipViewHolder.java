@@ -1,7 +1,9 @@
-package com.nike.dooit.views.main.fragments.tip;
+package com.nike.dooit.views.main.fragments.tip.viewholders;
 
 import android.content.Context;
 import android.net.Uri;
+import android.support.v4.content.ContextCompat;
+import android.support.v4.content.res.ResourcesCompat;
 import android.support.v7.widget.RecyclerView;
 import android.text.SpannableString;
 import android.view.View;
@@ -17,9 +19,11 @@ import com.nike.dooit.api.DooitErrorHandler;
 import com.nike.dooit.api.managers.TipManager;
 import com.nike.dooit.api.responses.EmptyResponse;
 import com.nike.dooit.helpers.Persisted;
+import com.nike.dooit.views.tip.TipArticleActivity;
 
 import javax.inject.Inject;
 
+import butterknife.BindString;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -31,7 +35,13 @@ import rx.functions.Action1;
 
 public class TipViewHolder extends RecyclerView.ViewHolder {
 
-    private static final String TAG = "TipViewHolder";
+    private static final String TAG = TipViewHolder.class.getName();
+
+    @BindString(R.string.tips_article_opening)
+    String openingArticleText;
+
+    @BindString(R.string.tips_article_add_fav)
+    String addFavArticleText;
 
     @BindView(R.id.card_tip_image)
     SimpleDraweeView imageView;
@@ -51,7 +61,10 @@ public class TipViewHolder extends RecyclerView.ViewHolder {
     @Inject
     Persisted persisted;
 
-    int id;
+    private int id;
+    private String title;
+    private String articleUrl;
+    private boolean isFavourite;
 
     public TipViewHolder(View itemView) {
         super(itemView);
@@ -65,11 +78,16 @@ public class TipViewHolder extends RecyclerView.ViewHolder {
 
     @OnClick(R.id.card_tip_title)
     public void startArticle(View view) {
-        Toast.makeText(view.getContext(), titleView.getText().toString() + " clicked", Toast.LENGTH_SHORT).show();
+        Toast.makeText(view.getContext(),
+                String.format(openingArticleText, titleView.getText().toString()),
+                Toast.LENGTH_SHORT).show();
+        TipArticleActivity.Builder.create(getContext())
+                .putArticleUrl(articleUrl)
+                .startActivity();
     }
 
     @OnClick(R.id.card_tip_fav)
-    public void favouriteTip(View view) {
+    public void favouriteTip(final View view) {
         tipManager.favourite(id, new DooitErrorHandler() {
             @Override
             public void onError(DooitAPIError error) {
@@ -78,15 +96,22 @@ public class TipViewHolder extends RecyclerView.ViewHolder {
         }).subscribe(new Action1<EmptyResponse>() {
             @Override
             public void call(EmptyResponse emptyResponse) {
-                persisted.clearFavourites();
+                view.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        setFavourite(true);
+                        persisted.clearFavourites();
+                    }
+                });
             }
         });
-        Toast.makeText(getContext(), titleView.getText().toString() + " faved", Toast.LENGTH_SHORT).show();
+        Toast.makeText(getContext(), String.format(addFavArticleText,
+                titleView.getText().toString()), Toast.LENGTH_SHORT).show();
     }
 
     @OnClick(R.id.card_tip_share)
     public void shareTip(View view) {
-        Toast.makeText(view.getContext(), titleView.getText().toString() + " shared", Toast.LENGTH_SHORT).show();
+
     }
 
     public void setImageUri(Uri uri) {
@@ -103,5 +128,23 @@ public class TipViewHolder extends RecyclerView.ViewHolder {
 
     public void setTitle(SpannableString title) {
         titleView.setText(title);
+    }
+
+    public void setArticleUrl(String articleUrl) {
+        this.articleUrl = articleUrl;
+    }
+
+    public boolean isFavourite() {
+        return isFavourite;
+    }
+
+    public void setFavourite(boolean favourite) {
+        isFavourite = favourite;
+        // TODO: Proper checkable button
+        if (isFavourite) {
+            favView.setImageDrawable(ContextCompat.getDrawable(getContext(), R.drawable.ic_d_heart));
+        } else {
+            favView.setImageDrawable(ContextCompat.getDrawable(getContext(), R.drawable.ic_d_heart_inverted));
+        }
     }
 }

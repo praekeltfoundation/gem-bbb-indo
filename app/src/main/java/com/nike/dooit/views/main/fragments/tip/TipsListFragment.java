@@ -5,6 +5,7 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -17,7 +18,7 @@ import com.nike.dooit.R;
 import com.nike.dooit.api.DooitAPIError;
 import com.nike.dooit.api.DooitErrorHandler;
 import com.nike.dooit.models.Tip;
-import com.nike.dooit.views.main.fragments.tip.adapters.TipsAdapter;
+import com.nike.dooit.views.main.fragments.tip.adapters.TipsListAdapter;
 import com.nike.dooit.views.main.fragments.tip.providers.TipProvider;
 
 import java.util.List;
@@ -29,6 +30,7 @@ import rx.functions.Action1;
 
 public class TipsListFragment extends Fragment {
 
+    private static final String TAG = TipsListFragment.class.getName();
     private static final String POS = "pos";
 
     @BindView(R.id.fragment_tips_list_recyclerview)
@@ -36,7 +38,8 @@ public class TipsListFragment extends Fragment {
 
     TipsViewPagerPositions pos;
     TipProvider tipProvider;
-    TipsAdapter adapter;
+    TipsListAdapter adapter;
+    OnTipsAvailableListener listener;
     GridLayoutManager gridManager;
 
     public TipsListFragment() {
@@ -72,7 +75,10 @@ public class TipsListFragment extends Fragment {
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
         if (tipProvider.hasTips()) {
-            adapter.updateTips(tipProvider.loadTips());
+            List<Tip> tips = tipProvider.loadTips();
+            adapter.updateAllTips(tips);
+            adapter.resetFiltered();
+            notifyTipsLoaded(tips);
         } else {
             retrieveTips();
         }
@@ -81,14 +87,17 @@ public class TipsListFragment extends Fragment {
     @Override
     public void onPause() {
         super.onPause();
-        tipProvider.saveTips(adapter.getTips());
+        tipProvider.saveTips(adapter.getAllTips());
     }
 
     @Override
     public void onResume() {
         super.onResume();
         if (tipProvider.hasTips()) {
-            adapter.updateTips(tipProvider.loadTips());
+            List<Tip> tips = tipProvider.loadTips();
+            adapter.updateAllTips(tips);
+            adapter.resetFiltered();
+            notifyTipsLoaded(tips);
         } else {
             retrieveTips();
         }
@@ -103,7 +112,6 @@ public class TipsListFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_tips_list, container, false);
         ButterKnife.bind(this, view);
 
@@ -118,12 +126,34 @@ public class TipsListFragment extends Fragment {
         recyclerView.setLayoutManager(gridManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
 
-        adapter = new TipsAdapter((DooitApplication) getActivity().getApplication());
+        adapter = new TipsListAdapter((DooitApplication) getActivity().getApplication());
         recyclerView.setAdapter(adapter);
 
         retrieveTips();
 
         return view;
+    }
+
+    public void onSearch(String constraint) {
+        Log.d(TAG, "On Search " + constraint);
+        adapter.getFilter().filter(constraint);
+    }
+
+    public void onPageSelected() {
+        Log.d(TAG, "onPageSelected");
+    }
+
+    public void onPageDeselected() {
+        Log.d(TAG, "onPageDeselected");
+    }
+
+    public void setOnTipsLoadedListener(OnTipsAvailableListener listener) {
+        this.listener = listener;
+    }
+
+    private void notifyTipsLoaded(List<Tip> tips) {
+        if (listener != null)
+            listener.onTipsAvailable(tips);
     }
 
     private void retrieveTips() {
@@ -136,13 +166,16 @@ public class TipsListFragment extends Fragment {
                 .subscribe(new Action1<List<Tip>>() {
                     @Override
                     public void call(final List<Tip> tips) {
-                        if (getActivity() != null)
+                        if (getActivity() != null) {
                             getActivity().runOnUiThread(new Runnable() {
                                 @Override
                                 public void run() {
-                                    adapter.updateTips(tips);
+                                    adapter.updateAllTips(tips);
+                                    adapter.resetFiltered();
+                                    notifyTipsLoaded(tips);
                                 }
                             });
+                        }
                     }
                 });
     }
