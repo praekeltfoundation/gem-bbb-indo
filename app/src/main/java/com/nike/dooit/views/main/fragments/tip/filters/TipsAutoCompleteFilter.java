@@ -57,13 +57,13 @@ public class TipsAutoCompleteFilter extends Filter {
         adapter.clear();
 
         if (results.values != null && results.count > 0) {
+            //  Avoids cast warning
             List<?> strings = (List<?>) results.values;
             for (Object obj : strings)
                 if (obj instanceof String)
                     adapter.add((String) obj);
         } else {
-            for (Tip tip : adapter.getAllTips())
-                adapter.add(tip.getTitle());
+            adapter.clear();
         }
 
         adapter.setNotifyOnChange(true);

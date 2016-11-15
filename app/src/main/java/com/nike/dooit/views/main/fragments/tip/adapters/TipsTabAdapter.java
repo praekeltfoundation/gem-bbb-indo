@@ -65,6 +65,10 @@ public class TipsTabAdapter extends FragmentStatePagerAdapter {
         super.setPrimaryItem(container, position, object);
     }
 
+    public TipsListFragment getPrimaryItem() {
+        return current;
+    }
+
     @Override
     public int getCount() {
         return COUNT;

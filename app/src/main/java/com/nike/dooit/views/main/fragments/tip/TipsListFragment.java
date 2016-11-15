@@ -77,6 +77,7 @@ public class TipsListFragment extends Fragment {
         if (tipProvider.hasTips()) {
             List<Tip> tips = tipProvider.loadTips();
             adapter.updateAllTips(tips);
+            adapter.resetFiltered();
             notifyTipsLoaded(tips);
         } else {
             retrieveTips();
@@ -86,7 +87,7 @@ public class TipsListFragment extends Fragment {
     @Override
     public void onPause() {
         super.onPause();
-        tipProvider.saveTips(adapter.getTips());
+        tipProvider.saveTips(adapter.getAllTips());
     }
 
     @Override
@@ -95,6 +96,7 @@ public class TipsListFragment extends Fragment {
         if (tipProvider.hasTips()) {
             List<Tip> tips = tipProvider.loadTips();
             adapter.updateAllTips(tips);
+            adapter.resetFiltered();
             notifyTipsLoaded(tips);
         } else {
             retrieveTips();
@@ -133,7 +135,8 @@ public class TipsListFragment extends Fragment {
     }
 
     public void onSearch(String constraint) {
-        Log.d("TipListFragment", "On Search");
+        Log.d(TAG, "On Search " + constraint);
+        adapter.getFilter().filter(constraint);
     }
 
     public void onPageSelected() {
@@ -168,6 +171,7 @@ public class TipsListFragment extends Fragment {
                                 @Override
                                 public void run() {
                                     adapter.updateAllTips(tips);
+                                    adapter.resetFiltered();
                                     notifyTipsLoaded(tips);
                                 }
                             });

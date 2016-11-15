@@ -17,9 +17,9 @@ import com.nike.dooit.R;
 import com.nike.dooit.api.managers.TipManager;
 import com.nike.dooit.models.Tip;
 import com.nike.dooit.views.main.fragments.tip.OnTipsAvailableListener;
+import com.nike.dooit.views.main.fragments.tip.TipsListFragment;
 import com.nike.dooit.views.main.fragments.tip.adapters.TipsAutoCompleteAdapter;
 import com.nike.dooit.views.main.fragments.tip.adapters.TipsTabAdapter;
-import com.nike.dooit.views.tip.TipArticleActivity;
 
 import java.util.List;
 
@@ -54,6 +54,7 @@ public class TipsFragment extends Fragment implements OnTipsAvailableListener {
     @Inject
     TipManager tipManager;
 
+    TipsTabAdapter tipsTabAdapter;
     TipsAutoCompleteAdapter searchAdapter;
 
     public TipsFragment() {
@@ -87,14 +88,24 @@ public class TipsFragment extends Fragment implements OnTipsAvailableListener {
 
         searchAdapter = new TipsAutoCompleteAdapter(getContext(), R.layout.list_tips_item);
         searchView.setAdapter(searchAdapter);
+        searchView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                TipsListFragment fragment = tipsTabAdapter.getPrimaryItem();
+                if (fragment != null) {
+                    String constraint = searchAdapter.getItem(position);
+                    tipsTabAdapter.getPrimaryItem().onSearch(constraint);
+                }
+            }
+        });
 
-        TipsTabAdapter adapter = new TipsTabAdapter(getChildFragmentManager(), getContext(), this);
-        viewPager.setAdapter(adapter);
+        tipsTabAdapter = new TipsTabAdapter(getChildFragmentManager(), getContext(), this);
+        viewPager.setAdapter(tipsTabAdapter);
         tabLayout.setupWithViewPager(viewPager);
 
         for (int i = 0; i < tabLayout.getTabCount(); i++) {
             TabLayout.Tab tab = tabLayout.getTabAt(i);
-            tab.setCustomView(adapter.getTabView(i));
+            tab.setCustomView(tipsTabAdapter.getTabView(i));
         }
 
         return view;
@@ -111,11 +122,5 @@ public class TipsFragment extends Fragment implements OnTipsAvailableListener {
     public void onTipsAvailable(List<Tip> tips) {
         Log.d(TAG, "Updating Tips");
         searchAdapter.updateAllTips(tips);
-    }
-
-    private void startArticle(Tip tip) {
-        TipArticleActivity.Builder.create(getActivity())
-                .putArticleUrl(tip.getArticleUrl())
-                .startActivity();
     }
 }

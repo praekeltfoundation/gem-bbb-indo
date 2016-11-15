@@ -3,7 +3,6 @@ package com.nike.dooit.views.main.fragments.tip.filters;
 import android.widget.Filter;
 
 import com.nike.dooit.models.Tip;
-import com.nike.dooit.views.main.fragments.tip.adapters.TipsAutoCompleteAdapter;
 import com.nike.dooit.views.main.fragments.tip.adapters.TipsListAdapter;
 
 import java.util.ArrayList;
@@ -52,17 +51,19 @@ public class TipsListFilter extends Filter {
 
     @Override
     protected void publishResults(CharSequence constraint, FilterResults results) {
+        adapter.clearFiltered();
         if (results != null && results.count > 0) {
             //  Avoids cast warning
             List<?> tips = (List<?>) results.values;
             for (Object obj : tips) {
                 if (obj instanceof Tip) {
-                    //adapter.add((Tip) obj);
+                    adapter.addFiltered((Tip) obj);
                 }
             }
         } else if (constraint == null) {
             // No filter
-            //adapter.addAll(adapter.getAllTips());
+            adapter.clearFiltered();
         }
+        adapter.notifyDataSetChanged();
     }
 }

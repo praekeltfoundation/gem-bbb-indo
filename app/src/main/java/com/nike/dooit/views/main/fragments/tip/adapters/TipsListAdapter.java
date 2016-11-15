@@ -22,6 +22,7 @@ import com.nike.dooit.views.main.fragments.tip.filters.TipsListFilter;
 import com.nike.dooit.views.main.fragments.tip.viewholders.TipViewHolder;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -51,12 +52,13 @@ public class TipsListAdapter extends RecyclerView.Adapter<TipViewHolder> impleme
 
     public TipsListAdapter(DooitApplication application, List<Tip> tips) {
         this(application);
-        this.tipsAll = tips;
+        this.tipsFiltered.addAll(tips);
+        this.tipsAll.addAll(tips);
     }
 
     @Override
     public int getItemCount() {
-        return tipsAll.size();
+        return tipsFiltered.size();
     }
 
     @Override
@@ -68,7 +70,7 @@ public class TipsListAdapter extends RecyclerView.Adapter<TipViewHolder> impleme
 
     @Override
     public void onBindViewHolder(TipViewHolder holder, int position) {
-        Tip tip = tipsAll.get(position);
+        Tip tip = tipsFiltered.get(position);
 
         // Id
         holder.setId(tip.getId());
@@ -109,8 +111,20 @@ public class TipsListAdapter extends RecyclerView.Adapter<TipViewHolder> impleme
         tipsFiltered.clear();
     }
 
+    /**
+     * Sets filtered tips to all tips.
+     */
+    public void resetFiltered() {
+        clearFiltered();
+        addAllFiltered(tipsAll);
+    }
+
     public void addFiltered(Tip tip) {
         tipsFiltered.add(tip);
+    }
+
+    public void addAllFiltered(Collection<Tip> tips) {
+        tipsFiltered.addAll(tips);
     }
 
     public Tip getFiltered(int index) {
@@ -127,9 +141,5 @@ public class TipsListAdapter extends RecyclerView.Adapter<TipViewHolder> impleme
         tipsAll.clear();
         tipsAll.addAll(tips);
         notifyDataSetChanged();
-    }
-
-    public List<Tip> getTips() {
-        return tipsAll;
     }
 }
