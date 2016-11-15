@@ -5,6 +5,7 @@ import android.widget.Filter;
 import com.nike.dooit.models.Tip;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 
 /**
@@ -24,14 +25,20 @@ public class TipsAutoCompleteFilter extends Filter {
         if (constraint != null) {
             FilterResults results = new FilterResults();
             List<String> suggestions = new ArrayList<>();
+            HashSet<String> closedSet = new HashSet<>();
             String c = constraint.toString().toLowerCase();
 
             for (Tip tip : adapter.getAllTips()) {
-                if (tip.getTitle().toLowerCase().contains(c))
+                if (tip.getTitle().toLowerCase().contains(c)
+                        && !closedSet.contains(tip.getTitle())) {
                     suggestions.add(tip.getTitle());
+                    closedSet.add(tip.getTitle());
+                }
                 for (String tag : tip.getTags())
-                    if (tag.toLowerCase().contains(c))
+                    if (tag.toLowerCase().contains(c) && !closedSet.contains(tag)) {
                         suggestions.add(tag);
+                        closedSet.add(tag);
+                    }
             }
 
             results.values = suggestions;
