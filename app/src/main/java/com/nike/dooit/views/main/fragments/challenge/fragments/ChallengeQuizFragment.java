@@ -136,11 +136,11 @@ public class ChallengeQuizFragment extends Fragment implements OnOptionChangeLis
                 Toast.LENGTH_SHORT).show();
 
         if (currentOption.getCorrect()) {
-            Toast.makeText(getContext(), "A winner is you", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getContext(), R.string.challenge_quiz_congratulate_correct, Toast.LENGTH_SHORT).show();
             captureAnswer(currentQuestion, currentOption);
             nextQuestion();
         } else {
-            Toast.makeText(getContext(), "My name is Error", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getContext(), R.string.challenge_quiz_sorry_incorrect, Toast.LENGTH_SHORT).show();
             captureAnswer(currentQuestion, currentOption);
         }
     }

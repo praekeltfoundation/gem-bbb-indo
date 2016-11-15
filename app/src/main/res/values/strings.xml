@@ -122,5 +122,7 @@
     <string name="challenge_none_available">No challenge available. Please try again soon!</string>
     <string name="challenge_quiz_select_option_required">You must select an answer</string>
     <string name="challenge_quiz_no_questions">No questions available</string>
+    <string name="challenge_quiz_congratulate_correct">Well done!</string>
+    <string name="challenge_quiz_sorry_incorrect">Sorry, try again.</string>
 
 </resources>
