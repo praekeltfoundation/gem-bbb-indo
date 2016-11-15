@@ -1,17 +1,23 @@
 package com.nike.dooit.views.main.fragments.challenge.fragments;
 
 import android.content.Context;
+import android.graphics.drawable.Animatable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.facebook.drawee.interfaces.DraweeController;
+import com.facebook.drawee.interfaces.DraweeHierarchy;
+import com.facebook.drawee.view.DraweeView;
+import com.facebook.drawee.view.SimpleDraweeView;
 import com.nike.dooit.R;
 import com.nike.dooit.models.challenge.BaseChallenge;
 import com.nike.dooit.models.challenge.FreeformChallenge;
@@ -20,6 +26,7 @@ import com.nike.dooit.models.challenge.QuizChallenge;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import butterknife.Unbinder;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -27,16 +34,13 @@ import butterknife.OnClick;
  * create an instance of this fragment.
  */
 public class ChallengeRegisterFragment extends Fragment {
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_CHALLENGE = "challenge";
 
-    // TODO: Rename and change types of parameters
     private BaseChallenge challenge;
+    private Unbinder unbinder = null;
 
-//    private OnFragmentInteractionListener mListener;
-    @BindView(R.id.fragment_challenge_image_image_view)
-    ImageView topImage;
+    @BindView(R.id.fragment_challenge_register_image)
+    SimpleDraweeView topImage;
 
     @BindView(R.id.fragment_challenge_sub_title_text_view)
     TextView title;
@@ -86,15 +90,25 @@ public class ChallengeRegisterFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_challenge_register, container, false);
-        ButterKnife.bind(this, view);
+        unbinder = ButterKnife.bind(this, view);
         // Inflate the layout for this fragment
         return view;
+    }
+
+    @Override
+    public void onDestroyView() {
+        if (unbinder != null) {
+            unbinder.unbind();
+        }
+        super.onDestroyView();
     }
 
     @Override
     public void onStart() {
         super.onStart();
         name.setText(challenge.getName());
+        date.setText(challenge.getDeactivationDate().toLocalDateTime().toString("yyyy-MM-dd HH:mm"));
+        topImage.setImageURI(challenge.getImageURL());
     }
 
     @OnClick(R.id.fragment_challenge_register_button)
@@ -103,7 +117,12 @@ public class ChallengeRegisterFragment extends Fragment {
         Fragment fragment;
 
         if (challenge instanceof QuizChallenge) {
-            fragment = ChallengeQuizFragment.newInstance((QuizChallenge) challenge);
+            if (((QuizChallenge) challenge).getQuestions() != null &&
+                    ((QuizChallenge) challenge).getQuestions().size() > 0) {
+                fragment = ChallengeQuizFragment.newInstance((QuizChallenge) challenge);
+            } else {
+                fragment = ChallengeNoneFragment.newInstance(getString(R.string.challenge_quiz_no_questions));
+            }
         } else if (challenge instanceof FreeformChallenge) {
             fragment = ChallengeFreeformFragment.newInstance((FreeformChallenge) challenge);
         } else {

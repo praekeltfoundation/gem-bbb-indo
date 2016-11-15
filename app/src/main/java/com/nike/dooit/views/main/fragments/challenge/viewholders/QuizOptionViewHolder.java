@@ -9,6 +9,7 @@ import android.widget.RadioButton;
 import com.nike.dooit.R;
 import com.nike.dooit.models.challenge.QuizChallengeOption;
 import com.nike.dooit.views.main.fragments.challenge.adapters.ChallengeQuizOptionsListAdapter;
+import com.nike.dooit.views.main.fragments.challenge.interfaces.OnOptionSelectedListener;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -41,7 +42,9 @@ public class QuizOptionViewHolder extends RecyclerView.ViewHolder implements Vie
     }
 
     @Override public void onClick(View view) {
-        adapter.optionSelectedListener.onSelected(getAdapterPosition());
+        if (adapter instanceof OnOptionSelectedListener) {
+            ((OnOptionSelectedListener) adapter).onOptionSelected(getAdapterPosition());
+        }
     }
 
     @Override public String toString() {
