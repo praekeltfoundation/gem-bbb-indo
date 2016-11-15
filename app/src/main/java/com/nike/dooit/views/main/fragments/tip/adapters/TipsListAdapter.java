@@ -19,6 +19,7 @@ import com.nike.dooit.api.managers.TipManager;
 import com.nike.dooit.helpers.Persisted;
 import com.nike.dooit.models.Tip;
 import com.nike.dooit.views.main.fragments.tip.TipViewHolder;
+import com.nike.dooit.views.main.fragments.tip.filters.TipsFilter;
 
 import java.util.ArrayList;
 import java.util.List;

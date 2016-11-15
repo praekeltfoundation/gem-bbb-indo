@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.nike.dooit.R;
 import com.nike.dooit.models.Tip;
+import com.nike.dooit.views.main.fragments.tip.filters.TipsAutoCompleteFilter;
 
 import java.util.ArrayList;
 import java.util.List;

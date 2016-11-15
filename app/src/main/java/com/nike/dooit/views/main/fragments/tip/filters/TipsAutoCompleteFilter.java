@@ -1,8 +1,9 @@
-package com.nike.dooit.views.main.fragments.tip.adapters;
+package com.nike.dooit.views.main.fragments.tip.filters;
 
 import android.widget.Filter;
 
 import com.nike.dooit.models.Tip;
+import com.nike.dooit.views.main.fragments.tip.adapters.TipsAutoCompleteAdapter;
 
 import java.util.ArrayList;
 import java.util.HashSet;
