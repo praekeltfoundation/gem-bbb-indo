@@ -116,8 +116,6 @@ public class TargetFragment extends MainFragment {
                     rightTarget.setVisibility(View.GONE);
                 else
                     rightTarget.setVisibility(View.VISIBLE);
-
-
             }
 
             @Override
@@ -185,9 +183,10 @@ public class TargetFragment extends MainFragment {
                                 @Override
                                 public void run() {
                                     adapter.updateGoals(goals);
-                                    populateGoal(goals.get(0));
-                                    if (goals.size() > 0)
+                                    if (goals.size() > 0) {
+                                        populateGoal(goals.get(0));
                                         rightTarget.setVisibility(View.VISIBLE);
+                                    }
                                 }
                             });
                     }
