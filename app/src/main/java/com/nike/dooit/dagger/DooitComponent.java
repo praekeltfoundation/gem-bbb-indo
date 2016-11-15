@@ -9,7 +9,7 @@ import com.nike.dooit.views.main.fragments.bot.BotFragment;
 import com.nike.dooit.views.main.fragments.ChallengeFragment;
 import com.nike.dooit.views.main.fragments.target.TargetFragment;
 import com.nike.dooit.views.main.fragments.TipsFragment;
-import com.nike.dooit.views.main.fragments.tip.TipViewHolder;
+import com.nike.dooit.views.main.fragments.tip.viewholders.TipViewHolder;
 import com.nike.dooit.views.main.fragments.tip.TipsListFragment;
 import com.nike.dooit.views.main.fragments.tip.adapters.TipsListAdapter;
 import com.nike.dooit.views.main.fragments.tip.providers.TipProvider;

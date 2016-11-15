@@ -1,4 +1,4 @@
-package com.nike.dooit.views.main.fragments.tip;
+package com.nike.dooit.views.main.fragments.tip.viewholders;
 
 import android.content.Context;
 import android.net.Uri;
