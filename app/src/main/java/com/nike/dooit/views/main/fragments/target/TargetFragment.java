@@ -178,14 +178,15 @@ public class TargetFragment extends MainFragment {
                     @Override
                     public void call(final List<Goal> goals) {
                         TargetFragment.this.goals = goals;
-                        if (getActivity() != null)
+                        if (getActivity() != null && goals != null)
                             getActivity().runOnUiThread(new Runnable() {
                                 @Override
                                 public void run() {
                                     adapter.updateGoals(goals);
-                                    populateGoal(goals.get(0));
-                                    if (goals.size() > 0)
+                                    if (goals.size() > 0) {
+                                        populateGoal(goals.get(0));
                                         rightTarget.setVisibility(View.VISIBLE);
+                                    }
                                 }
                             });
                     }
