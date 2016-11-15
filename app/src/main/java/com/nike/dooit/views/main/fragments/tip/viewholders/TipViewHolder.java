@@ -2,6 +2,8 @@ package com.nike.dooit.views.main.fragments.tip.viewholders;
 
 import android.content.Context;
 import android.net.Uri;
+import android.support.v4.content.ContextCompat;
+import android.support.v4.content.res.ResourcesCompat;
 import android.support.v7.widget.RecyclerView;
 import android.text.SpannableString;
 import android.view.View;
@@ -85,7 +87,7 @@ public class TipViewHolder extends RecyclerView.ViewHolder {
     }
 
     @OnClick(R.id.card_tip_fav)
-    public void favouriteTip(View view) {
+    public void favouriteTip(final View view) {
         tipManager.favourite(id, new DooitErrorHandler() {
             @Override
             public void onError(DooitAPIError error) {
@@ -94,7 +96,13 @@ public class TipViewHolder extends RecyclerView.ViewHolder {
         }).subscribe(new Action1<EmptyResponse>() {
             @Override
             public void call(EmptyResponse emptyResponse) {
-                persisted.clearFavourites();
+                view.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        setFavourite(true);
+                        persisted.clearFavourites();
+                    }
+                });
             }
         });
         Toast.makeText(getContext(), String.format(addFavArticleText,
@@ -132,10 +140,11 @@ public class TipViewHolder extends RecyclerView.ViewHolder {
 
     public void setFavourite(boolean favourite) {
         isFavourite = favourite;
+        // TODO: Proper checkable button
         if (isFavourite) {
-            favView.getDrawable().setState(new int[] {android.R.attr.state_checked});
+            favView.setImageDrawable(ContextCompat.getDrawable(getContext(), R.drawable.ic_d_heart));
         } else {
-            favView.getDrawable().setState(new int[] {-android.R.attr.state_checked});
+            favView.setImageDrawable(ContextCompat.getDrawable(getContext(), R.drawable.ic_d_heart_inverted));
         }
     }
 }

@@ -47,7 +47,8 @@
             android:layout_marginBottom="@dimen/tip_card_icon_margin"
             android:layout_marginRight="@dimen/tip_card_icon_margin"
             android:layout_toLeftOf="@+id/card_tip_share"
-            app:srcCompat="@drawable/bkg_heart" />
+            app:srcCompat="@drawable/ic_d_heart_inverted"
+            />
     </RelativeLayout>
 
 </android.support.v7.widget.CardView>
