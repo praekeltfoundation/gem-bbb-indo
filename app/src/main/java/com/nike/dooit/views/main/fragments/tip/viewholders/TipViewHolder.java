@@ -59,9 +59,10 @@ public class TipViewHolder extends RecyclerView.ViewHolder {
     @Inject
     Persisted persisted;
 
-    int id;
-    String title;
-    String articleUrl;
+    private int id;
+    private String title;
+    private String articleUrl;
+    private boolean isFavourite;
 
     public TipViewHolder(View itemView) {
         super(itemView);
@@ -123,5 +124,18 @@ public class TipViewHolder extends RecyclerView.ViewHolder {
 
     public void setArticleUrl(String articleUrl) {
         this.articleUrl = articleUrl;
+    }
+
+    public boolean isFavourite() {
+        return isFavourite;
+    }
+
+    public void setFavourite(boolean favourite) {
+        isFavourite = favourite;
+        if (isFavourite) {
+            favView.getDrawable().setState(new int[] {android.R.attr.state_checked});
+        } else {
+            favView.getDrawable().setState(new int[] {-android.R.attr.state_checked});
+        }
     }
 }

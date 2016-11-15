@@ -98,6 +98,9 @@ public class TipsListAdapter extends RecyclerView.Adapter<TipViewHolder> impleme
             Uri uri = Uri.parse(tip.getCoverImageUrl());
             holder.setImageUri(uri);
         }
+
+        // Favourite
+        holder.setFavourite(tip.isFavourite());
     }
 
     @Override
