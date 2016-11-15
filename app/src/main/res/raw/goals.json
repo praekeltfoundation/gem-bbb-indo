@@ -1,134 +1,126 @@
 [
   {
-    "name": "askGoalName",
+    "name": "goalGreeting",
     "type": "text",
+    "text": "$(goalGreeting)",
+    "textParams": ["USERNAME"],
+    "autoNext": "goalIntroduction"
+  },
+  {
+    "name": "goalIntroduction",
+    "type": "text",
+    "text": "$(goalIntroduction)",
+    "answers": [
+      {"name": "greeting", "next": "askGoalName", "text":"$(greeting)" } ]
+  },
+  {
+    "name": "askGoalName",
+    "type": "goalSelection",
     "text": " $(askGoalName) ",
     "answers": [
-      {"name": "goalName", "next": "askGoalImage", "text":"$(addOwnGoal)" } ]
+      {"name": "goalNameOption", "next": "askGoalNameInput", "text":"$(addOwnGoal)" } ]
+  },
+  {
+    "name": "askGoalNameInput",
+    "type": "text",
+    "text": " $(askGoalNameInput) ",
+    "autoAnswer": "goalName",
+    "answers": [
+      {"name": "goalName", "nextOnFinish": "goalNameCongrats", "type": "inlineText", "inlineEditHint": "$(type_name_hint)" } ]
+  },
+  {
+    "name": "goalNameCongrats",
+    "type": "text",
+    "text": "$(goalNameCongrats)",
+    "autoNext": "askGoalImage"
   },
   {
     "name": "askGoalImage",
-    "type": "choice",
+    "type": "text",
     "text": "$(askGoalImage)",
     "answers": [
-      { "name": "Capture", "value": " ", "text":"$(Capture)", "next": "askGoalImageTake"},
-      { "name": "Skip", "value": "Skip", "text":"$(Skip)", "next": "askKnowGoalAmount"}
+      { "name": "Capture", "text":"$(Capture)", "type": "CameraUpload", "nextOnFinish": "askGoalImageConfirm", "removeOnSelect": "Capture"},
+      { "name": "Gallery", "text":"$(Gallery)", "type": "GalleryUpload", "nextOnFinish": "askGoalImageConfirm", "removeOnSelect": "Gallery"}
     ]
   },
   {
-    "name": "askGoalImageTake",
-    "type": "imageUpload",
-    "text": "$(askGoalImageTake)",
-    "answers": [ {"name": "goalImage", "next": "askKnowGoalAmount" } ]
-  },
-  {
-    "name": "askKnowGoalAmount",
-    "type": "choice",
-    "text": "$(askKnowGoalAmount)",
+    "name": "askGoalImageConfirm",
+    "type": "blank",
     "answers": [
-      { "name": "knowAmountY", "value": "yes", "text":"$(knowAmountY)", "next": "askGoalAmount"},
-      { "name": "knowAmountN", "value": "no", "text":"$(knowAmountN)", "next": "askGoalWeeklySaveAmount"}
+      { "name": "Change", "text":"$(Change)", "next": "askGoalAmount" },
+      { "name": "Accept", "text":"$(Accept)", "next": "askGoalAmount" }
     ]
   },
   {
     "name": "askGoalAmount",
-    "type": "currency",
+    "type": "text",
     "text": "$(askGoalAmount)",
-    "error": "validationFail",
-    "answers": [ { "name": "goalAmount", "next": "askKnowGoalDate" } ]
-  },
-  {
-    "name": "infoDontKnowAmount",
-    "type": "info",
-    "text": "$(infoDontKnowAmount)",
-    "next": "askGoalWeeklySaveAmount"
-  },
-  {
-    "name": "askKnowGoalDate",
-    "type": "choice",
-    "text": "$(askKnowGoalDate)",
-    "answers": [
-      { "name": "knowDateY", "value": "yes", "text":"$(knowDateY)", "next": "askGoalDate"},
-      { "name": "knowDateN", "value": "no", "text":"$(knowDateN)", "next": "askGoalWeeklySaveAmount"}
-    ]
+    "autoAnswer": "goalAmount",
+    "answers": [ { "name": "goalAmount", "nextOnFinish": "askGoalDate", "type":"inlineCurrency", "typeOnFinish":"textCurrency", "inlineEditHint": "$(type_currency_hint)" } ]
   },
   {
     "name": "askGoalDate",
-    "type": "date",
+    "type": "text",
     "text": "$(askGoalDate)",
-    "error": "validationFailDate",
-    "answers": [ { "name": "goalDate", "next": "verifyGoalAmount" } ]
+    "textParams": ["goalAmount"],
+    "answers": [
+      { "name": "knowDateY", "text":"$(addDate)", "next": "askGoalDateCustom"},
+      { "name": "knowDateN", "text":"$(unknownDate)", "next": "askGoalPriorSave"}
+    ]
+  },
+  {
+    "name": "askGoalDateCustom",
+    "type": "blank",
+    "autoAnswer": "goalDate",
+    "answers": [ { "name": "goalDate", "nextOnFinish": "askGoalPriorSave", "type":"inlineDate", "inlineEditHint": "$(type_date_hint)" } ]
+  },
+  {
+    "name": "askGoalPriorSave",
+    "type": "text",
+    "text": "$(askGoalPriorSave)",
+    "answers": [
+      { "name": "hasSavedY", "text":"$(addAmount)", "next": "askPriorSavedAmount"},
+      { "name": "hasSavedN", "text":"$(nope)", "next": "verifyGoalAmount"}
+    ]
+  },
+  {
+    "name": "askPriorSavedAmount",
+    "type": "text",
+    "text": "$(askPriorSavedAmount)",
+    "autoAnswer": "priorSaveAmount",
+    "answers": [ { "name": "priorSaveAmount", "nextOnFinish": "verifyGoalAmount", "type":"inlineCurrency", "typeOnFinish":"textCurrency", "inlineEditHint": "$(type_currency_hint)" } ]
+  },
+  {
+    "name": "verifyGoalAmount",
+    "type": "goalVerification",
+    "text": "$(verifyGoalAmount)",
+    "textParams": ["goalAmount", "goalAmount", "goalAmount"],
+    "answers": [
+      { "name": "acceptGoal", "text":"$(acceptGoal)"},
+      { "name": "changeDate", "text":"$(changeDate)", "next": "askGoalDate"},
+      { "name": "changeAmount", "text":"$(changeAmount)", "next": "askGoalAmount"},
+      { "name": "startOver", "text":"$(startOver)", "next": "askGoalName"}
+    ]
   },
   {
     "name": "askGoalWeeklySaveAmount",
-    "type": "choice",
+    "type": "text",
     "text": "$(askGoalWeeklySaveAmount)",
     "answers": [
-      { "name": "five", "value":  "500", "text":"$(five)", "next": "askGoalPriorSave"},
-      { "name": "thousnad", "value": "1000", "text":"$(thousand)", "next": "askGoalPriorSave"},
-      { "name": "thousandFive", "value": "1500", "text":"$(thousandFive)", "next": "askGoalPriorSave"},
-      { "name": "twoThousand", "value": "2000", "text":"$(twoThousand)", "next": "askGoalPriorSave"},
+      { "name": "weeklySaveAmount", "value":  "500", "text":"$(five)", "next": "askGoalPriorSave", "type":"textCurrency"},
+      { "name": "weeklySaveAmount", "value": "1000", "text":"$(thousand)", "next": "askGoalPriorSave", "type":"textCurrency"},
+      { "name": "weeklySaveAmount", "value": "1500", "text":"$(thousandFive)", "next": "askGoalPriorSave", "type":"textCurrency"},
+      { "name": "weeklySaveAmount", "value": "2000", "text":"$(twoThousand)", "next": "askGoalPriorSave", "type":"textCurrency"},
       { "name": "otherSaveAmount", "value": "other", "text": "$(otherSaveAmount)", "next": "askGoalSaveAmountOther"}
     ]
   },
   {
     "name": "askGoalSaveAmountOther",
-    "type": "currency",
+    "type": "text",
     "text": "$(askGoalSaveAmountOther)",
-    "error": "validationFailSaveAmountOther",
-    "answers": [ { "name": "weeklySaveAmount", "next": "askGoalPriorSave" } ]
+    "autoAnswer": "weeklySaveAmount",
+    "answers": [ { "name": "weeklySaveAmount", "nextOnFinish": "askGoalPriorSave", "type":"inlineCurrency", "typeOnFinish":"textCurrency", "inlineEditHint": "$(type_currency_hint)" } ]
   },
-  {
-    "name": "askGoalPriorSave",
-    "type": "choice",
-    "text": "$(askGoalPriorSave)",
-    "answers": [
-      { "name": "hasSavedY", "value": "yes", "text":"$(hasSavedY)", "next": "askPriorSavedAmount"},
-      { "name": "hasSavedN", "value": "no", "text":"$(hasSavedN)", "next": "verifyGoalAmount"}
-    ]
-  },
-  {
-    "name": "askPriorSavedAmount",
-    "type": "currency",
-    "text": "$(askPriorSavedAmount)",
-    "error": "validationFailPriorSavedAmount",
-    "answers": [ { "name": "priorSaveAmount", "next": "infoGoalEnd" } ]
-  },
-  {
-    "name": "verifyGoalAmount",
-    "type": "choice",
-    "text": "$(verifyGoalAmount)",
-    "error": "validationFailPriorSavedAmount",
-    "answers": [
-      { "name": "goalCheckRT", "value": "reduceWeek", "text":"$(goalCheckRT)", "next": "askKnowGoalDate"},
-      { "name": "goalCheckRA", "value": "reduceAmount", "text":"$(goalCheckRA)", "next": "askPriorSavedAmount"},
-      { "name": "goalCheckOk", "value": "ok", "text":"$(goalCheckOk)", "next": "infoGoalEnd"}
-    ]
-  },
-  {
-    "name": "validationFail",
-    "type": "info",
-    "text": "$(validationFail)",
-    "next": "askGoalAmount"
-  },
-  {
-    "name": "validationFailDate",
-    "type": "info",
-    "text": "$(validationFailDate)",
-    "next": "askGoalDate"
-  },
-  {
-  "name": "validationFailSaveAmountOther",
-  "type": "info",
-  "text": "$(validationFailSaveAmountOther)",
-  "next": "askGoalSaveAmountOther"
-  },
-  {
-  "name": "validationFailPriorSavedAmount",
-  "type": "info",
-  "text": "$(validationFailPriorSavedAmount)",
-  "next": "askPriorSavedAmount"
-},
   {
     "name": "infoGoalEnd",
     "type": "end",

@@ -6,9 +6,11 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -19,10 +21,13 @@ import com.nike.dooit.helpers.Persisted;
 import com.nike.dooit.helpers.bot.BotFeed;
 import com.nike.dooit.models.bot.Answer;
 import com.nike.dooit.models.bot.BaseBotModel;
-import com.nike.dooit.models.bot.Goal;
+import com.nike.dooit.models.bot.Node;
+import com.nike.dooit.models.enums.BotMessageType;
 import com.nike.dooit.models.enums.BotType;
 import com.nike.dooit.views.main.fragments.MainFragment;
 import com.nike.dooit.views.main.fragments.bot.adapters.BotAdapter;
+
+import java.util.ArrayList;
 
 import javax.inject.Inject;
 
@@ -67,7 +72,6 @@ public class  BotFragment extends MainFragment implements HashtagView.TagsClickL
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setHasOptionsMenu(true);
         ((DooitApplication) getActivity().getApplication()).component.inject(this);
     }
 
@@ -87,39 +91,62 @@ public class  BotFragment extends MainFragment implements HashtagView.TagsClickL
         conversationRecyclerView.setHasFixedSize(true);
         conversationRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         conversationRecyclerView.setItemAnimator(new DefaultItemAnimator());
-        conversationRecyclerView.setAdapter(new BotAdapter(getContext()));
+        conversationRecyclerView.setAdapter(new BotAdapter(getContext(), this));
 
     }
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
+        menu.clear();
         getActivity().getMenuInflater().inflate(R.menu.menu_main, menu);
         getActivity().getMenuInflater().inflate(R.menu.menu_main_bot, menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == R.id.menu_main_bot_clear) {
+            persisted.clearConversation();
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     @Override
     public void onActive() {
         super.onActive();
         switch (type) {
+            case DEFAULT:
+                feed = new BotFeed<>(getContext());
+                feed.parse(R.raw.goals, Node.class);
+                break;
             case GOAL:
                 feed = new BotFeed<>(getContext());
-                feed.parse(R.raw.goals, Goal.class);
-                Goal goal = (Goal) feed.getFirstItem();
-                currentModel = goal;
-                getBotAdapter().addItem(goal);
-                persisted.saveConversationState(getBotAdapter().getDataSet());
-                answerView.setData(goal.getAnswers(), new HashtagView.DataStateTransform<Answer>() {
-                    @Override
-                    public CharSequence prepareSelected(Answer item) {
-                        return item.getText(getContext());
-                    }
+                feed.parse(R.raw.goals, Node.class);
+                break;
+        }
 
-                    @Override
-                    public CharSequence prepare(Answer item) {
-                        return item.getText(getContext());
-                    }
-                });
+        if (persisted.hasConversation(type)) {
+            ArrayList<BaseBotModel> data = persisted.loadConversationState(type);
+            if (data.size() > 0) {
+                getBotAdapter().clear();
+                getBotAdapter().addItems(data);
+                conversationRecyclerView.scrollToPosition(getBotAdapter().getItemCount() - 1);
+                BaseBotModel m = data.get(data.size() - 1);
+                if (m instanceof Node)
+                    addAnswerOptions((Node) data.get(data.size() - 1));
+                else if (m instanceof Answer) {
+                    getBotAdapter().removeItem(m);
+                    onItemClicked(m);
+                }
+                return;
+            }
+        }
+        switch (type) {
+            case DEFAULT:
+                getAndAddNode(null);
+                break;
+            case GOAL:
+                getAndAddNode("askGoalName");
                 break;
         }
     }
@@ -139,11 +166,64 @@ public class  BotFragment extends MainFragment implements HashtagView.TagsClickL
     public void onItemClicked(Object item) {
         Answer answer = (Answer) item;
         switch (type) {
+            case DEFAULT:
             case GOAL:
+                if (!TextUtils.isEmpty(answer.getRemoveOnSelect())) {
+                    for (BaseBotModel model : new ArrayList<>(getBotAdapter().getDataSet())) {
+                        if (answer.getRemoveOnSelect().equals(model.getName())) {
+                            getBotAdapter().removeItem(model);
+                        }
+                    }
+                }
+                if (answer.getChangeOnSelect() != null) {
+                    BaseBotModel model = feed.getItem(answer.getChangeOnSelect().first);
+                    model.setText(answer.getChangeOnSelect().second);
+                    model.setType(BotMessageType.TEXT);
+                    getBotAdapter().removeItem(model);
+                    getBotAdapter().addItem(model);
+                }
                 getBotAdapter().addItem(answer);
-                persisted.saveConversationState(getBotAdapter().getDataSet());
-                currentModel = feed.getItem(answer.getNext());
-                answerView.setData(((Goal) currentModel).getAnswers(), new HashtagView.DataStateTransform<Answer>() {
+                conversationRecyclerView.scrollToPosition(getBotAdapter().getItemCount() - 1);
+                persisted.saveConversationState(type, getBotAdapter().getDataSet());
+                if (!TextUtils.isEmpty(answer.getNext())) {
+                    getAndAddNode(answer.getNext());
+                } else {
+                    answerView.setData(new ArrayList<>());
+                }
+                break;
+            case SAVINGS:
+                break;
+        }
+        persisted.saveConversationState(type, getBotAdapter().getDataSet());
+    }
+
+    private void getAndAddNode(String name) {
+        getAndAddNode(name, false);
+    }
+
+    private void getAndAddNode(String name, boolean iconHidden) {
+        if (TextUtils.isEmpty(name)) {
+            currentModel = feed.getFirstItem();
+            getBotAdapter().clear();
+        } else
+            currentModel = feed.getItem(name);
+        Node node = (Node) currentModel;
+        if (node != null) {
+            node.setIconHidden(iconHidden);
+            if (!BotMessageType.BLANK.equals(BotMessageType.getValueOf(currentModel.getType()))) {
+                getBotAdapter().addItem(currentModel);
+            }
+            conversationRecyclerView.scrollToPosition(getBotAdapter().getItemCount() - 1);
+            persisted.saveConversationState(type, getBotAdapter().getDataSet());
+            addAnswerOptions(node);
+        }
+    }
+
+    private void addAnswerOptions(Node node) {
+        answerView.setData(new ArrayList<>());
+        if (node.getAnswers().size() > 0) {
+            if (TextUtils.isEmpty(node.getAutoAnswer())) {
+                answerView.setData(node.getAnswers(), new HashtagView.DataStateTransform<Answer>() {
                     @Override
                     public CharSequence prepareSelected(Answer item) {
                         return item.getText(getContext());
@@ -154,9 +234,16 @@ public class  BotFragment extends MainFragment implements HashtagView.TagsClickL
                         return item.getText(getContext());
                     }
                 });
-                break;
-            case SAVINGS:
-                break;
+            } else {
+                for (Answer answer : node.getAnswers()) {
+                    if (node.getAutoAnswer().equals(answer.getName())) {
+                        onItemClicked(answer);
+                        return;
+                    }
+                }
+            }
+        } else if (!TextUtils.isEmpty(node.getAutoNext())) {
+            getAndAddNode(node.getAutoNext(), true);
         }
     }
 }

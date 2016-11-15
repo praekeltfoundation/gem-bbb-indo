@@ -64,10 +64,8 @@ public class TargetFragment extends MainFragment {
 
     @BindString(R.string.savings_message)
     String savingsMessage;
-
-    private TargetPagerAdapter adapter;
-
     List<Goal> goals;
+    private TargetPagerAdapter adapter;
 
     public TargetFragment() {
         // Required empty public constructor
