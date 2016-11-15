@@ -9,6 +9,8 @@ import com.nike.dooit.views.main.fragments.bot.BotFragment;
 import com.nike.dooit.views.main.fragments.ChallengeFragment;
 import com.nike.dooit.views.main.fragments.target.TargetFragment;
 import com.nike.dooit.views.main.fragments.TipsFragment;
+import com.nike.dooit.views.main.fragments.challenge.fragments.ChallengeFreeformFragment;
+import com.nike.dooit.views.main.fragments.challenge.fragments.ChallengeQuizFragment;
 import com.nike.dooit.views.main.fragments.tip.TipViewHolder;
 import com.nike.dooit.views.main.fragments.tip.TipsListFragment;
 import com.nike.dooit.views.main.fragments.tip.adapters.TipsAdapter;
@@ -51,6 +53,10 @@ public interface DooitComponent {
     void inject(Persisted o);
 
     void inject(ChallengeFragment o);
+
+    void inject(ChallengeFreeformFragment o);
+
+    void inject(ChallengeQuizFragment o);
 
     void inject(BotFragment o);
 

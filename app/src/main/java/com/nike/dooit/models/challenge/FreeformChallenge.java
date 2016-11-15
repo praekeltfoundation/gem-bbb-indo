@@ -14,6 +14,15 @@ public class FreeformChallenge extends BaseChallenge {
 
     FreeformChallenge() {
         // Mandatory empty constructor
+        super();
+    }
+
+    public FreeformChallengeQuestion getQuestion() {
+        return question;
+    }
+
+    public void setQuestion(FreeformChallengeQuestion question) {
+        this.question = question;
     }
 
     protected FreeformChallenge(Parcel in) {

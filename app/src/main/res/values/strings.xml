@@ -101,6 +101,11 @@
     <string name="TthreeN">No</string>
     <string name="TfourY">Yes</string>
 
+    <!-- Challenges -->
+    <string name="challenge_no_question">No question</string>
+    <string name="challenge_freeform_submit">Submitting freeform answer</string>
+    <string name="challenge_all_questions_complete">You have completed all questions</string>
+
     <!--JSON CHALLENGES-->
     <string name="toes">Can you touch your toes?</string>
     <string name="night">Can you land on the sun at night?</string>
@@ -114,5 +119,10 @@
     <string name="savings_message" formatted="false">Save %s %s each week to get your %s in %s weeks.</string>
     <string name="edit_savings_plan">Edit Savings Plan</string>
     <string name="savings_plan">Savings Plan</string>
+    <string name="challenge_none_available">No challenge available. Please try again soon!</string>
+    <string name="challenge_quiz_select_option_required">You must select an answer</string>
+    <string name="challenge_quiz_no_questions">No questions available</string>
+    <string name="challenge_quiz_congratulate_correct">Well done!</string>
+    <string name="challenge_quiz_sorry_incorrect">Sorry, try again.</string>
 
 </resources>

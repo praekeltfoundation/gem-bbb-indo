@@ -6,7 +6,7 @@ import com.google.gson.annotations.SerializedName;
  * Created by herman on 2016/11/05.
  */
 public class User {
-    private String id;
+    private long id;
     private String username;
     private String password;
     private String email;
@@ -14,11 +14,11 @@ public class User {
     @SerializedName("last_name") private String lastName;
     private Profile profile;
 
-    public String getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(long id) {
         this.id = id;
     }
 

@@ -1,8 +1,9 @@
-<android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v4.widget.NestedScrollView android:id="@+id/fragment_challenge_container"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context="com.nike.dooit.views.main.fragments.challenge.fragments.ChallengeRegisterFragment">
 
     <RelativeLayout
@@ -10,17 +11,18 @@
         android:layout_height="wrap_content"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-        <ImageView
-            android:id="@+id/fragment_challenge_image_image_view"
+        <com.facebook.drawee.view.SimpleDraweeView
+            android:id="@+id/fragment_challenge_register_image"
             android:layout_width="match_parent"
-            android:layout_height="200dp"
+            android:layout_height="@dimen/tip_card_image_height"
+            app:placeholderImage="@color/purple"
             android:background="@color/purple" />
 
         <TextView
             android:id="@+id/fragment_challenge_sub_title_text_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/fragment_challenge_image_image_view"
+            android:layout_below="@+id/fragment_challenge_register_image"
             android:layout_centerHorizontal="true"
             android:layout_marginEnd="@dimen/challenge_margins"
             android:layout_marginStart="@dimen/challenge_margins"
