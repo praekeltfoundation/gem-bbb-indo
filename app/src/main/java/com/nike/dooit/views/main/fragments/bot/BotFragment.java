@@ -39,7 +39,7 @@ import butterknife.ButterKnife;
  * Use the {@link BotFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class BotFragment extends MainFragment implements HashtagView.TagsClickListener {
+public class  BotFragment extends MainFragment implements HashtagView.TagsClickListener {
     @BindView(R.id.fragment_bot_conversation_recycler_view)
     RecyclerView conversationRecyclerView;
     @BindView(R.id.fragment_bot_answer_hash_view)

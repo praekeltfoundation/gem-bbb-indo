@@ -18,8 +18,12 @@ public abstract class BaseChallenge implements Parcelable, Serializable {
     /*** Variables ***/
     private long id;
     private String name;
-    @SerializedName("activation_date") private DateTime activationDate;
-    @SerializedName("deactivation_date") private DateTime deactivationDate;
+    @SerializedName("image_url")
+    private String imageURL;
+    @SerializedName("activation_date")
+    private DateTime activationDate;
+    @SerializedName("deactivation_date")
+    private DateTime deactivationDate;
     private ChallengeType type;
 
     /*** Constructors ***/
@@ -50,6 +54,14 @@ public abstract class BaseChallenge implements Parcelable, Serializable {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getImageURL() {
+        return this.imageURL;
+    }
+
+    public void setImageURL(String url) {
+        this.imageURL = url;
     }
 
     public ChallengeType getType() {

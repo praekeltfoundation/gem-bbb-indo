@@ -1,10 +1,6 @@
 package com.nike.dooit.api.interfaces;
 
-import com.nike.dooit.api.requests.LoginRequest;
-import com.nike.dooit.api.responses.AuthenticationResponse;
 import com.nike.dooit.api.responses.EmptyResponse;
-import com.nike.dooit.api.responses.OnboardingResponse;
-import com.nike.dooit.models.User;
 
 import okhttp3.RequestBody;
 import retrofit2.http.Body;
@@ -19,5 +15,5 @@ import rx.Observable;
 public interface FileUploadAPI {
 
     @POST("/api/profile-image/{id}/")
-    Observable<EmptyResponse> upload(@Path("id") String id, @Body RequestBody requestBody, @Header("Content-Disposition") String contentDisposition);
+    Observable<EmptyResponse> upload(@Path("id") long id, @Body RequestBody requestBody, @Header("Content-Disposition") String contentDisposition);
 }

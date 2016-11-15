@@ -1,6 +1,4 @@
-Implemented Registration
-Added Age and Gender to Registration
-Implemented Login
-Implemented Signout from Settings
-Implemented Tips listing
-Implemented Tip Favourites
+Added Goal placeholder screen to Target tab
+Implemented Tip search and filtering
+Implemented Quiz and Freeform Challenge
+Implemented basic Coach bot

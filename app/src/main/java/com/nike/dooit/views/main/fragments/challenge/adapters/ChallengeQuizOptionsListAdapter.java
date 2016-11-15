@@ -8,6 +8,8 @@ import android.view.ViewGroup;
 import com.nike.dooit.R;
 import com.nike.dooit.models.challenge.QuizChallengeOption;
 import com.nike.dooit.models.challenge.QuizChallengeQuestion;
+import com.nike.dooit.views.main.fragments.challenge.interfaces.OnOptionSelectedListener;
+import com.nike.dooit.views.main.fragments.challenge.interfaces.OnOptionChangeListener;
 import com.nike.dooit.views.main.fragments.challenge.viewholders.QuizOptionViewHolder;
 
 import java.util.List;
@@ -16,14 +18,11 @@ import java.util.List;
  * Created by Rudolph Jacobs on 2016-11-09.
  */
 
-public class ChallengeQuizOptionsListAdapter extends RecyclerView.Adapter<QuizOptionViewHolder> {
-    public interface OnOptionSelectedListener {
-        void onSelected(int position);
-    }
+public class ChallengeQuizOptionsListAdapter extends RecyclerView.Adapter<QuizOptionViewHolder> implements OnOptionSelectedListener {
     private QuizChallengeQuestion mQuestion;
     private List<QuizChallengeOption> mOptionList;
     private int selectedIdx;
-    public OnOptionSelectedListener optionSelectedListener;
+    public OnOptionChangeListener optionChangeListener = null;
 
     RecyclerView recycler;
 
@@ -34,28 +33,7 @@ public class ChallengeQuizOptionsListAdapter extends RecyclerView.Adapter<QuizOp
         }
         selectedIdx = -1;
         this.recycler = recycler;
-        optionSelectedListener = new OnOptionSelectedListener() {
-            @Override
-            public void onSelected(int position) {
-                if (recycler != null) {
-                    if (selectedIdx >= 0 && selectedIdx < getItemCount()) {
-                        QuizOptionViewHolder oldView = (QuizOptionViewHolder) recycler.findViewHolderForAdapterPosition(selectedIdx);
-                        if (oldView != null) {
-                            oldView.setSelected(false);
-                        }
-                    }
-                    if (position >= 0 && position < getItemCount()) {
-                        QuizOptionViewHolder newView = (QuizOptionViewHolder) recycler.findViewHolderForAdapterPosition(position);
-                        if (newView != null) {
-                            newView.setSelected(true);
-                        }
-                    }
-                    selectedIdx = position;
-                } else {
-                    System.out.println("No recycler.");
-                }
-            }
-        };
+        optionChangeListener = null;
     }
 
     @Override public int getItemCount() {
@@ -80,5 +58,33 @@ public class ChallengeQuizOptionsListAdapter extends RecyclerView.Adapter<QuizOp
         final QuizChallengeOption item = mOptionList.get(position);
         holder.populate(item);
         holder.setSelected(position == selectedIdx);
+    }
+
+    public void setOptionChangeListener(OnOptionChangeListener listener) {
+        optionChangeListener = listener;
+    }
+
+    @Override
+    public void onOptionSelected(int position) {
+        if (recycler != null) {
+            if (selectedIdx >= 0 && selectedIdx < getItemCount()) {
+                QuizOptionViewHolder oldView = (QuizOptionViewHolder) recycler.findViewHolderForAdapterPosition(selectedIdx);
+                if (oldView != null) {
+                    oldView.setSelected(false);
+                }
+            }
+            if (position >= 0 && position < getItemCount()) {
+                QuizOptionViewHolder newView = (QuizOptionViewHolder) recycler.findViewHolderForAdapterPosition(position);
+                if (newView != null) {
+                    newView.setSelected(true);
+                }
+                if (optionChangeListener != null) {
+                    optionChangeListener.onOptionChange(mQuestion, mOptionList.get(position));
+                }
+            }
+            selectedIdx = position;
+        } else {
+            System.out.println("No recycler.");
+        }
     }
 }

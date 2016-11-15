@@ -22,6 +22,11 @@
     <string name="tips_tab_favourites">Favorit</string>
     <string name="tips_tab_all">Semua</string>
     <string name="tips_card_read_more">Baca lebih banyak</string>
+    <string name="tips_search_hint">Cari: Topik, judul, tag, dll...</string>
+    <string name="tips_search_placeholder_fav">Cari tips favorit</string>
+    <string name="tips_search_placeholder_all">Cari semua tips</string>
+    <string name="tips_article_opening">\'%s\' pembuka</string>
+    <string name="tips_article_add_fav">Menambahkan \'%s\' ke favorit</string>
 
     <!-- Registration -->
     <string name="reg_t_c">Dengan mengklik register, Anda setuju dengan Persyaratan dan Kondisi kami></string>
@@ -108,6 +113,16 @@
     <string name="TthreeN">No</string>
     <string name="TfourY">Yes</string>
 
+    <!-- Challenges -->
+    <string name="challenge_no_question">No question</string>
+    <string name="challenge_freeform_submit">Submitting freeform answer</string>
+    <string name="challenge_all_questions_complete">You have completed all questions</string>
+    <string name="challenge_none_available">No challenge available. Please try again soon!</string>
+    <string name="challenge_quiz_select_option_required">You must select an answer</string>
+    <string name="challenge_quiz_no_questions">No questions available</string>
+    <string name="challenge_quiz_congratulate_correct">Well done!</string>
+    <string name="challenge_quiz_sorry_incorrect">Sorry, try again.</string>
+
     <!--JSON CHALLENGES-->
     <string name="toes">Can you touch your toes?</string>
     <string name="night">Can you land on the sun at night?</string>
@@ -121,5 +136,22 @@
     <string name="savings_message" formatted="false">Simpan %s %s setiap minggu untuk mendapatkan Anda %s di %s minggu.</string>
     <string name="edit_savings_plan">Tabungan Rencana mengedit</string>
     <string name="savings_plan">Rencana penghematan</string>
+
+    <string name="uploading">Uploading</string>
+    <string name="type_currency_hint">Type amount…</string>
+    <string name="type_number_hint">Type number…</string>
+    <string name="unknownDate">I don\'t know</string>
+    <string name="nope">Nope</string>
+    <string name="goalGreeting">Hello %s.</string>
+    <string name="goalIntroduction">My Name is Dooit. I\'m gonna help  you save!</string>
+    <string name="goalNameCongrats">Great choice!</string>
+    <string name="changeAmount">Change amount</string>
+    <string name="changeDate">Change date</string>
+    <string name="addDate">Add date</string>
+    <string name="addAmount">Add amount</string>
+    <string name="acceptGoal">Accept goal</string>
+    <string name="Gallery">Select from gallery</string>
+    <string name="askGoalImageConfirm">Add an image for your savings goal to help keep you motivated</string>
+    <string name="startOver">Start over</string>
 
 </resources>
