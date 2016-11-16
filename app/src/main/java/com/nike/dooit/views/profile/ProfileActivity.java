@@ -76,7 +76,7 @@ public class ProfileActivity extends DooitActivity {
         setSupportActionBar(toolbar);
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-            getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_d_close);
+            getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_d_close_pink);
             getSupportActionBar().setTitle("");
             toolbar.setNavigationOnClickListener(new View.OnClickListener() {
                 @Override

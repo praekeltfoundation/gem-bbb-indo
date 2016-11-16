@@ -11,7 +11,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:visibility="gone">
+        android:visibility="gone"
+        android:layout_margin="@dimen/tip_card_margin">
 
         <TextView
             android:id="@+id/fragment_tips_list_filter_text_view"
@@ -21,11 +22,11 @@
             android:layout_weight="1"
             android:text="@string/tips_list_filter" />
 
-        <ImageButton
+        <ImageView
             android:id="@+id/fragment_tips_list_filter_image_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:srcCompat="@drawable/ic_d_close" />
+            app:srcCompat="@drawable/ic_d_close_pink" />
     </LinearLayout>
 
     <com.nike.dooit.views.custom.DesignSafeRecyclerView

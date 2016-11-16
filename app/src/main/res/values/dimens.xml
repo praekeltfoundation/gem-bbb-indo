@@ -27,4 +27,5 @@
     <dimen name="tip_card_icon_margin">8dp</dimen>
     <dimen name="tip_card_overlay_height">90dp</dimen>
     <dimen name="tip_tab_indicator_height">3dp</dimen>
+    <dimen name="tip_search_suggestion_padding">3dp</dimen>
 </resources>

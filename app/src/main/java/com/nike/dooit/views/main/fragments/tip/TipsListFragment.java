@@ -11,7 +11,6 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -154,7 +153,7 @@ public class TipsListFragment extends Fragment {
     }
 
     @OnClick(R.id.fragment_tips_list_filter_image_button)
-    public void clearFilter(ImageButton button) {
+    public void clearFilter(View v) {
         hideFiltering();
         adapter.resetFiltered();
     }
