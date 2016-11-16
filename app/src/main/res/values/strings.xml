@@ -14,6 +14,7 @@
     <!-- Common labels -->
     <string name="label_check_result">Check</string>
     <string name="label_clear_content">Clear</string>
+    <string name="label_continue">Continue</string>
     <string name="label_loading">Loading</string>
     <string name="label_log_in">Log in</string>
     <string name="label_mobile_number">Mobile number</string>
@@ -202,5 +203,6 @@
     <string name="heading_current_saving_streak">Current Saving Streak</string>
     <string name="heading_achievements">Achievements</string>
     <string name="abbrev_currency">Rp</string>
+    <string name="fragment_challenge_correct_text">You are correct!</string>
 
 </resources>
