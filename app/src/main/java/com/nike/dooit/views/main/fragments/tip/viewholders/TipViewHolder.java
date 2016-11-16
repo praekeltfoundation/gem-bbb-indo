@@ -5,7 +5,9 @@ import android.net.Uri;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.text.SpannableString;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -19,6 +21,8 @@ import com.nike.dooit.api.managers.TipManager;
 import com.nike.dooit.api.responses.EmptyResponse;
 import com.nike.dooit.helpers.Persisted;
 import com.nike.dooit.views.tip.TipArticleActivity;
+
+import java.util.Collection;
 
 import javax.inject.Inject;
 
@@ -45,6 +49,9 @@ public class TipViewHolder extends RecyclerView.ViewHolder {
 
     @BindView(R.id.card_tip_image)
     SimpleDraweeView imageView;
+
+    @BindView(R.id.card_tip_tags_view)
+    ViewGroup tagsView;
 
     @BindView(R.id.card_tip_title)
     TextView titleView;
@@ -148,6 +155,18 @@ public class TipViewHolder extends RecyclerView.ViewHolder {
 
     public boolean isFavourite() {
         return isFavourite;
+    }
+
+    public void clearTags() {
+        tagsView.removeAllViews();
+    }
+
+    public void addTags(Collection<String> tags) {
+        LayoutInflater inflater = LayoutInflater.from(getContext());
+        for (String tag : tags) {
+            View v = inflater.inflate(R.layout.card_tip_tag, tagsView, true);
+            ((TextView) v.findViewById(R.id.card_tip_tag_text_view)).setText(tag);
+        }
     }
 
     public void setFavourite(boolean favourite) {

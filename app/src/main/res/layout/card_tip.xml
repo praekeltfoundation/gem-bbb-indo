@@ -3,7 +3,10 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="@dimen/tip_card_margin"
+    android:layout_marginBottom="@dimen/tip_card_margin"
+    android:layout_marginLeft="@dimen/tip_card_margin"
+    android:layout_marginRight="@dimen/tip_card_margin"
+    android:layout_marginTop="@dimen/tip_card_margin"
     app:cardBackgroundColor="@color/transparent"
     app:cardCornerRadius="0dp"
     app:cardElevation="0dp">
@@ -18,6 +21,17 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/tip_card_image_height"
             app:placeholderImage="@color/light_grey" />
+
+        <LinearLayout
+            android:id="@+id/card_tip_tags_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@id/card_tip_image"
+            android:layout_alignStart="@id/card_tip_image"
+            android:layout_margin="@dimen/tip_card_icon_margin"
+            android:orientation="horizontal">
+
+        </LinearLayout>
 
         <TextView
             android:id="@+id/card_tip_title"
@@ -47,8 +61,7 @@
             android:layout_marginBottom="@dimen/tip_card_icon_margin"
             android:layout_marginRight="@dimen/tip_card_icon_margin"
             android:layout_toLeftOf="@+id/card_tip_share"
-            app:srcCompat="@drawable/ic_d_heart_inverted"
-            />
+            app:srcCompat="@drawable/ic_d_heart_inverted" />
     </RelativeLayout>
 
 </android.support.v7.widget.CardView>

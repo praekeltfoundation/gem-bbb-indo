@@ -22,6 +22,7 @@
     <string name="tips_tab_favourites">Favorit</string>
     <string name="tips_tab_all">Semua</string>
     <string name="tips_card_read_more">Baca lebih banyak</string>
+    <string name="tips_card_empty_tag">tag</string>
     <string name="tips_search_hint">Cari: Topik, judul, tag, dll...</string>
     <string name="tips_search_placeholder_fav">Cari tips favorit</string>
     <string name="tips_search_placeholder_all">Cari semua tips</string>
