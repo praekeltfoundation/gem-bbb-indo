@@ -204,5 +204,7 @@
     <string name="heading_achievements">Achievements</string>
     <string name="abbrev_currency">Rp</string>
     <string name="fragment_challenge_correct_text">You are correct!</string>
+    <string name="label_try_again">Try again</string>
+    <string name="fragment_challenge_wrong_text">Try again!</string>
 
 </resources>
