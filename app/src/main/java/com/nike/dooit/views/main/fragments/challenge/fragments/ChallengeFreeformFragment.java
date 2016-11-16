@@ -85,7 +85,33 @@ public class ChallengeFreeformFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_challenge_freeform, container, false);
         ButterKnife.bind(this, view);
         title.setText(question != null ? question.getText() : getString(R.string.challenge_no_question));
+        fetchAnswer();
         return view;
+    }
+
+    public void fetchAnswer() {
+        challengeManager.fetchParticipantFreeformAnswer(challenge.getId(), new DooitErrorHandler() {
+            @Override
+            public void onError(DooitAPIError error) {
+                if ("404".equals(error.getErrorResponse().status)) {
+                    Log.d(TAG, "No entry submitted yet");
+                } else {
+                    Log.d(TAG, "Could not fetch challenge entry");
+                }
+            }
+        }).subscribe(new Action1<ParticipantFreeformAnswer>() {
+            @Override
+            public void call(final ParticipantFreeformAnswer answer) {
+                if (answer != null) {
+                    getActivity().runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            submissionBox.setText(answer.getText());
+                        }
+                    });
+                }
+            }
+        });
     }
 
     public void submitAnswer(String text) {
