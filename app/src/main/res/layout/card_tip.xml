@@ -22,6 +22,15 @@
             android:layout_height="@dimen/tip_card_image_height"
             app:placeholderImage="@color/light_grey" />
 
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/tip_card_overlay_height"
+            android:src="@drawable/overlay_tip_gradient"
+            android:layout_alignBottom="@+id/card_tip_image"
+            android:scaleType="fitXY"
+
+            />
+
         <LinearLayout
             android:id="@+id/card_tip_tags_view"
             android:layout_width="wrap_content"
