@@ -22,6 +22,9 @@ import com.nike.dooit.R;
 import com.nike.dooit.models.challenge.BaseChallenge;
 import com.nike.dooit.models.challenge.FreeformChallenge;
 import com.nike.dooit.models.challenge.QuizChallenge;
+import com.nike.dooit.models.challenge.QuizChallengeOption;
+import com.nike.dooit.models.challenge.QuizChallengeQuestion;
+import com.nike.dooit.models.enums.ChallengeType;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -41,22 +44,16 @@ public class ChallengeRegisterFragment extends Fragment {
 
     @BindView(R.id.fragment_challenge_register_image)
     SimpleDraweeView topImage;
-
     @BindView(R.id.fragment_challenge_sub_title_text_view)
     TextView title;
-
     @BindView(R.id.fragment_challenge_name_text_view)
     TextView name;
-
     @BindView(R.id.fragment_challenge_expire_date_text_view)
     TextView date;
-
     @BindView(R.id.fragment_challenge_instruction_text_vew)
     TextView instruction;
-
     @BindView(R.id.fragment_challenge_t_c_text_view)
     TextView tc;
-
     @BindView(R.id.fragment_challenge_register_button)
     Button register;
 
@@ -91,7 +88,6 @@ public class ChallengeRegisterFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_challenge_register, container, false);
         unbinder = ButterKnife.bind(this, view);
-        // Inflate the layout for this fragment
         return view;
     }
 
@@ -111,66 +107,68 @@ public class ChallengeRegisterFragment extends Fragment {
         topImage.setImageURI(challenge.getImageURL());
     }
 
+    private Fragment startQuizChallenge(QuizChallenge quizChallenge) {
+        if (quizChallenge.getQuestions() == null || quizChallenge.getQuestions().size() <= 0) {
+            return ChallengeNoneFragment.newInstance(getString(R.string.challenge_quiz_no_questions));
+        }
+
+        for (QuizChallengeQuestion q: quizChallenge.getQuestions()) {
+            // check for empty question or empty list of options for question
+            if (q.getText() == null || q.getText().length() <= 0) {
+                return ChallengeNoneFragment.newInstance(getString(R.string.challenge_quiz_no_questions));
+            } else if (q.getOptions() == null || q.getOptions().size() <= 0) {
+                return ChallengeNoneFragment.newInstance(getString(R.string.challenge_quiz_no_questions));
+            }
+
+            // check whether any options are empty or none of the question's options are correct
+            boolean hasCorrect = false;
+            for (QuizChallengeOption o: q.getOptions()) {
+                if (o.getText() == null || o.getText().length() <= 0) {
+                    return ChallengeNoneFragment.newInstance(getString(R.string.challenge_quiz_empty_option));
+                }
+                hasCorrect |= o.getCorrect();
+            }
+            if (!hasCorrect) {
+                return ChallengeNoneFragment.newInstance(getString(R.string.challenge_quiz_no_correct_answer));
+            }
+        }
+        return ChallengeQuizFragment.newInstance(quizChallenge);
+    }
+
+    private Fragment startFreeformChallenge(FreeformChallenge freeformChallenge) {
+        if (freeformChallenge.getQuestion() == null) {
+            return ChallengeNoneFragment.newInstance("Freeform challenge has no question.");
+        } else if (freeformChallenge.getQuestion().getText() == null ||
+                freeformChallenge.getQuestion().getText().isEmpty()) {
+            return ChallengeNoneFragment.newInstance("Freeform challenge question is empty.");
+        }
+        return ChallengeFreeformFragment.newInstance(freeformChallenge);
+    }
+
     @OnClick(R.id.fragment_challenge_register_button)
     void startChallenge() {
         FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
-        Fragment fragment;
+        Fragment fragment = null;
 
-        if (challenge instanceof QuizChallenge) {
-            if (((QuizChallenge) challenge).getQuestions() != null &&
-                    ((QuizChallenge) challenge).getQuestions().size() > 0) {
-                fragment = ChallengeQuizFragment.newInstance((QuizChallenge) challenge);
-            } else {
-                fragment = ChallengeNoneFragment.newInstance(getString(R.string.challenge_quiz_no_questions));
-            }
-        } else if (challenge instanceof FreeformChallenge) {
-            fragment = ChallengeFreeformFragment.newInstance((FreeformChallenge) challenge);
-        } else {
-            throw new RuntimeException("Invalid challenge type provided");
+        switch (challenge.getType()) {
+            case QUIZ:
+                if (challenge instanceof QuizChallenge) {
+                    fragment = startQuizChallenge((QuizChallenge) challenge);
+                }
+                break;
+            case FREEFORM:
+                if (challenge instanceof FreeformChallenge) {
+                    fragment = startFreeformChallenge((FreeformChallenge) challenge);
+                }
+                break;
+            default:
+                throw new RuntimeException("Invalid challenge type provided");
         }
 
-        //ft.setCustomAnimations(R.anim.slide_in_left, R.anim.slide_out_right);
-        ft.replace(R.id.fragment_challenge_container, fragment);
-
-        ft.commit();
+        if (fragment != null) {
+            //ft.setCustomAnimations(R.anim.slide_in_left, R.anim.slide_out_right);
+            ft.replace(R.id.fragment_challenge_container, fragment);
+            ft.commit();
+        }
     }
-
-    // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(Uri uri) {
-//        if (mListener != null) {
-//            mListener.onFragmentInteraction(uri);
-//        }
-    }
-
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-//        if (context instanceof OnFragmentInteractionListener) {
-//            mListener = (OnFragmentInteractionListener) context;
-//        } else {
-//            throw new RuntimeException(context.toString()
-//                    + " must implement OnFragmentInteractionListener");
-//        }
-    }
-
-    @Override
-    public void onDetach() {
-        super.onDetach();
-//        mListener = null;
-    }
-
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
-     */
-//    public interface OnFragmentInteractionListener {
-//        // TODO: Update argument type and name
-//        void onFragmentInteraction(Uri uri);
-//    }
 }

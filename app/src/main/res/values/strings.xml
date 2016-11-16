@@ -129,6 +129,8 @@
     <string name="challenge_quiz_no_questions">No questions available</string>
     <string name="challenge_quiz_congratulate_correct">Well done!</string>
     <string name="challenge_quiz_sorry_incorrect">Sorry, try again.</string>
+    <string name="challenge_quiz_empty_option">Quiz question has option without text.</string>
+    <string name="challenge_quiz_no_correct_answer">Quiz question without correct option.</string>
 
     <!--JSON CHALLENGES-->
     <string name="toes">Can you touch your toes?</string>

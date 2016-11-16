@@ -10,6 +10,7 @@ import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
+import retrofit2.http.Query;
 import rx.Observable;
 
 /**
@@ -29,5 +30,8 @@ public interface ChallengeAPI {
 
     @POST("/api/participantfreetext/")
     Observable<ParticipantFreeformAnswer> postParticipantFreeform(@Body ParticipantFreeformAnswer answer);
+
+    @GET("/api/participantfreetext/fetch/")
+    Observable<ParticipantFreeformAnswer> fetchParticipantFreeform(@Query("challenge") long challenge);
 
 }
