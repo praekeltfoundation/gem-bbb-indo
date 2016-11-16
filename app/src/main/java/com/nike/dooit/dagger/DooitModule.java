@@ -10,10 +10,11 @@ import com.nike.dooit.api.managers.FileUploadManager;
 import com.nike.dooit.api.managers.GoalManager;
 import com.nike.dooit.api.managers.TipManager;
 import com.nike.dooit.api.managers.UserManager;
-import com.nike.dooit.helpers.bot.BotFeed;
-import com.nike.dooit.helpers.permissions.PermissionsHelper;
 import com.nike.dooit.helpers.DooitSharedPreferences;
 import com.nike.dooit.helpers.Persisted;
+import com.nike.dooit.helpers.activity.result.ActivityForResultHelper;
+import com.nike.dooit.helpers.bot.BotFeed;
+import com.nike.dooit.helpers.permissions.PermissionsHelper;
 
 import javax.inject.Singleton;
 
@@ -98,5 +99,11 @@ public class DooitModule {
     @Singleton
     BotFeed provideGoalBotFeed() {
         return new BotFeed(application);
+    }
+
+    @Provides
+    @Singleton
+    ActivityForResultHelper provideActivityForResultHelper() {
+        return new ActivityForResultHelper();
     }
 }

@@ -4,12 +4,17 @@ import android.app.Application;
 import android.text.TextUtils;
 import android.util.Log;
 
+import com.google.gson.Gson;
+import com.google.gson.internal.LinkedTreeMap;
 import com.nike.dooit.DooitApplication;
 import com.nike.dooit.models.Tip;
 import com.nike.dooit.models.Token;
 import com.nike.dooit.models.User;
+import com.nike.dooit.models.bot.Answer;
 import com.nike.dooit.models.bot.BaseBotModel;
+import com.nike.dooit.models.bot.Node;
 import com.nike.dooit.models.challenge.BaseChallenge;
+import com.nike.dooit.models.enums.BotType;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -37,12 +42,30 @@ public class Persisted {
         ((DooitApplication) application).component.inject(this);
     }
 
-    public ArrayList<BaseBotModel> loadConversationState() {
-        return (ArrayList<BaseBotModel>) dooitSharedPreferences.getComplex(BOT, ArrayList.class);
+    public ArrayList<BaseBotModel> loadConversationState(BotType type) {
+        String conv = dooitSharedPreferences.getString(BOT + type.name(), "");
+        if (TextUtils.isEmpty(conv))
+            return new ArrayList<>();
+        else {
+            Gson gson = new Gson();
+            ArrayList<LinkedTreeMap> arrayList = gson.fromJson(conv, ArrayList.class);
+            ArrayList<BaseBotModel> result = new ArrayList<BaseBotModel>();
+
+            for (LinkedTreeMap val : arrayList) {
+                if (Node.class.toString().equals(val.get("classType"))) {
+                    String obj = gson.toJson(val);
+                    result.add(gson.fromJson(obj, Node.class));
+                } else if (Answer.class.toString().equals(val.get("classType"))) {
+                    String obj = gson.toJson(val);
+                    result.add(gson.fromJson(obj, Answer.class));
+                }
+            }
+            return result;
+        }
     }
 
-    public void saveConversationState(List<BaseBotModel> conversation) {
-        dooitSharedPreferences.setComplex(BOT, conversation);
+    public void saveConversationState(BotType type, List<BaseBotModel> conversation) {
+        dooitSharedPreferences.setComplex(BOT + type.name(), conversation);
     }
 
     public User getCurrentUser() {
@@ -145,6 +168,16 @@ public class Persisted {
 
     private void saveTips(String prefKey, List<Tip> tips) {
         dooitSharedPreferences.setComplex(prefKey, tips.toArray());
+    }
+
+    public boolean hasConversation(BotType type) {
+        return dooitSharedPreferences.containsKey(BOT + type.name());
+    }
+
+    public void clearConversation() {
+        for (BotType botType : BotType.values()) {
+            dooitSharedPreferences.remove(BOT + botType.name());
+        }
     }
 }
 

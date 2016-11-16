@@ -5,9 +5,13 @@ import com.nike.dooit.api.managers.DooitManager;
 import com.nike.dooit.helpers.Persisted;
 import com.nike.dooit.views.DooitActivity;
 import com.nike.dooit.views.RootActivity;
+import com.nike.dooit.views.main.MainActivity;
 import com.nike.dooit.views.main.fragments.ChallengeFragment;
 import com.nike.dooit.views.main.fragments.TipsFragment;
 import com.nike.dooit.views.main.fragments.bot.BotFragment;
+import com.nike.dooit.views.main.fragments.bot.viewholders.AnswerImageSelectViewHolder;
+import com.nike.dooit.views.main.fragments.bot.viewholders.GoalVerificationViewHolder;
+import com.nike.dooit.views.main.fragments.bot.viewholders.TextViewHolder;
 import com.nike.dooit.views.main.fragments.challenge.fragments.ChallengeFreeformFragment;
 import com.nike.dooit.views.main.fragments.challenge.fragments.ChallengeQuizFragment;
 import com.nike.dooit.views.main.fragments.target.TargetFragment;
@@ -26,6 +30,7 @@ import javax.inject.Singleton;
 
 import dagger.Component;
 
+
 /**
  * Created by herman on 2016/11/05.
  */
@@ -40,6 +45,8 @@ public interface DooitComponent {
     void inject(DooitApplication o);
 
     void inject(DooitActivity o);
+
+    void inject(MainActivity o);
 
     void inject(ProfileActivity o);
 
@@ -61,9 +68,15 @@ public interface DooitComponent {
 
     void inject(BotFragment o);
 
+    void inject(AnswerImageSelectViewHolder o);
+
+    void inject(GoalVerificationViewHolder o);
+
     void inject(TargetFragment o);
 
     void inject(TipsFragment o);
+
+    void inject(TextViewHolder o);
 
     void inject(TipsListFragment o);
 

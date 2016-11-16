@@ -1,5 +1,6 @@
 package com.nike.dooit.views;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.database.Cursor;
 import android.net.Uri;
@@ -7,8 +8,8 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.annotation.StringRes;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.appcompat.BuildConfig;
 import android.view.inputmethod.InputMethodManager;
 
 import com.crashlytics.android.Crashlytics;
@@ -29,6 +30,7 @@ public class DooitActivity extends AppCompatActivity {
 
     @Inject
     protected PermissionsHelper permissionsHelper;
+    ProgressDialog dialog;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -36,10 +38,6 @@ public class DooitActivity extends AppCompatActivity {
         // TODO: Move this to where you establish a user session
         if (!Constants.DEBUG)
             logUser();
-    }
-
-    public void dismissDialog() {
-
     }
 
     public Uri getRealPathFromURI(Uri contentUri) {
@@ -86,5 +84,29 @@ public class DooitActivity extends AppCompatActivity {
             InputMethodManager imm = (InputMethodManager) this.getSystemService(Context.INPUT_METHOD_SERVICE);
             imm.hideSoftInputFromWindow(this.getCurrentFocus().getWindowToken(), 0);
         }
+    }
+
+    public ProgressDialog showProgressDialog(@StringRes int messageRes) {
+        String message = getString(messageRes);
+        if (dialog != null && dialog.isShowing()) {
+            dialog.dismiss();
+        }
+        dialog = new ProgressDialog(this);
+        dialog.setMessage(message);
+        dialog.setCancelable(false);
+        dialog.setInverseBackgroundForced(false);
+        dialog.show();
+        return dialog;
+    }
+
+    public void dismissDialog() {
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                if (dialog != null && dialog.isShowing()) {
+                    dialog.dismiss();
+                }
+            }
+        });
     }
 }

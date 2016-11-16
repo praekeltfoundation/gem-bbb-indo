@@ -9,7 +9,6 @@ import com.facebook.imagepipeline.core.ImagePipelineConfig;
 import com.nike.dooit.dagger.DaggerDooitComponent;
 import com.nike.dooit.dagger.DooitComponent;
 import com.nike.dooit.dagger.DooitModule;
-import com.nike.dooit.helpers.DooitSharedPreferences;
 import com.nike.dooit.helpers.Persisted;
 
 import java.io.IOException;
