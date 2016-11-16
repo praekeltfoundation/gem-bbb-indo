@@ -32,7 +32,7 @@
             android:gravity="top"
             android:background="@color/white"
             android:ems="10"
-            tools:text="Lorem ipsum dolor sit amet..."/>
+            tools:text="@string/placeholder_label_long"/>
 
         <Button
             android:id="@+id/fragment_challenge_freeform_submitbutton"
