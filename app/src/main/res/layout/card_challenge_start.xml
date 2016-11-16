@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <com.facebook.drawee.view.SimpleDraweeView
+            android:id="@+id/card_challenge_image"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/challenge_card_image_height"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            app:placeholderImage="@color/light_grey" />
+
+        <TextView
+            android:id="@+id/card_challenge_subtitle"
+            style="@style/AppTheme.TextView.Regular.Small"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/tip_card_title_margin"
+            android:layout_below="@+id/card_challenge_image"
+            android:layout_centerHorizontal="true"
+            android:textAlignment="center"
+            android:textColor="@color/black"
+            android:textAllCaps="true"
+            tools:text="Very short sub-title" />
+
+        <TextView
+            android:id="@+id/card_challenge_title"
+            style="@style/AppTheme.TextView.Regular.Large"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/tip_card_title_margin"
+            android:layout_below="@+id/card_challenge_subtitle"
+            android:layout_centerHorizontal="true"
+            android:textAlignment="center"
+            android:textColor="@color/black"
+            tools:text="Quiz challenge name" />
+
+        <TextView
+            android:id="@+id/card_challenge_date"
+            style="@style/AppTheme.TextView.Regular.Small"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/tip_card_title_margin"
+            android:layout_below="@+id/card_challenge_title"
+            android:layout_centerHorizontal="true"
+            android:textAlignment="center"
+            android:textColor="@color/black"
+            tools:text="Ends Month, dd, time" />
+
+        <Button
+            android:id="@+id/card_challenge_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/card_challenge_date"
+            android:layout_centerHorizontal="true"
+            android:layout_margin="16dp"
+            style="@style/AppTheme.Button.Big.Purple"
+            android:text="@string/label_start" />
+
+    </RelativeLayout>
+
+</android.support.v7.widget.CardView>
