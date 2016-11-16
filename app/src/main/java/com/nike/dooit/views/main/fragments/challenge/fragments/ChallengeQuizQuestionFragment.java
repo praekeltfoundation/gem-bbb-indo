@@ -16,12 +16,14 @@ import com.nike.dooit.views.main.fragments.challenge.interfaces.OnOptionChangeLi
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.Unbinder;
 
 public class ChallengeQuizQuestionFragment extends Fragment {
     private static final String ARG_QUESTION = "question";
 
     private QuizChallengeQuestion mQuestion = null;
     private OnOptionChangeListener optionChangeListener = null;
+    private Unbinder unbinder;
 
     @BindView(R.id.fragment_challengequizquestion_title) TextView title;
     @BindView(R.id.option_recycler_view) RecyclerView optionList;
@@ -60,13 +62,21 @@ public class ChallengeQuizQuestionFragment extends Fragment {
     @Override public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_challengequizquestion, container, false);
-        ButterKnife.bind(this, view);
+        unbinder = ButterKnife.bind(this, view);
         title.setText(mQuestion.getText());
         RecyclerView.Adapter adapter = new ChallengeQuizOptionsListAdapter(mQuestion, optionList);
         ((ChallengeQuizOptionsListAdapter) adapter).setOptionChangeListener(optionChangeListener);
         optionList.setAdapter(adapter);
         optionList.setLayoutManager(new LinearLayoutManager(getContext()));
         return view;
+    }
+
+    @Override
+    public void onDestroyView() {
+        if (unbinder != null) {
+            unbinder.unbind();
+        }
+        super.onDestroyView();
     }
 
     public void setOnOptionChangeListener(OnOptionChangeListener listener) {

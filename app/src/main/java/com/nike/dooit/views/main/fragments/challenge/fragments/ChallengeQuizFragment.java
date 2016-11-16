@@ -178,7 +178,7 @@ public class ChallengeQuizFragment extends Fragment implements OnOptionChangeLis
         currentOption = null;
         int idx = mPager.getCurrentItem() + 1;
         if (idx < mPager.getChildCount()) {
-            mPager.setCurrentItem(idx + 1);
+            mPager.setCurrentItem(idx);
         } else {
             Toast.makeText(getContext(), R.string.challenge_all_questions_complete, Toast.LENGTH_SHORT).show();
             submitParticipantEntry();

@@ -8,6 +8,7 @@ import android.support.v4.app.FragmentStatePagerAdapter;
 import com.nike.dooit.models.challenge.QuizChallenge;
 import com.nike.dooit.models.challenge.QuizChallengeOption;
 import com.nike.dooit.models.challenge.QuizChallengeQuestion;
+import com.nike.dooit.views.main.fragments.challenge.fragments.ChallengeCompleteFragment;
 import com.nike.dooit.views.main.fragments.challenge.fragments.ChallengeQuizQuestionFragment;
 import com.nike.dooit.views.main.fragments.challenge.interfaces.OnOptionSelectedListener;
 import com.nike.dooit.views.main.fragments.challenge.interfaces.OnOptionChangeListener;
@@ -19,14 +20,12 @@ import java.util.List;
  */
 
 public class ChallengeQuizPagerAdapter extends FragmentStatePagerAdapter implements OnOptionChangeListener {
-    private Context context;
     private QuizChallenge challenge;
     private List<QuizChallengeQuestion> questions;
     private OnOptionChangeListener optionChangeListener = null;
 
     public ChallengeQuizPagerAdapter(FragmentManager fm, Context context, QuizChallenge challenge) {
         super(fm);
-        this.context = context;
         this.challenge = challenge;
         if (challenge != null) {
             this.questions = challenge.getQuestions();
@@ -39,14 +38,19 @@ public class ChallengeQuizPagerAdapter extends FragmentStatePagerAdapter impleme
 
     @Override
     public Fragment getItem(int position) {
-        ChallengeQuizQuestionFragment f = ChallengeQuizQuestionFragment.newInstance(questions.get(position));
-        f.setOnOptionChangeListener(this);
+        Fragment f;
+        if (questions != null && position == questions.size()) {
+            f = ChallengeCompleteFragment.newInstance(challenge);
+        } else {
+            f = ChallengeQuizQuestionFragment.newInstance(questions.get(position));
+            ((ChallengeQuizQuestionFragment) f).setOnOptionChangeListener(this);
+        }
         return f;
     }
 
     @Override
     public int getCount() {
-        return questions != null ? questions.size() : 0;
+        return questions != null ? questions.size() + 1 : 0;
     }
 
     @Override
