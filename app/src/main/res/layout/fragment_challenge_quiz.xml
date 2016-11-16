@@ -21,20 +21,18 @@
         android:layout_margin="@dimen/text_margin"
         android:layout_below="@+id/fragment_challenge_quiz_progressbar"
         android:textAppearance="@style/AppTheme.TextView.Quiz.Subtitle"
-        android:text="Question X/Y"
         android:textAlignment="center" />
 
     <android.support.v4.view.ViewPager
         android:id="@+id/fragment_challenge_quiz_pager"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/fragment_challenge_quiz_progresscounter"
-        android:layout_weight="1" >
+        android:layout_below="@+id/fragment_challenge_quiz_progresscounter" >
     </android.support.v4.view.ViewPager>
 
     <Button
         android:id="@+id/fragment_challenge_quiz_checkbutton"
-        android:text="Check"
+        android:text="@string/fragment_challenge_check_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"

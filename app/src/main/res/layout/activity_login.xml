@@ -111,7 +111,7 @@
             android:layout_marginStart="18dp"
             android:layout_marginTop="8dp"
             android:background="@color/yellow"
-            android:text="Log in"
+            android:text="@string/label_log_in"
             android:textAllCaps="true"
             android:textColor="@color/purple"
             android:textSize="@dimen/k_font_xx_large" />
