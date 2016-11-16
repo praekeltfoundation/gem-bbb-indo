@@ -11,6 +11,8 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.nike.dooit.DooitApplication;
@@ -23,8 +25,10 @@ import com.nike.dooit.views.main.fragments.tip.providers.TipProvider;
 
 import java.util.List;
 
+import butterknife.BindString;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import rx.functions.Action1;
 
 
@@ -32,6 +36,15 @@ public class TipsListFragment extends Fragment {
 
     private static final String TAG = TipsListFragment.class.getName();
     private static final String POS = "pos";
+
+    @BindString(R.string.tips_list_filter)
+    String filterText;
+
+    @BindView(R.id.fragment_tips_list_filter)
+    ViewGroup filterView;
+
+    @BindView(R.id.fragment_tips_list_filter_text_view)
+    TextView filterTextView;
 
     @BindView(R.id.fragment_tips_list_recyclerview)
     RecyclerView recyclerView;
@@ -136,7 +149,14 @@ public class TipsListFragment extends Fragment {
 
     public void onSearch(String constraint) {
         Log.d(TAG, "On Search " + constraint);
+        showFiltering(constraint);
         adapter.getFilter().filter(constraint);
+    }
+
+    @OnClick(R.id.fragment_tips_list_filter_image_button)
+    public void clearFilter(ImageButton button) {
+        hideFiltering();
+        adapter.resetFiltered();
     }
 
     public void onPageSelected() {
@@ -178,5 +198,14 @@ public class TipsListFragment extends Fragment {
                         }
                     }
                 });
+    }
+
+    protected void showFiltering(String constraint) {
+        filterTextView.setText(String.format(filterText, constraint));
+        filterView.setVisibility(View.VISIBLE);
+    }
+
+    protected void hideFiltering() {
+        filterView.setVisibility(View.GONE);
     }
 }

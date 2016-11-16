@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
     <item android:drawable="@color/purple"/>
-    <!--<item android:drawable="@drawable/pattern_01" android:gravity="center"/>-->
+    <!--<item android:drawable="@drawable/pattern_01_purple" android:gravity="center"/>-->
 </layer-list>

@@ -1,13 +1,37 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.nike.dooit.views.main.fragments.tip.TipsListFragment">
 
 
+    <LinearLayout
+        android:id="@+id/fragment_tips_list_filter"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:visibility="gone">
+
+        <TextView
+            android:id="@+id/fragment_tips_list_filter_text_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="1"
+            android:text="@string/tips_list_filter" />
+
+        <ImageButton
+            android:id="@+id/fragment_tips_list_filter_image_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:srcCompat="@drawable/ic_d_close" />
+    </LinearLayout>
+
     <com.nike.dooit.views.custom.DesignSafeRecyclerView
         android:id="@+id/fragment_tips_list_recyclerview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        />
-</FrameLayout>
+        android:layout_below="@id/fragment_tips_list_filter"
+        android:nestedScrollingEnabled="false" />
+</RelativeLayout>
