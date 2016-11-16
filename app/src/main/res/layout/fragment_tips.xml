@@ -46,7 +46,11 @@
             android:layout_below="@+id/fragment_tips_search_hint"
             android:layout_marginTop="8dp"
             android:background="@color/yellow"
-            app:tabBackground="@drawable/tab_tips_background"
+            app:tabBackground="@drawable/tab_tips_bkg"
+            app:tabPaddingStart="0dp"
+            app:tabPaddingEnd="0dp"
+            app:tabPaddingTop="0dp"
+            app:tabPaddingBottom="0dp"
             app:tabTextAppearance="@style/AppTheme.TextView.Regular.ExtraLarge"
             app:tabIndicatorColor="@color/grey"
             app:tabIndicatorHeight="@dimen/tip_tab_indicator_height">

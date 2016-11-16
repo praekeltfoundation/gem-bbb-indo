@@ -12,4 +12,5 @@
         android:textAlignment="center"
         android:textAppearance="@style/AppTheme.TextView.Regular.ExtraLarge"
         android:textAllCaps="true"/>
+
 </RelativeLayout>
