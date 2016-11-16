@@ -3,7 +3,6 @@ package com.nike.dooit.views.main.fragments.tip.viewholders;
 import android.content.Context;
 import android.net.Uri;
 import android.support.v4.content.ContextCompat;
-import android.support.v4.content.res.ResourcesCompat;
 import android.support.v7.widget.RecyclerView;
 import android.text.SpannableString;
 import android.view.View;
@@ -27,6 +26,7 @@ import butterknife.BindString;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import rx.Observable;
 import rx.functions.Action1;
 
 /**
@@ -88,12 +88,24 @@ public class TipViewHolder extends RecyclerView.ViewHolder {
 
     @OnClick(R.id.card_tip_fav)
     public void favouriteTip(final View view) {
-        tipManager.favourite(id, new DooitErrorHandler() {
-            @Override
-            public void onError(DooitAPIError error) {
+        Observable<EmptyResponse> ob;
 
-            }
-        }).subscribe(new Action1<EmptyResponse>() {
+        if (isFavourite)
+            ob = tipManager.unfavourite(id, new DooitErrorHandler() {
+                @Override
+                public void onError(DooitAPIError error) {
+
+                }
+            });
+        else
+            ob = tipManager.favourite(id, new DooitErrorHandler() {
+                @Override
+                public void onError(DooitAPIError error) {
+
+                }
+            });
+
+        ob.subscribe(new Action1<EmptyResponse>() {
             @Override
             public void call(EmptyResponse emptyResponse) {
                 view.post(new Runnable() {
@@ -101,12 +113,12 @@ public class TipViewHolder extends RecyclerView.ViewHolder {
                     public void run() {
                         setFavourite(true);
                         persisted.clearFavourites();
+                        Toast.makeText(getContext(), String.format(addFavArticleText,
+                                titleView.getText().toString()), Toast.LENGTH_SHORT).show();
                     }
                 });
             }
         });
-        Toast.makeText(getContext(), String.format(addFavArticleText,
-                titleView.getText().toString()), Toast.LENGTH_SHORT).show();
     }
 
     @OnClick(R.id.card_tip_share)
