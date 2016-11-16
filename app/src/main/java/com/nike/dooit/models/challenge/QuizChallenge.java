@@ -3,6 +3,8 @@ package com.nike.dooit.models.challenge;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.nike.dooit.models.enums.ChallengeType;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,6 +17,8 @@ public class QuizChallenge extends BaseChallenge {
 
     QuizChallenge() {
         // Mandatory empty constructor
+        super();
+        this.type = ChallengeType.QUIZ;
     }
 
     public List<QuizChallengeQuestion> getQuestions() {
