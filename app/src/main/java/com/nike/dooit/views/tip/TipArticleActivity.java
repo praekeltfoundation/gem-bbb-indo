@@ -3,7 +3,9 @@ package com.nike.dooit.views.tip;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.webkit.WebChromeClient;
 import android.webkit.WebView;
+import android.webkit.WebViewClient;
 
 import com.nike.dooit.DooitApplication;
 import com.nike.dooit.R;
@@ -28,6 +30,13 @@ public class TipArticleActivity extends DooitActivity {
         ButterKnife.bind(this);
 
         Bundle args = getIntent().getExtras();
+
+        webView.setWebChromeClient(new WebChromeClient());
+        webView.setWebViewClient(new WebViewClient());
+        webView.clearCache(true);
+        webView.clearHistory();
+        webView.getSettings().setJavaScriptEnabled(true);
+        webView.getSettings().setJavaScriptCanOpenWindowsAutomatically(true);
         webView.loadUrl(args.getString(ARTICLE_URL));
     }
 
