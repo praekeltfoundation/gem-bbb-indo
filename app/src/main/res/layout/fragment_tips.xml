@@ -5,6 +5,12 @@
     android:layout_height="match_parent"
     tools:context="com.nike.dooit.views.main.fragments.target.TargetFragment">
 
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="centerCrop"
+        app:srcCompat="@drawable/pattern_01_grey" />
+
     <RelativeLayout
         android:id="@+id/fragment_tips_head"
         android:layout_width="match_parent"
