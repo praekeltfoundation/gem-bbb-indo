@@ -93,7 +93,7 @@ public class ChallengeFreeformFragment extends Fragment {
         challengeManager.fetchParticipantFreeformAnswer(challenge.getId(), new DooitErrorHandler() {
             @Override
             public void onError(DooitAPIError error) {
-                if ("404".equals(error.getErrorResponse().status)) {
+                if (error.getErrorResponse().getStatus() == 404) {
                     Log.d(TAG, "No entry submitted yet");
                 } else {
                     Log.d(TAG, "Could not fetch challenge entry");
