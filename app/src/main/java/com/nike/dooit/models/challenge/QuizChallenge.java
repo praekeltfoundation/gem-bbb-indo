@@ -25,6 +25,10 @@ public class QuizChallenge extends BaseChallenge {
         return questions;
     }
 
+    public int numQuestions() {
+        return questions == null ? 0 : questions.size();
+    }
+
     public void setQuestions(List<QuizChallengeQuestion> questions) {
         this.questions = questions;
     }

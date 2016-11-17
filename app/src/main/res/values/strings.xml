@@ -15,6 +15,7 @@
     <string name="label_check_result">Check</string>
     <string name="label_clear_content">Clear</string>
     <string name="label_continue">Continue</string>
+    <string name="label_done">Done</string>
     <string name="label_loading">Loading</string>
     <string name="label_log_in">Log in</string>
     <string name="label_mobile_number">Mobile number</string>
@@ -206,5 +207,6 @@
     <string name="fragment_challenge_correct_text">You are correct!</string>
     <string name="label_try_again">Try again</string>
     <string name="fragment_challenge_wrong_text">Try again!</string>
+    <string name="challenge_quiz_counter_fmt">Question %1$d/%2$d</string>
 
 </resources>

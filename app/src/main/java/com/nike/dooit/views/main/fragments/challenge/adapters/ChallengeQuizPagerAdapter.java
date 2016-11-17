@@ -4,7 +4,10 @@ import android.content.Context;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
+import android.support.v4.view.ViewPager;
+import android.util.Log;
 
+import com.nike.dooit.R;
 import com.nike.dooit.models.challenge.QuizChallenge;
 import com.nike.dooit.models.challenge.QuizChallengeOption;
 import com.nike.dooit.models.challenge.QuizChallengeQuestion;
@@ -15,11 +18,14 @@ import com.nike.dooit.views.main.fragments.challenge.interfaces.OnOptionChangeLi
 
 import java.util.List;
 
+import butterknife.OnPageChange;
+
 /**
  * Created by wsche on 2016/11/05.
  */
 
 public class ChallengeQuizPagerAdapter extends FragmentStatePagerAdapter implements OnOptionChangeListener {
+    private static final String TAG = "QuizPager";
     private QuizChallenge challenge;
     private List<QuizChallengeQuestion> questions;
     private OnOptionChangeListener optionChangeListener = null;

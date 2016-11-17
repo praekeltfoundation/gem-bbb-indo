@@ -41,6 +41,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
+import butterknife.OnPageChange;
 import butterknife.Unbinder;
 import rx.functions.Action1;
 
@@ -186,6 +187,19 @@ public class ChallengeQuizFragment extends Fragment implements OnOptionChangeLis
             Fragment fragment = ChallengeNoneFragment.newInstance();
             ft.replace(R.id.fragment_challenge_container, fragment);
             ft.commit();
+        }
+    }
+
+    @OnPageChange(R.id.fragment_challenge_quiz_pager)
+    public void onPageSelected(int position) {
+        Log.d(TAG, "Page change");
+        mProgressBar.setProgress(100 * position / mChallenge.numQuestions());
+        if (position == mAdapter.getCount() - 1) {
+            checkButton.setText(R.string.label_done);
+            mProgressCounter.setText("");
+        } else {
+            checkButton.setText(R.string.label_check_result);
+            mProgressCounter.setText(String.format(getString(R.string.challenge_quiz_counter_fmt), position + 1, mChallenge.numQuestions()));
         }
     }
 }
