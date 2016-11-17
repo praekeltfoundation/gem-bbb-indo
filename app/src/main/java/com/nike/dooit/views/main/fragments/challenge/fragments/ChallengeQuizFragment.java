@@ -100,7 +100,7 @@ public class ChallengeQuizFragment extends Fragment implements OnOptionChangeLis
             mChallenge = getArguments().getParcelable(ARG_CHALLENGE);
         }
         ((DooitApplication) getActivity().getApplication()).component.inject(this);
-        mAdapter = new ChallengeQuizPagerAdapter(getChildFragmentManager(), getContext(), mChallenge);
+        mAdapter = new ChallengeQuizPagerAdapter(getChildFragmentManager(), mChallenge);
         mAdapter.setOnOptionChangeListener(this);
     }
 
@@ -192,7 +192,7 @@ public class ChallengeQuizFragment extends Fragment implements OnOptionChangeLis
 
     @OnPageChange(R.id.fragment_challenge_quiz_pager)
     public void onPageSelected(int position) {
-        Log.d(TAG, "Page change");
+        Log.d(TAG, "Page change: " + String.valueOf(position));
         mProgressBar.setProgress(100 * position / mChallenge.numQuestions());
         if (position == mAdapter.getCount() - 1) {
             checkButton.setText(R.string.label_done);

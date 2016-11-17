@@ -42,8 +42,8 @@ public class QuizOptionViewHolder extends RecyclerView.ViewHolder implements Vie
     }
 
     @Override public void onClick(View view) {
-        if (adapter instanceof OnOptionSelectedListener) {
-            ((OnOptionSelectedListener) adapter).onOptionSelected(getAdapterPosition());
+        if (adapter != null) {
+            adapter.onOptionSelected(option);
         }
     }
 

@@ -4,29 +4,39 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.nike.dooit.R;
+import com.nike.dooit.models.challenge.QuizChallengeOption;
 import com.nike.dooit.models.challenge.QuizChallengeQuestion;
 import com.nike.dooit.views.main.fragments.challenge.adapters.ChallengeQuizOptionsListAdapter;
 import com.nike.dooit.views.main.fragments.challenge.interfaces.OnOptionChangeListener;
+import com.nike.dooit.views.main.fragments.challenge.viewholders.QuizOptionViewHolder;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnItemSelected;
 import butterknife.Unbinder;
 
-public class ChallengeQuizQuestionFragment extends Fragment {
+public class ChallengeQuizQuestionFragment extends Fragment implements OnOptionChangeListener {
+    private static final String TAG = "QuizQuestionFragment";
     private static final String ARG_QUESTION = "question";
+    private static final String ARG_OPTION_ID = "option_id";
 
     private QuizChallengeQuestion mQuestion = null;
+    private long optionId = -1;
     private OnOptionChangeListener optionChangeListener = null;
+    private ChallengeQuizOptionsListAdapter adapter = null;
     private Unbinder unbinder;
 
-    @BindView(R.id.fragment_challengequizquestion_title) TextView title;
-    @BindView(R.id.option_recycler_view) RecyclerView optionList;
+    @BindView(R.id.fragment_challengequizquestion_title)
+    TextView title;
+    @BindView(R.id.option_recycler_view)
+    RecyclerView optionList;
 
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
@@ -44,9 +54,14 @@ public class ChallengeQuizQuestionFragment extends Fragment {
     }
 
     public static ChallengeQuizQuestionFragment newInstance(QuizChallengeQuestion question) {
+        return newInstance(question, -1);
+    }
+
+    public static ChallengeQuizQuestionFragment newInstance(QuizChallengeQuestion question, long optionId) {
         ChallengeQuizQuestionFragment fragment = new ChallengeQuizQuestionFragment();
         Bundle args = new Bundle();
-        args.putParcelable("question", question);
+        args.putParcelable(ARG_QUESTION, question);
+        args.putLong(ARG_OPTION_ID, optionId);
         fragment.setArguments(args);
         return fragment;
     }
@@ -56,6 +71,7 @@ public class ChallengeQuizQuestionFragment extends Fragment {
 
         if (getArguments() != null) {
             mQuestion = getArguments().getParcelable(ARG_QUESTION);
+            optionId = getArguments().getLong(ARG_OPTION_ID);
         }
     }
 
@@ -64,10 +80,11 @@ public class ChallengeQuizQuestionFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_challengequizquestion, container, false);
         unbinder = ButterKnife.bind(this, view);
         title.setText(mQuestion.getText());
-        RecyclerView.Adapter adapter = new ChallengeQuizOptionsListAdapter(mQuestion, optionList);
-        ((ChallengeQuizOptionsListAdapter) adapter).setOptionChangeListener(optionChangeListener);
+        adapter = new ChallengeQuizOptionsListAdapter(mQuestion, optionId);
+        adapter.setOptionChangeListener(this);
         optionList.setAdapter(adapter);
         optionList.setLayoutManager(new LinearLayoutManager(getContext()));
+        selectItem(optionId);
         return view;
     }
 
@@ -79,7 +96,40 @@ public class ChallengeQuizQuestionFragment extends Fragment {
         super.onDestroyView();
     }
 
+    public void selectItem(long id) {
+        if (optionList != null) {
+            RecyclerView.ViewHolder old = optionList.findViewHolderForItemId(optionId);
+            if (old != null && old instanceof QuizOptionViewHolder) {
+                ((QuizOptionViewHolder) old).setSelected(false);
+            }
+
+            RecyclerView.ViewHolder holder = optionList.findViewHolderForItemId(id);
+            if (holder != null && holder instanceof QuizOptionViewHolder) {
+                ((QuizOptionViewHolder) holder).setSelected(true);
+            }
+        }
+
+        if (adapter != null) {
+            adapter.setSelectedId(id);
+        }
+
+        optionId = id;
+    }
+
+    public void onItemSelected() {
+        Log.d(TAG, "Item selected");
+    }
+
     public void setOnOptionChangeListener(OnOptionChangeListener listener) {
         this.optionChangeListener = listener;
+    }
+
+    @Override
+    public void onOptionChange(QuizChallengeQuestion question, QuizChallengeOption option) {
+        if (this.optionChangeListener != null) {
+            optionChangeListener.onOptionChange(question, option);
+        }
+
+        selectItem(option.getId());
     }
 }

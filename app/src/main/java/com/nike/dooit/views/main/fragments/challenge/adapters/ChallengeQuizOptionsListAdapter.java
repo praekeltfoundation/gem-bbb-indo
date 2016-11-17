@@ -19,21 +19,30 @@ import java.util.List;
  */
 
 public class ChallengeQuizOptionsListAdapter extends RecyclerView.Adapter<QuizOptionViewHolder> implements OnOptionSelectedListener {
+    private static final String TAG = "QuizOptionsAdapter";
     private QuizChallengeQuestion mQuestion;
     private List<QuizChallengeOption> mOptionList;
-    private int selectedIdx;
-    public OnOptionChangeListener optionChangeListener = null;
+    private long selectedId;
+    private OnOptionChangeListener optionChangeListener = null;
 
-    RecyclerView recycler;
-
-    public ChallengeQuizOptionsListAdapter(QuizChallengeQuestion question, final RecyclerView recycler) {
+    public ChallengeQuizOptionsListAdapter(QuizChallengeQuestion question) {
         mQuestion = question;
         if (question != null) {
             mOptionList = question.getOptions();
         }
-        selectedIdx = -1;
-        this.recycler = recycler;
+        selectedId = -1;
         optionChangeListener = null;
+        setHasStableIds(true);
+    }
+
+    public ChallengeQuizOptionsListAdapter(QuizChallengeQuestion question, long optionId) {
+        mQuestion = question;
+        if (question != null) {
+            mOptionList = question.getOptions();
+        }
+        selectedId = optionId;
+        optionChangeListener = null;
+        setHasStableIds(true);
     }
 
     @Override public int getItemCount() {
@@ -57,7 +66,11 @@ public class ChallengeQuizOptionsListAdapter extends RecyclerView.Adapter<QuizOp
     @Override public void onBindViewHolder(final QuizOptionViewHolder holder, int position) {
         final QuizChallengeOption item = mOptionList.get(position);
         holder.populate(item);
-        holder.setSelected(position == selectedIdx);
+        holder.setSelected(item.getId() == selectedId);
+    }
+
+    public void setSelectedId(long id) {
+        selectedId = (id < 0) ? -1 : id;
     }
 
     public void setOptionChangeListener(OnOptionChangeListener listener) {
@@ -65,26 +78,9 @@ public class ChallengeQuizOptionsListAdapter extends RecyclerView.Adapter<QuizOp
     }
 
     @Override
-    public void onOptionSelected(int position) {
-        if (recycler != null) {
-            if (selectedIdx >= 0 && selectedIdx < getItemCount()) {
-                QuizOptionViewHolder oldView = (QuizOptionViewHolder) recycler.findViewHolderForAdapterPosition(selectedIdx);
-                if (oldView != null) {
-                    oldView.setSelected(false);
-                }
-            }
-            if (position >= 0 && position < getItemCount()) {
-                QuizOptionViewHolder newView = (QuizOptionViewHolder) recycler.findViewHolderForAdapterPosition(position);
-                if (newView != null) {
-                    newView.setSelected(true);
-                }
-                if (optionChangeListener != null) {
-                    optionChangeListener.onOptionChange(mQuestion, mOptionList.get(position));
-                }
-            }
-            selectedIdx = position;
-        } else {
-            System.out.println("No recycler.");
+    public void onOptionSelected(QuizChallengeOption option) {
+        if (optionChangeListener != null) {
+            optionChangeListener.onOptionChange(mQuestion, option);
         }
     }
 }

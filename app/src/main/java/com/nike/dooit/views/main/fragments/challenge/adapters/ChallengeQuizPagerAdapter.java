@@ -6,6 +6,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
+import android.util.SparseIntArray;
 
 import com.nike.dooit.R;
 import com.nike.dooit.models.challenge.QuizChallenge;
@@ -16,7 +17,9 @@ import com.nike.dooit.views.main.fragments.challenge.fragments.ChallengeQuizQues
 import com.nike.dooit.views.main.fragments.challenge.interfaces.OnOptionSelectedListener;
 import com.nike.dooit.views.main.fragments.challenge.interfaces.OnOptionChangeListener;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import butterknife.OnPageChange;
 
@@ -28,9 +31,10 @@ public class ChallengeQuizPagerAdapter extends FragmentStatePagerAdapter impleme
     private static final String TAG = "QuizPager";
     private QuizChallenge challenge;
     private List<QuizChallengeQuestion> questions;
+    private Map<Long, Long> selections = new HashMap<>();
     private OnOptionChangeListener optionChangeListener = null;
 
-    public ChallengeQuizPagerAdapter(FragmentManager fm, Context context, QuizChallenge challenge) {
+    public ChallengeQuizPagerAdapter(FragmentManager fm, QuizChallenge challenge) {
         super(fm);
         this.challenge = challenge;
         if (challenge != null) {
@@ -44,14 +48,23 @@ public class ChallengeQuizPagerAdapter extends FragmentStatePagerAdapter impleme
 
     @Override
     public Fragment getItem(int position) {
-        Fragment f;
-        if (questions != null && position == questions.size()) {
-            f = ChallengeCompleteFragment.newInstance(challenge);
-        } else {
-            f = ChallengeQuizQuestionFragment.newInstance(questions.get(position));
-            ((ChallengeQuizQuestionFragment) f).setOnOptionChangeListener(this);
+        if (questions == null) {
+            return null;
         }
-        return f;
+
+        if (position == questions.size()) {
+            return ChallengeCompleteFragment.newInstance(challenge);
+        } else {
+            ChallengeQuizQuestionFragment f;
+            QuizChallengeQuestion question = questions.get(position);
+            long optionId = -1;
+            if (question != null && selections.containsKey(question.getId())) {
+                optionId = selections.get(question.getId());
+            }
+            f = ChallengeQuizQuestionFragment.newInstance(question, optionId);
+            f.setOnOptionChangeListener(this);
+            return f;
+        }
     }
 
     @Override
@@ -61,6 +74,7 @@ public class ChallengeQuizPagerAdapter extends FragmentStatePagerAdapter impleme
 
     @Override
     public void onOptionChange(QuizChallengeQuestion question, QuizChallengeOption option) {
+        selections.put(question.getId(), option.getId());
         if (optionChangeListener != null) {
             optionChangeListener.onOptionChange(question, option);
         }
