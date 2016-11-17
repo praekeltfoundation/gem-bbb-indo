@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginBottom="@dimen/tip_card_margin"
@@ -13,8 +14,7 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:layout_height="match_parent">
 
         <com.facebook.drawee.view.SimpleDraweeView
             android:id="@+id/card_tip_image"
@@ -23,22 +23,66 @@
             app:placeholderImage="@color/light_grey" />
 
         <ImageView
+            android:id="@+id/card_tip_gradient"
             android:layout_width="match_parent"
             android:layout_height="@dimen/tip_card_overlay_height"
-            android:src="@drawable/overlay_tip_gradient"
             android:layout_alignBottom="@+id/card_tip_image"
             android:scaleType="fitXY"
+            android:src="@drawable/overlay_tip_gradient" />
 
-            />
+        <!-- <LinearLayout
+             android:id="@+id/card_tip_tags_view"
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:layout_alignBottom="@id/card_tip_image"
+             android:layout_alignStart="@id/card_tip_image"
+             android:layout_margin="@dimen/tip_card_icon_margin"
+             android:orientation="horizontal">
+
+         </LinearLayout>-->
 
         <LinearLayout
-            android:id="@+id/card_tip_tags_view"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:layout_alignBottom="@id/card_tip_image"
-            android:layout_alignStart="@id/card_tip_image"
-            android:layout_margin="@dimen/tip_card_icon_margin"
+            android:layout_marginBottom="@dimen/tip_card_icon_margin"
             android:orientation="horizontal">
+
+            <com.greenfrvr.hashtagview.HashtagView
+                android:id="@+id/card_tip_tags_view"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:layout_gravity="bottom|start"
+                app:tagBackground="@color/yellow"
+                app:tagTextColor="@color/black"
+                app:tagTextSize="@dimen/k_font_small"
+                app:rowGravity="left"/>
+
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+                android:layout_gravity="end|bottom">
+
+                <ImageView
+                    android:id="@+id/card_tip_share"
+                    android:layout_width="20dp"
+                    android:layout_height="14dp"
+                    android:layout_marginEnd="@dimen/tip_card_icon_margin"
+                    android:layout_alignParentRight="true"
+                    app:srcCompat="@drawable/ic_d_share_icon_small" />
+
+                <ImageView
+                    android:id="@+id/card_tip_fav"
+                    android:layout_width="20dp"
+                    android:layout_height="14dp"
+                    android:layout_marginBottom="@dimen/tip_card_icon_margin"
+                    android:layout_marginEnd="@dimen/tip_card_icon_margin"
+                    android:layout_toLeftOf="@id/card_tip_share"
+                    app:srcCompat="@drawable/ic_d_heart_inverted" />
+            </RelativeLayout>
 
         </LinearLayout>
 
@@ -49,28 +93,9 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/card_tip_image"
             android:layout_marginTop="@dimen/tip_card_title_margin"
-            android:text="TextView"
-            android:textColor="@color/black" />
+            android:textColor="@color/black"
+            tools:text="Title" />
 
-        <ImageView
-            android:id="@+id/card_tip_share"
-            android:layout_width="20dp"
-            android:layout_height="14dp"
-            android:layout_alignBottom="@+id/card_tip_image"
-            android:layout_alignRight="@+id/card_tip_image"
-            android:layout_marginBottom="@dimen/tip_card_icon_margin"
-            android:layout_marginRight="@dimen/tip_card_icon_margin"
-            app:srcCompat="@drawable/ic_d_share_icon_small" />
-
-        <ImageView
-            android:id="@+id/card_tip_fav"
-            android:layout_width="20dp"
-            android:layout_height="14dp"
-            android:layout_alignBottom="@+id/card_tip_image"
-            android:layout_marginBottom="@dimen/tip_card_icon_margin"
-            android:layout_marginRight="@dimen/tip_card_icon_margin"
-            android:layout_toLeftOf="@+id/card_tip_share"
-            app:srcCompat="@drawable/ic_d_heart_inverted" />
     </RelativeLayout>
 
-</android.support.v7.widget.CardView>
+</FrameLayout>

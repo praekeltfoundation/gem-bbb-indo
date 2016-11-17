@@ -18,5 +18,5 @@
         android:textAllCaps="true"
         android:textSize="@dimen/k_font_extra_small"
         android:textColor="@color/black"
-        android:text="@string/tips_card_empty_tag" />
+        tools:text="@string/tips_card_empty_tag" />
 </FrameLayout>

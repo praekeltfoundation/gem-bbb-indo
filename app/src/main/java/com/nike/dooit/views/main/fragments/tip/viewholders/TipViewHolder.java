@@ -15,6 +15,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.facebook.drawee.view.SimpleDraweeView;
+import com.greenfrvr.hashtagview.HashtagView;
 import com.nike.dooit.DooitApplication;
 import com.nike.dooit.R;
 import com.nike.dooit.api.DooitAPIError;
@@ -54,7 +55,7 @@ public class TipViewHolder extends RecyclerView.ViewHolder {
     SimpleDraweeView imageView;
 
     @BindView(R.id.card_tip_tags_view)
-    ViewGroup tagsView;
+    HashtagView tagsView;
 
     @BindView(R.id.card_tip_title)
     TextView titleView;
@@ -165,14 +166,20 @@ public class TipViewHolder extends RecyclerView.ViewHolder {
     }
 
     public void addTags(List<String> tags) {
-        LayoutInflater inflater = LayoutInflater.from(getContext());
+        tagsView.setData(tags, new HashtagView.DataTransform<String>() {
+            @Override
+            public CharSequence prepare(String item) {
+                return item.toUpperCase();
+            }
+        });
+/*        LayoutInflater inflater = LayoutInflater.from(getContext());
         for (String tag : tags) {
             // Adding child view later to avoid bug where text isn't set.
             ViewGroup v = (ViewGroup) inflater.inflate(R.layout.card_tip_tag, tagsView, false);
             TextView textView = ((TextView) v.findViewById(R.id.card_tip_tag_text_view));
             textView.setText(tag);
             tagsView.addView(v);
-        }
+        }*/
     }
 
     public void setFavourite(boolean favourite) {

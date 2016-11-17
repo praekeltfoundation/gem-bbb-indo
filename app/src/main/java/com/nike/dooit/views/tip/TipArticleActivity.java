@@ -3,6 +3,7 @@ package com.nike.dooit.views.tip;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.webkit.WebChromeClient;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
@@ -37,6 +38,7 @@ public class TipArticleActivity extends DooitActivity {
         webView.clearHistory();
         webView.getSettings().setJavaScriptEnabled(true);
         webView.getSettings().setJavaScriptCanOpenWindowsAutomatically(true);
+        webView.setScrollBarStyle(View.SCROLLBARS_INSIDE_OVERLAY);
         webView.loadUrl(args.getString(ARTICLE_URL));
     }
 
