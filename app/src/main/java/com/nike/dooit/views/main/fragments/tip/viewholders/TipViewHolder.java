@@ -5,10 +5,12 @@ import android.net.Uri;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.text.SpannableString;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -23,6 +25,7 @@ import com.nike.dooit.helpers.Persisted;
 import com.nike.dooit.views.tip.TipArticleActivity;
 
 import java.util.Collection;
+import java.util.List;
 
 import javax.inject.Inject;
 
@@ -161,11 +164,14 @@ public class TipViewHolder extends RecyclerView.ViewHolder {
         tagsView.removeAllViews();
     }
 
-    public void addTags(Collection<String> tags) {
+    public void addTags(List<String> tags) {
         LayoutInflater inflater = LayoutInflater.from(getContext());
         for (String tag : tags) {
-            View v = inflater.inflate(R.layout.card_tip_tag, tagsView, true);
-            ((TextView) v.findViewById(R.id.card_tip_tag_text_view)).setText(tag);
+            // Adding child view later to avoid bug where text isn't set.
+            ViewGroup v = (ViewGroup) inflater.inflate(R.layout.card_tip_tag, tagsView, false);
+            TextView textView = ((TextView) v.findViewById(R.id.card_tip_tag_text_view));
+            textView.setText(tag);
+            tagsView.addView(v);
         }
     }
 
