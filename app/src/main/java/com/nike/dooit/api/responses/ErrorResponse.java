@@ -22,8 +22,6 @@ public class ErrorResponse {
     @SerializedName("field_errors")
     private Map<String, List<String>> fieldErrors;
 
-    public ErrorBody error;
-
     public int getStatus() {
         return status;
     }
@@ -32,16 +30,15 @@ public class ErrorResponse {
         return errors;
     }
 
+    public boolean hasErrors() {
+        return errors != null && !errors.isEmpty();
+    }
+
     public Map<String, List<String>> getRelErrors() {
         return relErrors;
     }
 
     public Map<String, List<String>> getFieldErrors() {
         return fieldErrors;
-    }
-
-    public static class ErrorBody {
-        public String code;
-        public String message;
     }
 }
