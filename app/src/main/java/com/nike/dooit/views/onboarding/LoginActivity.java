@@ -68,10 +68,8 @@ public class LoginActivity extends DooitActivity {
         authenticationManager.login(name.getText().toString(), password.getText().toString(), new DooitErrorHandler() {
             @Override
             public void onError(DooitAPIError error) {
-                for (String msg : error.getErrorResponse().getErrors()) {
+                for (String msg : error.getErrorResponse().getErrors())
                     Snackbar.make(buttonLogin, msg, Snackbar.LENGTH_SHORT).show();
-                }
-//                Snackbar.make(buttonLogin, R.string.invalid_credentials, Snackbar.LENGTH_SHORT).show();
             }
         }).subscribe(new Action1<AuthenticationResponse>() {
             @Override
