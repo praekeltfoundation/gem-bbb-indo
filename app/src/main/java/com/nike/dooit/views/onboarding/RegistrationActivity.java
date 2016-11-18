@@ -3,15 +3,16 @@ package com.nike.dooit.views.onboarding;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.v4.content.res.ResourcesCompat;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.TextUtils;
 import android.text.style.ForegroundColorSpan;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.nike.dooit.DooitApplication;
 import com.nike.dooit.R;
@@ -20,9 +21,9 @@ import com.nike.dooit.api.DooitErrorHandler;
 import com.nike.dooit.api.managers.AuthenticationManager;
 import com.nike.dooit.api.responses.AuthenticationResponse;
 import com.nike.dooit.api.responses.OnboardingResponse;
+import com.nike.dooit.helpers.Persisted;
 import com.nike.dooit.models.Profile;
 import com.nike.dooit.models.User;
-import com.nike.dooit.helpers.Persisted;
 import com.nike.dooit.views.DooitActivity;
 import com.nike.dooit.views.helpers.activity.DooitActivityBuilder;
 
@@ -68,6 +69,9 @@ public class RegistrationActivity extends DooitActivity {
     @BindView(R.id.activity_registration_password_example_text_edit)
     TextView passwordHint;
 
+    @BindView(R.id.activity_registration_register_button)
+    Button registerButton;
+
 
     @Inject
     AuthenticationManager authenticationManager;
@@ -112,8 +116,8 @@ public class RegistrationActivity extends DooitActivity {
         authenticationManager.onboard(getUser(), new DooitErrorHandler() {
             @Override
             public void onError(DooitAPIError error) {
-                Toast.makeText(RegistrationActivity.this, "Unable to register", Toast.LENGTH_SHORT).show();
-
+                for (String msg : error.getErrorMessages())
+                    Snackbar.make(registerButton, msg, Snackbar.LENGTH_SHORT).show();
             }
         }).subscribe(new Action1<OnboardingResponse>() {
             @Override
@@ -121,7 +125,8 @@ public class RegistrationActivity extends DooitActivity {
                 authenticationManager.login(getUser().getUsername(), getUser().getPassword(), new DooitErrorHandler() {
                     @Override
                     public void onError(DooitAPIError error) {
-                        Toast.makeText(RegistrationActivity.this, "Unable to Log in", Toast.LENGTH_SHORT).show();
+                        for (String msg : error.getErrorMessages())
+                            Snackbar.make(registerButton, msg, Snackbar.LENGTH_SHORT).show();
                     }
                 }).subscribe(new Action1<AuthenticationResponse>() {
                     @Override

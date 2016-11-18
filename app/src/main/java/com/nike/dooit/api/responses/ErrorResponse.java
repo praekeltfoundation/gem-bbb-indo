@@ -1,16 +1,44 @@
 package com.nike.dooit.api.responses;
 
+import com.google.gson.annotations.SerializedName;
+
+import java.util.List;
+import java.util.Map;
+
 /**
  * Created by herman on 2016/11/05.
  */
 
 public class ErrorResponse {
 
-    public String status;
-    public ErrorBody error;
+    @SerializedName("status_code")
+    private int status;
 
-    public static class ErrorBody {
-        public String code;
-        public String message;
+    private List<String> errors;
+
+    @SerializedName("rel_errors")
+    private Map<String, List<String>> relErrors;
+
+    @SerializedName("field_errors")
+    private Map<String, List<String>> fieldErrors;
+
+    public int getStatus() {
+        return status;
+    }
+
+    public List<String> getErrors() {
+        return errors;
+    }
+
+    public boolean hasErrors() {
+        return errors != null && !errors.isEmpty();
+    }
+
+    public Map<String, List<String>> getRelErrors() {
+        return relErrors;
+    }
+
+    public Map<String, List<String>> getFieldErrors() {
+        return fieldErrors;
     }
 }
