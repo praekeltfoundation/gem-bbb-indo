@@ -43,6 +43,10 @@ public class RegistrationActivity extends DooitActivity {
     private static final int MIN_AGE = 12;
     private static final int MAX_AGE = 80;
     private static final String NAME_PATTERN = "[a-zA-Z0-9@\\.\\=\\-\\_]+";
+    private static final String MOBILE_PATTERN = "^\\+?1?\\d{9,15}$";
+    private static final int MAX_NAME_LENGTH = 150;
+    private static final int MIN_MOBILE_LENGTH = 9;
+    private static final int MAX_MOBILE_LENGTH = 16;
 
     @BindView(R.id.activity_registration_t_c_text_view)
     TextView textViewTC;
@@ -204,6 +208,10 @@ public class RegistrationActivity extends DooitActivity {
             valid = false;
             nameHint.setText(R.string.reg_example_name_error_3);
             nameHint.setTextColor(ResourcesCompat.getColor(getResources(), android.R.color.holo_red_light, getTheme()));
+        } else if (nameText.length() > MAX_NAME_LENGTH) {
+            valid = false;
+            nameHint.setText(R.string.reg_example_name_error_4);
+            nameHint.setTextColor(ResourcesCompat.getColor(getResources(), android.R.color.holo_red_light, getTheme()));
         } else {
             nameHint.setText(R.string.reg_example_name);
             nameHint.setTextColor(ResourcesCompat.getColor(getResources(), R.color.white, getTheme()));
@@ -225,10 +233,19 @@ public class RegistrationActivity extends DooitActivity {
     }
 
     public boolean isNumberValid() {
-        boolean valid;
-        valid = !TextUtils.isEmpty(number.getText());
-        if (!valid) {
+        boolean valid = true;
+        String numberText = number.getText().toString();
+        if (TextUtils.isEmpty(numberText)) {
+            valid = false;
             numberHint.setText(R.string.reg_example_number_error_1);
+            numberHint.setTextColor(ResourcesCompat.getColor(getResources(), android.R.color.holo_red_light, getTheme()));
+        } else if (numberText.length() < MIN_MOBILE_LENGTH) {
+            valid = false;
+            numberHint.setText(R.string.reg_example_number_error_2);
+            numberHint.setTextColor(ResourcesCompat.getColor(getResources(), android.R.color.holo_red_light, getTheme()));
+        } else if (numberText.length() > MAX_MOBILE_LENGTH) {
+            valid = false;
+            numberHint.setText(R.string.reg_example_number_error_3);
             numberHint.setTextColor(ResourcesCompat.getColor(getResources(), android.R.color.holo_red_light, getTheme()));
         } else {
             numberHint.setText(R.string.reg_example_number);

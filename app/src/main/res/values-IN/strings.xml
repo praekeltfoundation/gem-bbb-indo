@@ -51,6 +51,7 @@
     <string name="reg_example_name_error_1">Nama tidak boleh kosong</string>
     <string name="reg_example_name_error_2">Name can\'t contain spaces</string>
     <string name="reg_example_name_error_3">Name can only contain letters and numbers</string>
+    <string name="reg_example_name_error_4">Name can\'t be longer than 150 characters</string>
     <string name="reg_age">Berapakah umur Anda?</string>
     <string name="reg_example_age">Contoh: 16</string>
     <string name="reg_example_age_error_1">Umur tidak boleh kosong</string>
@@ -59,6 +60,8 @@
     <string name="reg_gender_girl">Gadis</string>
     <string name="reg_example_number">Contoh: 1234567890</string>
     <string name="reg_example_number_error_1">Nomor ponsel tidak boleh kosong</string>
+    <string name="reg_example_number_error_2">Mobile Number must be longer than 9 digits</string>
+    <string name="reg_example_number_error_3">Mobile Number must be shorter than 15 digits</string>
     <string name="reg_example_password">Harus memiliki minimal 6 karakter</string>
     <string name="reg_example_password_error_1">Password tidak boleh kosong</string>
     <string name="already_registered_log_in">Sudah terdaftar? Masuk</string>
