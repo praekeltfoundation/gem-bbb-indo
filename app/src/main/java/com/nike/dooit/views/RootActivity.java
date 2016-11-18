@@ -2,6 +2,7 @@ package com.nike.dooit.views;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.app.AppCompatDelegate;
 
 import com.nike.dooit.DooitApplication;
 import com.nike.dooit.helpers.Persisted;
@@ -14,6 +15,10 @@ public class RootActivity extends AppCompatActivity {
 
     @Inject
     Persisted persisted;
+
+    static {
+        AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
