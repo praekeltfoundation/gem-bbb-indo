@@ -19,7 +19,7 @@
             android:layout_marginRight="8dp"
             android:layout_marginTop="8dp"
             android:background="@color/light_grey"
-            android:drawableEnd="@drawable/ic_d_search"
+            android:drawableEnd="@drawable/search_icon"
             android:imeOptions="actionDone"
             android:inputType="text" />
 

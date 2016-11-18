@@ -46,7 +46,7 @@
             android:layout_alignTop="@+id/fragment_target_targets_view_pagers"
             android:layout_gravity="center_vertical|start"
             android:background="?android:selectableItemBackground"
-            android:src="@drawable/ic_d_left_chevron"
+            app:srcCompat="@drawable/ic_d_left_chevron"
             android:visibility="gone"
             tools:visibility="visible" />
 
@@ -59,7 +59,7 @@
             android:layout_alignTop="@+id/fragment_target_targets_view_pagers"
             android:layout_gravity="center_vertical|end"
             android:background="?android:selectableItemBackground"
-            android:src="@drawable/ic_d_right_chevron"
+            app:srcCompat="@drawable/ic_d_right_chevron"
             android:visibility="gone"
             tools:visibility="visible" />
 
@@ -150,7 +150,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/fragment_target_weeks"
             android:layout_toStartOf="@+id/fragment_target_legend_average"
-            android:drawableStart="@drawable/ic_d_target_legend_goals"
+            android:drawableStart="@drawable/target_legend_goals"
             android:gravity="center_vertical"
             android:text="@string/legend_label_goals" />
 
@@ -160,7 +160,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/fragment_target_weeks"
             android:layout_centerHorizontal="true"
-            android:drawableStart="@drawable/ic_d_target_legend_average"
+            android:drawableStart="@drawable/target_legend_average"
             android:gravity="center_vertical"
             android:text="@string/legend_label_average" />
 
@@ -170,7 +170,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/fragment_target_weeks"
             android:layout_toEndOf="@+id/fragment_target_legend_average"
-            android:drawableStart="@drawable/ic_d_target_legend_saved"
+            android:drawableStart="@drawable/target_legend_saved"
             android:gravity="center_vertical"
             android:text="@string/legend_label_saved" />
 
