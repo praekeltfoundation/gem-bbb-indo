@@ -29,6 +29,8 @@ import com.nike.dooit.models.User;
 import com.nike.dooit.views.DooitActivity;
 import com.nike.dooit.views.helpers.activity.DooitActivityBuilder;
 
+import java.util.regex.Pattern;
+
 import javax.inject.Inject;
 
 import butterknife.BindView;
@@ -40,6 +42,7 @@ public class RegistrationActivity extends DooitActivity {
 
     private static final int MIN_AGE = 12;
     private static final int MAX_AGE = 80;
+    private static final String NAME_PATTERN = "[a-zA-Z0-9@\\.\\=\\-\\_]+";
 
     @BindView(R.id.activity_registration_t_c_text_view)
     TextView textViewTC;
@@ -187,10 +190,19 @@ public class RegistrationActivity extends DooitActivity {
     }
 
     public boolean isNameValid() {
-        boolean valid;
-        valid = !TextUtils.isEmpty(name.getText());
-        if (!valid) {
+        boolean valid = true;
+        String nameText = name.getText().toString();
+        if (TextUtils.isEmpty(nameText)) {
+            valid = false;
             nameHint.setText(R.string.reg_example_name_error_1);
+            nameHint.setTextColor(ResourcesCompat.getColor(getResources(), android.R.color.holo_red_light, getTheme()));
+        } else if (nameText.contains(" ")) {
+            valid = false;
+            nameHint.setText(R.string.reg_example_name_error_2);
+            nameHint.setTextColor(ResourcesCompat.getColor(getResources(), android.R.color.holo_red_light, getTheme()));
+        } else if (!Pattern.compile(NAME_PATTERN).matcher(nameText).matches()) {
+            valid = false;
+            nameHint.setText(R.string.reg_example_name_error_3);
             nameHint.setTextColor(ResourcesCompat.getColor(getResources(), android.R.color.holo_red_light, getTheme()));
         } else {
             nameHint.setText(R.string.reg_example_name);

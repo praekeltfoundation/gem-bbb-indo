@@ -49,6 +49,8 @@
     <string name="reg_t_c">Dengan mengklik register, Anda setuju dengan Persyaratan dan Kondisi kami></string>
     <string name="reg_example_name">Contoh: Aulia Dharmaningtyas</string>
     <string name="reg_example_name_error_1">Nama tidak boleh kosong</string>
+    <string name="reg_example_name_error_2">Name can\'t contain spaces</string>
+    <string name="reg_example_name_error_3">Name can only contain letters and numbers</string>
     <string name="reg_age">Berapakah umur Anda?</string>
     <string name="reg_example_age">Contoh: 16</string>
     <string name="reg_example_age_error_1">Umur tidak boleh kosong</string>
