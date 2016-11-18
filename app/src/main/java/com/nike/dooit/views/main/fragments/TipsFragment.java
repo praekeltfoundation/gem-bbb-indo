@@ -90,7 +90,7 @@ public class TipsFragment extends Fragment implements OnTipsAvailableListener {
         View view = inflater.inflate(R.layout.fragment_tips, container, false);
         ButterKnife.bind(this, view);
 
-        searchAdapter = new TipsAutoCompleteAdapter(getContext(), R.layout.list_tips_item);
+        searchAdapter = new TipsAutoCompleteAdapter(getContext(), R.layout.item_tips_search_suggestion);
         searchView.setAdapter(searchAdapter);
 
         tipsTabAdapter = new TipsTabAdapter(getChildFragmentManager(), getContext(), this);

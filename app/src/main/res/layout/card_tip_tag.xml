@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginEnd="@dimen/tip_card_icon_margin"
+    android:background="@color/yellow"
+    android:paddingBottom="@dimen/tip_card_icon_margin"
+    android:paddingTop="@dimen/tip_card_icon_margin"
+    android:paddingEnd="@dimen/tip_card_icon_margin"
+    android:paddingStart="@dimen/tip_card_icon_margin">
+
+    <TextView
+        android:id="@+id/card_tip_tag_text_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        fontPath="fonts/Lato-Bold.ttf"
+        android:textAllCaps="true"
+        android:textSize="@dimen/k_font_extra_small"
+        android:textColor="@color/black"
+        tools:text="@string/tips_card_empty_tag" />
+</FrameLayout>

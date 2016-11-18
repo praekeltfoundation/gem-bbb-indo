@@ -5,42 +5,71 @@
     android:layout_height="match_parent"
     tools:context="com.nike.dooit.views.main.fragments.target.TargetFragment">
 
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="centerCrop"
+        app:srcCompat="@drawable/pattern_01_grey" />
+
     <RelativeLayout
         android:id="@+id/fragment_tips_head"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/yellow">
 
-        <AutoCompleteTextView
-            android:id="@+id/fragment_tips_search_view"
+        <RelativeLayout
+            android:id="@+id/fragment_tips_search_container"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="8dp"
-            android:layout_marginRight="8dp"
-            android:layout_marginTop="8dp"
-            android:background="@color/light_grey"
-            android:drawableEnd="@drawable/ic_d_search"
-            android:imeOptions="actionDone"
-            android:inputType="text" />
+            android:layout_height="45dp"
+            android:layout_alignParentTop="true"
+            android:layout_marginEnd="@dimen/tip_card_margin"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="@dimen/tip_card_margin">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="fitXY"
+                app:srcCompat="@drawable/bkg_edit_text" />
+
+            <AutoCompleteTextView
+                android:id="@+id/fragment_tips_search_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@null"
+                android:drawableEnd="@drawable/ic_d_search"
+                android:imeOptions="actionDone"
+                android:inputType="text"
+                android:paddingLeft="16dp"
+                tools:text="Search favourite tips..."/>
+        </RelativeLayout>
 
         <TextView
             android:id="@+id/fragment_tips_search_hint"
+            fontPath="fonts/Lato-Regular.ttf"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/fragment_tips_search_view"
-            android:layout_marginLeft="8dp"
-            android:layout_marginRight="8dp"
-            android:layout_marginTop="8dp"
-            android:text="@string/tips_search_hint" />
+            android:layout_below="@+id/fragment_tips_search_container"
+            android:layout_marginEnd="@dimen/tip_card_margin"
+            android:layout_marginStart="@dimen/tip_card_margin"
+            android:layout_marginTop="4dp"
+            android:text="@string/tips_search_hint"
+            android:textSize="@dimen/k_font_small" />
 
         <android.support.design.widget.TabLayout
             android:id="@+id/fragment_tips_tablayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/fragment_tips_search_hint"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="12dp"
             android:background="@color/yellow"
-            app:tabBackground="@drawable/tab_tips_background"
+            app:tabBackground="@drawable/tab_tips_bkg"
+            app:tabIndicatorColor="@color/grey"
+            app:tabIndicatorHeight="@dimen/tip_tab_indicator_height"
+            app:tabPaddingBottom="0dp"
+            app:tabPaddingEnd="0dp"
+            app:tabPaddingStart="0dp"
+            app:tabPaddingTop="0dp"
             app:tabTextAppearance="@style/AppTheme.TextView.Regular.ExtraLarge">
 
             <android.support.design.widget.TabItem

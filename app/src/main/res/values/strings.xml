@@ -34,14 +34,16 @@
     <string name="lets_start">let\'s start</string>
 
     <!-- Tips -->
-    <string name="tips_tab_favourites">Favourites</string>
+    <string name="tips_tab_favourites">Favourite</string>
     <string name="tips_tab_all">All</string>
     <string name="tips_card_read_more">Read more</string>
+    <string name="tips_card_empty_tag">tag</string>
     <string name="tips_search_hint">Search for: Topics, titles, tags, etc...</string>
     <string name="tips_search_placeholder_fav">Search favourite tips</string>
     <string name="tips_search_placeholder_all">Search all tips</string>
     <string name="tips_article_opening">Opening \'%s\'</string>
     <string name="tips_article_add_fav">Added \'%s\' to favourites</string>
+    <string name="tips_list_filter">Filtering \'%s\'</string>
 
     <!-- Registration -->
     <string name="reg_t_c">By clicking register, you are agreeing\n to our Terms &amp; Condition</string>

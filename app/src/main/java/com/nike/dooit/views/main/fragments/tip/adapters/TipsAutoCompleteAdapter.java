@@ -33,7 +33,7 @@ public class TipsAutoCompleteAdapter extends ArrayAdapter<String> implements Tip
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         if (convertView == null) {
-            convertView = LayoutInflater.from(getContext()).inflate(R.layout.list_tips_item, parent, false);
+            convertView = LayoutInflater.from(getContext()).inflate(R.layout.item_tips_search_suggestion, parent, false);
         }
         String suggestion = getItem(position);
 
