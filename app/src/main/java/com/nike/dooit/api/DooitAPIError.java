@@ -2,6 +2,9 @@ package com.nike.dooit.api;
 
 import com.nike.dooit.api.responses.ErrorResponse;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import retrofit2.adapter.rxjava.HttpException;
 
 /**
@@ -25,21 +28,13 @@ public class DooitAPIError extends Throwable {
     }
 
     private boolean hasError() {
-        return getErrorResponse() != null &&
-                getErrorResponse().error != null &&
-                getErrorResponse().error.message != null;
+        return getErrorResponse().hasErrors();
     }
 
-    public String getErrorMessage() {
+    public List<String> getErrorMessages() {
         if (hasError())
-            return getErrorResponse().error.message;
-        return "";
-    }
-
-    public String getErrorCode() {
-        if (hasError())
-            return getErrorResponse().error.code;
-        return "";
+            return getErrorResponse().getErrors();
+        return new ArrayList();
     }
 
     @Override

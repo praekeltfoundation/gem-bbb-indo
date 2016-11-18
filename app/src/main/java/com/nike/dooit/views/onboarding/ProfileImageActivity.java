@@ -8,6 +8,8 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.support.design.widget.Snackbar;
+import android.widget.Button;
 import android.widget.Toast;
 
 import com.facebook.drawee.view.SimpleDraweeView;
@@ -44,6 +46,8 @@ public class ProfileImageActivity extends DooitActivity {
     @BindView(R.id.activity_profile_image_profile_image)
     SimpleDraweeView simpleDraweeView;
 
+    @BindView(R.id.activity_profile_image_next_button)
+    Button nextButton;
 
     @Inject
     AuthenticationManager authenticationManager;
@@ -104,10 +108,12 @@ public class ProfileImageActivity extends DooitActivity {
             return;
         }
         User user = persisted.getCurrentUser();
-        fileUploadManager.upload(user.getId(), getIntent().getStringExtra(INTENT_MIME_TYPE), new File(((Uri) getIntent().getParcelableExtra(INTENT_IMAGE_URI)).toString()), new DooitErrorHandler() {
+        fileUploadManager.upload(user.getId(), getIntent().getStringExtra(INTENT_MIME_TYPE),
+                new File(((Uri) getIntent().getParcelableExtra(INTENT_IMAGE_URI)).toString()), new DooitErrorHandler() {
             @Override
             public void onError(DooitAPIError error) {
-                Toast.makeText(ProfileImageActivity.this, "Unable to upload Image", Toast.LENGTH_SHORT).show();
+                for (String msg : error.getErrorMessages())
+                    Snackbar.make(nextButton, msg, Snackbar.LENGTH_SHORT).show();
             }
         }).subscribe(new Action1<EmptyResponse>() {
             @Override

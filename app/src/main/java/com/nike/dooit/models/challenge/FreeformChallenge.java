@@ -4,6 +4,7 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 import com.google.gson.annotations.SerializedName;
+import com.nike.dooit.models.enums.ChallengeType;
 
 /**
  * Created by Rudolph Jacobs on 2016-11-11.
@@ -15,6 +16,7 @@ public class FreeformChallenge extends BaseChallenge {
     FreeformChallenge() {
         // Mandatory empty constructor
         super();
+        this.type = ChallengeType.FREEFORM;
     }
 
     public FreeformChallengeQuestion getQuestion() {

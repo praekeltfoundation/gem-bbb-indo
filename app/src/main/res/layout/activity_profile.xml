@@ -88,7 +88,7 @@
                 android:layout_height="wrap_content"
                 android:ellipsize="end"
                 android:maxLines="1"
-                android:text="Current Saving Streak"
+                android:text="@string/heading_current_saving_streak"
                 android:textAllCaps="true"
                 android:textColor="@color/grey"
                 android:textSize="@dimen/k_font_small"
@@ -103,9 +103,9 @@
                 android:layout_marginBottom="@dimen/activity_vertical_margin"
                 android:ellipsize="end"
                 android:maxLines="1"
-                android:text="2 weeks"
                 android:textColor="@color/purple"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                tools:text="2 weeks" />
 
             <TextView
                 android:id="@+id/profile_current_achievement_title"
@@ -116,7 +116,7 @@
                 android:layout_marginTop="@dimen/activity_vertical_margin"
                 android:ellipsize="end"
                 android:maxLines="1"
-                android:text="Achievements"
+                android:text="@string/heading_achievements"
                 android:textAllCaps="true"
                 android:textColor="@color/grey"
                 android:textStyle="bold" />

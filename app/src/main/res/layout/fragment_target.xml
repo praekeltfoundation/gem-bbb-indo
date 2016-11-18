@@ -26,9 +26,9 @@
             android:layout_alignParentTop="true"
             android:layout_marginTop="6dp"
             android:gravity="center_horizontal"
-            android:text="Goal Name"
             android:textColor="@color/black"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            tools:text="Goal Name" />
 
         <android.support.v4.view.ViewPager
             android:id="@+id/fragment_target_targets_view_pagers"
@@ -71,9 +71,9 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/fragment_target_targets_view_pagers"
             android:gravity="center_horizontal"
-            android:text="saved"
             android:textColor="@color/black"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            android:text="@string/target_prefix_saved" />
 
         <TextView
             android:id="@+id/fragment_target_saved_text_view"
@@ -82,9 +82,9 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/fragment_target_saved"
             android:gravity="center_horizontal"
-            android:text="Rp 38.000"
             android:textColor="@color/black"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            tools:text="Rp 38.000" />
 
         <TextView
             android:id="@+id/fragment_target_total_text_view"
@@ -93,9 +93,9 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/fragment_target_saved_text_view"
             android:gravity="center_horizontal"
-            android:text="of Rp 50.000"
             android:textColor="@color/black"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            tools:text="of Rp 50.000" />
 
         <Button
             android:id="@+id/fragment_target_save_button"
@@ -152,7 +152,7 @@
             android:layout_toStartOf="@+id/fragment_target_legend_average"
             android:drawableStart="@drawable/ic_d_target_legend_goals"
             android:gravity="center_vertical"
-            android:text="Goals" />
+            android:text="@string/legend_label_goals" />
 
         <TextView
             android:id="@+id/fragment_target_legend_average"
@@ -162,7 +162,7 @@
             android:layout_centerHorizontal="true"
             android:drawableStart="@drawable/ic_d_target_legend_average"
             android:gravity="center_vertical"
-            android:text="Average" />
+            android:text="@string/legend_label_average" />
 
         <TextView
             android:id="@+id/fragment_target_legend_saved"
@@ -172,7 +172,7 @@
             android:layout_toEndOf="@+id/fragment_target_legend_average"
             android:drawableStart="@drawable/ic_d_target_legend_saved"
             android:gravity="center_vertical"
-            android:text="Saved" />
+            android:text="@string/legend_label_saved" />
 
         <HorizontalScrollView
             android:id="@+id/fragment_target_savings_graph"

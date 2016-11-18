@@ -176,7 +176,7 @@ public class TargetFragment extends MainFragment {
                     @Override
                     public void call(final List<Goal> goals) {
                         TargetFragment.this.goals = goals;
-                        if (getActivity() != null)
+                        if (getActivity() != null && goals != null)
                             getActivity().runOnUiThread(new Runnable() {
                                 @Override
                                 public void run() {

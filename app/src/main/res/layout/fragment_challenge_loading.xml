@@ -19,5 +19,5 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/fragment_challenge_loadingprogress"
         android:layout_centerHorizontal="true"
-        android:text="Loading" />
+        android:text="@string/label_loading" />
 </RelativeLayout>

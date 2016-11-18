@@ -48,7 +48,7 @@
                 android:layout_height="wrap_content"
                 android:ellipsize="end"
                 android:maxLines="1"
-                android:text="Your account"
+                android:text="@string/profile_section_account"
                 android:textAllCaps="true"
                 android:textColor="@color/divider" />
 
@@ -62,7 +62,7 @@
                 android:maxLines="1"
                 android:paddingBottom="8dp"
                 android:paddingTop="8dp"
-                android:text="Change name"
+                android:text="@string/profile_account_change_name"
                 android:textColor="@color/purple"
                 android:textStyle="bold" />
 
@@ -83,7 +83,7 @@
                 android:maxLines="1"
                 android:paddingBottom="8dp"
                 android:paddingTop="8dp"
-                android:text="Change password"
+                android:text="@string/profile_account_change_password"
                 android:textColor="@color/purple"
                 android:textStyle="bold" />
 
@@ -104,7 +104,7 @@
                 android:maxLines="1"
                 android:paddingBottom="8dp"
                 android:paddingTop="8dp"
-                android:text="Sign out"
+                android:text="@string/profile_account_sign_out"
                 android:textAlignment="viewStart"
                 android:textColor="@color/purple"
                 android:textStyle="bold" />
@@ -117,7 +117,7 @@
                 android:layout_marginTop="16dp"
                 android:ellipsize="end"
                 android:maxLines="1"
-                android:text="Notifications"
+                android:text="@string/profile_section_notifications"
                 android:textAllCaps="true"
                 android:textColor="@color/divider"
                 android:textSize="@dimen/k_font_small" />
@@ -132,7 +132,7 @@
                 android:maxLines="1"
                 android:paddingBottom="8dp"
                 android:paddingTop="8dp"
-                android:text="Notification A"
+                android:text="@string/placeholder_label_short"
                 android:textColor="@color/purple"
                 android:textStyle="bold" />
 
@@ -152,7 +152,7 @@
                 android:maxLines="1"
                 android:paddingBottom="8dp"
                 android:paddingTop="8dp"
-                android:text="Notification B"
+                android:text="@string/placeholder_label_short"
                 android:textColor="@color/purple"
                 android:textSize="@dimen/k_font_medium"
                 android:textStyle="bold" />
@@ -173,7 +173,7 @@
                 android:maxLines="1"
                 android:paddingBottom="8dp"
                 android:paddingTop="8dp"
-                android:text="Notification C"
+                android:text="@string/placeholder_label_short"
                 android:textColor="@color/purple"
                 android:textSize="@dimen/k_font_medium"
                 android:textStyle="bold" />
@@ -194,7 +194,7 @@
                 android:maxLines="1"
                 android:paddingBottom="8dp"
                 android:paddingTop="8dp"
-                android:text="Notification D"
+                android:text="@string/placeholder_label_short"
                 android:textColor="@color/purple"
                 android:textSize="@dimen/k_font_medium"
                 android:textStyle="bold" />
@@ -207,7 +207,7 @@
                 android:layout_marginTop="16dp"
                 android:ellipsize="end"
                 android:maxLines="1"
-                android:text="About &amp; Help"
+                android:text="@string/profile_section_help"
                 android:textAllCaps="true"
                 android:textColor="@color/divider"
                 android:textSize="@dimen/k_font_small" />
@@ -222,7 +222,7 @@
                 android:maxLines="1"
                 android:paddingBottom="8dp"
                 android:paddingTop="8dp"
-                android:text="Help"
+                android:text="@string/profile_help_help"
                 android:textColor="@color/purple"
                 android:textSize="@dimen/k_font_medium"
                 android:textStyle="bold" />
@@ -244,7 +244,7 @@
                 android:maxLines="1"
                 android:paddingBottom="8dp"
                 android:paddingTop="8dp"
-                android:text="Report A Problem"
+                android:text="@string/profile_help_report_problem"
                 android:textColor="@color/purple"
                 android:textSize="@dimen/k_font_medium"
                 android:textStyle="bold" />
@@ -266,7 +266,7 @@
                 android:maxLines="1"
                 android:paddingBottom="8dp"
                 android:paddingTop="8dp"
-                android:text="Feedback"
+                android:text="@string/profile_help_feedback"
                 android:textColor="@color/purple"
                 android:textSize="@dimen/k_font_medium"
                 android:textStyle="bold" />
@@ -288,7 +288,7 @@
                 android:maxLines="1"
                 android:paddingBottom="8dp"
                 android:paddingTop="8dp"
-                android:text="Terms &amp; Conditions"
+                android:text="@string/profile_help_terms_conditions"
                 android:textColor="@color/purple"
                 android:textSize="@dimen/k_font_medium"
                 android:textStyle="bold" />
@@ -310,7 +310,7 @@
                 android:maxLines="1"
                 android:paddingBottom="8dp"
                 android:paddingTop="8dp"
-                android:text="Privacy Policy"
+                android:text="@string/profile_help_privacy_policy"
                 android:textColor="@color/purple"
                 android:textSize="@dimen/k_font_medium"
                 android:textStyle="bold" />

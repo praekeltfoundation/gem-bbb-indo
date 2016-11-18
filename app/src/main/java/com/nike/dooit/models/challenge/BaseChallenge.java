@@ -24,7 +24,7 @@ public abstract class BaseChallenge implements Parcelable, Serializable {
     private DateTime activationDate;
     @SerializedName("deactivation_date")
     private DateTime deactivationDate;
-    private ChallengeType type;
+    protected ChallengeType type;
 
     /*** Constructors ***/
     BaseChallenge() {

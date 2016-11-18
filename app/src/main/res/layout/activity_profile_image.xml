@@ -23,7 +23,7 @@
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="24dp"
-            android:text="Upload Photo"
+            android:text="@string/prompt_upload_photo"
             android:textColor="@color/white"
             android:textStyle="bold" />
 
@@ -37,7 +37,7 @@
             android:layout_centerHorizontal="true"
             android:layout_marginTop="32dp"
             android:gravity="center_horizontal"
-            android:text="Skip"
+            android:text="@string/label_skip"
             android:textColor="@color/pink" />
 
 
@@ -50,7 +50,7 @@
             android:layout_marginEnd="18dp"
             android:layout_marginStart="18dp"
             android:layout_marginTop="8dp"
-            android:text="Next"
+            android:text="@string/label_next"
             android:textAllCaps="true" />
 
         <com.facebook.drawee.view.SimpleDraweeView
