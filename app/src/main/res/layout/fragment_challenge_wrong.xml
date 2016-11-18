@@ -4,7 +4,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@null">
 
     <TextView
         android:id="@+id/fragment_challenge_wrong_text"
@@ -28,6 +29,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:srcCompat="@drawable/ic_d_bot"
+        tools:src="@drawable/ic_d_bot"
         app:layout_constraintLeft_toLeftOf="@+id/fragment_challenge_wrong_text"
         app:layout_constraintRight_toLeftOf="@+id/fragment_challenge_wrong_hint"
         app:layout_constraintHorizontal_chainStyle="packed"
@@ -61,7 +63,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintRight_toRightOf="@+id/fragment_challenge_wrong_text"
         app:layout_constraintLeft_toLeftOf="@+id/fragment_challenge_wrong_text"
-        style="@style/AppTheme.Button.Big.Purple"
+        style="@style/AppTheme.Button.Big.LightBlue"
         android:text="@string/label_try_again"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
