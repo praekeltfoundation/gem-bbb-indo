@@ -82,7 +82,7 @@ public class DooitApplication extends Application {
 
 
         CalligraphyConfig.initDefault(new CalligraphyConfig.Builder()
-                .setDefaultFontPath("fonts/LondrinaSolid-Regular.ttf")
+                .setDefaultFontPath("fonts/Lato-Regular.ttf")
                 .setFontAttrId(R.attr.fontPath)
                 .build()
         );

@@ -121,7 +121,8 @@ public class RegistrationActivity extends DooitActivity {
 
     @OnClick(R.id.activity_registration_t_c_text_view)
     public void openTC() {
-
+        TermsConditionsActivity.Builder.create(this)
+                .startActivity();
     }
 
     @OnClick(R.id.activity_registration_register_button)
