@@ -36,6 +36,7 @@ public class WelcomeActivity extends DooitActivity {
         ButterKnife.bind(this);
 
         viewPager.setAdapter(new WelcomeTabAdapter(getSupportFragmentManager(), this));
+        viewPager.setOffscreenPageLimit(4);
         circleIndicator.setViewPager(viewPager);
 
         viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
