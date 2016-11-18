@@ -9,9 +9,11 @@ import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.TextUtils;
 import android.text.style.ForegroundColorSpan;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioGroup;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.nike.dooit.DooitApplication;
@@ -36,6 +38,9 @@ import rx.functions.Action1;
 
 public class RegistrationActivity extends DooitActivity {
 
+    private static final int MIN_AGE = 12;
+    private static final int MAX_AGE = 80;
+
     @BindView(R.id.activity_registration_t_c_text_view)
     TextView textViewTC;
 
@@ -45,8 +50,8 @@ public class RegistrationActivity extends DooitActivity {
     @BindView(R.id.activity_registration_name_text_edit)
     EditText name;
 
-    @BindView(R.id.activity_registration_age_text_edit)
-    EditText age;
+    @BindView(R.id.activity_registration_age_spinner)
+    Spinner age;
 
     @BindView(R.id.activity_registration_gender_radiogroup)
     RadioGroup gender;
@@ -89,8 +94,15 @@ public class RegistrationActivity extends DooitActivity {
         Spannable spanTc = new SpannableString(getString(R.string.reg_t_c));
         Spannable spanLogin = new SpannableString(getString(R.string.already_registered_log_in));
 
+        // Age
+        ArrayAdapter<Integer> ageAdapter = new ArrayAdapter(this, android.R.layout.simple_spinner_item);
+        for (int i = MIN_AGE; i <= MAX_AGE; i++)
+            ageAdapter.add(i);
+        age.setAdapter(ageAdapter);
+        age.setSelection(4); // 16
+
         // Default gender
-        gender.check(R.id.activity_registration_gender_boy);
+        gender.check(R.id.activity_registration_gender_girl);
 
         if (!getLocal().getCountry().equals("in")) {
             spanTc.setSpan(new ForegroundColorSpan(ResourcesCompat.getColor(getResources(), R.color.pink, getTheme())), spanTc.length() - 17, spanTc.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
@@ -158,7 +170,7 @@ public class RegistrationActivity extends DooitActivity {
 
         Profile profile = new Profile();
         profile.setMobile(number.getText().toString());
-        profile.setAge(Integer.parseInt(age.getText().toString()));
+        profile.setAge((Integer) age.getSelectedItem());
 
         switch (gender.getCheckedRadioButtonId()) {
             case R.id.activity_registration_gender_boy:
@@ -189,7 +201,7 @@ public class RegistrationActivity extends DooitActivity {
 
     public boolean isAgeValid() {
         boolean valid;
-        valid = !TextUtils.isEmpty(age.getText());
+        valid = true;
         if (!valid) {
             ageHint.setText(R.string.reg_example_age_error_1);
             ageHint.setTextColor(ResourcesCompat.getColor(getResources(), android.R.color.holo_red_light, getTheme()));
