@@ -8,8 +8,10 @@ import android.view.ViewGroup;
 import com.nike.dooit.R;
 import com.nike.dooit.models.challenge.QuizChallengeOption;
 import com.nike.dooit.models.challenge.QuizChallengeQuestion;
-import com.nike.dooit.views.main.fragments.challenge.interfaces.OnOptionSelectedListener;
+import com.nike.dooit.views.main.fragments.challenge.fragments.ChallengeQuizFragment;
 import com.nike.dooit.views.main.fragments.challenge.interfaces.OnOptionChangeListener;
+import com.nike.dooit.views.main.fragments.challenge.interfaces.OnOptionSelectedListener;
+import com.nike.dooit.views.main.fragments.challenge.interfaces.OnQuestionCompletedListener;
 import com.nike.dooit.views.main.fragments.challenge.viewholders.QuizOptionViewHolder;
 
 import java.util.List;
@@ -18,31 +20,26 @@ import java.util.List;
  * Created by Rudolph Jacobs on 2016-11-09.
  */
 
-public class ChallengeQuizOptionsListAdapter extends RecyclerView.Adapter<QuizOptionViewHolder> implements OnOptionSelectedListener {
+public class ChallengeQuizOptionsListAdapter extends RecyclerView.Adapter<QuizOptionViewHolder> implements OnOptionChangeListener, OnOptionSelectedListener, OnQuestionCompletedListener {
     private static final String TAG = "QuizOptionsAdapter";
     private QuizChallengeQuestion mQuestion;
     private List<QuizChallengeOption> mOptionList;
     private long selectedId;
-    private OnOptionChangeListener optionChangeListener = null;
+    private boolean completed = false;
+    private ChallengeQuizFragment controller = null;
 
-    public ChallengeQuizOptionsListAdapter(QuizChallengeQuestion question) {
-        mQuestion = question;
-        if (question != null) {
-            mOptionList = question.getOptions();
-        }
-        selectedId = -1;
-        optionChangeListener = null;
-        setHasStableIds(true);
+    public ChallengeQuizOptionsListAdapter(ChallengeQuizFragment challengeFragment, QuizChallengeQuestion question) {
+        this(challengeFragment, question, -1);
     }
 
-    public ChallengeQuizOptionsListAdapter(QuizChallengeQuestion question, long optionId) {
+    public ChallengeQuizOptionsListAdapter(ChallengeQuizFragment challengeFragment, QuizChallengeQuestion question, long optionId) {
+        controller = challengeFragment;
         mQuestion = question;
-        if (question != null) {
-            mOptionList = question.getOptions();
-        }
         selectedId = optionId;
-        optionChangeListener = null;
         setHasStableIds(true);
+
+        mOptionList = question != null ? question.getOptions() : null;
+        completed = question != null && controller != null && controller.isCompleted(question.getId());
     }
 
     @Override public int getItemCount() {
@@ -67,20 +64,30 @@ public class ChallengeQuizOptionsListAdapter extends RecyclerView.Adapter<QuizOp
         final QuizChallengeOption item = mOptionList.get(position);
         holder.populate(item);
         holder.setSelected(item.getId() == selectedId);
+        holder.setEnabled(!completed);
     }
 
     public void setSelectedId(long id) {
         selectedId = (id < 0) ? -1 : id;
     }
 
-    public void setOptionChangeListener(OnOptionChangeListener listener) {
-        optionChangeListener = listener;
+    @Override
+    public void onOptionSelected(QuizChallengeOption option) {
+        if (controller != null) {
+            controller.onOptionChange(mQuestion, option);
+        }
     }
 
     @Override
-    public void onOptionSelected(QuizChallengeOption option) {
-        if (optionChangeListener != null) {
-            optionChangeListener.onOptionChange(mQuestion, option);
+    public void onQuestionCompleted(long id) {
+        if (id == mQuestion.getId()) {
+            completed = true;
+            notifyItemRangeChanged(0, getItemCount());
         }
+    }
+
+    @Override
+    public void onOptionChange(QuizChallengeQuestion question, QuizChallengeOption option) {
+        return;
     }
 }

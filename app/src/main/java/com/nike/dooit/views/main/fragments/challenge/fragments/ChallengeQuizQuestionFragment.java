@@ -15,22 +15,27 @@ import com.nike.dooit.models.challenge.QuizChallengeOption;
 import com.nike.dooit.models.challenge.QuizChallengeQuestion;
 import com.nike.dooit.views.main.fragments.challenge.adapters.ChallengeQuizOptionsListAdapter;
 import com.nike.dooit.views.main.fragments.challenge.interfaces.OnOptionChangeListener;
+import com.nike.dooit.views.main.fragments.challenge.interfaces.OnQuestionCompletedListener;
 import com.nike.dooit.views.main.fragments.challenge.viewholders.QuizOptionViewHolder;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnItemSelected;
+import butterknife.OnPageChange;
 import butterknife.Unbinder;
 
 public class ChallengeQuizQuestionFragment extends Fragment implements OnOptionChangeListener {
     private static final String TAG = "QuizQuestionFragment";
     private static final String ARG_QUESTION = "question";
     private static final String ARG_OPTION_ID = "option_id";
+    private static final String ARG_COMPLETED = "completed";
 
     private QuizChallengeQuestion mQuestion = null;
     private long optionId = -1;
+    private boolean completed = false;
     private OnOptionChangeListener optionChangeListener = null;
     private ChallengeQuizOptionsListAdapter adapter = null;
+    private ChallengeQuizFragment controller = null;
     private Unbinder unbinder;
 
     @BindView(R.id.fragment_challengequizquestion_title)
@@ -58,10 +63,15 @@ public class ChallengeQuizQuestionFragment extends Fragment implements OnOptionC
     }
 
     public static ChallengeQuizQuestionFragment newInstance(QuizChallengeQuestion question, long optionId) {
+        return ChallengeQuizQuestionFragment.newInstance(question, optionId, false);
+    }
+
+    public static ChallengeQuizQuestionFragment newInstance(QuizChallengeQuestion question, long optionId, boolean completed) {
         ChallengeQuizQuestionFragment fragment = new ChallengeQuizQuestionFragment();
         Bundle args = new Bundle();
         args.putParcelable(ARG_QUESTION, question);
         args.putLong(ARG_OPTION_ID, optionId);
+        args.putBoolean(ARG_COMPLETED, completed);
         fragment.setArguments(args);
         return fragment;
     }
@@ -72,6 +82,14 @@ public class ChallengeQuizQuestionFragment extends Fragment implements OnOptionC
         if (getArguments() != null) {
             mQuestion = getArguments().getParcelable(ARG_QUESTION);
             optionId = getArguments().getLong(ARG_OPTION_ID);
+            completed = getArguments().getBoolean(ARG_COMPLETED);
+        }
+
+        Fragment challengeFragment = getActivity().getSupportFragmentManager().findFragmentByTag("fragment_challenge");
+        if (challengeFragment instanceof ChallengeQuizFragment) {
+            controller = ((ChallengeQuizFragment) challengeFragment);
+            controller.addOptionChangeListener(this);
+//            controller.addQuestionCompletedListener(this);
         }
     }
 
@@ -80,11 +98,16 @@ public class ChallengeQuizQuestionFragment extends Fragment implements OnOptionC
         View view = inflater.inflate(R.layout.fragment_challengequizquestion, container, false);
         unbinder = ButterKnife.bind(this, view);
         title.setText(mQuestion.getText());
-        adapter = new ChallengeQuizOptionsListAdapter(mQuestion, optionId);
-        adapter.setOptionChangeListener(this);
+
+        adapter = new ChallengeQuizOptionsListAdapter(controller, mQuestion, optionId);
+        if (controller != null) {
+            controller.addQuestionCompletedListener(adapter);
+        }
+
         optionList.setAdapter(adapter);
         optionList.setLayoutManager(new LinearLayoutManager(getContext()));
         selectItem(optionId);
+        optionList.setEnabled(completed);
         return view;
     }
 
@@ -93,7 +116,18 @@ public class ChallengeQuizQuestionFragment extends Fragment implements OnOptionC
         if (unbinder != null) {
             unbinder.unbind();
         }
+        if (controller != null) {
+            controller.removeQuestionCompletedListener(adapter);
+        }
         super.onDestroyView();
+    }
+
+    @Override
+    public void onDestroy() {
+        if (controller != null) {
+            controller.removeOptionChangeListener(this);
+        }
+        super.onDestroy();
     }
 
     public void selectItem(long id) {
@@ -114,10 +148,6 @@ public class ChallengeQuizQuestionFragment extends Fragment implements OnOptionC
         }
 
         optionId = id;
-    }
-
-    public void onItemSelected() {
-        Log.d(TAG, "Item selected");
     }
 
     public void setOnOptionChangeListener(OnOptionChangeListener listener) {

@@ -167,7 +167,7 @@ public class ChallengeRegisterFragment extends Fragment {
 
         if (fragment != null) {
             //ft.setCustomAnimations(R.anim.slide_in_left, R.anim.slide_out_right);
-            ft.replace(R.id.fragment_challenge_container, fragment);
+            ft.replace(R.id.fragment_challenge_container, fragment, "fragment_challenge");
             ft.commit();
         }
     }

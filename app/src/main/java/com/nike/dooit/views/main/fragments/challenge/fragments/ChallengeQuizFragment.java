@@ -29,11 +29,16 @@ import com.nike.dooit.models.challenge.QuizChallengeQuestion;
 import com.nike.dooit.views.main.fragments.challenge.adapters.ChallengeQuizPagerAdapter;
 import com.nike.dooit.views.main.fragments.challenge.interfaces.OnOptionSelectedListener;
 import com.nike.dooit.views.main.fragments.challenge.interfaces.OnOptionChangeListener;
+import com.nike.dooit.views.main.fragments.challenge.interfaces.OnQuestionCompletedListener;
 
 import org.joda.time.DateTime;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 import javax.inject.Inject;
 
@@ -46,7 +51,7 @@ import butterknife.Unbinder;
 import rx.functions.Action1;
 
 /**
- * A simple {@link Fragment} subclass.
+ * A {@link Fragment} subclass. All child fragments register listeners for quiz events here.
  * Use the {@link ChallengeQuizFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
@@ -64,6 +69,9 @@ public class ChallengeQuizFragment extends Fragment implements OnOptionChangeLis
     private QuizChallengeOption currentOption = null;
     private List<ParticipantAnswer> answers = new ArrayList<ParticipantAnswer>();
     private Unbinder unbinder = null;
+    private Set<OnOptionChangeListener> optionChangeListeners = new HashSet<>();
+    private Set<OnQuestionCompletedListener> questionCompletedListeners = new HashSet<>();
+    private Map<Long, QuestionState> selections = new HashMap<>();
 
     @BindView(R.id.fragment_challenge_quiz_progressbar)
     ProgressBar mProgressBar;
@@ -100,8 +108,8 @@ public class ChallengeQuizFragment extends Fragment implements OnOptionChangeLis
             mChallenge = getArguments().getParcelable(ARG_CHALLENGE);
         }
         ((DooitApplication) getActivity().getApplication()).component.inject(this);
-        mAdapter = new ChallengeQuizPagerAdapter(getChildFragmentManager(), mChallenge);
-        mAdapter.setOnOptionChangeListener(this);
+        mAdapter = new ChallengeQuizPagerAdapter(this, getChildFragmentManager(), mChallenge);
+        addOptionChangeListener(mAdapter);
     }
 
     @Override
@@ -111,7 +119,7 @@ public class ChallengeQuizFragment extends Fragment implements OnOptionChangeLis
         View view = inflater.inflate(R.layout.fragment_challenge_quiz, container, false);
         unbinder = ButterKnife.bind(this, view);
         mPager.setAdapter(mAdapter);
-        mProgressCounter.setText(String.format("Question %d/%d", mPager.getCurrentItem(), mChallenge.getQuestions().size()));
+        updateProgressCounter(0);
         return view;
     }
 
@@ -123,33 +131,30 @@ public class ChallengeQuizFragment extends Fragment implements OnOptionChangeLis
         super.onDestroyView();
     }
 
+    @Override
+    public void onDestroy() {
+        removeQuestionCompletedListener(mAdapter);
+        super.onDestroy();
+    }
+
     @OnClick(R.id.fragment_challenge_quiz_checkbutton)
     public void checkAnswer() {
         if (currentOption == null) {
             Toast.makeText(getContext(), R.string.challenge_quiz_select_option_required, Toast.LENGTH_SHORT).show();
             return;
         }
-        Toast.makeText(
-                getContext(),
-                String.format("Q: \"%s\"; A: \"%s\"",
-                currentQuestion != null ? currentQuestion.getText() : "<NONE>",
-                currentOption != null ? currentOption.getText() : "<NONE>"),
-                Toast.LENGTH_SHORT).show();
 
         if (currentOption.getCorrect()) {
             Toast.makeText(getContext(), R.string.challenge_quiz_congratulate_correct, Toast.LENGTH_SHORT).show();
             captureAnswer(currentQuestion, currentOption);
+            setCompleted(currentQuestion.getId());
             nextQuestion();
         } else {
             Toast.makeText(getContext(), R.string.challenge_quiz_sorry_incorrect, Toast.LENGTH_SHORT).show();
             captureAnswer(currentQuestion, currentOption);
         }
-    }
 
-    @Override
-    public void onOptionChange(QuizChallengeQuestion question, QuizChallengeOption option) {
-        currentQuestion = question;
-        currentOption = option;
+        updateProgressBar();
     }
 
     public void captureAnswer(QuizChallengeQuestion question, QuizChallengeOption option) {
@@ -190,16 +195,100 @@ public class ChallengeQuizFragment extends Fragment implements OnOptionChangeLis
         }
     }
 
+    private void updateProgressCounter(int position) {
+        if (mProgressCounter == null) {
+            return;
+        }
+
+        if (position < mChallenge.numQuestions()) {
+            mProgressCounter.setText(String.format(getString(R.string.challenge_quiz_counter_fmt), position + 1, mChallenge.numQuestions()));
+        } else {
+            mProgressCounter.setText("");
+        }
+    }
+
+    private void updateProgressBar() {
+        if (mProgressBar == null) {
+            return;
+        }
+
+        mProgressBar.setProgress(100 * numCompleted() / mChallenge.numQuestions());
+    }
+
     @OnPageChange(R.id.fragment_challenge_quiz_pager)
     public void onPageSelected(int position) {
         Log.d(TAG, "Page change: " + String.valueOf(position));
-        mProgressBar.setProgress(100 * position / mChallenge.numQuestions());
+        updateProgressCounter(position);
         if (position == mAdapter.getCount() - 1) {
             checkButton.setText(R.string.label_done);
-            mProgressCounter.setText("");
         } else {
             checkButton.setText(R.string.label_check_result);
-            mProgressCounter.setText(String.format(getString(R.string.challenge_quiz_counter_fmt), position + 1, mChallenge.numQuestions()));
+        }
+    }
+
+    public void addOptionChangeListener(OnOptionChangeListener listener) {
+        optionChangeListeners.add(listener);
+    }
+
+    public void removeOptionChangeListener(OnOptionChangeListener listener) {
+        optionChangeListeners.remove(listener);
+    }
+
+    @Override
+    public void onOptionChange(QuizChallengeQuestion question, QuizChallengeOption option) {
+        currentQuestion = question;
+        currentOption = option;
+        long questionId = question.getId();
+        selections.put(questionId, new QuestionState(option.getId(), isCompleted(questionId)));
+        for (OnOptionChangeListener l: optionChangeListeners) {
+            if (l != null) {
+                l.onOptionChange(question, option);
+            }
+        }
+    }
+
+    public void addQuestionCompletedListener(OnQuestionCompletedListener listener) {
+        questionCompletedListeners.add(listener);
+    }
+
+    public void removeQuestionCompletedListener(OnQuestionCompletedListener listener) {
+        questionCompletedListeners.remove(listener);
+    }
+
+    public void setCompleted(long questionId) {
+        if (selections.containsKey(questionId)) {
+            selections.put(questionId, new QuestionState(selections.get(questionId).optionId, true));
+        }
+        for (OnQuestionCompletedListener l: questionCompletedListeners) {
+            if (l != null) {
+                l.onQuestionCompleted(questionId);
+            }
+        }
+    }
+
+    public boolean isCompleted(long questionId) {
+        return selections.containsKey(questionId) && selections.get(questionId).completed;
+    }
+
+    public long getSelectedOption(long questionId) {
+        return selections.containsKey(questionId) ? selections.get(questionId).optionId : -1;
+    }
+
+    public int numCompleted() {
+        int total = 0;
+        for (QuestionState state: selections.values()) {
+            total += state.completed ? 1 : 0;
+        }
+        return total;
+    }
+
+    private class QuestionState {
+        private long optionId = -1;
+        private boolean completed = false;
+
+        QuestionState(long optionId, boolean completed) {
+            this.optionId = optionId;
+            this.completed = completed;
         }
     }
 }

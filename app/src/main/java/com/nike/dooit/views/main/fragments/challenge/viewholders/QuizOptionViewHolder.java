@@ -55,4 +55,16 @@ public class QuizOptionViewHolder extends RecyclerView.ViewHolder implements Vie
         itemView.setSelected(selected);
         radio.setChecked(selected);
     }
+
+    public boolean isSelected() {
+        return itemView.isSelected();
+    }
+
+    public void setEnabled(boolean enabled) {
+        itemView.setEnabled(enabled);
+    }
+
+    public boolean isEnabled() {
+        return itemView.isEnabled();
+    }
 }
