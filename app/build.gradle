@@ -67,33 +67,30 @@ android {
 }
 
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
-
+    compile fileTree(include: ['*.jar'], dir: 'libs')
     androidTestCompile('com.android.support.test:runner:0.5') {
         exclude module: 'support-annotations'
     }
     /*   androidTestCompile('com.android.support.test:rules:0.5') {
-         exclude module: 'support-annotations'
-     }
-     compile('com.android.support.test.espresso:espresso-core:2.2.2') {
-         exclude module: 'support-annotations'
-     }
-     androidTestCompile('com.android.support.test.espresso:espresso-intents:2.2.2') {
-         exclude module: 'support-annotations'
-     }
-     androidTestCompile('com.android.support.test.uiautomator:uiautomator-v18:2.1.2') {
-         exclude module: 'support-annotations'
-     }
-     androidTestCompile('com.android.support.test.espresso:espresso-contrib:2.2') {
-         // Necessary to avoid version conflicts
-         exclude group: 'com.android.support', module: 'appcompat'
-         exclude group: 'com.android.support', module: 'support-v4'
-         exclude group: 'com.android.support', module: 'support-annotations'
-         exclude module: 'recyclerview-v7'
-     }*/
-
+                 exclude module: 'support-annotations'
+             }
+             compile('com.android.support.test.espresso:espresso-core:2.2.2') {
+                 exclude module: 'support-annotations'
+             }
+             androidTestCompile('com.android.support.test.espresso:espresso-intents:2.2.2') {
+                 exclude module: 'support-annotations'
+             }
+             androidTestCompile('com.android.support.test.uiautomator:uiautomator-v18:2.1.2') {
+                 exclude module: 'support-annotations'
+             }
+             androidTestCompile('com.android.support.test.espresso:espresso-contrib:2.2') {
+                 // Necessary to avoid version conflicts
+                 exclude group: 'com.android.support', module: 'appcompat'
+                 exclude group: 'com.android.support', module: 'support-v4'
+                 exclude group: 'com.android.support', module: 'support-annotations'
+                 exclude module: 'recyclerview-v7'
+             }*/
     testCompile 'junit:junit:4.12'
-
     compile('com.crashlytics.sdk.android:crashlytics:2.6.5@aar') {
         transitive = true;
     }
@@ -120,4 +117,5 @@ dependencies {
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.4.0'
     compile 'com.github.JakeWharton:ViewPagerIndicator:2.4.1'
     compile 'com.facebook.fresco:imagepipeline-okhttp3:0.14.1'
+    compile 'com.facebook.fresco:animated-gif:0.14.1'
 }
