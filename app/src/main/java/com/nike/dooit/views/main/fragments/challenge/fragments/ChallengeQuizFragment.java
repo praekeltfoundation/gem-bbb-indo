@@ -1,7 +1,9 @@
 package com.nike.dooit.views.main.fragments.challenge.fragments;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.os.DropBoxManager;
+import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
@@ -144,17 +146,23 @@ public class ChallengeQuizFragment extends Fragment implements OnOptionChangeLis
             return;
         }
 
+        ChallengeSuccessLightboxFragment lightbox = null;
         if (currentOption.getCorrect()) {
-            Toast.makeText(getContext(), R.string.challenge_quiz_congratulate_correct, Toast.LENGTH_SHORT).show();
             captureAnswer(currentQuestion, currentOption);
             setCompleted(currentQuestion.getId());
-            nextQuestion();
+            lightbox = ChallengeSuccessLightboxFragment.newInstance(true);
+            lightbox.setOnDismissListener(new DialogInterface.OnDismissListener() {
+                @Override
+                public void onDismiss(DialogInterface dialog) {
+                    nextQuestion();
+                    updateProgressBar();
+                }
+            });
         } else {
-            Toast.makeText(getContext(), R.string.challenge_quiz_sorry_incorrect, Toast.LENGTH_SHORT).show();
             captureAnswer(currentQuestion, currentOption);
+            lightbox = ChallengeSuccessLightboxFragment.newInstance(false);
         }
-
-        updateProgressBar();
+        lightbox.show(getActivity().getSupportFragmentManager(), "challenge_lightbox");
     }
 
     public void captureAnswer(QuizChallengeQuestion question, QuizChallengeOption option) {
