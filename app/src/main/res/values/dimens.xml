@@ -14,6 +14,17 @@
     <dimen name="k_font_small">12dp</dimen>
     <dimen name="k_font_extra_small">8dp</dimen>
 
+    <dimen name="button_big_padding">11dp</dimen>
+
+    <!-- Registration -->
+    <dimen name="registration_activity_padding">24dp</dimen>
+    <dimen name="registration_margin_vertical">36dp</dimen>
+    <dimen name="registration_field_margin_vertical">16dp</dimen>
+
+    <!-- Login -->
+    <dimen name="login_activity_padding">24dp</dimen>
+    <dimen name="login_margin_vertical">56dp</dimen>
+
     <!-- Challenges -->
     <dimen name="challenge_margins">8dp</dimen>
     <dimen name="challenge_option_margins">16dp</dimen>

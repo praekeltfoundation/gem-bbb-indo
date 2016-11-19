@@ -11,30 +11,31 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:focusableInTouchMode="true"
-        android:padding="24dp">
+        android:padding="@dimen/registration_activity_padding">
 
         <TextView
             android:id="@+id/activity_registration_title"
-            style="@style/AppTheme.TextView.Regular.ExtraExtraLarge"
+            style="@style/AppTheme.TextView.Regular.XXXLargeHeading"
+            fontPath="fonts/LondrinaSolid-Regular.ttf"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="24dp"
+            android:layout_marginTop="@dimen/registration_margin_vertical"
             android:text="@string/heading_registration"
             android:textColor="@color/white"
             android:textStyle="bold" />
 
         <TextView
             android:id="@+id/activity_registration_name_text_view"
-            style="@style/AppTheme.TextView.Regular.MediumHeading"
-            fontPath="fonts/Lato-Regular.ttf"
+            style="@style/AppTheme.TextView.Bold.Medium"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
             android:layout_below="@+id/activity_registration_title"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="@dimen/registration_margin_vertical"
             android:text="@string/label_name"
+            android:textColor="@color/yellow"
             android:textAllCaps="true"
             android:textStyle="bold" />
 
@@ -63,14 +64,14 @@
 
         <TextView
             android:id="@+id/activity_registration_age_text_view"
-            style="@style/AppTheme.TextView.Regular.MediumHeading"
-            fontPath="fonts/Lato-Regular.ttf"
+            style="@style/AppTheme.TextView.Bold.Medium"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
             android:layout_below="@+id/activity_registration_name_example_text_edit"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="@dimen/registration_field_margin_vertical"
             android:text="@string/reg_age"
+            android:textColor="@color/yellow"
             android:textAllCaps="true"
             android:textStyle="bold" />
 
@@ -97,14 +98,14 @@
 
         <TextView
             android:id="@+id/activity_registration_gender_text_view"
-            style="@style/AppTheme.TextView.Regular.MediumHeading"
-            fontPath="fonts/Lato-Regular.ttf"
+            style="@style/AppTheme.TextView.Bold.Medium"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
             android:layout_below="@+id/activity_registration_age_example_text_view"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="@dimen/registration_field_margin_vertical"
             android:text="@string/reg_gender"
+            android:textColor="@color/yellow"
             android:textAllCaps="true"
             android:textStyle="bold" />
 
@@ -129,7 +130,7 @@
 
             <android.support.v7.widget.AppCompatRadioButton
                 android:id="@+id/activity_registration_gender_boy"
-                fontPath="fonts/Londrina-Regular.ttf"
+                fontPath="fonts/LondrinaSolid-Regular.ttf"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -143,14 +144,14 @@
 
         <TextView
             android:id="@+id/activity_registration_number_text_view"
-            style="@style/AppTheme.TextView.Regular.MediumHeading"
-            fontPath="fonts/Lato-Regular.ttf"
+            style="@style/AppTheme.TextView.Bold.Medium"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
             android:layout_below="@id/activity_registration_gender_radiogroup"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="@dimen/registration_field_margin_vertical"
             android:text="@string/label_mobile_number"
+            android:textColor="@color/yellow"
             android:textAllCaps="true"
             android:textStyle="bold" />
 
@@ -168,7 +169,6 @@
         <TextView
             android:id="@+id/activity_registration_number_example_text_edit"
             style="@style/AppTheme.TextView.Regular.ExtraSmall"
-            fontPath="fonts/Lato-Regular.ttf"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
@@ -179,14 +179,14 @@
 
         <TextView
             android:id="@+id/activity_registration_password_text_view"
-            style="@style/AppTheme.TextView.Regular.MediumHeading"
-            fontPath="fonts/Lato-Regular.ttf"
+            style="@style/AppTheme.TextView.Bold.Medium"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
             android:layout_below="@+id/activity_registration_number_example_text_edit"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="@dimen/registration_field_margin_vertical"
             android:text="@string/label_password"
+            android:textColor="@color/yellow"
             android:textAllCaps="true"
             android:textStyle="bold" />
 
@@ -204,7 +204,6 @@
         <TextView
             android:id="@+id/activity_registration_password_example_text_edit"
             style="@style/AppTheme.TextView.Regular.ExtraSmall"
-            fontPath="fonts/Lato-Regular.ttf"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
@@ -215,13 +214,12 @@
 
         <TextView
             android:id="@+id/activity_registration_t_c_text_view"
-            style="@style/AppTheme.TextView.Regular.Small"
-            fontPath="fonts/Lato-Regular.ttf"
+            style="@style/AppTheme.TextView.Bold.Small"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/activity_registration_password_example_text_edit"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="32dp"
+            android:layout_marginTop="@dimen/registration_margin_vertical"
             android:gravity="center_horizontal"
             android:text="@string/reg_t_c"
             android:textColor="@color/white" />
@@ -239,8 +237,7 @@
 
         <TextView
             android:id="@+id/activity_registration_login_text_view"
-            style="@style/AppTheme.TextView.Regular.Small"
-            fontPath="fonts/Lato-Regular.ttf"
+            style="@style/AppTheme.TextView.Bold.Small"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/activity_registration_register_button"
