@@ -3,15 +3,20 @@ package com.nike.dooit;
 import android.app.Application;
 
 import com.crashlytics.android.Crashlytics;
+import com.facebook.common.logging.FLog;
 import com.facebook.drawee.backends.pipeline.Fresco;
 import com.facebook.imagepipeline.backends.okhttp3.OkHttpImagePipelineConfigFactory;
 import com.facebook.imagepipeline.core.ImagePipelineConfig;
+import com.facebook.imagepipeline.listener.RequestListener;
+import com.facebook.imagepipeline.listener.RequestLoggingListener;
 import com.nike.dooit.dagger.DaggerDooitComponent;
 import com.nike.dooit.dagger.DooitComponent;
 import com.nike.dooit.dagger.DooitModule;
 import com.nike.dooit.helpers.Persisted;
 
 import java.io.IOException;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.inject.Inject;
 
@@ -63,14 +68,21 @@ public class DooitApplication extends Application {
                 return chain.proceed(request);
             }
         });
+
+        Set<RequestListener> requestListeners = new HashSet<>();
+        requestListeners.add(new RequestLoggingListener());
         ImagePipelineConfig config = OkHttpImagePipelineConfigFactory
                 .newBuilder(this, httpClient.build())
+                .setRequestListeners(requestListeners)
                 .build();
         Fresco.initialize(this, config);
 
+        if (Constants.DEBUG)
+            FLog.setMinimumLoggingLevel(FLog.DEBUG);
+
 
         CalligraphyConfig.initDefault(new CalligraphyConfig.Builder()
-                .setDefaultFontPath("fonts/LondrinaSolid-Regular.ttf")
+                .setDefaultFontPath("fonts/Lato-Regular.ttf")
                 .setFontAttrId(R.attr.fontPath)
                 .build()
         );

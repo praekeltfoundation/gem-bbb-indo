@@ -55,8 +55,9 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".views.onboarding.ProfileImageActivity"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".views.tip.TipArticleActivity"></activity>
+            android:theme="@style/AppTheme.FullscreenTheme" />
+        <activity android:name=".views.tip.TipArticleActivity" />
+        <activity android:name=".views.onboarding.OnboardingWebActivity"></activity>
     </application>
 
 </manifest>

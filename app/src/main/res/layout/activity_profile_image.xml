@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/activity_profile_image"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/bkg_pattern_01_purple"
+    android:background="@drawable/pattern_01_purple"
     android:fitsSystemWindows="true"
     tools:context=".views.onboarding.ProfileImageActivity">
 
@@ -17,7 +17,8 @@
 
         <TextView
             android:id="@+id/activity_profile_image_title"
-            style="@style/AppTheme.TextView.Regular.ExtraExtraLarge"
+            style="@style/AppTheme.TextView.Regular.XXXLargeHeading"
+            fontPath="fonts/LondrinaSolid-Regular.ttf"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
@@ -26,7 +27,6 @@
             android:text="@string/prompt_upload_photo"
             android:textColor="@color/white"
             android:textStyle="bold" />
-
 
         <TextView
             android:id="@+id/activity_profile_image_skip_text_view"
@@ -39,7 +39,6 @@
             android:gravity="center_horizontal"
             android:text="@string/label_skip"
             android:textColor="@color/pink" />
-
 
         <Button
             android:id="@+id/activity_profile_image_next_button"
@@ -55,9 +54,9 @@
 
         <com.facebook.drawee.view.SimpleDraweeView
             android:id="@+id/activity_profile_image_profile_image"
-            android:layout_width="220dp"
-            android:layout_height="220dp"
-            android:layout_marginTop="16dp"
+            android:layout_width="250dp"
+            android:layout_height="250dp"
+            android:layout_marginTop="48dp"
             android:scaleType="fitXY"
             app:placeholderImage="@drawable/ic_empty_profile_image"
             app:placeholderImageScaleType="fitXY"
@@ -67,10 +66,12 @@
 
         <ImageView
             android:id="@+id/activity_profile_image_plus"
-            android:layout_width="44dp"
-            android:layout_height="44dp"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
             android:layout_alignBottom="@+id/activity_profile_image_profile_image"
             android:layout_alignEnd="@+id/activity_profile_image_profile_image"
+            android:layout_marginRight="12dp"
+            android:layout_marginBottom="0dp"
             android:src="@drawable/ic_d_plus_circle" />
     </RelativeLayout>
-</android.support.design.widget.CoordinatorLayout>
+</RelativeLayout>

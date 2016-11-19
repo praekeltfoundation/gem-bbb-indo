@@ -49,6 +49,9 @@
     <string name="reg_t_c">By clicking register, you are agreeing\n to our Terms &amp; Condition</string>
     <string name="reg_example_name">Example: Aulia Dharmaningtyas</string>
     <string name="reg_example_name_error_1">Name can\'t be blank</string>
+    <string name="reg_example_name_error_2">Name can\'t contain spaces</string>
+    <string name="reg_example_name_error_3">Name can only contain letters and numbers</string>
+    <string name="reg_example_name_error_4">Name can\'t be longer than 150 characters</string>
     <string name="reg_age">How old are you?</string>
     <string name="reg_example_age">Example: 16</string>
     <string name="reg_example_age_error_1">Age can\'t be blank</string>
@@ -57,8 +60,11 @@
     <string name="reg_gender_girl">Girl</string>
     <string name="reg_example_number">Example: 1234567890</string>
     <string name="reg_example_number_error_1">Mobile Number can\'t be blank</string>
+    <string name="reg_example_number_error_2">Mobile Number must be longer than 9 digits</string>
+    <string name="reg_example_number_error_3">Mobile Number must be shorter than 15 digits</string>
     <string name="reg_example_password">Must have at least 6 characters</string>
     <string name="reg_example_password_error_1">Password can\'t be blank</string>
+    <string name="reg_example_password_error_2">Password must be longer than 6 characters</string>
     <string name="already_registered_log_in">Already registered? Log in</string>
     <string name="forgot_password">Forgot password?</string>
     <string name="challenge_t_c">By taking this challenge you\nagree to our Terms &amp; Conditions</string>
