@@ -94,6 +94,7 @@ public class TipsListFragment extends Fragment {
         } else {
             retrieveTips();
         }
+        hideFiltering();
     }
 
     @Override
@@ -113,6 +114,7 @@ public class TipsListFragment extends Fragment {
         } else {
             retrieveTips();
         }
+        hideFiltering();
     }
 
     @Override
@@ -140,12 +142,6 @@ public class TipsListFragment extends Fragment {
 
         adapter = new TipsListAdapter((DooitApplication) getActivity().getApplication());
         recyclerView.setAdapter(adapter);
-        /*recyclerView.setOnScrollChangeListener(new View.OnScrollChangeListener() {
-            @Override
-            public void onScrollChange(View v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
-                Log.d(TAG, "On Scroll");
-            }
-        });*/
 
         retrieveTips();
 
