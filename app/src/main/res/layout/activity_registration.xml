@@ -82,7 +82,7 @@
             android:layout_below="@+id/activity_registration_age_text_view"
             android:spinnerMode="dialog"
             android:layout_marginTop="4dp"
-            android:background="@color/white"
+            android:background="@drawable/bkg_edit_view"
             tools:listitem="@layout/item_spinner_age"
             />
 
