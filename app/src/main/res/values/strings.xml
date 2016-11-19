@@ -64,6 +64,7 @@
     <string name="reg_example_number_error_3">Mobile Number must be shorter than 15 digits</string>
     <string name="reg_example_password">Must have at least 6 characters</string>
     <string name="reg_example_password_error_1">Password can\'t be blank</string>
+    <string name="reg_example_password_error_2">Password must be longer than 6 characters</string>
     <string name="already_registered_log_in">Already registered? Log in</string>
     <string name="forgot_password">Forgot password?</string>
     <string name="challenge_t_c">By taking this challenge you\nagree to our Terms &amp; Conditions</string>

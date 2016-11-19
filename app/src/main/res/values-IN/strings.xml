@@ -64,6 +64,7 @@
     <string name="reg_example_number_error_3">Mobile Number must be shorter than 15 digits</string>
     <string name="reg_example_password">Harus memiliki minimal 6 karakter</string>
     <string name="reg_example_password_error_1">Password tidak boleh kosong</string>
+    <string name="reg_example_password_error_2">Password must be longer than 6 characters</string>
     <string name="already_registered_log_in">Sudah terdaftar? Masuk</string>
     <string name="forgot_password">Lupa kata sandi?</string>
     <string name="challenge_t_c">Dengan mengambil tantangan ini Anda menyetujui Syarat dan Ketentuan kami</string>

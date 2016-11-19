@@ -48,6 +48,7 @@ public class RegistrationActivity extends DooitActivity {
     private static final int MAX_NAME_LENGTH = 150;
     private static final int MIN_MOBILE_LENGTH = 9;
     private static final int MAX_MOBILE_LENGTH = 16;
+    private static final int MAX_PASSWORD = 6;
 
     @BindView(R.id.activity_registration_t_c_text_view)
     TextView textViewTC;
@@ -259,10 +260,14 @@ public class RegistrationActivity extends DooitActivity {
     }
 
     public boolean isPasswordValid() {
-        boolean valid;
-        valid = !TextUtils.isEmpty(password.getText());
-        if (!valid) {
+        boolean valid = true;
+        if (TextUtils.isEmpty(password.getText())) {
+            valid = false;
             passwordHint.setText(R.string.reg_example_password_error_1);
+            passwordHint.setTextColor(ResourcesCompat.getColor(getResources(), android.R.color.holo_red_light, getTheme()));
+        } else if (password.getText().length() < MAX_PASSWORD) {
+            valid = false;
+            passwordHint.setText(R.string.reg_example_password_error_2);
             passwordHint.setTextColor(ResourcesCompat.getColor(getResources(), android.R.color.holo_red_light, getTheme()));
         } else {
             passwordHint.setText(R.string.reg_example_password);
