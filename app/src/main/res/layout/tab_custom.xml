@@ -16,6 +16,7 @@
     <TextView
         android:id="@+id/tab_custom_title"
         style="@style/AppTheme.TextView.Regular.Small"
+        fontPath="fonts/LondrinaSolid-Regular.ttf"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/tab_custom_icon"
