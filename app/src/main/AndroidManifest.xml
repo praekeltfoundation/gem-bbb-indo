@@ -57,7 +57,7 @@
             android:name=".views.onboarding.ProfileImageActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".views.tip.TipArticleActivity" />
-        <activity android:name=".views.onboarding.TermsConditionsActivity"></activity>
+        <activity android:name=".views.onboarding.OnboardingWebActivity"></activity>
     </application>
 
 </manifest>

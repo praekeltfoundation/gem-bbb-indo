@@ -122,7 +122,7 @@ public class RegistrationActivity extends DooitActivity {
 
     @OnClick(R.id.activity_registration_t_c_text_view)
     public void openTC() {
-        TermsConditionsActivity.Builder.create(this)
+        OnboardingWebActivity.Builder.create(this)
                 .setTitle(getString(R.string.title_activity_terms_and_conditions))
                 .setUrl(Constants.TERMS_URL)
                 .startActivity();
