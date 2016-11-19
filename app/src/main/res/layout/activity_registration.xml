@@ -41,14 +41,14 @@
 
         <EditText
             android:id="@+id/activity_registration_name_text_edit"
+            style="@style/AppTheme.EditText.Grey"
             android:layout_width="match_parent"
-            android:layout_height="32dp"
+            android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
             android:layout_below="@+id/activity_registration_name_text_view"
             android:layout_marginTop="4dp"
-            android:background="@color/white"
-            android:ems="10"
-            android:inputType="textPersonName" />
+            android:inputType="textPersonName"
+            tools:text="Aida"/>
 
         <TextView
             android:id="@+id/activity_registration_name_example_text_edit"
@@ -83,6 +83,7 @@
             android:spinnerMode="dialog"
             android:layout_marginTop="4dp"
             android:background="@color/white"
+            tools:listitem="@layout/item_spinner_age"
             />
 
         <TextView
@@ -115,7 +116,8 @@
             android:layout_height="match_parent"
             android:layout_below="@+id/activity_registration_gender_text_view"
             android:layout_marginTop="8dp"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            tools:checkedButton="@id/activity_registration_gender_girl">
 
             <android.support.v7.widget.AppCompatRadioButton
                 android:id="@+id/activity_registration_gender_girl"
@@ -157,14 +159,14 @@
 
         <EditText
             android:id="@+id/activity_registration_number_text_edit"
+            style="@style/AppTheme.EditText.Grey"
             android:layout_width="match_parent"
-            android:layout_height="32dp"
+            android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
             android:layout_below="@+id/activity_registration_number_text_view"
             android:layout_marginTop="4dp"
-            android:background="@color/white"
-            android:ems="10"
-            android:inputType="text" />
+            android:inputType="text"
+            tools:text="+110002223"/>
 
         <TextView
             android:id="@+id/activity_registration_number_example_text_edit"
@@ -192,14 +194,14 @@
 
         <EditText
             android:id="@+id/activity_registration_password_edit_text"
+            style="@style/AppTheme.EditText.Grey"
             android:layout_width="match_parent"
-            android:layout_height="32dp"
+            android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
             android:layout_below="@+id/activity_registration_password_text_view"
             android:layout_marginTop="4dp"
-            android:background="@color/white"
-            android:ems="10"
-            android:inputType="textPassword" />
+            android:inputType="textPassword"
+            tools:text="qwertyuiop"/>
 
         <TextView
             android:id="@+id/activity_registration_password_example_text_edit"

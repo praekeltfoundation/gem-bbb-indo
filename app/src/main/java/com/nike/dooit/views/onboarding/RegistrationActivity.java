@@ -103,7 +103,7 @@ public class RegistrationActivity extends DooitActivity {
         Spannable spanLogin = new SpannableString(getString(R.string.already_registered_log_in));
 
         // Age
-        ArrayAdapter<Integer> ageAdapter = new ArrayAdapter(this, android.R.layout.simple_spinner_item);
+        ArrayAdapter<Integer> ageAdapter = new ArrayAdapter(this, R.layout.item_spinner_age);
         for (int i = MIN_AGE; i <= MAX_AGE; i++)
             ageAdapter.add(i);
         age.setAdapter(ageAdapter);
