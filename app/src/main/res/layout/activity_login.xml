@@ -39,13 +39,12 @@
 
         <EditText
             android:id="@+id/activity_login_name_edit_text"
+            style="@style/AppTheme.EditText.Grey"
             android:layout_width="match_parent"
-            android:layout_height="32dp"
+            android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
             android:layout_below="@+id/activity_login_name_text_view"
             android:layout_marginTop="4dp"
-            android:background="@color/white"
-            android:ems="10"
             android:inputType="textPersonName" />
 
         <TextView
@@ -73,13 +72,12 @@
 
         <EditText
             android:id="@+id/activity_login_password_edit_text"
+            style="@style/AppTheme.EditText.Grey"
             android:layout_width="match_parent"
-            android:layout_height="32dp"
+            android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
             android:layout_below="@+id/activity_login_password_text_view"
             android:layout_marginTop="4dp"
-            android:background="@color/white"
-            android:ems="10"
             android:inputType="textPassword" />
 
         <TextView
