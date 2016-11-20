@@ -8,6 +8,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 
 import com.nike.dooit.R;
+import com.nike.dooit.models.bot.BotCallback;
 import com.nike.dooit.models.enums.BotType;
 import com.nike.dooit.views.main.MainViewPagerPositions;
 import com.nike.dooit.views.main.fragments.bot.BotFragment;
@@ -35,10 +36,11 @@ public class MainFragment extends Fragment {
 
     }
 
-    protected void startBot(BotType botType) {
+    protected void startBot(BotType botType, BotCallback callback) {
         ViewPager viewPager = (ViewPager) getActivity().findViewById(R.id.content_main_view_pager);
         BotFragment botFragment = (BotFragment) viewPager.getAdapter().instantiateItem(viewPager, MainViewPagerPositions.BOT.getValue());
         botFragment.setBotType(botType);
+        botFragment.setBotCallback(callback);
         viewPager.setCurrentItem(MainViewPagerPositions.BOT.getValue());
     }
 

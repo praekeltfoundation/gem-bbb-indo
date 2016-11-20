@@ -21,6 +21,7 @@ import com.nike.dooit.helpers.Persisted;
 import com.nike.dooit.helpers.bot.BotFeed;
 import com.nike.dooit.models.bot.Answer;
 import com.nike.dooit.models.bot.BaseBotModel;
+import com.nike.dooit.models.bot.BotCallback;
 import com.nike.dooit.models.bot.Node;
 import com.nike.dooit.models.enums.BotMessageType;
 import com.nike.dooit.models.enums.BotType;
@@ -28,6 +29,8 @@ import com.nike.dooit.views.main.fragments.MainFragment;
 import com.nike.dooit.views.main.fragments.bot.adapters.BotAdapter;
 
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 import javax.inject.Inject;
 
@@ -39,7 +42,7 @@ import butterknife.ButterKnife;
  * Use the {@link BotFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class  BotFragment extends MainFragment implements HashtagView.TagsClickListener {
+public class BotFragment extends MainFragment implements HashtagView.TagsClickListener {
     @BindView(R.id.fragment_bot_conversation_recycler_view)
     RecyclerView conversationRecyclerView;
     @BindView(R.id.fragment_bot_answer_hash_view)
@@ -49,8 +52,10 @@ public class  BotFragment extends MainFragment implements HashtagView.TagsClickL
     Persisted persisted;
 
     BotType type = BotType.DEFAULT;
+    BotCallback callback;
     BotFeed feed;
     BaseBotModel currentModel;
+    Map<String, Answer> answerLog = new LinkedHashMap<>();
 
     public BotFragment() {
         // Required empty public constructor
@@ -92,7 +97,6 @@ public class  BotFragment extends MainFragment implements HashtagView.TagsClickL
         conversationRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         conversationRecyclerView.setItemAnimator(new DefaultItemAnimator());
         conversationRecyclerView.setAdapter(new BotAdapter(getContext(), this));
-
     }
 
     @Override
@@ -155,6 +159,10 @@ public class  BotFragment extends MainFragment implements HashtagView.TagsClickL
         this.type = type;
     }
 
+    public void setBotCallback(BotCallback callback) {
+        this.callback = callback;
+    }
+
     public BotAdapter getBotAdapter() {
         if (conversationRecyclerView != null) {
             return (BotAdapter) conversationRecyclerView.getAdapter();
@@ -183,10 +191,16 @@ public class  BotFragment extends MainFragment implements HashtagView.TagsClickL
                     getBotAdapter().addItem(model);
                 }
                 getBotAdapter().addItem(answer);
+                answerLog.put(answer.getName(), answer);
                 conversationRecyclerView.scrollToPosition(getBotAdapter().getItemCount() - 1);
                 persisted.saveConversationState(type, getBotAdapter().getDataSet());
                 if (!TextUtils.isEmpty(answer.getNext())) {
                     getAndAddNode(answer.getNext());
+                    if (BotMessageType.getValueOf(currentModel.getType()) == BotMessageType.END)
+                        if (callback != null) {
+                            callback.onDone(answerLog);
+                            resetAnswerLog();
+                        }
                 } else {
                     answerView.setData(new ArrayList<>());
                 }
@@ -195,6 +209,10 @@ public class  BotFragment extends MainFragment implements HashtagView.TagsClickL
                 break;
         }
         persisted.saveConversationState(type, getBotAdapter().getDataSet());
+    }
+
+    private void resetAnswerLog() {
+        answerLog = new LinkedHashMap<>();
     }
 
     private void getAndAddNode(String name) {
