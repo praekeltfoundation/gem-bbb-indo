@@ -5,6 +5,7 @@
 
     <TextView
         android:id="@+id/tab_tip_textview"
+        fontPath="fonts/LondrinaSolid-Regular.ttf"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"

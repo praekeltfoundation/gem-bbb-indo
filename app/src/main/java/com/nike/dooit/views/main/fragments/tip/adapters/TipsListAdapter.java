@@ -124,6 +124,7 @@ public class TipsListAdapter extends RecyclerView.Adapter<TipViewHolder> impleme
     public void resetFiltered() {
         clearFiltered();
         addAllFiltered(tipsAll);
+        notifyDataSetChanged();
     }
 
     public void addFiltered(Tip tip) {

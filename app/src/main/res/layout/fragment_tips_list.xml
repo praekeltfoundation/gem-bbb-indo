@@ -1,38 +1,26 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.nike.dooit.views.main.fragments.tip.TipsListFragment">
-
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context="com.nike.dooit.views.main.fragments.tip.TipsListFragment"
+    app:layout_collapseMode="pin">
 
     <LinearLayout
-        android:id="@+id/fragment_tips_list_filter"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:visibility="gone"
-        android:layout_margin="@dimen/tip_card_margin">
-
-        <TextView
-            android:id="@+id/fragment_tips_list_filter_text_view"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:layout_weight="1"
-            android:text="@string/tips_list_filter" />
-
-        <ImageView
-            android:id="@+id/fragment_tips_list_filter_image_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:srcCompat="@drawable/ic_d_close_pink" />
-    </LinearLayout>
-
-    <com.nike.dooit.views.custom.DesignSafeRecyclerView
-        android:id="@+id/fragment_tips_list_recyclerview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/fragment_tips_list_filter"
-        android:nestedScrollingEnabled="false" />
-</RelativeLayout>
+        android:orientation="vertical">
+
+        <include layout="@layout/filter_tip"
+            android:id="@+id/fragment_tips_list_filter"
+            android:visibility="gone"/>
+
+        <com.nike.dooit.views.custom.DesignSafeRecyclerView
+            android:id="@+id/fragment_tips_list_recyclerview"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@id/fragment_tips_list_filter" />
+    </LinearLayout>
+
+</android.support.v4.widget.NestedScrollView>
