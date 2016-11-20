@@ -38,6 +38,7 @@
                 android:id="@+id/card_tip_tags_view"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
                 android:layout_weight="1"
                 android:layout_gravity="bottom|start"
                 app:tagBackground="@drawable/ic_d_tag"
@@ -51,6 +52,7 @@
             <RelativeLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="3dp"
                 android:layout_weight="2"
                 android:layout_gravity="end|bottom">
 
@@ -66,7 +68,6 @@
                     android:id="@+id/card_tip_fav"
                     android:layout_width="20dp"
                     android:layout_height="14dp"
-                    android:layout_marginBottom="@dimen/tip_card_icon_margin"
                     android:layout_marginEnd="@dimen/tip_card_icon_margin"
                     android:layout_toLeftOf="@id/card_tip_share"
                     app:srcCompat="@drawable/ic_d_heart_inverted" />
