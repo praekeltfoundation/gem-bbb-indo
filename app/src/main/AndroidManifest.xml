@@ -31,6 +31,10 @@
             android:name=".views.onboarding.RegistrationActivity"
             android:theme="@style/AppTheme.FullscreenTheme" />
         <activity
+            android:name=".views.onboarding.ChangeNameActivity"
+            android:theme="@style/AppTheme.FullscreenTheme" />
+
+        <activity
             android:name=".views.onboarding.LoginActivity"
             android:theme="@style/AppTheme.FullscreenTheme" />
         <activity
