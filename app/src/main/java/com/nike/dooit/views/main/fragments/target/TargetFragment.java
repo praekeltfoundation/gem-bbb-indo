@@ -2,7 +2,6 @@ package com.nike.dooit.views.main.fragments.target;
 
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -23,13 +22,13 @@ import com.nike.dooit.models.enums.BotType;
 import com.nike.dooit.views.custom.WeekGraph;
 import com.nike.dooit.views.main.fragments.MainFragment;
 import com.nike.dooit.views.main.fragments.target.adapters.TargetPagerAdapter;
+import com.nike.dooit.views.main.fragments.target.callbacks.GoalAddCallback;
 
 import org.joda.time.Weeks;
 
 import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Currency;
-import java.util.LinkedHashMap;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -137,7 +136,7 @@ public class TargetFragment extends MainFragment {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.menu_main_target_add_goal:
-                startBot(BotType.GOAL);
+                startBot(BotType.GOAL_ADD);
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

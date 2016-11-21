@@ -23,7 +23,8 @@ public enum BotMessageType {
     INLINECURRENCY(10),
     INLINEDATE(11),
     TEXTCURRENCY(12),
-    GOALVERIFICATION(13);
+    GOALVERIFICATION(13),
+    END(14);
 
     private static Map<Integer, BotMessageType> map = new HashMap<>();
 
@@ -39,12 +40,6 @@ public enum BotMessageType {
         this.value = value;
     }
 
-    public static BotMessageType getValueOf(int value) {
-        if (map != null && map.containsKey(value))
-            return map.get(value);
-        return UNDEFINED;
-    }
-
     public int getValue() {
         return value;
     }
@@ -56,6 +51,12 @@ public enum BotMessageType {
 
     public boolean equalsTo(int value) {
         return this.value == value;
+    }
+
+    public static BotMessageType getValueOf(int value) {
+        if (map != null && map.containsKey(value))
+            return map.get(value);
+        return UNDEFINED;
     }
 
     public static BotMessageType getValueOf(String name) {

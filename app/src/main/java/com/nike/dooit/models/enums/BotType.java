@@ -6,6 +6,9 @@ package com.nike.dooit.models.enums;
 
 public enum BotType {
     DEFAULT,
-    GOAL,
+    GOAL_ADD,
+    GOAL_DEPOSIT,
+    GOAL_WITHDRAW,
+    GOAL_EDIT,
     SAVINGS
 }

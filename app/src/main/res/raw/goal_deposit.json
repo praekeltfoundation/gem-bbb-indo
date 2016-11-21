@@ -1,0 +1,14 @@
+[
+  {
+    "name": "goalGreeting",
+    "type": "text",
+    "text": "$(goalGreeting)",
+    "textParams": ["USERNAME"],
+    "autoNext": "depositIntroduction"
+  },
+  {
+    "name": "depositIntroduction",
+    "type": "end",
+    "text": "$(depositIntroduction)"
+  }
+]

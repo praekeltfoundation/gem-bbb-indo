@@ -8,6 +8,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 
 import com.nike.dooit.R;
+import com.nike.dooit.models.bot.BotCallback;
 import com.nike.dooit.models.enums.BotType;
 import com.nike.dooit.views.main.MainViewPagerPositions;
 import com.nike.dooit.views.main.fragments.bot.BotFragment;
