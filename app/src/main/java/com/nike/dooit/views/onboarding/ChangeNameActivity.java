@@ -3,18 +3,28 @@ package com.nike.dooit.views.onboarding;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.provider.SyncStateContract;
+import android.support.design.widget.Snackbar;
 import android.support.v4.content.res.ResourcesCompat;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.TextUtils;
 import android.text.style.ForegroundColorSpan;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
 import com.nike.dooit.DooitApplication;
 import com.nike.dooit.R;
+import com.nike.dooit.api.DooitAPIError;
+import com.nike.dooit.api.DooitErrorHandler;
 import com.nike.dooit.api.managers.UserManager;
+import com.nike.dooit.api.responses.AuthenticationResponse;
+import com.nike.dooit.api.responses.EmptyResponse;
+import com.nike.dooit.api.responses.OnboardingResponse;
+import com.nike.dooit.helpers.Persisted;
+import com.nike.dooit.models.User;
 import com.nike.dooit.views.DooitActivity;
 import com.nike.dooit.views.helpers.activity.DooitActivityBuilder;
 
@@ -25,6 +35,8 @@ import javax.inject.Inject;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import rx.functions.Action0;
+import rx.functions.Action1;
 
 /**
  * Created by chris on 2016-11-21.
@@ -40,8 +52,14 @@ public class ChangeNameActivity extends DooitActivity {
     @BindView(R.id.activity_change_name_example_text_edit)
     TextView nameHint;
 
+    @BindView(R.id.activity_change_name_button)
+    Button changeNameButton;
+
     @Inject
     UserManager userManager;
+
+    @Inject
+    Persisted persisted;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,11 +68,29 @@ public class ChangeNameActivity extends DooitActivity {
         ((DooitApplication) getApplication()).component.inject(this);
         ButterKnife.bind(this);
     }
+
     @OnClick(R.id.activity_change_name_button)
     public void changeName() {
         if(!isNameValid())
             return;
-        //userManager.
+        final User user = persisted.getCurrentUser();
+        final String name = this.name.getText().toString();
+        userManager.updateUser(user.getId(),name,new DooitErrorHandler() {
+            @Override
+            public void onError(DooitAPIError error) {
+                for (String msg : error.getErrorMessages())
+                    Snackbar.make(changeNameButton, msg, Snackbar.LENGTH_SHORT).show();
+            }
+        }).subscribe(new Action1<EmptyResponse>() {
+            @Override
+            public void call(EmptyResponse emptyResponse) {
+                user.setUsername(name);
+                ChangeNameActivity.this.persisted.setCurrentUser(user);
+                ChangeNameActivity.this.finish();
+
+            }
+        });
+
     }
     public boolean isNameValid() {
         boolean valid = true;
