@@ -36,11 +36,10 @@ public class MainFragment extends Fragment {
 
     }
 
-    protected void startBot(BotType botType, BotCallback callback) {
+    protected void startBot(BotType botType) {
         ViewPager viewPager = (ViewPager) getActivity().findViewById(R.id.content_main_view_pager);
         BotFragment botFragment = (BotFragment) viewPager.getAdapter().instantiateItem(viewPager, MainViewPagerPositions.BOT.getValue());
         botFragment.setBotType(botType);
-        botFragment.setBotCallback(callback);
         viewPager.setCurrentItem(MainViewPagerPositions.BOT.getValue());
     }
 

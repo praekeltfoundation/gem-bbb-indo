@@ -27,6 +27,7 @@ import com.nike.dooit.models.enums.BotMessageType;
 import com.nike.dooit.models.enums.BotType;
 import com.nike.dooit.views.main.fragments.MainFragment;
 import com.nike.dooit.views.main.fragments.bot.adapters.BotAdapter;
+import com.nike.dooit.views.main.fragments.target.callbacks.GoalAddCallback;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -120,12 +121,10 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
         super.onActive();
         switch (type) {
             case DEFAULT:
-                feed = new BotFeed<>(getContext());
-                feed.parse(R.raw.goals, Node.class);
-                break;
             case GOAL_ADD:
                 feed = new BotFeed<>(getContext());
                 feed.parse(R.raw.goals, Node.class);
+                callback = createBotCallback(type);
                 break;
         }
 
@@ -159,8 +158,14 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
         this.type = type;
     }
 
-    public void setBotCallback(BotCallback callback) {
-        this.callback = callback;
+    private BotCallback createBotCallback(BotType botType) {
+        switch(botType) {
+            case DEFAULT:
+            case GOAL_ADD:
+                return new GoalAddCallback((DooitApplication) getActivity().getApplication());
+            default:
+                return null;
+        }
     }
 
     public BotAdapter getBotAdapter() {
