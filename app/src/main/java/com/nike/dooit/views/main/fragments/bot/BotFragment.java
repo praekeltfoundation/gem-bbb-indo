@@ -123,7 +123,7 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
             case DEFAULT:
             case GOAL_ADD:
                 feed = new BotFeed<>(getContext());
-                feed.parse(R.raw.goals, Node.class);
+                feed.parse(R.raw.goal_add, Node.class);
                 callback = createBotCallback(type);
                 break;
         }
