@@ -24,6 +24,7 @@ import com.nike.dooit.api.responses.AuthenticationResponse;
 import com.nike.dooit.api.responses.EmptyResponse;
 import com.nike.dooit.api.responses.OnboardingResponse;
 import com.nike.dooit.helpers.Persisted;
+import com.nike.dooit.helpers.ViewValidation;
 import com.nike.dooit.models.User;
 import com.nike.dooit.views.DooitActivity;
 import com.nike.dooit.views.helpers.activity.DooitActivityBuilder;
@@ -43,8 +44,6 @@ import rx.functions.Action1;
  */
 
 public class ChangeNameActivity extends DooitActivity {
-    private static final String NAME_PATTERN = "[a-zA-Z0-9@\\.\\=\\-\\_]+";
-    private static final int MAX_NAME_LENGTH = 150;
 
     @BindView(R.id.activity_change_name_text_edit)
     EditText name;
@@ -93,29 +92,16 @@ public class ChangeNameActivity extends DooitActivity {
 
     }
     public boolean isNameValid() {
-        boolean valid = true;
         String nameText = name.getText().toString();
-        if (TextUtils.isEmpty(nameText)) {
-            valid = false;
-            nameHint.setText(R.string.reg_example_name_error_1);
-            nameHint.setTextColor(ResourcesCompat.getColor(getResources(), android.R.color.holo_red_light, getTheme()));
-        } else if (nameText.contains(" ")) {
-            valid = false;
-            nameHint.setText(R.string.reg_example_name_error_2);
-            nameHint.setTextColor(ResourcesCompat.getColor(getResources(), android.R.color.holo_red_light, getTheme()));
-        } else if (!Pattern.compile(NAME_PATTERN).matcher(nameText).matches()) {
-            valid = false;
-            nameHint.setText(R.string.reg_example_name_error_3);
-            nameHint.setTextColor(ResourcesCompat.getColor(getResources(), android.R.color.holo_red_light, getTheme()));
-        } else if (nameText.length() > MAX_NAME_LENGTH) {
-            valid = false;
-            nameHint.setText(R.string.reg_example_name_error_4);
+        ViewValidation.Result res = ViewValidation.isNameValid(nameText);
+        if (!res.valid) {
+            nameHint.setText(res.message);
             nameHint.setTextColor(ResourcesCompat.getColor(getResources(), android.R.color.holo_red_light, getTheme()));
         } else {
             nameHint.setText(R.string.reg_example_name);
             nameHint.setTextColor(ResourcesCompat.getColor(getResources(), R.color.white, getTheme()));
         }
-        return valid;
+        return res.valid;
     }
 
     public static class Builder extends DooitActivityBuilder<ChangeNameActivity.Builder> {

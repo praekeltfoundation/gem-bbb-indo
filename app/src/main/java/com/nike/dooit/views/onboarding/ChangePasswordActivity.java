@@ -11,6 +11,7 @@ import android.widget.TextView;
 import com.nike.dooit.DooitApplication;
 import com.nike.dooit.R;
 import com.nike.dooit.helpers.Persisted;
+import com.nike.dooit.helpers.ViewValidation;
 import com.nike.dooit.views.DooitActivity;
 import com.nike.dooit.views.helpers.activity.DooitActivityBuilder;
 
@@ -26,7 +27,6 @@ import butterknife.OnClick;
 
 public class ChangePasswordActivity extends DooitActivity {
 
-    private static final int MIN_PASSWORD = 6;
 
     @BindView(R.id.activity_change_password_edit_text)
     EditText password;
@@ -50,22 +50,17 @@ public class ChangePasswordActivity extends DooitActivity {
 
     public boolean isPasswordValid() {
         boolean valid = true;
-
-        if (TextUtils.isEmpty(password.getText())) {
-            valid = false;
-            passwordHint.setText(R.string.reg_example_password_error_1);
-            passwordHint.setTextColor(ResourcesCompat.getColor(getResources(), android.R.color.holo_red_light, getTheme()));
-        } else if (password.getText().length() < MIN_PASSWORD) {
-            valid = false;
-            passwordHint.setText(R.string.reg_example_password_error_2);
-            passwordHint.setTextColor(ResourcesCompat.getColor(getResources(), android.R.color.holo_red_light, getTheme()));
-        } else if (passwordOld.getText().toString().equals(password.getText().toString())) {
+        ViewValidation.Result result = ViewValidation.isPasswordValid(password.getText().toString());
+        if (passwordOld.getText().toString().equals(password.getText().toString())) {
             valid = false;
             passwordHint.setText(R.string.reg_change_password_error_1);
             passwordHint.setTextColor(ResourcesCompat.getColor(getResources(), android.R.color.holo_red_light, getTheme()));
-        } else {
+        } else if(result.valid){
             passwordHint.setText(R.string.reg_example_password);
             passwordHint.setTextColor(ResourcesCompat.getColor(getResources(), R.color.white, getTheme()));
+        }else{
+            passwordHint.setText(result.message);
+            passwordHint.setTextColor(ResourcesCompat.getColor(getResources(), android.R.color.holo_red_light, getTheme()));
         }
         return valid;
     }
