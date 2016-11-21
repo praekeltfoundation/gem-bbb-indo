@@ -41,7 +41,7 @@ public class GoalAddCallback implements BotCallback {
         goal.setTarget(Float.parseFloat(answerLog.get("goalAmount").getValue()));
         goal.setStartDate(LocalDate.now());
         goal.setEndDate(DateTimeFormat.forPattern("yyyy-MM-dd")
-                .parseLocalDate(answerLog.get("goalDate").getValue().substring(0, 9)));
+                .parseLocalDate(answerLog.get("goalDate").getValue().substring(0, 10)));
         Log.d(TAG, "Created " + goal);
 
         goalManager.createGoal(goal, new DooitErrorHandler() {
