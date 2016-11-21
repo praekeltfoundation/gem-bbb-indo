@@ -136,7 +136,7 @@ public class TargetFragment extends MainFragment {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.menu_main_target_add_goal:
-                startBot(BotType.GOAL,
+                startBot(BotType.GOAL_ADD,
                         new GoalAddCallback((DooitApplication) getActivity().getApplication()));
                 return true;
             default:

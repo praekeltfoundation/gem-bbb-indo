@@ -123,7 +123,7 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
                 feed = new BotFeed<>(getContext());
                 feed.parse(R.raw.goals, Node.class);
                 break;
-            case GOAL:
+            case GOAL_ADD:
                 feed = new BotFeed<>(getContext());
                 feed.parse(R.raw.goals, Node.class);
                 break;
@@ -149,7 +149,7 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
             case DEFAULT:
                 getAndAddNode(null);
                 break;
-            case GOAL:
+            case GOAL_ADD:
                 getAndAddNode("askGoalName");
                 break;
         }
@@ -175,7 +175,7 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
         Answer answer = (Answer) item;
         switch (type) {
             case DEFAULT:
-            case GOAL:
+            case GOAL_ADD:
                 if (!TextUtils.isEmpty(answer.getRemoveOnSelect())) {
                     for (BaseBotModel model : new ArrayList<>(getBotAdapter().getDataSet())) {
                         if (answer.getRemoveOnSelect().equals(model.getName())) {
