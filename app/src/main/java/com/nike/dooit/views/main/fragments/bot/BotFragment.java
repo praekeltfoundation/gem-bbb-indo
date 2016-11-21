@@ -30,6 +30,7 @@ import com.nike.dooit.views.main.fragments.bot.adapters.BotAdapter;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.inject.Inject;
@@ -55,7 +56,6 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
     BotCallback callback;
     BotFeed feed;
     BaseBotModel currentModel;
-    Map<String, Answer> answerLog = new LinkedHashMap<>();
 
     public BotFragment() {
         // Required empty public constructor
@@ -191,16 +191,13 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
                     getBotAdapter().addItem(model);
                 }
                 getBotAdapter().addItem(answer);
-                answerLog.put(answer.getName(), answer);
                 conversationRecyclerView.scrollToPosition(getBotAdapter().getItemCount() - 1);
                 persisted.saveConversationState(type, getBotAdapter().getDataSet());
                 if (!TextUtils.isEmpty(answer.getNext())) {
                     getAndAddNode(answer.getNext());
                     if (BotMessageType.getValueOf(currentModel.getType()) == BotMessageType.END)
-                        if (callback != null) {
-                            callback.onDone(answerLog);
-                            resetAnswerLog();
-                        }
+                        if (callback != null)
+                            callback.onDone(createAnswerLog(getBotAdapter().getDataSet()));
                 } else {
                     answerView.setData(new ArrayList<>());
                 }
@@ -211,8 +208,12 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
         persisted.saveConversationState(type, getBotAdapter().getDataSet());
     }
 
-    private void resetAnswerLog() {
-        answerLog = new LinkedHashMap<>();
+    private Map<String, Answer> createAnswerLog(List<BaseBotModel> converstation) {
+        Map<String, Answer> answerLog = new LinkedHashMap<>();
+        for (BaseBotModel model : converstation)
+            if (model instanceof Answer)
+                answerLog.put(model.getName(), (Answer) model);
+        return answerLog;
     }
 
     private void getAndAddNode(String name) {

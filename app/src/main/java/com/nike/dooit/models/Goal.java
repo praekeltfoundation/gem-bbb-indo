@@ -2,9 +2,8 @@ package com.nike.dooit.models;
 
 import com.google.gson.annotations.SerializedName;
 
-import org.joda.time.DateTime;
+import org.joda.time.LocalDate;
 
-import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.List;
 
@@ -20,9 +19,9 @@ public class Goal {
     @SerializedName("image_url")
     private String image;
     @SerializedName("start_date")
-    private DateTime startDate;
+    private LocalDate startDate;
     @SerializedName("end_date")
-    private DateTime endDate;
+    private LocalDate endDate;
     private List<GoalTransaction> transactions;
     @SerializedName("weekly_totals")
     private LinkedHashMap<String, Float> weeklyTotals;
@@ -59,19 +58,19 @@ public class Goal {
         this.image = image;
     }
 
-    public DateTime getStartDate() {
+    public LocalDate getStartDate() {
         return startDate;
     }
 
-    public void setStartDate(DateTime startDate) {
+    public void setStartDate(LocalDate startDate) {
         this.startDate = startDate;
     }
 
-    public DateTime getEndDate() {
+    public LocalDate getEndDate() {
         return endDate;
     }
 
-    public void setEndDate(DateTime endDate) {
+    public void setEndDate(LocalDate endDate) {
         this.endDate = endDate;
     }
 
