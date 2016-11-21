@@ -28,7 +28,7 @@ public class GoalAddCallback implements BotCallback {
     private static final String TAG = GoalAddCallback.class.getName();
 
     @Inject
-    GoalManager goalManager;
+    transient GoalManager goalManager;
 
     public GoalAddCallback(DooitApplication application) {
         application.component.inject(this);

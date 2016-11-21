@@ -16,6 +16,7 @@ import com.nike.dooit.views.main.fragments.challenge.fragments.ChallengeFreeform
 import com.nike.dooit.views.main.fragments.challenge.fragments.ChallengeQuizFragment;
 import com.nike.dooit.views.main.fragments.target.TargetFragment;
 import com.nike.dooit.views.main.fragments.target.callbacks.GoalAddCallback;
+import com.nike.dooit.views.main.fragments.target.callbacks.GoalDepositCallback;
 import com.nike.dooit.views.main.fragments.tip.TipsListFragment;
 import com.nike.dooit.views.main.fragments.tip.adapters.TipsListAdapter;
 import com.nike.dooit.views.main.fragments.tip.providers.TipProvider;
@@ -76,6 +77,8 @@ public interface DooitComponent {
     void inject(TargetFragment o);
 
     void inject(GoalAddCallback o);
+
+    void inject(GoalDepositCallback o);
 
     void inject(TipsFragment o);
 

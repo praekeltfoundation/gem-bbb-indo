@@ -81,7 +81,7 @@
     <string name="login_example_password_error_1">Password can\'t be blank</string>
 
     <!--JSON GOALS-->
-    <string name="goalGreeting">Hello %s.</string>
+    <string name="goalGreeting">Hello %s!</string>
     <string name="goalIntroduction">My Name is Dooit. I\'m gonna help  you save!</string>
     <string name="askGoalName">Select the goal you want to save for, please.</string>
     <string name="askGoalNameInput">What do you want to save for?</string>
@@ -101,6 +101,10 @@
     <string name="validationFailSaveAmountOther">Sorry, I do not understand that and have not t been taught how to handle it yet.</string>
     <string name="validationFailPriorSavedAmount">Sorry, I do not understand that and have not  been taught how to handle it yet.</string>
     <string name="infoGoalEnd">Thank you. That concludes the goal-setting process.</string>
+
+    <string name="depositIntroduction">Let\'s add your savings!</string>
+    <string name="depositReminder">Remember you have to save %1$s each week to reach %2$s by %3$s.</string>
+    <string name="depositRemainder">That is %1$s weeks and %2$s days from now.</string>
 
     <!--Buttons-->
     <string name="greeting">Hola!</string>

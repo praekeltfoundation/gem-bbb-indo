@@ -28,7 +28,9 @@ import com.nike.dooit.models.enums.BotType;
 import com.nike.dooit.views.main.fragments.MainFragment;
 import com.nike.dooit.views.main.fragments.bot.adapters.BotAdapter;
 import com.nike.dooit.views.main.fragments.target.callbacks.GoalAddCallback;
+import com.nike.dooit.views.main.fragments.target.callbacks.GoalDepositCallback;
 
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -124,7 +126,10 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
             case GOAL_ADD:
                 feed = new BotFeed<>(getContext());
                 feed.parse(R.raw.goal_add, Node.class);
-                callback = createBotCallback(type);
+                break;
+            case GOAL_DEPOSIT:
+                feed = new BotFeed<>(getContext());
+                feed.parse(R.raw.goal_deposit, Node.class);
                 break;
         }
 
@@ -143,6 +148,11 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
                 }
                 return;
             }
+
+            // TODO: Load persisted
+            callback = createBotCallback(type);
+        } else {
+            callback = createBotCallback(type);
         }
         switch (type) {
             case DEFAULT:
@@ -159,10 +169,24 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
     }
 
     private BotCallback createBotCallback(BotType botType) {
-        switch(botType) {
+        switch (botType) {
             case DEFAULT:
             case GOAL_ADD:
                 return new GoalAddCallback((DooitApplication) getActivity().getApplication());
+            case GOAL_DEPOSIT:
+                return new GoalDepositCallback((DooitApplication) getActivity().getApplication());
+            default:
+                return null;
+        }
+    }
+
+    private Type getBotCallbackClass(BotType botType) {
+        switch (botType) {
+            case DEFAULT:
+            case GOAL_ADD:
+                return GoalAddCallback.class;
+            case GOAL_DEPOSIT:
+                return GoalDepositCallback.class;
             default:
                 return null;
         }
