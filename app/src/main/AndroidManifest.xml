@@ -24,23 +24,27 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <activity
             android:name=".views.welcome.WelcomeActivity"
             android:theme="@style/AppTheme.FullscreenTheme" />
+
         <activity
             android:name=".views.onboarding.RegistrationActivity"
             android:theme="@style/AppTheme.FullscreenTheme" />
+
         <activity
             android:name=".views.onboarding.ChangeNameActivity"
             android:theme="@style/AppTheme.FullscreenTheme" />
 
-        <activity
-            android:name=".views.onboarding.LoginActivity"
+        <activity android:name=".views.onboarding.ChangePasswordActivity"
             android:theme="@style/AppTheme.FullscreenTheme" />
+
         <activity
             android:name=".views.main.MainActivity"
             android:label="@string/title_activity_main"
             android:theme="@style/AppTheme.NoActionBar" />
+
         <activity
             android:name=".views.profile.ProfileActivity"
             android:label="@string/title_activity_profile"
