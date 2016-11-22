@@ -4,6 +4,7 @@ import android.app.Application;
 
 import com.nike.dooit.api.DooitErrorHandler;
 import com.nike.dooit.api.interfaces.UserAPI;
+import com.nike.dooit.api.requests.ChangePassword;
 import com.nike.dooit.api.responses.EmptyResponse;
 import com.nike.dooit.models.User;
 import com.nike.dooit.api.requests.ChangeUser;
@@ -30,5 +31,8 @@ public class UserManager extends DooitManager {
     }
     public Observable<EmptyResponse> updateUser(long userId, String name, DooitErrorHandler errorHandler) {
         return useNetwork(userAPI.renameUser(userId,new ChangeUser(name)), errorHandler);
+    }
+    public Observable<EmptyResponse> changePassword(long userId, String oldPassword,String newPassword,  DooitErrorHandler errorHandler) {
+        return useNetwork(userAPI.changePassword(userId,new ChangePassword(oldPassword,newPassword)), errorHandler);
     }
 }

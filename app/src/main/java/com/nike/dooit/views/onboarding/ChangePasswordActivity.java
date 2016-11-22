@@ -3,15 +3,22 @@ package com.nike.dooit.views.onboarding;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.v4.content.res.ResourcesCompat;
 import android.text.TextUtils;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
 import com.nike.dooit.DooitApplication;
 import com.nike.dooit.R;
+import com.nike.dooit.api.DooitAPIError;
+import com.nike.dooit.api.DooitErrorHandler;
+import com.nike.dooit.api.managers.UserManager;
+import com.nike.dooit.api.responses.EmptyResponse;
 import com.nike.dooit.helpers.Persisted;
 import com.nike.dooit.helpers.ViewValidation;
+import com.nike.dooit.models.User;
 import com.nike.dooit.views.DooitActivity;
 import com.nike.dooit.views.helpers.activity.DooitActivityBuilder;
 
@@ -20,6 +27,7 @@ import javax.inject.Inject;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import rx.functions.Action1;
 
 /**
  * Created by chris on 2016-11-21.
@@ -36,6 +44,9 @@ public class ChangePasswordActivity extends DooitActivity {
 
     @BindView(R.id.activity_change_password_old_edit_text)
     EditText passwordOld;
+
+    @Inject
+    UserManager userManager;
 
     @Inject
     Persisted persisted;
@@ -64,11 +75,31 @@ public class ChangePasswordActivity extends DooitActivity {
         }
         return valid;
     }
+    @BindView(R.id.activity_change_password_button)
+    Button changePasswordButton;
 
     @OnClick(R.id.activity_change_password_button)
     public void changePassword() {
         if (!isPasswordValid())
             return;
+        final User user = persisted.getCurrentUser();
+        final String newPassword = this.password.getText().toString();
+        final String oldPassword = this.passwordOld.getText().toString();
+        userManager.changePassword(user.getId(),oldPassword,newPassword,new DooitErrorHandler() {
+            @Override
+            public void onError(DooitAPIError error) {
+                for (String msg : error.getErrorMessages())
+                    Snackbar.make(changePasswordButton, msg, Snackbar.LENGTH_SHORT).show();
+            }
+        }).subscribe(new Action1<EmptyResponse>() {
+            @Override
+            public void call(EmptyResponse emptyResponse) {
+                user.setPassword(newPassword);
+                ChangePasswordActivity.this.persisted.setCurrentUser(user);
+                ChangePasswordActivity.this.finish();
+
+            }
+        });
         ChangePasswordActivity.this.finish();
     }
 
