@@ -11,6 +11,10 @@ public class GoalTransaction {
     private DateTime date;
     private double value;
 
+    public GoalTransaction(double value) {
+        this(DateTime.now(), value);
+    }
+
     public GoalTransaction(DateTime date, double value) {
         this.date = date;
         this.value = value;

@@ -15,6 +15,7 @@ import java.util.List;
 
 public class Goal {
 
+    private Long id;
     private String name;
     private double value;
     private double target;
@@ -27,6 +28,14 @@ public class Goal {
     private List<GoalTransaction> transactions = new ArrayList<>();
     @SerializedName("weekly_totals")
     private LinkedHashMap<String, Float> weeklyTotals;
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     public String getName() {
         return name;
