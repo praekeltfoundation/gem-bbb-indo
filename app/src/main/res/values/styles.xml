@@ -45,35 +45,36 @@
         <item name="android:gravity">center_horizontal</item>
     </style>
 
+    <style name="AppTheme.HorsontalProgress" parent="Widget.AppCompat.ProgressBar.Horizontal">
+        <item name="colorAccent">@color/light_blue</item>
+        <item name="android:progressBackgroundTint">@color/grey</item>
+    </style>
+
+    <!-- Buttons -->
+
     <style name="AppTheme.Button" parent="@style/Widget.AppCompat.Button.Borderless">
 
     </style>
 
     <style name="AppTheme.Button.Big" parent="AppTheme.Button">
-        <item name="android:textSize">@dimen/k_font_xx_large</item>
+        <item name="android:textSize">@dimen/k_font_xxx_large</item>
+        <item name="android:padding">@dimen/button_big_padding</item>
+        <item name="fontPath">fonts/LondrinaSolid-Regular.ttf</item>
     </style>
 
     <style name="AppTheme.Button.Big.Yellow" parent="AppTheme.Button.Big">
         <item name="android:background">@drawable/button_bkg_yellow</item>
         <item name="android:textColor">@color/purple</item>
-        <item name="android:foreground">?android:attr/selectableItemBackground</item>
     </style>
 
     <style name="AppTheme.Button.Big.Purple" parent="AppTheme.Button.Big">
         <item name="android:background">@drawable/button_bkg_purple</item>
         <item name="android:textColor">@color/yellow</item>
-        <item name="android:foreground">?android:attr/selectableItemBackground</item>
     </style>
 
     <style name="AppTheme.Button.Big.Black" parent="AppTheme.Button.Big">
         <item name="android:background">@drawable/button_bkg_black</item>
         <item name="android:textColor">@color/yellow</item>
-        <item name="android:foreground">?android:attr/selectableItemBackground</item>
-    </style>
-
-    <style name="AppTheme.HorsontalProgress" parent="Widget.AppCompat.ProgressBar.Horizontal">
-        <item name="colorAccent">@color/light_blue</item>
-        <item name="android:progressBackgroundTint">@color/grey</item>
     </style>
 
     <style name="AppTheme.Button.Big.LightBlue" parent="AppTheme.Button.Big">
@@ -87,6 +88,21 @@
         <item name="android:windowFrame">@null</item>
         <item name="android:windowFullscreen">true</item>
         <item name="android:windowContentOverlay">@null</item>
+    </style>
+
+    <!-- Edit Text -->
+
+    <style name="AppTheme.EditText.Grey" parent="Widget.AppCompat.EditText">
+        <item name="android:background">@drawable/bkg_edit_view</item>
+        <item name="android:paddingStart">@dimen/edit_text_padding</item>
+        <item name="android:paddingEnd">@dimen/edit_text_padding</item>
+        <item name="android:textAppearance">@style/AppTheme.TextView.Regular.Large</item>
+    </style>
+
+    <!-- Spinner -->
+
+    <style name="AppTheme.SpinnerItem" parent="AppTheme.TextView.Regular.Medium">
+        <item name="android:padding">@dimen/spinner_item_padding</item>
     </style>
 
 </resources>

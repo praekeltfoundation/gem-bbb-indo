@@ -1,13 +1,26 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.nike.dooit.views.main.fragments.tip.TipsListFragment">
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context="com.nike.dooit.views.main.fragments.tip.TipsListFragment"
+    app:layout_collapseMode="pin">
 
-
-    <com.nike.dooit.views.custom.DesignSafeRecyclerView
-        android:id="@+id/fragment_tips_list_recyclerview"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        />
-</FrameLayout>
+        android:orientation="vertical">
+
+        <include layout="@layout/filter_tip"
+            android:id="@+id/fragment_tips_list_filter"
+            android:visibility="gone"/>
+
+        <com.nike.dooit.views.custom.DesignSafeRecyclerView
+            android:id="@+id/fragment_tips_list_recyclerview"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@id/fragment_tips_list_filter" />
+    </LinearLayout>
+
+</android.support.v4.widget.NestedScrollView>

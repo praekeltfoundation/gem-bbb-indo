@@ -5,7 +5,9 @@ import com.nike.dooit.models.User;
 
 import java.util.List;
 
+import retrofit2.http.Body;
 import retrofit2.http.GET;
+import retrofit2.http.POST;
 import retrofit2.http.Path;
 import rx.Observable;
 
@@ -15,7 +17,9 @@ import rx.Observable;
 
 public interface GoalAPI {
 
-    @GET("/api/goals")
+    @GET("/api/goals/")
     Observable<List<Goal>> getGoals();
 
+    @POST("/api/goals/")
+    Observable<Goal> createGoal(@Body Goal goal);
 }

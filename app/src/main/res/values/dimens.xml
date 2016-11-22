@@ -14,6 +14,19 @@
     <dimen name="k_font_small">12dp</dimen>
     <dimen name="k_font_extra_small">8dp</dimen>
 
+    <dimen name="button_big_padding">11dp</dimen>
+    <dimen name="edit_text_padding">10dp</dimen>
+    <dimen name="spinner_item_padding">10dp</dimen>
+
+    <!-- Registration -->
+    <dimen name="registration_activity_padding">24dp</dimen>
+    <dimen name="registration_margin_vertical">36dp</dimen>
+    <dimen name="registration_field_margin_vertical">16dp</dimen>
+
+    <!-- Login -->
+    <dimen name="login_activity_padding">24dp</dimen>
+    <dimen name="login_margin_vertical">56dp</dimen>
+
     <!-- Challenges -->
     <dimen name="challenge_margins">8dp</dimen>
     <dimen name="challenge_option_margins">16dp</dimen>
@@ -22,9 +35,13 @@
 
 
     <!-- Tips -->
-    <dimen name="tip_card_margin">16dp</dimen>
+    <dimen name="tip_card_margin">12dp</dimen>
     <dimen name="tip_card_image_height">180dp</dimen>
     <dimen name="tip_card_image_height_2">200dp</dimen>
-    <dimen name="tip_card_title_margin">16dp</dimen>
+    <dimen name="tip_card_title_margin">12dp</dimen>
     <dimen name="tip_card_icon_margin">8dp</dimen>
+    <dimen name="tip_card_overlay_height">90dp</dimen>
+    <dimen name="tip_tab_indicator_height">3dp</dimen>
+    <dimen name="tip_search_margin">12dp</dimen>
+    <dimen name="tip_search_suggestion_padding">3dp</dimen>
 </resources>

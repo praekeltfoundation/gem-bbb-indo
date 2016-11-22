@@ -10,9 +10,14 @@
         android:layout_height="match_parent"
         android:src="@color/yellow" />
 
+    <com.facebook.drawee.view.SimpleDraweeView
+        android:id="@+id/fragment_welcome_animation"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
     <TextView
         android:id="@+id/fragment_welcome_text"
-        style="@style/AppTheme.TextView.Regular.ExtraLarge"
+        style="@style/AppTheme.TextView.Bold.ExtraLarge"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"

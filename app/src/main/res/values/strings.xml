@@ -38,19 +38,24 @@
     <string name="lets_start">let\'s start</string>
 
     <!-- Tips -->
-    <string name="tips_tab_favourites">Favourites</string>
+    <string name="tips_tab_favourites">Favourite</string>
     <string name="tips_tab_all">All</string>
     <string name="tips_card_read_more">Read more</string>
+    <string name="tips_card_empty_tag">tag</string>
     <string name="tips_search_hint">Search for: Topics, titles, tags, etc…</string>
     <string name="tips_search_placeholder_fav">Search favourite tips</string>
     <string name="tips_search_placeholder_all">Search all tips</string>
     <string name="tips_article_opening">Opening \'%s\'</string>
     <string name="tips_article_add_fav">Added \'%s\' to favourites</string>
+    <string name="tips_list_filter">Filtering \'%s\'</string>
 
     <!-- Registration -->
     <string name="reg_t_c">By clicking register, you are agreeing\n to our Terms &amp; Condition</string>
     <string name="reg_example_name">Example: Aulia Dharmaningtyas</string>
     <string name="reg_example_name_error_1">Name can\'t be blank</string>
+    <string name="reg_example_name_error_2">Name can\'t contain spaces</string>
+    <string name="reg_example_name_error_3">Name can only contain letters and numbers</string>
+    <string name="reg_example_name_error_4">Name can\'t be longer than 150 characters</string>
     <string name="reg_age">How old are you?</string>
     <string name="reg_example_age">Example: 16</string>
     <string name="reg_example_age_error_1">Age can\'t be blank</string>
@@ -59,8 +64,11 @@
     <string name="reg_gender_girl">Girl</string>
     <string name="reg_example_number">Example: 1234567890</string>
     <string name="reg_example_number_error_1">Mobile Number can\'t be blank</string>
+    <string name="reg_example_number_error_2">Mobile Number must be longer than 9 digits</string>
+    <string name="reg_example_number_error_3">Mobile Number must be shorter than 15 digits</string>
     <string name="reg_example_password">Must have at least 6 characters</string>
     <string name="reg_example_password_error_1">Password can\'t be blank</string>
+    <string name="reg_example_password_error_2">Password must be longer than 6 characters</string>
     <string name="already_registered_log_in">Already registered? Log in</string>
     <string name="forgot_password">Forgot password?</string>
     <string name="challenge_t_c">By taking this challenge you\nagree to our Terms &amp; Conditions</string>
@@ -77,7 +85,7 @@
     <string name="login_example_password_error_1">Password can\'t be blank</string>
 
     <!--JSON GOALS-->
-    <string name="goalGreeting">Hello %s.</string>
+    <string name="goalGreeting">Hello %s!</string>
     <string name="goalIntroduction">My Name is Dooit. I\'m gonna help  you save!</string>
     <string name="askGoalName">Select the goal you want to save for, please.</string>
     <string name="askGoalNameInput">What do you want to save for?</string>
@@ -97,6 +105,10 @@
     <string name="validationFailSaveAmountOther">Sorry, I do not understand that and have not t been taught how to handle it yet.</string>
     <string name="validationFailPriorSavedAmount">Sorry, I do not understand that and have not  been taught how to handle it yet.</string>
     <string name="infoGoalEnd">Thank you. That concludes the goal-setting process.</string>
+
+    <string name="depositIntroduction">Let\'s add your savings!</string>
+    <string name="depositReminder">Remember you have to save %1$s each week to reach %2$s by %3$s.</string>
+    <string name="depositRemainder">That is %1$s weeks and %2$s days from now.</string>
 
     <!--Buttons-->
     <string name="greeting">Hola!</string>

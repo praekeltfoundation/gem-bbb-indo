@@ -1,46 +1,66 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.design.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:background="@drawable/pattern_01_grey"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.nike.dooit.views.main.fragments.target.TargetFragment">
+    android:fitsSystemWindows="true">
 
-    <RelativeLayout
-        android:id="@+id/fragment_tips_head"
+    <android.support.design.widget.AppBarLayout
+        android:id="@+id/appbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/yellow">
 
-        <AutoCompleteTextView
-            android:id="@+id/fragment_tips_search_view"
+        <android.support.design.widget.CollapsingToolbarLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="8dp"
-            android:layout_marginRight="8dp"
-            android:layout_marginTop="8dp"
-            android:background="@color/light_grey"
-            android:drawableEnd="@drawable/search_icon"
-            android:imeOptions="actionDone"
-            android:inputType="text" />
+            app:layout_scrollFlags="snap|scroll">
 
-        <TextView
-            android:id="@+id/fragment_tips_search_hint"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/fragment_tips_search_view"
-            android:layout_marginLeft="8dp"
-            android:layout_marginRight="8dp"
-            android:layout_marginTop="8dp"
-            android:text="@string/tips_search_hint" />
+            <RelativeLayout
+                android:id="@+id/fragment_tips_search_container"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/tip_search_margin">
+
+                    <AutoCompleteTextView
+                        android:id="@+id/fragment_tips_search_view"
+                        style="@style/AppTheme.EditText.Grey"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:drawableEnd="@drawable/search_icon"
+                        android:imeOptions="actionDone"
+                        android:inputType="text"
+                        tools:text="Search favourite tips..." />
+
+                <TextView
+                    android:id="@+id/fragment_tips_search_hint"
+                    style="@style/AppTheme.TextView.Regular.Small"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/fragment_tips_search_view"
+                    android:layout_marginTop="4dp"
+                    android:text="@string/tips_search_hint"
+                    android:textColor="@color/grey"/>
+
+            </RelativeLayout>
+
+        </android.support.design.widget.CollapsingToolbarLayout>
 
         <android.support.design.widget.TabLayout
             android:id="@+id/fragment_tips_tablayout"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_below="@+id/fragment_tips_search_hint"
-            android:layout_marginTop="8dp"
             android:background="@color/yellow"
-            app:tabBackground="@drawable/tab_tips_background"
+            app:tabBackground="@drawable/tab_tips_bkg"
+            app:tabIndicatorColor="@color/grey"
+            app:tabIndicatorHeight="@dimen/tip_tab_indicator_height"
+            app:tabPaddingBottom="0dp"
+            app:tabPaddingEnd="0dp"
+            app:tabPaddingStart="0dp"
+            app:tabPaddingTop="0dp"
             app:tabTextAppearance="@style/AppTheme.TextView.Regular.ExtraLarge">
 
             <android.support.design.widget.TabItem
@@ -58,12 +78,14 @@
                 android:layout_height="wrap_content"
                 tools:text="Right" />
         </android.support.design.widget.TabLayout>
-    </RelativeLayout>
+
+    </android.support.design.widget.AppBarLayout>
 
     <android.support.v4.view.ViewPager
         android:id="@+id/fragment_tips_viewpager"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/fragment_tips_head" />
+        android:layout_below="@id/appbar"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
 
-</RelativeLayout>
+</android.support.design.widget.CoordinatorLayout>

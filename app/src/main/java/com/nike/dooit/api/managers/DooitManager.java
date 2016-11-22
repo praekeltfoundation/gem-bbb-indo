@@ -10,10 +10,12 @@ import com.nike.dooit.DooitApplication;
 import com.nike.dooit.api.DooitErrorHandler;
 import com.nike.dooit.api.serializers.ChallengeSerializer;
 import com.nike.dooit.api.serializers.DateTimeSerializer;
+import com.nike.dooit.api.serializers.LocalDateSerializer;
 import com.nike.dooit.helpers.DooitSharedPreferences;
 import com.nike.dooit.helpers.Persisted;
 
 import org.joda.time.DateTime;
+import org.joda.time.LocalDate;
 
 import java.io.IOException;
 
@@ -86,6 +88,7 @@ public class DooitManager {
                 .addConverterFactory(GsonConverterFactory.create(
                         new GsonBuilder()
                                 .registerTypeAdapter(DateTime.class, new DateTimeSerializer())
+                                .registerTypeAdapter(LocalDate.class, new LocalDateSerializer())
                                 .registerTypeAdapterFactory(ChallengeSerializer.getChallengeAdapterFactory())
                                 .create())
                 )

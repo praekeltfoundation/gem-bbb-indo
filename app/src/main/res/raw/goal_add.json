@@ -96,10 +96,10 @@
     "text": "$(verifyGoalAmount)",
     "textParams": ["goalAmount", "goalAmount", "goalAmount"],
     "answers": [
-      { "name": "acceptGoal", "text":"$(acceptGoal)"},
+      { "name": "acceptGoal", "text":"$(acceptGoal)", "next": "infoGoalEnd"},
       { "name": "changeDate", "text":"$(changeDate)", "next": "askGoalDate"},
       { "name": "changeAmount", "text":"$(changeAmount)", "next": "askGoalAmount"},
-      { "name": "startOver", "text":"$(startOver)", "next": "askGoalName"}
+      { "name": "startOver", "text":"$(startOver)", "next": "infoGoalEnd"}
     ]
   },
   {

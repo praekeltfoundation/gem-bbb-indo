@@ -4,6 +4,7 @@ import android.content.Context;
 import android.text.InputType;
 import android.view.KeyEvent;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -45,6 +46,8 @@ public class AnswerInlineTextEditViewHolder extends BaseBotViewHolder<Answer> {
         editText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+//                if (EditorInfo.IME_ACTION_DONE == actionId) {
+                // TODO: `Done` on keyboard still sends 66 (KeyEvent.KEYCODE_ENTER)
                 if (KeyEvent.KEYCODE_ENTER == actionId) {
                     dismissKeyboard(editText);
                     Answer inputAnswer = new Answer();

@@ -3,7 +3,6 @@ package com.nike.dooit.views.main.fragments.tip.viewholders;
 import android.content.Context;
 import android.net.Uri;
 import android.support.v4.content.ContextCompat;
-import android.support.v4.content.res.ResourcesCompat;
 import android.support.v7.widget.RecyclerView;
 import android.text.SpannableString;
 import android.view.View;
@@ -12,6 +11,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.facebook.drawee.view.SimpleDraweeView;
+import com.greenfrvr.hashtagview.HashtagView;
 import com.nike.dooit.DooitApplication;
 import com.nike.dooit.R;
 import com.nike.dooit.api.DooitAPIError;
@@ -20,6 +20,8 @@ import com.nike.dooit.api.managers.TipManager;
 import com.nike.dooit.api.responses.EmptyResponse;
 import com.nike.dooit.helpers.Persisted;
 import com.nike.dooit.views.tip.TipArticleActivity;
+
+import java.util.List;
 
 import javax.inject.Inject;
 
@@ -45,6 +47,9 @@ public class TipViewHolder extends RecyclerView.ViewHolder {
 
     @BindView(R.id.card_tip_image)
     SimpleDraweeView imageView;
+
+    @BindView(R.id.card_tip_tags_view)
+    HashtagView tagsView;
 
     @BindView(R.id.card_tip_title)
     TextView titleView;
@@ -88,25 +93,47 @@ public class TipViewHolder extends RecyclerView.ViewHolder {
 
     @OnClick(R.id.card_tip_fav)
     public void favouriteTip(final View view) {
-        tipManager.favourite(id, new DooitErrorHandler() {
-            @Override
-            public void onError(DooitAPIError error) {
+        if (isFavourite) {
+            tipManager.unfavourite(id, new DooitErrorHandler() {
+                @Override
+                public void onError(DooitAPIError error) {
 
-            }
-        }).subscribe(new Action1<EmptyResponse>() {
-            @Override
-            public void call(EmptyResponse emptyResponse) {
-                view.post(new Runnable() {
-                    @Override
-                    public void run() {
-                        setFavourite(true);
-                        persisted.clearFavourites();
-                    }
-                });
-            }
-        });
-        Toast.makeText(getContext(), String.format(addFavArticleText,
-                titleView.getText().toString()), Toast.LENGTH_SHORT).show();
+                }
+            }).subscribe(new Action1<EmptyResponse>() {
+                @Override
+                public void call(EmptyResponse emptyResponse) {
+                    view.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            setFavourite(false);
+                            persisted.clearFavourites();
+                            Toast.makeText(getContext(), String.format(addFavArticleText,
+                                    titleView.getText().toString()), Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                }
+            });
+        } else {
+            tipManager.favourite(id, new DooitErrorHandler() {
+                @Override
+                public void onError(DooitAPIError error) {
+
+                }
+            }).subscribe(new Action1<EmptyResponse>() {
+                @Override
+                public void call(EmptyResponse emptyResponse) {
+                    view.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            setFavourite(true);
+                            persisted.clearFavourites();
+                            Toast.makeText(getContext(), String.format(addFavArticleText,
+                                    titleView.getText().toString()), Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                }
+            });
+        }
     }
 
     @OnClick(R.id.card_tip_share)
@@ -136,6 +163,19 @@ public class TipViewHolder extends RecyclerView.ViewHolder {
 
     public boolean isFavourite() {
         return isFavourite;
+    }
+
+    public void clearTags() {
+        tagsView.removeAllViews();
+    }
+
+    public void addTags(List<String> tags) {
+        tagsView.setData(tags, new HashtagView.DataTransform<String>() {
+            @Override
+            public CharSequence prepare(String item) {
+                return item.toUpperCase();
+            }
+        });
     }
 
     public void setFavourite(boolean favourite) {

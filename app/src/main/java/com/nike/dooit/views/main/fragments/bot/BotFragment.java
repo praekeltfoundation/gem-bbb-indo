@@ -21,13 +21,20 @@ import com.nike.dooit.helpers.Persisted;
 import com.nike.dooit.helpers.bot.BotFeed;
 import com.nike.dooit.models.bot.Answer;
 import com.nike.dooit.models.bot.BaseBotModel;
+import com.nike.dooit.models.bot.BotCallback;
 import com.nike.dooit.models.bot.Node;
 import com.nike.dooit.models.enums.BotMessageType;
 import com.nike.dooit.models.enums.BotType;
 import com.nike.dooit.views.main.fragments.MainFragment;
 import com.nike.dooit.views.main.fragments.bot.adapters.BotAdapter;
+import com.nike.dooit.views.main.fragments.target.callbacks.GoalAddCallback;
+import com.nike.dooit.views.main.fragments.target.callbacks.GoalDepositCallback;
 
+import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
 
 import javax.inject.Inject;
 
@@ -39,7 +46,7 @@ import butterknife.ButterKnife;
  * Use the {@link BotFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class  BotFragment extends MainFragment implements HashtagView.TagsClickListener {
+public class BotFragment extends MainFragment implements HashtagView.TagsClickListener {
     @BindView(R.id.fragment_bot_conversation_recycler_view)
     RecyclerView conversationRecyclerView;
     @BindView(R.id.fragment_bot_answer_hash_view)
@@ -49,6 +56,7 @@ public class  BotFragment extends MainFragment implements HashtagView.TagsClickL
     Persisted persisted;
 
     BotType type = BotType.DEFAULT;
+    BotCallback callback;
     BotFeed feed;
     BaseBotModel currentModel;
 
@@ -92,7 +100,6 @@ public class  BotFragment extends MainFragment implements HashtagView.TagsClickL
         conversationRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         conversationRecyclerView.setItemAnimator(new DefaultItemAnimator());
         conversationRecyclerView.setAdapter(new BotAdapter(getContext(), this));
-
     }
 
     @Override
@@ -116,12 +123,13 @@ public class  BotFragment extends MainFragment implements HashtagView.TagsClickL
         super.onActive();
         switch (type) {
             case DEFAULT:
+            case GOAL_ADD:
                 feed = new BotFeed<>(getContext());
-                feed.parse(R.raw.goals, Node.class);
+                feed.parse(R.raw.goal_add, Node.class);
                 break;
-            case GOAL:
+            case GOAL_DEPOSIT:
                 feed = new BotFeed<>(getContext());
-                feed.parse(R.raw.goals, Node.class);
+                feed.parse(R.raw.goal_deposit, Node.class);
                 break;
         }
 
@@ -140,12 +148,17 @@ public class  BotFragment extends MainFragment implements HashtagView.TagsClickL
                 }
                 return;
             }
+
+            // TODO: Load persisted
+            callback = createBotCallback(type);
+        } else {
+            callback = createBotCallback(type);
         }
         switch (type) {
             case DEFAULT:
                 getAndAddNode(null);
                 break;
-            case GOAL:
+            case GOAL_ADD:
                 getAndAddNode("askGoalName");
                 break;
         }
@@ -153,6 +166,30 @@ public class  BotFragment extends MainFragment implements HashtagView.TagsClickL
 
     public void setBotType(BotType type) {
         this.type = type;
+    }
+
+    private BotCallback createBotCallback(BotType botType) {
+        switch (botType) {
+            case DEFAULT:
+            case GOAL_ADD:
+                return new GoalAddCallback((DooitApplication) getActivity().getApplication());
+            case GOAL_DEPOSIT:
+                return new GoalDepositCallback((DooitApplication) getActivity().getApplication());
+            default:
+                return null;
+        }
+    }
+
+    private Type getBotCallbackClass(BotType botType) {
+        switch (botType) {
+            case DEFAULT:
+            case GOAL_ADD:
+                return GoalAddCallback.class;
+            case GOAL_DEPOSIT:
+                return GoalDepositCallback.class;
+            default:
+                return null;
+        }
     }
 
     public BotAdapter getBotAdapter() {
@@ -167,7 +204,7 @@ public class  BotFragment extends MainFragment implements HashtagView.TagsClickL
         Answer answer = (Answer) item;
         switch (type) {
             case DEFAULT:
-            case GOAL:
+            case GOAL_ADD:
                 if (!TextUtils.isEmpty(answer.getRemoveOnSelect())) {
                     for (BaseBotModel model : new ArrayList<>(getBotAdapter().getDataSet())) {
                         if (answer.getRemoveOnSelect().equals(model.getName())) {
@@ -187,6 +224,9 @@ public class  BotFragment extends MainFragment implements HashtagView.TagsClickL
                 persisted.saveConversationState(type, getBotAdapter().getDataSet());
                 if (!TextUtils.isEmpty(answer.getNext())) {
                     getAndAddNode(answer.getNext());
+                    if (BotMessageType.getValueOf(currentModel.getType()) == BotMessageType.END)
+                        if (callback != null)
+                            callback.onDone(createAnswerLog(getBotAdapter().getDataSet()));
                 } else {
                     answerView.setData(new ArrayList<>());
                 }
@@ -195,6 +235,14 @@ public class  BotFragment extends MainFragment implements HashtagView.TagsClickL
                 break;
         }
         persisted.saveConversationState(type, getBotAdapter().getDataSet());
+    }
+
+    private Map<String, Answer> createAnswerLog(List<BaseBotModel> converstation) {
+        Map<String, Answer> answerLog = new LinkedHashMap<>();
+        for (BaseBotModel model : converstation)
+            if (model instanceof Answer)
+                answerLog.put(model.getName(), (Answer) model);
+        return answerLog;
     }
 
     private void getAndAddNode(String name) {

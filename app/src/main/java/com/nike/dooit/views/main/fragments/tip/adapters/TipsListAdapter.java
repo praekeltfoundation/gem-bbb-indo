@@ -101,6 +101,10 @@ public class TipsListAdapter extends RecyclerView.Adapter<TipViewHolder> impleme
 
         // Favourite
         holder.setFavourite(tip.isFavourite());
+
+        // Tags
+        holder.clearTags();
+        holder.addTags(tip.getTags());
     }
 
     @Override
@@ -120,6 +124,7 @@ public class TipsListAdapter extends RecyclerView.Adapter<TipViewHolder> impleme
     public void resetFiltered() {
         clearFiltered();
         addAllFiltered(tipsAll);
+        notifyDataSetChanged();
     }
 
     public void addFiltered(Tip tip) {

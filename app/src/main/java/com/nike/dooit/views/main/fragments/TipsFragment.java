@@ -4,11 +4,13 @@ import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
@@ -32,6 +34,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnEditorAction;
 import butterknife.OnPageChange;
+import butterknife.OnTouch;
 
 public class TipsFragment extends Fragment implements OnTipsAvailableListener {
 
@@ -90,7 +93,7 @@ public class TipsFragment extends Fragment implements OnTipsAvailableListener {
         View view = inflater.inflate(R.layout.fragment_tips, container, false);
         ButterKnife.bind(this, view);
 
-        searchAdapter = new TipsAutoCompleteAdapter(getContext(), R.layout.list_tips_item);
+        searchAdapter = new TipsAutoCompleteAdapter(getContext(), R.layout.item_tips_search_suggestion);
         searchView.setAdapter(searchAdapter);
 
         tipsTabAdapter = new TipsTabAdapter(getChildFragmentManager(), getContext(), this);
@@ -114,8 +117,27 @@ public class TipsFragment extends Fragment implements OnTipsAvailableListener {
     public boolean onSearchSubmit(TextView v, int actionId, KeyEvent event) {
         if (actionId == EditorInfo.IME_ACTION_DONE) {
             String constraint = v.getText().toString();
-            tipsTabAdapter.getPrimaryItem().onSearch(constraint);
+            if (!TextUtils.isEmpty(constraint))
+                tipsTabAdapter.getPrimaryItem().onSearch(constraint);
             return true;
+        }
+        return false;
+    }
+
+    @OnTouch(R.id.fragment_tips_search_view)
+    public boolean onSearchClick(TextView v, MotionEvent event) {
+        final int DRAWABLE_LEFT = 0;
+        final int DRAWABLE_TOP = 1;
+        final int DRAWABLE_RIGHT = 2;
+        final int DRAWABLE_BOTTOM = 3;
+
+        if (event.getAction() == MotionEvent.ACTION_UP) {
+            if (event.getX() >= (searchView.getRight() - searchView.getCompoundDrawables()[DRAWABLE_RIGHT].getBounds().width() - searchView.getPaddingRight())) {
+                String constraint = v.getText().toString();
+                if (!TextUtils.isEmpty(constraint))
+                    tipsTabAdapter.getPrimaryItem().onSearch(constraint);
+                return true;
+            }
         }
         return false;
     }

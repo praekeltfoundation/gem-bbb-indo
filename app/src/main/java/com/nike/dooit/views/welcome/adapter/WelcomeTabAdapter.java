@@ -29,16 +29,16 @@ public class WelcomeTabAdapter extends FragmentStatePagerAdapter {
         Fragment fragment;
         switch (WelcomeViewPagerPositions.getValueOf(position)) {
             case ONE:
-                fragment = WelcomeFragment.newInstance(ONE.getImageRes(), ONE.getTextRes());
+                fragment = WelcomeFragment.newInstance(ONE.getAnimUri(), ONE.getImageRes(), ONE.getTextRes());
                 break;
             case TWO:
-                fragment = WelcomeFragment.newInstance(TWO.getImageRes(), TWO.getTextRes());
+                fragment = WelcomeFragment.newInstance(TWO.getAnimUri(), TWO.getImageRes(), TWO.getTextRes());
                 break;
             case THREE:
-                fragment = WelcomeFragment.newInstance(THREE.getImageRes(), THREE.getTextRes());
+                fragment = WelcomeFragment.newInstance(THREE.getAnimUri(), THREE.getImageRes(), THREE.getTextRes());
                 break;
             default:
-                fragment = WelcomeFragment.newInstance(ONE.getImageRes(), ONE.getTextRes());
+                fragment = WelcomeFragment.newInstance(ONE.getAnimUri(), ONE.getImageRes(), ONE.getTextRes());
                 break;
         }
         return fragment;

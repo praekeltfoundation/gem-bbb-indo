@@ -15,7 +15,7 @@
         android:id="@+id/activity_welcome_button"
         style="@style/AppTheme.Button.Big.Black"
         android:layout_width="match_parent"
-        android:layout_height="64dp"
+        android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_margin="24dp"
         android:text="@string/lets_start"
