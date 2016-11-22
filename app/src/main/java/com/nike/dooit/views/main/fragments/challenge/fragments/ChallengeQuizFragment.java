@@ -141,6 +141,11 @@ public class ChallengeQuizFragment extends Fragment implements OnOptionChangeLis
 
     @OnClick(R.id.fragment_challenge_quiz_checkbutton)
     public void checkAnswer() {
+        if (mPager.getCurrentItem() >= mChallenge.numQuestions()) {
+            submitParticipantEntry();
+            return;
+        }
+
         if (currentOption == null) {
             Toast.makeText(getContext(), R.string.challenge_quiz_select_option_required, Toast.LENGTH_SHORT).show();
             return;
@@ -184,6 +189,10 @@ public class ChallengeQuizFragment extends Fragment implements OnOptionChangeLis
             @Override
             public void call(QuizChallengeEntry entry) {
                 Log.d(TAG, "Entry submitted");
+                FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
+                Fragment fragment = ChallengeNoneFragment.newInstance("Thank you for participating!");
+                ft.replace(R.id.fragment_challenge_container, fragment, "fragment_challenge");
+                ft.commit();
             }
         });
     }
@@ -198,7 +207,7 @@ public class ChallengeQuizFragment extends Fragment implements OnOptionChangeLis
             submitParticipantEntry();
             FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
             Fragment fragment = ChallengeNoneFragment.newInstance();
-            ft.replace(R.id.fragment_challenge_container, fragment);
+            ft.replace(R.id.fragment_challenge_container, fragment, "fragment_challenge");
             ft.commit();
         }
     }
