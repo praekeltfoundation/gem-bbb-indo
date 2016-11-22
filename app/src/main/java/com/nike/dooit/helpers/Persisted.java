@@ -7,6 +7,7 @@ import android.util.Log;
 import com.google.gson.Gson;
 import com.google.gson.internal.LinkedTreeMap;
 import com.nike.dooit.DooitApplication;
+import com.nike.dooit.models.Goal;
 import com.nike.dooit.models.Tip;
 import com.nike.dooit.models.Token;
 import com.nike.dooit.models.User;
@@ -30,6 +31,7 @@ public class Persisted {
     private static final String USER = "user";
     private static final String CHALLENGE = "challenge";
     private static final String BOT = "bot";
+    private static final String GOAL = "goal";
     private static final String TIPS = "tips";
     private static final String FAVOURITES = "favourites";
     private static final String TAG = Persisted.class.getName();
@@ -41,6 +43,8 @@ public class Persisted {
     public Persisted(Application application) {
         ((DooitApplication) application).component.inject(this);
     }
+
+    /*** Bot ***/
 
     public ArrayList<BaseBotModel> loadConversationState(BotType type) {
         String conv = dooitSharedPreferences.getString(BOT + type.name(), "");
@@ -67,6 +71,37 @@ public class Persisted {
     public void saveConversationState(BotType type, List<BaseBotModel> conversation) {
         dooitSharedPreferences.setComplex(BOT + type.name(), conversation);
     }
+
+    public boolean hasConversation(BotType type) {
+        return dooitSharedPreferences.containsKey(BOT + type.name());
+    }
+
+    public void clearConversation() {
+        for (BotType botType : BotType.values()) {
+            dooitSharedPreferences.remove(BOT + botType.name());
+        }
+    }
+
+    public void saveConvoGoal(BotType type, Goal goal) {
+        dooitSharedPreferences.setComplex(BOT + "_" + GOAL + "_" + type.name(), goal);
+    }
+
+    public Goal loadConvoGoal(BotType type) {
+        if (hasConvoGoal(type))
+            return dooitSharedPreferences.getComplex(BOT + "_" + GOAL + "_" + type.name(), Goal.class);
+        return null;
+    }
+
+    public boolean hasConvoGoal(BotType type) {
+        return dooitSharedPreferences.containsKey(BOT + "_" + GOAL + "_" + type.name());
+    }
+
+    public void clearConvoGoals() {
+        for (BotType botType : BotType.values())
+            dooitSharedPreferences.remove(BOT + "_" + GOAL + "_" + botType.name());
+    }
+
+    /*** User ***/
 
     public User getCurrentUser() {
         User user = dooitSharedPreferences.getComplex(USER, User.class);
@@ -108,6 +143,8 @@ public class Persisted {
         dooitSharedPreferences.remove(TOKEN);
     }
 
+    /*** Challenge ***/
+
     public void setActiveChallenge(BaseChallenge activeChallenge) {
         dooitSharedPreferences.setComplex(CHALLENGE, activeChallenge);
     }
@@ -124,6 +161,8 @@ public class Persisted {
         BaseChallenge challenge = loadCurrentChallenge();
         return challenge != null;
     }
+
+    /*** Tips ***/
 
     public List<Tip> getTips() {
         return loadTips(TIPS);
@@ -168,16 +207,6 @@ public class Persisted {
 
     private void saveTips(String prefKey, List<Tip> tips) {
         dooitSharedPreferences.setComplex(prefKey, tips.toArray());
-    }
-
-    public boolean hasConversation(BotType type) {
-        return dooitSharedPreferences.containsKey(BOT + type.name());
-    }
-
-    public void clearConversation() {
-        for (BotType botType : BotType.values()) {
-            dooitSharedPreferences.remove(BOT + botType.name());
-        }
     }
 }
 

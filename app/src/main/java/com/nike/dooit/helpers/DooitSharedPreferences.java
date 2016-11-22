@@ -4,9 +4,13 @@ import android.content.Context;
 import android.content.SharedPreferences;
 
 import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
+import com.google.gson.GsonBuilder;
+import com.nike.dooit.api.serializers.DateTimeSerializer;
+import com.nike.dooit.api.serializers.LocalDateSerializer;
 
-import java.util.ArrayList;
+import org.joda.time.DateTime;
+import org.joda.time.LocalDate;
+
 import java.util.Set;
 
 import javax.inject.Singleton;
@@ -21,8 +25,14 @@ public class DooitSharedPreferences {
 
     public Context context;
 
+    private Gson gson;
+
     public DooitSharedPreferences(Context context) {
         this.context = context;
+        gson = new GsonBuilder()
+                .registerTypeAdapter(DateTime.class, new DateTimeSerializer())
+                .registerTypeAdapter(LocalDate.class, new LocalDateSerializer())
+                .create();
     }
 
     private SharedPreferences sharedPreferences() {
@@ -62,7 +72,7 @@ public class DooitSharedPreferences {
     }
 
     public <T> T getComplex(String key, Class<T> clazz) {
-        return new Gson().fromJson(getString(key, ""), clazz);
+        return gson.fromJson(getString(key, ""), clazz);
     }
 
     public void setString(String key, String value) {
@@ -115,7 +125,7 @@ public class DooitSharedPreferences {
 
     public void setComplex(String key, Object value) {
         SharedPreferences.Editor editor = sharedPreferences().edit();
-        editor.putString(key, new Gson().toJson(value));
+        editor.putString(key, gson.toJson(value));
         editor.apply();
     }
 
