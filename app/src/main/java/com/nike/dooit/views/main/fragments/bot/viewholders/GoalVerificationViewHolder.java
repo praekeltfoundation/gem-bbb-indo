@@ -62,8 +62,9 @@ public class GoalVerificationViewHolder extends BaseBotViewHolder<Node> {
             switch (baseBotModel.getName()) {
                 case "goalDate":
                     try {
-                        String fmDate = ((Answer) baseBotModel).getValue().split("-", 2)[0];
-                        DateFormat formatter = new SimpleDateFormat("MMMM dd, yyyy");
+//                        String fmDate = ((Answer) baseBotModel).getValue().split("-", 2)[0];
+                        String fmDate = ((Answer) baseBotModel).getValue().substring(0, 10);
+                        DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
                         goalDate = formatter.parse(fmDate);
                     } catch (ParseException e) {
                         e.printStackTrace();
