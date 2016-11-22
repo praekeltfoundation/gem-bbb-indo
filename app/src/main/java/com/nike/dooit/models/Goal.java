@@ -2,8 +2,10 @@ package com.nike.dooit.models;
 
 import com.google.gson.annotations.SerializedName;
 
+import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 
@@ -22,7 +24,7 @@ public class Goal {
     private LocalDate startDate;
     @SerializedName("end_date")
     private LocalDate endDate;
-    private List<GoalTransaction> transactions;
+    private List<GoalTransaction> transactions = new ArrayList<>();
     @SerializedName("weekly_totals")
     private LinkedHashMap<String, Float> weeklyTotals;
 
@@ -80,6 +82,16 @@ public class Goal {
 
     public void setTransactions(List<GoalTransaction> transactions) {
         this.transactions = transactions;
+    }
+
+    public void addTransaction(GoalTransaction transaction) {
+        this.transactions.add(transaction);
+    }
+
+    public GoalTransaction createTransaction(double value) {
+        GoalTransaction trans = new GoalTransaction(DateTime.now(), value);
+        addTransaction(trans);
+        return trans;
     }
 
     public LinkedHashMap<String, Float> getWeeklyTotals() {

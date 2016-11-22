@@ -42,6 +42,10 @@ public class GoalAddCallback implements BotCallback {
         goal.setStartDate(LocalDate.now());
         goal.setEndDate(DateTimeFormat.forPattern("yyyy-MM-dd")
                 .parseLocalDate(answerLog.get("goalDate").getValue().substring(0, 10)));
+
+        if (answerLog.containsKey("hasSavedY"))
+            goal.createTransaction(Double.parseDouble(answerLog.get("priorSaveAmount").getValue()));
+
         Log.d(TAG, "Created " + goal);
 
         goalManager.createGoal(goal, new DooitErrorHandler() {
