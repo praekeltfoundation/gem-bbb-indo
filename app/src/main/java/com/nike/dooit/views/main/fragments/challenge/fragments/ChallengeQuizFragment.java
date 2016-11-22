@@ -6,6 +6,7 @@ import android.os.DropBoxManager;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -23,6 +24,7 @@ import com.nike.dooit.api.DooitErrorHandler;
 import com.nike.dooit.api.managers.ChallengeManager;
 import com.nike.dooit.api.managers.UserManager;
 import com.nike.dooit.helpers.Persisted;
+import com.nike.dooit.helpers.TilingDrawable;
 import com.nike.dooit.models.challenge.ParticipantAnswer;
 import com.nike.dooit.models.challenge.QuizChallenge;
 import com.nike.dooit.models.challenge.QuizChallengeEntry;
@@ -75,6 +77,8 @@ public class ChallengeQuizFragment extends Fragment implements OnOptionChangeLis
     private Set<OnQuestionCompletedListener> questionCompletedListeners = new HashSet<>();
     private Map<Long, QuestionState> selections = new HashMap<>();
 
+    @BindView(R.id.fragment_chalenge_nested_bg)
+    View mainBackground;
     @BindView(R.id.fragment_challenge_quiz_progressbar)
     ProgressBar mProgressBar;
     @BindView(R.id.fragment_challenge_quiz_progresscounter)
@@ -120,6 +124,9 @@ public class ChallengeQuizFragment extends Fragment implements OnOptionChangeLis
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_challenge_quiz, container, false);
         unbinder = ButterKnife.bind(this, view);
+        TilingDrawable tiled = new TilingDrawable(ContextCompat.getDrawable(getContext(), R.drawable.bkg_clipped));
+        tiled.setTint(getResources().getColor(R.color.light_grey));
+        mainBackground.setBackground(tiled);
         mPager.setAdapter(mAdapter);
         updateProgressCounter(0);
         return view;
