@@ -3,6 +3,7 @@ package com.nike.dooit.views.main.fragments;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.text.TextUtils;
 import android.util.Log;
@@ -19,6 +20,7 @@ import android.widget.TextView;
 
 import com.nike.dooit.R;
 import com.nike.dooit.api.managers.TipManager;
+import com.nike.dooit.helpers.TilingDrawable;
 import com.nike.dooit.models.Tip;
 import com.nike.dooit.views.main.fragments.tip.OnTipsAvailableListener;
 import com.nike.dooit.views.main.fragments.tip.TipsViewPagerPositions;
@@ -98,6 +100,9 @@ public class TipsFragment extends Fragment implements OnTipsAvailableListener {
 
         tipsTabAdapter = new TipsTabAdapter(getChildFragmentManager(), getContext(), this);
         viewPager.setAdapter(tipsTabAdapter);
+        TilingDrawable tiled = new TilingDrawable(ContextCompat.getDrawable(getContext(), R.drawable.bkg_clipped));
+        tiled.setTint(getResources().getColor(R.color.light_grey));
+        viewPager.setBackground(tiled);
         tabLayout.setupWithViewPager(viewPager);
 
         for (int i = 0; i < tabLayout.getTabCount(); i++) {

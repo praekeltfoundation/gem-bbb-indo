@@ -2,10 +2,15 @@ package com.nike.dooit.views.onboarding;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.content.res.ResourcesCompat;
+import android.support.v4.graphics.drawable.DrawableCompat;
 import android.text.TextUtils;
+import android.util.AttributeSet;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -17,6 +22,7 @@ import com.nike.dooit.api.DooitErrorHandler;
 import com.nike.dooit.api.managers.AuthenticationManager;
 import com.nike.dooit.api.responses.AuthenticationResponse;
 import com.nike.dooit.helpers.Persisted;
+import com.nike.dooit.helpers.TilingDrawable;
 import com.nike.dooit.views.DooitActivity;
 import com.nike.dooit.views.helpers.activity.DooitActivityBuilder;
 import com.nike.dooit.views.main.MainActivity;
@@ -29,6 +35,9 @@ import butterknife.OnClick;
 import rx.functions.Action1;
 
 public class LoginActivity extends DooitActivity {
+
+    @BindView(R.id.activity_login)
+    View background;
 
     @BindView(R.id.activity_login_login_button)
     Button buttonLogin;
@@ -57,6 +66,9 @@ public class LoginActivity extends DooitActivity {
         ((DooitApplication) getApplication()).component.inject(this);
         setContentView(R.layout.activity_login);
         ButterKnife.bind(this);
+        Drawable back = ContextCompat.getDrawable(this, R.drawable.bkg_pattern_01_purple);
+        TilingDrawable tiled = new TilingDrawable(back);
+        background.setBackground(tiled);
     }
 
     @OnClick(R.id.activity_login_login_button)

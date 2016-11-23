@@ -187,26 +187,31 @@ public class TargetFragment extends MainFragment {
         goalManager.retrieveGoals(new DooitErrorHandler() {
             @Override
             public void onError(DooitAPIError error) {
-                Toast.makeText(getContext(), "Error retrieving goals.", Toast.LENGTH_SHORT);
-            }
-        })
-                .subscribe(new Action1<List<Goal>>() {
+                getActivity().runOnUiThread(new Runnable() {
                     @Override
-                    public void call(final List<Goal> goals) {
-                        TargetFragment.this.goals = goals;
-                        if (getActivity() != null && goals != null)
-                            getActivity().runOnUiThread(new Runnable() {
-                                @Override
-                                public void run() {
-                                    adapter.updateGoals(goals);
-                                    if (goals.size() > 0) {
-                                        populateGoal(goals.get(0));
-                                        rightTarget.setVisibility(View.VISIBLE);
-                                    }
-                                }
-                            });
+                    public void run() {
+                        Toast.makeText(getContext(), "Error retrieving goals.", Toast.LENGTH_SHORT).show();
                     }
                 });
+            }
+        })
+        .subscribe(new Action1<List<Goal>>() {
+            @Override
+            public void call(final List<Goal> goals) {
+                TargetFragment.this.goals = goals;
+                if (getActivity() != null && goals != null)
+                    getActivity().runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            adapter.updateGoals(goals);
+                            if (goals.size() > 0) {
+                                populateGoal(goals.get(0));
+                                rightTarget.setVisibility(View.VISIBLE);
+                            }
+                        }
+                    });
+            }
+        });
 
         bars.setGoal(16.0f);
     }

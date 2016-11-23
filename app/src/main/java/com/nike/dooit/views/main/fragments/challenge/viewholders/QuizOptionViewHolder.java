@@ -42,8 +42,8 @@ public class QuizOptionViewHolder extends RecyclerView.ViewHolder implements Vie
     }
 
     @Override public void onClick(View view) {
-        if (adapter instanceof OnOptionSelectedListener) {
-            ((OnOptionSelectedListener) adapter).onOptionSelected(getAdapterPosition());
+        if (adapter != null) {
+            adapter.onOptionSelected(option);
         }
     }
 
@@ -54,5 +54,17 @@ public class QuizOptionViewHolder extends RecyclerView.ViewHolder implements Vie
     public void setSelected(boolean selected) {
         itemView.setSelected(selected);
         radio.setChecked(selected);
+    }
+
+    public boolean isSelected() {
+        return itemView.isSelected();
+    }
+
+    public void setEnabled(boolean enabled) {
+        itemView.setEnabled(enabled);
+    }
+
+    public boolean isEnabled() {
+        return itemView.isEnabled();
     }
 }

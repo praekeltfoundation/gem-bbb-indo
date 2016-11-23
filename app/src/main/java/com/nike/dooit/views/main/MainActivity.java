@@ -5,9 +5,11 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.Drawable;
+import android.graphics.drawable.VectorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
+import android.support.v4.graphics.drawable.DrawableCompat;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory;
 import android.support.v4.view.ViewPager;
@@ -16,6 +18,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewTreeObserver;
+import android.widget.Toast;
 
 import com.nike.dooit.DooitApplication;
 import com.nike.dooit.R;
@@ -80,7 +83,7 @@ public class MainActivity extends DooitActivity {
                         roundedProfileImage.setCircular(true);
 
                         getSupportActionBar().setHomeAsUpIndicator(roundedProfileImage);
-                    } catch (FileNotFoundException e) {
+                    } catch (Exception e) {
                         getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_d_profile);
                     }
 

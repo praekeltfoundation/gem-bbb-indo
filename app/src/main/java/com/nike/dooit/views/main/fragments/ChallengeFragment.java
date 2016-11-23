@@ -113,7 +113,7 @@ public class ChallengeFragment extends Fragment {
                         Bundle args = new Bundle();
                         args.putParcelable("challenge", challenge);
                         fragment.setArguments(args);
-                        ft.replace(R.id.fragment_challenge_container, fragment);
+                        ft.replace(R.id.fragment_challenge_container, fragment, "fragment_challenge");
                         ft.commit();
                     }
                 } else {

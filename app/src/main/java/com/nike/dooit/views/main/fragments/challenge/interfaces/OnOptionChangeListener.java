@@ -8,5 +8,5 @@ import com.nike.dooit.models.challenge.QuizChallengeQuestion;
  */
 
 public interface OnOptionChangeListener {
-    public void onOptionChange(QuizChallengeQuestion question, QuizChallengeOption option);
+    void onOptionChange(QuizChallengeQuestion question, QuizChallengeOption option);
 }

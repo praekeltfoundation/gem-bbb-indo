@@ -6,6 +6,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -19,6 +20,7 @@ import com.facebook.drawee.interfaces.DraweeHierarchy;
 import com.facebook.drawee.view.DraweeView;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.nike.dooit.R;
+import com.nike.dooit.helpers.TilingDrawable;
 import com.nike.dooit.models.challenge.BaseChallenge;
 import com.nike.dooit.models.challenge.FreeformChallenge;
 import com.nike.dooit.models.challenge.QuizChallenge;
@@ -42,6 +44,8 @@ public class ChallengeRegisterFragment extends Fragment {
     private BaseChallenge challenge;
     private Unbinder unbinder = null;
 
+    @BindView(R.id.fragment_chalenge_nested_bg)
+    View background;
     @BindView(R.id.fragment_challenge_register_image)
     SimpleDraweeView topImage;
     @BindView(R.id.fragment_challenge_sub_title_text_view)
@@ -88,6 +92,9 @@ public class ChallengeRegisterFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_challenge_register, container, false);
         unbinder = ButterKnife.bind(this, view);
+        TilingDrawable tiled = new TilingDrawable(ContextCompat.getDrawable(getContext(), R.drawable.bkg_clipped));
+        tiled.setTint(getResources().getColor(R.color.dark_yellow));
+        background.setBackground(tiled);
         return view;
     }
 
@@ -167,7 +174,7 @@ public class ChallengeRegisterFragment extends Fragment {
 
         if (fragment != null) {
             //ft.setCustomAnimations(R.anim.slide_in_left, R.anim.slide_out_right);
-            ft.replace(R.id.fragment_challenge_container, fragment);
+            ft.replace(R.id.fragment_challenge_container, fragment, "fragment_challenge");
             ft.commit();
         }
     }

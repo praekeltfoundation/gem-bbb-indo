@@ -1,42 +1,52 @@
-<RelativeLayout
+<FrameLayout
     android:id="@+id/fragment_challenge_container"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_margin="@dimen/challenge_margins"
+    android:background="@color/grey"
     tools:context="com.nike.dooit.views.main.fragments.challenge.fragments.ChallengeQuizFragment">
 
-    <ProgressBar
-        style="?android:attr/progressBarStyleHorizontal"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:id="@+id/fragment_challenge_quiz_progressbar"  />
-
-    <TextView
-        android:id="@+id/fragment_challenge_quiz_progresscounter"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/text_margin"
-        android:layout_below="@+id/fragment_challenge_quiz_progressbar"
-        android:textAppearance="@style/AppTheme.TextView.Quiz.Subtitle"
-        android:textAlignment="center" />
-
-    <android.support.v4.view.ViewPager
-        android:id="@+id/fragment_challenge_quiz_pager"
+    <RelativeLayout
+        android:id="@+id/fragment_chalenge_nested_bg"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/fragment_challenge_quiz_progresscounter" >
-    </android.support.v4.view.ViewPager>
+        android:padding="8dp"
+        tools:background="@drawable/ic_d_pattern_grey">
 
-    <Button
-        android:id="@+id/fragment_challenge_quiz_checkbutton"
-        android:text="@string/fragment_challenge_check_button"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_below="@+id/fragment_challenge_quiz_pager"
-        style="@style/AppTheme.Button.Big.LightBlue" />
+        <ProgressBar
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:id="@+id/fragment_challenge_quiz_progressbar"  />
 
-</RelativeLayout>
+        <TextView
+            android:id="@+id/fragment_challenge_quiz_progresscounter"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/text_margin"
+            android:layout_below="@+id/fragment_challenge_quiz_progressbar"
+            android:textAppearance="@style/AppTheme.TextView.Quiz.Subtitle"
+            android:textAlignment="center"
+            tools:text="Question X/Y" />
+
+        <android.support.v4.view.ViewPager
+            android:id="@+id/fragment_challenge_quiz_pager"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/fragment_challenge_quiz_progresscounter"
+            android:layout_above="@+id/fragment_challenge_quiz_checkbutton" >
+        </android.support.v4.view.ViewPager>
+
+        <Button
+            android:id="@+id/fragment_challenge_quiz_checkbutton"
+            android:text="@string/fragment_challenge_check_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_alignParentBottom="true"
+            style="@style/AppTheme.Button.Big.LightBlue" />
+
+    </RelativeLayout>
+</FrameLayout>

@@ -1,20 +1,23 @@
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
     <TextView
         android:id="@+id/fragment_challengequizquestion_title"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
+        android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:textAppearance="@style/AppTheme.TextView.Quiz.Title"
-        android:textAlignment="center" />
+        android:textAlignment="center"
+        tools:text="Question can be long and go over two lines?" />
 
     <com.nike.dooit.views.custom.DesignSafeRecyclerView
         android:id="@+id/option_recycler_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@+id/fragment_challengequizquestion_title"
         android:layout_alignParentBottom="true"
         android:scrollbars="vertical" />
 
