@@ -1,14 +1,13 @@
-package com.nike.dooit.views.main.fragments.bot.viewholders;
+package org.gem.indo.dooit.views.main.fragments.bot.viewholders;
 
 import android.content.Context;
 import android.view.View;
 import android.widget.TextView;
 
-import com.nike.dooit.R;
-import com.nike.dooit.models.bot.Answer;
-import com.nike.dooit.views.DooitActivity;
-import com.nike.dooit.views.helpers.activity.CurrencyHelper;
-import com.nike.dooit.views.main.fragments.bot.adapters.BotAdapter;
+import org.gem.indo.dooit.models.bot.Answer;
+import org.gem.indo.dooit.views.DooitActivity;
+import org.gem.indo.dooit.views.helpers.activity.CurrencyHelper;
+import org.gem.indo.dooit.views.main.fragments.bot.adapters.BotAdapter;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -18,7 +17,7 @@ import butterknife.ButterKnife;
  */
 
 public class AnswerTextCurrencyViewHolder extends BaseBotViewHolder<Answer> {
-    @BindView(R.id.item_view_bot_answer_text)
+    @BindView(org.gem.indo.dooit.R.id.item_view_bot_answer_text)
     TextView textView;
 
     BotAdapter botAdapter;
