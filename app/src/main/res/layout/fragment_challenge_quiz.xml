@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/grey"
-    tools:context="com.nike.dooit.views.main.fragments.challenge.fragments.ChallengeQuizFragment">
+    tools:context="org.gem.indo.dooit.views.main.fragments.challenge.fragments.ChallengeQuizFragment">
 
     <RelativeLayout
         android:id="@+id/fragment_chalenge_nested_bg"

@@ -3,9 +3,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.nike.dooit.views.main.fragments.bot.BotFragment">
+    tools:context="org.gem.indo.dooit.views.main.fragments.bot.BotFragment">
 
-    <com.nike.dooit.views.custom.DesignSafeRecyclerView
+    <org.gem.indo.dooit.views.custom.DesignSafeRecyclerView
         android:id="@+id/fragment_bot_conversation_recycler_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

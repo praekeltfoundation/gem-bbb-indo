@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:background="@drawable/pattern_01_purple"
     android:fitsSystemWindows="true"
-    tools:context=".views.onboarding.ProfileImageActivity">
+    tools:context="org.gem.indo.dooit.views.onboarding.ProfileImageActivity">
 
     <RelativeLayout
         android:layout_width="match_parent"

@@ -13,7 +13,7 @@
         android:textAlignment="center"
         tools:text="Question can be long and go over two lines?" />
 
-    <com.nike.dooit.views.custom.DesignSafeRecyclerView
+    <org.gem.indo.dooit.views.custom.DesignSafeRecyclerView
         android:id="@+id/option_recycler_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

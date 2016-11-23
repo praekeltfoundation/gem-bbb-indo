@@ -33,7 +33,7 @@ android {
     }
 
     defaultConfig {
-        applicationId "com.nike.dooit"
+        applicationId "org.gem.indo.dooit"
         minSdkVersion project.minSdkVersion.toInteger()
         targetSdkVersion project.targetSdkVersion.toInteger()
         versionCode project.version.toInteger()
@@ -56,13 +56,13 @@ android {
     }
     productFlavors {
         staging {
-            applicationId "com.nike.dooit.staging"
+            applicationId "org.gem.indo.dooit.staging"
         }
         production {
-            applicationId "com.nike.dooit"
+            applicationId "org.gem.indo.dooit"
         }
         automation {
-            applicationId "com.nike.dooit.automation"
+            applicationId "org.gem.indo.dooit.automation"
         }
     }
 }

@@ -18,7 +18,7 @@
 
     <view
         android:id="@+id/fragment_target_progress_view"
-        class="com.nike.dooit.views.custom.ArcProgressBar"
+        class="org.gem.indo.dooit.views.custom.ArcProgressBar"
         android:layout_width="190dp"
         android:layout_height="190dp"
         android:layout_gravity="center"
