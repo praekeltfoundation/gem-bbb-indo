@@ -98,7 +98,7 @@ public class ChallengeFreeformFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(org.gem.indo.dooit.R.layout.fragment_challenge_freeform, container, false);
         ButterKnife.bind(this, view);
-        
+
         ShapeDrawable back = new ShapeDrawable();
         back.getPaint().setColor(ContextCompat.getColor(getContext(), R.color.grey_back));
         Drawable fore = ContextCompat.getDrawable(getContext(), R.drawable.bkg_clipped);

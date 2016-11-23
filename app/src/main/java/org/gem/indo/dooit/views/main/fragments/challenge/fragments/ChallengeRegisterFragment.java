@@ -1,14 +1,8 @@
 package org.gem.indo.dooit.views.main.fragments.challenge.fragments;
 
-<<<<<<< HEAD:app/src/main/java/org/gem/indo/dooit/views/main/fragments/challenge/fragments/ChallengeRegisterFragment.java
-=======
-import android.content.Context;
-import android.graphics.drawable.Animatable;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.LayerDrawable;
 import android.graphics.drawable.ShapeDrawable;
-import android.net.Uri;
->>>>>>> 267924f... Add dynamically allocated squiggly backgrounds to onboarding and challenges.:app/src/main/java/com/nike/dooit/views/main/fragments/challenge/fragments/ChallengeRegisterFragment.java
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -22,6 +16,7 @@ import android.widget.TextView;
 
 import com.facebook.drawee.view.SimpleDraweeView;
 
+import org.gem.indo.dooit.R;
 import org.gem.indo.dooit.helpers.TilingDrawable;
 import org.gem.indo.dooit.models.challenge.BaseChallenge;
 import org.gem.indo.dooit.models.challenge.FreeformChallenge;
@@ -45,25 +40,28 @@ public class ChallengeRegisterFragment extends Fragment {
     private BaseChallenge challenge;
     private Unbinder unbinder = null;
 
-<<<<<<< HEAD:app/src/main/java/org/gem/indo/dooit/views/main/fragments/challenge/fragments/ChallengeRegisterFragment.java
-    @BindView(org.gem.indo.dooit.R.id.fragment_chalenge_nested_bg)
-=======
     @BindView(R.id.fragment_challenge_container)
->>>>>>> 267924f... Add dynamically allocated squiggly backgrounds to onboarding and challenges.:app/src/main/java/com/nike/dooit/views/main/fragments/challenge/fragments/ChallengeRegisterFragment.java
     View background;
-    @BindView(org.gem.indo.dooit.R.id.fragment_challenge_register_image)
+
+    @BindView(R.id.fragment_challenge_register_image)
     SimpleDraweeView topImage;
-    @BindView(org.gem.indo.dooit.R.id.fragment_challenge_sub_title_text_view)
+
+    @BindView(R.id.fragment_challenge_sub_title_text_view)
     TextView title;
-    @BindView(org.gem.indo.dooit.R.id.fragment_challenge_name_text_view)
+
+    @BindView(R.id.fragment_challenge_name_text_view)
     TextView name;
-    @BindView(org.gem.indo.dooit.R.id.fragment_challenge_expire_date_text_view)
+
+    @BindView(R.id.fragment_challenge_expire_date_text_view)
     TextView date;
-    @BindView(org.gem.indo.dooit.R.id.fragment_challenge_instruction_text_vew)
+
+    @BindView(R.id.fragment_challenge_instruction_text_vew)
     TextView instruction;
-    @BindView(org.gem.indo.dooit.R.id.fragment_challenge_t_c_text_view)
+
+    @BindView(R.id.fragment_challenge_t_c_text_view)
     TextView tc;
-    @BindView(org.gem.indo.dooit.R.id.fragment_challenge_register_button)
+
+    @BindView(R.id.fragment_challenge_register_button)
     Button register;
 
     public ChallengeRegisterFragment() {
@@ -97,17 +95,12 @@ public class ChallengeRegisterFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(org.gem.indo.dooit.R.layout.fragment_challenge_register, container, false);
         unbinder = ButterKnife.bind(this, view);
-<<<<<<< HEAD:app/src/main/java/org/gem/indo/dooit/views/main/fragments/challenge/fragments/ChallengeRegisterFragment.java
-        TilingDrawable tiled = new TilingDrawable(ContextCompat.getDrawable(getContext(), org.gem.indo.dooit.R.drawable.bkg_clipped));
-        tiled.setTint(getResources().getColor(org.gem.indo.dooit.R.color.dark_yellow));
-=======
         ShapeDrawable back = new ShapeDrawable();
         back.getPaint().setColor(ContextCompat.getColor(getContext(), R.color.grey_back));
         Drawable fore = ContextCompat.getDrawable(getContext(), R.drawable.bkg_clipped);
         DrawableCompat.setTint(fore, ContextCompat.getColor(getContext(), R.color.grey_fore));
         LayerDrawable layers = new LayerDrawable(new Drawable[]{back, fore});
         TilingDrawable tiled = new TilingDrawable(layers);
->>>>>>> 267924f... Add dynamically allocated squiggly backgrounds to onboarding and challenges.:app/src/main/java/com/nike/dooit/views/main/fragments/challenge/fragments/ChallengeRegisterFragment.java
         background.setBackground(tiled);
         return view;
     }
