@@ -102,9 +102,9 @@ public class ChallengeRegisterFragment extends Fragment {
         tiled.setTint(getResources().getColor(org.gem.indo.dooit.R.color.dark_yellow));
 =======
         ShapeDrawable back = new ShapeDrawable();
-        back.getPaint().setColor(ContextCompat.getColor(getContext(), R.color.yellow));
+        back.getPaint().setColor(ContextCompat.getColor(getContext(), R.color.grey_back));
         Drawable fore = ContextCompat.getDrawable(getContext(), R.drawable.bkg_clipped);
-        DrawableCompat.setTint(fore, ContextCompat.getColor(getContext(), R.color.yellow_light));
+        DrawableCompat.setTint(fore, ContextCompat.getColor(getContext(), R.color.grey_fore));
         LayerDrawable layers = new LayerDrawable(new Drawable[]{back, fore});
         TilingDrawable tiled = new TilingDrawable(layers);
 >>>>>>> 267924f... Add dynamically allocated squiggly backgrounds to onboarding and challenges.:app/src/main/java/com/nike/dooit/views/main/fragments/challenge/fragments/ChallengeRegisterFragment.java

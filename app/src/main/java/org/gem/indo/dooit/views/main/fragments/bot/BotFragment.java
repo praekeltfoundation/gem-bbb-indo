@@ -1,8 +1,13 @@
 package org.gem.indo.dooit.views.main.fragments.bot;
 
+import android.graphics.drawable.Drawable;
+import android.graphics.drawable.LayerDrawable;
+import android.graphics.drawable.ShapeDrawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
+import android.support.v4.graphics.drawable.DrawableCompat;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -16,7 +21,9 @@ import android.view.ViewGroup;
 
 import com.greenfrvr.hashtagview.HashtagView;
 import org.gem.indo.dooit.DooitApplication;
+import org.gem.indo.dooit.R;
 import org.gem.indo.dooit.helpers.Persisted;
+import org.gem.indo.dooit.helpers.TilingDrawable;
 import org.gem.indo.dooit.helpers.bot.BotFeed;
 import org.gem.indo.dooit.models.Goal;
 import org.gem.indo.dooit.models.bot.Answer;
@@ -91,6 +98,13 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
         // Inflate the layout for this fragment
         View view = inflater.inflate(org.gem.indo.dooit.R.layout.fragment_bot, container, false);
         ButterKnife.bind(this, view);
+        ShapeDrawable back = new ShapeDrawable();
+        back.getPaint().setColor(ContextCompat.getColor(getContext(), R.color.grey_back));
+        Drawable fore = ContextCompat.getDrawable(getContext(), R.drawable.bkg_clipped);
+        DrawableCompat.setTint(fore, ContextCompat.getColor(getContext(), R.color.grey_fore));
+        LayerDrawable layers = new LayerDrawable(new Drawable[]{back, fore});
+        TilingDrawable tiled = new TilingDrawable(layers);
+        conversationRecyclerView.setBackground(tiled);
         return view;
     }
 

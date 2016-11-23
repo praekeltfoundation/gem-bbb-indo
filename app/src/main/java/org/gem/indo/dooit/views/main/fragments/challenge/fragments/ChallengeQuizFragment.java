@@ -135,9 +135,9 @@ public class ChallengeQuizFragment extends Fragment implements OnOptionChangeLis
         mainBackground.setBackground(tiled);
 =======
         ShapeDrawable back = new ShapeDrawable();
-        back.getPaint().setColor(ContextCompat.getColor(getContext(), R.color.challenge_back));
+        back.getPaint().setColor(ContextCompat.getColor(getContext(), R.color.grey_back));
         Drawable fore = ContextCompat.getDrawable(getContext(), R.drawable.bkg_clipped);
-        DrawableCompat.setTint(fore, ContextCompat.getColor(getContext(), R.color.challenge_fore));
+        DrawableCompat.setTint(fore, ContextCompat.getColor(getContext(), R.color.grey_fore));
         LayerDrawable layers = new LayerDrawable(new Drawable[]{back, fore});
         TilingDrawable tiled = new TilingDrawable(layers);
         background.setBackground(tiled);

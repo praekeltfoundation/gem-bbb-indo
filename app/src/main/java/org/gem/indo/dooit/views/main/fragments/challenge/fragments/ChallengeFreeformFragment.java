@@ -1,8 +1,13 @@
 package org.gem.indo.dooit.views.main.fragments.challenge.fragments;
 
+import android.graphics.drawable.Drawable;
+import android.graphics.drawable.LayerDrawable;
+import android.graphics.drawable.ShapeDrawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.content.ContextCompat;
+import android.support.v4.graphics.drawable.DrawableCompat;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,10 +18,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import org.gem.indo.dooit.DooitApplication;
+import org.gem.indo.dooit.R;
 import org.gem.indo.dooit.api.DooitAPIError;
 import org.gem.indo.dooit.api.DooitErrorHandler;
 import org.gem.indo.dooit.api.managers.ChallengeManager;
 import org.gem.indo.dooit.helpers.Persisted;
+import org.gem.indo.dooit.helpers.TilingDrawable;
 import org.gem.indo.dooit.models.challenge.FreeformChallenge;
 import org.gem.indo.dooit.models.challenge.FreeformChallengeQuestion;
 import org.gem.indo.dooit.models.challenge.ParticipantFreeformAnswer;
@@ -44,9 +51,17 @@ public class ChallengeFreeformFragment extends Fragment {
     private FreeformChallenge challenge;
     private FreeformChallengeQuestion question;
 
-    @BindView(org.gem.indo.dooit.R.id.fragment_challenge_freeform_title) TextView title;
-    @BindView(org.gem.indo.dooit.R.id.fragment_challenge_freeform_submission) EditText submissionBox;
-    @BindView(org.gem.indo.dooit.R.id.fragment_challenge_freeform_submitbutton) Button submitButton;
+    @BindView(R.id.fragment_challenge_container)
+    View background;
+
+    @BindView(R.id.fragment_challenge_freeform_title)
+    TextView title;
+
+    @BindView(R.id.fragment_challenge_freeform_submission)
+    EditText submissionBox;
+
+    @BindView(R.id.fragment_challenge_freeform_submitbutton)
+    Button submitButton;
 
     public ChallengeFreeformFragment() {
         // Required empty public constructor
@@ -83,7 +98,16 @@ public class ChallengeFreeformFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(org.gem.indo.dooit.R.layout.fragment_challenge_freeform, container, false);
         ButterKnife.bind(this, view);
-        title.setText(question != null ? question.getText() : getString(org.gem.indo.dooit.R.string.challenge_no_question));
+        
+        ShapeDrawable back = new ShapeDrawable();
+        back.getPaint().setColor(ContextCompat.getColor(getContext(), R.color.grey_back));
+        Drawable fore = ContextCompat.getDrawable(getContext(), R.drawable.bkg_clipped);
+        DrawableCompat.setTint(fore, ContextCompat.getColor(getContext(), R.color.grey_fore));
+        LayerDrawable layers = new LayerDrawable(new Drawable[]{back, fore});
+        TilingDrawable tiled = new TilingDrawable(layers);
+        background.setBackground(tiled);
+
+        title.setText(question != null ? question.getText() : getString(R.string.challenge_no_question));
         fetchAnswer();
         return view;
     }

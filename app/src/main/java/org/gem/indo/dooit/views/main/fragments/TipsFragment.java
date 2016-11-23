@@ -1,9 +1,13 @@
 package org.gem.indo.dooit.views.main.fragments;
 
+import android.graphics.drawable.Drawable;
+import android.graphics.drawable.LayerDrawable;
+import android.graphics.drawable.ShapeDrawable;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.graphics.drawable.DrawableCompat;
 import android.support.v4.view.ViewPager;
 import android.text.TextUtils;
 import android.util.Log;
@@ -18,6 +22,7 @@ import android.view.inputmethod.EditorInfo;
 import android.widget.AutoCompleteTextView;
 import android.widget.TextView;
 
+import org.gem.indo.dooit.R;
 import org.gem.indo.dooit.api.managers.TipManager;
 import org.gem.indo.dooit.helpers.TilingDrawable;
 import org.gem.indo.dooit.models.Tip;
@@ -99,8 +104,12 @@ public class TipsFragment extends Fragment implements OnTipsAvailableListener {
 
         tipsTabAdapter = new TipsTabAdapter(getChildFragmentManager(), getContext(), this);
         viewPager.setAdapter(tipsTabAdapter);
-        TilingDrawable tiled = new TilingDrawable(ContextCompat.getDrawable(getContext(), org.gem.indo.dooit.R.drawable.bkg_clipped));
-        tiled.setTint(getResources().getColor(org.gem.indo.dooit.R.color.light_grey));
+        ShapeDrawable back = new ShapeDrawable();
+        back.getPaint().setColor(ContextCompat.getColor(getContext(), R.color.grey_back));
+        Drawable fore = ContextCompat.getDrawable(getContext(), R.drawable.bkg_clipped);
+        DrawableCompat.setTint(fore, ContextCompat.getColor(getContext(), R.color.grey_fore));
+        LayerDrawable layers = new LayerDrawable(new Drawable[]{back, fore});
+        TilingDrawable tiled = new TilingDrawable(layers);
         viewPager.setBackground(tiled);
         tabLayout.setupWithViewPager(viewPager);
 
