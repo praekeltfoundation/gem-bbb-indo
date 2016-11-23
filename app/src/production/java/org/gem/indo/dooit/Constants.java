@@ -1,4 +1,4 @@
-package com.nike.dooit;
+package org.gem.indo.dooit;
 
 /**
  * Created by herman on 2016/11/05.

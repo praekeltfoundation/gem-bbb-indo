@@ -5,6 +5,8 @@ import android.view.View;
 import android.widget.TextView;
 
 import org.gem.indo.dooit.models.bot.Answer;
+import org.gem.indo.dooit.views.DooitActivity;
+import org.gem.indo.dooit.views.helpers.activity.CurrencyHelper;
 import org.gem.indo.dooit.views.main.fragments.bot.adapters.BotAdapter;
 
 import butterknife.BindView;
@@ -29,7 +31,7 @@ public class AnswerTextCurrencyViewHolder extends BaseBotViewHolder<Answer> {
     @Override
     public void populate(Answer model) {
         this.dataModel = model;
-        textView.setText("Rp " + dataModel.getText(getContext()));
+        textView.setText(CurrencyHelper.format(dataModel.getText(getContext())));
     }
 
     public Context getContext() {

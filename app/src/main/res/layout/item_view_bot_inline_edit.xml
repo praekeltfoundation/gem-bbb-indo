@@ -14,11 +14,9 @@
         android:layout_height="wrap_content"
         android:background="@drawable/rounded_squre_light_blue"
         android:focusable="true"
-        android:maxLines="1"
-        android:lines="1"
-        android:minLines="1"
         android:imeOptions="actionDone"
         android:inputType="text"
+        android:maxLines="1"
         android:padding="4dp"
         android:textColor="@color/black"
         tools:text="Blank Answer" />
