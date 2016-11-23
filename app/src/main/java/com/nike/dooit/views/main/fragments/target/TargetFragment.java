@@ -21,13 +21,12 @@ import com.nike.dooit.helpers.Persisted;
 import com.nike.dooit.models.Goal;
 import com.nike.dooit.models.enums.BotType;
 import com.nike.dooit.views.custom.WeekGraph;
+import com.nike.dooit.views.helpers.activity.CurrencyHelper;
 import com.nike.dooit.views.main.fragments.MainFragment;
 import com.nike.dooit.views.main.fragments.target.adapters.TargetPagerAdapter;
-import com.nike.dooit.views.main.fragments.target.callbacks.GoalAddCallback;
 
 import org.joda.time.Weeks;
 
-import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Currency;
 import java.util.List;
@@ -174,9 +173,8 @@ public class TargetFragment extends MainFragment {
 
     private void populateGoal(Goal goal) {
         goalName.setText(goal.getName());
-        NumberFormat format = NumberFormat.getCurrencyInstance();
-        saved.setText(format.format(goal.getValue()));
-        total.setText(String.format("of %s", format.format(goal.getTarget())));
+        saved.setText(CurrencyHelper.format(goal.getValue()));
+        total.setText(String.format("of %s", CurrencyHelper.format(goal.getTarget())));
         int weeks = Weeks.weeksBetween(goal.getStartDate(), goal.getEndDate()).getWeeks();
         double toSavePerWeek = goal.getTarget() / weeks;
         bars.setValues(goal.getWeeklyTotals());
@@ -195,23 +193,23 @@ public class TargetFragment extends MainFragment {
                 });
             }
         })
-        .subscribe(new Action1<List<Goal>>() {
-            @Override
-            public void call(final List<Goal> goals) {
-                TargetFragment.this.goals = goals;
-                if (getActivity() != null && goals != null)
-                    getActivity().runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            adapter.updateGoals(goals);
-                            if (goals.size() > 0) {
-                                populateGoal(goals.get(0));
-                                rightTarget.setVisibility(View.VISIBLE);
-                            }
-                        }
-                    });
-            }
-        });
+                .subscribe(new Action1<List<Goal>>() {
+                    @Override
+                    public void call(final List<Goal> goals) {
+                        TargetFragment.this.goals = goals;
+                        if (getActivity() != null && goals != null)
+                            getActivity().runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    adapter.updateGoals(goals);
+                                    if (goals.size() > 0) {
+                                        populateGoal(goals.get(0));
+                                        rightTarget.setVisibility(View.VISIBLE);
+                                    }
+                                }
+                            });
+                    }
+                });
 
         bars.setGoal(16.0f);
     }

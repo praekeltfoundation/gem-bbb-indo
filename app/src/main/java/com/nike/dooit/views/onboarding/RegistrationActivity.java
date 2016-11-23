@@ -108,7 +108,7 @@ public class RegistrationActivity extends DooitActivity {
         for (int i = MIN_AGE; i <= MAX_AGE; i++)
             ageAdapter.add(i);
         age.setAdapter(ageAdapter);
-        age.setSelection(4); // 16
+       // age.setSelection(4); // 16
 
         // Default gender
         gender.check(R.id.activity_registration_gender_girl);

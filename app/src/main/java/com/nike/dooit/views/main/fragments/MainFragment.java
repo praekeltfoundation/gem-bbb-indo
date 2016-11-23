@@ -13,6 +13,8 @@ import com.nike.dooit.models.enums.BotType;
 import com.nike.dooit.views.main.MainViewPagerPositions;
 import com.nike.dooit.views.main.fragments.bot.BotFragment;
 
+import java.text.Format;
+import java.text.NumberFormat;
 import java.util.Locale;
 
 /**

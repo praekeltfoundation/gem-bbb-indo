@@ -2,13 +2,12 @@ package com.nike.dooit.views.main.fragments.bot.viewholders;
 
 import android.content.Context;
 import android.view.View;
-import android.widget.ImageView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.nike.dooit.R;
 import com.nike.dooit.models.bot.Answer;
-import com.nike.dooit.models.bot.Node;
+import com.nike.dooit.views.DooitActivity;
+import com.nike.dooit.views.helpers.activity.CurrencyHelper;
 import com.nike.dooit.views.main.fragments.bot.adapters.BotAdapter;
 
 import butterknife.BindView;
@@ -33,7 +32,7 @@ public class AnswerTextCurrencyViewHolder extends BaseBotViewHolder<Answer> {
     @Override
     public void populate(Answer model) {
         this.dataModel = model;
-        textView.setText("Rp " + dataModel.getText(getContext()));
+        textView.setText(CurrencyHelper.format(dataModel.getText(getContext())));
     }
 
     public Context getContext() {
