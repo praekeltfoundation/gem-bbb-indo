@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context="com.nike.dooit.views.main.fragments.tip.TipsListFragment"
+    tools:context="org.gem.indo.dooit.views.main.fragments.tip.TipsListFragment"
     app:layout_collapseMode="pin">
 
     <LinearLayout
@@ -16,7 +16,7 @@
             android:id="@+id/fragment_tips_list_filter"
             android:visibility="gone"/>
 
-        <com.nike.dooit.views.custom.DesignSafeRecyclerView
+        <org.gem.indo.dooit.views.custom.DesignSafeRecyclerView
             android:id="@+id/fragment_tips_list_recyclerview"
             android:layout_width="match_parent"
             android:layout_height="match_parent"

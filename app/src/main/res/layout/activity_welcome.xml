@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.nike.dooit.views.welcome.WelcomeActivity">
+    tools:context="org.gem.indo.dooit.views.welcome.WelcomeActivity">
 
     <android.support.v4.view.ViewPager
         android:id="@+id/activity_welcome_view_pager"

@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.nike.dooit.views.main.fragments.challenge.fragments.ChallengeFreeformFragment">
+    tools:context="org.gem.indo.dooit.views.main.fragments.challenge.fragments.ChallengeFreeformFragment">
 
     <RelativeLayout
         android:layout_width="match_parent"

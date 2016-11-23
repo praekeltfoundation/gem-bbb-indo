@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/yellow"
-    tools:context="com.nike.dooit.views.main.fragments.challenge.fragments.ChallengeRegisterFragment">
+    tools:context="org.gem.indo.dooit.views.main.fragments.challenge.fragments.ChallengeRegisterFragment">
 
     <android.support.v4.widget.NestedScrollView
         android:id="@+id/fragment_chalenge_nested_bg"

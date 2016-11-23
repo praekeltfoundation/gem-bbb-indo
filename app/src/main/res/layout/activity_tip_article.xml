@@ -4,7 +4,7 @@
     android:id="@+id/activity_tip_article"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.nike.dooit.views.tip.TipArticleActivity">
+    tools:context="org.gem.indo.dooit.views.tip.TipArticleActivity">
 
     <WebView
         android:layout_width="match_parent"
