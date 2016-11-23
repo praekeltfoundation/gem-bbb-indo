@@ -1,0 +1,109 @@
+package org.gem.indo.dooit.views.main;
+
+import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
+import android.support.design.widget.TabLayout;
+import android.support.v4.view.ViewPager;
+import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.view.View;
+
+import org.gem.indo.dooit.DooitApplication;
+import org.gem.indo.dooit.R;
+import org.gem.indo.dooit.helpers.activity.result.ActivityForResultHelper;
+import org.gem.indo.dooit.views.DooitActivity;
+import org.gem.indo.dooit.views.helpers.activity.DooitActivityBuilder;
+import org.gem.indo.dooit.views.main.adapters.MainTabAdapter;
+import org.gem.indo.dooit.views.profile.ProfileActivity;
+
+import javax.inject.Inject;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
+public class MainActivity extends DooitActivity {
+
+    @BindView(R.id.toolbar)
+    Toolbar toolbar;
+
+    @BindView(R.id.content_main_view_pager)
+    ViewPager viewPager;
+
+    @BindView(R.id.content_main_tab_layout)
+    TabLayout tabLayout;
+
+    MainTabAdapter mainTabAdapter;
+    @Inject
+    ActivityForResultHelper activityForResultHelper;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+        ((DooitApplication) getApplication()).component.inject(this);
+        ButterKnife.bind(this);
+        setSupportActionBar(toolbar);
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_d_profile);
+            toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    openProfile();
+                }
+            });
+        }
+        mainTabAdapter = new MainTabAdapter(getSupportFragmentManager(), this);
+        viewPager.setAdapter(mainTabAdapter);
+        tabLayout.setupWithViewPager(viewPager);
+
+        // Iterate over all tabs and set the custom view
+        for (int i = 0; i < tabLayout.getTabCount(); i++) {
+            TabLayout.Tab tab = tabLayout.getTabAt(i);
+            tab.setCustomView(mainTabAdapter.getTabView(i));
+        }
+    }
+
+    private void openProfile() {
+        ProfileActivity.Builder.create(this).startActivity();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        return true;
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (!activityForResultHelper.onActivityResult(requestCode, resultCode, data))
+            super.onActivityResult(requestCode, resultCode, data);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        return super.onOptionsItemSelected(item);
+    }
+
+    public static class Builder extends DooitActivityBuilder<MainActivity.Builder> {
+        protected Builder(Context context) {
+            super(context);
+        }
+
+        public static MainActivity.Builder create(Context context) {
+            MainActivity.Builder builder = new MainActivity.Builder(context);
+            return builder;
+        }
+
+        @Override
+        protected Intent createIntent(Context context) {
+            return new Intent(context, MainActivity.class);
+        }
+
+    }
+
+
+}
