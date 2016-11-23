@@ -93,21 +93,25 @@
     <string name="login_example_password_error_1">Password can\'t be blank</string>
 
     <!--JSON GOALS-->
-    <string name="goalGreeting">Hello %s!</string>
+    <string name="greeting">Hola!</string>
     <string name="goalIntroduction">My Name is Dooit. I\'m gonna help  you save!</string>
+    <string name="goalGreeting">Hello %s!</string>
+    <string name="goalNameCongrats">Great choice!</string>
     <string name="askGoalName">Select the goal you want to save for, please.</string>
     <string name="askGoalNameInput">What do you want to save for?</string>
-    <string name="goalNameCongrats">Great choice!</string>
-    <string name="askGoalImage">Add an image for your savings goal to help keep you motivated</string>
+    <string name="askGoalImage">Add an image for your savings goal to help keep you motivated,or press skip:</string>
+    <string name="askGoalImageTake">Tap on the blue square…</string>
     <string name="askGoalImageConfirm">Add an image for your savings goal to help keep you motivated</string>
-    <string name="askGoalAmount">How much do you need to save?</string>
+    <string name="askKnowGoalAmount">Do you know how much you need to save? </string>
+    <string name="askGoalAmount">Great! Just type the amount that you want to save.</string>
     <string name="infoDontKnowAmount">No problem.</string>
-    <string name="askGoalDate">What date would you need to save Rp %s by?</string>
+    <string name="askKnowGoalDate">That is a big goal. Let us get saving then. Do you have a date that you want to save this by?</string>
+    <string name="askGoalDate">When would you like to have saved this much?</string>
     <string name="askGoalWeeklySaveAmount">How much can you save each week?</string>
     <string name="askGoalSaveAmountOther">How much can you save?</string>
     <string name="askGoalPriorSave">Have you saved anything towards this goal yet?</string>
     <string name="askPriorSavedAmount">How much have you already saved?</string>
-    <string name="verifyGoalAmount">If you save Rp %1$s each week you will save enough to get your %2$s in %3$s weeks.</string>
+    <string name="verifyGoalAmount">If you save %4$s %1$s each week you will save enough to get your %2$s in %3$s weeks.</string>
     <string name="validationFail">Sorry, I do not understand that and have not been taught how to handle it yet.</string>
     <string name="validationFailDate">Sorry, I do not understand that and have not  been taught how to handle it yet.</string>
     <string name="validationFailSaveAmountOther">Sorry, I do not understand that and have not t been taught how to handle it yet.</string>
@@ -117,11 +121,8 @@
     <string name="depositIntroduction">Let\'s add your savings!</string>
     <string name="depositReminder">Remember you have to save %1$s each week to reach %2$s by %3$s.</string>
     <string name="depositRemainder">That is %1$s weeks and %2$s days from now.</string>
-    <string name="askDepositAddAmount">Add Amount</string>
-    <string name="depositEnd">Nice going! You added your first saving!</string>
 
     <!--Buttons-->
-    <string name="greeting">Hola!</string>
     <string name="Skip">Skip</string>
     <string name="Capture">Add photo</string>
     <string name="Change">Change photo</string>
@@ -135,10 +136,10 @@
     <string name="goalCheckRT">Reduce Time</string>
     <string name="goalCheckRA">Reduce Amount</string>
     <string name="goalCheckOk">OK</string>
-    <string name="five">Rp 500</string>
-    <string name="thousand">Rp 1000</string>
-    <string name="thousandFive">Rp 1500</string>
-    <string name="twoThousand">Rp 2000</string>
+    <string name="five">%1$s 500</string>
+    <string name="thousand">%1$s 1000</string>
+    <string name="thousandFive">%1$s 1500</string>
+    <string name="twoThousand">%1$s 2000</string>
     <string name="Save">Save</string>
     <string name="WithdrawButton">Withdraw</string>
     <string name="addOwnGoal">Add own goal</string>
@@ -215,9 +216,6 @@
     <string name="knowDateY">Yes</string>
     <string name="hasSavedY">Yes</string>
     <string name="hasSavedN">No</string>
-    <string name="askKnowGoalAmount">"Do you know how much you need to save? "</string>
-    <string name="askKnowGoalDate">That is a big goal. Let us get saving then. Do you have a date that you want to save this by?</string>
-    <string name="askGoalImageTake">Tap on the blue square…</string>
     <string name="fragment_challenge_check_button">Check</string>
     <string name="button_submit">@string/label_submit</string>
     <string name="heading_registration">Registration</string>
@@ -228,7 +226,6 @@
     <string name="target_prefix_saved">saved</string>
     <string name="heading_current_saving_streak">Current Saving Streak</string>
     <string name="heading_achievements">Achievements</string>
-    <string name="abbrev_currency">Rp</string>
     <string name="fragment_challenge_correct_text">You are correct!</string>
     <string name="label_try_again">Try again</string>
     <string name="fragment_challenge_wrong_text">Try again!</string>

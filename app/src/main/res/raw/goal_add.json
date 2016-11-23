@@ -62,7 +62,7 @@
     "name": "askGoalDate",
     "type": "text",
     "text": "$(askGoalDate)",
-    "textParams": ["goalAmount"],
+    "textParams": ["LOCAL_CURRENCY","goalAmount"],
     "answers": [
       { "name": "knowDateY", "text":"$(addDate)", "next": "askGoalDateCustom"},
       { "name": "knowDateN", "text":"$(unknownDate)", "next": "askGoalPriorSave"}
@@ -99,7 +99,7 @@
       { "name": "acceptGoal", "text":"$(acceptGoal)", "next": "infoGoalEnd"},
       { "name": "changeDate", "text":"$(changeDate)", "next": "askGoalDate"},
       { "name": "changeAmount", "text":"$(changeAmount)", "next": "askGoalAmount"},
-      { "name": "startOver", "text":"$(startOver)", "next": "infoGoalEnd"}
+      { "name": "startOver", "text":"$(startOver)", "next": "goalGreeting"}
     ]
   },
   {
