@@ -8,7 +8,34 @@
   },
   {
     "name": "depositIntroduction",
+    "type": "text",
+    "text": "$(depositIntroduction)",
+    "autoNext": "depositReminder"
+  },
+  {
+    "name": "depositReminder",
+    "type": "text",
+    "text": "$(depositReminder)",
+    "autoNext": "depositRemainder"
+  },
+  {
+    "name": "depositRemainder",
+    "type": "text",
+    "text": "$(depositRemainder)",
+    "answers" : [
+      { "name": "askDepositAddAmount", "text": "$(askDepositAddAmount)", "next": "askDepositAmount"}
+    ]
+  },
+  {
+    "name": "askDepositAmount",
+    "type": "blank",
+    "answers" : [
+      { "name": "depositAmount", "nextOnFinish": "depositEnd", "type":"inlineCurrency", "typeOnFinish":"textCurrency", "inlineEditHint": "$(type_currency_hint)" }
+    ]
+  },
+  {
+    "name": "depositEnd",
     "type": "end",
-    "text": "$(depositIntroduction)"
+    "text": "$(depositEnd)"
   }
 ]

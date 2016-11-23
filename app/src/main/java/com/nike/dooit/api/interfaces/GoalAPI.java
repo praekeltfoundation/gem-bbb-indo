@@ -1,6 +1,8 @@
 package com.nike.dooit.api.interfaces;
 
+import com.nike.dooit.api.responses.EmptyResponse;
 import com.nike.dooit.models.Goal;
+import com.nike.dooit.models.GoalTransaction;
 import com.nike.dooit.models.User;
 
 import java.util.List;
@@ -22,4 +24,8 @@ public interface GoalAPI {
 
     @POST("/api/goals/")
     Observable<Goal> createGoal(@Body Goal goal);
+
+    @POST("/api/goals/{id}/transactions/")
+    Observable<EmptyResponse> createGoalTransactions(@Path("id") long id,
+                                                     @Body List<GoalTransaction> transactions);
 }

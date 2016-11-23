@@ -3,12 +3,14 @@ package com.nike.dooit.views.profile;
 import android.app.Activity;
 import android.content.ContentResolver;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.design.widget.AppBarLayout;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -23,6 +25,7 @@ import com.nike.dooit.api.DooitAPIError;
 import com.nike.dooit.api.DooitErrorHandler;
 import com.nike.dooit.api.managers.FileUploadManager;
 import com.nike.dooit.api.responses.EmptyResponse;
+import com.nike.dooit.helpers.Utils;
 import com.nike.dooit.helpers.permissions.PermissionCallback;
 import com.nike.dooit.helpers.permissions.PermissionsHelper;
 import com.nike.dooit.models.User;
@@ -30,6 +33,7 @@ import com.nike.dooit.helpers.Persisted;
 import com.nike.dooit.helpers.RequestCodes;
 import com.nike.dooit.views.DooitActivity;
 import com.nike.dooit.views.helpers.activity.DooitActivityBuilder;
+import com.nike.dooit.views.onboarding.ProfileImageActivity;
 import com.nike.dooit.views.settings.SettingsActivity;
 
 import java.io.File;
@@ -134,35 +138,45 @@ public class ProfileActivity extends DooitActivity {
         }
         return true;
     }
-
     @OnClick(R.id.activity_profile_image)
-    void takeImage() {
-        permissionsHelper.askForPermission(this, PermissionsHelper.D_WRITE_EXTERNAL_STORAGE, new PermissionCallback() {
-            @Override
-            public void permissionGranted() {
-                permissionsHelper.askForPermission(ProfileActivity.this, PermissionsHelper.D_CAMERA, new PermissionCallback() {
-                    @Override
-                    public void permissionGranted() {
-                        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                        if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
-                            startActivityForResult(takePictureIntent, RequestCodes.REPONSE_CAMERA_REQUEST_PROFILE_IMAGE);
-                        }
-                    }
+    public void selectImage() {
+        final CharSequence[] items = { "Take Photo", "Choose from Library",
+                "Cancel" };
 
-                    @Override
-                    public void permissionRefused() {
-                        Toast.makeText(ProfileActivity.this, "Can't take ic_d_profile image without camera permission", Toast.LENGTH_SHORT).show();
-                    }
-                });
-            }
-
+        AlertDialog.Builder builder = new AlertDialog.Builder(ProfileActivity.this);
+        builder.setTitle("Add Profile Photo!");
+        builder.setItems(items, new DialogInterface.OnClickListener() {
             @Override
-            public void permissionRefused() {
-                Toast.makeText(ProfileActivity.this, "Can't take ic_d_profile image without storage permission", Toast.LENGTH_SHORT).show();
+            public void onClick(DialogInterface dialog, int item) {
+                boolean result= Utils.checkExternalStoragePermission(ProfileActivity.this);
+
+                if (items[item].equals("Take Photo")) {
+                    if(result)
+                        takeImage();
+
+                } else if (items[item].equals("Choose from Gallery")) {
+                    if(result)
+                        chooseImage();
+
+                } else if (items[item].equals("Cancel")) {
+                    dialog.dismiss();
+                }
             }
         });
+        builder.show();
+    }
+    public void chooseImage() {
+        Intent intent = new Intent();
+        intent.setType("image/*");
+        intent.setAction(Intent.ACTION_GET_CONTENT);//
+        startActivityForResult(Intent.createChooser(intent, "Select File"),RequestCodes.RESPONSE_GALLERY_REQUEST_PROFILE_IMAGE);
+    }
 
-
+    void takeImage() {
+        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
+            startActivityForResult(takePictureIntent, RequestCodes.REPONSE_CAMERA_REQUEST_PROFILE_IMAGE);
+        }
     }
 
     @Override
@@ -174,21 +188,14 @@ public class ProfileActivity extends DooitActivity {
             case RequestCodes.REPONSE_CAMERA_REQUEST_PROFILE_IMAGE:
                 onActivityResultCameraProfileImage(data);
                 break;
+            case RequestCodes.RESPONSE_GALLERY_REQUEST_PROFILE_IMAGE:
+                onSelectFromGalleryResult(data);
+                break;
         }
         //  ActivityResult.onResult(requestCode, resultCode, data).into(this);
 
     }
-
-    //@OnActivityResult(requestCode = RequestCodes.REPONSE_CAMERA_REQUEST_PROFILE_IMAGE)
-    void onActivityResultCameraProfileImage(Intent data) {
-        cameraUri = data.getData();
-        if (cameraUri == null) {
-            try {
-                cameraUri = Uri.parse(MediaStore.Images.Media.insertImage(getContentResolver(), (Bitmap) data.getExtras().get("data"), "", ""));
-            } catch (Throwable ex) {
-
-            }
-        }
+    private void uploadFromDeviceUri(final Uri cameraUri){
         profileImage.setImageURI(cameraUri);
         ContentResolver cR = this.getContentResolver();
         getIntent().putExtra(INTENT_MIME_TYPE, cR.getType(cameraUri));
@@ -208,6 +215,27 @@ public class ProfileActivity extends DooitActivity {
                 persisted.setCurrentUser(user);
             }
         });
+    }
+    private void onSelectFromGalleryResult(Intent data) {
+        Bitmap bm=null;
+        if (data != null) {
+            cameraUri = data.getData();
+            uploadFromDeviceUri(data.getData());
+        }
+    }
+
+    //@OnActivityResult(requestCode = RequestCodes.REPONSE_CAMERA_REQUEST_PROFILE_IMAGE)
+    void onActivityResultCameraProfileImage(Intent data) {
+        cameraUri = data.getData();
+        if (cameraUri == null) {
+            try {
+                cameraUri = Uri.parse(MediaStore.Images.Media.insertImage(getContentResolver(), (Bitmap) data.getExtras().get("data"), "", ""));
+            } catch (Throwable ex) {
+
+            }
+        }
+        uploadFromDeviceUri(cameraUri);
+
     }
 
     public static class Builder extends DooitActivityBuilder<Builder> {

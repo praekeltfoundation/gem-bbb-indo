@@ -13,6 +13,8 @@ import com.nike.dooit.R;
 import com.nike.dooit.helpers.DooitSharedPreferences;
 import com.nike.dooit.views.RootActivity;
 import com.nike.dooit.views.helpers.activity.DooitActivityBuilder;
+import com.nike.dooit.views.onboarding.ChangeNameActivity;
+import com.nike.dooit.views.onboarding.ChangePasswordActivity;
 
 import javax.inject.Inject;
 
@@ -29,6 +31,7 @@ public class SettingsActivity extends AppCompatActivity {
     Toolbar toolbar;
     @Inject
     DooitSharedPreferences dooitSharedPreferences;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,7 +52,14 @@ public class SettingsActivity extends AppCompatActivity {
             });
         }
     }
-
+    @OnClick(R.id.settings_account_change_name)
+    public void changeName(View view){
+        ChangeNameActivity.Builder.create(this).startActivity();
+    }
+    @OnClick(R.id.settings_account_change_password)
+    public void changePassword(View view){
+        ChangePasswordActivity.Builder.create(this).startActivity();
+    }
     @OnClick({R.id.settings_account_sign_out})
     public void signOut(View view) {
         dooitSharedPreferences.clear();

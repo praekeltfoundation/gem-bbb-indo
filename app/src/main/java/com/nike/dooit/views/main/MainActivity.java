@@ -2,21 +2,33 @@ package com.nike.dooit.views.main;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
+import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
+import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewTreeObserver;
 
 import com.nike.dooit.DooitApplication;
 import com.nike.dooit.R;
+import com.nike.dooit.helpers.Persisted;
 import com.nike.dooit.helpers.activity.result.ActivityForResultHelper;
+import com.nike.dooit.models.User;
 import com.nike.dooit.views.DooitActivity;
 import com.nike.dooit.views.helpers.activity.DooitActivityBuilder;
 import com.nike.dooit.views.main.adapters.MainTabAdapter;
 import com.nike.dooit.views.profile.ProfileActivity;
+
+import java.io.FileNotFoundException;
+import java.io.InputStream;
 
 import javax.inject.Inject;
 
@@ -38,6 +50,9 @@ public class MainActivity extends DooitActivity {
     @Inject
     ActivityForResultHelper activityForResultHelper;
 
+    @Inject
+    Persisted persisted;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,7 +62,32 @@ public class MainActivity extends DooitActivity {
         setSupportActionBar(toolbar);
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            toolbar.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+                @Override
+                public void onGlobalLayout() {
+                    // Remember to remove it if you don't want it to fire every time
+                    MainActivity.this.toolbar.getViewTreeObserver().removeGlobalOnLayoutListener(this);
+
+                    int abHeight = (int)(getSupportActionBar().getHeight()*0.7);
+                    try {
+                        User user = persisted.getCurrentUser();
+                        Uri profileImageUri = Uri.parse(user.getProfile().getProfileImageUrl());
+                        InputStream inputStream = getContentResolver().openInputStream(profileImageUri);
+                        Bitmap squareProfileImage = BitmapFactory.decodeStream(inputStream);
+                        int scaledWidth = (squareProfileImage.getWidth()*abHeight)/squareProfileImage.getHeight();
+                        Bitmap squareScaledProfileImage = Bitmap.createScaledBitmap(squareProfileImage, scaledWidth, abHeight, false);
+                        RoundedBitmapDrawable roundedProfileImage = RoundedBitmapDrawableFactory.create(getResources(),squareScaledProfileImage);
+                        roundedProfileImage.setCircular(true);
+
+                        getSupportActionBar().setHomeAsUpIndicator(roundedProfileImage);
+                    } catch (FileNotFoundException e) {
+                        getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_d_profile);
+                    }
+
+                }
+            });
             getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_d_profile);
+
             toolbar.setNavigationOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
