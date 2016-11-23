@@ -3,12 +3,14 @@ package com.nike.dooit.views.onboarding;
 import android.app.Activity;
 import android.content.ContentResolver;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.design.widget.Snackbar;
+import android.support.v7.app.AlertDialog;
 import android.widget.Button;
 import android.widget.Toast;
 
@@ -20,6 +22,7 @@ import com.nike.dooit.api.DooitErrorHandler;
 import com.nike.dooit.api.managers.AuthenticationManager;
 import com.nike.dooit.api.managers.FileUploadManager;
 import com.nike.dooit.api.responses.EmptyResponse;
+import com.nike.dooit.helpers.Utils;
 import com.nike.dooit.helpers.permissions.PermissionCallback;
 import com.nike.dooit.helpers.permissions.PermissionsHelper;
 import com.nike.dooit.models.User;
@@ -30,6 +33,7 @@ import com.nike.dooit.views.helpers.activity.DooitActivityBuilder;
 import com.nike.dooit.views.main.MainActivity;
 
 import java.io.File;
+import java.io.IOException;
 
 import javax.inject.Inject;
 
@@ -72,33 +76,45 @@ public class ProfileImageActivity extends DooitActivity {
     }
 
     @OnClick(R.id.activity_profile_image_profile_image)
-    public void takeImage() {
-        permissionsHelper.askForPermission(this, PermissionsHelper.D_WRITE_EXTERNAL_STORAGE, new PermissionCallback() {
-            @Override
-            public void permissionGranted() {
-                permissionsHelper.askForPermission(ProfileImageActivity.this, PermissionsHelper.D_CAMERA, new PermissionCallback() {
-                    @Override
-                    public void permissionGranted() {
-                        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                        if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
-                            startActivityForResult(takePictureIntent, RequestCodes.REPONSE_CAMERA_REQUEST_PROFILE_IMAGE);
-                        }
-                    }
+    public void selectImage() {
+        final CharSequence[] items = { "Take Photo", "Choose from Library",
+                "Cancel" };
 
-                    @Override
-                    public void permissionRefused() {
-                        Toast.makeText(ProfileImageActivity.this, "Can't take ic_d_profile image without camera permission", Toast.LENGTH_SHORT).show();
-                    }
-                });
-            }
-
+        AlertDialog.Builder builder = new AlertDialog.Builder(ProfileImageActivity.this);
+        builder.setTitle("Add Photo!");
+        builder.setItems(items, new DialogInterface.OnClickListener() {
             @Override
-            public void permissionRefused() {
-                Toast.makeText(ProfileImageActivity.this, "Can't take ic_d_profile image without storage permission", Toast.LENGTH_SHORT).show();
+            public void onClick(DialogInterface dialog, int item) {
+                boolean result= Utils.checkExternalStoragePermission(ProfileImageActivity.this);
+
+                if (items[item].equals("Take Photo")) {
+                    if(result)
+                        takeImage();
+
+                } else if (items[item].equals("Choose from Gallery")) {
+                    if(result)
+                        chooseImage();
+
+                } else if (items[item].equals("Cancel")) {
+                    dialog.dismiss();
+                }
             }
         });
+        builder.show();
+    }
 
+    public void takeImage() {
+        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
+            startActivityForResult(takePictureIntent, RequestCodes.REPONSE_CAMERA_REQUEST_PROFILE_IMAGE);
+        }
+    }
 
+    public void chooseImage() {
+        Intent intent = new Intent();
+        intent.setType("image/*");
+        intent.setAction(Intent.ACTION_GET_CONTENT);//
+        startActivityForResult(Intent.createChooser(intent, "Select File"),RequestCodes.RESPONSE_GALLERY_REQUEST_PROFILE_IMAGE);
     }
 
     @OnClick(R.id.activity_profile_image_next_button)
@@ -141,6 +157,9 @@ public class ProfileImageActivity extends DooitActivity {
             case RequestCodes.REPONSE_CAMERA_REQUEST_PROFILE_IMAGE:
                 onActivityResultCameraProfileImage(data);
                 break;
+            case RequestCodes.RESPONSE_GALLERY_REQUEST_PROFILE_IMAGE:
+                onSelectFromGalleryResult(data);
+                break;
         }
         //  ActivityResult.onResult(requestCode, resultCode, data).into(this);
 
@@ -161,6 +180,17 @@ public class ProfileImageActivity extends DooitActivity {
         simpleDraweeView.setImageURI(cameraUri);
         getIntent().putExtra(INTENT_MIME_TYPE, cR.getType(cameraUri));
         getIntent().putExtra(INTENT_IMAGE_URI, getRealPathFromURI(cameraUri));
+    }
+    @SuppressWarnings("deprecation")
+    private void onSelectFromGalleryResult(Intent data) {
+        Bitmap bm=null;
+        if (data != null) {
+            cameraUri = data.getData();
+            ContentResolver cR = this.getContentResolver();
+            simpleDraweeView.setImageURI(cameraUri);
+            getIntent().putExtra(INTENT_MIME_TYPE, cR.getType(cameraUri));
+            getIntent().putExtra(INTENT_IMAGE_URI, getRealPathFromURI(cameraUri));
+        }
     }
 
     public static class Builder extends DooitActivityBuilder<ProfileImageActivity.Builder> {

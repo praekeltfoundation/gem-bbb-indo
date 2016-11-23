@@ -14,7 +14,7 @@
         android:padding="@dimen/registration_activity_padding">
 
         <TextView
-            android:id="@+id/activity_registration_title"
+            android:id="@+id/activity_change_name_title"
             style="@style/AppTheme.TextView.Regular.XXXLargeHeading"
             fontPath="fonts/LondrinaSolid-Regular.ttf"
             android:layout_width="wrap_content"
@@ -32,7 +32,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
-            android:layout_below="@+id/activity_registration_title"
+            android:layout_below="@+id/activity_change_name_title"
             android:layout_marginTop="@dimen/registration_margin_vertical"
             android:text="@string/label_name"
             android:textColor="@color/yellow"
