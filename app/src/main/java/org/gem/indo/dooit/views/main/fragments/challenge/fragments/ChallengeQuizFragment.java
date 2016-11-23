@@ -1,10 +1,14 @@
 package org.gem.indo.dooit.views.main.fragments.challenge.fragments;
 
 import android.content.DialogInterface;
+import android.graphics.drawable.Drawable;
+import android.graphics.drawable.LayerDrawable;
+import android.graphics.drawable.ShapeDrawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.graphics.drawable.DrawableCompat;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -72,9 +76,15 @@ public class ChallengeQuizFragment extends Fragment implements OnOptionChangeLis
     private Set<OnQuestionCompletedListener> questionCompletedListeners = new HashSet<>();
     private Map<Long, QuestionState> selections = new HashMap<>();
 
+<<<<<<< HEAD:app/src/main/java/org/gem/indo/dooit/views/main/fragments/challenge/fragments/ChallengeQuizFragment.java
     @BindView(org.gem.indo.dooit.R.id.fragment_chalenge_nested_bg)
     View mainBackground;
     @BindView(org.gem.indo.dooit.R.id.fragment_challenge_quiz_progressbar)
+=======
+    @BindView(R.id.fragment_chalenge_nested_bg)
+    View background;
+    @BindView(R.id.fragment_challenge_quiz_progressbar)
+>>>>>>> 267924f... Add dynamically allocated squiggly backgrounds to onboarding and challenges.:app/src/main/java/com/nike/dooit/views/main/fragments/challenge/fragments/ChallengeQuizFragment.java
     ProgressBar mProgressBar;
     @BindView(org.gem.indo.dooit.R.id.fragment_challenge_quiz_progresscounter)
     TextView mProgressCounter;
@@ -119,9 +129,19 @@ public class ChallengeQuizFragment extends Fragment implements OnOptionChangeLis
         // Inflate the layout for this fragment
         View view = inflater.inflate(org.gem.indo.dooit.R.layout.fragment_challenge_quiz, container, false);
         unbinder = ButterKnife.bind(this, view);
+<<<<<<< HEAD:app/src/main/java/org/gem/indo/dooit/views/main/fragments/challenge/fragments/ChallengeQuizFragment.java
         TilingDrawable tiled = new TilingDrawable(ContextCompat.getDrawable(getContext(), org.gem.indo.dooit.R.drawable.bkg_clipped));
         tiled.setTint(getResources().getColor(org.gem.indo.dooit.R.color.light_grey));
         mainBackground.setBackground(tiled);
+=======
+        ShapeDrawable back = new ShapeDrawable();
+        back.getPaint().setColor(ContextCompat.getColor(getContext(), R.color.challenge_back));
+        Drawable fore = ContextCompat.getDrawable(getContext(), R.drawable.bkg_clipped);
+        DrawableCompat.setTint(fore, ContextCompat.getColor(getContext(), R.color.challenge_fore));
+        LayerDrawable layers = new LayerDrawable(new Drawable[]{back, fore});
+        TilingDrawable tiled = new TilingDrawable(layers);
+        background.setBackground(tiled);
+>>>>>>> 267924f... Add dynamically allocated squiggly backgrounds to onboarding and challenges.:app/src/main/java/com/nike/dooit/views/main/fragments/challenge/fragments/ChallengeQuizFragment.java
         mPager.setAdapter(mAdapter);
         updateProgressCounter(0);
         return view;

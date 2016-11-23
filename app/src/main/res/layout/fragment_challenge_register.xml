@@ -1,4 +1,4 @@
-<FrameLayout
+<android.support.v4.widget.NestedScrollView
     android:id="@+id/fragment_challenge_container"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -8,131 +8,125 @@
     android:background="@color/yellow"
     tools:context="org.gem.indo.dooit.views.main.fragments.challenge.fragments.ChallengeRegisterFragment">
 
-    <android.support.v4.widget.NestedScrollView
-        android:id="@+id/fragment_chalenge_nested_bg"
+    <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-        <android.support.constraint.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior">
+        <com.facebook.drawee.view.SimpleDraweeView
+            android:id="@+id/fragment_challenge_register_image"
+            android:layout_width="0dp"
+            app:placeholderImage="@color/purple"
+            android:background="@color/purple"
+            tools:layout_constraintTop_creator="1"
+            tools:layout_constraintRight_creator="1"
+            tools:layout_constraintBottom_creator="1"
+            app:layout_constraintBottom_toTopOf="@+id/fragment_challenge_sub_title_text_view"
+            app:layout_constraintRight_toRightOf="parent"
+            tools:layout_constraintLeft_creator="1"
+            android:layout_marginBottom="24dp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_height="180dp" />
 
-            <com.facebook.drawee.view.SimpleDraweeView
-                android:id="@+id/fragment_challenge_register_image"
-                android:layout_width="0dp"
-                app:placeholderImage="@color/purple"
-                android:background="@color/purple"
-                tools:layout_constraintTop_creator="1"
-                tools:layout_constraintRight_creator="1"
-                tools:layout_constraintBottom_creator="1"
-                app:layout_constraintBottom_toTopOf="@+id/fragment_challenge_sub_title_text_view"
-                app:layout_constraintRight_toRightOf="parent"
-                tools:layout_constraintLeft_creator="1"
-                android:layout_marginBottom="24dp"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                android:layout_height="180dp" />
+        <TextView
+            android:id="@+id/fragment_challenge_sub_title_text_view"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:textAlignment="center"
+            android:textAllCaps="true"
+            android:textAppearance="@style/AppTheme.TextView.Regular.Medium"
+            android:textColor="@color/black"
+            tools:text="Very Short Sub-Title"
+            tools:layout_constraintRight_creator="1"
+            tools:layout_constraintBottom_creator="1"
+            app:layout_constraintBottom_toTopOf="@+id/fragment_challenge_name_text_view"
+            app:layout_constraintRight_toRightOf="@+id/fragment_challenge_name_text_view"
+            tools:layout_constraintLeft_creator="1"
+            android:layout_marginBottom="8dp"
+            app:layout_constraintLeft_toLeftOf="@+id/fragment_challenge_name_text_view" />
 
-            <TextView
-                android:id="@+id/fragment_challenge_sub_title_text_view"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:textAlignment="center"
-                android:textAllCaps="true"
-                android:textAppearance="@style/AppTheme.TextView.Regular.Medium"
-                android:textColor="@color/black"
-                tools:text="Very Short Sub-Title"
-                tools:layout_constraintRight_creator="1"
-                tools:layout_constraintBottom_creator="1"
-                app:layout_constraintBottom_toTopOf="@+id/fragment_challenge_name_text_view"
-                app:layout_constraintRight_toRightOf="@+id/fragment_challenge_name_text_view"
-                tools:layout_constraintLeft_creator="1"
-                android:layout_marginBottom="8dp"
-                app:layout_constraintLeft_toLeftOf="@+id/fragment_challenge_name_text_view" />
+        <TextView
+            android:id="@+id/fragment_challenge_name_text_view"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:textAlignment="center"
+            android:textAppearance="@style/AppTheme.TextView.Regular.ExtraLarge"
+            android:textColor="@color/black"
+            tools:text="Quiz Challenge Name"
+            tools:layout_constraintRight_creator="1"
+            tools:layout_constraintBottom_creator="1"
+            app:layout_constraintBottom_toTopOf="@+id/fragment_challenge_expire_date_text_view"
+            app:layout_constraintRight_toRightOf="@+id/fragment_challenge_expire_date_text_view"
+            tools:layout_constraintLeft_creator="1"
+            android:layout_marginBottom="8dp"
+            app:layout_constraintLeft_toLeftOf="@+id/fragment_challenge_expire_date_text_view" />
 
-            <TextView
-                android:id="@+id/fragment_challenge_name_text_view"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:textAlignment="center"
-                android:textAppearance="@style/AppTheme.TextView.Regular.ExtraLarge"
-                android:textColor="@color/black"
-                tools:text="Quiz Challenge Name"
-                tools:layout_constraintRight_creator="1"
-                tools:layout_constraintBottom_creator="1"
-                app:layout_constraintBottom_toTopOf="@+id/fragment_challenge_expire_date_text_view"
-                app:layout_constraintRight_toRightOf="@+id/fragment_challenge_expire_date_text_view"
-                tools:layout_constraintLeft_creator="1"
-                android:layout_marginBottom="8dp"
-                app:layout_constraintLeft_toLeftOf="@+id/fragment_challenge_expire_date_text_view" />
+        <TextView
+            android:id="@+id/fragment_challenge_expire_date_text_view"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:textAlignment="center"
+            android:textAppearance="@style/AppTheme.TextView.Regular.Medium"
+            android:textColor="@color/black"
+            android:textStyle="normal|bold"
+            tools:text="Ends Month, dd, time"
+            tools:layout_constraintRight_creator="1"
+            tools:layout_constraintBottom_creator="1"
+            app:layout_constraintBottom_toTopOf="@+id/fragment_challenge_instruction_text_vew"
+            app:layout_constraintRight_toRightOf="@+id/fragment_challenge_instruction_text_vew"
+            tools:layout_constraintLeft_creator="1"
+            android:layout_marginBottom="24dp"
+            app:layout_constraintLeft_toLeftOf="@+id/fragment_challenge_instruction_text_vew" />
 
-            <TextView
-                android:id="@+id/fragment_challenge_expire_date_text_view"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:textAlignment="center"
-                android:textAppearance="@style/AppTheme.TextView.Regular.Medium"
-                android:textColor="@color/black"
-                android:textStyle="normal|bold"
-                tools:text="Ends Month, dd, time"
-                tools:layout_constraintRight_creator="1"
-                tools:layout_constraintBottom_creator="1"
-                app:layout_constraintBottom_toTopOf="@+id/fragment_challenge_instruction_text_vew"
-                app:layout_constraintRight_toRightOf="@+id/fragment_challenge_instruction_text_vew"
-                tools:layout_constraintLeft_creator="1"
-                android:layout_marginBottom="24dp"
-                app:layout_constraintLeft_toLeftOf="@+id/fragment_challenge_instruction_text_vew" />
+        <TextView
+            android:id="@+id/fragment_challenge_instruction_text_vew"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:minLines="4"
+            android:textAlignment="center"
+            android:textAppearance="@style/AppTheme.TextView.Regular.Medium"
+            android:textColor="@color/black"
+            tools:text="@string/placeholder_label_long"
+            tools:layout_constraintRight_creator="1"
+            tools:layout_constraintBottom_creator="1"
+            app:layout_constraintBottom_toTopOf="@+id/fragment_challenge_t_c_text_view"
+            app:layout_constraintRight_toRightOf="@+id/fragment_challenge_t_c_text_view"
+            tools:layout_constraintLeft_creator="1"
+            app:layout_constraintLeft_toLeftOf="@+id/fragment_challenge_t_c_text_view"
+            android:layout_marginBottom="24dp" />
 
-            <TextView
-                android:id="@+id/fragment_challenge_instruction_text_vew"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:minLines="4"
-                android:textAlignment="center"
-                android:textAppearance="@style/AppTheme.TextView.Regular.Medium"
-                android:textColor="@color/black"
-                tools:text="@string/placeholder_label_long"
-                tools:layout_constraintRight_creator="1"
-                tools:layout_constraintBottom_creator="1"
-                app:layout_constraintBottom_toTopOf="@+id/fragment_challenge_t_c_text_view"
-                app:layout_constraintRight_toRightOf="@+id/fragment_challenge_t_c_text_view"
-                tools:layout_constraintLeft_creator="1"
-                app:layout_constraintLeft_toLeftOf="@+id/fragment_challenge_t_c_text_view"
-                android:layout_marginBottom="24dp" />
+        <TextView
+            android:id="@+id/fragment_challenge_t_c_text_view"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/challenge_t_c"
+            android:textAlignment="center"
+            android:textAppearance="@style/AppTheme.TextView.Regular.Small"
+            android:textColor="@color/black"
+            tools:layout_constraintRight_creator="1"
+            tools:layout_constraintBottom_creator="1"
+            app:layout_constraintBottom_toTopOf="@+id/fragment_challenge_register_button"
+            app:layout_constraintRight_toRightOf="@+id/fragment_challenge_register_button"
+            tools:layout_constraintLeft_creator="1"
+            android:layout_marginBottom="8dp"
+            app:layout_constraintLeft_toLeftOf="@+id/fragment_challenge_register_button" />
 
-            <TextView
-                android:id="@+id/fragment_challenge_t_c_text_view"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:text="@string/challenge_t_c"
-                android:textAlignment="center"
-                android:textAppearance="@style/AppTheme.TextView.Regular.Small"
-                android:textColor="@color/black"
-                tools:layout_constraintRight_creator="1"
-                tools:layout_constraintBottom_creator="1"
-                app:layout_constraintBottom_toTopOf="@+id/fragment_challenge_register_button"
-                app:layout_constraintRight_toRightOf="@+id/fragment_challenge_register_button"
-                tools:layout_constraintLeft_creator="1"
-                android:layout_marginBottom="8dp"
-                app:layout_constraintLeft_toLeftOf="@+id/fragment_challenge_register_button" />
+        <Button
+            android:id="@+id/fragment_challenge_register_button"
+            style="@style/AppTheme.Button.Big.Purple"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/register"
+            tools:layout_constraintRight_creator="1"
+            tools:layout_constraintBottom_creator="1"
+            android:layout_marginStart="8dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginEnd="8dp"
+            app:layout_constraintRight_toRightOf="parent"
+            tools:layout_constraintLeft_creator="1"
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:layout_marginBottom="8dp" />
+    </android.support.constraint.ConstraintLayout>
 
-            <Button
-                android:id="@+id/fragment_challenge_register_button"
-                style="@style/AppTheme.Button.Big.Purple"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:text="@string/register"
-                tools:layout_constraintRight_creator="1"
-                tools:layout_constraintBottom_creator="1"
-                android:layout_marginStart="8dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                android:layout_marginEnd="8dp"
-                app:layout_constraintRight_toRightOf="parent"
-                tools:layout_constraintLeft_creator="1"
-                app:layout_constraintLeft_toLeftOf="parent"
-                android:layout_marginBottom="8dp" />
-        </android.support.constraint.ConstraintLayout>
-
-    </android.support.v4.widget.NestedScrollView>
-</FrameLayout>
+</android.support.v4.widget.NestedScrollView>

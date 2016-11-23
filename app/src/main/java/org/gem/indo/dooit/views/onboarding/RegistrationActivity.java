@@ -2,13 +2,19 @@ package org.gem.indo.dooit.views.onboarding;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
+import android.graphics.drawable.LayerDrawable;
+import android.graphics.drawable.ShapeDrawable;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.content.res.ResourcesCompat;
+import android.support.v4.graphics.drawable.DrawableCompat;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.TextUtils;
 import android.text.style.ForegroundColorSpan;
+import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -18,6 +24,7 @@ import android.widget.TextView;
 
 import org.gem.indo.dooit.Constants;
 import org.gem.indo.dooit.DooitApplication;
+import org.gem.indo.dooit.R;
 import org.gem.indo.dooit.api.DooitAPIError;
 import org.gem.indo.dooit.api.DooitErrorHandler;
 import org.gem.indo.dooit.api.managers.AuthenticationManager;
@@ -49,7 +56,10 @@ public class RegistrationActivity extends DooitActivity {
     private static final int MAX_MOBILE_LENGTH = 16;
     private static final int MAX_PASSWORD = 6;
 
-    @BindView(org.gem.indo.dooit.R.id.activity_registration_t_c_text_view)
+    @BindView(R.id.activity_registration)
+    View background;
+    
+    @BindView(R.id.activity_registration_t_c_text_view)
     TextView textViewTC;
 
     @BindView(org.gem.indo.dooit.R.id.activity_registration_login_text_view)
@@ -118,6 +128,13 @@ public class RegistrationActivity extends DooitActivity {
         }
         textViewTC.setText(spanTc);
         textViewLogin.setText(spanLogin);
+        ShapeDrawable back = new ShapeDrawable();
+        back.getPaint().setColor(ContextCompat.getColor(this, R.color.purple));
+        Drawable fore = ContextCompat.getDrawable(this, R.drawable.bkg_clipped);
+        DrawableCompat.setTint(fore, ContextCompat.getColor(this, R.color.purple_light));
+        LayerDrawable layers = new LayerDrawable(new Drawable[]{back, fore});
+        TilingDrawable tiled = new TilingDrawable(layers);
+        background.setBackground(tiled);
     }
 
     @OnClick(org.gem.indo.dooit.R.id.activity_registration_t_c_text_view)

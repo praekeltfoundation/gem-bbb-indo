@@ -1,9 +1,19 @@
 package org.gem.indo.dooit.views.main.fragments.challenge.fragments;
 
+<<<<<<< HEAD:app/src/main/java/org/gem/indo/dooit/views/main/fragments/challenge/fragments/ChallengeRegisterFragment.java
+=======
+import android.content.Context;
+import android.graphics.drawable.Animatable;
+import android.graphics.drawable.Drawable;
+import android.graphics.drawable.LayerDrawable;
+import android.graphics.drawable.ShapeDrawable;
+import android.net.Uri;
+>>>>>>> 267924f... Add dynamically allocated squiggly backgrounds to onboarding and challenges.:app/src/main/java/com/nike/dooit/views/main/fragments/challenge/fragments/ChallengeRegisterFragment.java
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.graphics.drawable.DrawableCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -35,7 +45,11 @@ public class ChallengeRegisterFragment extends Fragment {
     private BaseChallenge challenge;
     private Unbinder unbinder = null;
 
+<<<<<<< HEAD:app/src/main/java/org/gem/indo/dooit/views/main/fragments/challenge/fragments/ChallengeRegisterFragment.java
     @BindView(org.gem.indo.dooit.R.id.fragment_chalenge_nested_bg)
+=======
+    @BindView(R.id.fragment_challenge_container)
+>>>>>>> 267924f... Add dynamically allocated squiggly backgrounds to onboarding and challenges.:app/src/main/java/com/nike/dooit/views/main/fragments/challenge/fragments/ChallengeRegisterFragment.java
     View background;
     @BindView(org.gem.indo.dooit.R.id.fragment_challenge_register_image)
     SimpleDraweeView topImage;
@@ -83,8 +97,17 @@ public class ChallengeRegisterFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(org.gem.indo.dooit.R.layout.fragment_challenge_register, container, false);
         unbinder = ButterKnife.bind(this, view);
+<<<<<<< HEAD:app/src/main/java/org/gem/indo/dooit/views/main/fragments/challenge/fragments/ChallengeRegisterFragment.java
         TilingDrawable tiled = new TilingDrawable(ContextCompat.getDrawable(getContext(), org.gem.indo.dooit.R.drawable.bkg_clipped));
         tiled.setTint(getResources().getColor(org.gem.indo.dooit.R.color.dark_yellow));
+=======
+        ShapeDrawable back = new ShapeDrawable();
+        back.getPaint().setColor(ContextCompat.getColor(getContext(), R.color.yellow));
+        Drawable fore = ContextCompat.getDrawable(getContext(), R.drawable.bkg_clipped);
+        DrawableCompat.setTint(fore, ContextCompat.getColor(getContext(), R.color.yellow_light));
+        LayerDrawable layers = new LayerDrawable(new Drawable[]{back, fore});
+        TilingDrawable tiled = new TilingDrawable(layers);
+>>>>>>> 267924f... Add dynamically allocated squiggly backgrounds to onboarding and challenges.:app/src/main/java/com/nike/dooit/views/main/fragments/challenge/fragments/ChallengeRegisterFragment.java
         background.setBackground(tiled);
         return view;
     }
