@@ -70,6 +70,7 @@
             android:theme="@style/AppTheme.FullscreenTheme" />
         <activity android:name="org.gem.indo.dooit.views.tip.TipArticleActivity" />
         <activity android:name="org.gem.indo.dooit.views.onboarding.OnboardingWebActivity"></activity>
+        <service android:enabled="true" android:name=".services.NotificationScheduler"/>
     </application>
 
 </manifest>
