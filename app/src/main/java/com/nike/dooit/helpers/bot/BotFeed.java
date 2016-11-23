@@ -18,6 +18,9 @@ import java.util.HashMap;
  */
 
 public class BotFeed<T extends BaseBotModel> {
+
+    private static final String TAG = BotFeed.class.getName();
+
     private HashMap<String, T> data = new HashMap<>();
     private Context context;
     private ArrayList<String> indexMap = new ArrayList<>();
@@ -40,7 +43,7 @@ public class BotFeed<T extends BaseBotModel> {
                 indexMap.add(item.getName());
             }
         } catch (Exception e) {
-            Log.d("BotFeed", "Error loading feed", e);
+            Log.d(TAG, "Error loading feed", e);
         } finally {
             try {
                 is.close();

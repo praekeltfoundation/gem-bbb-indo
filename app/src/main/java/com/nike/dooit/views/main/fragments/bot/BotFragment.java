@@ -19,6 +19,7 @@ import com.nike.dooit.DooitApplication;
 import com.nike.dooit.R;
 import com.nike.dooit.helpers.Persisted;
 import com.nike.dooit.helpers.bot.BotFeed;
+import com.nike.dooit.models.Goal;
 import com.nike.dooit.models.bot.Answer;
 import com.nike.dooit.models.bot.BaseBotModel;
 import com.nike.dooit.models.bot.BotCallback;
@@ -47,8 +48,10 @@ import butterknife.ButterKnife;
  * create an instance of this fragment.
  */
 public class BotFragment extends MainFragment implements HashtagView.TagsClickListener {
+
     @BindView(R.id.fragment_bot_conversation_recycler_view)
     RecyclerView conversationRecyclerView;
+
     @BindView(R.id.fragment_bot_answer_hash_view)
     HashtagView answerView;
 
@@ -114,6 +117,7 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.menu_main_bot_clear) {
             persisted.clearConversation();
+            persisted.clearConvoGoals();
         }
         return super.onOptionsItemSelected(item);
     }
@@ -154,12 +158,16 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
         } else {
             callback = createBotCallback(type);
         }
+
         switch (type) {
             case DEFAULT:
                 getAndAddNode(null);
                 break;
             case GOAL_ADD:
                 getAndAddNode("askGoalName");
+                break;
+            case GOAL_DEPOSIT:
+                getAndAddNode("depositIntroduction");
                 break;
         }
     }
@@ -174,7 +182,10 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
             case GOAL_ADD:
                 return new GoalAddCallback((DooitApplication) getActivity().getApplication());
             case GOAL_DEPOSIT:
-                return new GoalDepositCallback((DooitApplication) getActivity().getApplication());
+                Goal goal = persisted.loadConvoGoal(BotType.GOAL_DEPOSIT);
+                if (goal == null)
+                    throw new RuntimeException("No Goal was persisted for Goal Deposit conversation.");
+                return new GoalDepositCallback((DooitApplication) getActivity().getApplication(), goal);
             default:
                 return null;
         }
@@ -205,6 +216,7 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
         switch (type) {
             case DEFAULT:
             case GOAL_ADD:
+            case GOAL_DEPOSIT:
                 if (!TextUtils.isEmpty(answer.getRemoveOnSelect())) {
                     for (BaseBotModel model : new ArrayList<>(getBotAdapter().getDataSet())) {
                         if (answer.getRemoveOnSelect().equals(model.getName())) {
@@ -225,8 +237,11 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
                 if (!TextUtils.isEmpty(answer.getNext())) {
                     getAndAddNode(answer.getNext());
                     if (BotMessageType.getValueOf(currentModel.getType()) == BotMessageType.END)
-                        if (callback != null)
+                        if (callback != null) {
                             callback.onDone(createAnswerLog(getBotAdapter().getDataSet()));
+                            persisted.clearConversation();
+                            persisted.clearConvoGoals();
+                        }
                 } else {
                     answerView.setData(new ArrayList<>());
                 }

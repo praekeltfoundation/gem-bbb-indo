@@ -17,6 +17,7 @@ import com.nike.dooit.R;
 import com.nike.dooit.api.DooitAPIError;
 import com.nike.dooit.api.DooitErrorHandler;
 import com.nike.dooit.api.managers.GoalManager;
+import com.nike.dooit.helpers.Persisted;
 import com.nike.dooit.models.Goal;
 import com.nike.dooit.models.enums.BotType;
 import com.nike.dooit.views.custom.WeekGraph;
@@ -41,29 +42,40 @@ import rx.functions.Action1;
 
 public class TargetFragment extends MainFragment {
 
-    @Inject
-    GoalManager goalManager;
-
     @BindView(R.id.fragment_target_targets_view_pagers)
     ViewPager viewPager;
+
     @BindView(R.id.fragment_target_goal_name_text_view)
     TextView goalName;
+
     @BindView(R.id.fragment_target_saved_text_view)
     TextView saved;
+
     @BindView(R.id.fragment_target_total_text_view)
     TextView total;
+
     @BindView(R.id.fragment_target_savings_plan_message)
     TextView targetMessage;
+
     @BindView(R.id.fragment_target_week_graph_view)
     WeekGraph bars;
+
     @BindView(R.id.fragment_target_left_image_button)
     ImageButton leftTarget;
+
     @BindView(R.id.fragment_target_right_image_button)
     ImageButton rightTarget;
 
     @BindString(R.string.savings_message)
     String savingsMessage;
-    List<Goal> goals;
+
+    @Inject
+    Persisted persisted;
+
+    @Inject
+    GoalManager goalManager;
+
+    private List<Goal> goals;
     private TargetPagerAdapter adapter;
 
     public TargetFragment() {
@@ -151,6 +163,13 @@ public class TargetFragment extends MainFragment {
     @OnClick(R.id.fragment_target_right_image_button)
     public void onRightClick() {
         viewPager.setCurrentItem(Math.min(goals.size(), viewPager.getCurrentItem() + 1));
+    }
+
+    @OnClick(R.id.fragment_target_save_button)
+    public void onSavingsEditClick(View view) {
+        Goal goal = goals.get(viewPager.getCurrentItem());
+        persisted.saveConvoGoal(BotType.GOAL_DEPOSIT, goal);
+        startBot(BotType.GOAL_DEPOSIT);
     }
 
     private void populateGoal(Goal goal) {
