@@ -9,7 +9,7 @@ import android.content.Intent;
 
 public class NotificationScheduler extends IntentService {
     public NotificationScheduler(){
-        super("DoitService");
+        super("DooitService");
     }
 
     @Override
