@@ -4,9 +4,9 @@ import android.app.Application;
 
 import org.gem.indo.dooit.api.DooitErrorHandler;
 import org.gem.indo.dooit.api.interfaces.ChallengeAPI;
+import org.gem.indo.dooit.models.challenge.BaseChallenge;
 import org.gem.indo.dooit.models.challenge.ParticipantFreeformAnswer;
 import org.gem.indo.dooit.models.challenge.QuizChallengeEntry;
-import org.gem.indo.dooit.models.challenge.BaseChallenge;
 
 import java.util.List;
 

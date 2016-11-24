@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 
 import com.facebook.drawee.view.SimpleDraweeView;
 
+import org.gem.indo.dooit.R;
 import org.gem.indo.dooit.models.Goal;
 import org.gem.indo.dooit.views.custom.ArcProgressBar;
 
@@ -29,8 +30,8 @@ public class TargetPagerAdapter extends PagerAdapter {
         LayoutInflater inflater = LayoutInflater.from(container.getContext());
         ViewGroup layout = (ViewGroup) inflater.inflate(org.gem.indo.dooit.R.layout.fragment_target_progress, container, false);
 
-        ((ArcProgressBar) layout.findViewById(org.gem.indo.dooit.R.id.fragment_target_progress_view)).setProgress((int) ((goals.get(position).getValue() / goals.get(position).getTarget()) * 100));
-        ((SimpleDraweeView) layout.findViewById(org.gem.indo.dooit.R.id.fragment_target_progress_image)).setImageURI(goals.get(position).getImage());
+        ((ArcProgressBar) layout.findViewById(R.id.fragment_target_progress_view)).setProgress((int) ((goals.get(position).getValue() / goals.get(position).getTarget()) * 100));
+        ((SimpleDraweeView) layout.findViewById(R.id.fragment_target_progress_image)).setImageURI(goals.get(position).getImage());
         container.addView(layout);
         return layout;
     }

@@ -10,6 +10,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import org.gem.indo.dooit.DooitApplication;
+import org.gem.indo.dooit.R;
 import org.gem.indo.dooit.api.DooitAPIError;
 import org.gem.indo.dooit.api.DooitErrorHandler;
 import org.gem.indo.dooit.api.managers.UserManager;
@@ -34,13 +35,13 @@ import rx.functions.Action1;
 public class ChangePasswordActivity extends DooitActivity {
 
 
-    @BindView(org.gem.indo.dooit.R.id.activity_change_password_edit_text)
+    @BindView(R.id.activity_change_password_edit_text)
     EditText password;
 
-    @BindView(org.gem.indo.dooit.R.id.activity_change_password_example_text_edit)
+    @BindView(R.id.activity_change_password_example_text_edit)
     TextView passwordHint;
 
-    @BindView(org.gem.indo.dooit.R.id.activity_change_password_old_edit_text)
+    @BindView(R.id.activity_change_password_old_edit_text)
     EditText passwordOld;
 
     @Inject
@@ -73,10 +74,10 @@ public class ChangePasswordActivity extends DooitActivity {
         }
         return valid;
     }
-    @BindView(org.gem.indo.dooit.R.id.activity_change_password_button)
+    @BindView(R.id.activity_change_password_button)
     Button changePasswordButton;
 
-    @OnClick(org.gem.indo.dooit.R.id.activity_change_password_button)
+    @OnClick(R.id.activity_change_password_button)
     public void changePassword() {
         if (!isPasswordValid())
             return;

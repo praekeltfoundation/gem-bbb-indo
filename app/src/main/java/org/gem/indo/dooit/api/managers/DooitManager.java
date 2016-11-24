@@ -5,6 +5,7 @@ import android.content.Context;
 import android.util.Log;
 
 import com.google.gson.GsonBuilder;
+
 import org.gem.indo.dooit.Constants;
 import org.gem.indo.dooit.DooitApplication;
 import org.gem.indo.dooit.api.DooitErrorHandler;
@@ -13,7 +14,6 @@ import org.gem.indo.dooit.api.serializers.DateTimeSerializer;
 import org.gem.indo.dooit.api.serializers.LocalDateSerializer;
 import org.gem.indo.dooit.helpers.DooitSharedPreferences;
 import org.gem.indo.dooit.helpers.Persisted;
-
 import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 

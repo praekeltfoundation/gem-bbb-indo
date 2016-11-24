@@ -18,6 +18,7 @@ import android.view.inputmethod.EditorInfo;
 import android.widget.AutoCompleteTextView;
 import android.widget.TextView;
 
+import org.gem.indo.dooit.R;
 import org.gem.indo.dooit.api.managers.TipManager;
 import org.gem.indo.dooit.helpers.TilingDrawable;
 import org.gem.indo.dooit.models.Tip;
@@ -50,13 +51,13 @@ public class TipsFragment extends Fragment implements OnTipsAvailableListener {
     @BindString(org.gem.indo.dooit.R.string.tips_article_opening)
     String openingArticleText;
 
-    @BindView(org.gem.indo.dooit.R.id.fragment_tips_search_view)
+    @BindView(R.id.fragment_tips_search_view)
     AutoCompleteTextView searchView;
 
-    @BindView(org.gem.indo.dooit.R.id.fragment_tips_tablayout)
+    @BindView(R.id.fragment_tips_tablayout)
     TabLayout tabLayout;
 
-    @BindView(org.gem.indo.dooit.R.id.fragment_tips_viewpager)
+    @BindView(R.id.fragment_tips_viewpager)
     ViewPager viewPager;
 
     @Inject
@@ -117,7 +118,7 @@ public class TipsFragment extends Fragment implements OnTipsAvailableListener {
         return view;
     }
 
-    @OnEditorAction(org.gem.indo.dooit.R.id.fragment_tips_search_view)
+    @OnEditorAction(R.id.fragment_tips_search_view)
     public boolean onSearchSubmit(TextView v, int actionId, KeyEvent event) {
         if (actionId == EditorInfo.IME_ACTION_DONE) {
             String constraint = v.getText().toString();
@@ -128,7 +129,7 @@ public class TipsFragment extends Fragment implements OnTipsAvailableListener {
         return false;
     }
 
-    @OnTouch(org.gem.indo.dooit.R.id.fragment_tips_search_view)
+    @OnTouch(R.id.fragment_tips_search_view)
     public boolean onSearchClick(TextView v, MotionEvent event) {
         final int DRAWABLE_LEFT = 0;
         final int DRAWABLE_TOP = 1;
@@ -146,7 +147,7 @@ public class TipsFragment extends Fragment implements OnTipsAvailableListener {
         return false;
     }
 
-    @OnPageChange(org.gem.indo.dooit.R.id.fragment_tips_viewpager)
+    @OnPageChange(R.id.fragment_tips_viewpager)
     public void onPageSelected(int position) {
         TipsViewPagerPositions pos = TipsViewPagerPositions.getValueOf(position);
         searchView.setHint(getString(pos.getSearchRes()));

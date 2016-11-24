@@ -4,8 +4,8 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 import com.google.gson.annotations.SerializedName;
-import org.gem.indo.dooit.models.enums.ChallengeType;
 
+import org.gem.indo.dooit.models.enums.ChallengeType;
 import org.joda.time.DateTime;
 
 import java.io.Serializable;

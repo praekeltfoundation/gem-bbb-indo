@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import com.facebook.drawee.view.SimpleDraweeView;
 
+import org.gem.indo.dooit.R;
 import org.gem.indo.dooit.helpers.TilingDrawable;
 import org.gem.indo.dooit.models.challenge.BaseChallenge;
 import org.gem.indo.dooit.models.challenge.FreeformChallenge;
@@ -35,21 +36,21 @@ public class ChallengeRegisterFragment extends Fragment {
     private BaseChallenge challenge;
     private Unbinder unbinder = null;
 
-    @BindView(org.gem.indo.dooit.R.id.fragment_chalenge_nested_bg)
+    @BindView(R.id.fragment_chalenge_nested_bg)
     View background;
-    @BindView(org.gem.indo.dooit.R.id.fragment_challenge_register_image)
+    @BindView(R.id.fragment_challenge_register_image)
     SimpleDraweeView topImage;
-    @BindView(org.gem.indo.dooit.R.id.fragment_challenge_sub_title_text_view)
+    @BindView(R.id.fragment_challenge_sub_title_text_view)
     TextView title;
-    @BindView(org.gem.indo.dooit.R.id.fragment_challenge_name_text_view)
+    @BindView(R.id.fragment_challenge_name_text_view)
     TextView name;
-    @BindView(org.gem.indo.dooit.R.id.fragment_challenge_expire_date_text_view)
+    @BindView(R.id.fragment_challenge_expire_date_text_view)
     TextView date;
-    @BindView(org.gem.indo.dooit.R.id.fragment_challenge_instruction_text_vew)
+    @BindView(R.id.fragment_challenge_instruction_text_vew)
     TextView instruction;
-    @BindView(org.gem.indo.dooit.R.id.fragment_challenge_t_c_text_view)
+    @BindView(R.id.fragment_challenge_t_c_text_view)
     TextView tc;
-    @BindView(org.gem.indo.dooit.R.id.fragment_challenge_register_button)
+    @BindView(R.id.fragment_challenge_register_button)
     Button register;
 
     public ChallengeRegisterFragment() {
@@ -143,7 +144,7 @@ public class ChallengeRegisterFragment extends Fragment {
         return ChallengeFreeformFragment.newInstance(freeformChallenge);
     }
 
-    @OnClick(org.gem.indo.dooit.R.id.fragment_challenge_register_button)
+    @OnClick(R.id.fragment_challenge_register_button)
     void startChallenge() {
         FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
         Fragment fragment = null;
@@ -165,7 +166,7 @@ public class ChallengeRegisterFragment extends Fragment {
 
         if (fragment != null) {
             //ft.setCustomAnimations(R.anim.slide_in_left, R.anim.slide_out_right);
-            ft.replace(org.gem.indo.dooit.R.id.fragment_challenge_container, fragment, "fragment_challenge");
+            ft.replace(R.id.fragment_challenge_container, fragment, "fragment_challenge");
             ft.commit();
         }
     }

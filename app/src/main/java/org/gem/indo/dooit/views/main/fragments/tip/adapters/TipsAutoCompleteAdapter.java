@@ -9,6 +9,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Filter;
 import android.widget.TextView;
 
+import org.gem.indo.dooit.R;
 import org.gem.indo.dooit.models.Tip;
 import org.gem.indo.dooit.views.main.fragments.tip.filters.TipsAutoCompleteFilter;
 
@@ -36,7 +37,7 @@ public class TipsAutoCompleteAdapter extends ArrayAdapter<String> implements Tip
         }
         String suggestion = getItem(position);
 
-        TextView textView = (TextView) convertView.findViewById(org.gem.indo.dooit.R.id.list_tips_item_text_view);
+        TextView textView = (TextView) convertView.findViewById(R.id.list_tips_item_text_view);
         textView.setText(suggestion);
 
         return convertView;

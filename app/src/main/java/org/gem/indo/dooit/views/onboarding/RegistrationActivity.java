@@ -18,6 +18,7 @@ import android.widget.TextView;
 
 import org.gem.indo.dooit.Constants;
 import org.gem.indo.dooit.DooitApplication;
+import org.gem.indo.dooit.R;
 import org.gem.indo.dooit.api.DooitAPIError;
 import org.gem.indo.dooit.api.DooitErrorHandler;
 import org.gem.indo.dooit.api.managers.AuthenticationManager;
@@ -49,40 +50,40 @@ public class RegistrationActivity extends DooitActivity {
     private static final int MAX_MOBILE_LENGTH = 16;
     private static final int MAX_PASSWORD = 6;
 
-    @BindView(org.gem.indo.dooit.R.id.activity_registration_t_c_text_view)
+    @BindView(R.id.activity_registration_t_c_text_view)
     TextView textViewTC;
 
-    @BindView(org.gem.indo.dooit.R.id.activity_registration_login_text_view)
+    @BindView(R.id.activity_registration_login_text_view)
     TextView textViewLogin;
 
-    @BindView(org.gem.indo.dooit.R.id.activity_registration_name_text_edit)
+    @BindView(R.id.activity_registration_name_text_edit)
     EditText name;
 
-    @BindView(org.gem.indo.dooit.R.id.activity_registration_age_spinner)
+    @BindView(R.id.activity_registration_age_spinner)
     Spinner age;
 
-    @BindView(org.gem.indo.dooit.R.id.activity_registration_gender_radiogroup)
+    @BindView(R.id.activity_registration_gender_radiogroup)
     RadioGroup gender;
 
-    @BindView(org.gem.indo.dooit.R.id.activity_registration_password_edit_text)
+    @BindView(R.id.activity_registration_password_edit_text)
     EditText password;
 
-    @BindView(org.gem.indo.dooit.R.id.activity_registration_number_text_edit)
+    @BindView(R.id.activity_registration_number_text_edit)
     EditText number;
 
-    @BindView(org.gem.indo.dooit.R.id.activity_registration_name_example_text_edit)
+    @BindView(R.id.activity_registration_name_example_text_edit)
     TextView nameHint;
 
-    @BindView(org.gem.indo.dooit.R.id.activity_registration_age_example_text_view)
+    @BindView(R.id.activity_registration_age_example_text_view)
     TextView ageHint;
 
-    @BindView(org.gem.indo.dooit.R.id.activity_registration_number_example_text_edit)
+    @BindView(R.id.activity_registration_number_example_text_edit)
     TextView numberHint;
 
-    @BindView(org.gem.indo.dooit.R.id.activity_registration_password_example_text_edit)
+    @BindView(R.id.activity_registration_password_example_text_edit)
     TextView passwordHint;
 
-    @BindView(org.gem.indo.dooit.R.id.activity_registration_register_button)
+    @BindView(R.id.activity_registration_register_button)
     Button registerButton;
 
 
@@ -110,7 +111,7 @@ public class RegistrationActivity extends DooitActivity {
         age.setSelection(4); // 16
 
         // Default gender
-        gender.check(org.gem.indo.dooit.R.id.activity_registration_gender_girl);
+        gender.check(R.id.activity_registration_gender_girl);
 
         if (!getLocal().getCountry().equals("in")) {
             spanTc.setSpan(new ForegroundColorSpan(ResourcesCompat.getColor(getResources(), org.gem.indo.dooit.R.color.pink, getTheme())), spanTc.length() - 17, spanTc.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
@@ -120,7 +121,7 @@ public class RegistrationActivity extends DooitActivity {
         textViewLogin.setText(spanLogin);
     }
 
-    @OnClick(org.gem.indo.dooit.R.id.activity_registration_t_c_text_view)
+    @OnClick(R.id.activity_registration_t_c_text_view)
     public void openTC() {
         OnboardingWebActivity.Builder.create(this)
                 .setTitle(getString(org.gem.indo.dooit.R.string.title_activity_terms_and_conditions))
@@ -128,7 +129,7 @@ public class RegistrationActivity extends DooitActivity {
                 .startActivity();
     }
 
-    @OnClick(org.gem.indo.dooit.R.id.activity_registration_register_button)
+    @OnClick(R.id.activity_registration_register_button)
     public void register() {
 
         if (!detailsValid())
@@ -169,7 +170,7 @@ public class RegistrationActivity extends DooitActivity {
     }
 
 
-    @OnClick(org.gem.indo.dooit.R.id.activity_registration_login_text_view)
+    @OnClick(R.id.activity_registration_login_text_view)
     public void openLogin() {
         LoginActivity.Builder.create(this).startActivityClearTop();
     }
@@ -184,10 +185,10 @@ public class RegistrationActivity extends DooitActivity {
         profile.setAge((Integer) age.getSelectedItem());
 
         switch (gender.getCheckedRadioButtonId()) {
-            case org.gem.indo.dooit.R.id.activity_registration_gender_boy:
+            case R.id.activity_registration_gender_boy:
                 profile.setGender(Profile.MALE);
                 break;
-            case org.gem.indo.dooit.R.id.activity_registration_gender_girl:
+            case R.id.activity_registration_gender_girl:
                 profile.setGender(Profile.FEMALE);
                 break;
         }

@@ -14,6 +14,7 @@ import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.widget.ProgressBar;
 
+import org.gem.indo.dooit.R;
 import org.gem.indo.dooit.views.helpers.activity.DooitActivityBuilder;
 
 import butterknife.BindView;
@@ -25,11 +26,11 @@ import butterknife.ButterKnife;
 public class SettingsWebViewActivity extends AppCompatActivity {
     private static final String INTENT_URL = "intent_webView_url";
     private static final String INTENT_TITLE = "intent_webView_title";
-    @BindView(org.gem.indo.dooit.R.id.toolbar)
+    @BindView(R.id.toolbar)
     Toolbar toolbar;
-    @BindView(org.gem.indo.dooit.R.id.activity_settings_web_view)
+    @BindView(R.id.activity_settings_web_view)
     WebView webView;
-    @BindView(org.gem.indo.dooit.R.id.activity_settings_web_progress)
+    @BindView(R.id.activity_settings_web_progress)
     ProgressBar progressBar;
 
     @Override

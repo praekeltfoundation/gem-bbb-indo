@@ -8,6 +8,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import org.gem.indo.dooit.R;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
@@ -23,7 +25,7 @@ public class ChallengeNoneFragment extends Fragment {
     private String message = null;
     private Unbinder unbinder = null;
 
-    @BindView(org.gem.indo.dooit.R.id.fragment_challenge_none_text)
+    @BindView(R.id.fragment_challenge_none_text)
     TextView messageText;
 
     public ChallengeNoneFragment() {

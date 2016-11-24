@@ -6,6 +6,7 @@ import android.util.Log;
 
 import com.google.gson.Gson;
 import com.google.gson.internal.LinkedTreeMap;
+
 import org.gem.indo.dooit.DooitApplication;
 import org.gem.indo.dooit.models.Goal;
 import org.gem.indo.dooit.models.Tip;

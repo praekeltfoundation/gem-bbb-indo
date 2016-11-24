@@ -10,6 +10,8 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
+import org.gem.indo.dooit.R;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -28,10 +30,10 @@ public class ChallengeSuccessLightboxFragment extends DialogFragment {
     DialogInterface.OnDismissListener dismissListener = null;
 
     @Nullable
-    @BindView(org.gem.indo.dooit.R.id.fragment_challenge_wrong_hint)
+    @BindView(R.id.fragment_challenge_wrong_hint)
     TextView hintText;
 
-    @BindView(org.gem.indo.dooit.R.id.fragment_challenge_continue_button)
+    @BindView(R.id.fragment_challenge_continue_button)
     Button nextButton;
 
     static ChallengeSuccessLightboxFragment newInstance() {
@@ -95,7 +97,7 @@ public class ChallengeSuccessLightboxFragment extends DialogFragment {
         this.dismissListener = listener;
     }
 
-    @OnClick(org.gem.indo.dooit.R.id.fragment_challenge_continue_button)
+    @OnClick(R.id.fragment_challenge_continue_button)
     public void onClick() {
         dismiss();
     }

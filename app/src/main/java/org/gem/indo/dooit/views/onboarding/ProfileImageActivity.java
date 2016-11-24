@@ -15,18 +15,19 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import com.facebook.drawee.view.SimpleDraweeView;
+
 import org.gem.indo.dooit.DooitApplication;
+import org.gem.indo.dooit.R;
 import org.gem.indo.dooit.api.DooitAPIError;
 import org.gem.indo.dooit.api.DooitErrorHandler;
 import org.gem.indo.dooit.api.managers.AuthenticationManager;
 import org.gem.indo.dooit.api.managers.FileUploadManager;
 import org.gem.indo.dooit.api.responses.EmptyResponse;
-import org.gem.indo.dooit.helpers.Utils;
+import org.gem.indo.dooit.helpers.Persisted;
+import org.gem.indo.dooit.helpers.RequestCodes;
 import org.gem.indo.dooit.helpers.permissions.PermissionCallback;
 import org.gem.indo.dooit.helpers.permissions.PermissionsHelper;
 import org.gem.indo.dooit.models.User;
-import org.gem.indo.dooit.helpers.Persisted;
-import org.gem.indo.dooit.helpers.RequestCodes;
 import org.gem.indo.dooit.views.DooitActivity;
 import org.gem.indo.dooit.views.helpers.activity.DooitActivityBuilder;
 import org.gem.indo.dooit.views.main.MainActivity;
@@ -45,10 +46,10 @@ public class ProfileImageActivity extends DooitActivity {
     private static final String INTENT_MIME_TYPE = "mime_type";
     private static final String INTENT_IMAGE_URI = "image_uri";
 
-    @BindView(org.gem.indo.dooit.R.id.activity_profile_image_profile_image)
+    @BindView(R.id.activity_profile_image_profile_image)
     SimpleDraweeView simpleDraweeView;
 
-    @BindView(org.gem.indo.dooit.R.id.activity_profile_image_next_button)
+    @BindView(R.id.activity_profile_image_next_button)
     Button nextButton;
 
     @Inject
@@ -73,7 +74,7 @@ public class ProfileImageActivity extends DooitActivity {
 
     }
 
-    @OnClick(org.gem.indo.dooit.R.id.activity_profile_image_profile_image)
+    @OnClick(R.id.activity_profile_image_profile_image)
     public void selectImage() {
 
 
@@ -146,7 +147,7 @@ public class ProfileImageActivity extends DooitActivity {
 
     }
 
-    @OnClick(org.gem.indo.dooit.R.id.activity_profile_image_next_button)
+    @OnClick(R.id.activity_profile_image_next_button)
     public void uploadProfileImage() {
         if (!getIntent().hasExtra(INTENT_IMAGE_URI)) {
             Toast.makeText(this, "Upload image of click Skip", Toast.LENGTH_SHORT).show();
@@ -171,7 +172,7 @@ public class ProfileImageActivity extends DooitActivity {
         });
     }
 
-    @OnClick(org.gem.indo.dooit.R.id.activity_profile_image_skip_text_view)
+    @OnClick(R.id.activity_profile_image_skip_text_view)
     public void skip() {
         MainActivity.Builder.create(ProfileImageActivity.this).startActivityClearTop();
 

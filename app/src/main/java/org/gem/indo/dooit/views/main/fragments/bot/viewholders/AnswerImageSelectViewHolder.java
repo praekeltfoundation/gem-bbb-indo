@@ -10,7 +10,9 @@ import android.view.View;
 
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.greenfrvr.hashtagview.HashtagView;
+
 import org.gem.indo.dooit.DooitApplication;
+import org.gem.indo.dooit.R;
 import org.gem.indo.dooit.api.managers.FileUploadManager;
 import org.gem.indo.dooit.helpers.Persisted;
 import org.gem.indo.dooit.helpers.activity.result.ActivityForResultCallback;
@@ -33,7 +35,7 @@ import butterknife.ButterKnife;
  */
 
 public class AnswerImageSelectViewHolder extends BaseBotViewHolder<Answer> {
-    @BindView(org.gem.indo.dooit.R.id.item_view_bot_image)
+    @BindView(R.id.item_view_bot_image)
     SimpleDraweeView selectView;
     BotAdapter botAdapter;
     HashtagView.TagsClickListener tagsClickListener;

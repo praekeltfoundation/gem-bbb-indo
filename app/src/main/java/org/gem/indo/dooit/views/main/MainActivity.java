@@ -17,6 +17,7 @@ import android.view.View;
 import android.view.ViewTreeObserver;
 
 import org.gem.indo.dooit.DooitApplication;
+import org.gem.indo.dooit.R;
 import org.gem.indo.dooit.helpers.Persisted;
 import org.gem.indo.dooit.helpers.activity.result.ActivityForResultHelper;
 import org.gem.indo.dooit.models.User;
@@ -34,13 +35,13 @@ import butterknife.ButterKnife;
 
 public class MainActivity extends DooitActivity {
 
-    @BindView(org.gem.indo.dooit.R.id.toolbar)
+    @BindView(R.id.toolbar)
     Toolbar toolbar;
 
-    @BindView(org.gem.indo.dooit.R.id.content_main_view_pager)
+    @BindView(R.id.content_main_view_pager)
     ViewPager viewPager;
 
-    @BindView(org.gem.indo.dooit.R.id.content_main_tab_layout)
+    @BindView(R.id.content_main_tab_layout)
     TabLayout tabLayout;
 
     MainTabAdapter mainTabAdapter;

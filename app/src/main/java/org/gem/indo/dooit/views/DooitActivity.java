@@ -14,6 +14,7 @@ import android.support.v7.app.AppCompatDelegate;
 import android.view.inputmethod.InputMethodManager;
 
 import com.crashlytics.android.Crashlytics;
+
 import org.gem.indo.dooit.Constants;
 import org.gem.indo.dooit.helpers.permissions.PermissionsHelper;
 

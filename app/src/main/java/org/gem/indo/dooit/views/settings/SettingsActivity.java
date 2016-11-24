@@ -9,6 +9,7 @@ import android.view.View;
 
 import org.gem.indo.dooit.Constants;
 import org.gem.indo.dooit.DooitApplication;
+import org.gem.indo.dooit.R;
 import org.gem.indo.dooit.helpers.DooitSharedPreferences;
 import org.gem.indo.dooit.views.RootActivity;
 import org.gem.indo.dooit.views.helpers.activity.DooitActivityBuilder;
@@ -26,7 +27,7 @@ import butterknife.OnClick;
  */
 public class SettingsActivity extends AppCompatActivity {
 
-    @BindView(org.gem.indo.dooit.R.id.toolbar)
+    @BindView(R.id.toolbar)
     Toolbar toolbar;
     @Inject
     DooitSharedPreferences dooitSharedPreferences;
@@ -51,15 +52,15 @@ public class SettingsActivity extends AppCompatActivity {
             });
         }
     }
-    @OnClick(org.gem.indo.dooit.R.id.settings_account_change_name)
+    @OnClick(R.id.settings_account_change_name)
     public void changeName(View view){
         ChangeNameActivity.Builder.create(this).startActivity();
     }
-    @OnClick(org.gem.indo.dooit.R.id.settings_account_change_password)
+    @OnClick(R.id.settings_account_change_password)
     public void changePassword(View view){
         ChangePasswordActivity.Builder.create(this).startActivity();
     }
-    @OnClick({org.gem.indo.dooit.R.id.settings_account_sign_out})
+    @OnClick({R.id.settings_account_sign_out})
     public void signOut(View view) {
         dooitSharedPreferences.clear();
         Intent intent = new Intent(this, RootActivity.class);
@@ -67,7 +68,7 @@ public class SettingsActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    @OnClick({org.gem.indo.dooit.R.id.settings_about_terms})
+    @OnClick({R.id.settings_about_terms})
     public void terms(View view) {
         SettingsWebViewActivity.Builder.create(this)
                 .setTitle(getString(org.gem.indo.dooit.R.string.title_activity_terms_and_conditions))
@@ -75,7 +76,7 @@ public class SettingsActivity extends AppCompatActivity {
                 .startActivity();
     }
 
-    @OnClick({org.gem.indo.dooit.R.id.settings_about_privacy})
+    @OnClick({R.id.settings_about_privacy})
     public void privacy(View view) {
         SettingsWebViewActivity.Builder.create(this)
                 .setTitle(getString(org.gem.indo.dooit.R.string.title_activity_privacy_policy))

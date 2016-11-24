@@ -4,8 +4,8 @@ import android.content.Context;
 import android.view.View;
 import android.widget.TextView;
 
+import org.gem.indo.dooit.R;
 import org.gem.indo.dooit.models.bot.Answer;
-import org.gem.indo.dooit.views.DooitActivity;
 import org.gem.indo.dooit.views.helpers.activity.CurrencyHelper;
 import org.gem.indo.dooit.views.main.fragments.bot.adapters.BotAdapter;
 
@@ -17,7 +17,7 @@ import butterknife.ButterKnife;
  */
 
 public class AnswerTextCurrencyViewHolder extends BaseBotViewHolder<Answer> {
-    @BindView(org.gem.indo.dooit.R.id.item_view_bot_answer_text)
+    @BindView(R.id.item_view_bot_answer_text)
     TextView textView;
 
     BotAdapter botAdapter;

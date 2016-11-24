@@ -19,20 +19,20 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.facebook.drawee.view.SimpleDraweeView;
+
 import org.gem.indo.dooit.DooitApplication;
+import org.gem.indo.dooit.R;
 import org.gem.indo.dooit.api.DooitAPIError;
 import org.gem.indo.dooit.api.DooitErrorHandler;
 import org.gem.indo.dooit.api.managers.FileUploadManager;
 import org.gem.indo.dooit.api.responses.EmptyResponse;
-import org.gem.indo.dooit.helpers.Utils;
+import org.gem.indo.dooit.helpers.Persisted;
+import org.gem.indo.dooit.helpers.RequestCodes;
 import org.gem.indo.dooit.helpers.permissions.PermissionCallback;
 import org.gem.indo.dooit.helpers.permissions.PermissionsHelper;
 import org.gem.indo.dooit.models.User;
-import org.gem.indo.dooit.helpers.Persisted;
-import org.gem.indo.dooit.helpers.RequestCodes;
 import org.gem.indo.dooit.views.DooitActivity;
 import org.gem.indo.dooit.views.helpers.activity.DooitActivityBuilder;
-import org.gem.indo.dooit.views.onboarding.ProfileImageActivity;
 import org.gem.indo.dooit.views.settings.SettingsActivity;
 
 import java.io.File;
@@ -52,13 +52,13 @@ public class ProfileActivity extends DooitActivity {
     private static final String INTENT_MIME_TYPE = "mime_type";
     private static final String INTENT_IMAGE_URI = "image_uri";
 
-    @BindView(org.gem.indo.dooit.R.id.activity_profile_image)
+    @BindView(R.id.activity_profile_image)
     SimpleDraweeView profileImage;
-    @BindView(org.gem.indo.dooit.R.id.toolbar)
+    @BindView(R.id.toolbar)
     Toolbar toolbar;
-    @BindView(org.gem.indo.dooit.R.id.app_bar)
+    @BindView(R.id.app_bar)
     AppBarLayout appBarLayout;
-    @BindView(org.gem.indo.dooit.R.id.toolbar_title)
+    @BindView(R.id.toolbar_title)
     TextView toolbarTitle;
 
     @Inject
@@ -129,7 +129,7 @@ public class ProfileActivity extends DooitActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case org.gem.indo.dooit.R.id.action_settings:
+            case R.id.action_settings:
                 SettingsActivity.Builder.create(this).startActivity();
                 break;
             default:
@@ -137,7 +137,7 @@ public class ProfileActivity extends DooitActivity {
         }
         return true;
     }
-    @OnClick(org.gem.indo.dooit.R.id.activity_profile_image)
+    @OnClick(R.id.activity_profile_image)
     public void selectImage() {
         final CharSequence[] items = { "Take Photo", "Choose from Library",
                 "Cancel" };

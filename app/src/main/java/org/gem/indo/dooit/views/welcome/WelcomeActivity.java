@@ -7,12 +7,13 @@ import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.widget.Button;
 
+import com.viewpagerindicator.CirclePageIndicator;
+
 import org.gem.indo.dooit.R;
 import org.gem.indo.dooit.views.DooitActivity;
 import org.gem.indo.dooit.views.helpers.activity.DooitActivityBuilder;
 import org.gem.indo.dooit.views.onboarding.RegistrationActivity;
 import org.gem.indo.dooit.views.welcome.adapter.WelcomeTabAdapter;
-import com.viewpagerindicator.CirclePageIndicator;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;

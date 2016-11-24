@@ -6,6 +6,7 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 
+import org.gem.indo.dooit.R;
 import org.gem.indo.dooit.models.challenge.QuizChallengeOption;
 import org.gem.indo.dooit.views.main.fragments.challenge.adapters.ChallengeQuizOptionsListAdapter;
 
@@ -20,8 +21,8 @@ public class QuizOptionViewHolder extends RecyclerView.ViewHolder implements Vie
     private QuizChallengeOption option;
     private ChallengeQuizOptionsListAdapter adapter;
 
-    @BindView(org.gem.indo.dooit.R.id.option_text) RadioButton radio;
-    @BindView(org.gem.indo.dooit.R.id.option_background) LinearLayout optionBackground;
+    @BindView(R.id.option_text) RadioButton radio;
+    @BindView(R.id.option_background) LinearLayout optionBackground;
 
     public QuizOptionViewHolder(View itemView, ChallengeQuizOptionsListAdapter adapter) {
         super(itemView);

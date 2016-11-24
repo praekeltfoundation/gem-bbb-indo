@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import org.gem.indo.dooit.R;
 import org.gem.indo.dooit.views.main.fragments.tip.OnTipsAvailableListener;
 import org.gem.indo.dooit.views.main.fragments.tip.TipsListFragment;
 import org.gem.indo.dooit.views.main.fragments.tip.TipsViewPagerPositions;
@@ -77,7 +78,7 @@ public class TipsTabAdapter extends FragmentStatePagerAdapter {
         View view = LayoutInflater.from(context).inflate(org.gem.indo.dooit.R.layout.tab_tips, null);
 
         TipsViewPagerPositions pos = TipsViewPagerPositions.getValueOf(position);
-        TextView textView = (TextView) view.findViewById(org.gem.indo.dooit.R.id.tab_tip_textview);
+        TextView textView = (TextView) view.findViewById(R.id.tab_tip_textview);
 
         textView.setText(context.getString(pos.getTitleRes()));
         return view;
