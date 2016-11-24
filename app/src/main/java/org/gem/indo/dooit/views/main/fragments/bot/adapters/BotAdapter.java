@@ -7,8 +7,10 @@ import android.view.ViewGroup;
 
 import com.greenfrvr.hashtagview.HashtagView;
 
+import org.gem.indo.dooit.R;
 import org.gem.indo.dooit.models.bot.BaseBotModel;
 import org.gem.indo.dooit.models.enums.BotMessageType;
+import org.gem.indo.dooit.views.main.fragments.bot.viewholders.AnswerGoalGalleryViewHolder;
 import org.gem.indo.dooit.views.main.fragments.bot.viewholders.AnswerImageSelectViewHolder;
 import org.gem.indo.dooit.views.main.fragments.bot.viewholders.AnswerImageViewHolder;
 import org.gem.indo.dooit.views.main.fragments.bot.viewholders.AnswerInlineDateEditViewHolder;
@@ -61,6 +63,8 @@ public class BotAdapter extends RecyclerView.Adapter<BaseBotViewHolder> {
                 return new AnswerInlineDateEditViewHolder(LayoutInflater.from(context).inflate(org.gem.indo.dooit.R.layout.item_view_bot_inline_edit, parent, false), this, tagsClickListener);
             case TEXTCURRENCY:
                 return new AnswerTextCurrencyViewHolder(LayoutInflater.from(context).inflate(org.gem.indo.dooit.R.layout.item_view_bot_answer, parent, false), this);
+            case GOALGALLERY:
+                return new AnswerGoalGalleryViewHolder(LayoutInflater.from(context).inflate(R.layout.item_view_bot_carousel, parent, false), this, tagsClickListener);
             case GOALVERIFICATION:
                 return new GoalVerificationViewHolder(LayoutInflater.from(context).inflate(org.gem.indo.dooit.R.layout.item_view_bot_text, parent, false), this);
             case UNDEFINED:

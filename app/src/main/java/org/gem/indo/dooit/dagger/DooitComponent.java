@@ -9,6 +9,7 @@ import org.gem.indo.dooit.views.main.MainActivity;
 import org.gem.indo.dooit.views.main.fragments.ChallengeFragment;
 import org.gem.indo.dooit.views.main.fragments.TipsFragment;
 import org.gem.indo.dooit.views.main.fragments.bot.BotFragment;
+import org.gem.indo.dooit.views.main.fragments.bot.viewholders.AnswerGoalGalleryViewHolder;
 import org.gem.indo.dooit.views.main.fragments.bot.viewholders.AnswerImageSelectViewHolder;
 import org.gem.indo.dooit.views.main.fragments.bot.viewholders.GoalVerificationViewHolder;
 import org.gem.indo.dooit.views.main.fragments.bot.viewholders.TextViewHolder;
@@ -77,6 +78,8 @@ public interface DooitComponent {
     void inject(BotFragment o);
 
     void inject(AnswerImageSelectViewHolder o);
+
+    void inject(AnswerGoalGalleryViewHolder o);
 
     void inject(GoalVerificationViewHolder o);
 
