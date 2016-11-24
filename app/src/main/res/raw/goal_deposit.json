@@ -3,7 +3,9 @@
     "name": "goalGreeting",
     "type": "text",
     "text": "$(goalGreeting)",
-    "textParams": ["USERNAME"],
+    "textParams": [
+      "USERNAME"
+    ],
     "autoNext": "depositIntroduction"
   },
   {
@@ -22,15 +24,25 @@
     "name": "depositRemainder",
     "type": "text",
     "text": "$(depositRemainder)",
-    "answers" : [
-      { "name": "askDepositAddAmount", "text": "$(askDepositAddAmount)", "next": "askDepositAmount"}
+    "answers": [
+      {
+        "name": "askDepositAddAmount",
+        "text": "$(askDepositAddAmount)",
+        "next": "askDepositAmount"
+      }
     ]
   },
   {
     "name": "askDepositAmount",
     "type": "blank",
-    "answers" : [
-      { "name": "depositAmount", "nextOnFinish": "depositEnd", "type":"inlineCurrency", "typeOnFinish":"textCurrency", "inlineEditHint": "$(type_currency_hint)" }
+    "answers": [
+      {
+        "name": "depositAmount",
+        "nextOnFinish": "depositEnd",
+        "type": "inlineCurrency",
+        "typeOnFinish": "textCurrency",
+        "inlineEditHint": "$(type_currency_hint)"
+      }
     ]
   },
   {

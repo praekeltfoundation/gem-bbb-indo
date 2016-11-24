@@ -60,6 +60,7 @@ public class ProfileImageActivity extends DooitActivity {
 
     @Inject
     Persisted persisted;
+    Uri cameraUri;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -195,7 +196,6 @@ public class ProfileImageActivity extends DooitActivity {
 
     }
 
-    Uri cameraUri;
     // @OnActivityResult(requestCode = RequestCodes.REPONSE_CAMERA_REQUEST_PROFILE_IMAGE)
     void onActivityResultCameraProfileImage(Intent data) {
         cameraUri = data.getData();

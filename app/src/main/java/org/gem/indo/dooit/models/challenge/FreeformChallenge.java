@@ -12,20 +12,24 @@ import org.gem.indo.dooit.models.enums.ChallengeType;
  */
 
 public class FreeformChallenge extends BaseChallenge {
+    @SuppressWarnings("unused")
+    public static final Parcelable.Creator<FreeformChallenge> CREATOR = new Parcelable.Creator<FreeformChallenge>() {
+        @Override
+        public FreeformChallenge createFromParcel(Parcel in) {
+            return new FreeformChallenge(in);
+        }
+
+        @Override
+        public FreeformChallenge[] newArray(int size) {
+            return new FreeformChallenge[size];
+        }
+    };
     @SerializedName("freetext_question") FreeformChallengeQuestion question;
 
     FreeformChallenge() {
         // Mandatory empty constructor
         super();
         this.type = ChallengeType.FREEFORM;
-    }
-
-    public FreeformChallengeQuestion getQuestion() {
-        return question;
-    }
-
-    public void setQuestion(FreeformChallengeQuestion question) {
-        this.question = question;
     }
 
     protected FreeformChallenge(Parcel in) {
@@ -35,6 +39,14 @@ public class FreeformChallenge extends BaseChallenge {
         } else {
             question = null;
         }
+    }
+
+    public FreeformChallengeQuestion getQuestion() {
+        return question;
+    }
+
+    public void setQuestion(FreeformChallengeQuestion question) {
+        this.question = question;
     }
 
     @Override
@@ -52,17 +64,4 @@ public class FreeformChallenge extends BaseChallenge {
             dest.writeParcelable(question, flags);
         }
     }
-
-    @SuppressWarnings("unused")
-    public static final Parcelable.Creator<FreeformChallenge> CREATOR = new Parcelable.Creator<FreeformChallenge>() {
-        @Override
-        public FreeformChallenge createFromParcel(Parcel in) {
-            return new FreeformChallenge(in);
-        }
-
-        @Override
-        public FreeformChallenge[] newArray(int size) {
-            return new FreeformChallenge[size];
-        }
-    };
 }

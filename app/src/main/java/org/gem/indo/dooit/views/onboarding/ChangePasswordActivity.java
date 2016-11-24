@@ -49,6 +49,8 @@ public class ChangePasswordActivity extends DooitActivity {
 
     @Inject
     Persisted persisted;
+    @BindView(R.id.activity_change_password_button)
+    Button changePasswordButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,8 +76,6 @@ public class ChangePasswordActivity extends DooitActivity {
         }
         return valid;
     }
-    @BindView(R.id.activity_change_password_button)
-    Button changePasswordButton;
 
     @OnClick(R.id.activity_change_password_button)
     public void changePassword() {

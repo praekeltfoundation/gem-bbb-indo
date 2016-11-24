@@ -56,13 +56,13 @@
             android:id="@+id/activity_profile_image_profile_image"
             android:layout_width="250dp"
             android:layout_height="250dp"
+            android:layout_below="@+id/activity_profile_image_title"
+            android:layout_centerHorizontal="true"
             android:layout_marginTop="48dp"
             android:scaleType="fitXY"
             app:placeholderImage="@drawable/ic_empty_profile_image"
             app:placeholderImageScaleType="fitXY"
-            app:roundAsCircle="true"
-            android:layout_below="@+id/activity_profile_image_title"
-            android:layout_centerHorizontal="true" />
+            app:roundAsCircle="true" />
 
         <ImageView
             android:id="@+id/activity_profile_image_plus"
@@ -70,8 +70,8 @@
             android:layout_height="50dp"
             android:layout_alignBottom="@+id/activity_profile_image_profile_image"
             android:layout_alignEnd="@+id/activity_profile_image_profile_image"
-            android:layout_marginRight="12dp"
             android:layout_marginBottom="0dp"
+            android:layout_marginRight="12dp"
             android:src="@drawable/ic_d_plus_circle" />
     </RelativeLayout>
 </RelativeLayout>

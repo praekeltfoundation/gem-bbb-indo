@@ -46,8 +46,8 @@
             android:layout_alignTop="@+id/fragment_target_targets_view_pagers"
             android:layout_gravity="center_vertical|start"
             android:background="?android:selectableItemBackground"
-            app:srcCompat="@drawable/ic_d_left_chevron"
             android:visibility="gone"
+            app:srcCompat="@drawable/ic_d_left_chevron"
             tools:visibility="visible" />
 
         <ImageButton
@@ -59,8 +59,8 @@
             android:layout_alignTop="@+id/fragment_target_targets_view_pagers"
             android:layout_gravity="center_vertical|end"
             android:background="?android:selectableItemBackground"
-            app:srcCompat="@drawable/ic_d_right_chevron"
             android:visibility="gone"
+            app:srcCompat="@drawable/ic_d_right_chevron"
             tools:visibility="visible" />
 
 
@@ -71,9 +71,9 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/fragment_target_targets_view_pagers"
             android:gravity="center_horizontal"
+            android:text="@string/target_prefix_saved"
             android:textColor="@color/black"
-            android:textStyle="bold"
-            android:text="@string/target_prefix_saved" />
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/fragment_target_saved_text_view"

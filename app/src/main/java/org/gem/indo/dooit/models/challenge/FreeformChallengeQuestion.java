@@ -8,6 +8,19 @@ import android.os.Parcelable;
  */
 
 public class FreeformChallengeQuestion extends BaseChallengeQuestion {
+    @SuppressWarnings("unused")
+    public static final Parcelable.Creator<FreeformChallengeQuestion> CREATOR = new Parcelable.Creator<FreeformChallengeQuestion>() {
+        @Override
+        public FreeformChallengeQuestion createFromParcel(Parcel in) {
+            return new FreeformChallengeQuestion(in);
+        }
+
+        @Override
+        public FreeformChallengeQuestion[] newArray(int size) {
+            return new FreeformChallengeQuestion[size];
+        }
+    };
+
     FreeformChallengeQuestion() {
         // Mandatory empty constructor
     }
@@ -25,17 +38,4 @@ public class FreeformChallengeQuestion extends BaseChallengeQuestion {
     public void writeToParcel(Parcel dest, int flags) {
         super.writeToParcel(dest, flags);
     }
-
-    @SuppressWarnings("unused")
-    public static final Parcelable.Creator<FreeformChallengeQuestion> CREATOR = new Parcelable.Creator<FreeformChallengeQuestion>() {
-        @Override
-        public FreeformChallengeQuestion createFromParcel(Parcel in) {
-            return new FreeformChallengeQuestion(in);
-        }
-
-        @Override
-        public FreeformChallengeQuestion[] newArray(int size) {
-            return new FreeformChallengeQuestion[size];
-        }
-    };
 }

@@ -11,12 +11,12 @@ import org.gem.indo.dooit.models.enums.BotMessageType;
  */
 
 public class Answer extends BaseBotModel {
+    protected String inlineEditHint;
     private String value;
     private String next;
     private String nextOnFinish;
     private String removeOnSelect;
     private String[] changeOnSelect;
-    protected String inlineEditHint;
     private String typeOnFinish;
 
     public Answer() {
@@ -52,6 +52,10 @@ public class Answer extends BaseBotModel {
         return removeOnSelect;
     }
 
+    public void setRemoveOnSelect(String removeOnSelect) {
+        this.removeOnSelect = removeOnSelect;
+    }
+
     public Pair<String, String> getChangeOnSelect() {
         if (changeOnSelect != null && changeOnSelect.length == 2)
             return new Pair<String, String>(changeOnSelect[0], changeOnSelect[1]);
@@ -60,10 +64,6 @@ public class Answer extends BaseBotModel {
 
     public String getInlineEditHint(Context context) {
         return getResourceString(context, inlineEditHint);
-    }
-
-    public void setRemoveOnSelect(String removeOnSelect) {
-        this.removeOnSelect = removeOnSelect;
     }
 
     public String getNextOnFinish() {

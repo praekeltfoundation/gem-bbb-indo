@@ -44,6 +44,8 @@ public class DooitManager {
     protected Retrofit retrofit;
     @Inject
     DooitSharedPreferences sharedPreferences;
+    @Inject
+    Persisted persisted;
     private Context context;
 
     public DooitManager(Application application) {
@@ -94,9 +96,6 @@ public class DooitManager {
                 )
                 .build();
     }
-
-    @Inject
-    Persisted persisted;
 
     protected Request.Builder addTokenToRequest(Request.Builder requestBuilder) {
         if (persisted.hasToken())

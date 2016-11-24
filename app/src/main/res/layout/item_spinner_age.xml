@@ -3,9 +3,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@android:id/text1"
     style="@style/AppTheme.SpinnerItem"
-    android:maxLines="1"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:ellipsize="marquee"
+    android:maxLines="1"
     android:textAlignment="inherit"
-    tools:text="18"/>
+    tools:text="18" />

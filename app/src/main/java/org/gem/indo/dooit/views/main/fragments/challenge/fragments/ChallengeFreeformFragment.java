@@ -42,12 +42,11 @@ public class ChallengeFreeformFragment extends Fragment {
     ChallengeManager challengeManager;
     @Inject
     Persisted persisted;
-    private FreeformChallenge challenge;
-    private FreeformChallengeQuestion question;
-
     @BindView(R.id.fragment_challenge_freeform_title) TextView title;
     @BindView(R.id.fragment_challenge_freeform_submission) EditText submissionBox;
     @BindView(R.id.fragment_challenge_freeform_submitbutton) Button submitButton;
+    private FreeformChallenge challenge;
+    private FreeformChallengeQuestion question;
 
     public ChallengeFreeformFragment() {
         // Required empty public constructor

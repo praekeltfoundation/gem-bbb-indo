@@ -35,8 +35,8 @@
             android:layout_below="@+id/activity_change_name_title"
             android:layout_marginTop="@dimen/registration_margin_vertical"
             android:text="@string/label_name"
-            android:textColor="@color/yellow"
             android:textAllCaps="true"
+            android:textColor="@color/yellow"
             android:textStyle="bold" />
 
         <EditText
@@ -48,7 +48,7 @@
             android:layout_below="@+id/activity_change_name_text_view"
             android:layout_marginTop="4dp"
             android:inputType="textPersonName"
-            tools:text="Aida"/>
+            tools:text="Aida" />
 
         <TextView
             android:id="@+id/activity_change_name_example_text_edit"
@@ -67,12 +67,12 @@
             style="@style/AppTheme.Button.Big.Yellow"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/activity_change_name_example_text_edit"
             android:layout_marginTop="100dp"
-            android:textSize="@dimen/k_font_xx_large"
             android:text="@string/label_change_name"
             android:textAllCaps="true"
-            android:layout_below="@+id/activity_change_name_example_text_edit"
-            android:layout_alignParentStart="true" />
+            android:textSize="@dimen/k_font_xx_large" />
 
     </RelativeLayout>
 </ScrollView>

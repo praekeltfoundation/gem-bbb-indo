@@ -166,6 +166,16 @@ public class TipViewHolder extends RecyclerView.ViewHolder {
         return isFavourite;
     }
 
+    public void setFavourite(boolean favourite) {
+        isFavourite = favourite;
+        // TODO: Proper checkable button
+        if (isFavourite) {
+            favView.setImageDrawable(ContextCompat.getDrawable(getContext(), org.gem.indo.dooit.R.drawable.ic_d_heart));
+        } else {
+            favView.setImageDrawable(ContextCompat.getDrawable(getContext(), org.gem.indo.dooit.R.drawable.ic_d_heart_inverted));
+        }
+    }
+
     public void clearTags() {
         tagsView.removeAllViews();
     }
@@ -177,15 +187,5 @@ public class TipViewHolder extends RecyclerView.ViewHolder {
                 return item.toUpperCase();
             }
         });
-    }
-
-    public void setFavourite(boolean favourite) {
-        isFavourite = favourite;
-        // TODO: Proper checkable button
-        if (isFavourite) {
-            favView.setImageDrawable(ContextCompat.getDrawable(getContext(), org.gem.indo.dooit.R.drawable.ic_d_heart));
-        } else {
-            favView.setImageDrawable(ContextCompat.getDrawable(getContext(), org.gem.indo.dooit.R.drawable.ic_d_heart_inverted));
-        }
     }
 }

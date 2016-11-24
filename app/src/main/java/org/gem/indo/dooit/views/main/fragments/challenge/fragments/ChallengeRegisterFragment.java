@@ -32,10 +32,6 @@ import butterknife.Unbinder;
  */
 public class ChallengeRegisterFragment extends Fragment {
     private static final String ARG_CHALLENGE = "challenge";
-
-    private BaseChallenge challenge;
-    private Unbinder unbinder = null;
-
     @BindView(R.id.fragment_chalenge_nested_bg)
     View background;
     @BindView(R.id.fragment_challenge_register_image)
@@ -52,6 +48,8 @@ public class ChallengeRegisterFragment extends Fragment {
     TextView tc;
     @BindView(R.id.fragment_challenge_register_button)
     Button register;
+    private BaseChallenge challenge;
+    private Unbinder unbinder = null;
 
     public ChallengeRegisterFragment() {
         // Required empty public constructor

@@ -61,16 +61,6 @@ public class ChallengeQuizFragment extends Fragment implements OnOptionChangeLis
     Persisted persisted;
     @Inject
     ChallengeManager challengeManager;
-    private QuizChallenge mChallenge;
-    private ChallengeQuizPagerAdapter mAdapter;
-    private QuizChallengeQuestion currentQuestion = null;
-    private QuizChallengeOption currentOption = null;
-    private List<ParticipantAnswer> answers = new ArrayList<ParticipantAnswer>();
-    private Unbinder unbinder = null;
-    private Set<OnOptionChangeListener> optionChangeListeners = new HashSet<>();
-    private Set<OnQuestionCompletedListener> questionCompletedListeners = new HashSet<>();
-    private Map<Long, QuestionState> selections = new HashMap<>();
-
     @BindView(R.id.fragment_chalenge_nested_bg)
     View mainBackground;
     @BindView(R.id.fragment_challenge_quiz_progressbar)
@@ -81,6 +71,15 @@ public class ChallengeQuizFragment extends Fragment implements OnOptionChangeLis
     ViewPager mPager;
     @BindView(R.id.fragment_challenge_quiz_checkbutton)
     Button checkButton;
+    private QuizChallenge mChallenge;
+    private ChallengeQuizPagerAdapter mAdapter;
+    private QuizChallengeQuestion currentQuestion = null;
+    private QuizChallengeOption currentOption = null;
+    private List<ParticipantAnswer> answers = new ArrayList<ParticipantAnswer>();
+    private Unbinder unbinder = null;
+    private Set<OnOptionChangeListener> optionChangeListeners = new HashSet<>();
+    private Set<OnQuestionCompletedListener> questionCompletedListeners = new HashSet<>();
+    private Map<Long, QuestionState> selections = new HashMap<>();
 
     public ChallengeQuizFragment() {
         // Required empty public constructor

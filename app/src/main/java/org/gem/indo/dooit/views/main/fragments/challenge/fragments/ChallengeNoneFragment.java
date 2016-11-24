@@ -21,12 +21,10 @@ import butterknife.Unbinder;
  */
 public class ChallengeNoneFragment extends Fragment {
     public static final String ARG_MESSAGE = "message";
-
-    private String message = null;
-    private Unbinder unbinder = null;
-
     @BindView(R.id.fragment_challenge_none_text)
     TextView messageText;
+    private String message = null;
+    private Unbinder unbinder = null;
 
     public ChallengeNoneFragment() {
         // Required empty public constructor

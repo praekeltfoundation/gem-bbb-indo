@@ -8,7 +8,7 @@
     <!-- Regular -->
 
     <style name="AppTheme.TextView.Regular" parent="AppTheme.TextView">
-      <!--  <item name="android:fontFamily">sans-serif</item>-->
+        <!--  <item name="android:fontFamily">sans-serif</item>-->
         <item name="android:textColor">@color/black</item>
         <item name="fontPath">fonts/Lato-Regular.ttf</item>
     </style>

@@ -40,6 +40,18 @@ public enum BotMessageType {
         this.value = value;
     }
 
+    public static BotMessageType getValueOf(int value) {
+        if (map != null && map.containsKey(value))
+            return map.get(value);
+        return UNDEFINED;
+    }
+
+    public static BotMessageType getValueOf(String name) {
+        if (TextUtils.isEmpty(name))
+            return UNDEFINED;
+        return valueOf(name.toUpperCase());
+    }
+
     public int getValue() {
         return value;
     }
@@ -51,17 +63,5 @@ public enum BotMessageType {
 
     public boolean equalsTo(int value) {
         return this.value == value;
-    }
-
-    public static BotMessageType getValueOf(int value) {
-        if (map != null && map.containsKey(value))
-            return map.get(value);
-        return UNDEFINED;
-    }
-
-    public static BotMessageType getValueOf(String name) {
-        if (TextUtils.isEmpty(name))
-            return UNDEFINED;
-        return valueOf(name.toUpperCase());
     }
 }

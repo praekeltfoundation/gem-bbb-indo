@@ -18,11 +18,10 @@ import butterknife.ButterKnife;
  */
 
 public class QuizOptionViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-    private QuizChallengeOption option;
-    private ChallengeQuizOptionsListAdapter adapter;
-
     @BindView(R.id.option_text) RadioButton radio;
     @BindView(R.id.option_background) LinearLayout optionBackground;
+    private QuizChallengeOption option;
+    private ChallengeQuizOptionsListAdapter adapter;
 
     public QuizOptionViewHolder(View itemView, ChallengeQuizOptionsListAdapter adapter) {
         super(itemView);
@@ -50,20 +49,20 @@ public class QuizOptionViewHolder extends RecyclerView.ViewHolder implements Vie
             return super.toString() + " '" + option.getText() + "'";
         }
 
+    public boolean isSelected() {
+        return itemView.isSelected();
+    }
+
     public void setSelected(boolean selected) {
         itemView.setSelected(selected);
         radio.setChecked(selected);
     }
 
-    public boolean isSelected() {
-        return itemView.isSelected();
+    public boolean isEnabled() {
+        return itemView.isEnabled();
     }
 
     public void setEnabled(boolean enabled) {
         itemView.setEnabled(enabled);
-    }
-
-    public boolean isEnabled() {
-        return itemView.isEnabled();
     }
 }

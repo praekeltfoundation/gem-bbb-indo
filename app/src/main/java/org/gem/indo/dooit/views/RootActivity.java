@@ -13,12 +13,12 @@ import javax.inject.Inject;
 
 public class RootActivity extends AppCompatActivity {
 
-    @Inject
-    Persisted persisted;
-
     static {
         AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
     }
+
+    @Inject
+    Persisted persisted;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -30,13 +30,13 @@ import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 public class DooitActivity extends AppCompatActivity {
 
-    @Inject
-    protected PermissionsHelper permissionsHelper;
-    ProgressDialog dialog;
-
     static {
         AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
     }
+
+    @Inject
+    protected PermissionsHelper permissionsHelper;
+    ProgressDialog dialog;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
