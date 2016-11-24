@@ -1,14 +1,9 @@
 package org.gem.indo.dooit.views.main.fragments.challenge.fragments;
 
 import android.content.DialogInterface;
-import android.graphics.drawable.Drawable;
-import android.graphics.drawable.LayerDrawable;
-import android.graphics.drawable.ShapeDrawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v4.content.ContextCompat;
-import android.support.v4.graphics.drawable.DrawableCompat;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -25,7 +20,7 @@ import org.gem.indo.dooit.api.DooitAPIError;
 import org.gem.indo.dooit.api.DooitErrorHandler;
 import org.gem.indo.dooit.api.managers.ChallengeManager;
 import org.gem.indo.dooit.helpers.Persisted;
-import org.gem.indo.dooit.helpers.TilingDrawable;
+import org.gem.indo.dooit.helpers.SquiggleBackgroundHelper;
 import org.gem.indo.dooit.models.challenge.ParticipantAnswer;
 import org.gem.indo.dooit.models.challenge.QuizChallenge;
 import org.gem.indo.dooit.models.challenge.QuizChallengeEntry;
@@ -121,13 +116,7 @@ public class ChallengeQuizFragment extends Fragment implements OnOptionChangeLis
         // Inflate the layout for this fragment
         View view = inflater.inflate(org.gem.indo.dooit.R.layout.fragment_challenge_quiz, container, false);
         unbinder = ButterKnife.bind(this, view);
-        ShapeDrawable back = new ShapeDrawable();
-        back.getPaint().setColor(ContextCompat.getColor(getContext(), R.color.grey_back));
-        Drawable fore = ContextCompat.getDrawable(getContext(), R.drawable.bkg_clipped);
-        DrawableCompat.setTint(fore, ContextCompat.getColor(getContext(), R.color.grey_fore));
-        LayerDrawable layers = new LayerDrawable(new Drawable[]{back, fore});
-        TilingDrawable tiled = new TilingDrawable(layers);
-        background.setBackground(tiled);
+        SquiggleBackgroundHelper.setBackground(getContext(), R.color.grey_back, R.color.grey_fore, background);
         mPager.setAdapter(mAdapter);
         updateProgressCounter(0);
         return view;

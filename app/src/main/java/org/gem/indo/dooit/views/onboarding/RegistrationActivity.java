@@ -2,14 +2,9 @@ package org.gem.indo.dooit.views.onboarding;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.drawable.Drawable;
-import android.graphics.drawable.LayerDrawable;
-import android.graphics.drawable.ShapeDrawable;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
-import android.support.v4.content.ContextCompat;
 import android.support.v4.content.res.ResourcesCompat;
-import android.support.v4.graphics.drawable.DrawableCompat;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.TextUtils;
@@ -31,7 +26,7 @@ import org.gem.indo.dooit.api.managers.AuthenticationManager;
 import org.gem.indo.dooit.api.responses.AuthenticationResponse;
 import org.gem.indo.dooit.api.responses.OnboardingResponse;
 import org.gem.indo.dooit.helpers.Persisted;
-import org.gem.indo.dooit.helpers.TilingDrawable;
+import org.gem.indo.dooit.helpers.SquiggleBackgroundHelper;
 import org.gem.indo.dooit.models.Profile;
 import org.gem.indo.dooit.models.User;
 import org.gem.indo.dooit.views.DooitActivity;
@@ -60,7 +55,7 @@ public class RegistrationActivity extends DooitActivity {
     @BindView(R.id.activity_registration)
     View background;
     
-    @BindView(R.id.activity_registration_t_c_text_view)
+    @BindView(org.gem.indo.dooit.R.id.activity_registration_t_c_text_view)
     TextView textViewTC;
 
     @BindView(R.id.activity_registration_login_text_view)
@@ -129,13 +124,7 @@ public class RegistrationActivity extends DooitActivity {
         }
         textViewTC.setText(spanTc);
         textViewLogin.setText(spanLogin);
-        ShapeDrawable back = new ShapeDrawable();
-        back.getPaint().setColor(ContextCompat.getColor(this, R.color.purple));
-        Drawable fore = ContextCompat.getDrawable(this, R.drawable.bkg_clipped);
-        DrawableCompat.setTint(fore, ContextCompat.getColor(this, R.color.purple_light));
-        LayerDrawable layers = new LayerDrawable(new Drawable[]{back, fore});
-        TilingDrawable tiled = new TilingDrawable(layers);
-        background.setBackground(tiled);
+        SquiggleBackgroundHelper.setBackground(this, R.color.purple, R.color.purple_light, background);
     }
 
     @OnClick(R.id.activity_registration_t_c_text_view)

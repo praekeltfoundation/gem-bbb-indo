@@ -1,13 +1,8 @@
 package org.gem.indo.dooit.views.main.fragments.challenge.fragments;
 
-import android.graphics.drawable.Drawable;
-import android.graphics.drawable.LayerDrawable;
-import android.graphics.drawable.ShapeDrawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v4.content.ContextCompat;
-import android.support.v4.graphics.drawable.DrawableCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,7 +12,7 @@ import android.widget.TextView;
 import com.facebook.drawee.view.SimpleDraweeView;
 
 import org.gem.indo.dooit.R;
-import org.gem.indo.dooit.helpers.TilingDrawable;
+import org.gem.indo.dooit.helpers.SquiggleBackgroundHelper;
 import org.gem.indo.dooit.models.challenge.BaseChallenge;
 import org.gem.indo.dooit.models.challenge.FreeformChallenge;
 import org.gem.indo.dooit.models.challenge.QuizChallenge;
@@ -95,13 +90,7 @@ public class ChallengeRegisterFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(org.gem.indo.dooit.R.layout.fragment_challenge_register, container, false);
         unbinder = ButterKnife.bind(this, view);
-        ShapeDrawable back = new ShapeDrawable();
-        back.getPaint().setColor(ContextCompat.getColor(getContext(), R.color.grey_back));
-        Drawable fore = ContextCompat.getDrawable(getContext(), R.drawable.bkg_clipped);
-        DrawableCompat.setTint(fore, ContextCompat.getColor(getContext(), R.color.grey_fore));
-        LayerDrawable layers = new LayerDrawable(new Drawable[]{back, fore});
-        TilingDrawable tiled = new TilingDrawable(layers);
-        background.setBackground(tiled);
+        SquiggleBackgroundHelper.setBackground(getContext(), R.color.grey_back, R.color.grey_fore, background);
         return view;
     }
 
