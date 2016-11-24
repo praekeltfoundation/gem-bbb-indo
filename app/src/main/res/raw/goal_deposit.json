@@ -27,7 +27,7 @@
     "answers": [
       {
         "name": "askDepositAddAmount",
-        "text": "$(askDepositAddAmount)",
+        "text": "$(addAmount)",
         "next": "askDepositAmount"
       }
     ]
@@ -35,6 +35,7 @@
   {
     "name": "askDepositAmount",
     "type": "blank",
+    "autoAnswer": "depositAmount",
     "answers": [
       {
         "name": "depositAmount",

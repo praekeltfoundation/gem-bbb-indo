@@ -102,6 +102,7 @@
     <string name="depositIntroduction">Let\'s add your savings!</string>
     <string name="depositReminder">Remember you have to save %1$s each week to reach %2$s by %3$s.</string>
     <string name="depositRemainder">That is %1$s weeks and %2$s days from now.</string>
+    <string name="depositEnd">Well done! You\'re getting closer to your goal.</string>
 
     <!--Buttons-->
     <string name="Skip">Skip</string>
