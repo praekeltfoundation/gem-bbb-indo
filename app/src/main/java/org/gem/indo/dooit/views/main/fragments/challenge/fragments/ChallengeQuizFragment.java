@@ -162,7 +162,7 @@ public class ChallengeQuizFragment extends Fragment implements OnOptionChangeLis
             });
         } else {
             captureAnswer(currentQuestion, currentOption);
-            lightbox = ChallengeSuccessLightboxFragment.newInstance(false);
+            lightbox = ChallengeSuccessLightboxFragment.newInstance(false, currentQuestion.getHint());
         }
         lightbox.show(getActivity().getSupportFragmentManager(), "challenge_lightbox");
     }
