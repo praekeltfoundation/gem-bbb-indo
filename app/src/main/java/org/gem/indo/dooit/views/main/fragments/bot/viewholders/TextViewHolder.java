@@ -11,6 +11,7 @@ import org.gem.indo.dooit.helpers.Persisted;
 import org.gem.indo.dooit.models.bot.Answer;
 import org.gem.indo.dooit.models.bot.BaseBotModel;
 import org.gem.indo.dooit.models.bot.Node;
+import org.gem.indo.dooit.views.helpers.activity.CurrencyHelper;
 import org.gem.indo.dooit.views.main.fragments.bot.adapters.BotAdapter;
 
 import javax.inject.Inject;
@@ -53,6 +54,8 @@ public class TextViewHolder extends BaseBotViewHolder<Node> {
                 params[i] = persisted.getCurrentUser().getFirstName();
             } else if ("LASTNAME".equals(param)) {
                 params[i] = persisted.getCurrentUser().getLastName();
+            } else if ("LOCAL_CURRENCY".equals(param)) {
+                params[i] = CurrencyHelper.getCurrencyString();
             } else {
                 for (BaseBotModel baseBotModel : botAdapter.getDataSet()) {
                     if (baseBotModel.getClassType().equals(Answer.class.toString())

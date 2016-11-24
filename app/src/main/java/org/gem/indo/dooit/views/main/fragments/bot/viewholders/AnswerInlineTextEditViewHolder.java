@@ -4,12 +4,13 @@ import android.content.Context;
 import android.text.InputType;
 import android.view.KeyEvent;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.TextView;
 
 import com.greenfrvr.hashtagview.HashtagView;
-import org.gem.indo.dooit.R;
 
+import org.gem.indo.dooit.R;
 import org.gem.indo.dooit.models.bot.Answer;
 import org.gem.indo.dooit.models.enums.BotMessageType;
 import org.gem.indo.dooit.views.main.fragments.bot.adapters.BotAdapter;
@@ -38,8 +39,8 @@ public class AnswerInlineTextEditViewHolder extends BaseBotViewHolder<Answer> {
     public void populate(Answer model) {
         this.dataModel = model;
         editText.setHint(dataModel.getInlineEditHint(getContext()));
-        editText.setImeActionLabel("Done", KeyEvent.KEYCODE_ENTER);
-        editText.setInputType(InputType.TYPE_CLASS_TEXT);
+        editText.setImeActionLabel("Done", EditorInfo.IME_ACTION_DONE);
+        editText.setInputType(InputType.TYPE_TEXT_FLAG_CAP_SENTENCES);
         if (botAdapter.getItemCount() - 1 == getAdapterPosition()) {
             showKeyboard(editText);
         }
@@ -48,7 +49,7 @@ public class AnswerInlineTextEditViewHolder extends BaseBotViewHolder<Answer> {
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
 //                if (EditorInfo.IME_ACTION_DONE == actionId) {
                 // TODO: `Done` on keyboard still sends 66 (KeyEvent.KEYCODE_ENTER)
-                if (KeyEvent.KEYCODE_ENTER == actionId) {
+                if (EditorInfo.IME_ACTION_DONE == actionId) {
                     dismissKeyboard(editText);
                     Answer inputAnswer = new Answer();
                     inputAnswer.setValue(v.getText().toString());

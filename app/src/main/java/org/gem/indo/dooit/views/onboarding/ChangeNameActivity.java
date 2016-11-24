@@ -51,7 +51,7 @@ public class ChangeNameActivity extends DooitActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(org.gem.indo.dooit.R.layout.activity_omboarding_change_name);
+        setContentView(org.gem.indo.dooit.R.layout.activity_onboarding_change_name);
         ((DooitApplication) getApplication()).component.inject(this);
         ButterKnife.bind(this);
     }

@@ -90,7 +90,7 @@ public class AnswerImageSelectViewHolder extends BaseBotViewHolder<Answer> {
             }
         });
         if (botAdapter.getItemCount() - 1 == getAdapterPosition()) {
-            permissionsHelper.askForPermission((Activity) getContext(), PermissionsHelper.D_READ_EXTERNAL_STORAGE, new PermissionCallback() {
+            permissionsHelper.askForPermission((Activity) getContext(), new String[] {PermissionsHelper.D_READ_EXTERNAL_STORAGE, PermissionsHelper.D_CAMERA}, new PermissionCallback() {
                 @Override
                 public void permissionGranted() {
                     selectView.performClick();

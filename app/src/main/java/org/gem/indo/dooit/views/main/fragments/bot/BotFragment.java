@@ -15,6 +15,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.greenfrvr.hashtagview.HashtagView;
+
 import org.gem.indo.dooit.DooitApplication;
 import org.gem.indo.dooit.helpers.Persisted;
 import org.gem.indo.dooit.helpers.bot.BotFeed;
@@ -141,7 +142,12 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
             if (data.size() > 0) {
                 getBotAdapter().clear();
                 getBotAdapter().addItems(data);
-                conversationRecyclerView.scrollToPosition(getBotAdapter().getItemCount() - 1);
+                conversationRecyclerView.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        conversationRecyclerView.scrollToPosition(getBotAdapter().getItemCount() - 1);
+                    }
+                }, 100);
                 BaseBotModel m = data.get(data.size() - 1);
                 if (m instanceof Node)
                     addAnswerOptions((Node) data.get(data.size() - 1));

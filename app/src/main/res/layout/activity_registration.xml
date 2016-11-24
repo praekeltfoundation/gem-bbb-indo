@@ -35,8 +35,8 @@
             android:layout_below="@+id/activity_change_name_title"
             android:layout_marginTop="@dimen/registration_margin_vertical"
             android:text="@string/label_name"
-            android:textColor="@color/yellow"
             android:textAllCaps="true"
+            android:textColor="@color/yellow"
             android:textStyle="bold" />
 
         <EditText
@@ -48,7 +48,7 @@
             android:layout_below="@+id/activity_registration_name_text_view"
             android:layout_marginTop="4dp"
             android:inputType="textPersonName"
-            tools:text="Aida"/>
+            tools:text="Aida" />
 
         <TextView
             android:id="@+id/activity_registration_name_example_text_edit"
@@ -71,8 +71,8 @@
             android:layout_below="@+id/activity_registration_name_example_text_edit"
             android:layout_marginTop="@dimen/registration_field_margin_vertical"
             android:text="@string/reg_age"
-            android:textColor="@color/yellow"
             android:textAllCaps="true"
+            android:textColor="@color/yellow"
             android:textStyle="bold" />
 
         <Spinner
@@ -80,11 +80,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/activity_registration_age_text_view"
-            android:spinnerMode="dialog"
             android:layout_marginTop="4dp"
             android:background="@drawable/bkg_edit_view"
-            tools:listitem="@layout/item_spinner_age"
-            />
+            android:spinnerMode="dialog"
+            tools:listitem="@layout/item_spinner_age" />
 
         <TextView
             android:id="@+id/activity_registration_age_example_text_view"
@@ -106,8 +105,8 @@
             android:layout_below="@+id/activity_registration_age_example_text_view"
             android:layout_marginTop="@dimen/registration_field_margin_vertical"
             android:text="@string/reg_gender"
-            android:textColor="@color/yellow"
             android:textAllCaps="true"
+            android:textColor="@color/yellow"
             android:textStyle="bold" />
 
         <RadioGroup
@@ -119,28 +118,29 @@
             android:orientation="horizontal"
             tools:checkedButton="@id/activity_registration_gender_girl">
 
-            <android.support.v7.widget.AppCompatRadioButton
+            <RadioButton
                 android:id="@+id/activity_registration_gender_girl"
                 fontPath="fonts/LondrinaSolid-Regular.ttf"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:button="@drawable/bkg_radio_box"
+                android:paddingStart="8dp"
                 android:text="@string/reg_gender_girl"
                 android:textAppearance="@style/AppTheme.TextView.Regular.ExtraLarge"
-                android:textColor="@color/white"
-                android:button="@drawable/bkg_radio_box"/>
+                android:textColor="@color/white" />
 
-            <android.support.v7.widget.AppCompatRadioButton
+            <RadioButton
                 android:id="@+id/activity_registration_gender_boy"
                 fontPath="fonts/LondrinaSolid-Regular.ttf"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:button="@drawable/bkg_radio_box"
+                android:paddingStart="8dp"
                 android:text="@string/reg_gender_boy"
                 android:textAppearance="@style/AppTheme.TextView.Regular.ExtraLarge"
-                android:textColor="@color/white"
-                android:button="@drawable/bkg_radio_box"
-                />
+                android:textColor="@color/white" />
 
         </RadioGroup>
 
@@ -153,8 +153,8 @@
             android:layout_below="@id/activity_registration_gender_radiogroup"
             android:layout_marginTop="@dimen/registration_field_margin_vertical"
             android:text="@string/label_mobile_number"
-            android:textColor="@color/yellow"
             android:textAllCaps="true"
+            android:textColor="@color/yellow"
             android:textStyle="bold" />
 
         <EditText
@@ -166,7 +166,7 @@
             android:layout_below="@+id/activity_registration_number_text_view"
             android:layout_marginTop="4dp"
             android:inputType="text"
-            tools:text="+110002223"/>
+            tools:text="+110002223" />
 
         <TextView
             android:id="@+id/activity_registration_number_example_text_edit"
@@ -188,8 +188,8 @@
             android:layout_below="@+id/activity_registration_number_example_text_edit"
             android:layout_marginTop="@dimen/registration_field_margin_vertical"
             android:text="@string/label_password"
-            android:textColor="@color/yellow"
             android:textAllCaps="true"
+            android:textColor="@color/yellow"
             android:textStyle="bold" />
 
         <EditText
@@ -201,7 +201,7 @@
             android:layout_below="@+id/activity_registration_password_text_view"
             android:layout_marginTop="4dp"
             android:inputType="textPassword"
-            tools:text="qwertyuiop"/>
+            tools:text="qwertyuiop" />
 
         <TextView
             android:id="@+id/activity_registration_password_example_text_edit"
