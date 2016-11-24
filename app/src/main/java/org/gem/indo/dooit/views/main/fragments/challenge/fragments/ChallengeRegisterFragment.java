@@ -37,9 +37,6 @@ import butterknife.Unbinder;
 public class ChallengeRegisterFragment extends Fragment {
     private static final String ARG_CHALLENGE = "challenge";
 
-    private BaseChallenge challenge;
-    private Unbinder unbinder = null;
-
     @BindView(R.id.fragment_challenge_container)
     View background;
 
@@ -63,6 +60,7 @@ public class ChallengeRegisterFragment extends Fragment {
 
     @BindView(R.id.fragment_challenge_register_button)
     Button register;
+
     private BaseChallenge challenge;
     private Unbinder unbinder = null;
 
@@ -128,7 +126,7 @@ public class ChallengeRegisterFragment extends Fragment {
             return ChallengeNoneFragment.newInstance(getString(org.gem.indo.dooit.R.string.challenge_quiz_no_questions));
         }
 
-        for (QuizChallengeQuestion q: quizChallenge.getQuestions()) {
+        for (QuizChallengeQuestion q : quizChallenge.getQuestions()) {
             // check for empty question or empty list of options for question
             if (q.getText() == null || q.getText().length() <= 0) {
                 return ChallengeNoneFragment.newInstance(getString(org.gem.indo.dooit.R.string.challenge_quiz_no_questions));
@@ -138,7 +136,7 @@ public class ChallengeRegisterFragment extends Fragment {
 
             // check whether any options are empty or none of the question's options are correct
             boolean hasCorrect = false;
-            for (QuizChallengeOption o: q.getOptions()) {
+            for (QuizChallengeOption o : q.getOptions()) {
                 if (o.getText() == null || o.getText().length() <= 0) {
                     return ChallengeNoneFragment.newInstance(getString(org.gem.indo.dooit.R.string.challenge_quiz_empty_option));
                 }

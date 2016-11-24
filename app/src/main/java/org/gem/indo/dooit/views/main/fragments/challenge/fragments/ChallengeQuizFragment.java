@@ -66,14 +66,14 @@ public class ChallengeQuizFragment extends Fragment implements OnOptionChangeLis
     @Inject
     ChallengeManager challengeManager;
     @BindView(R.id.fragment_chalenge_nested_bg)
-    View mainBackground;
+    View background;
     @BindView(R.id.fragment_challenge_quiz_progressbar)
     ProgressBar mProgressBar;
-    @BindView(R.id.fragment_challenge_quiz_progresscounter)
+    @BindView(org.gem.indo.dooit.R.id.fragment_challenge_quiz_progresscounter)
     TextView mProgressCounter;
-    @BindView(R.id.fragment_challenge_quiz_pager)
+    @BindView(org.gem.indo.dooit.R.id.fragment_challenge_quiz_pager)
     ViewPager mPager;
-    @BindView(R.id.fragment_challenge_quiz_checkbutton)
+    @BindView(org.gem.indo.dooit.R.id.fragment_challenge_quiz_checkbutton)
     Button checkButton;
     private QuizChallenge mChallenge;
     private ChallengeQuizPagerAdapter mAdapter;
@@ -84,17 +84,6 @@ public class ChallengeQuizFragment extends Fragment implements OnOptionChangeLis
     private Set<OnOptionChangeListener> optionChangeListeners = new HashSet<>();
     private Set<OnQuestionCompletedListener> questionCompletedListeners = new HashSet<>();
     private Map<Long, QuestionState> selections = new HashMap<>();
-
-    @BindView(R.id.fragment_chalenge_nested_bg)
-    View background;
-    @BindView(R.id.fragment_challenge_quiz_progressbar)
-    ProgressBar mProgressBar;
-    @BindView(org.gem.indo.dooit.R.id.fragment_challenge_quiz_progresscounter)
-    TextView mProgressCounter;
-    @BindView(org.gem.indo.dooit.R.id.fragment_challenge_quiz_pager)
-    ViewPager mPager;
-    @BindView(org.gem.indo.dooit.R.id.fragment_challenge_quiz_checkbutton)
-    Button checkButton;
 
     public ChallengeQuizFragment() {
         // Required empty public constructor
