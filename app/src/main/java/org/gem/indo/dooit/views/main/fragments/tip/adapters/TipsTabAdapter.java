@@ -4,6 +4,7 @@ import android.content.Context;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
+import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -79,6 +80,7 @@ public class TipsTabAdapter extends FragmentStatePagerAdapter {
 
         TipsViewPagerPositions pos = TipsViewPagerPositions.getValueOf(position);
         TextView textView = (TextView) view.findViewById(R.id.tab_tip_textview);
+        textView.setTextColor(ContextCompat.getColorStateList(context, R.color.tab_tips_text));
 
         textView.setText(context.getString(pos.getTitleRes()));
         return view;
