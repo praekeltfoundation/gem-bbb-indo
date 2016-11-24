@@ -14,6 +14,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import org.gem.indo.dooit.DooitApplication;
+import org.gem.indo.dooit.R;
 import org.gem.indo.dooit.api.DooitAPIError;
 import org.gem.indo.dooit.api.DooitErrorHandler;
 import org.gem.indo.dooit.api.managers.ChallengeManager;
@@ -41,10 +42,10 @@ public class ChallengeFragment extends Fragment {
     @Inject
     Persisted persisted;
 
-    @BindView(org.gem.indo.dooit.R.id.fragment_challenge_loadingprogress)
+    @BindView(R.id.fragment_challenge_loadingprogress)
     ProgressBar progressBar;
 
-    @BindView(org.gem.indo.dooit.R.id.fragment_challenge_loadingtext)
+    @BindView(R.id.fragment_challenge_loadingtext)
     TextView progressText;
 
     BaseChallenge challenge;
@@ -112,19 +113,19 @@ public class ChallengeFragment extends Fragment {
                             challenge = challenges.get(0);
                             persisted.setActiveChallenge(challenge);
 
-                            if (getActivity().findViewById(org.gem.indo.dooit.R.id.fragment_challenge_container) != null) {
+                            if (getActivity().findViewById(R.id.fragment_challenge_container) != null) {
                                 FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
                                 Fragment fragment = ChallengeRegisterFragment.newInstance();
                                 Bundle args = new Bundle();
                                 args.putParcelable("challenge", challenge);
                                 fragment.setArguments(args);
-                                ft.replace(org.gem.indo.dooit.R.id.fragment_challenge_container, fragment, "fragment_challenge");
+                                ft.replace(R.id.fragment_challenge_container, fragment, "fragment_challenge");
                                 ft.commit();
                             }
                         } else {
                             FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
                             Fragment fragment = ChallengeNoneFragment.newInstance();
-                            ft.replace(org.gem.indo.dooit.R.id.fragment_challenge_container, fragment);
+                            ft.replace(R.id.fragment_challenge_container, fragment);
                             ft.commit();
                         }
                         getActivity().runOnUiThread(new Runnable() {

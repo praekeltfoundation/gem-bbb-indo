@@ -17,6 +17,8 @@ import android.support.v7.app.AlertDialog;
 
 public class Utils {
 
+    public static final int MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE = 123;
+
     public static float dpTopx(Resources resources, float dp) {
         final float scale = resources.getDisplayMetrics().density;
         return  dp * scale + 0.5f;
@@ -26,8 +28,6 @@ public class Utils {
         final float scale = resources.getDisplayMetrics().scaledDensity;
         return sp * scale;
     }
-
-    public static final int MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE = 123;
 
     //@TargetApi(Build.VERSION_CODES.JELLY_BEAN)
     public static boolean checkExternalStoragePermission(final Context context)

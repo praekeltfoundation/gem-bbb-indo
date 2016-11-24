@@ -13,6 +13,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import org.gem.indo.dooit.DooitApplication;
+import org.gem.indo.dooit.R;
 import org.gem.indo.dooit.api.DooitAPIError;
 import org.gem.indo.dooit.api.DooitErrorHandler;
 import org.gem.indo.dooit.api.managers.ChallengeManager;
@@ -41,12 +42,11 @@ public class ChallengeFreeformFragment extends Fragment {
     ChallengeManager challengeManager;
     @Inject
     Persisted persisted;
+    @BindView(R.id.fragment_challenge_freeform_title) TextView title;
+    @BindView(R.id.fragment_challenge_freeform_submission) EditText submissionBox;
+    @BindView(R.id.fragment_challenge_freeform_submitbutton) Button submitButton;
     private FreeformChallenge challenge;
     private FreeformChallengeQuestion question;
-
-    @BindView(org.gem.indo.dooit.R.id.fragment_challenge_freeform_title) TextView title;
-    @BindView(org.gem.indo.dooit.R.id.fragment_challenge_freeform_submission) EditText submissionBox;
-    @BindView(org.gem.indo.dooit.R.id.fragment_challenge_freeform_submitbutton) Button submitButton;
 
     public ChallengeFreeformFragment() {
         // Required empty public constructor
@@ -132,13 +132,13 @@ public class ChallengeFreeformFragment extends Fragment {
         });
     }
 
-    @OnClick(org.gem.indo.dooit.R.id.fragment_challenge_freeform_submitbutton)
+    @OnClick(R.id.fragment_challenge_freeform_submitbutton)
     public void submitFreeformAnswer() {
         Toast.makeText(getContext(), org.gem.indo.dooit.R.string.challenge_freeform_submit, Toast.LENGTH_SHORT).show();
         submitAnswer(submissionBox.getText().toString());
         FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
         Fragment fragment = ChallengeNoneFragment.newInstance();
-        ft.replace(org.gem.indo.dooit.R.id.fragment_challenge_container, fragment);
+        ft.replace(R.id.fragment_challenge_container, fragment);
         ft.commit();
     }
 }

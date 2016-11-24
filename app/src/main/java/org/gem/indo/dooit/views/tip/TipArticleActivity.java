@@ -9,6 +9,7 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
 import org.gem.indo.dooit.DooitApplication;
+import org.gem.indo.dooit.R;
 import org.gem.indo.dooit.views.DooitActivity;
 import org.gem.indo.dooit.views.helpers.activity.DooitActivityBuilder;
 
@@ -19,7 +20,7 @@ public class TipArticleActivity extends DooitActivity {
 
     public static final String ARTICLE_URL = "articleUrl";
 
-    @BindView(org.gem.indo.dooit.R.id.activity_tip_article_web_view)
+    @BindView(R.id.activity_tip_article_web_view)
     WebView webView;
 
     @Override

@@ -9,6 +9,7 @@ import android.widget.EditText;
 
 import com.greenfrvr.hashtagview.HashtagView;
 
+import org.gem.indo.dooit.R;
 import org.gem.indo.dooit.models.bot.Answer;
 import org.gem.indo.dooit.models.enums.BotMessageType;
 import org.gem.indo.dooit.views.custom.DatePickerFragment;
@@ -27,7 +28,7 @@ import butterknife.ButterKnife;
  */
 
 public class AnswerInlineDateEditViewHolder extends BaseBotViewHolder<Answer> {
-    @BindView(org.gem.indo.dooit.R.id.item_view_bot_inline_edit_view)
+    @BindView(R.id.item_view_bot_inline_edit_view)
     EditText editText;
     BotAdapter botAdapter;
     HashtagView.TagsClickListener tagsClickListener;

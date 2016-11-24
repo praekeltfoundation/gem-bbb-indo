@@ -1,6 +1,7 @@
 package org.gem.indo.dooit.api.serializers;
 
 import com.google.gson.TypeAdapterFactory;
+
 import org.gem.indo.dooit.adapter.RuntimeTypeAdapterFactory;
 import org.gem.indo.dooit.models.challenge.BaseChallenge;
 import org.gem.indo.dooit.models.challenge.FreeformChallenge;

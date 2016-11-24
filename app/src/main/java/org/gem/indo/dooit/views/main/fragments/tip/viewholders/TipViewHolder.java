@@ -12,7 +12,9 @@ import android.widget.Toast;
 
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.greenfrvr.hashtagview.HashtagView;
+
 import org.gem.indo.dooit.DooitApplication;
+import org.gem.indo.dooit.R;
 import org.gem.indo.dooit.api.DooitAPIError;
 import org.gem.indo.dooit.api.DooitErrorHandler;
 import org.gem.indo.dooit.api.managers.TipManager;
@@ -44,19 +46,19 @@ public class TipViewHolder extends RecyclerView.ViewHolder {
     @BindString(org.gem.indo.dooit.R.string.tips_article_add_fav)
     String addFavArticleText;
 
-    @BindView(org.gem.indo.dooit.R.id.card_tip_image)
+    @BindView(R.id.card_tip_image)
     SimpleDraweeView imageView;
 
-    @BindView(org.gem.indo.dooit.R.id.card_tip_tags_view)
+    @BindView(R.id.card_tip_tags_view)
     HashtagView tagsView;
 
-    @BindView(org.gem.indo.dooit.R.id.card_tip_title)
+    @BindView(R.id.card_tip_title)
     TextView titleView;
 
-    @BindView(org.gem.indo.dooit.R.id.card_tip_fav)
+    @BindView(R.id.card_tip_fav)
     ImageView favView;
 
-    @BindView(org.gem.indo.dooit.R.id.card_tip_share)
+    @BindView(R.id.card_tip_share)
     ImageView shareView;
 
     @Inject
@@ -80,7 +82,7 @@ public class TipViewHolder extends RecyclerView.ViewHolder {
         return itemView.getContext();
     }
 
-    @OnClick(org.gem.indo.dooit.R.id.card_tip_title)
+    @OnClick(R.id.card_tip_title)
     public void startArticle(View view) {
         Toast.makeText(view.getContext(),
                 String.format(openingArticleText, titleView.getText().toString()),
@@ -90,7 +92,7 @@ public class TipViewHolder extends RecyclerView.ViewHolder {
                 .startActivity();
     }
 
-    @OnClick(org.gem.indo.dooit.R.id.card_tip_fav)
+    @OnClick(R.id.card_tip_fav)
     public void favouriteTip(final View view) {
         if (isFavourite) {
             tipManager.unfavourite(id, new DooitErrorHandler() {
@@ -135,7 +137,7 @@ public class TipViewHolder extends RecyclerView.ViewHolder {
         }
     }
 
-    @OnClick(org.gem.indo.dooit.R.id.card_tip_share)
+    @OnClick(R.id.card_tip_share)
     public void shareTip(View view) {
 
     }
@@ -164,6 +166,16 @@ public class TipViewHolder extends RecyclerView.ViewHolder {
         return isFavourite;
     }
 
+    public void setFavourite(boolean favourite) {
+        isFavourite = favourite;
+        // TODO: Proper checkable button
+        if (isFavourite) {
+            favView.setImageDrawable(ContextCompat.getDrawable(getContext(), org.gem.indo.dooit.R.drawable.ic_d_heart));
+        } else {
+            favView.setImageDrawable(ContextCompat.getDrawable(getContext(), org.gem.indo.dooit.R.drawable.ic_d_heart_inverted));
+        }
+    }
+
     public void clearTags() {
         tagsView.removeAllViews();
     }
@@ -175,15 +187,5 @@ public class TipViewHolder extends RecyclerView.ViewHolder {
                 return item.toUpperCase();
             }
         });
-    }
-
-    public void setFavourite(boolean favourite) {
-        isFavourite = favourite;
-        // TODO: Proper checkable button
-        if (isFavourite) {
-            favView.setImageDrawable(ContextCompat.getDrawable(getContext(), org.gem.indo.dooit.R.drawable.ic_d_heart));
-        } else {
-            favView.setImageDrawable(ContextCompat.getDrawable(getContext(), org.gem.indo.dooit.R.drawable.ic_d_heart_inverted));
-        }
     }
 }

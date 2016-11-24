@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.greenfrvr.hashtagview.HashtagView;
 
+import org.gem.indo.dooit.R;
 import org.gem.indo.dooit.models.bot.Answer;
 import org.gem.indo.dooit.models.enums.BotMessageType;
 import org.gem.indo.dooit.views.helpers.activity.CurrencyHelper;
@@ -23,10 +24,10 @@ import butterknife.ButterKnife;
  */
 
 public class AnswerInlineNumberEditViewHolder extends BaseBotViewHolder<Answer> {
-    @BindView(org.gem.indo.dooit.R.id.item_view_bot_inline_edit_view)
+    @BindView(R.id.item_view_bot_inline_edit_view)
     EditText editText;
 
-    @BindView(org.gem.indo.dooit.R.id.item_view_bot_inline_edit_currency_view)
+    @BindView(R.id.item_view_bot_inline_edit_currency_view)
     TextView textViewCurrency;
 
     BotAdapter botAdapter;

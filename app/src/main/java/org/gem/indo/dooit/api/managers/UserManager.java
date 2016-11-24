@@ -5,9 +5,9 @@ import android.app.Application;
 import org.gem.indo.dooit.api.DooitErrorHandler;
 import org.gem.indo.dooit.api.interfaces.UserAPI;
 import org.gem.indo.dooit.api.requests.ChangePassword;
+import org.gem.indo.dooit.api.requests.ChangeUser;
 import org.gem.indo.dooit.api.responses.EmptyResponse;
 import org.gem.indo.dooit.models.User;
-import org.gem.indo.dooit.api.requests.ChangeUser;
 
 import javax.inject.Inject;
 

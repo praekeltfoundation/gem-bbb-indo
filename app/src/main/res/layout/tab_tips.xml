@@ -11,7 +11,7 @@
         android:layout_centerInParent="true"
         android:text="@string/tips_tab_all"
         android:textAlignment="center"
-        android:textAppearance="@style/AppTheme.TextView.Regular.ExtraLarge"
-        android:textAllCaps="true"/>
+        android:textAllCaps="true"
+        android:textAppearance="@style/AppTheme.TextView.Regular.ExtraLarge" />
 
 </RelativeLayout>

@@ -13,24 +13,24 @@ import java.util.List;
  */
 
 public class QuizChallenge extends BaseChallenge {
+    @SuppressWarnings("unused")
+    public static final Parcelable.Creator<QuizChallenge> CREATOR = new Parcelable.Creator<QuizChallenge>() {
+        @Override
+        public QuizChallenge createFromParcel(Parcel in) {
+            return new QuizChallenge(in);
+        }
+
+        @Override
+        public QuizChallenge[] newArray(int size) {
+            return new QuizChallenge[size];
+        }
+    };
     List<QuizChallengeQuestion> questions = new ArrayList<>();
 
     QuizChallenge() {
         // Mandatory empty constructor
         super();
         this.type = ChallengeType.QUIZ;
-    }
-
-    public List<QuizChallengeQuestion> getQuestions() {
-        return questions;
-    }
-
-    public int numQuestions() {
-        return questions == null ? 0 : questions.size();
-    }
-
-    public void setQuestions(List<QuizChallengeQuestion> questions) {
-        this.questions = questions;
     }
 
     protected QuizChallenge(Parcel in) {
@@ -41,6 +41,18 @@ public class QuizChallenge extends BaseChallenge {
         } else {
             questions = null;
         }
+    }
+
+    public List<QuizChallengeQuestion> getQuestions() {
+        return questions;
+    }
+
+    public void setQuestions(List<QuizChallengeQuestion> questions) {
+        this.questions = questions;
+    }
+
+    public int numQuestions() {
+        return questions == null ? 0 : questions.size();
     }
 
     @Override
@@ -58,17 +70,4 @@ public class QuizChallenge extends BaseChallenge {
             dest.writeList(questions);
         }
     }
-
-    @SuppressWarnings("unused")
-    public static final Parcelable.Creator<QuizChallenge> CREATOR = new Parcelable.Creator<QuizChallenge>() {
-        @Override
-        public QuizChallenge createFromParcel(Parcel in) {
-            return new QuizChallenge(in);
-        }
-
-        @Override
-        public QuizChallenge[] newArray(int size) {
-            return new QuizChallenge[size];
-        }
-    };
 }

@@ -81,7 +81,7 @@
         <item name="android:background">@drawable/button_bkg_light_blue</item>
         <item name="android:textColor">@color/white</item>
     </style>
-    
+
     <style name="AppTheme.PopupOverlay.Semitransparent.Dark" parent="AppTheme.PopupOverlay">
         <item name="android:textColor">@color/white</item>
         <item name="android:windowBackground">@color/dark_transparent</item>

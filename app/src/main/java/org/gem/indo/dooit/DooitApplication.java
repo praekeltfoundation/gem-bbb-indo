@@ -9,6 +9,7 @@ import com.facebook.imagepipeline.backends.okhttp3.OkHttpImagePipelineConfigFact
 import com.facebook.imagepipeline.core.ImagePipelineConfig;
 import com.facebook.imagepipeline.listener.RequestListener;
 import com.facebook.imagepipeline.listener.RequestLoggingListener;
+
 import org.gem.indo.dooit.dagger.DaggerDooitComponent;
 import org.gem.indo.dooit.dagger.DooitComponent;
 import org.gem.indo.dooit.dagger.DooitModule;

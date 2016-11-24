@@ -32,16 +32,14 @@ import javax.inject.Inject;
 
 public class TipsListAdapter extends RecyclerView.Adapter<TipViewHolder> implements Filterable, TipsAdapter {
 
+    @Inject
+    TipManager tipManager;
+    @Inject
+    Persisted persisted;
     private Context context;
     private List<Tip> tipsFiltered = new ArrayList<>();
     private List<Tip> tipsAll = new ArrayList<>();
     private TipsListFilter filter;
-
-    @Inject
-    TipManager tipManager;
-
-    @Inject
-    Persisted persisted;
 
     public TipsListAdapter(DooitApplication application) {
         super();

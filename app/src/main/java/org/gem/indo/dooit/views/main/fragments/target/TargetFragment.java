@@ -13,6 +13,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import org.gem.indo.dooit.DooitApplication;
+import org.gem.indo.dooit.R;
 import org.gem.indo.dooit.api.DooitAPIError;
 import org.gem.indo.dooit.api.DooitErrorHandler;
 import org.gem.indo.dooit.api.managers.GoalManager;
@@ -23,7 +24,6 @@ import org.gem.indo.dooit.views.custom.WeekGraph;
 import org.gem.indo.dooit.views.helpers.activity.CurrencyHelper;
 import org.gem.indo.dooit.views.main.fragments.MainFragment;
 import org.gem.indo.dooit.views.main.fragments.target.adapters.TargetPagerAdapter;
-
 import org.joda.time.Weeks;
 
 import java.util.ArrayList;
@@ -40,28 +40,28 @@ import rx.functions.Action1;
 
 public class TargetFragment extends MainFragment {
 
-    @BindView(org.gem.indo.dooit.R.id.fragment_target_targets_view_pagers)
+    @BindView(R.id.fragment_target_targets_view_pagers)
     ViewPager viewPager;
 
-    @BindView(org.gem.indo.dooit.R.id.fragment_target_goal_name_text_view)
+    @BindView(R.id.fragment_target_goal_name_text_view)
     TextView goalName;
 
-    @BindView(org.gem.indo.dooit.R.id.fragment_target_saved_text_view)
+    @BindView(R.id.fragment_target_saved_text_view)
     TextView saved;
 
-    @BindView(org.gem.indo.dooit.R.id.fragment_target_total_text_view)
+    @BindView(R.id.fragment_target_total_text_view)
     TextView total;
 
-    @BindView(org.gem.indo.dooit.R.id.fragment_target_savings_plan_message)
+    @BindView(R.id.fragment_target_savings_plan_message)
     TextView targetMessage;
 
-    @BindView(org.gem.indo.dooit.R.id.fragment_target_week_graph_view)
+    @BindView(R.id.fragment_target_week_graph_view)
     WeekGraph bars;
 
-    @BindView(org.gem.indo.dooit.R.id.fragment_target_left_image_button)
+    @BindView(R.id.fragment_target_left_image_button)
     ImageButton leftTarget;
 
-    @BindView(org.gem.indo.dooit.R.id.fragment_target_right_image_button)
+    @BindView(R.id.fragment_target_right_image_button)
     ImageButton rightTarget;
 
     @BindString(org.gem.indo.dooit.R.string.savings_message)
@@ -145,7 +145,7 @@ public class TargetFragment extends MainFragment {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case org.gem.indo.dooit.R.id.menu_main_target_add_goal:
+            case R.id.menu_main_target_add_goal:
                 startBot(BotType.GOAL_ADD);
                 return true;
             default:
@@ -153,17 +153,17 @@ public class TargetFragment extends MainFragment {
         }
     }
 
-    @OnClick(org.gem.indo.dooit.R.id.fragment_target_left_image_button)
+    @OnClick(R.id.fragment_target_left_image_button)
     public void onLeftClick() {
         viewPager.setCurrentItem(Math.max(0, viewPager.getCurrentItem() - 1));
     }
 
-    @OnClick(org.gem.indo.dooit.R.id.fragment_target_right_image_button)
+    @OnClick(R.id.fragment_target_right_image_button)
     public void onRightClick() {
         viewPager.setCurrentItem(Math.min(goals.size(), viewPager.getCurrentItem() + 1));
     }
 
-    @OnClick(org.gem.indo.dooit.R.id.fragment_target_save_button)
+    @OnClick(R.id.fragment_target_save_button)
     public void onSavingsEditClick(View view) {
         Goal goal = goals.get(viewPager.getCurrentItem());
         persisted.saveConvoGoal(BotType.GOAL_DEPOSIT, goal);

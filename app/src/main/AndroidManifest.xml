@@ -41,7 +41,8 @@
             android:name="org.gem.indo.dooit.views.onboarding.ChangeNameActivity"
             android:theme="@style/AppTheme.FullscreenTheme" />
 
-        <activity android:name="org.gem.indo.dooit.views.onboarding.ChangePasswordActivity"
+        <activity
+            android:name="org.gem.indo.dooit.views.onboarding.ChangePasswordActivity"
             android:theme="@style/AppTheme.FullscreenTheme" />
 
         <activity
@@ -70,7 +71,10 @@
             android:theme="@style/AppTheme.FullscreenTheme" />
         <activity android:name="org.gem.indo.dooit.views.tip.TipArticleActivity" />
         <activity android:name="org.gem.indo.dooit.views.onboarding.OnboardingWebActivity"></activity>
-        <service android:enabled="true" android:name=".services.NotificationScheduler"/>
+
+        <service
+            android:name=".services.NotificationScheduler"
+            android:enabled="true" />
     </application>
 
 </manifest>

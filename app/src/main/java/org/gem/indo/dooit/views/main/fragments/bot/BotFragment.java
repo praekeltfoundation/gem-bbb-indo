@@ -17,6 +17,7 @@ import android.view.ViewGroup;
 import com.greenfrvr.hashtagview.HashtagView;
 
 import org.gem.indo.dooit.DooitApplication;
+import org.gem.indo.dooit.R;
 import org.gem.indo.dooit.helpers.Persisted;
 import org.gem.indo.dooit.helpers.bot.BotFeed;
 import org.gem.indo.dooit.models.Goal;
@@ -49,10 +50,10 @@ import butterknife.ButterKnife;
  */
 public class BotFragment extends MainFragment implements HashtagView.TagsClickListener {
 
-    @BindView(org.gem.indo.dooit.R.id.fragment_bot_conversation_recycler_view)
+    @BindView(R.id.fragment_bot_conversation_recycler_view)
     RecyclerView conversationRecyclerView;
 
-    @BindView(org.gem.indo.dooit.R.id.fragment_bot_answer_hash_view)
+    @BindView(R.id.fragment_bot_answer_hash_view)
     HashtagView answerView;
 
     @Inject
@@ -115,7 +116,7 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == org.gem.indo.dooit.R.id.menu_main_bot_clear) {
+        if (item.getItemId() == R.id.menu_main_bot_clear) {
             persisted.clearConversation();
             persisted.clearConvoGoals();
         }

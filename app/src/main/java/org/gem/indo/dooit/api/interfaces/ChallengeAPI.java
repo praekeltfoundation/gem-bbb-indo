@@ -1,8 +1,8 @@
 package org.gem.indo.dooit.api.interfaces;
 
+import org.gem.indo.dooit.models.challenge.BaseChallenge;
 import org.gem.indo.dooit.models.challenge.ParticipantFreeformAnswer;
 import org.gem.indo.dooit.models.challenge.QuizChallengeEntry;
-import org.gem.indo.dooit.models.challenge.BaseChallenge;
 
 import java.util.List;
 
