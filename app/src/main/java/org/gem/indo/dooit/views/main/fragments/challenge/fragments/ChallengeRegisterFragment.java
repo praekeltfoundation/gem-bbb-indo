@@ -3,7 +3,6 @@ package org.gem.indo.dooit.views.main.fragments.challenge.fragments;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,7 +12,7 @@ import android.widget.TextView;
 import com.facebook.drawee.view.SimpleDraweeView;
 
 import org.gem.indo.dooit.R;
-import org.gem.indo.dooit.helpers.TilingDrawable;
+import org.gem.indo.dooit.helpers.SquiggleBackgroundHelper;
 import org.gem.indo.dooit.models.challenge.BaseChallenge;
 import org.gem.indo.dooit.models.challenge.FreeformChallenge;
 import org.gem.indo.dooit.models.challenge.QuizChallenge;
@@ -32,22 +31,31 @@ import butterknife.Unbinder;
  */
 public class ChallengeRegisterFragment extends Fragment {
     private static final String ARG_CHALLENGE = "challenge";
-    @BindView(R.id.fragment_chalenge_nested_bg)
+
+    @BindView(R.id.fragment_challenge_container)
     View background;
+
     @BindView(R.id.fragment_challenge_register_image)
     SimpleDraweeView topImage;
+
     @BindView(R.id.fragment_challenge_sub_title_text_view)
     TextView title;
+
     @BindView(R.id.fragment_challenge_name_text_view)
     TextView name;
+
     @BindView(R.id.fragment_challenge_expire_date_text_view)
     TextView date;
+
     @BindView(R.id.fragment_challenge_instruction_text_vew)
     TextView instruction;
+
     @BindView(R.id.fragment_challenge_t_c_text_view)
     TextView tc;
+
     @BindView(R.id.fragment_challenge_register_button)
     Button register;
+
     private BaseChallenge challenge;
     private Unbinder unbinder = null;
 
@@ -82,9 +90,7 @@ public class ChallengeRegisterFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(org.gem.indo.dooit.R.layout.fragment_challenge_register, container, false);
         unbinder = ButterKnife.bind(this, view);
-        TilingDrawable tiled = new TilingDrawable(ContextCompat.getDrawable(getContext(), org.gem.indo.dooit.R.drawable.bkg_clipped));
-        tiled.setTint(getResources().getColor(org.gem.indo.dooit.R.color.dark_yellow));
-        background.setBackground(tiled);
+        SquiggleBackgroundHelper.setBackground(getContext(), R.color.grey_back, R.color.grey_fore, background);
         return view;
     }
 
@@ -109,7 +115,7 @@ public class ChallengeRegisterFragment extends Fragment {
             return ChallengeNoneFragment.newInstance(getString(org.gem.indo.dooit.R.string.challenge_quiz_no_questions));
         }
 
-        for (QuizChallengeQuestion q: quizChallenge.getQuestions()) {
+        for (QuizChallengeQuestion q : quizChallenge.getQuestions()) {
             // check for empty question or empty list of options for question
             if (q.getText() == null || q.getText().length() <= 0) {
                 return ChallengeNoneFragment.newInstance(getString(org.gem.indo.dooit.R.string.challenge_quiz_no_questions));
@@ -119,7 +125,7 @@ public class ChallengeRegisterFragment extends Fragment {
 
             // check whether any options are empty or none of the question's options are correct
             boolean hasCorrect = false;
-            for (QuizChallengeOption o: q.getOptions()) {
+            for (QuizChallengeOption o : q.getOptions()) {
                 if (o.getText() == null || o.getText().length() <= 0) {
                     return ChallengeNoneFragment.newInstance(getString(org.gem.indo.dooit.R.string.challenge_quiz_empty_option));
                 }

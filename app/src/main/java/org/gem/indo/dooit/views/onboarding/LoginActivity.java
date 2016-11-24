@@ -2,10 +2,8 @@ package org.gem.indo.dooit.views.onboarding;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
-import android.support.v4.content.ContextCompat;
 import android.support.v4.content.res.ResourcesCompat;
 import android.text.TextUtils;
 import android.view.View;
@@ -20,7 +18,7 @@ import org.gem.indo.dooit.api.DooitErrorHandler;
 import org.gem.indo.dooit.api.managers.AuthenticationManager;
 import org.gem.indo.dooit.api.responses.AuthenticationResponse;
 import org.gem.indo.dooit.helpers.Persisted;
-import org.gem.indo.dooit.helpers.TilingDrawable;
+import org.gem.indo.dooit.helpers.SquiggleBackgroundHelper;
 import org.gem.indo.dooit.views.DooitActivity;
 import org.gem.indo.dooit.views.helpers.activity.DooitActivityBuilder;
 import org.gem.indo.dooit.views.main.MainActivity;
@@ -64,9 +62,7 @@ public class LoginActivity extends DooitActivity {
         ((DooitApplication) getApplication()).component.inject(this);
         setContentView(org.gem.indo.dooit.R.layout.activity_login);
         ButterKnife.bind(this);
-        Drawable back = ContextCompat.getDrawable(this, org.gem.indo.dooit.R.drawable.bkg_pattern_01_purple);
-        TilingDrawable tiled = new TilingDrawable(back);
-        background.setBackground(tiled);
+        SquiggleBackgroundHelper.setBackground(this, R.color.purple, R.color.purple_light, background);
     }
 
     @OnClick(R.id.activity_login_login_button)

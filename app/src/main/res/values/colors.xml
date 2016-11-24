@@ -4,6 +4,8 @@
     <color name="colorPrimary">@color/purple</color>
     <color name="colorPrimaryDark">@color/purple</color>
     <color name="colorAccent">@color/pink</color>
+    <color name="grey_back">#f7f7f7</color>
+    <color name="grey_fore">#f2f2f2</color>
     <color name="colorQuizSubtitle">@color/grey</color>
     <color name="colorQuizText">@color/black</color>
     <color name="colorQuizOption">@color/white</color>
@@ -13,12 +15,13 @@
     <color name="white">@android:color/white</color>
     <color name="black">@android:color/black</color>
     <color name="purple">#391563</color>
+    <color name="purple_light">#45236c</color>
     <color name="pink">#E93988</color>
     <color name="light_grey">#ccc</color>
     <color name="light_grey_alpha">#82cccccc</color>
     <color name="grey">#828282</color>
     <color name="yellow">#FDDF5B</color>
-    <color name="dark_yellow">#f7da57</color>
+    <color name="yellow_light">#fde58c</color>
     <color name="green">#B9D154</color>
     <color name="corn_silk">#FFF6DC</color>
     <color name="light_blue">#01BFE3</color>
