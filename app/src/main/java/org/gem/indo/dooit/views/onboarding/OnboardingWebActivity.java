@@ -12,6 +12,7 @@ import android.webkit.WebView;
 import android.widget.ProgressBar;
 
 import org.gem.indo.dooit.DooitApplication;
+import org.gem.indo.dooit.R;
 import org.gem.indo.dooit.views.DooitActivity;
 import org.gem.indo.dooit.views.helpers.activity.DooitActivityBuilder;
 
@@ -23,10 +24,10 @@ public class OnboardingWebActivity extends DooitActivity {
     private static final String INTENT_URL = "intent_webView_url";
     private static final String INTENT_TITLE = "intent_webView_title";
 
-    @BindView(org.gem.indo.dooit.R.id.activity_onboarding_web_view)
+    @BindView(R.id.activity_onboarding_web_view)
     WebView webView;
 
-    @BindView(org.gem.indo.dooit.R.id.activity_onboarding_web_progress)
+    @BindView(R.id.activity_onboarding_web_progress)
     ProgressBar progressBar;
 
     @Override

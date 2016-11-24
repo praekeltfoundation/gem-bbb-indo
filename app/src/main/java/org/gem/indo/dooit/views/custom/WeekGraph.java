@@ -23,14 +23,13 @@ import java.util.Map;
  * TODO: document your custom view class.
  */
 public class WeekGraph extends FrameLayout {
+    int parentWidth, parentHeight;
     private int mBarWidth = 0, mBarMarginStart = 0, mBarMarginEnd = 0, mBarTextHeight = 0, mBarAverageHeight = 0, mBarTargetHeight = 0;
     private Drawable mBarDrawable;
     private LinkedHashMap<String, Float> mValues = new LinkedHashMap<>();
     private Float mMaxValue = 0f, mGoal = 0f;
     @ColorInt
     private int mBarTargetColor = Color.GREEN, mBarAverageColor = Color.YELLOW;
-
-    int parentWidth, parentHeight;
 
     public WeekGraph(Context context) {
         super(context);

@@ -37,22 +37,22 @@ import rx.functions.Action1;
 
 public class LoginActivity extends DooitActivity {
 
-    @BindView(org.gem.indo.dooit.R.id.activity_login)
+    @BindView(R.id.activity_login)
     View background;
 
-    @BindView(org.gem.indo.dooit.R.id.activity_login_login_button)
+    @BindView(R.id.activity_login_login_button)
     Button buttonLogin;
 
-    @BindView(org.gem.indo.dooit.R.id.activity_login_name_edit_text)
+    @BindView(R.id.activity_login_name_edit_text)
     EditText name;
 
-    @BindView(org.gem.indo.dooit.R.id.activity_login_password_edit_text)
+    @BindView(R.id.activity_login_password_edit_text)
     EditText password;
 
-    @BindView(org.gem.indo.dooit.R.id.activity_login_name_example_text_view)
+    @BindView(R.id.activity_login_name_example_text_view)
     TextView nameHint;
 
-    @BindView(org.gem.indo.dooit.R.id.activity_login_password_example_text_view)
+    @BindView(R.id.activity_login_password_example_text_view)
     TextView passwordHint;
 
     @Inject
@@ -76,7 +76,7 @@ public class LoginActivity extends DooitActivity {
         background.setBackground(tiled);
     }
 
-    @OnClick(org.gem.indo.dooit.R.id.activity_login_login_button)
+    @OnClick(R.id.activity_login_login_button)
     public void login() {
 
         if (!detailsValid())

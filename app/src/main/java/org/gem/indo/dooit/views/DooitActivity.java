@@ -14,6 +14,7 @@ import android.support.v7.app.AppCompatDelegate;
 import android.view.inputmethod.InputMethodManager;
 
 import com.crashlytics.android.Crashlytics;
+
 import org.gem.indo.dooit.Constants;
 import org.gem.indo.dooit.helpers.permissions.PermissionsHelper;
 
@@ -29,13 +30,13 @@ import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 public class DooitActivity extends AppCompatActivity {
 
-    @Inject
-    protected PermissionsHelper permissionsHelper;
-    ProgressDialog dialog;
-
     static {
         AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
     }
+
+    @Inject
+    protected PermissionsHelper permissionsHelper;
+    ProgressDialog dialog;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {

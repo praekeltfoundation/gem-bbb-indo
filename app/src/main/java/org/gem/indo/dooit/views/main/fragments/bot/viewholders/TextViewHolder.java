@@ -7,10 +7,12 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import org.gem.indo.dooit.DooitApplication;
+import org.gem.indo.dooit.R;
 import org.gem.indo.dooit.helpers.Persisted;
 import org.gem.indo.dooit.models.bot.Answer;
 import org.gem.indo.dooit.models.bot.BaseBotModel;
 import org.gem.indo.dooit.models.bot.Node;
+import org.gem.indo.dooit.views.helpers.activity.CurrencyHelper;
 import org.gem.indo.dooit.views.main.fragments.bot.adapters.BotAdapter;
 
 import javax.inject.Inject;
@@ -23,9 +25,9 @@ import butterknife.ButterKnife;
  */
 
 public class TextViewHolder extends BaseBotViewHolder<Node> {
-    @BindView(org.gem.indo.dooit.R.id.item_view_bot_text)
+    @BindView(R.id.item_view_bot_text)
     TextView textView;
-    @BindView(org.gem.indo.dooit.R.id.item_view_bot_icon)
+    @BindView(R.id.item_view_bot_icon)
     ImageView botIcon;
     @Inject
     Persisted persisted;
@@ -53,6 +55,8 @@ public class TextViewHolder extends BaseBotViewHolder<Node> {
                 params[i] = persisted.getCurrentUser().getFirstName();
             } else if ("LASTNAME".equals(param)) {
                 params[i] = persisted.getCurrentUser().getLastName();
+            } else if ("LOCAL_CURRENCY".equals(param)) {
+                params[i] = CurrencyHelper.getCurrencyString();
             } else {
                 for (BaseBotModel baseBotModel : botAdapter.getDataSet()) {
                     if (baseBotModel.getClassType().equals(Answer.class.toString())

@@ -41,12 +41,12 @@ public class ArcProgressBar extends View {
     private final float default_bottom_text_size;
     private final float default_stroke_width;
     private final String default_suffix_text;
-    private float default_text_size;
-    private float default_bottom_text_margin_top = 0;
     private final int default_max = 100;
     private final float default_arc_angle = 360 * 0.8f;
     private final int min_size;
     protected Paint textPaint;
+    private float default_text_size;
+    private float default_bottom_text_margin_top = 0;
     private Paint paint;
     private RectF rectF = new RectF();
     private float strokeWidth;

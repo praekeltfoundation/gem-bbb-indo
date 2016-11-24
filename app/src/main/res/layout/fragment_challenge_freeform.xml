@@ -1,6 +1,6 @@
-<FrameLayout android:id="@+id/fragment_challenge_container"
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/fragment_challenge_container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="org.gem.indo.dooit.views.main.fragments.challenge.fragments.ChallengeFreeformFragment">
@@ -13,34 +13,34 @@
             android:id="@+id/fragment_challenge_freeform_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/text_margin"
             android:layout_alignParentTop="true"
-            android:textAppearance="@style/AppTheme.TextView.Quiz.Title"
+            android:layout_margin="@dimen/text_margin"
             android:textAlignment="center"
+            android:textAppearance="@style/AppTheme.TextView.Quiz.Title"
             tools:text="This is the title of the question?" />
 
         <EditText
             android:id="@+id/fragment_challenge_freeform_submission"
-            android:inputType="textMultiLine"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:layout_below="@+id/fragment_challenge_freeform_title"
             android:layout_above="@+id/fragment_challenge_freeform_submitbutton"
-            android:layout_marginStart="16dp"
+            android:layout_below="@+id/fragment_challenge_freeform_title"
+            android:layout_centerInParent="true"
             android:layout_marginEnd="16dp"
-            android:gravity="top"
+            android:layout_marginStart="16dp"
             android:background="@color/white"
             android:ems="10"
-            tools:text="@string/placeholder_label_long"/>
+            android:gravity="top"
+            android:inputType="textMultiLine"
+            tools:text="@string/placeholder_label_long" />
 
         <Button
             android:id="@+id/fragment_challenge_freeform_submitbutton"
+            style="@style/AppTheme.Button.Big.LightBlue"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:layout_margin="@dimen/challenge_margins"
-            style="@style/AppTheme.Button.Big.LightBlue"
             android:text="@string/button_submit" />
 
     </RelativeLayout>

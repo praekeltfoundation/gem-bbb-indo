@@ -4,8 +4,8 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 import com.google.gson.annotations.SerializedName;
-import org.gem.indo.dooit.models.enums.ChallengeType;
 
+import org.gem.indo.dooit.models.enums.ChallengeType;
 import org.joda.time.DateTime;
 
 import java.io.Serializable;
@@ -15,6 +15,7 @@ import java.io.Serializable;
  */
 
 public abstract class BaseChallenge implements Parcelable, Serializable {
+    protected ChallengeType type;
     /*** Variables ***/
     private long id;
     private String name;
@@ -24,11 +25,20 @@ public abstract class BaseChallenge implements Parcelable, Serializable {
     private DateTime activationDate;
     @SerializedName("deactivation_date")
     private DateTime deactivationDate;
-    protected ChallengeType type;
 
     /*** Constructors ***/
     BaseChallenge() {
         // Mandatory empty constructor
+    }
+
+    /*** Parcelable methods ***/
+
+    protected BaseChallenge(Parcel in) {
+        id = in.readLong();
+        name = in.readString();
+        activationDate = (DateTime) in.readValue(DateTime.class.getClassLoader());
+        deactivationDate = (DateTime) in.readValue(DateTime.class.getClassLoader());
+        type = (ChallengeType) in.readValue(ChallengeType.class.getClassLoader());
     }
 
     /*** Getters/Setters ***/
@@ -78,16 +88,6 @@ public abstract class BaseChallenge implements Parcelable, Serializable {
 
     public void setDeactivationDate(DateTime deactivationDate) {
         this.deactivationDate = deactivationDate;
-    }
-
-    /*** Parcelable methods ***/
-
-    protected BaseChallenge(Parcel in) {
-        id = in.readLong();
-        name = in.readString();
-        activationDate = (DateTime) in.readValue(DateTime.class.getClassLoader());
-        deactivationDate = (DateTime) in.readValue(DateTime.class.getClassLoader());
-        type = (ChallengeType) in.readValue(ChallengeType.class.getClassLoader());
     }
 
     @Override

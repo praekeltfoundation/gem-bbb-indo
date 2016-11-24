@@ -7,10 +7,12 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import org.gem.indo.dooit.DooitApplication;
+import org.gem.indo.dooit.R;
 import org.gem.indo.dooit.helpers.Persisted;
 import org.gem.indo.dooit.models.bot.Answer;
 import org.gem.indo.dooit.models.bot.BaseBotModel;
 import org.gem.indo.dooit.models.bot.Node;
+import org.gem.indo.dooit.views.helpers.activity.CurrencyHelper;
 import org.gem.indo.dooit.views.main.fragments.bot.adapters.BotAdapter;
 
 import java.text.DateFormat;
@@ -29,9 +31,9 @@ import butterknife.ButterKnife;
  */
 
 public class GoalVerificationViewHolder extends BaseBotViewHolder<Node> {
-    @BindView(org.gem.indo.dooit.R.id.item_view_bot_text)
+    @BindView(R.id.item_view_bot_text)
     TextView textView;
-    @BindView(org.gem.indo.dooit.R.id.item_view_bot_icon)
+    @BindView(R.id.item_view_bot_icon)
     ImageView botIcon;
     @Inject
     Persisted persisted;
@@ -93,10 +95,12 @@ public class GoalVerificationViewHolder extends BaseBotViewHolder<Node> {
             goalWeeks = amountLeft / weekly;
         }
 
-        String[] params = new String[3];
-        params[0] = String.valueOf(weekly);
-        params[1] = goalName;
-        params[2] = String.valueOf((int) goalWeeks);
+        String[] params = new String[]{
+                String.valueOf(weekly),
+                goalName,
+                String.valueOf((int) goalWeeks),
+                CurrencyHelper.getCurrencyString()
+        };
         textView.setText(String.format(text, params));
         RelativeLayout.LayoutParams lp = ((RelativeLayout.LayoutParams) textView.getLayoutParams());
         if (dataModel.isIconHidden()) {

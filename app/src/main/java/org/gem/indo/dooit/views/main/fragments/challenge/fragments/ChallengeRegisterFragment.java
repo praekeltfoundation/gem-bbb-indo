@@ -63,6 +63,8 @@ public class ChallengeRegisterFragment extends Fragment {
 
     @BindView(R.id.fragment_challenge_register_button)
     Button register;
+    private BaseChallenge challenge;
+    private Unbinder unbinder = null;
 
     public ChallengeRegisterFragment() {
         // Required empty public constructor
@@ -159,7 +161,7 @@ public class ChallengeRegisterFragment extends Fragment {
         return ChallengeFreeformFragment.newInstance(freeformChallenge);
     }
 
-    @OnClick(org.gem.indo.dooit.R.id.fragment_challenge_register_button)
+    @OnClick(R.id.fragment_challenge_register_button)
     void startChallenge() {
         FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
         Fragment fragment = null;
@@ -181,7 +183,7 @@ public class ChallengeRegisterFragment extends Fragment {
 
         if (fragment != null) {
             //ft.setCustomAnimations(R.anim.slide_in_left, R.anim.slide_out_right);
-            ft.replace(org.gem.indo.dooit.R.id.fragment_challenge_container, fragment, "fragment_challenge");
+            ft.replace(R.id.fragment_challenge_container, fragment, "fragment_challenge");
             ft.commit();
         }
     }

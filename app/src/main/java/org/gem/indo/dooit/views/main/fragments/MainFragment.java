@@ -12,8 +12,6 @@ import org.gem.indo.dooit.models.enums.BotType;
 import org.gem.indo.dooit.views.main.MainViewPagerPositions;
 import org.gem.indo.dooit.views.main.fragments.bot.BotFragment;
 
-import java.text.Format;
-import java.text.NumberFormat;
 import java.util.Locale;
 
 /**

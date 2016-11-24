@@ -4,6 +4,7 @@ import android.content.Context;
 import android.util.Log;
 
 import com.google.gson.Gson;
+
 import org.gem.indo.dooit.api.responses.ErrorResponse;
 
 import retrofit2.adapter.rxjava.HttpException;

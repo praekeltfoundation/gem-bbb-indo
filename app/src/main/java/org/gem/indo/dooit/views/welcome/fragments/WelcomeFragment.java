@@ -13,6 +13,8 @@ import com.facebook.drawee.backends.pipeline.Fresco;
 import com.facebook.drawee.interfaces.DraweeController;
 import com.facebook.drawee.view.SimpleDraweeView;
 
+import org.gem.indo.dooit.R;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -21,13 +23,13 @@ public class WelcomeFragment extends Fragment {
     private static final String IMAGE_RESOURCE = "image_resource";
     private static final String TEXT_RESOURCE = "text_resource";
 
-    @BindView(org.gem.indo.dooit.R.id.fragment_welcome_animation)
+    @BindView(R.id.fragment_welcome_animation)
     SimpleDraweeView animView;
 
-    @BindView(org.gem.indo.dooit.R.id.fragment_welcome_image)
+    @BindView(R.id.fragment_welcome_image)
     ImageView imageView;
 
-    @BindView(org.gem.indo.dooit.R.id.fragment_welcome_text)
+    @BindView(R.id.fragment_welcome_text)
     TextView textView;
 
     private String animUri;

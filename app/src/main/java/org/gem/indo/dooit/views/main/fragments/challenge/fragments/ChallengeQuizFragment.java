@@ -34,7 +34,6 @@ import org.gem.indo.dooit.models.challenge.QuizChallengeQuestion;
 import org.gem.indo.dooit.views.main.fragments.challenge.adapters.ChallengeQuizPagerAdapter;
 import org.gem.indo.dooit.views.main.fragments.challenge.interfaces.OnOptionChangeListener;
 import org.gem.indo.dooit.views.main.fragments.challenge.interfaces.OnQuestionCompletedListener;
-
 import org.joda.time.DateTime;
 
 import java.util.ArrayList;
@@ -49,7 +48,6 @@ import javax.inject.Inject;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-
 import butterknife.OnPageChange;
 import butterknife.Unbinder;
 import rx.functions.Action1;
@@ -67,6 +65,16 @@ public class ChallengeQuizFragment extends Fragment implements OnOptionChangeLis
     Persisted persisted;
     @Inject
     ChallengeManager challengeManager;
+    @BindView(R.id.fragment_chalenge_nested_bg)
+    View mainBackground;
+    @BindView(R.id.fragment_challenge_quiz_progressbar)
+    ProgressBar mProgressBar;
+    @BindView(R.id.fragment_challenge_quiz_progresscounter)
+    TextView mProgressCounter;
+    @BindView(R.id.fragment_challenge_quiz_pager)
+    ViewPager mPager;
+    @BindView(R.id.fragment_challenge_quiz_checkbutton)
+    Button checkButton;
     private QuizChallenge mChallenge;
     private ChallengeQuizPagerAdapter mAdapter;
     private QuizChallengeQuestion currentQuestion = null;
@@ -150,7 +158,7 @@ public class ChallengeQuizFragment extends Fragment implements OnOptionChangeLis
         super.onDestroy();
     }
 
-    @OnClick(org.gem.indo.dooit.R.id.fragment_challenge_quiz_checkbutton)
+    @OnClick(R.id.fragment_challenge_quiz_checkbutton)
     public void checkAnswer() {
         if (mPager.getCurrentItem() >= mChallenge.numQuestions()) {
             submitParticipantEntry();
@@ -202,7 +210,7 @@ public class ChallengeQuizFragment extends Fragment implements OnOptionChangeLis
                 Log.d(TAG, "Entry submitted");
                 FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
                 Fragment fragment = ChallengeNoneFragment.newInstance("Thank you for participating!");
-                ft.replace(org.gem.indo.dooit.R.id.fragment_challenge_container, fragment, "fragment_challenge");
+                ft.replace(R.id.fragment_challenge_container, fragment, "fragment_challenge");
                 ft.commit();
             }
         });
@@ -218,7 +226,7 @@ public class ChallengeQuizFragment extends Fragment implements OnOptionChangeLis
             submitParticipantEntry();
             FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
             Fragment fragment = ChallengeNoneFragment.newInstance();
-            ft.replace(org.gem.indo.dooit.R.id.fragment_challenge_container, fragment, "fragment_challenge");
+            ft.replace(R.id.fragment_challenge_container, fragment, "fragment_challenge");
             ft.commit();
         }
     }
@@ -243,7 +251,7 @@ public class ChallengeQuizFragment extends Fragment implements OnOptionChangeLis
         mProgressBar.setProgress(100 * numCompleted() / mChallenge.numQuestions());
     }
 
-    @OnPageChange(org.gem.indo.dooit.R.id.fragment_challenge_quiz_pager)
+    @OnPageChange(R.id.fragment_challenge_quiz_pager)
     public void onPageSelected(int position) {
         Log.d(TAG, "Page change: " + String.valueOf(position));
         updateProgressCounter(position);
@@ -268,7 +276,7 @@ public class ChallengeQuizFragment extends Fragment implements OnOptionChangeLis
         currentOption = option;
         long questionId = question.getId();
         selections.put(questionId, new QuestionState(option.getId(), isCompleted(questionId)));
-        for (OnOptionChangeListener l: optionChangeListeners) {
+        for (OnOptionChangeListener l : optionChangeListeners) {
             if (l != null) {
                 l.onOptionChange(question, option);
             }
@@ -287,7 +295,7 @@ public class ChallengeQuizFragment extends Fragment implements OnOptionChangeLis
         if (selections.containsKey(questionId)) {
             selections.put(questionId, new QuestionState(selections.get(questionId).optionId, true));
         }
-        for (OnQuestionCompletedListener l: questionCompletedListeners) {
+        for (OnQuestionCompletedListener l : questionCompletedListeners) {
             if (l != null) {
                 l.onQuestionCompleted(questionId);
             }
@@ -304,7 +312,7 @@ public class ChallengeQuizFragment extends Fragment implements OnOptionChangeLis
 
     public int numCompleted() {
         int total = 0;
-        for (QuestionState state: selections.values()) {
+        for (QuestionState state : selections.values()) {
             total += state.completed ? 1 : 0;
         }
         return total;

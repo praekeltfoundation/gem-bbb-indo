@@ -11,19 +11,21 @@ import java.util.List;
 
 public class QuizChallengeQuestion extends BaseChallengeQuestion
 {
+    @SuppressWarnings("unused")
+    public static final Creator<QuizChallengeQuestion> CREATOR = new Creator<QuizChallengeQuestion>() {
+        @Override
+        public QuizChallengeQuestion createFromParcel(Parcel in) {
+            return new QuizChallengeQuestion(in);
+        }
+
+        @Override
+        public QuizChallengeQuestion[] newArray(int size) {
+            return new QuizChallengeQuestion[size];
+        }
+    };
     /*** Variables ***/
 
     private List<QuizChallengeOption> options;
-
-    /*** Getters/Setters ***/
-
-    public List<QuizChallengeOption> getOptions() {
-        return options;
-    }
-
-    public void setOptions(List<QuizChallengeOption> options) {
-        this.options = options;
-    }
 
     /*** Parcelable methods ***/
 
@@ -35,6 +37,16 @@ public class QuizChallengeQuestion extends BaseChallengeQuestion
         } else {
             options = null;
         }
+    }
+
+    /*** Getters/Setters ***/
+
+    public List<QuizChallengeOption> getOptions() {
+        return options;
+    }
+
+    public void setOptions(List<QuizChallengeOption> options) {
+        this.options = options;
     }
 
     @Override
@@ -52,17 +64,4 @@ public class QuizChallengeQuestion extends BaseChallengeQuestion
             dest.writeList(options);
         }
     }
-
-    @SuppressWarnings("unused")
-    public static final Creator<QuizChallengeQuestion> CREATOR = new Creator<QuizChallengeQuestion>() {
-        @Override
-        public QuizChallengeQuestion createFromParcel(Parcel in) {
-            return new QuizChallengeQuestion(in);
-        }
-
-        @Override
-        public QuizChallengeQuestion[] newArray(int size) {
-            return new QuizChallengeQuestion[size];
-        }
-    };
 }

@@ -14,6 +14,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import org.gem.indo.dooit.DooitApplication;
+import org.gem.indo.dooit.R;
 import org.gem.indo.dooit.api.DooitAPIError;
 import org.gem.indo.dooit.api.DooitErrorHandler;
 import org.gem.indo.dooit.api.managers.ChallengeManager;
@@ -29,6 +30,8 @@ import javax.inject.Inject;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
+import rx.Observable;
+import rx.functions.Action0;
 import rx.functions.Action1;
 
 public class ChallengeFragment extends Fragment {
@@ -39,15 +42,16 @@ public class ChallengeFragment extends Fragment {
     @Inject
     Persisted persisted;
 
-    @BindView(org.gem.indo.dooit.R.id.fragment_challenge_loadingprogress)
+    @BindView(R.id.fragment_challenge_loadingprogress)
     ProgressBar progressBar;
 
-    @BindView(org.gem.indo.dooit.R.id.fragment_challenge_loadingtext)
+    @BindView(R.id.fragment_challenge_loadingtext)
     TextView progressText;
 
     BaseChallenge challenge;
 
     Unbinder unbinder;
+    private Observable<List<BaseChallenge>> challengeSubscription;
 
     public ChallengeFragment() {
         // Required empty public constructor
@@ -94,43 +98,58 @@ public class ChallengeFragment extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
-        challengeManager.retrieveChallenges(new DooitErrorHandler() {
+        challengeSubscription = challengeManager.retrieveChallenges(new DooitErrorHandler() {
             @Override
             public void onError(DooitAPIError error) {
                 Toast.makeText(getContext(), "Could not retrieve challenges", Toast.LENGTH_SHORT).show();
             }
-        }).subscribe(new Action1<List<BaseChallenge>>() {
-            @Override
-            public void call(List<BaseChallenge> challenges) {
-                if (challenges.size() > 0) {
-                    challenge = challenges.get(0);
-                    persisted.setActiveChallenge(challenge);
+        });
 
-                    if (getActivity().findViewById(org.gem.indo.dooit.R.id.fragment_challenge_container) != null) {
-                        FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
-                        Fragment fragment = ChallengeRegisterFragment.newInstance();
-                        Bundle args = new Bundle();
-                        args.putParcelable("challenge", challenge);
-                        fragment.setArguments(args);
-                        ft.replace(org.gem.indo.dooit.R.id.fragment_challenge_container, fragment, "fragment_challenge");
-                        ft.commit();
-                    }
-                } else {
-                    FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
-                    Fragment fragment = ChallengeNoneFragment.newInstance();
-                    ft.replace(org.gem.indo.dooit.R.id.fragment_challenge_container, fragment);
-                    ft.commit();
-                }
-                getActivity().runOnUiThread(new Runnable() {
+        challengeSubscription
+                .subscribe(new Action1<List<BaseChallenge>>() {
                     @Override
-                    public void run() {
-                        progressBar.setVisibility(View.GONE);
-                        progressText.setVisibility(View.GONE);
+                    public void call(List<BaseChallenge> challenges) {
+                        if (challenges.size() > 0) {
+                            challenge = challenges.get(0);
+                            persisted.setActiveChallenge(challenge);
 
+                            if (getActivity().findViewById(R.id.fragment_challenge_container) != null) {
+                                FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
+                                Fragment fragment = ChallengeRegisterFragment.newInstance();
+                                Bundle args = new Bundle();
+                                args.putParcelable("challenge", challenge);
+                                fragment.setArguments(args);
+                                ft.replace(R.id.fragment_challenge_container, fragment, "fragment_challenge");
+                                ft.commit();
+                            }
+                        } else {
+                            FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
+                            Fragment fragment = ChallengeNoneFragment.newInstance();
+                            ft.replace(R.id.fragment_challenge_container, fragment);
+                            ft.commit();
+                        }
+                        getActivity().runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                progressBar.setVisibility(View.GONE);
+                                progressText.setVisibility(View.GONE);
+
+                            }
+                        });
                     }
                 });
-            }
-        });
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        if (challengeSubscription != null)
+            challengeSubscription.doOnUnsubscribe(new Action0() {
+                @Override
+                public void call() {
+
+                }
+            });
     }
 
     @Override

@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import org.gem.indo.dooit.R;
 import org.gem.indo.dooit.models.challenge.QuizChallengeOption;
 import org.gem.indo.dooit.models.challenge.QuizChallengeQuestion;
 import org.gem.indo.dooit.views.main.fragments.challenge.adapters.ChallengeQuizOptionsListAdapter;
@@ -24,7 +25,10 @@ public class ChallengeQuizQuestionFragment extends Fragment implements OnOptionC
     private static final String ARG_QUESTION = "question";
     private static final String ARG_OPTION_ID = "option_id";
     private static final String ARG_COMPLETED = "completed";
-
+    @BindView(R.id.fragment_challengequizquestion_title)
+    TextView title;
+    @BindView(R.id.option_recycler_view)
+    RecyclerView optionList;
     private QuizChallengeQuestion mQuestion = null;
     private long optionId = -1;
     private boolean completed = false;
@@ -32,11 +36,6 @@ public class ChallengeQuizQuestionFragment extends Fragment implements OnOptionC
     private ChallengeQuizOptionsListAdapter adapter = null;
     private ChallengeQuizFragment controller = null;
     private Unbinder unbinder;
-
-    @BindView(org.gem.indo.dooit.R.id.fragment_challengequizquestion_title)
-    TextView title;
-    @BindView(org.gem.indo.dooit.R.id.option_recycler_view)
-    RecyclerView optionList;
 
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
@@ -46,7 +45,8 @@ public class ChallengeQuizQuestionFragment extends Fragment implements OnOptionC
         // Required empty constructor
     }
 
-    @SuppressWarnings("unused") public static ChallengeQuizQuestionFragment newInstance() {
+    @SuppressWarnings("unused")
+    public static ChallengeQuizQuestionFragment newInstance() {
         ChallengeQuizQuestionFragment fragment = new ChallengeQuizQuestionFragment();
         Bundle args = new Bundle();
         fragment.setArguments(args);
@@ -71,7 +71,8 @@ public class ChallengeQuizQuestionFragment extends Fragment implements OnOptionC
         return fragment;
     }
 
-    @Override public void onCreate(Bundle savedInstanceState) {
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         if (getArguments() != null) {
@@ -88,7 +89,8 @@ public class ChallengeQuizQuestionFragment extends Fragment implements OnOptionC
         }
     }
 
-    @Override public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(org.gem.indo.dooit.R.layout.fragment_challengequizquestion, container, false);
         unbinder = ButterKnife.bind(this, view);

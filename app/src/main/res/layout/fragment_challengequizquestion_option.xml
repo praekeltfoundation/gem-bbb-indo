@@ -3,19 +3,19 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/option_background"
-    android:orientation="horizontal"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="@dimen/challenge_option_margins"
-    android:padding="@dimen/challenge_option_padding"
+    android:background="@drawable/challenge_option_selector"
     android:clickable="false"
-    android:background="@drawable/challenge_option_selector">
+    android:orientation="horizontal"
+    android:padding="@dimen/challenge_option_padding">
 
     <RadioButton
         android:id="@+id/option_text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:clickable="false"
         android:background="@color/transparent"
+        android:clickable="false"
         tools:text="Quiz option" />
 </LinearLayout>

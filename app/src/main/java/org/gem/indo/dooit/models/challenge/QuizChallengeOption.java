@@ -10,12 +10,30 @@ import java.io.Serializable;
  */
 
 public class QuizChallengeOption implements Parcelable, Serializable {
+    @SuppressWarnings("unused")
+    public static final Parcelable.Creator<QuizChallengeOption> CREATOR = new Parcelable.Creator<QuizChallengeOption>() {
+        @Override
+        public QuizChallengeOption createFromParcel(Parcel in) {
+            return new QuizChallengeOption(in);
+        }
+
+        @Override
+        public QuizChallengeOption[] newArray(int size) {
+            return new QuizChallengeOption[size];
+        }
+    };
     private long id;
     private String text;
     private boolean correct;
 
     QuizChallengeOption() {
         // Mandatory empty constructor
+    }
+
+    protected QuizChallengeOption(Parcel in) {
+        id = in.readLong();
+        text = in.readString();
+        correct = in.readByte() != 0x0;
     }
 
     public long getId() {
@@ -42,12 +60,6 @@ public class QuizChallengeOption implements Parcelable, Serializable {
         this.correct = correct;
     }
 
-    protected QuizChallengeOption(Parcel in) {
-        id = in.readLong();
-        text = in.readString();
-        correct = in.readByte() != 0x0;
-    }
-
     @Override
     public int describeContents() {
         return 0;
@@ -59,17 +71,4 @@ public class QuizChallengeOption implements Parcelable, Serializable {
         dest.writeString(text);
         dest.writeByte((byte) (correct ? 0x1 : 0x0));
     }
-
-    @SuppressWarnings("unused")
-    public static final Parcelable.Creator<QuizChallengeOption> CREATOR = new Parcelable.Creator<QuizChallengeOption>() {
-        @Override
-        public QuizChallengeOption createFromParcel(Parcel in) {
-            return new QuizChallengeOption(in);
-        }
-
-        @Override
-        public QuizChallengeOption[] newArray(int size) {
-            return new QuizChallengeOption[size];
-        }
-    };
 }

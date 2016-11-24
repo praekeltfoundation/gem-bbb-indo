@@ -10,6 +10,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import org.gem.indo.dooit.DooitApplication;
+import org.gem.indo.dooit.R;
 import org.gem.indo.dooit.api.DooitAPIError;
 import org.gem.indo.dooit.api.DooitErrorHandler;
 import org.gem.indo.dooit.api.managers.UserManager;
@@ -33,13 +34,13 @@ import rx.functions.Action1;
 
 public class ChangeNameActivity extends DooitActivity {
 
-    @BindView(org.gem.indo.dooit.R.id.activity_change_name_text_edit)
+    @BindView(R.id.activity_change_name_text_edit)
     EditText name;
 
-    @BindView(org.gem.indo.dooit.R.id.activity_change_name_example_text_edit)
+    @BindView(R.id.activity_change_name_example_text_edit)
     TextView nameHint;
 
-    @BindView(org.gem.indo.dooit.R.id.activity_change_name_button)
+    @BindView(R.id.activity_change_name_button)
     Button changeNameButton;
 
     @Inject
@@ -51,12 +52,12 @@ public class ChangeNameActivity extends DooitActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(org.gem.indo.dooit.R.layout.activity_omboarding_change_name);
+        setContentView(org.gem.indo.dooit.R.layout.activity_onboarding_change_name);
         ((DooitApplication) getApplication()).component.inject(this);
         ButterKnife.bind(this);
     }
 
-    @OnClick(org.gem.indo.dooit.R.id.activity_change_name_button)
+    @OnClick(R.id.activity_change_name_button)
     public void changeName() {
         if(!isNameValid())
             return;

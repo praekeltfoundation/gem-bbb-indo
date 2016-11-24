@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v7.widget.CardView
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     app:cardBackgroundColor="@color/yellow">
@@ -14,84 +13,84 @@
         <com.facebook.drawee.view.SimpleDraweeView
             android:id="@+id/card_challenge_image"
             android:layout_width="0dp"
-            app:placeholderImage="@color/light_grey"
-            tools:layout_constraintTop_creator="1"
-            tools:layout_constraintRight_creator="1"
-            tools:layout_constraintBottom_creator="1"
-            app:layout_constraintBottom_toTopOf="@+id/card_challenge_complete_text"
-            app:layout_constraintRight_toRightOf="parent"
-            tools:layout_constraintLeft_creator="1"
+            android:layout_height="200dp"
             android:layout_marginBottom="24dp"
+            app:layout_constraintBottom_toTopOf="@+id/card_challenge_complete_text"
             app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            android:layout_height="200dp" />
+            app:placeholderImage="@color/light_grey"
+            tools:layout_constraintBottom_creator="1"
+            tools:layout_constraintLeft_creator="1"
+            tools:layout_constraintRight_creator="1"
+            tools:layout_constraintTop_creator="1" />
 
         <TextView
             android:id="@+id/card_challenge_complete_text"
             style="@style/AppTheme.TextView.Regular.Small"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:textAlignment="center"
-            android:textColor="@color/black"
-            android:textAllCaps="true"
-            tools:text="Very short sub-title"
-            tools:layout_constraintRight_creator="1"
-            tools:layout_constraintBottom_creator="1"
-            app:layout_constraintBottom_toTopOf="@+id/card_challenge_title"
-            android:layout_marginStart="8dp"
-            android:layout_marginEnd="8dp"
-            app:layout_constraintRight_toRightOf="parent"
-            tools:layout_constraintLeft_creator="1"
             android:layout_marginBottom="8dp"
-            app:layout_constraintLeft_toLeftOf="parent" />
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            android:textAlignment="center"
+            android:textAllCaps="true"
+            android:textColor="@color/black"
+            app:layout_constraintBottom_toTopOf="@+id/card_challenge_title"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            tools:layout_constraintBottom_creator="1"
+            tools:layout_constraintLeft_creator="1"
+            tools:layout_constraintRight_creator="1"
+            tools:text="Very short sub-title" />
 
         <TextView
             android:id="@+id/card_challenge_title"
             style="@style/AppTheme.TextView.Regular.Large"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
             android:textAlignment="center"
             android:textColor="@color/black"
-            tools:text="Quiz challenge name"
-            tools:layout_constraintRight_creator="1"
-            tools:layout_constraintBottom_creator="1"
             app:layout_constraintBottom_toTopOf="@+id/card_challenge_date"
+            app:layout_constraintLeft_toLeftOf="@+id/card_challenge_complete_text"
             app:layout_constraintRight_toRightOf="@+id/card_challenge_complete_text"
+            tools:layout_constraintBottom_creator="1"
             tools:layout_constraintLeft_creator="1"
-            android:layout_marginBottom="8dp"
-            app:layout_constraintLeft_toLeftOf="@+id/card_challenge_complete_text" />
+            tools:layout_constraintRight_creator="1"
+            tools:text="Quiz challenge name" />
 
         <TextView
             android:id="@+id/card_challenge_date"
             style="@style/AppTheme.TextView.Regular.Small"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="24dp"
             android:textAlignment="center"
             android:textColor="@color/black"
-            tools:text="Ends Month, dd, time"
-            tools:layout_constraintRight_creator="1"
-            tools:layout_constraintBottom_creator="1"
             app:layout_constraintBottom_toTopOf="@+id/card_challenge_button"
+            app:layout_constraintLeft_toLeftOf="@+id/card_challenge_title"
             app:layout_constraintRight_toRightOf="@+id/card_challenge_title"
+            tools:layout_constraintBottom_creator="1"
             tools:layout_constraintLeft_creator="1"
-            android:layout_marginBottom="24dp"
-            app:layout_constraintLeft_toLeftOf="@+id/card_challenge_title" />
+            tools:layout_constraintRight_creator="1"
+            tools:text="Ends Month, dd, time" />
 
         <Button
             android:id="@+id/card_challenge_button"
+            style="@style/AppTheme.Button.Big.Purple"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            style="@style/AppTheme.Button.Big.Purple"
-            android:paddingStart="16dp"
-            android:paddingEnd="16dp"
-            android:text="@string/label_start"
-            tools:layout_constraintBottom_creator="1"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
             android:layout_marginBottom="16dp"
-            app:layout_constraintLeft_toLeftOf="parent"
             android:layout_marginEnd="16dp"
-            android:layout_marginStart="16dp" />
+            android:layout_marginStart="16dp"
+            android:paddingEnd="16dp"
+            android:paddingStart="16dp"
+            android:text="@string/label_start"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            tools:layout_constraintBottom_creator="1" />
 
     </android.support.constraint.ConstraintLayout>
 

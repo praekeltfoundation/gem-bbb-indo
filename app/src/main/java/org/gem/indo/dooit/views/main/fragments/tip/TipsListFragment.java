@@ -15,6 +15,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import org.gem.indo.dooit.DooitApplication;
+import org.gem.indo.dooit.R;
 import org.gem.indo.dooit.api.DooitAPIError;
 import org.gem.indo.dooit.api.DooitErrorHandler;
 import org.gem.indo.dooit.models.Tip;
@@ -38,13 +39,13 @@ public class TipsListFragment extends Fragment {
     @BindString(org.gem.indo.dooit.R.string.tips_list_filter)
     String filterText;
 
-    @BindView(org.gem.indo.dooit.R.id.fragment_tips_list_filter)
+    @BindView(R.id.fragment_tips_list_filter)
     ViewGroup filterView;
 
-    @BindView(org.gem.indo.dooit.R.id.fragment_tips_list_filter_text_view)
+    @BindView(R.id.fragment_tips_list_filter_text_view)
     TextView filterTextView;
 
-    @BindView(org.gem.indo.dooit.R.id.fragment_tips_list_recyclerview)
+    @BindView(R.id.fragment_tips_list_recyclerview)
     RecyclerView recyclerView;
 
     TipsViewPagerPositions pos;
@@ -153,7 +154,7 @@ public class TipsListFragment extends Fragment {
         adapter.getFilter().filter(constraint);
     }
 
-    @OnClick(org.gem.indo.dooit.R.id.fragment_tips_list_filter_image_button)
+    @OnClick(R.id.fragment_tips_list_filter_image_button)
     public void clearFilter(View v) {
         hideFiltering();
         adapter.resetFiltered();

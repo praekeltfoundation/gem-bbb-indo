@@ -17,6 +17,11 @@ public abstract class BaseChallengeQuestion implements Parcelable, Serializable 
         // Mandatory empty constructor
     }
 
+    protected BaseChallengeQuestion(Parcel in) {
+        id = in.readLong();
+        text = in.readString();
+    }
+
     public long getId() {
         return id;
     }
@@ -31,11 +36,6 @@ public abstract class BaseChallengeQuestion implements Parcelable, Serializable 
 
     public void setText(String text) {
         this.text = text;
-    }
-
-    protected BaseChallengeQuestion(Parcel in) {
-        id = in.readLong();
-        text = in.readString();
     }
 
     @Override

@@ -6,6 +6,7 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 
+import org.gem.indo.dooit.R;
 import org.gem.indo.dooit.models.challenge.QuizChallengeOption;
 import org.gem.indo.dooit.views.main.fragments.challenge.adapters.ChallengeQuizOptionsListAdapter;
 
@@ -17,11 +18,10 @@ import butterknife.ButterKnife;
  */
 
 public class QuizOptionViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+    @BindView(R.id.option_text) RadioButton radio;
+    @BindView(R.id.option_background) LinearLayout optionBackground;
     private QuizChallengeOption option;
     private ChallengeQuizOptionsListAdapter adapter;
-
-    @BindView(org.gem.indo.dooit.R.id.option_text) RadioButton radio;
-    @BindView(org.gem.indo.dooit.R.id.option_background) LinearLayout optionBackground;
 
     public QuizOptionViewHolder(View itemView, ChallengeQuizOptionsListAdapter adapter) {
         super(itemView);
@@ -49,20 +49,20 @@ public class QuizOptionViewHolder extends RecyclerView.ViewHolder implements Vie
             return super.toString() + " '" + option.getText() + "'";
         }
 
+    public boolean isSelected() {
+        return itemView.isSelected();
+    }
+
     public void setSelected(boolean selected) {
         itemView.setSelected(selected);
         radio.setChecked(selected);
     }
 
-    public boolean isSelected() {
-        return itemView.isSelected();
+    public boolean isEnabled() {
+        return itemView.isEnabled();
     }
 
     public void setEnabled(boolean enabled) {
         itemView.setEnabled(enabled);
-    }
-
-    public boolean isEnabled() {
-        return itemView.isEnabled();
     }
 }

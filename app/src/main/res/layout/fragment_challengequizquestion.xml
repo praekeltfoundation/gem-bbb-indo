@@ -1,5 +1,4 @@
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
@@ -9,16 +8,16 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
-        android:textAppearance="@style/AppTheme.TextView.Quiz.Title"
         android:textAlignment="center"
+        android:textAppearance="@style/AppTheme.TextView.Quiz.Title"
         tools:text="Question can be long and go over two lines?" />
 
     <org.gem.indo.dooit.views.custom.DesignSafeRecyclerView
         android:id="@+id/option_recycler_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/fragment_challengequizquestion_title"
         android:layout_alignParentBottom="true"
+        android:layout_below="@+id/fragment_challengequizquestion_title"
         android:scrollbars="vertical" />
 
 </RelativeLayout>

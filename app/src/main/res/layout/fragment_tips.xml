@@ -1,5 +1,4 @@
-<android.support.design.widget.CoordinatorLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -23,15 +22,15 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/tip_search_margin">
 
-                    <AutoCompleteTextView
-                        android:id="@+id/fragment_tips_search_view"
-                        style="@style/AppTheme.EditText.Grey"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:drawableEnd="@drawable/search_icon"
-                        android:imeOptions="actionDone"
-                        android:inputType="text"
-                        tools:text="Search favourite tips..." />
+                <AutoCompleteTextView
+                    android:id="@+id/fragment_tips_search_view"
+                    style="@style/AppTheme.EditText.Grey"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:drawableEnd="@drawable/search_icon"
+                    android:imeOptions="actionDone"
+                    android:inputType="text"
+                    tools:text="Search favourite tips..." />
 
                 <TextView
                     android:id="@+id/fragment_tips_search_hint"
@@ -41,7 +40,7 @@
                     android:layout_below="@+id/fragment_tips_search_view"
                     android:layout_marginTop="4dp"
                     android:text="@string/tips_search_hint"
-                    android:textColor="@color/grey"/>
+                    android:textColor="@color/grey" />
 
             </RelativeLayout>
 
@@ -84,6 +83,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@id/appbar"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
+        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
 </android.support.design.widget.CoordinatorLayout>

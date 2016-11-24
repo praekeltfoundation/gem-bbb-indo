@@ -5,6 +5,7 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.gem.indo.dooit.R;
 import org.gem.indo.dooit.models.bot.Answer;
 
 import butterknife.BindView;
@@ -15,7 +16,7 @@ import butterknife.ButterKnife;
  */
 
 public class AnswerViewHolder extends BaseBotViewHolder<Answer> {
-    @BindView(org.gem.indo.dooit.R.id.item_view_bot_answer_text)
+    @BindView(R.id.item_view_bot_answer_text)
     TextView textView;
 
     public AnswerViewHolder(View itemView) {
