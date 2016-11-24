@@ -34,6 +34,7 @@ import javax.inject.Inject;
 import butterknife.BindString;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import butterknife.OnEditorAction;
 import butterknife.OnPageChange;
 import butterknife.OnTouch;
@@ -41,6 +42,9 @@ import butterknife.OnTouch;
 public class TipsFragment extends Fragment implements OnTipsAvailableListener {
 
     private static final String TAG = TipsFragment.class.getName();
+
+    @BindString(org.gem.indo.dooit.R.string.tips_list_filter)
+    String filterText;
 
     @BindString(org.gem.indo.dooit.R.string.tips_tab_favourites)
     String favouritesTitle;
@@ -59,6 +63,12 @@ public class TipsFragment extends Fragment implements OnTipsAvailableListener {
 
     @BindView(R.id.fragment_tips_viewpager)
     ViewPager viewPager;
+
+    @BindView(R.id.fragment_tips_list_filter)
+    ViewGroup filterView;
+
+    @BindView(R.id.fragment_tips_list_filter_text_view)
+    TextView filterTextView;
 
     @Inject
     TipManager tipManager;
@@ -117,13 +127,21 @@ public class TipsFragment extends Fragment implements OnTipsAvailableListener {
 
         return view;
     }
+    @OnClick(R.id.fragment_tips_list_filter_image_button)
+    public void clearFilter(View v) {
+        tipsTabAdapter.getPrimaryItem().clearFilter(v);
+    }
 
     @OnEditorAction(R.id.fragment_tips_search_view)
     public boolean onSearchSubmit(TextView v, int actionId, KeyEvent event) {
         if (actionId == EditorInfo.IME_ACTION_DONE) {
             String constraint = v.getText().toString();
-            if (!TextUtils.isEmpty(constraint))
+            if (!TextUtils.isEmpty(constraint)) {
+                Log.d(TAG, "On Search " + constraint);
+                showFiltering(constraint);
+
                 tipsTabAdapter.getPrimaryItem().onSearch(constraint);
+            }
             return true;
         }
         return false;
@@ -164,5 +182,14 @@ public class TipsFragment extends Fragment implements OnTipsAvailableListener {
     public void onTipsAvailable(List<Tip> tips) {
         Log.d(TAG, "Updating Tips");
         searchAdapter.updateAllTips(tips);
+    }
+
+    protected void showFiltering(String constraint) {
+        filterTextView.setText(String.format(filterText, constraint));
+        filterView.setVisibility(View.VISIBLE);
+    }
+
+    public void hideFiltering() {
+        filterView.setVisibility(View.GONE);
     }
 }

@@ -19,6 +19,7 @@ import org.gem.indo.dooit.R;
 import org.gem.indo.dooit.api.DooitAPIError;
 import org.gem.indo.dooit.api.DooitErrorHandler;
 import org.gem.indo.dooit.models.Tip;
+import org.gem.indo.dooit.views.main.fragments.TipsFragment;
 import org.gem.indo.dooit.views.main.fragments.tip.adapters.TipsListAdapter;
 import org.gem.indo.dooit.views.main.fragments.tip.providers.TipProvider;
 
@@ -35,15 +36,6 @@ public class TipsListFragment extends Fragment {
 
     private static final String TAG = TipsListFragment.class.getName();
     private static final String POS = "pos";
-
-    @BindString(org.gem.indo.dooit.R.string.tips_list_filter)
-    String filterText;
-
-    @BindView(R.id.fragment_tips_list_filter)
-    ViewGroup filterView;
-
-    @BindView(R.id.fragment_tips_list_filter_text_view)
-    TextView filterTextView;
 
     @BindView(R.id.fragment_tips_list_recyclerview)
     RecyclerView recyclerView;
@@ -149,12 +141,9 @@ public class TipsListFragment extends Fragment {
     }
 
     public void onSearch(String constraint) {
-        Log.d(TAG, "On Search " + constraint);
-        showFiltering(constraint);
         adapter.getFilter().filter(constraint);
     }
 
-    @OnClick(R.id.fragment_tips_list_filter_image_button)
     public void clearFilter(View v) {
         hideFiltering();
         adapter.resetFiltered();
@@ -201,12 +190,10 @@ public class TipsListFragment extends Fragment {
                 });
     }
 
-    protected void showFiltering(String constraint) {
-        filterTextView.setText(String.format(filterText, constraint));
-        filterView.setVisibility(View.VISIBLE);
-    }
-
-    protected void hideFiltering() {
-        filterView.setVisibility(View.GONE);
+    protected void hideFiltering(){
+        if(listener!=null)
+            listener.hideFiltering();
+        else
+            System.out.println("filtering not set");
     }
 }
