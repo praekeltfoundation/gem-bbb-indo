@@ -73,6 +73,6 @@
             android:layout_marginBottom="0dp"
             android:layout_marginRight="12dp"
             app:srcCompat="@drawable/ic_d_plus_circle" />
-        
+
     </RelativeLayout>
 </RelativeLayout>
