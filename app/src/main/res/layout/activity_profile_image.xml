@@ -72,6 +72,7 @@
             android:layout_alignEnd="@+id/activity_profile_image_profile_image"
             android:layout_marginBottom="0dp"
             android:layout_marginRight="12dp"
-            android:src="@drawable/ic_d_plus_circle" />
+            app:srcCompat="@drawable/ic_d_plus_circle" />
+        
     </RelativeLayout>
 </RelativeLayout>
