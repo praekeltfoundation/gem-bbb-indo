@@ -6,7 +6,11 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.TabLayout;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory;
 import android.support.v4.view.ViewPager;
@@ -24,6 +28,10 @@ import org.gem.indo.dooit.models.User;
 import org.gem.indo.dooit.views.DooitActivity;
 import org.gem.indo.dooit.views.helpers.activity.DooitActivityBuilder;
 import org.gem.indo.dooit.views.main.adapters.MainTabAdapter;
+import org.gem.indo.dooit.views.main.fragments.ChallengeFragment;
+import org.gem.indo.dooit.views.main.fragments.TipsFragment;
+import org.gem.indo.dooit.views.main.fragments.bot.BotFragment;
+import org.gem.indo.dooit.views.main.fragments.target.TargetFragment;
 import org.gem.indo.dooit.views.profile.ProfileActivity;
 
 import java.io.InputStream;
@@ -102,7 +110,33 @@ public class MainActivity extends DooitActivity {
             TabLayout.Tab tab = tabLayout.getTabAt(i);
             tab.setCustomView(mainTabAdapter.getTabView(i));
         }
+
+        BottomNavigationView bottomNavigationView = (BottomNavigationView)
+                findViewById(R.id.bottom_navigation);
+
+        bottomNavigationView.setOnNavigationItemSelectedListener(
+        new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(MenuItem item) {
+                switch (item.getItemId()) {
+                    case R.id.action_tips:
+                        viewPager.setCurrentItem(MainViewPagerPositions.TIPS.getValue());
+                        break;
+                    case R.id.action_trophy:
+                        viewPager.setCurrentItem(MainViewPagerPositions.CHALLENGE.getValue());
+                        break;
+                    case R.id.action_bot:
+                        viewPager.setCurrentItem(MainViewPagerPositions.BOT.getValue());
+                        break;
+                    case R.id.action_flag:
+                        viewPager.setCurrentItem(MainViewPagerPositions.TARGET.getValue());
+                        break;
+                }
+                return true;
+            }
+        });
     }
+
 
     private void openProfile() {
         ProfileActivity.Builder.create(this).startActivity();

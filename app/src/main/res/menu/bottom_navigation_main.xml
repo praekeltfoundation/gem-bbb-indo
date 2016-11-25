@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+xmlns:app="http://schemas.android.com/apk/res-auto">
+<item
+    android:id="@+id/action_bot"
+    android:enabled="true"
+    android:icon="@drawable/ic_bot_icon_nav"
+    app:showAsAction="ifRoom" />
+
+<item
+    android:id="@+id/action_flag"
+    android:enabled="true"
+    android:icon="@drawable/ic_flag"
+    app:showAsAction="ifRoom" />
+
+<item
+    android:id="@+id/action_trophy"
+    android:enabled="true"
+    android:icon="@drawable/ic_trophy_icon"
+    app:showAsAction="ifRoom" />
+
+<item
+    android:id="@+id/action_tips"
+    android:enabled="true"
+    android:icon="@drawable/ic_tips_icon"
+    app:showAsAction="ifRoom" />
+
+</menu>
