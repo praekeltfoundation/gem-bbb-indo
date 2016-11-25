@@ -1,5 +1,7 @@
 package org.gem.indo.dooit.views.main.fragments;
 
+import android.app.Activity;
+import android.app.Application;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
@@ -14,6 +16,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AutoCompleteTextView;
 import android.widget.TextView;
 
@@ -141,9 +144,15 @@ public class TipsFragment extends Fragment implements OnTipsAvailableListener {
 
                 tipsTabAdapter.getPrimaryItem().onSearch(constraint);
             }
+            hideKeyBoard();
             return true;
         }
         return false;
+    }
+    void hideKeyBoard(){
+        InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Activity.INPUT_METHOD_SERVICE);
+        imm.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0);
+
     }
 
     @OnTouch(R.id.fragment_tips_search_view)
@@ -160,6 +169,7 @@ public class TipsFragment extends Fragment implements OnTipsAvailableListener {
                     showFiltering(constraint);
                     tipsTabAdapter.getPrimaryItem().onSearch(constraint);
                 }
+                hideKeyBoard();
                 return true;
             }
         }
