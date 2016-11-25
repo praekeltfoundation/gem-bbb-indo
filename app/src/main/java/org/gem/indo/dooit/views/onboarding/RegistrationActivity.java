@@ -9,6 +9,7 @@ import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.TextUtils;
 import android.text.style.ForegroundColorSpan;
+import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -25,6 +26,7 @@ import org.gem.indo.dooit.api.managers.AuthenticationManager;
 import org.gem.indo.dooit.api.responses.AuthenticationResponse;
 import org.gem.indo.dooit.api.responses.OnboardingResponse;
 import org.gem.indo.dooit.helpers.Persisted;
+import org.gem.indo.dooit.helpers.SquiggleBackgroundHelper;
 import org.gem.indo.dooit.models.Profile;
 import org.gem.indo.dooit.models.User;
 import org.gem.indo.dooit.views.DooitActivity;
@@ -50,7 +52,10 @@ public class RegistrationActivity extends DooitActivity {
     private static final int MAX_MOBILE_LENGTH = 16;
     private static final int MAX_PASSWORD = 6;
 
-    @BindView(R.id.activity_registration_t_c_text_view)
+    @BindView(R.id.activity_registration)
+    View background;
+    
+    @BindView(org.gem.indo.dooit.R.id.activity_registration_t_c_text_view)
     TextView textViewTC;
 
     @BindView(R.id.activity_registration_login_text_view)
@@ -119,6 +124,7 @@ public class RegistrationActivity extends DooitActivity {
         }
         textViewTC.setText(spanTc);
         textViewLogin.setText(spanLogin);
+        SquiggleBackgroundHelper.setBackground(this, R.color.purple, R.color.purple_light, background);
     }
 
     @OnClick(R.id.activity_registration_t_c_text_view)

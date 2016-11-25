@@ -4,7 +4,6 @@ import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -21,7 +20,7 @@ import org.gem.indo.dooit.api.DooitAPIError;
 import org.gem.indo.dooit.api.DooitErrorHandler;
 import org.gem.indo.dooit.api.managers.ChallengeManager;
 import org.gem.indo.dooit.helpers.Persisted;
-import org.gem.indo.dooit.helpers.TilingDrawable;
+import org.gem.indo.dooit.helpers.SquiggleBackgroundHelper;
 import org.gem.indo.dooit.models.challenge.ParticipantAnswer;
 import org.gem.indo.dooit.models.challenge.QuizChallenge;
 import org.gem.indo.dooit.models.challenge.QuizChallengeEntry;
@@ -62,14 +61,14 @@ public class ChallengeQuizFragment extends Fragment implements OnOptionChangeLis
     @Inject
     ChallengeManager challengeManager;
     @BindView(R.id.fragment_chalenge_nested_bg)
-    View mainBackground;
+    View background;
     @BindView(R.id.fragment_challenge_quiz_progressbar)
     ProgressBar mProgressBar;
-    @BindView(R.id.fragment_challenge_quiz_progresscounter)
+    @BindView(org.gem.indo.dooit.R.id.fragment_challenge_quiz_progresscounter)
     TextView mProgressCounter;
-    @BindView(R.id.fragment_challenge_quiz_pager)
+    @BindView(org.gem.indo.dooit.R.id.fragment_challenge_quiz_pager)
     ViewPager mPager;
-    @BindView(R.id.fragment_challenge_quiz_checkbutton)
+    @BindView(org.gem.indo.dooit.R.id.fragment_challenge_quiz_checkbutton)
     Button checkButton;
     private QuizChallenge mChallenge;
     private ChallengeQuizPagerAdapter mAdapter;
@@ -117,9 +116,7 @@ public class ChallengeQuizFragment extends Fragment implements OnOptionChangeLis
         // Inflate the layout for this fragment
         View view = inflater.inflate(org.gem.indo.dooit.R.layout.fragment_challenge_quiz, container, false);
         unbinder = ButterKnife.bind(this, view);
-        TilingDrawable tiled = new TilingDrawable(ContextCompat.getDrawable(getContext(), org.gem.indo.dooit.R.drawable.bkg_clipped));
-        tiled.setTint(getResources().getColor(org.gem.indo.dooit.R.color.light_grey));
-        mainBackground.setBackground(tiled);
+        SquiggleBackgroundHelper.setBackground(getContext(), R.color.grey_back, R.color.grey_fore, background);
         mPager.setAdapter(mAdapter);
         updateProgressCounter(0);
         return view;

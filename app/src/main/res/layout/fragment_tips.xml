@@ -66,6 +66,7 @@
             android:layout_height="match_parent"
             android:layout_below="@+id/fragment_tips_search_hint"
             android:background="@color/yellow"
+            app:tabBackground="@drawable/tab_tips_bkg"
             app:tabIndicatorColor="@color/grey"
             app:tabIndicatorHeight="@dimen/tip_tab_indicator_height"
             app:tabPaddingBottom="0dp"

@@ -11,6 +11,7 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
+import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
@@ -25,6 +26,7 @@ import org.gem.indo.dooit.api.managers.FileUploadManager;
 import org.gem.indo.dooit.api.responses.EmptyResponse;
 import org.gem.indo.dooit.helpers.Persisted;
 import org.gem.indo.dooit.helpers.RequestCodes;
+import org.gem.indo.dooit.helpers.SquiggleBackgroundHelper;
 import org.gem.indo.dooit.helpers.permissions.PermissionCallback;
 import org.gem.indo.dooit.helpers.permissions.PermissionsHelper;
 import org.gem.indo.dooit.models.User;
@@ -45,6 +47,8 @@ public class ProfileImageActivity extends DooitActivity {
 
     private static final String INTENT_MIME_TYPE = "mime_type";
     private static final String INTENT_IMAGE_URI = "image_uri";
+    @BindView(R.id.activity_profile_image)
+    View background;
 
     @BindView(R.id.activity_profile_image_profile_image)
     SimpleDraweeView simpleDraweeView;
@@ -68,6 +72,7 @@ public class ProfileImageActivity extends DooitActivity {
         setContentView(org.gem.indo.dooit.R.layout.activity_profile_image);
         ((DooitApplication) getApplication()).component.inject(this);
         ButterKnife.bind(this);
+        SquiggleBackgroundHelper.setBackground(this, R.color.purple, R.color.purple_light, background);
     }
 
     @Override

@@ -18,6 +18,7 @@ import org.gem.indo.dooit.api.DooitAPIError;
 import org.gem.indo.dooit.api.DooitErrorHandler;
 import org.gem.indo.dooit.api.managers.ChallengeManager;
 import org.gem.indo.dooit.helpers.Persisted;
+import org.gem.indo.dooit.helpers.SquiggleBackgroundHelper;
 import org.gem.indo.dooit.models.challenge.FreeformChallenge;
 import org.gem.indo.dooit.models.challenge.FreeformChallengeQuestion;
 import org.gem.indo.dooit.models.challenge.ParticipantFreeformAnswer;
@@ -42,11 +43,21 @@ public class ChallengeFreeformFragment extends Fragment {
     ChallengeManager challengeManager;
     @Inject
     Persisted persisted;
-    @BindView(R.id.fragment_challenge_freeform_title) TextView title;
-    @BindView(R.id.fragment_challenge_freeform_submission) EditText submissionBox;
-    @BindView(R.id.fragment_challenge_freeform_submitbutton) Button submitButton;
+
     private FreeformChallenge challenge;
     private FreeformChallengeQuestion question;
+
+    @BindView(R.id.fragment_challenge_container)
+    View background;
+
+    @BindView(R.id.fragment_challenge_freeform_title)
+    TextView title;
+
+    @BindView(R.id.fragment_challenge_freeform_submission)
+    EditText submissionBox;
+
+    @BindView(R.id.fragment_challenge_freeform_submitbutton)
+    Button submitButton;
 
     public ChallengeFreeformFragment() {
         // Required empty public constructor
@@ -83,7 +94,8 @@ public class ChallengeFreeformFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(org.gem.indo.dooit.R.layout.fragment_challenge_freeform, container, false);
         ButterKnife.bind(this, view);
-        title.setText(question != null ? question.getText() : getString(org.gem.indo.dooit.R.string.challenge_no_question));
+        SquiggleBackgroundHelper.setBackground(getContext(), R.color.grey_back, R.color.grey_fore, background);
+        title.setText(question != null ? question.getText() : getString(R.string.challenge_no_question));
         fetchAnswer();
         return view;
     }
