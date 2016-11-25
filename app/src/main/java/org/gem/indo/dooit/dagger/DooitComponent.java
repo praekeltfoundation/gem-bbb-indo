@@ -14,6 +14,7 @@ import org.gem.indo.dooit.views.main.fragments.bot.viewholders.GoalVerificationV
 import org.gem.indo.dooit.views.main.fragments.bot.viewholders.TextViewHolder;
 import org.gem.indo.dooit.views.main.fragments.challenge.fragments.ChallengeFreeformFragment;
 import org.gem.indo.dooit.views.main.fragments.challenge.fragments.ChallengeQuizFragment;
+import org.gem.indo.dooit.views.main.fragments.challenge.fragments.ChallengeRegisterFragment;
 import org.gem.indo.dooit.views.main.fragments.target.TargetFragment;
 import org.gem.indo.dooit.views.main.fragments.target.callbacks.GoalAddCallback;
 import org.gem.indo.dooit.views.main.fragments.target.callbacks.GoalDepositCallback;
@@ -41,32 +42,9 @@ import dagger.Component;
 @Singleton
 @Component(modules = DooitModule.class)
 public interface DooitComponent {
+    void inject(AnswerImageSelectViewHolder o);
 
-    void inject(DooitManager o);
-
-    void inject(RootActivity o);
-
-    void inject(DooitApplication o);
-
-    void inject(DooitActivity o);
-
-    void inject(MainActivity o);
-
-    void inject(ProfileActivity o);
-
-    void inject(LoginActivity o);
-
-    void inject(SettingsActivity o);
-
-    void inject(RegistrationActivity o);
-
-    void inject(ChangeNameActivity o);
-
-    void inject(ChangePasswordActivity o);
-
-    void inject(ProfileImageActivity o);
-
-    void inject(Persisted o);
+    void inject(BotFragment o);
 
     void inject(ChallengeFragment o);
 
@@ -74,29 +52,53 @@ public interface DooitComponent {
 
     void inject(ChallengeQuizFragment o);
 
-    void inject(BotFragment o);
+    void inject(ChallengeRegisterFragment o);
 
-    void inject(AnswerImageSelectViewHolder o);
+    void inject(ChangeNameActivity o);
 
-    void inject(GoalVerificationViewHolder o);
+    void inject(ChangePasswordActivity o);
 
-    void inject(TargetFragment o);
+    void inject(DooitActivity o);
+
+    void inject(DooitApplication o);
+
+    void inject(DooitManager o);
 
     void inject(GoalAddCallback o);
 
     void inject(GoalDepositCallback o);
 
-    void inject(TipsFragment o);
+    void inject(GoalVerificationViewHolder o);
+
+    void inject(LoginActivity o);
+
+    void inject(MainActivity o);
+
+    void inject(Persisted o);
+
+    void inject(ProfileActivity o);
+
+    void inject(ProfileImageActivity o);
+
+    void inject(RegistrationActivity o);
+
+    void inject(RootActivity o);
+
+    void inject(SettingsActivity o);
+
+    void inject(TargetFragment o);
 
     void inject(TextViewHolder o);
 
-    void inject(TipsListFragment o);
+    void inject(TipArticleActivity o);
 
     void inject(TipProvider o);
 
-    void inject(TipsListAdapter o);
-
     void inject(TipViewHolder o);
 
-    void inject(TipArticleActivity o);
+    void inject(TipsFragment o);
+
+    void inject(TipsListAdapter o);
+
+    void inject(TipsListFragment o);
 }
