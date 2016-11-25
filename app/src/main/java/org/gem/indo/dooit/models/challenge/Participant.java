@@ -22,11 +22,11 @@ public class Participant implements Parcelable, Serializable {
      * Constructors *
      ****************/
 
-    Participant() {
+    public Participant() {
         // Mandatory empty constructor
     }
 
-    Participant(long user, long challenge) {
+    public Participant(long user, long challenge) {
         this.user = user;
         this.challenge = challenge;
     }
@@ -37,15 +37,15 @@ public class Participant implements Parcelable, Serializable {
      ***********/
 
     public long getChallenge() {
-        return this.challenge;
+        return challenge != null ? challenge : -1;
     }
 
     public long getId() {
-        return this.id;
+        return id != null ? id : -1;
     }
 
     public long getUser() {
-        return this.user;
+        return user != null ? user : -1;
     }
 
 

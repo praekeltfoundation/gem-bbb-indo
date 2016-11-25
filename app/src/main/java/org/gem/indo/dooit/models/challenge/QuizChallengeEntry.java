@@ -13,13 +13,30 @@ import java.util.List;
 
 public class QuizChallengeEntry implements Serializable {
 
-    private long user;
-    private long challenge;
-    @SerializedName("date_completed") private DateTime dateCompleted = new DateTime();
+    /*************
+     * Variables *
+     *************/
+
+    @SerializedName("date_completed")
+    private DateTime dateCompleted = new DateTime();
     private List<ParticipantAnswer> answers;
+    private Long challenge = null;
+    private Long participant = null;
+    private Long user = null;
+
+
+    /****************
+     * Constructors *
+     ****************/
 
     public QuizChallengeEntry() {
         // Mandatory empty constructor
+    }
+
+    public QuizChallengeEntry(long participant, List<ParticipantAnswer> answers) {
+        this.participant = participant;
+        this.dateCompleted = new DateTime();
+        this.answers = answers;
     }
 
     public QuizChallengeEntry(long user, long challenge, List<ParticipantAnswer> answers) {
@@ -29,35 +46,52 @@ public class QuizChallengeEntry implements Serializable {
         this.answers = answers;
     }
 
-    public long getUser() {
-        return user;
-    }
 
-    public void setUser(long user) {
-        this.user = user;
-    }
-
-    public long getChallenge() {
-        return challenge;
-    }
-
-    public void setChallenge(long challenge) {
-        this.challenge = challenge;
-    }
+    /***********
+     * Getters *
+     ***********/
 
     public DateTime getDateCompleted() {
         return dateCompleted;
-    }
-
-    public void setDateCompleted(DateTime dateCompleted) {
-        this.dateCompleted = dateCompleted;
     }
 
     public List<ParticipantAnswer> getAnswers() {
         return answers;
     }
 
+    public long getChallenge() {
+        return challenge != null ? challenge : -1;
+    }
+
+    public long getParticipant() {
+        return participant != null ? participant : -1;
+    }
+
+    public long getUser() {
+        return user != null ? user : -1;
+    }
+
+    /***********
+     * Setters *
+     ***********/
+
     public void setAnswers(List<ParticipantAnswer> answers) {
         this.answers = answers;
+    }
+
+    public void setChallenge(long challenge) {
+        this.challenge = challenge;
+    }
+
+    public void setDateCompleted(DateTime dateCompleted) {
+        this.dateCompleted = dateCompleted;
+    }
+
+    public void setParticipant(long participant) {
+        this.participant = participant;
+    }
+
+    public void setUser(long user) {
+        this.user = user;
     }
 }
