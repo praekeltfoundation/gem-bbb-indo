@@ -35,7 +35,7 @@ public interface ChallengeAPI {
     @GET("/api/participantfreetext/fetch/")
     Observable<ParticipantFreeformAnswer> fetchParticipantFreeform(@Query("challenge") long challenge);
 
-    @GET("/api/participants/register/")
+    @POST("/api/participants/register/")
     Observable<Participant> registerParticipant(@Body Participant participant);
 
 }
