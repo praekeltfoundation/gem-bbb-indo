@@ -144,14 +144,17 @@ public class TipsFragment extends Fragment implements OnTipsAvailableListener {
 
                 tipsTabAdapter.getPrimaryItem().onSearch(constraint);
             }
-            hideKeyBoard();
+
             return true;
         }
         return false;
     }
     void hideKeyBoard(){
         InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Activity.INPUT_METHOD_SERVICE);
-        imm.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0);
+
+        //imm.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0);
+
+        //imm.hideSoftInputFromWindow( this.viewPager.getWindowToken(), InputMethodManager.HIDE_IMPLICIT_ONLY, null);
 
     }
 
