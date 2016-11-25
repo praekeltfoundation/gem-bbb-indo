@@ -1,5 +1,6 @@
 package org.gem.indo.dooit.views.main.fragments;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
@@ -14,6 +15,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AutoCompleteTextView;
 import android.widget.TextView;
 
@@ -33,6 +35,7 @@ import javax.inject.Inject;
 import butterknife.BindString;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import butterknife.OnEditorAction;
 import butterknife.OnPageChange;
 import butterknife.OnTouch;
@@ -40,6 +43,9 @@ import butterknife.OnTouch;
 public class TipsFragment extends Fragment implements OnTipsAvailableListener {
 
     private static final String TAG = TipsFragment.class.getName();
+
+    @BindString(org.gem.indo.dooit.R.string.tips_list_filter)
+    String filterText;
 
     @BindString(org.gem.indo.dooit.R.string.tips_tab_favourites)
     String favouritesTitle;
@@ -58,6 +64,12 @@ public class TipsFragment extends Fragment implements OnTipsAvailableListener {
 
     @BindView(R.id.fragment_tips_viewpager)
     ViewPager viewPager;
+
+    @BindView(R.id.fragment_tips_list_filter)
+    ViewGroup filterView;
+
+    @BindView(R.id.fragment_tips_list_filter_text_view)
+    TextView filterTextView;
 
     @Inject
     TipManager tipManager;
@@ -91,6 +103,7 @@ public class TipsFragment extends Fragment implements OnTipsAvailableListener {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
         View view = inflater.inflate(org.gem.indo.dooit.R.layout.fragment_tips, container, false);
         ButterKnife.bind(this, view);
 
@@ -114,16 +127,35 @@ public class TipsFragment extends Fragment implements OnTipsAvailableListener {
 
         return view;
     }
+    @OnClick(R.id.fragment_tips_list_filter_image_button)
+    public void clearFilter(View v) {
+
+        tipsTabAdapter.getPrimaryItem().clearFilter(v);
+
+    }
 
     @OnEditorAction(R.id.fragment_tips_search_view)
     public boolean onSearchSubmit(TextView v, int actionId, KeyEvent event) {
         if (actionId == EditorInfo.IME_ACTION_DONE) {
             String constraint = v.getText().toString();
-            if (!TextUtils.isEmpty(constraint))
+            if (!TextUtils.isEmpty(constraint)) {
+                Log.d(TAG, "On Search " + constraint);
+                showFiltering(constraint);
+
                 tipsTabAdapter.getPrimaryItem().onSearch(constraint);
+            }
+
             return true;
         }
         return false;
+    }
+    void hideKeyBoard(){
+        InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Activity.INPUT_METHOD_SERVICE);
+
+        //imm.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0);
+
+        //imm.hideSoftInputFromWindow( this.viewPager.getWindowToken(), InputMethodManager.HIDE_IMPLICIT_ONLY, null);
+
     }
 
     @OnTouch(R.id.fragment_tips_search_view)
@@ -136,8 +168,11 @@ public class TipsFragment extends Fragment implements OnTipsAvailableListener {
         if (event.getAction() == MotionEvent.ACTION_UP) {
             if (event.getX() >= (searchView.getRight() - searchView.getCompoundDrawables()[DRAWABLE_RIGHT].getBounds().width() - searchView.getPaddingRight())) {
                 String constraint = v.getText().toString();
-                if (!TextUtils.isEmpty(constraint))
+                if (!TextUtils.isEmpty(constraint)) {
+                    showFiltering(constraint);
                     tipsTabAdapter.getPrimaryItem().onSearch(constraint);
+                }
+                hideKeyBoard();
                 return true;
             }
         }
@@ -159,7 +194,21 @@ public class TipsFragment extends Fragment implements OnTipsAvailableListener {
 
     @Override
     public void onTipsAvailable(List<Tip> tips) {
+        View view = this.getActivity().findViewById(R.id.fragment_tip_progress_container);
+        if(view != null){
+            view.setVisibility(View.GONE);
+        }
         Log.d(TAG, "Updating Tips");
         searchAdapter.updateAllTips(tips);
+
+    }
+
+    protected void showFiltering(String constraint) {
+        filterTextView.setText(String.format(filterText, constraint));
+        filterView.setVisibility(View.VISIBLE);
+    }
+
+    public void hideFiltering() {
+        filterView.setVisibility(View.GONE);
     }
 }
