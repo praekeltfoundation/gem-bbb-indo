@@ -42,7 +42,7 @@ public class DooitApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-        if (!Constants.DEBUG) {
+        if (!BuildConfig.DEBUG) {
             Fabric.with(this, new Crashlytics());
         }
 

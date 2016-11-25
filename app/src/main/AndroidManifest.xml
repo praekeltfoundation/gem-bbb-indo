@@ -59,10 +59,6 @@
             android:label="@string/title_activity_settings"
             android:theme="@style/AppTheme.NoActionBar" />
 
-        <meta-data
-            android:name="io.fabric.ApiKey"
-            android:value="21c49b39f896991f9c499d71d1371cd26cd8e499" />
-
         <activity
             android:name="org.gem.indo.dooit.views.settings.SettingsWebViewActivity"
             android:theme="@style/AppTheme.NoActionBar" />
@@ -75,6 +71,9 @@
         <service
             android:name=".services.NotificationScheduler"
             android:enabled="true" />
+        <meta-data
+            android:name="io.fabric.ApiKey"
+            android:value="21c49b39f896991f9c499d71d1371cd26cd8e499" />
     </application>
 
 </manifest>
