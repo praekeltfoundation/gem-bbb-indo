@@ -1,6 +1,7 @@
 package org.gem.indo.dooit.api.interfaces;
 
 import org.gem.indo.dooit.models.challenge.BaseChallenge;
+import org.gem.indo.dooit.models.challenge.Participant;
 import org.gem.indo.dooit.models.challenge.ParticipantFreeformAnswer;
 import org.gem.indo.dooit.models.challenge.QuizChallengeEntry;
 
@@ -33,5 +34,8 @@ public interface ChallengeAPI {
 
     @GET("/api/participantfreetext/fetch/")
     Observable<ParticipantFreeformAnswer> fetchParticipantFreeform(@Query("challenge") long challenge);
+
+    @GET("/api/participants/register/")
+    Observable<Participant> registerParticipant(@Body Participant participant);
 
 }
