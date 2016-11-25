@@ -21,6 +21,7 @@ import org.gem.indo.dooit.api.DooitErrorHandler;
 import org.gem.indo.dooit.api.managers.ChallengeManager;
 import org.gem.indo.dooit.helpers.Persisted;
 import org.gem.indo.dooit.helpers.SquiggleBackgroundHelper;
+import org.gem.indo.dooit.models.challenge.Participant;
 import org.gem.indo.dooit.models.challenge.ParticipantAnswer;
 import org.gem.indo.dooit.models.challenge.QuizChallenge;
 import org.gem.indo.dooit.models.challenge.QuizChallengeEntry;
@@ -55,30 +56,40 @@ import rx.functions.Action1;
 public class ChallengeQuizFragment extends Fragment implements OnOptionChangeListener {
     private static final String TAG = "ChallengeQuiz";
     private static final String ARG_CHALLENGE = "challenge";
+    private static final String ARG_PARTICIPANT = "participant";
 
     @Inject
     Persisted persisted;
+
     @Inject
     ChallengeManager challengeManager;
+
     @BindView(R.id.fragment_chalenge_nested_bg)
     View background;
+
     @BindView(R.id.fragment_challenge_quiz_progressbar)
     ProgressBar mProgressBar;
+
     @BindView(org.gem.indo.dooit.R.id.fragment_challenge_quiz_progresscounter)
     TextView mProgressCounter;
+
     @BindView(org.gem.indo.dooit.R.id.fragment_challenge_quiz_pager)
     ViewPager mPager;
+
     @BindView(org.gem.indo.dooit.R.id.fragment_challenge_quiz_checkbutton)
     Button checkButton;
-    private QuizChallenge mChallenge;
+
     private ChallengeQuizPagerAdapter mAdapter;
-    private QuizChallengeQuestion currentQuestion = null;
-    private QuizChallengeOption currentOption = null;
     private List<ParticipantAnswer> answers = new ArrayList<ParticipantAnswer>();
-    private Unbinder unbinder = null;
+    private Map<Long, QuestionState> selections = new HashMap<>();
+    private Participant participant;
+    private QuizChallenge mChallenge;
+    private QuizChallengeOption currentOption = null;
+    private QuizChallengeQuestion currentQuestion = null;
     private Set<OnOptionChangeListener> optionChangeListeners = new HashSet<>();
     private Set<OnQuestionCompletedListener> questionCompletedListeners = new HashSet<>();
-    private Map<Long, QuestionState> selections = new HashMap<>();
+    private Unbinder unbinder = null;
+
 
     public ChallengeQuizFragment() {
         // Required empty public constructor
@@ -91,9 +102,10 @@ public class ChallengeQuizFragment extends Fragment implements OnOptionChangeLis
      * @param challenge Quiz type challenge.
      * @return A new instance of fragment ChallengeQuizFragment.
      */
-    public static ChallengeQuizFragment newInstance(QuizChallenge challenge) {
+    public static ChallengeQuizFragment newInstance(Participant participant, QuizChallenge challenge) {
         ChallengeQuizFragment fragment = new ChallengeQuizFragment();
         Bundle args = new Bundle();
+        args.putParcelable(ARG_PARTICIPANT, participant);
         args.putParcelable(ARG_CHALLENGE, challenge);
         fragment.setArguments(args);
         return fragment;
@@ -103,6 +115,7 @@ public class ChallengeQuizFragment extends Fragment implements OnOptionChangeLis
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
+            participant = getArguments().getParcelable(ARG_PARTICIPANT);
             mChallenge = getArguments().getParcelable(ARG_CHALLENGE);
         }
         ((DooitApplication) getActivity().getApplication()).component.inject(this);
@@ -173,8 +186,7 @@ public class ChallengeQuizFragment extends Fragment implements OnOptionChangeLis
 
     public void submitParticipantEntry() {
         QuizChallengeEntry entry = new QuizChallengeEntry();
-        entry.setUser(persisted.getCurrentUser().getId());
-        entry.setChallenge(mChallenge.getId());
+        entry.setParticipant(participant.getId());
         entry.setDateCompleted(new DateTime());
         entry.setAnswers(answers);
         challengeManager.createEntry(entry, new DooitErrorHandler() {
