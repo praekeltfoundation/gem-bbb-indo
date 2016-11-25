@@ -87,8 +87,6 @@ public interface DooitComponent {
 
     void inject(GoalReminderViewHolder o);
 
-    void inject(TargetFragment o);
-
     void inject(SettingsActivity o);
 
     void inject(TargetFragment o);
