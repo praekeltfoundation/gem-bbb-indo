@@ -1,7 +1,6 @@
 package org.gem.indo.dooit.views.main.fragments;
 
 import android.app.Activity;
-import android.app.Application;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
@@ -104,6 +103,7 @@ public class TipsFragment extends Fragment implements OnTipsAvailableListener {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
         View view = inflater.inflate(org.gem.indo.dooit.R.layout.fragment_tips, container, false);
         ButterKnife.bind(this, view);
 
@@ -194,8 +194,13 @@ public class TipsFragment extends Fragment implements OnTipsAvailableListener {
 
     @Override
     public void onTipsAvailable(List<Tip> tips) {
+        View view = this.getActivity().findViewById(R.id.fragment_tip_progress_container);
+        if(view != null){
+            view.setVisibility(View.GONE);
+        }
         Log.d(TAG, "Updating Tips");
         searchAdapter.updateAllTips(tips);
+
     }
 
     protected void showFiltering(String constraint) {
