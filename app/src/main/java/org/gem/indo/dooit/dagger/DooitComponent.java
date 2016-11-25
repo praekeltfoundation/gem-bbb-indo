@@ -10,6 +10,7 @@ import org.gem.indo.dooit.views.main.fragments.ChallengeFragment;
 import org.gem.indo.dooit.views.main.fragments.TipsFragment;
 import org.gem.indo.dooit.views.main.fragments.bot.BotFragment;
 import org.gem.indo.dooit.views.main.fragments.bot.viewholders.AnswerImageSelectViewHolder;
+import org.gem.indo.dooit.views.main.fragments.bot.viewholders.GoalReminderViewHolder;
 import org.gem.indo.dooit.views.main.fragments.bot.viewholders.GoalVerificationViewHolder;
 import org.gem.indo.dooit.views.main.fragments.bot.viewholders.TextViewHolder;
 import org.gem.indo.dooit.views.main.fragments.challenge.fragments.ChallengeFreeformFragment;
@@ -83,6 +84,10 @@ public interface DooitComponent {
     void inject(RegistrationActivity o);
 
     void inject(RootActivity o);
+
+    void inject(GoalReminderViewHolder o);
+
+    void inject(TargetFragment o);
 
     void inject(SettingsActivity o);
 

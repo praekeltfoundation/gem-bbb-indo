@@ -105,38 +105,40 @@ public class ChallengeFragment extends Fragment {
             }
         });
 
-        challengeSubscription.subscribe(new Action1<List<BaseChallenge>>() {
-            @Override
-            public void call(List<BaseChallenge> challenges) {
-                if (challenges.size() > 0) {
-                    challenge = challenges.get(0);
-                    persisted.setActiveChallenge(challenge);
-
-                    if (getActivity().findViewById(R.id.fragment_challenge_container) != null) {
-                        FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
-                        Fragment fragment = ChallengeRegisterFragment.newInstance();
-                        Bundle args = new Bundle();
-                        args.putParcelable("challenge", challenge);
-                        fragment.setArguments(args);
-                        ft.replace(R.id.fragment_challenge_container, fragment, "fragment_challenge");
-                        ft.commit();
-                    }
-                } else {
-                    FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
-                    Fragment fragment = ChallengeNoneFragment.newInstance();
-                    ft.replace(R.id.fragment_challenge_container, fragment);
-                    ft.commit();
-                }
-                getActivity().runOnUiThread(new Runnable() {
+        challengeSubscription
+                .subscribe(new Action1<List<BaseChallenge>>() {
                     @Override
-                    public void run() {
-                        progressBar.setVisibility(View.GONE);
-                        progressText.setVisibility(View.GONE);
+                    public void call(List<BaseChallenge> challenges) {
+                        if (challenges.size() > 0) {
+                            challenge = challenges.get(0);
+                            persisted.setActiveChallenge(challenge);
 
+                            if (getActivity() == null) return;
+                            if (getActivity().findViewById(R.id.fragment_challenge_container) != null) {
+                                FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
+                                Fragment fragment = ChallengeRegisterFragment.newInstance();
+                                Bundle args = new Bundle();
+                                args.putParcelable("challenge", challenge);
+                                fragment.setArguments(args);
+                                ft.replace(R.id.fragment_challenge_container, fragment, "fragment_challenge");
+                                ft.commit();
+                            }
+                        } else {
+                            FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
+                            Fragment fragment = ChallengeNoneFragment.newInstance();
+                            ft.replace(R.id.fragment_challenge_container, fragment);
+                            ft.commit();
+                        }
+                        getActivity().runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                progressBar.setVisibility(View.GONE);
+                                progressText.setVisibility(View.GONE);
+
+                            }
+                        });
                     }
                 });
-            }
-        });
     }
 
     @Override

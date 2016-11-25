@@ -17,6 +17,7 @@ import org.gem.indo.dooit.views.main.fragments.bot.viewholders.AnswerInlineTextE
 import org.gem.indo.dooit.views.main.fragments.bot.viewholders.AnswerTextCurrencyViewHolder;
 import org.gem.indo.dooit.views.main.fragments.bot.viewholders.AnswerViewHolder;
 import org.gem.indo.dooit.views.main.fragments.bot.viewholders.BaseBotViewHolder;
+import org.gem.indo.dooit.views.main.fragments.bot.viewholders.GoalReminderViewHolder;
 import org.gem.indo.dooit.views.main.fragments.bot.viewholders.GoalVerificationViewHolder;
 import org.gem.indo.dooit.views.main.fragments.bot.viewholders.TextViewHolder;
 
@@ -63,6 +64,8 @@ public class BotAdapter extends RecyclerView.Adapter<BaseBotViewHolder> {
                 return new AnswerTextCurrencyViewHolder(LayoutInflater.from(context).inflate(org.gem.indo.dooit.R.layout.item_view_bot_answer, parent, false), this);
             case GOALVERIFICATION:
                 return new GoalVerificationViewHolder(LayoutInflater.from(context).inflate(org.gem.indo.dooit.R.layout.item_view_bot_text, parent, false), this);
+            case GOALREMINDER:
+                return new GoalReminderViewHolder(LayoutInflater.from(context).inflate(org.gem.indo.dooit.R.layout.item_view_bot_text, parent, false));
             case UNDEFINED:
             default:
                 return new TextViewHolder(LayoutInflater.from(context).inflate(org.gem.indo.dooit.R.layout.item_view_bot_text, parent, false), this);

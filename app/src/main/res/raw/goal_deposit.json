@@ -10,13 +10,13 @@
   },
   {
     "name": "depositIntroduction",
-    "type": "text",
+    "type": "goalReminder",
     "text": "$(depositIntroduction)",
     "autoNext": "depositReminder"
   },
   {
     "name": "depositReminder",
-    "type": "text",
+    "type": "goalReminder",
     "text": "$(depositReminder)",
     "autoNext": "depositRemainder"
   },
