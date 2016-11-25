@@ -71,9 +71,15 @@ public class ChallengeSuccessLightboxFragment extends DialogFragment {
                 false
         );
         unbinder = ButterKnife.bind(this, view);
-        if (hint != null && !hint.isEmpty() && hintText != null) {
-            hintText.setText(hint);
+
+        if (hintText != null) {
+            if (hint != null && !hint.isEmpty()) {
+                hintText.setText(String.format(getString(R.string.challenge_hint_template), hint));
+            } else {
+                hintText.setText(R.string.challenge_hint_none);
+            }
         }
+
         return view;
     }
 

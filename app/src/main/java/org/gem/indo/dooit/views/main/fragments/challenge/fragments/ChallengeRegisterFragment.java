@@ -8,21 +8,31 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.facebook.drawee.view.SimpleDraweeView;
 
+import org.gem.indo.dooit.DooitApplication;
 import org.gem.indo.dooit.R;
+import org.gem.indo.dooit.api.DooitAPIError;
+import org.gem.indo.dooit.api.DooitErrorHandler;
+import org.gem.indo.dooit.api.managers.ChallengeManager;
 import org.gem.indo.dooit.helpers.SquiggleBackgroundHelper;
 import org.gem.indo.dooit.models.challenge.BaseChallenge;
 import org.gem.indo.dooit.models.challenge.FreeformChallenge;
+import org.gem.indo.dooit.models.challenge.Participant;
 import org.gem.indo.dooit.models.challenge.QuizChallenge;
 import org.gem.indo.dooit.models.challenge.QuizChallengeOption;
 import org.gem.indo.dooit.models.challenge.QuizChallengeQuestion;
+
+import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
+import rx.Observable;
+import rx.functions.Action1;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -31,6 +41,9 @@ import butterknife.Unbinder;
  */
 public class ChallengeRegisterFragment extends Fragment {
     private static final String ARG_CHALLENGE = "challenge";
+
+    @Inject
+    ChallengeManager challengeManager;
 
     @BindView(R.id.fragment_challenge_container)
     View background;
@@ -57,6 +70,7 @@ public class ChallengeRegisterFragment extends Fragment {
     Button register;
 
     private BaseChallenge challenge;
+    private Observable<Participant> participantSubscription = null;
     private Unbinder unbinder = null;
 
     public ChallengeRegisterFragment() {
@@ -83,6 +97,7 @@ public class ChallengeRegisterFragment extends Fragment {
         if (getArguments() != null) {
             challenge = getArguments().getParcelable(ARG_CHALLENGE);
         }
+        ((DooitApplication) getActivity().getApplication()).component.inject(this);
     }
 
     @Override
@@ -110,7 +125,7 @@ public class ChallengeRegisterFragment extends Fragment {
         topImage.setImageURI(challenge.getImageURL());
     }
 
-    private Fragment startQuizChallenge(QuizChallenge quizChallenge) {
+    private Fragment startQuizChallenge(Participant participant, QuizChallenge quizChallenge) {
         if (quizChallenge.getQuestions() == null || quizChallenge.getQuestions().size() <= 0) {
             return ChallengeNoneFragment.newInstance(getString(org.gem.indo.dooit.R.string.challenge_quiz_no_questions));
         }
@@ -135,33 +150,55 @@ public class ChallengeRegisterFragment extends Fragment {
                 return ChallengeNoneFragment.newInstance(getString(org.gem.indo.dooit.R.string.challenge_quiz_no_correct_answer));
             }
         }
-        return ChallengeQuizFragment.newInstance(quizChallenge);
+        return ChallengeQuizFragment.newInstance(participant, quizChallenge);
     }
 
-    private Fragment startFreeformChallenge(FreeformChallenge freeformChallenge) {
+    private Fragment startFreeformChallenge(Participant participant, FreeformChallenge freeformChallenge) {
         if (freeformChallenge.getQuestion() == null) {
             return ChallengeNoneFragment.newInstance("Freeform challenge has no question.");
         } else if (freeformChallenge.getQuestion().getText() == null ||
                 freeformChallenge.getQuestion().getText().isEmpty()) {
             return ChallengeNoneFragment.newInstance("Freeform challenge question is empty.");
         }
-        return ChallengeFreeformFragment.newInstance(freeformChallenge);
+        return ChallengeFreeformFragment.newInstance(participant, freeformChallenge);
     }
 
     @OnClick(R.id.fragment_challenge_register_button)
-    void startChallenge() {
+    void registerClick() {
+        Participant participant = new Participant();
+        participant.setChallenge(challenge.getId());
+
+        participantSubscription = challengeManager.registerParticipant(
+            participant,
+            new DooitErrorHandler() {
+                @Override
+                public void onError(DooitAPIError error) {
+                    Toast.makeText(getContext(), "Could not confirm registration", Toast.LENGTH_SHORT).show();
+                }
+            }
+        );
+
+        participantSubscription.subscribe(new Action1<Participant>() {
+            @Override
+            public void call(Participant participant1) {
+                startChallenge(participant1);
+            }
+        });
+    }
+
+    void startChallenge(Participant participant) {
         FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
         Fragment fragment = null;
 
         switch (challenge.getType()) {
             case QUIZ:
                 if (challenge instanceof QuizChallenge) {
-                    fragment = startQuizChallenge((QuizChallenge) challenge);
+                    fragment = startQuizChallenge(participant, (QuizChallenge) challenge);
                 }
                 break;
             case FREEFORM:
                 if (challenge instanceof FreeformChallenge) {
-                    fragment = startFreeformChallenge((FreeformChallenge) challenge);
+                    fragment = startFreeformChallenge(participant, (FreeformChallenge) challenge);
                 }
                 break;
             default:

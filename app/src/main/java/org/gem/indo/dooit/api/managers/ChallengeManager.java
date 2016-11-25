@@ -5,6 +5,7 @@ import android.app.Application;
 import org.gem.indo.dooit.api.DooitErrorHandler;
 import org.gem.indo.dooit.api.interfaces.ChallengeAPI;
 import org.gem.indo.dooit.models.challenge.BaseChallenge;
+import org.gem.indo.dooit.models.challenge.Participant;
 import org.gem.indo.dooit.models.challenge.ParticipantFreeformAnswer;
 import org.gem.indo.dooit.models.challenge.QuizChallengeEntry;
 
@@ -46,5 +47,9 @@ public class ChallengeManager extends DooitManager {
 
     public Observable<ParticipantFreeformAnswer> fetchParticipantFreeformAnswer(long challengeID, DooitErrorHandler errorHandler) {
         return useNetwork(challengeAPI.fetchParticipantFreeform(challengeID), errorHandler);
+    }
+
+    public Observable<Participant> registerParticipant(Participant participant, DooitErrorHandler errorHandler) {
+        return useNetwork(challengeAPI.registerParticipant(participant), errorHandler);
     }
 }

@@ -34,6 +34,7 @@
     <string name="label_skip">Skip</string>
     <string name="label_start">Start</string>
     <string name="label_submit">Submit</string>
+    <string name="label_try_again">Try again</string>
     <string name="label_uploading">Uploading</string>
 
     <!-- Welcome -->
@@ -172,6 +173,11 @@
     <string name="challenge_quiz_sorry_incorrect">Sorry, try again.</string>
     <string name="challenge_quiz_empty_option">Quiz question has option without text.</string>
     <string name="challenge_quiz_no_correct_answer">Quiz question without correct option.</string>
+    <string name="fragment_challenge_correct_text">You are correct!</string>
+    <string name="fragment_challenge_wrong_text">Try again!</string>
+    <string name="challenge_quiz_counter_fmt">Question %1$d/%2$d</string>
+    <string name="challenge_hint_template">Hint: %1$s</string>
+    <string name="challenge_hint_none">Sorry, I don\'t have a hint for you</string>
 
     <!--JSON CHALLENGES-->
     <string name="toes">Can you touch your toes?</string>
@@ -226,9 +232,5 @@
     <string name="target_prefix_saved">saved</string>
     <string name="heading_current_saving_streak">Current Saving Streak</string>
     <string name="heading_achievements">Achievements</string>
-    <string name="fragment_challenge_correct_text">You are correct!</string>
-    <string name="label_try_again">Try again</string>
-    <string name="fragment_challenge_wrong_text">Try again!</string>
-    <string name="challenge_quiz_counter_fmt">Question %1$d/%2$d</string>
 
 </resources>

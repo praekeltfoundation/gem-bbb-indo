@@ -10,7 +10,6 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import org.gem.indo.dooit.DooitApplication;
 import org.gem.indo.dooit.R;
@@ -21,6 +20,7 @@ import org.gem.indo.dooit.helpers.Persisted;
 import org.gem.indo.dooit.helpers.SquiggleBackgroundHelper;
 import org.gem.indo.dooit.models.challenge.FreeformChallenge;
 import org.gem.indo.dooit.models.challenge.FreeformChallengeQuestion;
+import org.gem.indo.dooit.models.challenge.Participant;
 import org.gem.indo.dooit.models.challenge.ParticipantFreeformAnswer;
 
 import javax.inject.Inject;
@@ -38,14 +38,17 @@ import rx.functions.Action1;
 public class ChallengeFreeformFragment extends Fragment {
     private static final String TAG = "ChallengeFreeform";
     private static final String ARG_CHALLENGE = "challenge";
+    private static final String ARG_PARTICIPANT = "participant";
 
     @Inject
     ChallengeManager challengeManager;
+
     @Inject
     Persisted persisted;
 
     private FreeformChallenge challenge;
     private FreeformChallengeQuestion question;
+    private Participant participant;
 
     @BindView(R.id.fragment_challenge_container)
     View background;
@@ -71,9 +74,10 @@ public class ChallengeFreeformFragment extends Fragment {
      * @return A new instance of fragment ChallengeFreeformFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static ChallengeFreeformFragment newInstance(FreeformChallenge challenge) {
+    public static ChallengeFreeformFragment newInstance(Participant participant, FreeformChallenge challenge) {
         ChallengeFreeformFragment fragment = new ChallengeFreeformFragment();
         Bundle args = new Bundle();
+        args.putParcelable(ARG_PARTICIPANT, participant);
         args.putParcelable(ARG_CHALLENGE, challenge);
         fragment.setArguments(args);
         return fragment;
@@ -84,8 +88,9 @@ public class ChallengeFreeformFragment extends Fragment {
         super.onCreate(savedInstanceState);
         ((DooitApplication) getActivity().getApplication()).component.inject(this);
         if (getArguments() != null) {
+            participant = getArguments().getParcelable(ARG_PARTICIPANT);
             challenge = getArguments().getParcelable(ARG_CHALLENGE);
-            question = challenge.getQuestion();
+            question = challenge != null ? challenge.getQuestion() : null;
         }
     }
 
@@ -127,8 +132,7 @@ public class ChallengeFreeformFragment extends Fragment {
 
     public void submitAnswer(String text) {
         ParticipantFreeformAnswer answer = new ParticipantFreeformAnswer();
-        answer.setUser(persisted.getCurrentUser().getId());
-        answer.setChallenge(challenge.getId());
+        answer.setParticipant(participant.getId());
         answer.setQuestion(question.getId());
         answer.setText(text);
         challengeManager.createParticipantFreeformAnswer(answer, new DooitErrorHandler() {
@@ -146,7 +150,7 @@ public class ChallengeFreeformFragment extends Fragment {
 
     @OnClick(R.id.fragment_challenge_freeform_submitbutton)
     public void submitFreeformAnswer() {
-        Toast.makeText(getContext(), org.gem.indo.dooit.R.string.challenge_freeform_submit, Toast.LENGTH_SHORT).show();
+        Log.d(TAG, "Submitting freeform answer.");
         submitAnswer(submissionBox.getText().toString());
         FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
         Fragment fragment = ChallengeNoneFragment.newInstance();
