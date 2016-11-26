@@ -43,7 +43,7 @@ public class AnswerInlineNumberEditViewHolder extends BaseBotViewHolder<Answer> 
     @Override
     public void populate(Answer model) {
         dataModel = model;
-        textViewCurrency.setText(CurrencyHelper.getCurrencyString());
+        textViewCurrency.setText(CurrencyHelper.getCurrencySymbol());
         editText.setText("");
         editText.setHint(dataModel.getInlineEditHint(getContext()));
         editText.setImeActionLabel("Done", EditorInfo.IME_ACTION_DONE);

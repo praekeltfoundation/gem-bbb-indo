@@ -14,7 +14,7 @@ public class CurrencyHelper {
         return NumberFormat.getCurrencyInstance().format(Float.parseFloat(String.valueOf(o)));
     }
 
-    public static String getCurrencyString() {
+    public static String getCurrencySymbol() {
         return Currency.getInstance(Locale.getDefault()).getSymbol();
     }
 }

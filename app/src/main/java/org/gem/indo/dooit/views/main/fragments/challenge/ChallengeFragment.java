@@ -1,4 +1,4 @@
-package org.gem.indo.dooit.views.main.fragments;
+package org.gem.indo.dooit.views.main.fragments.challenge;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -20,6 +20,7 @@ import org.gem.indo.dooit.api.DooitErrorHandler;
 import org.gem.indo.dooit.api.managers.ChallengeManager;
 import org.gem.indo.dooit.helpers.Persisted;
 import org.gem.indo.dooit.models.challenge.BaseChallenge;
+import org.gem.indo.dooit.views.main.fragments.MainFragment;
 import org.gem.indo.dooit.views.main.fragments.challenge.fragments.ChallengeNoneFragment;
 import org.gem.indo.dooit.views.main.fragments.challenge.fragments.ChallengeRegisterFragment;
 

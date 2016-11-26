@@ -17,6 +17,7 @@
         android:theme="@style/AppTheme.NoActionBar">
         <activity
             android:name="org.gem.indo.dooit.views.RootActivity"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.FullscreenTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -27,50 +28,69 @@
 
         <activity
             android:name="org.gem.indo.dooit.views.welcome.WelcomeActivity"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.FullscreenTheme" />
 
         <activity
             android:name="org.gem.indo.dooit.views.onboarding.RegistrationActivity"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.FullscreenTheme" />
 
         <activity
             android:name="org.gem.indo.dooit.views.onboarding.LoginActivity"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.FullscreenTheme" />
 
         <activity
             android:name="org.gem.indo.dooit.views.onboarding.ChangeNameActivity"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.FullscreenTheme" />
 
         <activity
             android:name="org.gem.indo.dooit.views.onboarding.ChangePasswordActivity"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.FullscreenTheme" />
 
         <activity
             android:name="org.gem.indo.dooit.views.main.MainActivity"
             android:label="@string/title_activity_main"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
 
         <activity
             android:name="org.gem.indo.dooit.views.profile.ProfileActivity"
             android:label="@string/title_activity_profile"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
+
         <activity
             android:name="org.gem.indo.dooit.views.settings.SettingsActivity"
             android:label="@string/title_activity_settings"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
 
         <activity
             android:name="org.gem.indo.dooit.views.settings.SettingsWebViewActivity"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
+
         <activity
             android:name="org.gem.indo.dooit.views.onboarding.ProfileImageActivity"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.FullscreenTheme" />
-        <activity android:name="org.gem.indo.dooit.views.tip.TipArticleActivity" />
-        <activity android:name="org.gem.indo.dooit.views.onboarding.OnboardingWebActivity"></activity>
+
+        <activity
+            android:name="org.gem.indo.dooit.views.tip.TipArticleActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name="org.gem.indo.dooit.views.onboarding.OnboardingWebActivity"
+            android:screenOrientation="portrait" />
 
         <service
             android:name=".services.NotificationScheduler"
             android:enabled="true" />
+
         <meta-data
             android:name="io.fabric.ApiKey"
             android:value="21c49b39f896991f9c499d71d1371cd26cd8e499" />

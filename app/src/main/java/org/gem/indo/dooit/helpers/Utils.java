@@ -11,6 +11,9 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -62,8 +65,27 @@ public class Utils {
         }
     }
 
-    public static int weekDiff(long time) {
-        return (int) Math.ceil(TimeUnit.MILLISECONDS.toDays(time - System.currentTimeMillis()) / 7.0);
+    public static int weekDiff(long time, ROUNDWEEK round) {
+        switch (round) {
+            case UP:
+                return (int) Math.ceil(TimeUnit.MILLISECONDS.toDays(time - System.currentTimeMillis()) / 7.0);
+            case DOWN:
+            default:
+                return (int) Math.floor(TimeUnit.MILLISECONDS.toDays(time - System.currentTimeMillis()) / 7.0);
+
+        }
     }
 
+    public static int dayDiff(long time) {
+        return (int) Math.ceil(TimeUnit.MILLISECONDS.toDays(time - System.currentTimeMillis()));
+    }
+
+    public static String formatDate(Date date) {
+        return new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(date);
+    }
+
+    public enum ROUNDWEEK {
+        UP,
+        DOWN
+    }
 }

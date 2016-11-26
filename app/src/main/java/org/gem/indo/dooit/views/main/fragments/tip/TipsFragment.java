@@ -1,4 +1,4 @@
-package org.gem.indo.dooit.views.main.fragments;
+package org.gem.indo.dooit.views.main.fragments.tip;
 
 import android.app.Activity;
 import android.os.Bundle;
@@ -23,8 +23,6 @@ import org.gem.indo.dooit.R;
 import org.gem.indo.dooit.api.managers.TipManager;
 import org.gem.indo.dooit.helpers.SquiggleBackgroundHelper;
 import org.gem.indo.dooit.models.Tip;
-import org.gem.indo.dooit.views.main.fragments.tip.OnTipsAvailableListener;
-import org.gem.indo.dooit.views.main.fragments.tip.TipsViewPagerPositions;
 import org.gem.indo.dooit.views.main.fragments.tip.adapters.TipsAutoCompleteAdapter;
 import org.gem.indo.dooit.views.main.fragments.tip.adapters.TipsTabAdapter;
 
@@ -107,6 +105,13 @@ public class TipsFragment extends Fragment implements OnTipsAvailableListener {
         View view = inflater.inflate(org.gem.indo.dooit.R.layout.fragment_tips, container, false);
         ButterKnife.bind(this, view);
 
+        return view;
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+
         searchAdapter = new TipsAutoCompleteAdapter(getContext(), org.gem.indo.dooit.R.layout.item_tips_search_suggestion);
         searchView.setAdapter(searchAdapter);
 
@@ -125,7 +130,6 @@ public class TipsFragment extends Fragment implements OnTipsAvailableListener {
                 viewPager.getCurrentItem()).getSearchRes());
         searchView.setHint(hint);
 
-        return view;
     }
 
     @OnClick(R.id.fragment_tips_list_filter_image_button)

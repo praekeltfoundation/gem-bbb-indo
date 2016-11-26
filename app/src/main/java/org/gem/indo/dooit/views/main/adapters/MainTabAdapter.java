@@ -11,8 +11,8 @@ import android.widget.TextView;
 
 import org.gem.indo.dooit.R;
 import org.gem.indo.dooit.views.main.MainViewPagerPositions;
-import org.gem.indo.dooit.views.main.fragments.ChallengeFragment;
-import org.gem.indo.dooit.views.main.fragments.TipsFragment;
+import org.gem.indo.dooit.views.main.fragments.challenge.ChallengeFragment;
+import org.gem.indo.dooit.views.main.fragments.tip.TipsFragment;
 import org.gem.indo.dooit.views.main.fragments.bot.BotFragment;
 import org.gem.indo.dooit.views.main.fragments.target.TargetFragment;
 
