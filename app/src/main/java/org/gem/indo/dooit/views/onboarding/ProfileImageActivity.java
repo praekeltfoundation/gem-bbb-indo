@@ -24,6 +24,7 @@ import org.gem.indo.dooit.api.DooitErrorHandler;
 import org.gem.indo.dooit.api.managers.AuthenticationManager;
 import org.gem.indo.dooit.api.managers.FileUploadManager;
 import org.gem.indo.dooit.api.responses.EmptyResponse;
+import org.gem.indo.dooit.helpers.ImageStorageHelper;
 import org.gem.indo.dooit.helpers.Persisted;
 import org.gem.indo.dooit.helpers.RequestCodes;
 import org.gem.indo.dooit.helpers.SquiggleBackgroundHelper;
@@ -64,7 +65,7 @@ public class ProfileImageActivity extends DooitActivity {
 
     @Inject
     Persisted persisted;
-    Uri cameraUri;
+    Uri imageUri;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -163,7 +164,7 @@ public class ProfileImageActivity extends DooitActivity {
         }
         User user = persisted.getCurrentUser();
         fileUploadManager.upload(user.getId(), getIntent().getStringExtra(INTENT_MIME_TYPE),
-                new File(((Uri) getIntent().getParcelableExtra(INTENT_IMAGE_URI)).toString()), new DooitErrorHandler() {
+                new File(getIntent().getExtras().getString(INTENT_IMAGE_URI)), new DooitErrorHandler() {
                     @Override
                     public void onError(DooitAPIError error) {
                         for (String msg : error.getErrorMessages())
@@ -173,7 +174,7 @@ public class ProfileImageActivity extends DooitActivity {
             @Override
             public void call(EmptyResponse emptyResponse) {
                 User user = persisted.getCurrentUser();
-                user.getProfile().setProfileImageUrl(cameraUri.toString());
+                user.getProfile().setProfileImageUrl(imageUri.toString());
                 persisted.setCurrentUser(user);
                 MainActivity.Builder.create(ProfileImageActivity.this).startActivityClearTop();
             }
@@ -192,42 +193,27 @@ public class ProfileImageActivity extends DooitActivity {
 
         switch (requestCode) {
             case RequestCodes.REPONSE_CAMERA_REQUEST_PROFILE_IMAGE:
-                onActivityResultCameraProfileImage(data);
+                onActivityImageResult(data);
                 break;
             case RequestCodes.RESPONSE_GALLERY_REQUEST_PROFILE_IMAGE:
-                onSelectFromGalleryResult(data);
+                onActivityImageResult(data);
                 break;
         }
-        //  ActivityResult.onResult(requestCode, resultCode, data).into(this);
-
     }
 
-    // @OnActivityResult(requestCode = RequestCodes.REPONSE_CAMERA_REQUEST_PROFILE_IMAGE)
-    void onActivityResultCameraProfileImage(Intent data) {
-        cameraUri = data.getData();
-        if (cameraUri == null) {
+    void onActivityImageResult(Intent data) {
+        imageUri = data.getData();
+        if (imageUri == null) {
             try {
-                cameraUri = Uri.parse(MediaStore.Images.Media.insertImage(getContentResolver(), (Bitmap) data.getExtras().get("data"), "", ""));
+                imageUri = Uri.parse(MediaStore.Images.Media.insertImage(getContentResolver(), (Bitmap) data.getExtras().get("data"), "", ""));
             } catch (Throwable ex) {
 
             }
         }
         ContentResolver cR = this.getContentResolver();
-        simpleDraweeView.setImageURI(cameraUri);
-        getIntent().putExtra(INTENT_MIME_TYPE, cR.getType(cameraUri));
-        getIntent().putExtra(INTENT_IMAGE_URI, getRealPathFromURI(cameraUri));
-    }
-
-    @SuppressWarnings("deprecation")
-    private void onSelectFromGalleryResult(Intent data) {
-        Bitmap bm = null;
-        if (data != null) {
-            cameraUri = data.getData();
-            ContentResolver cR = this.getContentResolver();
-            simpleDraweeView.setImageURI(cameraUri);
-            getIntent().putExtra(INTENT_MIME_TYPE, cR.getType(cameraUri));
-            getIntent().putExtra(INTENT_IMAGE_URI, getRealPathFromURI(cameraUri));
-        }
+        simpleDraweeView.setImageURI(imageUri);
+        getIntent().putExtra(INTENT_MIME_TYPE, cR.getType(imageUri));
+        getIntent().putExtra(INTENT_IMAGE_URI, ImageStorageHelper.getPath(this, imageUri));
     }
 
     public static class Builder extends DooitActivityBuilder<Builder> {

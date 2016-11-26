@@ -13,7 +13,7 @@
     <string name="main_tab_text_3">TIPS</string>
 
     <!-- Profile image -->
-    <string name="profile_image_camera">Take Photo</string>
+    <string name="profile_image_camera">Take Photo using Camera</string>
     <string name="profile_image_gallery">Choose from Gallery</string>
     <string name="profile_image_cancel">Cancel</string>
 

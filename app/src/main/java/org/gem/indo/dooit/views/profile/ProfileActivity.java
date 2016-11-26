@@ -28,6 +28,7 @@ import org.gem.indo.dooit.api.managers.AchievementManager;
 import org.gem.indo.dooit.api.managers.FileUploadManager;
 import org.gem.indo.dooit.api.responses.AchievementResponse;
 import org.gem.indo.dooit.api.responses.EmptyResponse;
+import org.gem.indo.dooit.helpers.ImageStorageHelper;
 import org.gem.indo.dooit.helpers.Persisted;
 import org.gem.indo.dooit.helpers.RequestCodes;
 import org.gem.indo.dooit.helpers.permissions.PermissionCallback;
@@ -86,7 +87,7 @@ public class ProfileActivity extends DooitActivity {
     AchievementManager achievementManager;
 
     User user;
-    Uri cameraUri;
+    Uri imageUri;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -258,24 +259,31 @@ public class ProfileActivity extends DooitActivity {
 
         switch (requestCode) {
             case RequestCodes.REPONSE_CAMERA_REQUEST_PROFILE_IMAGE:
-                onActivityResultCameraProfileImage(data);
+                onActivityImageResult(data);
                 break;
             case RequestCodes.RESPONSE_GALLERY_REQUEST_PROFILE_IMAGE:
-                onSelectFromGalleryResult(data);
+                onActivityImageResult(data);
                 break;
         }
-        //  ActivityResult.onResult(requestCode, resultCode, data).into(this);
-
     }
 
-    private void uploadFromDeviceUri(final Uri cameraUri) {
-        profileImage.setImageURI(cameraUri);
+    void onActivityImageResult(Intent data) {
+        imageUri = data.getData();
+        if (imageUri == null) {
+            try {
+                imageUri = Uri.parse(MediaStore.Images.Media.insertImage(getContentResolver(), (Bitmap) data.getExtras().get("data"), "", ""));
+            } catch (Throwable ex) {
+
+            }
+        }
+        profileImage.setImageURI(imageUri);
         ContentResolver cR = this.getContentResolver();
-        getIntent().putExtra(INTENT_MIME_TYPE, cR.getType(cameraUri));
-        Uri imageUri = getRealPathFromURI(cameraUri);
-        getIntent().putExtra(INTENT_IMAGE_URI, imageUri);
+        uploadImage(cR.getType(imageUri), ImageStorageHelper.getPath(this, imageUri));
+    }
+
+    private void uploadImage(String mimetype, String filepath) {
         User user = persisted.getCurrentUser();
-        fileUploadManager.upload(user.getId(), getIntent().getStringExtra(INTENT_MIME_TYPE), new File(imageUri.getPath()), new DooitErrorHandler() {
+        fileUploadManager.upload(user.getId(), mimetype, new File(filepath), new DooitErrorHandler() {
             @Override
             public void onError(DooitAPIError error) {
                 Toast.makeText(ProfileActivity.this, "Unable to uploadProfileImage Image", Toast.LENGTH_SHORT).show();
@@ -284,31 +292,10 @@ public class ProfileActivity extends DooitActivity {
             @Override
             public void call(EmptyResponse emptyResponse) {
                 User user = persisted.getCurrentUser();
-                user.getProfile().setProfileImageUrl(cameraUri.toString());
+                user.getProfile().setProfileImageUrl(imageUri.toString());
                 persisted.setCurrentUser(user);
             }
         });
-    }
-
-    private void onSelectFromGalleryResult(Intent data) {
-        Bitmap bm = null;
-        if (data != null) {
-            cameraUri = data.getData();
-            uploadFromDeviceUri(data.getData());
-        }
-    }
-
-    //@OnActivityResult(requestCode = RequestCodes.REPONSE_CAMERA_REQUEST_PROFILE_IMAGE)
-    void onActivityResultCameraProfileImage(Intent data) {
-        cameraUri = data.getData();
-        if (cameraUri == null) {
-            try {
-                cameraUri = Uri.parse(MediaStore.Images.Media.insertImage(getContentResolver(), (Bitmap) data.getExtras().get("data"), "", ""));
-            } catch (Throwable ex) {
-
-            }
-        }
-        uploadFromDeviceUri(cameraUri);
     }
 
     void setStreak(int streak) {
