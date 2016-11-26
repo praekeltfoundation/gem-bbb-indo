@@ -34,7 +34,7 @@ import rx.Observable;
 import rx.functions.Action0;
 import rx.functions.Action1;
 
-public class ChallengeFragment extends Fragment {
+public class ChallengeFragment extends MainFragment {
 
     @Inject
     ChallengeManager challengeManager;
@@ -57,8 +57,8 @@ public class ChallengeFragment extends Fragment {
         // Required empty public constructor
     }
 
-    public static Fragment newInstance() {
-        Fragment fragment = new ChallengeFragment();
+    public static ChallengeFragment newInstance() {
+        ChallengeFragment fragment = new ChallengeFragment();
         Bundle args = new Bundle();
         fragment.setArguments(args);
         return fragment;

@@ -15,6 +15,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewTreeObserver;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import org.gem.indo.dooit.DooitApplication;
 import org.gem.indo.dooit.R;
@@ -66,15 +68,15 @@ public class MainActivity extends DooitActivity {
                     // Remember to remove it if you don't want it to fire every time
                     MainActivity.this.toolbar.getViewTreeObserver().removeGlobalOnLayoutListener(this);
 
-                    int abHeight = (int)(getSupportActionBar().getHeight()*0.7);
+                    int abHeight = (int) (getSupportActionBar().getHeight() * 0.7);
                     try {
                         User user = persisted.getCurrentUser();
                         Uri profileImageUri = Uri.parse(user.getProfile().getProfileImageUrl());
                         InputStream inputStream = getContentResolver().openInputStream(profileImageUri);
                         Bitmap squareProfileImage = BitmapFactory.decodeStream(inputStream);
-                        int scaledWidth = (squareProfileImage.getWidth()*abHeight)/squareProfileImage.getHeight();
+                        int scaledWidth = (squareProfileImage.getWidth() * abHeight) / squareProfileImage.getHeight();
                         Bitmap squareScaledProfileImage = Bitmap.createScaledBitmap(squareProfileImage, scaledWidth, abHeight, false);
-                        RoundedBitmapDrawable roundedProfileImage = RoundedBitmapDrawableFactory.create(getResources(),squareScaledProfileImage);
+                        RoundedBitmapDrawable roundedProfileImage = RoundedBitmapDrawableFactory.create(getResources(), squareScaledProfileImage);
                         roundedProfileImage.setCircular(true);
 
                         getSupportActionBar().setHomeAsUpIndicator(roundedProfileImage);
@@ -101,7 +103,46 @@ public class MainActivity extends DooitActivity {
         for (int i = 0; i < tabLayout.getTabCount(); i++) {
             TabLayout.Tab tab = tabLayout.getTabAt(i);
             tab.setCustomView(mainTabAdapter.getTabView(i));
+
+            if (i == 0) {
+                MainViewPagerPositions.setActiveState(tab.getCustomView());
+            } else {
+                MainViewPagerPositions.setInActiveState(tab.getCustomView());
+            }
         }
+        viewPager.addOnPageChangeListener(
+                new ViewPager.OnPageChangeListener() {
+                    @Override
+                    public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+                    }
+
+                    @Override
+                    public void onPageSelected(int position) {
+                        for (int i = 0; i < tabLayout.getTabCount(); i++) {
+                            TabLayout.Tab tab = tabLayout.getTabAt(i);
+                            View tabView = tab.getCustomView();
+                            ImageView icon = (ImageView) tabView.findViewById(R.id.tab_custom_icon);
+                            TextView text = (TextView) tabView.findViewById(R.id.tab_custom_title);
+
+                            if (position == i) {
+                                MainViewPagerPositions.setActiveState(tabView);
+
+                            } else {
+                                MainViewPagerPositions.setInActiveState(tabView);
+
+                            }
+
+                        }
+                    }
+
+                    @Override
+                    public void onPageScrollStateChanged(int state) {
+
+                    }
+                }
+
+        );
     }
 
     private void openProfile() {
