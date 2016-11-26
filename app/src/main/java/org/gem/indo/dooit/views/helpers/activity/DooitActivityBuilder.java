@@ -59,6 +59,8 @@ public abstract class DooitActivityBuilder<T extends DooitActivityBuilder> {
             context.startActivity(intent);
         } else
             throw new IncompleteBuilderException("Not all required intent values provided");
+
+        ((Activity) context).finish();
     }
 
     public void startActivity() throws IncompleteBuilderException {

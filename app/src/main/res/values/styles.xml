@@ -56,8 +56,14 @@
 
     </style>
 
+    <style name="AppTheme.Button.Medium" parent="AppTheme.Button">
+        <item name="android:textSize">@dimen/k_font_large</item>
+        <item name="android:padding">@dimen/button_big_padding</item>
+        <item name="fontPath">fonts/LondrinaSolid-Regular.ttf</item>
+    </style>
+
     <style name="AppTheme.Button.Big" parent="AppTheme.Button">
-        <item name="android:textSize">@dimen/k_font_xxx_large</item>
+        <item name="android:textSize">@dimen/k_font_xx_large</item>
         <item name="android:padding">@dimen/button_big_padding</item>
         <item name="fontPath">fonts/LondrinaSolid-Regular.ttf</item>
     </style>

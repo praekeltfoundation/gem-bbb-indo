@@ -6,7 +6,9 @@ import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v4.content.res.ResourcesCompat;
 import android.text.TextUtils;
+import android.view.KeyEvent;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -28,6 +30,7 @@ import javax.inject.Inject;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import butterknife.OnEditorAction;
 import rx.functions.Action1;
 
 public class LoginActivity extends DooitActivity {
@@ -87,6 +90,14 @@ public class LoginActivity extends DooitActivity {
         });
     }
 
+    @OnEditorAction(R.id.activity_login_password_edit_text)
+    boolean imeLogin(TextView v, int actionId, KeyEvent event) {
+        if (EditorInfo.IME_ACTION_DONE == actionId) {
+            login();
+        }
+        return true;
+    }
+
     private boolean detailsValid() {
         return isNameValid() & isPasswordValid();
     }
@@ -104,7 +115,6 @@ public class LoginActivity extends DooitActivity {
         return valid;
     }
 
-
     public boolean isPasswordValid() {
         boolean valid;
         valid = !TextUtils.isEmpty(password.getText());
@@ -117,7 +127,6 @@ public class LoginActivity extends DooitActivity {
         }
         return valid;
     }
-
 
     public static class Builder extends DooitActivityBuilder<Builder> {
         protected Builder(Context context) {

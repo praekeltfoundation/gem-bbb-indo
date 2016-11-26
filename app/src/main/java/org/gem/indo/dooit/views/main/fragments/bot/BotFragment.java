@@ -94,17 +94,17 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
         View view = inflater.inflate(org.gem.indo.dooit.R.layout.fragment_bot, container, false);
         ButterKnife.bind(this, view);
         SquiggleBackgroundHelper.setBackground(getContext(), R.color.grey_back, R.color.grey_fore, conversationRecyclerView);
+        answerView.addOnTagClickListener(this);
+        conversationRecyclerView.setHasFixedSize(true);
+        conversationRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        conversationRecyclerView.setItemAnimator(new DefaultItemAnimator());
+        conversationRecyclerView.setAdapter(new BotAdapter(getContext(), this));
         return view;
     }
 
     @Override
     public void onStart() {
         super.onStart();
-        answerView.addOnTagClickListener(this);
-        conversationRecyclerView.setHasFixedSize(true);
-        conversationRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        conversationRecyclerView.setItemAnimator(new DefaultItemAnimator());
-        conversationRecyclerView.setAdapter(new BotAdapter(getContext(), this));
     }
 
     @Override

@@ -78,6 +78,9 @@
             android:layout_alignParentStart="true"
             android:layout_below="@+id/activity_login_password_text_view"
             android:layout_marginTop="4dp"
+            android:imeActionLabel="@string/label_log_in"
+            android:imeOptions="actionDone"
+            android:imeActionId="6"
             android:inputType="textPassword" />
 
         <TextView
