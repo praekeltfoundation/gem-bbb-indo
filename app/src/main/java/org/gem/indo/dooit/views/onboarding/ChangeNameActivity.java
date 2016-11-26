@@ -3,6 +3,8 @@ package org.gem.indo.dooit.views.onboarding;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.support.design.widget.Snackbar;
 import android.support.v4.content.res.ResourcesCompat;
 import android.widget.Button;
@@ -23,6 +25,7 @@ import org.gem.indo.dooit.views.helpers.activity.DooitActivityBuilder;
 
 import javax.inject.Inject;
 
+import butterknife.BindString;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -33,6 +36,9 @@ import rx.functions.Action1;
  */
 
 public class ChangeNameActivity extends DooitActivity {
+
+    @BindString(R.string.change_username_success)
+    String successText;
 
     @BindView(R.id.activity_change_name_text_edit)
     EditText name;
@@ -49,12 +55,15 @@ public class ChangeNameActivity extends DooitActivity {
     @Inject
     Persisted persisted;
 
+    private Handler handler;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(org.gem.indo.dooit.R.layout.activity_onboarding_change_name);
         ((DooitApplication) getApplication()).component.inject(this);
         ButterKnife.bind(this);
+        handler = new Handler(Looper.getMainLooper());
     }
 
     @OnClick(R.id.activity_change_name_button)
@@ -72,9 +81,15 @@ public class ChangeNameActivity extends DooitActivity {
         }).subscribe(new Action1<EmptyResponse>() {
             @Override
             public void call(EmptyResponse emptyResponse) {
+                Snackbar.make(changeNameButton, String.format(successText, name), Snackbar.LENGTH_LONG).show();
                 user.setUsername(name);
                 ChangeNameActivity.this.persisted.setCurrentUser(user);
-                ChangeNameActivity.this.finish();
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        ChangeNameActivity.this.finish();
+                    }
+                }, 2000);
             }
         });
 

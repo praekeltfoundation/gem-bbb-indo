@@ -216,6 +216,9 @@
     <string name="profile_help_terms_conditions"><![CDATA[Terms & Conditions]]></string>
     <string name="profile_help_privacy_policy">Privacy Policy</string>
 
+    <!-- Change Username -->
+    <string name="change_username_success">Your username has been changed to \'%s\'</string>
+
     <!-- Change Password -->
     <string name="change_password_success">Your password has been changed</string>
 

@@ -86,8 +86,8 @@ public class ProfileActivity extends DooitActivity {
     @Inject
     AchievementManager achievementManager;
 
-    User user;
-    Uri imageUri;
+    private User user;
+    private Uri imageUri;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -95,6 +95,7 @@ public class ProfileActivity extends DooitActivity {
         setContentView(org.gem.indo.dooit.R.layout.activity_profile);
         ((DooitApplication) getApplication()).component.inject(this);
         ButterKnife.bind(this);
+
         setSupportActionBar(toolbar);
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -147,6 +148,13 @@ public class ProfileActivity extends DooitActivity {
                 });
             }
         });
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        user = persisted.getCurrentUser();
+        setTitle(user.getUsername());
     }
 
     @Override
