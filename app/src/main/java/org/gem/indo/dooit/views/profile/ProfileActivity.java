@@ -178,21 +178,27 @@ public class ProfileActivity extends DooitActivity {
 
     @OnClick(R.id.activity_profile_image)
     public void selectImage() {
-        final CharSequence[] items = {"Take Photo", "Choose from Library",
-                "Cancel"};
+        final CharSequence[] items = {
+                getString(R.string.profile_image_camera),
+                getString(R.string.profile_image_gallery),
+                getString(R.string.profile_image_cancel)
+        };
 
         AlertDialog.Builder builder = new AlertDialog.Builder(ProfileActivity.this);
         builder.setTitle("Add Profile Photo!");
         builder.setItems(items, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int item) {
-
-                if (items[item].equals("Take Photo")) {
-                    takeImage();
-                } else if (items[item].equals("Choose from Gallery")) {
-                    chooseImage();
-                } else if (items[item].equals("Cancel")) {
-                    dialog.dismiss();
+                switch (item) {
+                    case 0:
+                        takeImage();
+                        break;
+                    case 1:
+                        chooseImage();
+                        break;
+                    case 2:
+                        dialog.dismiss();
+                        break;
                 }
             }
         });
