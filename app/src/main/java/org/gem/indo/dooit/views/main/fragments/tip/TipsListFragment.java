@@ -11,7 +11,6 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import org.gem.indo.dooit.DooitApplication;
@@ -24,10 +23,8 @@ import org.gem.indo.dooit.views.main.fragments.tip.providers.TipProvider;
 
 import java.util.List;
 
-import butterknife.BindString;
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 import rx.functions.Action1;
 
 
@@ -35,15 +32,6 @@ public class TipsListFragment extends Fragment {
 
     private static final String TAG = TipsListFragment.class.getName();
     private static final String POS = "pos";
-
-    @BindString(org.gem.indo.dooit.R.string.tips_list_filter)
-    String filterText;
-
-    @BindView(R.id.fragment_tips_list_filter)
-    ViewGroup filterView;
-
-    @BindView(R.id.fragment_tips_list_filter_text_view)
-    TextView filterTextView;
 
     @BindView(R.id.fragment_tips_list_recyclerview)
     RecyclerView recyclerView;
@@ -53,6 +41,7 @@ public class TipsListFragment extends Fragment {
     TipsListAdapter adapter;
     OnTipsAvailableListener listener;
     GridLayoutManager gridManager;
+    View listView;
 
     public TipsListFragment() {
         // Required empty public constructor
@@ -126,8 +115,9 @@ public class TipsListFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(org.gem.indo.dooit.R.layout.fragment_tips_list, container, false);
-        ButterKnife.bind(this, view);
+
+        View listView = inflater.inflate(org.gem.indo.dooit.R.layout.fragment_tips_list, container, false);
+        ButterKnife.bind(this, listView);
 
         gridManager = new GridLayoutManager(getContext(), 2);
         gridManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
@@ -145,16 +135,13 @@ public class TipsListFragment extends Fragment {
 
         retrieveTips();
 
-        return view;
+        return listView;
     }
 
     public void onSearch(String constraint) {
-        Log.d(TAG, "On Search " + constraint);
-        showFiltering(constraint);
         adapter.getFilter().filter(constraint);
     }
 
-    @OnClick(R.id.fragment_tips_list_filter_image_button)
     public void clearFilter(View v) {
         hideFiltering();
         adapter.resetFiltered();
@@ -187,13 +174,16 @@ public class TipsListFragment extends Fragment {
                 .subscribe(new Action1<List<Tip>>() {
                     @Override
                     public void call(final List<Tip> tips) {
+
                         if (getActivity() != null) {
                             getActivity().runOnUiThread(new Runnable() {
                                 @Override
                                 public void run() {
-                                    adapter.updateAllTips(tips);
-                                    adapter.resetFiltered();
-                                    notifyTipsLoaded(tips);
+
+                                adapter.updateAllTips(tips);
+                                adapter.resetFiltered();
+                                notifyTipsLoaded(tips);
+
                                 }
                             });
                         }
@@ -201,12 +191,10 @@ public class TipsListFragment extends Fragment {
                 });
     }
 
-    protected void showFiltering(String constraint) {
-        filterTextView.setText(String.format(filterText, constraint));
-        filterView.setVisibility(View.VISIBLE);
-    }
-
-    protected void hideFiltering() {
-        filterView.setVisibility(View.GONE);
+    protected void hideFiltering(){
+        if(listener!=null)
+            listener.hideFiltering();
+        else
+            System.out.println("filtering not set");
     }
 }

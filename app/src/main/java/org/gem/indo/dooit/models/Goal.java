@@ -15,7 +15,8 @@ import java.util.List;
 
 public class Goal {
 
-    private Long id;
+
+    private long id;
     private String name;
     private double value;
     private double target;
@@ -28,12 +29,21 @@ public class Goal {
     private List<GoalTransaction> transactions = new ArrayList<>();
     @SerializedName("weekly_totals")
     private LinkedHashMap<String, Float> weeklyTotals;
+    @SerializedName("weekly_target")
+    private double weeklyTarget;
+    @SerializedName("week_count")
+    private int weekCount;
+    @SerializedName("week_count_to_now")
+    private int weekCountToNow;
+    @SerializedName("weekly_average")
+    private double weeklyAverage;
+    private long user;
 
-    public Long getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(long id) {
         this.id = id;
     }
 
@@ -89,6 +99,54 @@ public class Goal {
         return transactions;
     }
 
+    public LinkedHashMap<String, Float> getWeeklyTotals() {
+        return weeklyTotals;
+    }
+
+    public void setWeeklyTotals(LinkedHashMap<String, Float> weeklyTotals) {
+        this.weeklyTotals = weeklyTotals;
+    }
+
+    public double getWeeklyTarget() {
+        return weeklyTarget;
+    }
+
+    public void setWeeklyTarget(double weeklyTarget) {
+        this.weeklyTarget = weeklyTarget;
+    }
+
+    public int getWeekCount() {
+        return weekCount;
+    }
+
+    public void setWeekCount(int weekCount) {
+        this.weekCount = weekCount;
+    }
+
+    public int getWeekCountToNow() {
+        return weekCountToNow;
+    }
+
+    public void setWeekCountToNow(int weekCountToNow) {
+        this.weekCountToNow = weekCountToNow;
+    }
+
+    public double getWeeklyAverage() {
+        return weeklyAverage;
+    }
+
+    public void setWeeklyAverage(double weeklyAverage) {
+        this.weeklyAverage = weeklyAverage;
+    }
+
+    public long getUser() {
+        return user;
+    }
+
+    public void setUser(long user) {
+        this.user = user;
+    }
+
     public void setTransactions(List<GoalTransaction> transactions) {
         this.transactions = transactions;
     }
@@ -103,11 +161,4 @@ public class Goal {
         return trans;
     }
 
-    public LinkedHashMap<String, Float> getWeeklyTotals() {
-        return weeklyTotals;
-    }
-
-    public void setWeeklyTotals(LinkedHashMap<String, Float> weeklyTotals) {
-        this.weeklyTotals = weeklyTotals;
-    }
 }
