@@ -91,7 +91,7 @@ public class GoalVerificationViewHolder extends BaseBotViewHolder<Node> {
         amountLeft = amountLeft < 0 ? 0 : amountLeft;
         if (goalDate != null) {
 
-            goalWeeks = Utils.weekDiff(goalDate.getTime());
+            goalWeeks = Utils.weekDiff(goalDate.getTime(), Utils.ROUNDWEEK.UP);
             weeklyTarget = amountLeft / goalWeeks;
         } else if (weeklyTarget != null) {
             goalWeeks = amountLeft / weeklyTarget;
@@ -101,7 +101,7 @@ public class GoalVerificationViewHolder extends BaseBotViewHolder<Node> {
                 String.valueOf((int) Math.ceil(weeklyTarget)),
                 goalName,
                 String.valueOf((int) goalWeeks),
-                CurrencyHelper.getCurrencyString()
+                CurrencyHelper.getCurrencySymbol()
         };
         textView.setText(String.format(text, params));
         RelativeLayout.LayoutParams lp = ((RelativeLayout.LayoutParams) textView.getLayoutParams());

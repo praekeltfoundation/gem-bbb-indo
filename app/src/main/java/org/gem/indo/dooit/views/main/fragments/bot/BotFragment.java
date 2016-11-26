@@ -1,13 +1,7 @@
 package org.gem.indo.dooit.views.main.fragments.bot;
 
-import android.graphics.drawable.Drawable;
-import android.graphics.drawable.LayerDrawable;
-import android.graphics.drawable.ShapeDrawable;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v4.content.ContextCompat;
-import android.support.v4.graphics.drawable.DrawableCompat;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -25,7 +19,6 @@ import org.gem.indo.dooit.DooitApplication;
 import org.gem.indo.dooit.R;
 import org.gem.indo.dooit.helpers.Persisted;
 import org.gem.indo.dooit.helpers.SquiggleBackgroundHelper;
-import org.gem.indo.dooit.helpers.TilingDrawable;
 import org.gem.indo.dooit.helpers.bot.BotFeed;
 import org.gem.indo.dooit.models.Goal;
 import org.gem.indo.dooit.models.bot.Answer;
@@ -105,8 +98,8 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
     }
 
     @Override
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
+    public void onStart() {
+        super.onStart();
         answerView.addOnTagClickListener(this);
         conversationRecyclerView.setHasFixedSize(true);
         conversationRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
