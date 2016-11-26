@@ -191,6 +191,7 @@
     <string name="savings_message" formatted="false">Save %s %s each week to get your %s in %s weeks.</string>
     <string name="edit_savings_plan">Edit Savings Plan</string>
     <string name="savings_plan">Savings Plan</string>
+    <string name="target_date">Target Date</string>
 
     <!-- Profile -->
     <string name="profile_section_account">Your account</string>
