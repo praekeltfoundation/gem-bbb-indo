@@ -24,6 +24,8 @@ public abstract class DooitErrorHandler implements Action1<Throwable> {
                 HttpException exception = (HttpException) throwable;
                 ErrorResponse errorResponse = new Gson().fromJson(new String(exception.response().errorBody().bytes(), "UTF-8"), ErrorResponse.class);
                 apiError = new DooitAPIError(exception, errorResponse);
+            } else {
+                Log.e(DooitErrorHandler.class.toString(), "Non HTTP Error", throwable);
             }
         } catch (Throwable ex) {
             Log.w(DooitErrorHandler.class.toString(), "Unable to decode api error", ex);

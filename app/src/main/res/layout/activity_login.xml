@@ -96,7 +96,7 @@
 
         <TextView
             android:id="@+id/activity_login_forgot_text_view"
-            style="@style/AppTheme.TextView.Bold.Small"
+            style="@style/AppTheme.TextView.Bold.Medium"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/activity_login_password_example_text_view"
@@ -112,7 +112,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/activity_login_forgot_text_view"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="16dp"
             android:text="@string/label_log_in"
             android:textAllCaps="true" />
 
