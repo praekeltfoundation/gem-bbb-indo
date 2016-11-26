@@ -120,8 +120,10 @@
     <string name="infoGoalEnd">Thank you. That concludes the goal-setting process.</string>
 
     <string name="depositIntroduction">Let\'s add your savings!</string>
-    <string name="depositReminder">Remember you have to save %1$s each week to reach %2$s by %3$s.</string>
+    <string name="depositReminder">Remember you have to save %1$s %2$s each week to reach %3$s by %4$s.</string>
     <string name="depositRemainder">That is %1$s weeks and %2$s days from now.</string>
+    <string name="askDepositAddAmount">Add Amount</string>
+    <string name="depositEnd">Nice going! You added your first saving!</string>
 
     <!--Buttons-->
     <string name="Skip">Skip</string>

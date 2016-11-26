@@ -101,6 +101,13 @@ public class TargetFragment extends MainFragment {
         View view = inflater.inflate(org.gem.indo.dooit.R.layout.fragment_target, container, false);
         ButterKnife.bind(this, view);
 
+        return view;
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+
         adapter = new TargetPagerAdapter(new ArrayList<Goal>());
         viewPager.setAdapter(adapter);
 
@@ -130,9 +137,12 @@ public class TargetFragment extends MainFragment {
 
             }
         });
+        if (adapter.getCount() == 1) {
+            rightTarget.setVisibility(View.GONE);
+            leftTarget.setVisibility(View.GONE);
+        }
 
         retrieveGoals();
-        return view;
     }
 
     @Override

@@ -80,7 +80,7 @@
       {
         "name": "Change",
         "text": "$(Change)",
-        "next": "askGoalAmount"
+        "next": "askGoalImage"
       },
       {
         "name": "Accept",

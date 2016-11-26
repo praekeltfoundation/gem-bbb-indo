@@ -9,6 +9,7 @@ import android.widget.TextView;
 import org.gem.indo.dooit.DooitApplication;
 import org.gem.indo.dooit.R;
 import org.gem.indo.dooit.helpers.Persisted;
+import org.gem.indo.dooit.helpers.Utils;
 import org.gem.indo.dooit.models.bot.Answer;
 import org.gem.indo.dooit.models.bot.BaseBotModel;
 import org.gem.indo.dooit.models.bot.Node;
@@ -19,7 +20,7 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.concurrent.TimeUnit;
+import java.util.Locale;
 
 import javax.inject.Inject;
 
@@ -41,7 +42,7 @@ public class GoalVerificationViewHolder extends BaseBotViewHolder<Node> {
     BotAdapter botAdapter;
     Date goalDate;        //goalDate
     double current;     //priorSaveAmount
-    Double weekly;      //weeklySaveAmount
+    Double weeklyTarget;      //weeklySaveAmount
     double target;      //goalAmount
     String goalName;
     double goalWeeks;
@@ -65,7 +66,7 @@ public class GoalVerificationViewHolder extends BaseBotViewHolder<Node> {
                     try {
 //                        String fmDate = ((Answer) baseBotModel).getValue().split("-", 2)[0];
                         String fmDate = ((Answer) baseBotModel).getValue().substring(0, 10);
-                        DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+                        DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
                         goalDate = formatter.parse(fmDate);
                     } catch (ParseException e) {
                         e.printStackTrace();
@@ -75,10 +76,10 @@ public class GoalVerificationViewHolder extends BaseBotViewHolder<Node> {
                     current = Double.parseDouble(((Answer) baseBotModel).getValue());
                     break;
                 case "weeklySaveAmount":
-                    weekly = Double.parseDouble(((Answer) baseBotModel).getValue());
+                    weeklyTarget = Double.parseDouble(((Answer) baseBotModel).getValue());
                     break;
                 case "goalAmount":
-                    target = Double.parseDouble(((Answer) baseBotModel).getValue());
+                    target = ((Answer) baseBotModel).getValue() == null ? 0 : Double.parseDouble(((Answer) baseBotModel).getValue());
                     break;
                 case "goalName":
                     goalName = ((Answer) baseBotModel).getValue();
@@ -89,17 +90,18 @@ public class GoalVerificationViewHolder extends BaseBotViewHolder<Node> {
         double amountLeft = target - current;
         amountLeft = amountLeft < 0 ? 0 : amountLeft;
         if (goalDate != null) {
-            goalWeeks = (int) TimeUnit.MILLISECONDS.toDays(goalDate.getTime() - System.currentTimeMillis()) / 7;
-            weekly = amountLeft / goalWeeks;
-        } else if (weekly != null) {
-            goalWeeks = amountLeft / weekly;
+
+            goalWeeks = Utils.weekDiff(goalDate.getTime(), Utils.ROUNDWEEK.UP);
+            weeklyTarget = amountLeft / goalWeeks;
+        } else if (weeklyTarget != null) {
+            goalWeeks = amountLeft / weeklyTarget;
         }
 
         String[] params = new String[]{
-                String.valueOf(weekly),
+                String.valueOf((int) Math.ceil(weeklyTarget)),
                 goalName,
                 String.valueOf((int) goalWeeks),
-                CurrencyHelper.getCurrencyString()
+                CurrencyHelper.getCurrencySymbol()
         };
         textView.setText(String.format(text, params));
         RelativeLayout.LayoutParams lp = ((RelativeLayout.LayoutParams) textView.getLayoutParams());

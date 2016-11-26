@@ -18,12 +18,22 @@
     "name": "depositReminder",
     "type": "text",
     "text": "$(depositReminder)",
-    "autoNext": "depositRemainder"
+    "autoNext": "depositRemainder",
+    "textParams": [
+      "LOCAL_CURRENCY",
+      "GOAL_DEPOSIT_WEEKLY_TARGET",
+      "GOAL_DEPOSIT_TARGET",
+      "GOAL_DEPOSIT_END_DATE"
+    ]
   },
   {
     "name": "depositRemainder",
     "type": "text",
     "text": "$(depositRemainder)",
+    "textParams": [
+      "GOAL_DEPOSIT_WEEKS_LEFT",
+      "GOAL_DEPOSIT_DAYS_LEFT"
+    ],
     "answers": [
       {
         "name": "askDepositAddAmount",

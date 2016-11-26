@@ -1,4 +1,4 @@
-package org.gem.indo.dooit.views.main.fragments;
+package org.gem.indo.dooit.views.main.fragments.tip;
 
 import android.app.Activity;
 import android.os.Bundle;
@@ -23,8 +23,6 @@ import org.gem.indo.dooit.R;
 import org.gem.indo.dooit.api.managers.TipManager;
 import org.gem.indo.dooit.helpers.SquiggleBackgroundHelper;
 import org.gem.indo.dooit.models.Tip;
-import org.gem.indo.dooit.views.main.fragments.tip.OnTipsAvailableListener;
-import org.gem.indo.dooit.views.main.fragments.tip.TipsViewPagerPositions;
 import org.gem.indo.dooit.views.main.fragments.tip.adapters.TipsAutoCompleteAdapter;
 import org.gem.indo.dooit.views.main.fragments.tip.adapters.TipsTabAdapter;
 
@@ -107,6 +105,13 @@ public class TipsFragment extends Fragment implements OnTipsAvailableListener {
         View view = inflater.inflate(org.gem.indo.dooit.R.layout.fragment_tips, container, false);
         ButterKnife.bind(this, view);
 
+        return view;
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+
         searchAdapter = new TipsAutoCompleteAdapter(getContext(), org.gem.indo.dooit.R.layout.item_tips_search_suggestion);
         searchView.setAdapter(searchAdapter);
 
@@ -125,8 +130,8 @@ public class TipsFragment extends Fragment implements OnTipsAvailableListener {
                 viewPager.getCurrentItem()).getSearchRes());
         searchView.setHint(hint);
 
-        return view;
     }
+
     @OnClick(R.id.fragment_tips_list_filter_image_button)
     public void clearFilter(View v) {
 
@@ -149,7 +154,8 @@ public class TipsFragment extends Fragment implements OnTipsAvailableListener {
         }
         return false;
     }
-    void hideKeyBoard(){
+
+    void hideKeyBoard() {
         InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Activity.INPUT_METHOD_SERVICE);
 
         //imm.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0);
@@ -194,8 +200,11 @@ public class TipsFragment extends Fragment implements OnTipsAvailableListener {
 
     @Override
     public void onTipsAvailable(List<Tip> tips) {
+        if (this.getActivity() == null)
+            return;
+
         View view = this.getActivity().findViewById(R.id.fragment_tip_progress_container);
-        if(view != null){
+        if (view != null) {
             view.setVisibility(View.GONE);
         }
         Log.d(TAG, "Updating Tips");
