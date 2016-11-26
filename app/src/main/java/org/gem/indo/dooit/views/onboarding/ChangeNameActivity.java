@@ -67,7 +67,7 @@ public class ChangeNameActivity extends DooitActivity {
             @Override
             public void onError(DooitAPIError error) {
                 for (String msg : error.getErrorMessages())
-                    Snackbar.make(changeNameButton, msg, Snackbar.LENGTH_SHORT).show();
+                    Snackbar.make(changeNameButton, msg, Snackbar.LENGTH_LONG).show();
             }
         }).subscribe(new Action1<EmptyResponse>() {
             @Override
@@ -75,7 +75,6 @@ public class ChangeNameActivity extends DooitActivity {
                 user.setUsername(name);
                 ChangeNameActivity.this.persisted.setCurrentUser(user);
                 ChangeNameActivity.this.finish();
-
             }
         });
 
