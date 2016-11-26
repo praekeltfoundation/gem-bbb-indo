@@ -212,6 +212,9 @@
     <string name="profile_help_terms_conditions"><![CDATA[Terms & Conditions]]></string>
     <string name="profile_help_privacy_policy">Privacy Policy</string>
 
+    <!-- Change Password -->
+    <string name="change_password_success">Your password has been changed</string>
+
     <!-- Legends -->
     <string name="legend_label_average">Average</string>
     <string name="legend_label_goals">Goals</string>

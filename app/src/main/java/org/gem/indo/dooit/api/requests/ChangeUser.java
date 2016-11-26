@@ -5,7 +5,9 @@ package org.gem.indo.dooit.api.requests;
  */
 
 public class ChangeUser {
+
     private String username;
+
     public ChangeUser(String name){
         this.username = name;
     }
