@@ -198,6 +198,7 @@
     <string name="target_date">Target Date</string>
 
     <!-- Profile -->
+    <string name="profile_settings_title">Settings</string>
     <string name="profile_section_account">Your account</string>
     <string name="profile_week_streak_singular">%s week</string>
     <string name="profile_week_streak_plural">%s weeks</string>

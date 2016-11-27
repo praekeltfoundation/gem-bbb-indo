@@ -56,6 +56,7 @@ public class ProfileActivity extends DooitActivity {
 
     private static final String INTENT_MIME_TYPE = "mime_type";
     private static final String INTENT_IMAGE_URI = "image_uri";
+    private static final float MIN_PROFILE_IMAGE_SCALE = 0.4f;
 
     @BindView(R.id.activity_profile_scroll_view)
     View background;
@@ -117,6 +118,7 @@ public class ProfileActivity extends DooitActivity {
 
         setTitle(user.getUsername());
 
+        // Profile image collapse
         profileImage.setImageURI(user.getProfile().getProfileImageUrl());
         appBarLayout.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
             boolean isShow = false;
@@ -126,10 +128,15 @@ public class ProfileActivity extends DooitActivity {
             public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
                 if (Math.abs(verticalOffset) > appBarLayout.getHeight() * 0.4) {
                     isShow = true;
-                    profileImage.setVisibility(View.GONE);
+                    if (profileImage.getVisibility() == View.VISIBLE)
+                        profileImage.setVisibility(View.GONE);
                 } else if (Math.abs(verticalOffset) < appBarLayout.getHeight() * 0.4) {
                     isShow = false;
-                    profileImage.setVisibility(View.VISIBLE);
+                    if (profileImage.getVisibility() == View.GONE)
+                        profileImage.setVisibility(View.VISIBLE);
+                    float scale = 1 - ((float) Math.abs(verticalOffset) / (appBarLayout.getHeight() * 0.4f));
+                    profileImage.setScaleX(Math.max(scale, MIN_PROFILE_IMAGE_SCALE));
+                    profileImage.setScaleY(Math.max(scale, MIN_PROFILE_IMAGE_SCALE));
                 }
             }
         });
