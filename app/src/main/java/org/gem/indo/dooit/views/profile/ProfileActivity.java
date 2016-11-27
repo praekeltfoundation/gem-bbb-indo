@@ -15,6 +15,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -31,6 +32,7 @@ import org.gem.indo.dooit.api.responses.EmptyResponse;
 import org.gem.indo.dooit.helpers.ImageStorageHelper;
 import org.gem.indo.dooit.helpers.Persisted;
 import org.gem.indo.dooit.helpers.RequestCodes;
+import org.gem.indo.dooit.helpers.SquiggleBackgroundHelper;
 import org.gem.indo.dooit.helpers.permissions.PermissionCallback;
 import org.gem.indo.dooit.helpers.permissions.PermissionsHelper;
 import org.gem.indo.dooit.models.User;
@@ -55,6 +57,9 @@ public class ProfileActivity extends DooitActivity {
 
     private static final String INTENT_MIME_TYPE = "mime_type";
     private static final String INTENT_IMAGE_URI = "image_uri";
+
+    @BindView(R.id.activity_profile_scroll_view)
+    View background;
 
     @BindView(R.id.activity_profile_image)
     SimpleDraweeView profileImage;
@@ -148,6 +153,12 @@ public class ProfileActivity extends DooitActivity {
                 });
             }
         });
+
+        // Background
+        SquiggleBackgroundHelper.setBackground(this, R.color.purple, R.color.purple_light, appBarLayout);
+        // FIXME: Setting the purple background on the appbar tints the grey background pattern purple as well.
+//        SquiggleBackgroundHelper.setBackground(this, R.color.grey_back, R.color.grey_fore, background);
+
     }
 
     @Override
@@ -198,6 +209,7 @@ public class ProfileActivity extends DooitActivity {
         builder.setItems(items, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int item) {
+                // TODO: Use Enums or Constants
                 switch (item) {
                     case 0:
                         takeImage();
