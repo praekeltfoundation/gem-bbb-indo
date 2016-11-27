@@ -121,7 +121,7 @@
     <string name="infoGoalEnd">Thank you. That concludes the goal-setting process.</string>
 
     <!-- goal_deposit -->
-    <!-- User clicks on add savings (+ More) on Goal saving page  -->
+    <!-- User clicks on add savings (+ Deposit) on Goal saving page  -->
     <string name="goal_deposit_intro">Let\'s add your savings!</string>
     <string name="goal_deposit_reminder">Remember you have to save %1$s %2$s each week to reach %3$s by %4$s.</string>
     <string name="goal_deposit_remaining">That is %1$s weeks and %2$s days from now.</string>
@@ -205,8 +205,8 @@
     <string name="night">Can you land on the sun at night?</string>
 
     <!-- TARGET -->
-    <string name="save">+ More</string>
-    <string name="withdraw">- Pull</string>
+    <string name="save">+ Deposit</string>
+    <string name="withdraw">- Withdraw</string>
     <string name="savings_history">Savings History</string>
     <string name="weeks">Weeks</string>
     <string name="add_goal">ADD GOAL</string>

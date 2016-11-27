@@ -202,8 +202,8 @@
     <string name="night">Can you land on the sun at night?</string>
 
     <!-- TARGET -->
-    <string name="save">+ More</string>
-    <string name="withdraw">- Pull</string>
+    <string name="save">+ Tambah</string>
+    <string name="withdraw">- Tarik</string>
     <string name="savings_history">Savings History</string>
     <string name="weeks">Weeks</string>
     <string name="add_goal">ADD GOAL</string>
