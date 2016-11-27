@@ -24,10 +24,14 @@ import org.gem.indo.dooit.DooitApplication;
 import org.gem.indo.dooit.R;
 import org.gem.indo.dooit.api.DooitAPIError;
 import org.gem.indo.dooit.api.DooitErrorHandler;
+import org.gem.indo.dooit.api.managers.AchievementManager;
 import org.gem.indo.dooit.api.managers.FileUploadManager;
+import org.gem.indo.dooit.api.responses.AchievementResponse;
 import org.gem.indo.dooit.api.responses.EmptyResponse;
+import org.gem.indo.dooit.helpers.MediaUriHelper;
 import org.gem.indo.dooit.helpers.Persisted;
 import org.gem.indo.dooit.helpers.RequestCodes;
+import org.gem.indo.dooit.helpers.SquiggleBackgroundHelper;
 import org.gem.indo.dooit.helpers.permissions.PermissionCallback;
 import org.gem.indo.dooit.helpers.permissions.PermissionsHelper;
 import org.gem.indo.dooit.models.User;
@@ -39,6 +43,7 @@ import java.io.File;
 
 import javax.inject.Inject;
 
+import butterknife.BindString;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -51,15 +56,31 @@ public class ProfileActivity extends DooitActivity {
 
     private static final String INTENT_MIME_TYPE = "mime_type";
     private static final String INTENT_IMAGE_URI = "image_uri";
+    private static final float MIN_PROFILE_IMAGE_SCALE = 0.4f;
+
+    @BindView(R.id.activity_profile_scroll_view)
+    View background;
 
     @BindView(R.id.activity_profile_image)
     SimpleDraweeView profileImage;
+
     @BindView(R.id.toolbar)
     Toolbar toolbar;
+
     @BindView(R.id.app_bar)
     AppBarLayout appBarLayout;
+
     @BindView(R.id.toolbar_title)
     TextView toolbarTitle;
+
+    @BindView(R.id.profile_current_streak_value)
+    TextView streakView;
+
+    @BindString(R.string.profile_week_streak_singular)
+    String streakSingular;
+
+    @BindString(R.string.profile_week_streak_plural)
+    String streakPlural;
 
     @Inject
     Persisted persisted;
@@ -67,8 +88,11 @@ public class ProfileActivity extends DooitActivity {
     @Inject
     FileUploadManager fileUploadManager;
 
-    User user;
-    Uri cameraUri;
+    @Inject
+    AchievementManager achievementManager;
+
+    private User user;
+    private Uri imageUri;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,6 +100,8 @@ public class ProfileActivity extends DooitActivity {
         setContentView(org.gem.indo.dooit.R.layout.activity_profile);
         ((DooitApplication) getApplication()).component.inject(this);
         ButterKnife.bind(this);
+
+        // Appbar
         setSupportActionBar(toolbar);
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -92,6 +118,7 @@ public class ProfileActivity extends DooitActivity {
 
         setTitle(user.getUsername());
 
+        // Profile image collapse
         profileImage.setImageURI(user.getProfile().getProfileImageUrl());
         appBarLayout.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
             boolean isShow = false;
@@ -101,13 +128,51 @@ public class ProfileActivity extends DooitActivity {
             public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
                 if (Math.abs(verticalOffset) > appBarLayout.getHeight() * 0.4) {
                     isShow = true;
-                    profileImage.setVisibility(View.GONE);
+                    if (profileImage.getVisibility() == View.VISIBLE)
+                        profileImage.setVisibility(View.GONE);
                 } else if (Math.abs(verticalOffset) < appBarLayout.getHeight() * 0.4) {
                     isShow = false;
-                    profileImage.setVisibility(View.VISIBLE);
+                    if (profileImage.getVisibility() == View.GONE)
+                        profileImage.setVisibility(View.VISIBLE);
+                    float scale = 1 - ((float) Math.abs(verticalOffset) / (appBarLayout.getHeight() * 0.4f));
+                    profileImage.setScaleX(Math.max(scale, MIN_PROFILE_IMAGE_SCALE));
+                    profileImage.setScaleY(Math.max(scale, MIN_PROFILE_IMAGE_SCALE));
                 }
             }
         });
+
+        // Achievevments
+        setStreak(0);
+
+        achievementManager.retrieveAchievement(user.getId(), new DooitErrorHandler() {
+            @Override
+            public void onError(DooitAPIError error) {
+                Toast.makeText(ProfileActivity.this, "Error retrieving achievements", Toast.LENGTH_SHORT).show();
+            }
+        }).subscribe(new Action1<AchievementResponse>() {
+            @Override
+            public void call(final AchievementResponse response) {
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        setStreak(response.getWeeklyStreak());
+                    }
+                });
+            }
+        });
+
+        // Background
+        SquiggleBackgroundHelper.setBackground(this, R.color.purple, R.color.purple_light, appBarLayout);
+        // FIXME: Setting the purple background on the appbar tints the grey background pattern purple as well.
+//        SquiggleBackgroundHelper.setBackground(this, R.color.grey_back, R.color.grey_fore, background);
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        user = persisted.getCurrentUser();
+        setTitle(user.getUsername());
     }
 
     @Override
@@ -137,29 +202,38 @@ public class ProfileActivity extends DooitActivity {
         }
         return true;
     }
+
     @OnClick(R.id.activity_profile_image)
     public void selectImage() {
-        final CharSequence[] items = { "Take Photo", "Choose from Library",
-                "Cancel" };
+        final CharSequence[] items = {
+                getString(R.string.profile_image_camera),
+                getString(R.string.profile_image_gallery),
+                getString(R.string.profile_image_cancel)
+        };
 
         AlertDialog.Builder builder = new AlertDialog.Builder(ProfileActivity.this);
         builder.setTitle("Add Profile Photo!");
         builder.setItems(items, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int item) {
-
-                if (items[item].equals("Take Photo")) {
-                    takeImage();
-                } else if (items[item].equals("Choose from Gallery")) {
-                    chooseImage();
-                } else if (items[item].equals("Cancel")) {
-                    dialog.dismiss();
+                // TODO: Use Enums or Constants
+                switch (item) {
+                    case 0:
+                        startCamera();
+                        break;
+                    case 1:
+                        startGallery();
+                        break;
+                    case 2:
+                        dialog.dismiss();
+                        break;
                 }
             }
         });
         builder.show();
     }
-    public void takeImage() {
+
+    protected void startCamera() {
         permissionsHelper.askForPermission(this, PermissionsHelper.D_WRITE_EXTERNAL_STORAGE, new PermissionCallback() {
             @Override
             public void permissionGranted() {
@@ -184,17 +258,16 @@ public class ProfileActivity extends DooitActivity {
                 Toast.makeText(ProfileActivity.this, "Can't take ic_d_profile image without storage permission", Toast.LENGTH_SHORT).show();
             }
         });
-
     }
 
-    public void chooseImage() {
+    protected void startGallery() {
         permissionsHelper.askForPermission(this, PermissionsHelper.D_WRITE_EXTERNAL_STORAGE, new PermissionCallback() {
             @Override
             public void permissionGranted() {
                 Intent intent = new Intent();
                 intent.setType("image/*");
                 intent.setAction(Intent.ACTION_GET_CONTENT);//
-                startActivityForResult(Intent.createChooser(intent, "Select File"),RequestCodes.RESPONSE_GALLERY_REQUEST_PROFILE_IMAGE);
+                startActivityForResult(Intent.createChooser(intent, "Select File"), RequestCodes.RESPONSE_GALLERY_REQUEST_PROFILE_IMAGE);
             }
 
             @Override
@@ -205,7 +278,6 @@ public class ProfileActivity extends DooitActivity {
 
     }
 
-
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (resultCode == Activity.RESULT_CANCELED)
@@ -213,56 +285,53 @@ public class ProfileActivity extends DooitActivity {
 
         switch (requestCode) {
             case RequestCodes.REPONSE_CAMERA_REQUEST_PROFILE_IMAGE:
-                onActivityResultCameraProfileImage(data);
+                onActivityImageResult(data);
                 break;
             case RequestCodes.RESPONSE_GALLERY_REQUEST_PROFILE_IMAGE:
-                onSelectFromGalleryResult(data);
+                onActivityImageResult(data);
                 break;
         }
-        //  ActivityResult.onResult(requestCode, resultCode, data).into(this);
-
     }
-    private void uploadFromDeviceUri(final Uri cameraUri){
-        profileImage.setImageURI(cameraUri);
+
+    protected void onActivityImageResult(Intent data) {
+        imageUri = data.getData();
+        if (imageUri == null) {
+            try {
+                imageUri = Uri.parse(MediaStore.Images.Media.insertImage(getContentResolver(), (Bitmap) data.getExtras().get("data"), "", ""));
+            } catch (Throwable ex) {
+
+            }
+        }
+        profileImage.setImageURI(imageUri);
         ContentResolver cR = this.getContentResolver();
-        getIntent().putExtra(INTENT_MIME_TYPE, cR.getType(cameraUri));
-        Uri imageUri = getRealPathFromURI(cameraUri);
-        getIntent().putExtra(INTENT_IMAGE_URI, imageUri);
+        uploadImage(cR.getType(imageUri), MediaUriHelper.getPath(this, imageUri));
+    }
+
+    protected void uploadImage(String mimetype, String filepath) {
         User user = persisted.getCurrentUser();
-        fileUploadManager.upload(user.getId(), getIntent().getStringExtra(INTENT_MIME_TYPE), new File(imageUri.getPath()), new DooitErrorHandler() {
+        showProgressDialog(R.string.profile_image_progress);
+        fileUploadManager.upload(user.getId(), mimetype, new File(filepath), new DooitErrorHandler() {
             @Override
             public void onError(DooitAPIError error) {
+                dismissDialog();
                 Toast.makeText(ProfileActivity.this, "Unable to uploadProfileImage Image", Toast.LENGTH_SHORT).show();
             }
         }).subscribe(new Action1<EmptyResponse>() {
             @Override
             public void call(EmptyResponse emptyResponse) {
+                dismissDialog();
                 User user = persisted.getCurrentUser();
-                user.getProfile().setProfileImageUrl(cameraUri.toString());
+                user.getProfile().setProfileImageUrl(imageUri.toString());
                 persisted.setCurrentUser(user);
             }
         });
     }
-    private void onSelectFromGalleryResult(Intent data) {
-        Bitmap bm=null;
-        if (data != null) {
-            cameraUri = data.getData();
-            uploadFromDeviceUri(data.getData());
-        }
-    }
 
-    //@OnActivityResult(requestCode = RequestCodes.REPONSE_CAMERA_REQUEST_PROFILE_IMAGE)
-    void onActivityResultCameraProfileImage(Intent data) {
-        cameraUri = data.getData();
-        if (cameraUri == null) {
-            try {
-                cameraUri = Uri.parse(MediaStore.Images.Media.insertImage(getContentResolver(), (Bitmap) data.getExtras().get("data"), "", ""));
-            } catch (Throwable ex) {
-
-            }
-        }
-        uploadFromDeviceUri(cameraUri);
-
+    protected void setStreak(int streak) {
+        if (streak == 1)
+            streakView.setText(String.format(streakSingular, streak));
+        else
+            streakView.setText(String.format(streakPlural, streak));
     }
 
     public static class Builder extends DooitActivityBuilder<Builder> {

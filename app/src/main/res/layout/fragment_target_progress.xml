@@ -12,7 +12,7 @@
         android:layout_gravity="center"
         android:padding="10dp"
         android:scaleType="fitXY"
-        app:placeholderImage="@drawable/placeholder"
+        app:placeholderImage="@color/light_blue"
         app:placeholderImageScaleType="fitXY"
         app:roundAsCircle="true" />
 

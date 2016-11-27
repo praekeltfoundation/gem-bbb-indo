@@ -1,5 +1,6 @@
 package org.gem.indo.dooit.views.main.fragments.target;
 
+import android.graphics.Point;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
@@ -8,6 +9,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -18,6 +20,7 @@ import org.gem.indo.dooit.api.DooitAPIError;
 import org.gem.indo.dooit.api.DooitErrorHandler;
 import org.gem.indo.dooit.api.managers.GoalManager;
 import org.gem.indo.dooit.helpers.Persisted;
+import org.gem.indo.dooit.helpers.Utils;
 import org.gem.indo.dooit.models.Goal;
 import org.gem.indo.dooit.models.enums.BotType;
 import org.gem.indo.dooit.views.custom.WeekGraph;
@@ -27,7 +30,6 @@ import org.gem.indo.dooit.views.main.fragments.target.adapters.TargetPagerAdapte
 import org.joda.time.Weeks;
 
 import java.util.ArrayList;
-import java.util.Currency;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -36,6 +38,7 @@ import butterknife.BindString;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import butterknife.OnPageChange;
 import rx.functions.Action1;
 
 public class TargetFragment extends MainFragment {
@@ -52,8 +55,14 @@ public class TargetFragment extends MainFragment {
     @BindView(R.id.fragment_target_total_text_view)
     TextView total;
 
+    @BindView(R.id.fragment_target_history_date)
+    TextView endDate;
+
+    @BindView(R.id.fragment_target_history_date_container)
+    FrameLayout historyDateContainer;
+
     @BindView(R.id.fragment_target_savings_plan_message)
-    TextView targetMessage;
+    TextView goalMessage;
 
     @BindView(R.id.fragment_target_week_graph_view)
     WeekGraph bars;
@@ -101,38 +110,40 @@ public class TargetFragment extends MainFragment {
         View view = inflater.inflate(org.gem.indo.dooit.R.layout.fragment_target, container, false);
         ButterKnife.bind(this, view);
 
+        return view;
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        Point size = new Point();
+        getActivity().getWindowManager().getDefaultDisplay().getSize(size);
+        historyDateContainer.getLayoutParams().width = size.x;
+
         adapter = new TargetPagerAdapter(new ArrayList<Goal>());
         viewPager.setAdapter(adapter);
 
-        viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-            @Override
-            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-
-            }
-
-            @Override
-            public void onPageSelected(int position) {
-                populateGoal(goals.get(position));
-
-                if (position == 0)
-                    leftTarget.setVisibility(View.GONE);
-                else
-                    leftTarget.setVisibility(View.VISIBLE);
-
-                if (position == goals.size())
-                    rightTarget.setVisibility(View.GONE);
-                else
-                    rightTarget.setVisibility(View.VISIBLE);
-            }
-
-            @Override
-            public void onPageScrollStateChanged(int state) {
-
-            }
-        });
+        if (adapter.getCount() == 1) {
+            rightTarget.setVisibility(View.GONE);
+            leftTarget.setVisibility(View.GONE);
+        }
 
         retrieveGoals();
-        return view;
+    }
+
+    @OnPageChange(value = R.id.fragment_target_targets_view_pagers, callback = OnPageChange.Callback.PAGE_SELECTED)
+    void onPageSelected(int position) {
+        populateGoal(goals.get(position));
+
+        if (position == 0)
+            leftTarget.setVisibility(View.GONE);
+        else
+            leftTarget.setVisibility(View.VISIBLE);
+
+        if (position == goals.size() - 1)
+            rightTarget.setVisibility(View.GONE);
+        else
+            rightTarget.setVisibility(View.VISIBLE);
     }
 
     @Override
@@ -176,8 +187,10 @@ public class TargetFragment extends MainFragment {
         total.setText(String.format("of %s", CurrencyHelper.format(goal.getTarget())));
         int weeks = Weeks.weeksBetween(goal.getStartDate(), goal.getEndDate()).getWeeks();
         double toSavePerWeek = goal.getTarget() / weeks;
-        bars.setValues(goal.getWeeklyTotals());
-        targetMessage.setText(String.format(savingsMessage, Currency.getInstance(getLocal()).getCurrencyCode(), toSavePerWeek, goal.getTarget(), weeks));
+        bars.setGoal(goal);
+        bars.requestLayout();
+        goalMessage.setText(String.format(savingsMessage, CurrencyHelper.getCurrencySymbol(), (int) toSavePerWeek, goal.getTarget(), weeks));
+        endDate.setText(Utils.formatDate(goal.getEndDate().toDate()));
     }
 
     private void retrieveGoals() {
@@ -209,7 +222,5 @@ public class TargetFragment extends MainFragment {
                             });
                     }
                 });
-
-        bars.setGoal(16.0f);
     }
 }

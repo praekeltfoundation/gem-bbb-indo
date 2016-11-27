@@ -26,6 +26,7 @@ public class QuizChallengeQuestion extends BaseChallengeQuestion
     /*** Variables ***/
 
     private List<QuizChallengeOption> options;
+    private String hint;
 
     /*** Parcelable methods ***/
 
@@ -37,6 +38,11 @@ public class QuizChallengeQuestion extends BaseChallengeQuestion
         } else {
             options = null;
         }
+        if (in.readByte() == 0x01) {
+            hint = in.readString();
+        } else {
+            hint = null;
+        }
     }
 
     /*** Getters/Setters ***/
@@ -47,6 +53,14 @@ public class QuizChallengeQuestion extends BaseChallengeQuestion
 
     public void setOptions(List<QuizChallengeOption> options) {
         this.options = options;
+    }
+
+    public String getHint() {
+        return hint;
+    }
+
+    public void setHint(String hint) {
+        this.hint = hint;
     }
 
     @Override
@@ -62,6 +76,12 @@ public class QuizChallengeQuestion extends BaseChallengeQuestion
         } else {
             dest.writeByte((byte) (0x01));
             dest.writeList(options);
+        }
+        if (hint == null) {
+            dest.writeByte((byte) (0x00));
+        } else {
+            dest.writeByte((byte) (0x01));
+            dest.writeString(hint);
         }
     }
 }

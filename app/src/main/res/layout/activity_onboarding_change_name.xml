@@ -52,7 +52,7 @@
 
         <TextView
             android:id="@+id/activity_change_name_example_text_edit"
-            style="@style/AppTheme.TextView.Regular.ExtraSmall"
+            style="@style/AppTheme.TextView.Regular.Medium"
             fontPath="fonts/Lato-Regular.ttf"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

@@ -11,8 +11,8 @@ import android.widget.TextView;
 
 import org.gem.indo.dooit.R;
 import org.gem.indo.dooit.views.main.MainViewPagerPositions;
-import org.gem.indo.dooit.views.main.fragments.ChallengeFragment;
-import org.gem.indo.dooit.views.main.fragments.TipsFragment;
+import org.gem.indo.dooit.views.main.fragments.challenge.ChallengeFragment;
+import org.gem.indo.dooit.views.main.fragments.tip.TipsFragment;
 import org.gem.indo.dooit.views.main.fragments.bot.BotFragment;
 import org.gem.indo.dooit.views.main.fragments.target.TargetFragment;
 
@@ -22,6 +22,10 @@ import org.gem.indo.dooit.views.main.fragments.target.TargetFragment;
 
 public class MainTabAdapter extends FragmentStatePagerAdapter {
     private Context context;
+    private BotFragment botFragment = BotFragment.newInstance();
+    private TargetFragment targetFragment = TargetFragment.newInstance();
+    private ChallengeFragment challengeFragment = ChallengeFragment.newInstance();
+    private TipsFragment tipsFragment = TipsFragment.newInstance();
 
     public MainTabAdapter(FragmentManager fm, Context context) {
         super(fm);
@@ -33,22 +37,16 @@ public class MainTabAdapter extends FragmentStatePagerAdapter {
         Fragment fragment;
         switch (MainViewPagerPositions.getValueOf(position)) {
             case BOT:
-                fragment = BotFragment.newInstance();
-                break;
+                return botFragment;
             case TARGET:
-                fragment = TargetFragment.newInstance();
-                break;
+                return targetFragment;
             case CHALLENGE:
-                fragment = ChallengeFragment.newInstance();
-                break;
+                return challengeFragment;
             case TIPS:
-                fragment = TipsFragment.newInstance();
-                break;
+                return tipsFragment;
             default:
-                fragment = BotFragment.newInstance();
-                break;
+                return botFragment;
         }
-        return fragment;
     }
 
     @Override

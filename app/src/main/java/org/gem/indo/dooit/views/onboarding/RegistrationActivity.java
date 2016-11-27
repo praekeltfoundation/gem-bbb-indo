@@ -91,7 +91,6 @@ public class RegistrationActivity extends DooitActivity {
     @BindView(R.id.activity_registration_register_button)
     Button registerButton;
 
-
     @Inject
     AuthenticationManager authenticationManager;
 

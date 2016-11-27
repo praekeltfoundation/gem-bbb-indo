@@ -9,12 +9,22 @@ import org.joda.time.DateTime;
  */
 
 public abstract class BaseParticipantAnswer {
-    protected Long participant;
-    protected Long user;
-    protected Long challenge;
-    protected long question;
+
+    /*************
+     * Variables *
+     *************/
+
     @SerializedName("date_answered")
     protected DateTime dateAnswered = new DateTime();
+    protected Long challenge;
+    protected Long question;
+    protected Long participant;
+    protected Long user;
+
+
+    /****************
+     * Constructors *
+     ****************/
 
     public BaseParticipantAnswer() {
         // Mandatory empty constructor
@@ -26,43 +36,53 @@ public abstract class BaseParticipantAnswer {
         this.dateAnswered = new DateTime();
     }
 
-    public long getParticipant() {
-        return participant;
-    }
 
-    public void setParticipant(long participant) {
-        this.participant = participant;
-    }
-
-    public long getUser() {
-        return user;
-    }
-
-    public void setUser(long user) {
-        this.user = user;
-    }
+    /***********
+     * Getters *
+     ***********/
 
     public long getChallenge() {
-        return challenge;
+        return challenge != null ? challenge : -1;
     }
 
-    public void setChallenge(long challenge) {
-        this.challenge = challenge;
+    public long getParticipant() {
+        return participant != null ? participant : -1;
     }
 
     public long getQuestion() {
-        return question;
+        return question != null ? question : -1;
     }
 
-    public void setQuestion(long question) {
-        this.question = question;
+    public long getUser() {
+        return user != null ? user : -1;
     }
 
     public DateTime getDateAnswered() {
         return dateAnswered;
     }
 
+
+    /***********
+     * Setters *
+     ***********/
+
+    public void setChallenge(long challenge) {
+        this.challenge = challenge;
+    }
+
     public void setDateAnswered(DateTime dateAnswered) {
         this.dateAnswered = dateAnswered;
+    }
+
+    public void setParticipant(long participant) {
+        this.participant = participant;
+    }
+
+    public void setQuestion(long question) {
+        this.question = question;
+    }
+
+    public void setUser(long user) {
+        this.user = user;
     }
 }

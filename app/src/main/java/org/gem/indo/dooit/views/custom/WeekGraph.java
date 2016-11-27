@@ -14,6 +14,8 @@ import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import org.gem.indo.dooit.models.Goal;
+
 import java.util.LinkedHashMap;
 import java.util.Locale;
 import java.util.Map;
@@ -27,7 +29,9 @@ public class WeekGraph extends FrameLayout {
     private int mBarWidth = 0, mBarMarginStart = 0, mBarMarginEnd = 0, mBarTextHeight = 0, mBarAverageHeight = 0, mBarTargetHeight = 0;
     private Drawable mBarDrawable;
     private LinkedHashMap<String, Float> mValues = new LinkedHashMap<>();
-    private Float mMaxValue = 0f, mGoal = 0f;
+    private double mMaxValue = 0d, mWeeklyTarget = 0d, mWeeklyAverage = 0d;
+    private Goal mGoal;
+
     @ColorInt
     private int mBarTargetColor = Color.GREEN, mBarAverageColor = Color.YELLOW;
 
@@ -135,13 +139,20 @@ public class WeekGraph extends FrameLayout {
     private void createViews() {
         removeAllViews();
         Float totalValue = 0f;
-        mMaxValue = mGoal;
         for (Map.Entry<String, Float> value : mValues.entrySet()) {
             if (value.getValue() > mMaxValue)
                 mMaxValue = value.getValue();
 
             totalValue += value.getValue();
         }
+
+        if(mWeeklyAverage > mMaxValue)
+            mMaxValue = mWeeklyAverage;
+
+        if(mWeeklyTarget > mMaxValue)
+            mMaxValue = mWeeklyTarget;
+
+        mMaxValue *= 1.1;
 
         LinearLayout viewContainer = new LinearLayout(getContext());
         LinearLayout.LayoutParams paramsViewContainer = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
@@ -174,41 +185,38 @@ public class WeekGraph extends FrameLayout {
             viewContainer.addView(viewGroup);
         }
 
-        View average = new View(getContext());
+        View weeklyAverage = new View(getContext());
         FrameLayout.LayoutParams paramsAvarage = new FrameLayout.LayoutParams(LayoutParams.MATCH_PARENT, mBarAverageHeight);
         paramsAvarage.gravity = Gravity.BOTTOM;
-        paramsAvarage.bottomMargin = (int) ((parentHeight - mBarTextHeight) * ((totalValue / mValues.size()) / mMaxValue)) + mBarTextHeight;
-        average.setBackgroundColor(mBarAverageColor);
-        average.setLayoutParams(paramsAvarage);
-        addView(average);
+        paramsAvarage.bottomMargin = (int) ((parentHeight - mBarTextHeight) * (mWeeklyAverage / mMaxValue)) + mBarTextHeight;
+        weeklyAverage.setBackgroundColor(mBarAverageColor);
+        weeklyAverage.setLayoutParams(paramsAvarage);
+        addView(weeklyAverage);
 
-        View target = new View(getContext());
+        View weeklyTarget = new View(getContext());
         FrameLayout.LayoutParams paramsGoal = new FrameLayout.LayoutParams(LayoutParams.MATCH_PARENT, mBarTargetHeight);
         paramsGoal.gravity = Gravity.BOTTOM;
-        paramsGoal.bottomMargin = (int) ((parentHeight - mBarTextHeight) * (mGoal / mMaxValue)) + mBarTextHeight;
-        target.setBackgroundColor(mBarTargetColor);
-        target.setLayoutParams(paramsGoal);
-        addView(target);
+        paramsGoal.bottomMargin = (int) ((parentHeight - mBarTextHeight) * (mWeeklyTarget / mMaxValue)) + mBarTextHeight;
+        weeklyTarget.setBackgroundColor(mBarTargetColor);
+        weeklyTarget.setLayoutParams(paramsGoal);
+        addView(weeklyTarget);
 
         addView(viewContainer);
 
     }
 
-    public LinkedHashMap<String, Float> getValues() {
-        return mValues;
-    }
-
-    public void setValues(LinkedHashMap<String, Float> values) {
-        this.mValues = values;
-        requestLayout();
-    }
-
-    public Float getGoal() {
+    public Goal getGoal() {
         return mGoal;
     }
 
-    public void setGoal(Float mGoal) {
+    public void setGoal(Goal mGoal) {
         this.mGoal = mGoal;
+
+        mValues = mGoal.getWeeklyTotals();
+        mWeeklyTarget = mGoal.getWeeklyTarget();
+        mWeeklyAverage = mGoal.getWeeklyAverage();
+
+        createViews();
         requestLayout();
     }
 }

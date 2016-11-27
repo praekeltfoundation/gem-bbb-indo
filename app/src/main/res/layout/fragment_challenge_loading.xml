@@ -4,7 +4,7 @@
     android:id="@+id/fragment_challenge_container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="org.gem.indo.dooit.views.main.fragments.ChallengeFragment">
+    tools:context="org.gem.indo.dooit.views.main.fragments.challenge.ChallengeFragment">
 
     <ProgressBar
         android:id="@+id/fragment_challenge_loadingprogress"

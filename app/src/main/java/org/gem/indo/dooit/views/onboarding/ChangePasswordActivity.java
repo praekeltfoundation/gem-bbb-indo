@@ -3,6 +3,8 @@ package org.gem.indo.dooit.views.onboarding;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.support.design.widget.Snackbar;
 import android.support.v4.content.res.ResourcesCompat;
 import android.widget.Button;
@@ -13,7 +15,9 @@ import org.gem.indo.dooit.DooitApplication;
 import org.gem.indo.dooit.R;
 import org.gem.indo.dooit.api.DooitAPIError;
 import org.gem.indo.dooit.api.DooitErrorHandler;
+import org.gem.indo.dooit.api.managers.AuthenticationManager;
 import org.gem.indo.dooit.api.managers.UserManager;
+import org.gem.indo.dooit.api.responses.AuthenticationResponse;
 import org.gem.indo.dooit.api.responses.EmptyResponse;
 import org.gem.indo.dooit.helpers.Persisted;
 import org.gem.indo.dooit.helpers.ViewValidation;
@@ -44,20 +48,27 @@ public class ChangePasswordActivity extends DooitActivity {
     @BindView(R.id.activity_change_password_old_edit_text)
     EditText passwordOld;
 
+    @BindView(R.id.activity_change_password_button)
+    Button changePasswordButton;
+
+    @Inject
+    AuthenticationManager authenticationManager;
+
     @Inject
     UserManager userManager;
 
     @Inject
     Persisted persisted;
-    @BindView(R.id.activity_change_password_button)
-    Button changePasswordButton;
+
+    private Handler handler;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(org.gem.indo.dooit.R.layout.activity_onboarding_change_password);
+        setContentView(R.layout.activity_onboarding_change_password);
         ((DooitApplication) getApplication()).component.inject(this);
         ButterKnife.bind(this);
+        handler = new Handler(Looper.getMainLooper());
     }
 
     public boolean isPasswordValid() {
@@ -65,12 +76,12 @@ public class ChangePasswordActivity extends DooitActivity {
         ViewValidation.Result result = ViewValidation.isPasswordValid(password.getText().toString());
         if (passwordOld.getText().toString().equals(password.getText().toString())) {
             valid = false;
-            passwordHint.setText(org.gem.indo.dooit.R.string.reg_change_password_error_1);
+            passwordHint.setText(R.string.reg_change_password_error_1);
             passwordHint.setTextColor(ResourcesCompat.getColor(getResources(), android.R.color.holo_red_light, getTheme()));
-        } else if(result.valid){
-            passwordHint.setText(org.gem.indo.dooit.R.string.reg_example_password);
+        } else if (result.valid) {
+            passwordHint.setText(R.string.reg_example_password);
             passwordHint.setTextColor(ResourcesCompat.getColor(getResources(), org.gem.indo.dooit.R.color.white, getTheme()));
-        }else{
+        } else {
             passwordHint.setText(result.message);
             passwordHint.setTextColor(ResourcesCompat.getColor(getResources(), android.R.color.holo_red_light, getTheme()));
         }
@@ -84,22 +95,50 @@ public class ChangePasswordActivity extends DooitActivity {
         final User user = persisted.getCurrentUser();
         final String newPassword = this.password.getText().toString();
         final String oldPassword = this.passwordOld.getText().toString();
-        userManager.changePassword(user.getId(),oldPassword,newPassword,new DooitErrorHandler() {
+        userManager.changePassword(user.getId(), oldPassword, newPassword, new DooitErrorHandler() {
             @Override
             public void onError(DooitAPIError error) {
                 for (String msg : error.getErrorMessages())
-                    Snackbar.make(changePasswordButton, msg, Snackbar.LENGTH_SHORT).show();
+                    Snackbar.make(changePasswordButton, msg, Snackbar.LENGTH_LONG).show();
             }
         }).subscribe(new Action1<EmptyResponse>() {
             @Override
             public void call(EmptyResponse emptyResponse) {
+                Snackbar.make(changePasswordButton, R.string.change_password_success, Snackbar.LENGTH_SHORT).show();
                 user.setPassword(newPassword);
                 ChangePasswordActivity.this.persisted.setCurrentUser(user);
-                ChangePasswordActivity.this.finish();
-
+                login(user, newPassword);
             }
         });
-        ChangePasswordActivity.this.finish();
+    }
+
+    void login(User user, String newPassword) {
+        authenticationManager.login(user.getUsername(), newPassword, new DooitErrorHandler() {
+            @Override
+            public void onError(DooitAPIError error) {
+                for (String msg : error.getErrorMessages())
+                    Snackbar.make(changePasswordButton, msg, Snackbar.LENGTH_LONG).show();
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        LoginActivity.Builder.create(ChangePasswordActivity.this)
+                                .startActivityClearTop();
+                    }
+                }, 2000);
+            }
+        }).subscribe(new Action1<AuthenticationResponse>() {
+            @Override
+            public void call(AuthenticationResponse response) {
+                persisted.setCurrentUser(response.getUser());
+                persisted.saveToken(response.getToken());
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        ChangePasswordActivity.this.finish();
+                    }
+                }, 2000);
+            }
+        });
     }
 
     public static class Builder extends DooitActivityBuilder<Builder> {

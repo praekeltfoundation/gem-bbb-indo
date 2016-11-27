@@ -10,6 +10,7 @@ import android.widget.EditText;
 import com.greenfrvr.hashtagview.HashtagView;
 
 import org.gem.indo.dooit.R;
+import org.gem.indo.dooit.helpers.Utils;
 import org.gem.indo.dooit.models.bot.Answer;
 import org.gem.indo.dooit.models.enums.BotMessageType;
 import org.gem.indo.dooit.views.custom.DatePickerFragment;
@@ -18,7 +19,6 @@ import org.gem.indo.dooit.views.main.fragments.bot.adapters.BotAdapter;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Locale;
-import java.util.concurrent.TimeUnit;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -58,7 +58,7 @@ public class AnswerInlineDateEditViewHolder extends BaseBotViewHolder<Answer> {
                         Answer inputAnswer = new Answer();
                         Calendar cal = Calendar.getInstance(Locale.getDefault());
                         cal.set(year, month, day);
-                        inputAnswer.setValue(new SimpleDateFormat("yyyy-MM-dd").format(cal.getTime()) + " - " + (TimeUnit.MILLISECONDS.toDays(cal.getTime().getTime() - System.currentTimeMillis()) / 7) + " weeks");
+                        inputAnswer.setValue(Utils.formatDate(cal.getTime()) + " - " + Utils.weekDiff(cal.getTime().getTime(), Utils.ROUNDWEEK.UP) + " weeks");
                         inputAnswer.setName(dataModel.getName());
                         inputAnswer.setRemoveOnSelect(dataModel.getName());
                         inputAnswer.setNext(dataModel.getNextOnFinish());
