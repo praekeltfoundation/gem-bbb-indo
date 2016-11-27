@@ -302,14 +302,17 @@ public class ProfileActivity extends DooitActivity {
 
     protected void uploadImage(String mimetype, String filepath) {
         User user = persisted.getCurrentUser();
+        showProgressDialog(R.string.profile_image_progress);
         fileUploadManager.upload(user.getId(), mimetype, new File(filepath), new DooitErrorHandler() {
             @Override
             public void onError(DooitAPIError error) {
+                dismissDialog();
                 Toast.makeText(ProfileActivity.this, "Unable to uploadProfileImage Image", Toast.LENGTH_SHORT).show();
             }
         }).subscribe(new Action1<EmptyResponse>() {
             @Override
             public void call(EmptyResponse emptyResponse) {
+                dismissDialog();
                 User user = persisted.getCurrentUser();
                 user.getProfile().setProfileImageUrl(imageUri.toString());
                 persisted.setCurrentUser(user);
