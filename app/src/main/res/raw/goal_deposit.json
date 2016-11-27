@@ -1,24 +1,15 @@
 [
   {
-    "name": "goalGreeting",
+    "name": "goal_deposit_intro",
     "type": "text",
-    "text": "$(goalGreeting)",
-    "textParams": [
-      "USERNAME"
-    ],
-    "autoNext": "depositIntroduction"
+    "text": "$(goal_deposit_intro)",
+    "autoNext": "goal_deposit_reminder"
   },
   {
-    "name": "depositIntroduction",
+    "name": "goal_deposit_reminder",
     "type": "text",
-    "text": "$(depositIntroduction)",
-    "autoNext": "depositReminder"
-  },
-  {
-    "name": "depositReminder",
-    "type": "text",
-    "text": "$(depositReminder)",
-    "autoNext": "depositRemainder",
+    "text": "$(goal_deposit_reminder)",
+    "autoNext": "goal_deposit_remaining",
     "textParams": [
       "LOCAL_CURRENCY",
       "GOAL_DEPOSIT_WEEKLY_TARGET",
@@ -27,29 +18,29 @@
     ]
   },
   {
-    "name": "depositRemainder",
+    "name": "goal_deposit_remaining",
     "type": "text",
-    "text": "$(depositRemainder)",
+    "text": "$(goal_deposit_remaining)",
     "textParams": [
       "GOAL_DEPOSIT_WEEKS_LEFT",
       "GOAL_DEPOSIT_DAYS_LEFT"
     ],
     "answers": [
       {
-        "name": "askDepositAddAmount",
-        "text": "$(addAmount)",
-        "next": "askDepositAmount"
+        "name": "goal_deposit_ask_amount",
+        "text": "$(goal_deposit_ask_amount)",
+        "next": "goal_deposit_ask_amount"
       }
     ]
   },
   {
-    "name": "askDepositAmount",
+    "name": "goal_deposit_ask_amount",
     "type": "blank",
-    "autoAnswer": "depositAmount",
+    "autoAnswer": "deposit_amount",
     "answers": [
       {
-        "name": "depositAmount",
-        "nextOnFinish": "depositEnd",
+        "name": "deposit_amount",
+        "nextOnFinish": "goal_deposit_end",
         "type": "inlineCurrency",
         "typeOnFinish": "textCurrency",
         "inlineEditHint": "$(type_currency_hint)"
@@ -57,8 +48,8 @@
     ]
   },
   {
-    "name": "depositEnd",
+    "name": "goal_deposit_end",
     "type": "end",
-    "text": "$(depositEnd)"
+    "text": "$(goal_deposit_end)"
   }
 ]

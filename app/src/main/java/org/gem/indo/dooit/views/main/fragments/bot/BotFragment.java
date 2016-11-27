@@ -174,7 +174,7 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
                 getAndAddNode("askGoalName");
                 break;
             case GOAL_DEPOSIT:
-                getAndAddNode("depositIntroduction");
+                getAndAddNode("goal_deposit_intro");
                 break;
         }
     }

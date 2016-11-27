@@ -119,11 +119,13 @@
     <string name="validationFailPriorSavedAmount">Sorry, I do not understand that and have not  been taught how to handle it yet.</string>
     <string name="infoGoalEnd">Thank you. That concludes the goal-setting process.</string>
 
-    <string name="depositIntroduction">Let\'s add your savings!</string>
-    <string name="depositReminder">Remember you have to save %1$s %2$s each week to reach %3$s by %4$s.</string>
-    <string name="depositRemainder">That is %1$s weeks and %2$s days from now.</string>
-    <string name="askDepositAddAmount">Add Amount</string>
-    <string name="depositEnd">Well done!</string>
+    <!-- goal_deposit -->
+    <!-- User clicks on add savings (+ More) on Goal saving page  -->
+    <string name="goal_deposit_intro">Let\'s add your savings!</string>
+    <string name="goal_deposit_reminder">Remember you have to save %1$s %2$s each week to reach %3$s by %4$s.</string>
+    <string name="goal_deposit_remaining">That is %1$s weeks and %2$s days from now.</string>
+    <string name="goal_deposit_ask_amount">Add Amount</string>
+    <string name="goal_deposit_end">Well done!</string>
 
     <!--Buttons-->
     <string name="Skip">Skip</string>
