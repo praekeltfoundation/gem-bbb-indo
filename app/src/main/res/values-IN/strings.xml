@@ -1,12 +1,18 @@
 <resources>
+
+    <!-- General -->
     <string name="app_name">Dooit</string>
-    <string name="title_activity_main">Dooit</string>
+
+    <!-- Activity Titles  -->
+    <string name="title_activity_main"></string>
     <string name="title_activity_profile">Profil</string>
     <string name="title_activity_settings">Pengaturan</string>
     <string name="title_activity_terms_and_conditions">Terms &amp; Conditions</string>
     <string name="title_activity_privacy_policy">Privacy Policy</string>
     <string name="action_settings">Settings</string>
 
+    <!-- Bottom Navigation -->
+    <string name="main_tab_text_0">COACH</string>
     <string name="main_tab_text_1">TARGET</string>
     <string name="main_tab_text_2">TANTAGAN</string>
     <string name="main_tab_text_3">TIPS</string>
@@ -48,12 +54,12 @@
     <string name="tips_tab_favourites">Favorit</string>
     <string name="tips_tab_all">Semua</string>
     <string name="tips_card_read_more">Baca lebih banyak</string>
-    <string name="tips_card_empty_tag">tag</string>
     <string name="tips_search_hint">Cari: Topik, judul, tag, dll...</string>
     <string name="tips_search_placeholder_fav">Cari tips favorit</string>
     <string name="tips_search_placeholder_all">Cari semua tips</string>
     <string name="tips_article_opening">\'%s\' pembuka</string>
     <string name="tips_article_add_fav">Menambahkan \'%s\' ke favorit</string>
+    <string name="tips_article_remove_fav">Removed \'%s\' from favourites</string>
     <string name="tips_list_filter">Filtering \'%s\'</string>
 
     <!-- Registration -->
@@ -76,7 +82,6 @@
     <string name="reg_example_password">Harus memiliki minimal 6 karakter</string>
     <string name="reg_example_password_error_1">Password tidak boleh kosong</string>
     <string name="reg_example_password_error_2">Password must be longer than 6 characters</string>
-    <string name="reg_change_password_error_1">Passwords can\'t be the same</string>
 
     <string name="already_registered_log_in">Sudah terdaftar? Masuk</string>
     <string name="forgot_password">Lupa kata sandi?</string>
@@ -213,10 +218,10 @@
     <string name="target_date">Target Date</string>
 
     <!-- Profile -->
-    <string name="profile_settings_title">Settings</string>
-    <string name="profile_section_account">Your account</string>
     <string name="profile_week_streak_singular">%s week</string>
     <string name="profile_week_streak_plural">%s weeks</string>
+    <string name="profile_settings_title">Settings</string>
+    <string name="profile_section_account">Your account</string>
     <string name="profile_account_change_name">Change name</string>
     <string name="profile_account_change_password">Change password</string>
     <string name="profile_account_sign_out">Sign out</string>
@@ -234,11 +239,14 @@
     <string name="profile_image_cancel">Cancel</string>
     <string name="profile_image_progress">We\'re uploading your profile image&#8230;</string>
 
-    <!-- Change Username -->
-    <string name="change_username_success">Your username has been changed to \'%s\'</string>
+    <!-- Profile: Change Username -->
+    <string name="profile_change_username_progress">We\'re changing your username&#8230;</string>
+    <string name="profile_change_username_success">Your username has been changed to \'%s\'</string>
 
-    <!-- Change Password -->
-    <string name="change_password_success">Your password has been changed</string>
+    <!-- Profile: Change Password -->
+    <string name="profile_change_password_progress">We\'re changing your password&#8230;</string>
+    <string name="profile_change_password_success">Your password has been changed</string>
+    <string name="profile_change_password_error_1">Passwords can\'t be the same</string>
 
     <!-- Legends -->
     <string name="legend_label_average">Average</string>

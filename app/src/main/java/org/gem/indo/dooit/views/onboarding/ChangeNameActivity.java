@@ -37,7 +37,7 @@ import rx.functions.Action1;
 
 public class ChangeNameActivity extends DooitActivity {
 
-    @BindString(R.string.change_username_success)
+    @BindString(R.string.profile_change_username_success)
     String successText;
 
     @BindView(R.id.activity_change_name_text_edit)
