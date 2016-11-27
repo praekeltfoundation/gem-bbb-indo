@@ -81,7 +81,7 @@ public class MainActivity extends DooitActivity {
 
                         getSupportActionBar().setHomeAsUpIndicator(roundedProfileImage);
                     } catch (Exception e) {
-                        getSupportActionBar().setHomeAsUpIndicator(org.gem.indo.dooit.R.drawable.ic_d_profile);
+                        getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_d_profile);
                     }
 
                 }

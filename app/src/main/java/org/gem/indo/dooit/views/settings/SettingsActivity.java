@@ -11,6 +11,7 @@ import org.gem.indo.dooit.Constants;
 import org.gem.indo.dooit.DooitApplication;
 import org.gem.indo.dooit.R;
 import org.gem.indo.dooit.helpers.DooitSharedPreferences;
+import org.gem.indo.dooit.helpers.SquiggleBackgroundHelper;
 import org.gem.indo.dooit.views.RootActivity;
 import org.gem.indo.dooit.views.helpers.activity.DooitActivityBuilder;
 import org.gem.indo.dooit.views.onboarding.ChangeNameActivity;
@@ -27,11 +28,14 @@ import butterknife.OnClick;
  */
 public class SettingsActivity extends AppCompatActivity {
 
+    @BindView(R.id.activity_settings)
+    View background;
+
     @BindView(R.id.toolbar)
     Toolbar toolbar;
+
     @Inject
     DooitSharedPreferences dooitSharedPreferences;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,7 +47,8 @@ public class SettingsActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-            getSupportActionBar().setHomeAsUpIndicator(org.gem.indo.dooit.R.drawable.ic_d_back_arrow);
+            getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_d_back_caret_pink);
+            getSupportActionBar().setTitle("");
             toolbar.setNavigationOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -51,15 +56,21 @@ public class SettingsActivity extends AppCompatActivity {
                 }
             });
         }
+
+        // Background
+        SquiggleBackgroundHelper.setBackground(this, R.color.grey_back, R.color.grey_fore, background);
     }
+
     @OnClick(R.id.settings_account_change_name)
     public void changeName(View view){
         ChangeNameActivity.Builder.create(this).startActivity();
     }
+
     @OnClick(R.id.settings_account_change_password)
     public void changePassword(View view){
         ChangePasswordActivity.Builder.create(this).startActivity();
     }
+
     @OnClick({R.id.settings_account_sign_out})
     public void signOut(View view) {
         dooitSharedPreferences.clear();
@@ -83,7 +94,6 @@ public class SettingsActivity extends AppCompatActivity {
                 .setUrl(Constants.PRIVACY_URL)
                 .startActivity();
     }
-
 
     public static class Builder extends DooitActivityBuilder<Builder> {
         protected Builder(Context context) {

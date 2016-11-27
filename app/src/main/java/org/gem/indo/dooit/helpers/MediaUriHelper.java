@@ -14,7 +14,7 @@ import android.provider.MediaStore;
  * Created by Wimpie Victor on 2016/11/26.
  */
 
-public class ImageStorageHelper {
+public class MediaUriHelper {
 
     /**
      * Get a file path from a Uri. This will get the the path for Storage Access

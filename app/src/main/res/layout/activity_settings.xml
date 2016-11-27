@@ -13,27 +13,58 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:theme="@style/AppTheme.AppBarOverlay"
+        android:background="@color/transparent"
+        android:fitsSystemWindows="false"
         app:elevation="0dp">
 
-        <android.support.v7.widget.Toolbar
-            android:id="@+id/toolbar"
+        <android.support.design.widget.CollapsingToolbarLayout
+            android:id="@+id/toolbar_layout"
             android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:background="?attr/colorPrimary"
-            app:layout_collapseMode="pin"
-            app:layout_scrollFlags="scroll|enterAlways"
-            app:popupTheme="@style/AppTheme.PopupOverlay"
-            app:subtitleTextAppearance="@style/AppTheme.Toolbar.SubTitle"
-            app:titleTextAppearance="@style/AppTheme.Toolbar.Title.Center"
-            app:titleTextColor="@color/profileSettingsTitle"
-            tools:title="Settings" />
+            android:layout_height="match_parent"
+            app:contentScrim="@color/transparent"
+            app:layout_scrollFlags="scroll|exitUntilCollapsed|snap"
+            app:titleEnabled="false">
+
+            <TextView
+                android:id="@+id/toolbar_title"
+                style="@style/AppTheme.TextView.Regular.ExtraLarge"
+                fontPath="fonts/LondrinaSolid-Regular.ttf"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:layout_gravity="top"
+                android:layout_marginEnd="?attr/actionBarSize"
+                android:layout_marginStart="?attr/actionBarSize"
+                android:background="@null"
+                android:ellipsize="end"
+                android:gravity="center"
+                android:maxLines="1"
+                android:text="@string/profile_settings_title"
+                android:textColor="@color/black"
+                app:layout_collapseMode="pin" />
+
+            <android.support.v7.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:background="@color/transparent"
+                app:layout_collapseMode="pin"
+                app:layout_scrollFlags="scroll|enterAlways"
+                app:popupTheme="@style/AppTheme.PopupOverlay"
+                app:subtitleTextAppearance="@style/AppTheme.Toolbar.SubTitle"
+                app:titleTextColor="@color/profileSettingsTitle" />
+
+        </android.support.design.widget.CollapsingToolbarLayout>
 
     </android.support.design.widget.AppBarLayout>
 
     <android.support.v4.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:padding="@dimen/activity_vertical_margin"
+        android:paddingBottom="@dimen/profile_activity_vertical_margin"
+        android:paddingEnd="@dimen/profile_activity_horizontal_margin"
+        android:paddingLeft="@dimen/profile_activity_horizontal_margin"
+        android:paddingRight="@dimen/profile_activity_horizontal_margin"
+        android:paddingStart="@dimen/profile_activity_horizontal_margin"
         android:scrollbars="none"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
@@ -43,18 +74,19 @@
 
             <TextView
                 android:id="@+id/settings_account_title"
-                style="@style/AppTheme.TextView.Regular.Small"
+                style="@style/AppTheme.TextView.Bold.Medium"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ellipsize="end"
                 android:maxLines="1"
                 android:text="@string/profile_section_account"
                 android:textAllCaps="true"
-                android:textColor="@color/divider" />
+                android:textColor="@color/divider"
+                android:textStyle="bold"/>
 
             <TextView
                 android:id="@+id/settings_account_change_name"
-                style="@style/AppTheme.TextView.Regular.Medium"
+                style="@style/AppTheme.TextView.Settings.Item"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/settings_account_title"
@@ -75,7 +107,7 @@
 
             <TextView
                 android:id="@+id/settings_account_change_password"
-                style="@style/AppTheme.TextView.Regular.Medium"
+                style="@style/AppTheme.TextView.Settings.Item"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/settings_account_change_name_separator"
@@ -96,7 +128,7 @@
 
             <TextView
                 android:id="@+id/settings_account_sign_out"
-                style="@style/AppTheme.TextView.Regular.Medium"
+                style="@style/AppTheme.TextView.Settings.Item"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/settings_account_change_password_separator"
@@ -111,6 +143,7 @@
 
             <TextView
                 android:id="@+id/settings_notifications"
+                style="@style/AppTheme.TextView.Bold.Medium"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/settings_account_sign_out"
@@ -120,11 +153,10 @@
                 android:text="@string/profile_section_notifications"
                 android:textAllCaps="true"
                 android:textColor="@color/divider"
-                android:textSize="@dimen/k_font_small" />
+                android:textStyle="bold" />
 
             <android.support.v7.widget.SwitchCompat
                 android:id="@+id/settings_notifications_a"
-                style="@style/AppTheme.TextView.Regular.Medium"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/settings_notifications"
@@ -134,7 +166,8 @@
                 android:paddingTop="8dp"
                 android:text="@string/placeholder_label_short"
                 android:textColor="@color/purple"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                android:textAppearance="@style/AppTheme.TextView.Settings.Item"/>
 
             <View
                 android:id="@+id/settings_notifications_a_separator"
@@ -154,8 +187,9 @@
                 android:paddingTop="8dp"
                 android:text="@string/placeholder_label_short"
                 android:textColor="@color/purple"
-                android:textSize="@dimen/k_font_medium"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                android:textAppearance="@style/AppTheme.TextView.Settings.Item"
+                />
 
             <View
                 android:id="@+id/settings_notifications_b_separator"
@@ -175,8 +209,8 @@
                 android:paddingTop="8dp"
                 android:text="@string/placeholder_label_short"
                 android:textColor="@color/purple"
-                android:textSize="@dimen/k_font_medium"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                android:textAppearance="@style/AppTheme.TextView.Settings.Item"/>
 
             <View
                 android:id="@+id/settings_notifications_c_separator"
@@ -196,11 +230,12 @@
                 android:paddingTop="8dp"
                 android:text="@string/placeholder_label_short"
                 android:textColor="@color/purple"
-                android:textSize="@dimen/k_font_medium"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                android:textAppearance="@style/AppTheme.TextView.Settings.Item"/>
 
             <TextView
                 android:id="@+id/settings_about"
+                style="@style/AppTheme.TextView.Bold.Medium"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/settings_notifications_d"
@@ -210,21 +245,6 @@
                 android:text="@string/profile_section_help"
                 android:textAllCaps="true"
                 android:textColor="@color/divider"
-                android:textSize="@dimen/k_font_small" />
-
-            <TextView
-                android:id="@+id/settings_about_help"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/settings_about"
-                android:background="?attr/selectableItemBackground"
-                android:clickable="true"
-                android:maxLines="1"
-                android:paddingBottom="8dp"
-                android:paddingTop="8dp"
-                android:text="@string/profile_help_help"
-                android:textColor="@color/purple"
-                android:textSize="@dimen/k_font_medium"
                 android:textStyle="bold" />
 
             <View
@@ -236,6 +256,7 @@
 
             <TextView
                 android:id="@+id/settings_about_report"
+                style="@style/AppTheme.TextView.Settings.Item"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/settings_about_help_separator"
@@ -246,7 +267,6 @@
                 android:paddingTop="8dp"
                 android:text="@string/profile_help_report_problem"
                 android:textColor="@color/purple"
-                android:textSize="@dimen/k_font_medium"
                 android:textStyle="bold" />
 
             <View
@@ -258,6 +278,7 @@
 
             <TextView
                 android:id="@+id/settings_about_feedback"
+                style="@style/AppTheme.TextView.Settings.Item"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/settings_about_report_separator"
@@ -268,7 +289,6 @@
                 android:paddingTop="8dp"
                 android:text="@string/profile_help_feedback"
                 android:textColor="@color/purple"
-                android:textSize="@dimen/k_font_medium"
                 android:textStyle="bold" />
 
             <View
@@ -280,6 +300,7 @@
 
             <TextView
                 android:id="@+id/settings_about_terms"
+                style="@style/AppTheme.TextView.Settings.Item"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/settings_about_feedback_separator"
@@ -290,7 +311,6 @@
                 android:paddingTop="8dp"
                 android:text="@string/profile_help_terms_conditions"
                 android:textColor="@color/purple"
-                android:textSize="@dimen/k_font_medium"
                 android:textStyle="bold" />
 
             <View
@@ -302,6 +322,7 @@
 
             <TextView
                 android:id="@+id/settings_about_privacy"
+                style="@style/AppTheme.TextView.Settings.Item"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/settings_about_terms_separator"
@@ -312,8 +333,23 @@
                 android:paddingTop="8dp"
                 android:text="@string/profile_help_privacy_policy"
                 android:textColor="@color/purple"
-                android:textSize="@dimen/k_font_medium"
                 android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/settings_about_help"
+                style="@style/AppTheme.TextView.Settings.Item"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="?attr/selectableItemBackground"
+                android:clickable="true"
+                android:maxLines="1"
+                android:paddingBottom="8dp"
+                android:paddingTop="8dp"
+                android:text="@string/profile_help_help"
+                android:textColor="@color/purple"
+                android:textStyle="bold"
+                android:layout_below="@+id/settings_about"
+                android:layout_alignParentStart="true" />
 
         </RelativeLayout>
     </android.support.v4.widget.NestedScrollView>

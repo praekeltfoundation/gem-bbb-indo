@@ -28,9 +28,10 @@ import org.gem.indo.dooit.api.managers.AchievementManager;
 import org.gem.indo.dooit.api.managers.FileUploadManager;
 import org.gem.indo.dooit.api.responses.AchievementResponse;
 import org.gem.indo.dooit.api.responses.EmptyResponse;
-import org.gem.indo.dooit.helpers.ImageStorageHelper;
+import org.gem.indo.dooit.helpers.MediaUriHelper;
 import org.gem.indo.dooit.helpers.Persisted;
 import org.gem.indo.dooit.helpers.RequestCodes;
+import org.gem.indo.dooit.helpers.SquiggleBackgroundHelper;
 import org.gem.indo.dooit.helpers.permissions.PermissionCallback;
 import org.gem.indo.dooit.helpers.permissions.PermissionsHelper;
 import org.gem.indo.dooit.models.User;
@@ -55,6 +56,10 @@ public class ProfileActivity extends DooitActivity {
 
     private static final String INTENT_MIME_TYPE = "mime_type";
     private static final String INTENT_IMAGE_URI = "image_uri";
+    private static final float MIN_PROFILE_IMAGE_SCALE = 0.4f;
+
+    @BindView(R.id.activity_profile_scroll_view)
+    View background;
 
     @BindView(R.id.activity_profile_image)
     SimpleDraweeView profileImage;
@@ -96,6 +101,7 @@ public class ProfileActivity extends DooitActivity {
         ((DooitApplication) getApplication()).component.inject(this);
         ButterKnife.bind(this);
 
+        // Appbar
         setSupportActionBar(toolbar);
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -112,6 +118,7 @@ public class ProfileActivity extends DooitActivity {
 
         setTitle(user.getUsername());
 
+        // Profile image collapse
         profileImage.setImageURI(user.getProfile().getProfileImageUrl());
         appBarLayout.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
             boolean isShow = false;
@@ -121,10 +128,15 @@ public class ProfileActivity extends DooitActivity {
             public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
                 if (Math.abs(verticalOffset) > appBarLayout.getHeight() * 0.4) {
                     isShow = true;
-                    profileImage.setVisibility(View.GONE);
+                    if (profileImage.getVisibility() == View.VISIBLE)
+                        profileImage.setVisibility(View.GONE);
                 } else if (Math.abs(verticalOffset) < appBarLayout.getHeight() * 0.4) {
                     isShow = false;
-                    profileImage.setVisibility(View.VISIBLE);
+                    if (profileImage.getVisibility() == View.GONE)
+                        profileImage.setVisibility(View.VISIBLE);
+                    float scale = 1 - ((float) Math.abs(verticalOffset) / (appBarLayout.getHeight() * 0.4f));
+                    profileImage.setScaleX(Math.max(scale, MIN_PROFILE_IMAGE_SCALE));
+                    profileImage.setScaleY(Math.max(scale, MIN_PROFILE_IMAGE_SCALE));
                 }
             }
         });
@@ -148,6 +160,12 @@ public class ProfileActivity extends DooitActivity {
                 });
             }
         });
+
+        // Background
+        SquiggleBackgroundHelper.setBackground(this, R.color.purple, R.color.purple_light, appBarLayout);
+        // FIXME: Setting the purple background on the appbar tints the grey background pattern purple as well.
+//        SquiggleBackgroundHelper.setBackground(this, R.color.grey_back, R.color.grey_fore, background);
+
     }
 
     @Override
@@ -198,12 +216,13 @@ public class ProfileActivity extends DooitActivity {
         builder.setItems(items, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int item) {
+                // TODO: Use Enums or Constants
                 switch (item) {
                     case 0:
-                        takeImage();
+                        startCamera();
                         break;
                     case 1:
-                        chooseImage();
+                        startGallery();
                         break;
                     case 2:
                         dialog.dismiss();
@@ -214,7 +233,7 @@ public class ProfileActivity extends DooitActivity {
         builder.show();
     }
 
-    public void takeImage() {
+    protected void startCamera() {
         permissionsHelper.askForPermission(this, PermissionsHelper.D_WRITE_EXTERNAL_STORAGE, new PermissionCallback() {
             @Override
             public void permissionGranted() {
@@ -239,10 +258,9 @@ public class ProfileActivity extends DooitActivity {
                 Toast.makeText(ProfileActivity.this, "Can't take ic_d_profile image without storage permission", Toast.LENGTH_SHORT).show();
             }
         });
-
     }
 
-    public void chooseImage() {
+    protected void startGallery() {
         permissionsHelper.askForPermission(this, PermissionsHelper.D_WRITE_EXTERNAL_STORAGE, new PermissionCallback() {
             @Override
             public void permissionGranted() {
@@ -275,7 +293,7 @@ public class ProfileActivity extends DooitActivity {
         }
     }
 
-    void onActivityImageResult(Intent data) {
+    protected void onActivityImageResult(Intent data) {
         imageUri = data.getData();
         if (imageUri == null) {
             try {
@@ -286,19 +304,22 @@ public class ProfileActivity extends DooitActivity {
         }
         profileImage.setImageURI(imageUri);
         ContentResolver cR = this.getContentResolver();
-        uploadImage(cR.getType(imageUri), ImageStorageHelper.getPath(this, imageUri));
+        uploadImage(cR.getType(imageUri), MediaUriHelper.getPath(this, imageUri));
     }
 
-    private void uploadImage(String mimetype, String filepath) {
+    protected void uploadImage(String mimetype, String filepath) {
         User user = persisted.getCurrentUser();
+        showProgressDialog(R.string.profile_image_progress);
         fileUploadManager.upload(user.getId(), mimetype, new File(filepath), new DooitErrorHandler() {
             @Override
             public void onError(DooitAPIError error) {
+                dismissDialog();
                 Toast.makeText(ProfileActivity.this, "Unable to uploadProfileImage Image", Toast.LENGTH_SHORT).show();
             }
         }).subscribe(new Action1<EmptyResponse>() {
             @Override
             public void call(EmptyResponse emptyResponse) {
+                dismissDialog();
                 User user = persisted.getCurrentUser();
                 user.getProfile().setProfileImageUrl(imageUri.toString());
                 persisted.setCurrentUser(user);
@@ -306,7 +327,7 @@ public class ProfileActivity extends DooitActivity {
         });
     }
 
-    void setStreak(int streak) {
+    protected void setStreak(int streak) {
         if (streak == 1)
             streakView.setText(String.format(streakSingular, streak));
         else

@@ -12,11 +12,6 @@
     <string name="main_tab_text_2">CHALLENGE</string>
     <string name="main_tab_text_3">TIPS</string>
 
-    <!-- Profile image -->
-    <string name="profile_image_camera">Take Photo using Camera</string>
-    <string name="profile_image_gallery">Choose from Gallery</string>
-    <string name="profile_image_cancel">Cancel</string>
-
     <!-- Common labels -->
     <string name="label_check_result">Check</string>
     <string name="label_clear_content">Clear</string>
@@ -203,6 +198,7 @@
     <string name="target_date">Target Date</string>
 
     <!-- Profile -->
+    <string name="profile_settings_title">Settings</string>
     <string name="profile_section_account">Your account</string>
     <string name="profile_week_streak_singular">%s week</string>
     <string name="profile_week_streak_plural">%s weeks</string>
@@ -216,6 +212,12 @@
     <string name="profile_help_feedback">Feedback</string>
     <string name="profile_help_terms_conditions"><![CDATA[Terms & Conditions]]></string>
     <string name="profile_help_privacy_policy">Privacy Policy</string>
+
+    <!-- Profile image -->
+    <string name="profile_image_camera">Take Photo using Camera</string>
+    <string name="profile_image_gallery">Choose from Gallery</string>
+    <string name="profile_image_cancel">Cancel</string>
+    <string name="profile_image_progress">We\'re uploading your profile image&#8230;</string>
 
     <!-- Change Username -->
     <string name="change_username_success">Your username has been changed to \'%s\'</string>

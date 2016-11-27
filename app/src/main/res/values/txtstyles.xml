@@ -112,6 +112,13 @@
         <item name="android:textSize">@dimen/k_font_extra_small</item>
     </style>
 
+    <!-- Settings -->
+
+    <style name="AppTheme.TextView.Settings.Item" parent="AppTheme.TextView.Regular.Large">
+        <item name="fontPath">fonts/LondrinaSolid-Regular.ttf</item>
+        <item name="android:textColor">@color/purple</item>
+    </style>
+
     <!-- Challenge -->
 
     <style name="AppTheme.TextView.Quiz.Title" parent="AppTheme.TextView.Regular.ExtraLarge">

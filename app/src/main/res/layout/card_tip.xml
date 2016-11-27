@@ -62,7 +62,7 @@
                     android:layout_height="14dp"
                     android:layout_alignParentRight="true"
                     android:layout_marginEnd="@dimen/tip_card_icon_margin"
-                    app:srcCompat="@drawable/ic_d_share_icon_small" />
+                    app:srcCompat="@drawable/ic_d_share_icon_small_yellow" />
 
                 <ImageView
                     android:id="@+id/card_tip_fav"
