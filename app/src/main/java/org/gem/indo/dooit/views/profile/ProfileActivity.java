@@ -28,7 +28,7 @@ import org.gem.indo.dooit.api.managers.AchievementManager;
 import org.gem.indo.dooit.api.managers.FileUploadManager;
 import org.gem.indo.dooit.api.responses.AchievementResponse;
 import org.gem.indo.dooit.api.responses.EmptyResponse;
-import org.gem.indo.dooit.helpers.ImageStorageHelper;
+import org.gem.indo.dooit.helpers.MediaUriHelper;
 import org.gem.indo.dooit.helpers.Persisted;
 import org.gem.indo.dooit.helpers.RequestCodes;
 import org.gem.indo.dooit.helpers.SquiggleBackgroundHelper;
@@ -304,7 +304,7 @@ public class ProfileActivity extends DooitActivity {
         }
         profileImage.setImageURI(imageUri);
         ContentResolver cR = this.getContentResolver();
-        uploadImage(cR.getType(imageUri), ImageStorageHelper.getPath(this, imageUri));
+        uploadImage(cR.getType(imageUri), MediaUriHelper.getPath(this, imageUri));
     }
 
     protected void uploadImage(String mimetype, String filepath) {

@@ -24,7 +24,7 @@ import org.gem.indo.dooit.api.DooitErrorHandler;
 import org.gem.indo.dooit.api.managers.AuthenticationManager;
 import org.gem.indo.dooit.api.managers.FileUploadManager;
 import org.gem.indo.dooit.api.responses.EmptyResponse;
-import org.gem.indo.dooit.helpers.ImageStorageHelper;
+import org.gem.indo.dooit.helpers.MediaUriHelper;
 import org.gem.indo.dooit.helpers.Persisted;
 import org.gem.indo.dooit.helpers.RequestCodes;
 import org.gem.indo.dooit.helpers.SquiggleBackgroundHelper;
@@ -213,7 +213,7 @@ public class ProfileImageActivity extends DooitActivity {
         ContentResolver cR = this.getContentResolver();
         simpleDraweeView.setImageURI(imageUri);
         getIntent().putExtra(INTENT_MIME_TYPE, cR.getType(imageUri));
-        getIntent().putExtra(INTENT_IMAGE_URI, ImageStorageHelper.getPath(this, imageUri));
+        getIntent().putExtra(INTENT_IMAGE_URI, MediaUriHelper.getPath(this, imageUri));
     }
 
     public static class Builder extends DooitActivityBuilder<Builder> {
