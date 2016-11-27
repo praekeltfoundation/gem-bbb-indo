@@ -174,11 +174,18 @@ public class TargetFragment extends MainFragment {
         viewPager.setCurrentItem(Math.min(goals.size(), viewPager.getCurrentItem() + 1));
     }
 
-    @OnClick(R.id.fragment_target_save_button)
-    public void onSavingsEditClick(View view) {
+    @OnClick(R.id.fragment_target_deposit_button)
+    public void onDepositClick(View view) {
         Goal goal = goals.get(viewPager.getCurrentItem());
         persisted.saveConvoGoal(BotType.GOAL_DEPOSIT, goal);
         startBot(BotType.GOAL_DEPOSIT);
+    }
+
+    @OnClick(R.id.fragment_target_withdraw_button)
+    public void onWithdrawClick(View view) {
+        Goal goal = goals.get(viewPager.getCurrentItem());
+        persisted.saveConvoGoal(BotType.GOAL_WITHDRAW, goal);
+        startBot(BotType.GOAL_WITHDRAW);
     }
 
     private void populateGoal(Goal goal) {

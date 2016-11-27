@@ -102,7 +102,7 @@
             tools:text="of $ 50.000" />
 
         <Button
-            android:id="@+id/fragment_target_save_button"
+            android:id="@+id/fragment_target_deposit_button"
             style="@style/AppTheme.Button.Big.LightBlue"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -118,7 +118,7 @@
             style="@style/AppTheme.Button.Medium"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/fragment_target_save_button"
+            android:layout_below="@+id/fragment_target_deposit_button"
             android:layout_gravity="center"
             android:text="@string/withdraw"
             android:textColor="@color/grey"
