@@ -15,7 +15,6 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -101,6 +100,7 @@ public class ProfileActivity extends DooitActivity {
         ((DooitApplication) getApplication()).component.inject(this);
         ButterKnife.bind(this);
 
+        // Appbar
         setSupportActionBar(toolbar);
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -212,10 +212,10 @@ public class ProfileActivity extends DooitActivity {
                 // TODO: Use Enums or Constants
                 switch (item) {
                     case 0:
-                        takeImage();
+                        startCamera();
                         break;
                     case 1:
-                        chooseImage();
+                        startGallery();
                         break;
                     case 2:
                         dialog.dismiss();
@@ -226,7 +226,7 @@ public class ProfileActivity extends DooitActivity {
         builder.show();
     }
 
-    public void takeImage() {
+    protected void startCamera() {
         permissionsHelper.askForPermission(this, PermissionsHelper.D_WRITE_EXTERNAL_STORAGE, new PermissionCallback() {
             @Override
             public void permissionGranted() {
@@ -251,10 +251,9 @@ public class ProfileActivity extends DooitActivity {
                 Toast.makeText(ProfileActivity.this, "Can't take ic_d_profile image without storage permission", Toast.LENGTH_SHORT).show();
             }
         });
-
     }
 
-    public void chooseImage() {
+    protected void startGallery() {
         permissionsHelper.askForPermission(this, PermissionsHelper.D_WRITE_EXTERNAL_STORAGE, new PermissionCallback() {
             @Override
             public void permissionGranted() {
@@ -287,7 +286,7 @@ public class ProfileActivity extends DooitActivity {
         }
     }
 
-    void onActivityImageResult(Intent data) {
+    protected void onActivityImageResult(Intent data) {
         imageUri = data.getData();
         if (imageUri == null) {
             try {
@@ -301,7 +300,7 @@ public class ProfileActivity extends DooitActivity {
         uploadImage(cR.getType(imageUri), ImageStorageHelper.getPath(this, imageUri));
     }
 
-    private void uploadImage(String mimetype, String filepath) {
+    protected void uploadImage(String mimetype, String filepath) {
         User user = persisted.getCurrentUser();
         fileUploadManager.upload(user.getId(), mimetype, new File(filepath), new DooitErrorHandler() {
             @Override
@@ -318,7 +317,7 @@ public class ProfileActivity extends DooitActivity {
         });
     }
 
-    void setStreak(int streak) {
+    protected void setStreak(int streak) {
         if (streak == 1)
             streakView.setText(String.format(streakSingular, streak));
         else
