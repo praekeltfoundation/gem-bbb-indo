@@ -8,6 +8,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TextView;
+
+import com.facebook.drawee.view.SimpleDraweeView;
 
 import org.gem.indo.dooit.R;
 import org.gem.indo.dooit.models.challenge.BaseChallenge;
@@ -22,14 +25,21 @@ import butterknife.Unbinder;
  * create an instance of this fragment.
  */
 public class ChallengeDoneFragment extends Fragment {
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_CHALLENGE = "challenge";
 
     private BaseChallenge challenge;
 
     @BindView(R.id.challenge_done_card)
     CardView doneCard;
+
+    @BindView(R.id.card_challenge_image)
+    SimpleDraweeView challengeImage;
+
+    @BindView(R.id.card_challenge_complete_text)
+    TextView subtitle;
+
+    @BindView(R.id.card_challenge_title)
+    TextView title;
 
     @BindView(R.id.challenge_done_button)
     Button doneButton;
@@ -69,6 +79,7 @@ public class ChallengeDoneFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_challenge_done, container, false);
         unbinder = ButterKnife.bind(this, view);
+        title.setText(challenge.getName());
         return view;
     }
 
@@ -88,5 +99,11 @@ public class ChallengeDoneFragment extends Fragment {
     @Override
     public void onDetach() {
         super.onDetach();
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        challengeImage.setImageURI(challenge.getImageURL());
     }
 }
