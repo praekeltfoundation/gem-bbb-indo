@@ -110,5 +110,10 @@
     <style name="AppTheme.SpinnerItem" parent="AppTheme.TextView.Regular.Medium">
         <item name="android:padding">@dimen/spinner_item_padding</item>
     </style>
+    
+    <!-- Dialog -->
+    <style name="NoAnim">
+        <item name="android:windowAnimationStyle">@null</item>
+    </style>
 
 </resources>

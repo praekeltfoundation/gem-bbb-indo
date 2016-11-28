@@ -4,6 +4,7 @@ import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
+import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -106,5 +107,10 @@ public class ChallengeSuccessLightboxFragment extends DialogFragment {
     @OnClick(R.id.fragment_challenge_continue_button)
     public void onClick() {
         dismiss();
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
     }
 }
