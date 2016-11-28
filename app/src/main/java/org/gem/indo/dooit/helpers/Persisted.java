@@ -150,12 +150,12 @@ public class Persisted {
         dooitSharedPreferences.setComplex(CHALLENGE, activeChallenge);
     }
 
-    public Object getCurrentChallenge() {
+    public BaseChallenge getCurrentChallenge() {
         return loadCurrentChallenge();
     }
 
     private BaseChallenge loadCurrentChallenge() {
-        return dooitSharedPreferences.getComplex(TOKEN, BaseChallenge.class);
+        return dooitSharedPreferences.getComplex(CHALLENGE, BaseChallenge.class);
     }
 
     public boolean hasCurrentChallenge() {
