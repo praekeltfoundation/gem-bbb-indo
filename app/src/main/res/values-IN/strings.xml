@@ -6,6 +6,7 @@
     <!-- Activity Titles  -->
     <string name="title_activity_main"></string>
     <string name="title_activity_profile">Profil</string>
+    <string name="title_activity_profile_image">Upload Photo</string>
     <string name="title_activity_settings">Pengaturan</string>
     <string name="title_activity_terms_and_conditions">Terms &amp; Conditions</string>
     <string name="title_activity_privacy_policy">Privacy Policy</string>
@@ -85,8 +86,6 @@
 
     <string name="already_registered_log_in">Sudah terdaftar? Masuk</string>
     <string name="forgot_password">Lupa kata sandi?</string>
-    <string name="challenge_t_c">Dengan mengambil tantangan ini Anda menyetujui Syarat dan Ketentuan kami</string>
-    <string name="register">Daftar</string>
 
     <!--LOGIN-->
     <string name="login_title">@string/label_log_in</string>
@@ -189,7 +188,9 @@
     <string name="TfourY">Yes</string>
 
     <!-- Challenges -->
+    <string name="challenge_t_c">Dengan mengikuti tantangan ini, kamu telah menyetujui Syarat &amp; Ketentuan yang berlaku.</string>
     <string name="challenge_no_question">No question</string>
+    <string name="challenge_register">Daftar</string>
     <string name="challenge_freeform_submit">Submitting freeform answer</string>
     <string name="challenge_all_questions_complete">You have completed all questions</string>
     <string name="challenge_none_available">No challenge available. Please try again soon!</string>
@@ -207,14 +208,14 @@
     <string name="night">Can you land on the sun at night?</string>
 
     <!-- TARGET -->
-    <string name="save">+ Tambah</string>
-    <string name="withdraw">- Tarik</string>
-    <string name="savings_history">Savings History</string>
-    <string name="weeks">Weeks</string>
-    <string name="add_goal">ADD GOAL</string>
-    <string name="savings_message" formatted="false">Save %s %s each week to get your %s in %s weeks.</string>
-    <string name="edit_savings_plan">Edit Savings Plan</string>
-    <string name="savings_plan">Savings Plan</string>
+    <string name="target_save">+ Tambah</string>
+    <string name="target_withdraw">- Tarik</string>
+    <string name="target_savings_history">Savings History</string>
+    <string name="target_weeks">Weeks</string>
+    <string name="target_add_goal">ADD GOAL</string>
+    <string name="target_savings_message" formatted="false">Save %s %s each week to get your %s in %s weeks.</string>
+    <string name="target_edit_savings_plan">Edit Savings Plan</string>
+    <string name="target_savings_plan">Savings Plan</string>
     <string name="target_date">Target Date</string>
 
     <!-- Profile -->
@@ -267,13 +268,11 @@
     <string name="knowDateY">Yes</string>
     <string name="hasSavedY">Yes</string>
     <string name="hasSavedN">No</string>
-    <string name="fragment_challenge_check_button">Check</string>
-    <string name="button_submit">@string/label_submit</string>
+
     <string name="heading_registration">Registration</string>
     <string name="heading_change_name">Change name</string>
     <string name="heading_change_password">Change password</string>
 
-    <string name="prompt_upload_photo">Upload Photo</string>
     <string name="target_prefix_saved">saved</string>
     <string name="heading_current_saving_streak">Current Saving Streak</string>
     <string name="heading_achievements">Achievements</string>

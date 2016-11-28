@@ -111,7 +111,7 @@
             android:layout_marginEnd="18dp"
             android:layout_marginStart="18dp"
             android:layout_marginTop="16dp"
-            android:text="@string/save" />
+            android:text="@string/target_save" />
 
         <Button
             android:id="@+id/fragment_target_withdraw_button"
@@ -120,7 +120,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/fragment_target_deposit_button"
             android:layout_gravity="center"
-            android:text="@string/withdraw"
+            android:text="@string/target_withdraw"
             android:textColor="@color/grey"
             android:textStyle="bold" />
 
@@ -133,7 +133,7 @@
             android:layout_below="@+id/view"
             android:layout_marginTop="16dp"
             android:gravity="center_horizontal"
-            android:text="@string/savings_history"
+            android:text="@string/target_savings_history"
             android:textAllCaps="true"
             android:textColor="@color/black" />
 
@@ -146,7 +146,7 @@
             android:layout_below="@+id/fragment_target_savings_history"
             android:layout_marginTop="4dp"
             android:gravity="center_horizontal"
-            android:text="@string/weeks"
+            android:text="@string/target_weeks"
             android:textColor="@color/grey" />
 
         <TextView
@@ -268,7 +268,7 @@
             android:layout_below="@+id/fragment_target_savings_graph"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="24dp"
-            android:text="@string/savings_plan"
+            android:text="@string/target_savings_plan"
             android:textAllCaps="true"
             android:textStyle="bold" />
 
@@ -280,7 +280,7 @@
             android:layout_below="@+id/fragment_target_savings_plan"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="4dp"
-            android:text="@string/savings_message"
+            android:text="@string/target_savings_message"
             android:textAlignment="center" />
 
         <TextView
@@ -291,7 +291,7 @@
             android:layout_below="@+id/fragment_target_savings_plan_message"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="24dp"
-            android:text="@string/edit_savings_plan"
+            android:text="@string/target_edit_savings_plan"
             android:textAlignment="center"
             android:layout_marginBottom="30dp"
             android:textAllCaps="true"

@@ -73,7 +73,7 @@ public class TargetFragment extends MainFragment {
     @BindView(R.id.fragment_target_right_image_button)
     ImageButton rightTarget;
 
-    @BindString(org.gem.indo.dooit.R.string.savings_message)
+    @BindString(R.string.target_savings_message)
     String savingsMessage;
 
     @Inject
@@ -107,7 +107,7 @@ public class TargetFragment extends MainFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(org.gem.indo.dooit.R.layout.fragment_target, container, false);
+        View view = inflater.inflate(R.layout.fragment_target, container, false);
         ButterKnife.bind(this, view);
 
         return view;
@@ -150,7 +150,7 @@ public class TargetFragment extends MainFragment {
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
         menu.clear();
-        getActivity().getMenuInflater().inflate(org.gem.indo.dooit.R.menu.menu_main_target, menu);
+        getActivity().getMenuInflater().inflate(R.menu.menu_main_target, menu);
     }
 
     @Override

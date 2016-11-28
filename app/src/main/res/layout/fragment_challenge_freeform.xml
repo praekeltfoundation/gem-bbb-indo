@@ -41,7 +41,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:layout_margin="@dimen/challenge_margins"
-            android:text="@string/button_submit" />
+            android:text="@string/label_submit" />
 
     </RelativeLayout>
 
