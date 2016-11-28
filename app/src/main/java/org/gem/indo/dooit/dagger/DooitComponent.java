@@ -7,7 +7,7 @@ import org.gem.indo.dooit.views.DooitActivity;
 import org.gem.indo.dooit.views.RootActivity;
 import org.gem.indo.dooit.views.main.MainActivity;
 import org.gem.indo.dooit.views.main.fragments.bot.BotFragment;
-import org.gem.indo.dooit.views.main.fragments.bot.viewholders.GoalGalleryViewHolder;
+import org.gem.indo.dooit.views.main.fragments.bot.viewholders.AnswerGoalGalleryViewHolder;
 import org.gem.indo.dooit.views.main.fragments.bot.viewholders.AnswerImageSelectViewHolder;
 import org.gem.indo.dooit.views.main.fragments.bot.viewholders.GoalVerificationViewHolder;
 import org.gem.indo.dooit.views.main.fragments.bot.viewholders.TextViewHolder;
@@ -47,7 +47,7 @@ public interface DooitComponent {
 
     void inject(AnswerImageSelectViewHolder o);
 
-    void inject(GoalGalleryViewHolder o);
+    void inject(AnswerGoalGalleryViewHolder o);
 
     void inject(BotFragment o);
 

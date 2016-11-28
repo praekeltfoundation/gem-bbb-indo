@@ -34,6 +34,7 @@
         />
 
     <TextView
+        android:id="@+id/item_view_bot_carousel_card_select"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         style="@style/AppTheme.TextView.Bold.Large"

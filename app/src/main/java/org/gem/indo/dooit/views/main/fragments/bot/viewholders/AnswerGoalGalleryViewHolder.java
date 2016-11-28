@@ -28,9 +28,9 @@ import butterknife.ButterKnife;
  * Created by Wimpie Victor on 2016/11/24.
  */
 
-public class GoalGalleryViewHolder extends BaseBotViewHolder<Node> {
+public class AnswerGoalGalleryViewHolder extends BaseBotViewHolder<Answer> {
 
-    private static final String TAG = GoalGalleryViewHolder.class.getName();
+    private static final String TAG = AnswerGoalGalleryViewHolder.class.getName();
 
     @BindView(R.id.item_view_bot_carousel_recycler_view)
     RecyclerView recyclerView;
@@ -44,24 +44,26 @@ public class GoalGalleryViewHolder extends BaseBotViewHolder<Node> {
     private Handler handler;
     private GoalGalleryAdapter galleryAdapter;
     private BotAdapter botAdapter;
-    private HashtagView.TagsClickListener tagsClickListener;
+    private HashtagView.TagsClickListener listener;
 
-    public GoalGalleryViewHolder(View itemView, BotAdapter botAdapter, HashtagView.TagsClickListener tagsClickListener) {
+    public AnswerGoalGalleryViewHolder(View itemView, BotAdapter botAdapter, HashtagView.TagsClickListener tagsClickListener) {
         super(itemView);
         ((DooitApplication) getContext().getApplicationContext()).component.inject(this);
         ButterKnife.bind(this, itemView);
         this.handler = new Handler(Looper.getMainLooper());
         this.botAdapter = botAdapter;
-        this.tagsClickListener = tagsClickListener;
+        this.listener = tagsClickListener;
 
         LinearLayoutManager manager = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
         recyclerView.setLayoutManager(manager);
-        galleryAdapter = new GoalGalleryAdapter(persisted.loadGoalProtos());
+        galleryAdapter = new GoalGalleryAdapter(persisted.loadGoalProtos(), listener);
         recyclerView.setAdapter(galleryAdapter);
     }
 
     @Override
-    public void populate(Node model) {
-
+    public void populate(Answer model) {
+        dataModel = model;
+        galleryAdapter.setDataModel(model);
+//        galleryAdapter.notifyDataSetChanged();
     }
 }
