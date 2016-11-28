@@ -17,7 +17,7 @@
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:placeholderImage="@color/light_grey" />
+            app:placeholderImage="@drawable/empty_image" />
 
         <TextView
             android:id="@+id/card_challenge_complete_text"
