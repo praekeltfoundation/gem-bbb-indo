@@ -113,7 +113,8 @@ public class RegistrationActivity extends DooitActivity {
             ageAdapter.add(i);
         age.setAdapter(ageAdapter);
         age.setSelection(4); // 16
-
+        age.setFocusable(true);
+        age.setFocusableInTouchMode(true);
         // Default gender
         gender.check(R.id.activity_registration_gender_girl);
 
