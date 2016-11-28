@@ -97,6 +97,9 @@
     <string name="login_example_password">Must have at least 6 characters</string>
     <string name="login_example_password_error_1">Password can\'t be blank</string>
 
+    <!-- Bot -->
+    <string name="bot_carousel_card_select">Select</string>
+
     <!--JSON GOALS-->
     <string name="greeting">Hola!</string>
     <string name="goalIntroduction">My Name is Dooit. I\'m gonna help  you save!</string>
