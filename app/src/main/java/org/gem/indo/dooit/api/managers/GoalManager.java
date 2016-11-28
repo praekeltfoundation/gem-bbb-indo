@@ -45,7 +45,7 @@ public class GoalManager extends DooitManager {
         return useNetwork(goalAPI.createGoalTransactions(goal.getId(), transactions), errorHandler);
     }
 
-    public Observable<GoalPrototype> retrieveGoalPrototypes(DooitErrorHandler errorHandler) {
+    public Observable<List<GoalPrototype>> retrieveGoalPrototypes(DooitErrorHandler errorHandler) {
         return useNetwork(goalAPI.getGoalPrototypes(), errorHandler);
     }
 }

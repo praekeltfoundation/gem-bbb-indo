@@ -30,5 +30,5 @@ public interface GoalAPI {
                                                      @Body List<GoalTransaction> transactions);
 
     @GET("/api/goal-prototypes/")
-    Observable<GoalPrototype> getGoalPrototypes();
+    Observable<List<GoalPrototype>> getGoalPrototypes();
 }

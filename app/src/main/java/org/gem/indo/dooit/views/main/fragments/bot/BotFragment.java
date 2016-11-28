@@ -17,10 +17,14 @@ import com.greenfrvr.hashtagview.HashtagView;
 
 import org.gem.indo.dooit.DooitApplication;
 import org.gem.indo.dooit.R;
+import org.gem.indo.dooit.api.DooitAPIError;
+import org.gem.indo.dooit.api.DooitErrorHandler;
+import org.gem.indo.dooit.api.managers.GoalManager;
 import org.gem.indo.dooit.helpers.Persisted;
 import org.gem.indo.dooit.helpers.SquiggleBackgroundHelper;
 import org.gem.indo.dooit.helpers.bot.BotFeed;
 import org.gem.indo.dooit.models.Goal;
+import org.gem.indo.dooit.models.GoalPrototype;
 import org.gem.indo.dooit.models.bot.Answer;
 import org.gem.indo.dooit.models.bot.BaseBotModel;
 import org.gem.indo.dooit.models.bot.BotCallback;
@@ -43,6 +47,10 @@ import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import rx.Observable;
+import rx.functions.Action0;
+import rx.functions.Action1;
+import rx.functions.Func1;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -133,15 +141,75 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
             case DEFAULT:
             case GOAL_ADD:
                 feed.parse(R.raw.goal_add, Node.class);
+                getGoalAddResources();
                 break;
             case GOAL_DEPOSIT:
                 feed.parse(R.raw.goal_deposit, Node.class);
+                initializeBot();
                 break;
             case GOAL_WITHDRAW:
                 feed.parse(R.raw.goal_withdraw, Node.class);
+                initializeBot();
                 break;
         }
 
+    }
+
+    @Inject
+    GoalManager goalManager;
+
+    private void getGoalAddResources() {
+        ArrayList<Observable> reqSync = new ArrayList<>();
+        Observable goalProtos = goalManager.retrieveGoalPrototypes(new DooitErrorHandler() {
+            @Override
+            public void onError(DooitAPIError error) {
+
+            }
+        });
+        if (persisted.hasGoalProtos())
+            goalProtos.subscribe(new Action1<List<GoalPrototype>>() {
+                @Override
+                public void call(List<GoalPrototype> goalPrototypes) {
+                    persisted.saveGoalProtos(goalPrototypes);
+                }
+            });
+        else
+            reqSync.add(goalProtos);
+
+        if (reqSync.size() > 0) {
+            //ShowLoader
+            Observable.from(reqSync).flatMap(new Func1<Observable, Observable<?>>() {
+                @Override
+                public Observable<?> call(Observable observable) {
+                    return observable;
+                }
+            }).doOnCompleted(new Action0() {
+                @Override
+                public void call() {
+                    if (getContext() != null) {
+                        getActivity().runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                initializeBot();
+                            }
+                        });
+                    }
+                }
+            }).subscribe(new Action1<Object>() {
+                @Override
+                public void call(Object o) {
+                    if (o instanceof List) {
+                        if (((List) o).size() == 0) return;
+                        if (((List) o).get(0) instanceof GoalPrototype)
+                            persisted.saveGoalProtos((List<GoalPrototype>) o);
+                    }
+                }
+            });
+        } else
+            initializeBot();
+    }
+
+    private void initializeBot() {
         if (persisted.hasConversation(type)) {
             ArrayList<BaseBotModel> data = persisted.loadConversationState(type);
             if (data.size() > 0) {
