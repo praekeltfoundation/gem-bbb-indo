@@ -3,6 +3,7 @@ package org.gem.indo.dooit.views.main.fragments.challenge.fragments;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,6 +18,7 @@ import org.gem.indo.dooit.R;
 import org.gem.indo.dooit.api.DooitAPIError;
 import org.gem.indo.dooit.api.DooitErrorHandler;
 import org.gem.indo.dooit.api.managers.ChallengeManager;
+import org.gem.indo.dooit.helpers.Persisted;
 import org.gem.indo.dooit.helpers.SquiggleBackgroundHelper;
 import org.gem.indo.dooit.models.challenge.BaseChallenge;
 import org.gem.indo.dooit.models.challenge.FreeformChallenge;
@@ -40,10 +42,14 @@ import rx.functions.Action1;
  * create an instance of this fragment.
  */
 public class ChallengeRegisterFragment extends Fragment {
+    private static final String TAG = "ChallengeRegister";
     private static final String ARG_CHALLENGE = "challenge";
 
     @Inject
     ChallengeManager challengeManager;
+
+    @Inject
+    Persisted persist;
 
     @BindView(R.id.fragment_challenge_container)
     View background;
@@ -181,6 +187,7 @@ public class ChallengeRegisterFragment extends Fragment {
         participantSubscription.subscribe(new Action1<Participant>() {
             @Override
             public void call(Participant participant1) {
+                persist.setActiveChallenge(challenge);
                 startChallenge(participant1);
             }
         });
