@@ -9,9 +9,15 @@ import java.util.Locale;
  */
 
 public class CurrencyHelper {
-
+    public static double DEFAULT_VALUE = 0.0f;
     public static String format(Object o) {
-        return NumberFormat.getCurrencyInstance().format(Float.parseFloat(String.valueOf(o)));
+        try {
+            String value = String.valueOf(o);
+            return NumberFormat.getCurrencyInstance().format(NumberFormat.getInstance().parse(value));
+        } catch (Exception e) {
+           //TODO: this should be logged to an external telemetry system
+        }
+        return NumberFormat.getCurrencyInstance().format(DEFAULT_VALUE);
     }
 
     public static String getCurrencyString() {
