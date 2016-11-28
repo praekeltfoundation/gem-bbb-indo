@@ -1,17 +1,10 @@
 package org.gem.indo.dooit.views.main;
 
-import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.net.Uri;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
-import android.support.v4.content.ContentResolverCompat;
-import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
-import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
@@ -22,25 +15,22 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.crashlytics.android.Crashlytics;
+import com.facebook.drawee.interfaces.DraweeController;
+import com.facebook.drawee.view.DraweeView;
+import com.facebook.drawee.view.SimpleDraweeView;
 
 import org.gem.indo.dooit.DooitApplication;
 import org.gem.indo.dooit.R;
 import org.gem.indo.dooit.helpers.Persisted;
 import org.gem.indo.dooit.helpers.activity.result.ActivityForResultHelper;
-import org.gem.indo.dooit.models.User;
 import org.gem.indo.dooit.views.DooitActivity;
 import org.gem.indo.dooit.views.helpers.activity.DooitActivityBuilder;
 import org.gem.indo.dooit.views.main.adapters.MainTabAdapter;
 import org.gem.indo.dooit.views.profile.ProfileActivity;
 
-import java.io.BufferedInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
-import java.net.Authenticator;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.PasswordAuthentication;
 import java.net.URL;
 
 import javax.inject.Inject;
@@ -52,6 +42,9 @@ public class MainActivity extends DooitActivity {
 
     @BindView(R.id.toolbar)
     Toolbar toolbar;
+
+    @BindView(R.id.activity_main_profile_image)
+    SimpleDraweeView simpleDraweeViewProfile;
 
     @BindView(R.id.content_main_view_pager)
     ViewPager viewPager;
@@ -66,54 +59,6 @@ public class MainActivity extends DooitActivity {
     @Inject
     Persisted persisted;
 
-    private InputStream resolveInputStream(Uri streamUri) throws IOException {
-        HttpURLConnection urlConnection = null;
-        try {
-
-            URL remote = new URL(streamUri.toString());
-            urlConnection = (HttpURLConnection) remote.openConnection();
-            urlConnection.setDoInput(true);
-            urlConnection.setRequestProperty("Accept", "application/json");
-            urlConnection.setRequestProperty("Authorization","Token " + persisted.getToken());
-            urlConnection.connect();
-            InputStream in = urlConnection.getInputStream();
-            return in;
-        }catch (Exception ioe){
-            Crashlytics.log("cannot download " + streamUri);
-
-        }
-        return getContentResolver().openInputStream(streamUri);
-
-    }
-    private class ProfileImageTask extends AsyncTask<Void,Integer,RoundedBitmapDrawable>{
-
-        @Override
-        protected RoundedBitmapDrawable doInBackground(Void... params) {
-
-            int abHeight = (int) (getSupportActionBar().getHeight() * 0.7);
-            try {
-                User user = persisted.getCurrentUser();
-                Uri profileImageUri = Uri.parse(user.getProfile().getProfileImageUrl());
-                InputStream inputStream = resolveInputStream(profileImageUri);
-                Bitmap squareProfileImage = BitmapFactory.decodeStream(inputStream);
-                int scaledWidth = (squareProfileImage.getWidth() * abHeight) / squareProfileImage.getHeight();
-                Bitmap squareScaledProfileImage = Bitmap.createScaledBitmap(squareProfileImage, scaledWidth, abHeight, false);
-                RoundedBitmapDrawable roundedProfileImage = RoundedBitmapDrawableFactory.create(getResources(), squareScaledProfileImage);
-                roundedProfileImage.setCircular(true);
-
-                return roundedProfileImage;
-            } catch (Exception e) {
-                Crashlytics.log("cannot scale profile image " + e.getMessage());
-            }
-            return null;
-        }
-        protected void onPostExecute(RoundedBitmapDrawable roundedProfileImage){
-            if(roundedProfileImage!=null)
-                getSupportActionBar().setHomeAsUpIndicator(roundedProfileImage);
-            else
-                getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_d_profile);
-        }
-    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -122,17 +67,19 @@ public class MainActivity extends DooitActivity {
         ButterKnife.bind(this);
         setSupportActionBar(toolbar);
         if (getSupportActionBar() != null) {
-            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            //getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             toolbar.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
                 @Override
                 public void onGlobalLayout() {
                     // Remember to remove it if you don't want it to fire every time
                     MainActivity.this.toolbar.getViewTreeObserver().removeGlobalOnLayoutListener(this);
                     getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_d_profile);
-                    new ProfileImageTask().execute();
+                    simpleDraweeViewProfile.setImageURI(persisted.getCurrentUser().getProfile().getProfileImageUrl());
 
                 }
             });
+            toolbar.setPadding(0,0,0,0);
+
             getSupportActionBar().setHomeAsUpIndicator(org.gem.indo.dooit.R.drawable.ic_d_profile);
 
             toolbar.setNavigationOnClickListener(new View.OnClickListener() {
