@@ -21,6 +21,8 @@ import android.view.ViewTreeObserver;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.crashlytics.android.Crashlytics;
+
 import org.gem.indo.dooit.DooitApplication;
 import org.gem.indo.dooit.R;
 import org.gem.indo.dooit.helpers.Persisted;
@@ -77,7 +79,8 @@ public class MainActivity extends DooitActivity {
             InputStream in = urlConnection.getInputStream();
             return in;
         }catch (Exception ioe){
-            System.out.println("cannot download " );
+            Crashlytics.log("cannot download " + streamUri);
+
         }
         return getContentResolver().openInputStream(streamUri);
 
@@ -100,7 +103,7 @@ public class MainActivity extends DooitActivity {
 
                 return roundedProfileImage;
             } catch (Exception e) {
-                System.out.println("Exception " + e.getMessage());
+                Crashlytics.log("cannot scale profile image " + e.getMessage());
             }
             return null;
         }
