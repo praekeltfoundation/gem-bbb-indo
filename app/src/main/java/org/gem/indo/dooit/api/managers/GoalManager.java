@@ -6,6 +6,7 @@ import org.gem.indo.dooit.api.DooitErrorHandler;
 import org.gem.indo.dooit.api.interfaces.GoalAPI;
 import org.gem.indo.dooit.api.responses.EmptyResponse;
 import org.gem.indo.dooit.models.Goal;
+import org.gem.indo.dooit.models.GoalPrototype;
 import org.gem.indo.dooit.models.GoalTransaction;
 
 import java.util.ArrayList;
@@ -42,5 +43,9 @@ public class GoalManager extends DooitManager {
         List<GoalTransaction> transactions = new ArrayList<>();
         transactions.add(transaction);
         return useNetwork(goalAPI.createGoalTransactions(goal.getId(), transactions), errorHandler);
+    }
+
+    public Observable<GoalPrototype> retrieveGoalPrototypes(DooitErrorHandler errorHandler) {
+        return useNetwork(goalAPI.getGoalPrototypes(), errorHandler);
     }
 }
