@@ -3,6 +3,7 @@ package org.gem.indo.dooit.views.main.fragments.challenge.fragments;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.CardView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,9 +15,11 @@ import com.facebook.drawee.view.SimpleDraweeView;
 
 import org.gem.indo.dooit.R;
 import org.gem.indo.dooit.models.challenge.BaseChallenge;
+import org.gem.indo.dooit.views.main.fragments.challenge.ChallengeFragment;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import butterknife.Unbinder;
 
 /**
@@ -105,5 +108,13 @@ public class ChallengeDoneFragment extends Fragment {
     public void onStart() {
         super.onStart();
         challengeImage.setImageURI(challenge.getImageURL());
+    }
+
+    @OnClick(R.id.challenge_done_button)
+    public void finishChallenge() {
+        FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
+        Fragment f = ChallengeFragment.newInstance();
+        ft.replace(R.id.fragment_challenge_container, f, "fragment_challenge");
+        ft.commit();
     }
 }

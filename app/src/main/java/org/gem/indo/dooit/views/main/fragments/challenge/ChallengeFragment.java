@@ -133,8 +133,12 @@ public class ChallengeFragment extends MainFragment {
                         getActivity().runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
-                                progressBar.setVisibility(View.GONE);
-                                progressText.setVisibility(View.GONE);
+                                if (progressBar != null) {
+                                    progressBar.setVisibility(View.GONE);
+                                }
+                                if (progressText != null) {
+                                    progressText.setVisibility(View.GONE);
+                                }
 
                             }
                         });
