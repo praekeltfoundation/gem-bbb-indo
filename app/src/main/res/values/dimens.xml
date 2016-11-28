@@ -32,8 +32,10 @@
     <dimen name="profile_activity_vertical_margin">24dp</dimen>
 
     <!-- Bot -->
-    <dimen name="bot_carousel_card_width">200dp</dimen>
+    <dimen name="bot_left_margin">36dp</dimen>
+    <dimen name="bot_carousel_card_width">250dp</dimen>
     <dimen name="bot_carousel_card_image_height">150dp</dimen>
+    <dimen name="bot_carousel_card_horizontal_margin">16dp</dimen>
 
     <!-- Challenges -->
     <dimen name="challenge_margins">8dp</dimen>

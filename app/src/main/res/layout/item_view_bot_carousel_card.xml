@@ -2,7 +2,10 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="@dimen/bot_carousel_card_width"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:layout_marginEnd="@dimen/bot_carousel_card_horizontal_margin"
+    android:layout_marginBottom="4dp"
+    android:background="@drawable/bkg_carousel_card">
 
     <com.facebook.drawee.view.SimpleDraweeView
         android:id="@+id/item_view_bot_carousel_card_image"
@@ -14,15 +17,31 @@
         android:id="@+id/item_view_bot_carousel_card_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        style="@style/AppTheme.TextView.Regular.Large"
         android:layout_centerHorizontal="true"
         android:layout_below="@id/item_view_bot_carousel_card_image"
+        android:layout_marginTop="4dp"
+        android:textColor="@color/black"
         tools:text="Goal"/>
+
+    <View
+        android:id="@+id/item_view_bot_carousel_card_separator"
+        android:layout_width="match_parent"
+        android:layout_height="1.5dp"
+        android:layout_below="@id/item_view_bot_carousel_card_title"
+        android:layout_marginTop="4dp"
+        android:background="@drawable/bkg_carousel_separator"
+        />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        style="@style/AppTheme.TextView.Bold.Large"
         android:layout_centerHorizontal="true"
-        android:layout_below="@id/item_view_bot_carousel_card_title"
+        android:layout_below="@id/item_view_bot_carousel_card_separator"
+        android:layout_marginTop="4dp"
+        android:layout_marginBottom="4dp"
+        android:textColor="@color/light_blue"
         android:text="@string/bot_carousel_card_select"
         />
 
