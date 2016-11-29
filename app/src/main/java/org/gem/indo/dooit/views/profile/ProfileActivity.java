@@ -242,7 +242,7 @@ public class ProfileActivity extends DooitActivity {
                     public void permissionGranted() {
                         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
                         if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
-                            startActivityForResult(takePictureIntent, RequestCodes.REPONSE_CAMERA_REQUEST_PROFILE_IMAGE);
+                            startActivityForResult(takePictureIntent, RequestCodes.RESPONSE_CAMERA_REQUEST_PROFILE_IMAGE);
                         }
                     }
 
@@ -284,7 +284,7 @@ public class ProfileActivity extends DooitActivity {
             return;
 
         switch (requestCode) {
-            case RequestCodes.REPONSE_CAMERA_REQUEST_PROFILE_IMAGE:
+            case RequestCodes.RESPONSE_CAMERA_REQUEST_PROFILE_IMAGE:
                 onActivityImageResult(data);
                 break;
             case RequestCodes.RESPONSE_GALLERY_REQUEST_PROFILE_IMAGE:
