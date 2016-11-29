@@ -28,6 +28,7 @@ import org.gem.indo.dooit.models.challenge.QuizChallengeEntry;
 import org.gem.indo.dooit.models.challenge.QuizChallengeOption;
 import org.gem.indo.dooit.models.challenge.QuizChallengeQuestion;
 import org.gem.indo.dooit.models.challenge.QuizChallengeQuestionState;
+import org.gem.indo.dooit.views.main.fragments.challenge.ChallengeFragment;
 import org.gem.indo.dooit.views.main.fragments.challenge.adapters.ChallengeQuizPagerAdapter;
 import org.gem.indo.dooit.views.main.fragments.challenge.interfaces.OnOptionChangeListener;
 import org.gem.indo.dooit.views.main.fragments.challenge.interfaces.OnQuestionCompletedListener;
@@ -80,6 +81,7 @@ public class ChallengeQuizFragment extends Fragment implements OnOptionChangeLis
     @BindView(org.gem.indo.dooit.R.id.fragment_challenge_quiz_checkbutton)
     Button checkButton;
 
+    private boolean challengeCompleted = false;
     private ChallengeQuizPagerAdapter mAdapter;
     private List<ParticipantAnswer> answers = new ArrayList<ParticipantAnswer>();
     private Map<Long, QuizChallengeQuestionState> selections = new HashMap<>();
@@ -199,9 +201,11 @@ public class ChallengeQuizFragment extends Fragment implements OnOptionChangeLis
             @Override
             public void call(QuizChallengeEntry entry) {
                 Log.d(TAG, "Entry submitted");
+                clearState();
+                challengeCompleted = true;
                 FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
-                Fragment fragment = ChallengeNoneFragment.newInstance("Thank you for participating!");
-                ft.replace(R.id.fragment_challenge_container, fragment, "fragment_challenge");
+                Fragment f = ChallengeFragment.newInstance();
+                ft.replace(R.id.fragment_challenge_container, f, "fragment_challenge");
                 ft.commit();
             }
         });
@@ -244,7 +248,7 @@ public class ChallengeQuizFragment extends Fragment implements OnOptionChangeLis
 
     @OnPageChange(R.id.fragment_challenge_quiz_pager)
     public void onPageSelected(int position) {
-        Log.d(TAG, "Page change: " + String.valueOf(position));
+        Log.d(TAG, "Quiz page change: " + String.valueOf(position));
         updateProgressCounter(position);
         if (position == mAdapter.getCount() - 1) {
             checkButton.setText(org.gem.indo.dooit.R.string.label_done);
@@ -307,5 +311,72 @@ public class ChallengeQuizFragment extends Fragment implements OnOptionChangeLis
             total += state.completed ? 1 : 0;
         }
         return total;
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        loadState();
+    }
+
+    @Override
+    public void onStop() {
+        if (!challengeCompleted) {
+            saveState();
+        }
+        super.onStop();
+    }
+
+    public int calcPagerIdx(int idx) {
+        if (idx >= mPager.getChildCount()) idx = mPager.getChildCount() - 1;
+        if (idx < 0) idx = 0;
+        return idx;
+    }
+
+    private void saveState() {
+        persisted.saveQuizChallengeIndex(mPager.getCurrentItem());
+        persisted.saveQuizChallengeState(selections);
+        persisted.saveQuizChallengeAnswers(answers);
+    }
+
+    private void loadState() {
+        Map<Long, QuizChallengeQuestionState> state = null;
+        List<ParticipantAnswer> prevAnswers = null;
+        int idx = -1;
+        try {
+            Log.d(TAG, "Loading state. (0/3)");
+            state = persisted.loadQuizChallengeState();
+            Log.d(TAG, "Loading answers. (1/3)");
+            prevAnswers = persisted.loadQuizChallengeAnswers();
+            Log.d(TAG, "Loading page index. (2/3)");
+            idx = persisted.loadQuizChallengeIndex();
+            Log.d(TAG, "State fully loaded. (3/3)");
+        } catch (Exception e) {
+            Log.d(TAG, "Failed to load quiz state. Resetting.");
+            e.printStackTrace();
+            clearState();
+        }
+
+        if (state != null) {
+            selections = state;
+        }
+
+        if (prevAnswers != null) {
+            answers = persisted.loadQuizChallengeAnswers();
+        }
+
+        int len = mChallenge.numQuestions();
+        idx = 0;
+        List<QuizChallengeQuestion > questions = mChallenge.getQuestions();
+        while (idx < len && isCompleted(questions.get(idx).getId())) {
+            idx++;
+        }
+        mPager.setCurrentItem(idx);
+    }
+
+    private void clearState() {
+        persisted.clearQuizChallengeState();
+        persisted.clearQuizChallengeAnswers();
+        persisted.clearQuizChallengeIndex();
     }
 }
