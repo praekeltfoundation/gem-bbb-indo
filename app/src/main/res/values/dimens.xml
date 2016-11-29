@@ -32,7 +32,10 @@
     <dimen name="profile_activity_vertical_margin">24dp</dimen>
 
     <!-- Bot -->
-    <dimen name="bot_left_margin">36dp</dimen>
+    <dimen name="bot_left_margin">64dp</dimen>
+    <dimen name="bot_tail_left_margin">54dp</dimen>
+    <dimen name="bot_text_padding_vertical">6dp</dimen>
+    <dimen name="bot_text_padding_horizontal">16dp</dimen>
 
     <dimen name="bot_carousel_card_width">250dp</dimen>
     <dimen name="bot_carousel_card_image_height">150dp</dimen>

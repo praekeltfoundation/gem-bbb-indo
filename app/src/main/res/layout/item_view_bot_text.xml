@@ -9,30 +9,41 @@
 
     <ImageView
         android:id="@+id/item_view_bot_icon"
-        android:layout_width="20dp"
-        android:layout_height="20dp"
-        android:layout_alignBottom="@+id/item_view_bot_text"
-        android:layout_marginBottom="4dp"
+        android:layout_width="45dp"
+        android:layout_height="45dp"
+        android:layout_marginBottom="-8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
-        android:background="@drawable/bot_circle"
+        android:layout_alignBottom="@+id/item_view_bot_text"
         android:padding="3dp"
-        android:scaleType="centerInside"
-        android:tint="@color/purple"
+        android:scaleType="fitXY"
         app:elevation="4dp"
-        app:srcCompat="@drawable/ic_d_bot" />
+        app:srcCompat="@drawable/ic_d_bot_coin"/>
+
+    <ImageView
+        android:id="@+id/item_view_bot_text_tail"
+        android:layout_width="14dp"
+        android:layout_height="12dp"
+        android:layout_alignBottom="@+id/item_view_bot_text"
+        android:layout_marginStart="@dimen/bot_tail_left_margin"
+        android:layout_marginBottom="10dp"
+        android:scaleType="fitXY"
+        app:srcCompat="@drawable/ic_d_bot_dialogue_tail"/>
 
     <TextView
         android:id="@+id/item_view_bot_text"
         style="@style/AppTheme.TextView.Regular.Large"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="4dp"
+        android:layout_marginBottom="5dp"
         android:layout_marginEnd="8dp"
-        android:layout_marginStart="36dp"
+        android:layout_marginStart="@dimen/bot_left_margin"
         android:layout_marginTop="8dp"
-        android:background="@drawable/rounded_squre_light_blue"
-        android:padding="4dp"
+        android:background="@drawable/ic_d_bot_dialogue_bkg"
+        android:paddingTop="@dimen/bot_text_padding_vertical"
+        android:paddingBottom="@dimen/bot_text_padding_vertical"
+        android:paddingStart="@dimen/bot_text_padding_horizontal"
+        android:paddingEnd="@dimen/bot_text_padding_horizontal"
         android:textColor="@color/black"
-        tools:text="Blank Answer" />
+        tools:text="Line 1" />
 </RelativeLayout>
