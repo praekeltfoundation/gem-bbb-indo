@@ -18,7 +18,9 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.facebook.drawee.backends.pipeline.Fresco;
 import com.facebook.drawee.view.SimpleDraweeView;
+import com.facebook.imagepipeline.core.ImagePipeline;
 
 import org.gem.indo.dooit.DooitApplication;
 import org.gem.indo.dooit.R;
@@ -47,6 +49,7 @@ import butterknife.BindString;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import rx.functions.Action0;
 import rx.functions.Action1;
 
 /**
@@ -313,16 +316,24 @@ public class ProfileActivity extends DooitActivity {
         fileUploadManager.upload(user.getId(), mimetype, new File(filepath), new DooitErrorHandler() {
             @Override
             public void onError(DooitAPIError error) {
-                dismissDialog();
                 Toast.makeText(ProfileActivity.this, "Unable to uploadProfileImage Image", Toast.LENGTH_SHORT).show();
+            }
+        }).doOnCompleted(new Action0() {
+            @Override
+            public void call() {
+                dismissDialog();
             }
         }).subscribe(new Action1<EmptyResponse>() {
             @Override
             public void call(EmptyResponse emptyResponse) {
-                dismissDialog();
                 User user = persisted.getCurrentUser();
-                user.getProfile().setProfileImageUrl(imageUri.toString());
-                persisted.setCurrentUser(user);
+
+                // Clear remote image from Fresco cache
+                Uri currentUri = Uri.parse(user.getProfile().getProfileImageUrl());
+                if (currentUri.getScheme().equals("http") || currentUri.getScheme().equals("https")) {
+                    ImagePipeline pipeline = Fresco.getImagePipeline();
+                    pipeline.evictFromCache(currentUri);
+                }
             }
         });
     }
