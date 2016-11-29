@@ -1,0 +1,86 @@
+[
+  {
+    "name": "goal_withdraw_intro",
+    "type": "text",
+    "text": "$(goal_withdraw_intro)",
+    "answers": [
+      {
+        "name": "goal_withdraw_cancel",
+        "text": "$(goal_withdraw_cancel)",
+        "next": "goal_withdraw_keep_saving"
+      },
+      {
+        "name": "goal_withdraw_continue",
+        "text": "$(goal_withdraw_continue)",
+        "next": "goal_withdraw_enter_amount"
+      }
+    ]
+  },
+  {
+    "name": "goal_withdraw_keep_saving",
+    "type": "end",
+    "text": "$(goal_withdraw_keep_saving)",
+    "textParams": [
+      "USERNAME"
+    ],
+    "answers": [
+      {
+        "name": "goal_withdraw_keep_saving_end",
+        "text": "$(goal_withdraw_keep_saving_end)"
+      }
+    ]
+  },
+  {
+    "name": "goal_withdraw_enter_amount",
+    "type": "text",
+    "text": "$(goal_withdraw_enter_amount)",
+    "autoAnswer": "withdraw_amount",
+    "answers": [
+      {
+        "name": "withdraw_amount",
+        "nextOnFinish": "goal_withdraw_show_goal",
+        "type": "inlineCurrency",
+        "typeOnFinish": "textCurrency",
+        "inlineEditHint": "$(type_currency_hint)"
+      }
+    ]
+  },
+  {
+    "name": "goal_withdraw_show_goal",
+    "type": "text",
+    "text": "$(bot_goal_display_todo)",
+    "autoNext": "goal_withdraw_tips_challenge"
+  },
+  {
+    "name": "goal_withdraw_tips_challenge",
+    "type": "text",
+    "text": "$(goal_withdraw_tips_challenge)",
+    "answers": [
+      {
+        "name": "goal_withdraw_tip",
+        "text": "$(goal_withdraw_tip)",
+        "next": "todo"
+      },
+      {
+        "name": "goal_withdraw_challenge",
+        "text": "$(goal_withdraw_challenge)",
+        "next": "todo"
+      },
+      {
+        "name": "goal_withdraw_do_end",
+        "text": "$(goal_withdraw_do_end)",
+        "next": "goal_withdraw_end"
+      }
+    ]
+  },
+  {
+    "name": "todo",
+    "type": "end",
+    "text": "$(bot_todo)"
+  },
+  {
+    "name": "goal_withdraw_end",
+    "type": "end",
+    "text": "$(goal_withdraw_end)"
+  }
+]

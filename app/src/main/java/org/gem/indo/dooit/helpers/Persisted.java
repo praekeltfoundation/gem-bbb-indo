@@ -9,6 +9,7 @@ import com.google.gson.internal.LinkedTreeMap;
 
 import org.gem.indo.dooit.DooitApplication;
 import org.gem.indo.dooit.models.Goal;
+import org.gem.indo.dooit.models.GoalPrototype;
 import org.gem.indo.dooit.models.Tip;
 import org.gem.indo.dooit.models.Token;
 import org.gem.indo.dooit.models.User;
@@ -33,6 +34,7 @@ public class Persisted {
     private static final String CHALLENGE = "challenge";
     private static final String BOT = "bot";
     private static final String GOAL = "goal";
+    private static final String GOAL_PROTOTYPE = "goal_prototype";
     private static final String TIPS = "tips";
     private static final String FAVOURITES = "favourites";
     private static final String TAG = Persisted.class.getName();
@@ -100,6 +102,29 @@ public class Persisted {
     public void clearConvoGoals() {
         for (BotType botType : BotType.values())
             dooitSharedPreferences.remove(BOT + "_" + GOAL + "_" + botType.name());
+    }
+
+    public void saveGoalProtos(List<GoalPrototype> prototypes) {
+        dooitSharedPreferences.setComplex(GOAL_PROTOTYPE, prototypes);
+    }
+
+    public List<GoalPrototype> loadGoalProtos() {
+        if (hasGoalProtos()) {
+             GoalPrototype[] protos = dooitSharedPreferences.getComplex(GOAL_PROTOTYPE, GoalPrototype[].class);
+            if (protos != null)
+                return new ArrayList<GoalPrototype>(Arrays.asList(protos));
+            else
+                return new ArrayList<GoalPrototype>();
+        }
+        return null;
+    }
+
+    public boolean hasGoalProtos() {
+        return dooitSharedPreferences.containsKey(GOAL_PROTOTYPE);
+    }
+
+    public void clearGoalProtos() {
+        dooitSharedPreferences.remove(GOAL_PROTOTYPE);
     }
 
     /*** User ***/
