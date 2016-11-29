@@ -60,6 +60,9 @@ import rx.functions.Func1;
  */
 public class BotFragment extends MainFragment implements HashtagView.TagsClickListener {
 
+    @BindView(R.id.fragment_bot)
+    View background;
+
     @BindView(R.id.fragment_bot_conversation_recycler_view)
     RecyclerView conversationRecyclerView;
 
@@ -109,7 +112,7 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
         // Inflate the layout for this fragment
         View view = inflater.inflate(org.gem.indo.dooit.R.layout.fragment_bot, container, false);
         ButterKnife.bind(this, view);
-        SquiggleBackgroundHelper.setBackground(getContext(), R.color.grey_back, R.color.grey_fore, conversationRecyclerView);
+        SquiggleBackgroundHelper.setBackground(getContext(), R.color.grey_back, R.color.grey_fore, background);
         answerView.addOnTagClickListener(this);
         conversationRecyclerView.setHasFixedSize(true);
         conversationRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
