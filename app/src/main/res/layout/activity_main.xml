@@ -32,14 +32,13 @@
                     android:layout_width="48dp"
                     android:layout_height="48dp"
                     android:layout_gravity="start"
-                    android:paddingBottom="8dp"
-                    android:paddingTop="8dp"
+                    android:padding="8dp"
                     app:actualImageScaleType="fitXY"
                     app:fadeDuration="300"
                     app:failureImage="@drawable/ic_d_profile"
                     app:failureImageScaleType="fitXY"
                     app:placeholderImage="@drawable/ic_d_profile"
-                    app:placeholderImageScaleType="centerInside"
+                    app:placeholderImageScaleType="fitXY"
                     app:roundAsCircle="true"
                     app:roundedCornerRadius="1dp" />
             </android.support.v7.widget.Toolbar>

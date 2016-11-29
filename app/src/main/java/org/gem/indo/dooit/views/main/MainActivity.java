@@ -28,6 +28,7 @@ import javax.inject.Inject;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import butterknife.OnPageChange;
 
 public class MainActivity extends DooitActivity {
 
@@ -73,39 +74,23 @@ public class MainActivity extends DooitActivity {
                 MainViewPagerPositions.setInActiveState(tab.getCustomView());
             }
         }
-        viewPager.addOnPageChangeListener(
-                new ViewPager.OnPageChangeListener() {
-                    @Override
-                    public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+    }
 
-                    }
+    @OnPageChange(value = R.id.content_main_view_pager, callback = OnPageChange.Callback.PAGE_SELECTED)
+    public void onMainPagerPageSelected(int position) {
+        for (int i = 0; i < tabLayout.getTabCount(); i++) {
+            TabLayout.Tab tab = tabLayout.getTabAt(i);
+            View tabView = tab.getCustomView();
 
-                    @Override
-                    public void onPageSelected(int position) {
-                        for (int i = 0; i < tabLayout.getTabCount(); i++) {
-                            TabLayout.Tab tab = tabLayout.getTabAt(i);
-                            View tabView = tab.getCustomView();
-                            ImageView icon = (ImageView) tabView.findViewById(R.id.tab_custom_icon);
-                            TextView text = (TextView) tabView.findViewById(R.id.tab_custom_title);
+            if (position == i) {
+                MainViewPagerPositions.setActiveState(tabView);
 
-                            if (position == i) {
-                                MainViewPagerPositions.setActiveState(tabView);
+            } else {
+                MainViewPagerPositions.setInActiveState(tabView);
 
-                            } else {
-                                MainViewPagerPositions.setInActiveState(tabView);
+            }
 
-                            }
-
-                        }
-                    }
-
-                    @Override
-                    public void onPageScrollStateChanged(int state) {
-
-                    }
-                }
-
-        );
+        }
     }
 
     @OnClick(R.id.activity_main_profile_image)
@@ -113,7 +98,7 @@ public class MainActivity extends DooitActivity {
         ProfileActivity.Builder.create(this).startActivity();
     }
 
-    @Override
+	@Override
     protected void onResume() {
         super.onResume();
         simpleDraweeViewProfile.setImageURI(persisted.getCurrentUser().getProfile().getProfileImageUrl());
