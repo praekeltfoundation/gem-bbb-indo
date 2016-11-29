@@ -2,7 +2,6 @@ package org.gem.indo.dooit.views.main;
 
 import android.content.Context;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
@@ -10,13 +9,9 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewTreeObserver;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.crashlytics.android.Crashlytics;
-import com.facebook.drawee.interfaces.DraweeController;
-import com.facebook.drawee.view.DraweeView;
 import com.facebook.drawee.view.SimpleDraweeView;
 
 import org.gem.indo.dooit.DooitApplication;
@@ -28,15 +23,11 @@ import org.gem.indo.dooit.views.helpers.activity.DooitActivityBuilder;
 import org.gem.indo.dooit.views.main.adapters.MainTabAdapter;
 import org.gem.indo.dooit.views.profile.ProfileActivity;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.HttpURLConnection;
-import java.net.URL;
-
 import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 public class MainActivity extends DooitActivity {
 
@@ -59,6 +50,7 @@ public class MainActivity extends DooitActivity {
     @Inject
     Persisted persisted;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -66,29 +58,6 @@ public class MainActivity extends DooitActivity {
         ((DooitApplication) getApplication()).component.inject(this);
         ButterKnife.bind(this);
         setSupportActionBar(toolbar);
-        if (getSupportActionBar() != null) {
-            //getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-            toolbar.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
-                @Override
-                public void onGlobalLayout() {
-                    // Remember to remove it if you don't want it to fire every time
-                    MainActivity.this.toolbar.getViewTreeObserver().removeGlobalOnLayoutListener(this);
-                    getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_d_profile);
-                    simpleDraweeViewProfile.setImageURI(persisted.getCurrentUser().getProfile().getProfileImageUrl());
-
-                }
-            });
-            toolbar.setPadding(0,0,0,0);
-
-            getSupportActionBar().setHomeAsUpIndicator(org.gem.indo.dooit.R.drawable.ic_d_profile);
-
-            toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    openProfile();
-                }
-            });
-        }
         mainTabAdapter = new MainTabAdapter(getSupportFragmentManager(), this);
         viewPager.setAdapter(mainTabAdapter);
         tabLayout.setupWithViewPager(viewPager);
@@ -139,8 +108,15 @@ public class MainActivity extends DooitActivity {
         );
     }
 
-    private void openProfile() {
+    @OnClick(R.id.activity_main_profile_image)
+    void openProfile() {
         ProfileActivity.Builder.create(this).startActivity();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        simpleDraweeViewProfile.setImageURI(persisted.getCurrentUser().getProfile().getProfileImageUrl());
     }
 
     @Override
