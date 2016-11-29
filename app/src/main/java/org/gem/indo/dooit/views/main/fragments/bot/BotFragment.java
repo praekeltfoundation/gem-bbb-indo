@@ -233,13 +233,11 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
                 }
                 return;
             }
-
-            // TODO: Load persisted
-            callback = createBotCallback(type);
-        } else {
-            callback = createBotCallback(type);
         }
 
+        callback = createBotCallback(type);
+
+        // Jump to first node
         switch (type) {
             case DEFAULT:
                 getAndAddNode(null);
@@ -290,6 +288,7 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
     public void onItemClicked(Object item) {
         Answer answer = (Answer) item;
 
+        // For replacing existing nodes in the converstation
         if (!TextUtils.isEmpty(answer.getRemoveOnSelect())) {
             for (BaseBotModel model : new ArrayList<>(getBotAdapter().getDataSet())) {
                 if (answer.getRemoveOnSelect().equals(model.getName())) {
@@ -297,6 +296,7 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
                 }
             }
         }
+
         if (answer.getChangeOnSelect() != null) {
             BaseBotModel model = feed.getItem(answer.getChangeOnSelect().first);
             model.setText(answer.getChangeOnSelect().second);
@@ -307,20 +307,26 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
         getBotAdapter().addItem(answer);
         conversationRecyclerView.scrollToPosition(getBotAdapter().getItemCount() - 1);
         persisted.saveConversationState(type, getBotAdapter().getDataSet());
+
         if (!TextUtils.isEmpty(answer.getNext())) {
             getAndAddNode(answer.getNext());
-            if (BotMessageType.getValueOf(currentModel.getType()) == BotMessageType.END)
-                if (callback != null) {
-                    callback.onDone(createAnswerLog(getBotAdapter().getDataSet()));
-                    persisted.clearConversation();
-                    persisted.clearConvoGoals();
-                }
+            if (BotMessageType.getValueOf(currentModel.getType()) == BotMessageType.END) {
+                // Reached explicit end of current converstation
+                finishConverstation();
+            }
         } else {
             answerView.setData(new ArrayList<>());
         }
 
-
         persisted.saveConversationState(type, getBotAdapter().getDataSet());
+    }
+
+    private void finishConverstation() {
+        if (callback != null) {
+            callback.onDone(createAnswerLog(getBotAdapter().getDataSet()));
+        }
+        persisted.clearConversation();
+        persisted.clearConvoGoals();
     }
 
     private Map<String, Answer> createAnswerLog(List<BaseBotModel> converstation) {
@@ -344,9 +350,13 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
         Node node = (Node) currentModel;
         if (node != null) {
             node.setIconHidden(iconHidden);
-            if (!BotMessageType.BLANK.equals(BotMessageType.getValueOf(currentModel.getType()))) {
+
+            // Don't add views for BLANK and STARTCONVO
+            if (!BotMessageType.BLANK.equals(BotMessageType.getValueOf(currentModel.getType())) &&
+                    !BotMessageType.STARTCONVO.equals(BotMessageType.getValueOf(currentModel.getType()))) {
                 getBotAdapter().addItem(currentModel);
             }
+
             conversationRecyclerView.scrollToPosition(getBotAdapter().getItemCount() - 1);
             persisted.saveConversationState(type, getBotAdapter().getDataSet());
             addAnswerOptions(node);
@@ -377,7 +387,16 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
                 }
             }
         } else if (!TextUtils.isEmpty(node.getAutoNext())) {
-            getAndAddNode(node.getAutoNext(), true);
+            if (BotMessageType.getValueOf(node.getType()) == BotMessageType.STARTCONVO) {
+                // Auto load next converstation
+                finishConverstation();
+                BotType botType = BotType.valueOf(node.getAutoNext().toUpperCase());
+                setBotType(botType);
+                createFeed();
+            } else {
+                // Auto load next node in current converstation
+                getAndAddNode(node.getAutoNext(), true);
+            }
         }
     }
 }
