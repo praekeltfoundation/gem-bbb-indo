@@ -260,7 +260,12 @@
   },
   {
     "name": "infoGoalEnd",
-    "type": "end",
-    "text": "$(infoGoalEnd)"
+    "type": "text",
+    "text": "$(infoGoalEnd)",
+    "autoNext": "goal_add_end"
+  },
+  {
+    "name": "goal_add_end",
+    "type": "end"
   }
 ]

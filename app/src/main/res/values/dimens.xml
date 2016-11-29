@@ -40,6 +40,7 @@
 
     <dimen name="bot_tip_card_width">250dp</dimen>
     <dimen name="bot_tip_card_image_height">150dp</dimen>
+    <dimen name="bot_tip_card_vertical_margin">4dp</dimen>
 
     <!-- Challenges -->
     <dimen name="challenge_margins">8dp</dimen>

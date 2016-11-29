@@ -73,18 +73,27 @@
       }
     ]
   },
+
   {
     "name": "goal_withdraw_show_tip",
-    "type": "tip"
+    "type": "tip",
+    "autoNext": "goal_withdraw_end"
   },
   {
     "name": "todo",
-    "type": "end",
-    "text": "$(bot_todo)"
+    "type": "text",
+    "text": "$(bot_todo)",
+    "autoNext": "goal_withdraw_end"
   },
   {
+    "name": "goal_withdraw_end_message",
+    "type": "text",
+    "text": "$(goal_withdraw_end_message)",
+    "autoNext": "goal_withdraw_end"
+  },
+
+  {
     "name": "goal_withdraw_end",
-    "type": "end",
-    "text": "$(goal_withdraw_end)"
+    "type": "end"
   }
 ]

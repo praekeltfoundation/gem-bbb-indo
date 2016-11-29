@@ -370,7 +370,9 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
             getBotAdapter().removeItem(model);
             getBotAdapter().addItem(model);
         }
-        getBotAdapter().addItem(answer);
+
+        if (shouldAdd(answer))
+            getBotAdapter().addItem(answer);
         conversationRecyclerView.scrollToPosition(getBotAdapter().getItemCount() - 1);
         persisted.saveConversationState(type, getBotAdapter().getDataSet());
 
@@ -474,6 +476,8 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
         switch(BotMessageType.getValueOf(model.getType())) {
             case BLANK:
             case STARTCONVO:
+            case END:
+            case BLANKANSWER:
                 return false;
             default:
                 return true;

@@ -2,7 +2,10 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="@dimen/bot_tip_card_width"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/bkg_carousel_card"
+    android:layout_marginStart="@dimen/bot_left_margin"
+    android:layout_marginEnd="@dimen/bot_left_margin"
     tools:context=".views.main.MainActivity">
 
     <com.facebook.drawee.view.SimpleDraweeView
@@ -16,6 +19,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/item_view_bot_tip_image"
         android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/bot_tip_card_vertical_margin"
         tools:text="Tip Title"/>
 
     <View
@@ -23,7 +27,7 @@
         android:layout_width="match_parent"
         android:layout_height="1.5dp"
         android:layout_below="@id/item_view_bot_tip_title"
-        android:layout_marginTop="4dp"
+        android:layout_marginTop="@dimen/bot_tip_card_vertical_margin"
         android:background="@drawable/bkg_carousel_separator"
         />
 
@@ -32,6 +36,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/item_view_bot_tip_separator"
+        android:layout_marginTop="@dimen/bot_tip_card_vertical_margin"
+        android:layout_marginBottom="@dimen/bot_tip_card_vertical_margin"
         android:layout_centerHorizontal="true"
         android:text="@string/label_share"/>
 </RelativeLayout>
