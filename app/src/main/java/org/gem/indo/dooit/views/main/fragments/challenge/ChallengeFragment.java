@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -34,6 +35,7 @@ import rx.functions.Action0;
 import rx.functions.Action1;
 
 public class ChallengeFragment extends MainFragment {
+    public static String TAG = "ChallengeMain";
 
     @Inject
     ChallengeManager challengeManager;
@@ -90,17 +92,13 @@ public class ChallengeFragment extends MainFragment {
         super.onDestroyView();
     }
 
-    private void loadTypeFragment(BaseChallenge challenge) {
+    private void loadTypeFragment(BaseChallenge challenge, boolean hasActive) {
         if (challenge != null) {
             ChallengeFragment.this.challenge = challenge;
-            persisted.setActiveChallenge(challenge);
 
             if (getActivity() != null) {
                 FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
-                Fragment fragment = ChallengeRegisterFragment.newInstance();
-                Bundle args = new Bundle();
-                args.putParcelable("challenge", challenge);
-                fragment.setArguments(args);
+                Fragment fragment = ChallengeRegisterFragment.newInstance(challenge, hasActive);
                 ft.replace(R.id.fragment_challenge_container, fragment, "fragment_challenge");
                 ft.commit();
             }
@@ -114,17 +112,23 @@ public class ChallengeFragment extends MainFragment {
 
     @Override
     public void onStart() {
-//        if (persisted.hasCurrentChallenge()) {
-//            challenge = (BaseChallenge) persisted.getCurrentChallenge();
-//            startChallenge();
-//            return;
-//        }
-
         super.onStart();
+
+        if (persisted.hasCurrentChallenge()) {
+            try {
+                challenge = (BaseChallenge) persisted.getCurrentChallenge();
+                loadTypeFragment(challenge, true);
+                return;
+            } catch (Exception e) {
+                Log.d(TAG, "Could not load persisted challenge");
+                persisted.clearCurrentChallenge();
+            }
+        }
+
         challengeSubscription = challengeManager.retrieveCurrentChallenge(false, new DooitErrorHandler() {
             @Override
             public void onError(DooitAPIError error) {
-                Toast.makeText(getContext(), "Could not retrieve challenges", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), "Could not retrieve challenge", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -132,7 +136,7 @@ public class ChallengeFragment extends MainFragment {
                 .subscribe(new Action1<BaseChallenge>() {
                     @Override
                     public void call(BaseChallenge challenge) {
-                        loadTypeFragment(challenge);
+                        loadTypeFragment(challenge, false);
                         getActivity().runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
