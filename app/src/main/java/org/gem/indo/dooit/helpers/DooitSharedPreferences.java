@@ -12,7 +12,6 @@ import org.gem.indo.dooit.api.serializers.LocalDateSerializer;
 import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 
-import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.util.Set;
 
