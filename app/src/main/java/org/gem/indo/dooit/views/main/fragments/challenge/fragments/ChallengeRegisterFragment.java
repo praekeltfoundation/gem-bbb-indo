@@ -3,6 +3,7 @@ package org.gem.indo.dooit.views.main.fragments.challenge.fragments;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,6 +18,7 @@ import org.gem.indo.dooit.R;
 import org.gem.indo.dooit.api.DooitAPIError;
 import org.gem.indo.dooit.api.DooitErrorHandler;
 import org.gem.indo.dooit.api.managers.ChallengeManager;
+import org.gem.indo.dooit.helpers.Persisted;
 import org.gem.indo.dooit.helpers.SquiggleBackgroundHelper;
 import org.gem.indo.dooit.models.challenge.BaseChallenge;
 import org.gem.indo.dooit.models.challenge.FreeformChallenge;
@@ -40,10 +42,15 @@ import rx.functions.Action1;
  * create an instance of this fragment.
  */
 public class ChallengeRegisterFragment extends Fragment {
+    private static final String TAG = "ChallengeRegister";
     private static final String ARG_CHALLENGE = "challenge";
+    private static final String ARG_HASACTIVE = "has_active";
 
     @Inject
     ChallengeManager challengeManager;
+
+    @Inject
+    Persisted persist;
 
     @BindView(R.id.fragment_challenge_container)
     View background;
@@ -69,6 +76,7 @@ public class ChallengeRegisterFragment extends Fragment {
     @BindView(R.id.fragment_challenge_register_button)
     Button register;
 
+    private boolean hasActive = false;
     private BaseChallenge challenge;
     private Observable<Participant> participantSubscription = null;
     private Unbinder unbinder = null;
@@ -77,16 +85,20 @@ public class ChallengeRegisterFragment extends Fragment {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @return A new instance of fragment ChallengeRegisterFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static ChallengeRegisterFragment newInstance() {
+    public static ChallengeRegisterFragment newInstance(BaseChallenge challenge) {
         ChallengeRegisterFragment fragment = new ChallengeRegisterFragment();
         Bundle args = new Bundle();
+        args.putParcelable(ARG_CHALLENGE, challenge);
+        args.putBoolean(ARG_HASACTIVE, false);
+        fragment.setArguments(args);
+        return fragment;
+    }
+
+    public static ChallengeRegisterFragment newInstance(BaseChallenge challenge, boolean hasActive) {
+        ChallengeRegisterFragment fragment = new ChallengeRegisterFragment();
+        Bundle args = new Bundle();
+        args.putParcelable(ARG_CHALLENGE, challenge);
+        args.putBoolean(ARG_HASACTIVE, hasActive);
         fragment.setArguments(args);
         return fragment;
     }
@@ -96,6 +108,7 @@ public class ChallengeRegisterFragment extends Fragment {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
             challenge = getArguments().getParcelable(ARG_CHALLENGE);
+            hasActive = getArguments().getBoolean(ARG_HASACTIVE);
         }
         ((DooitApplication) getActivity().getApplication()).component.inject(this);
     }
@@ -106,6 +119,9 @@ public class ChallengeRegisterFragment extends Fragment {
         View view = inflater.inflate(org.gem.indo.dooit.R.layout.fragment_challenge_register, container, false);
         unbinder = ButterKnife.bind(this, view);
         SquiggleBackgroundHelper.setBackground(getContext(), R.color.grey_back, R.color.grey_fore, background);
+        if (hasActive) {
+            register.setText(getText(R.string.label_continue));
+        }
         return view;
     }
 
@@ -181,6 +197,7 @@ public class ChallengeRegisterFragment extends Fragment {
         participantSubscription.subscribe(new Action1<Participant>() {
             @Override
             public void call(Participant participant1) {
+                persist.setActiveChallenge(challenge);
                 startChallenge(participant1);
             }
         });

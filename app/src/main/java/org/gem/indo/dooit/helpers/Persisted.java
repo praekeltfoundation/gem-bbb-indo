@@ -8,6 +8,8 @@ import com.google.gson.Gson;
 import com.google.gson.internal.LinkedTreeMap;
 
 import org.gem.indo.dooit.DooitApplication;
+import org.gem.indo.dooit.helpers.bot.ListParameterizedType;
+import org.gem.indo.dooit.helpers.challenge.MapParameterizedType;
 import org.gem.indo.dooit.models.Goal;
 import org.gem.indo.dooit.models.GoalPrototype;
 import org.gem.indo.dooit.models.Tip;
@@ -17,11 +19,14 @@ import org.gem.indo.dooit.models.bot.Answer;
 import org.gem.indo.dooit.models.bot.BaseBotModel;
 import org.gem.indo.dooit.models.bot.Node;
 import org.gem.indo.dooit.models.challenge.BaseChallenge;
+import org.gem.indo.dooit.models.challenge.ParticipantAnswer;
+import org.gem.indo.dooit.models.challenge.QuizChallengeQuestionState;
 import org.gem.indo.dooit.models.enums.BotType;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 
 import javax.inject.Inject;
 
@@ -32,6 +37,9 @@ public class Persisted {
     private static final String TOKEN = "token";
     private static final String USER = "user";
     private static final String CHALLENGE = "challenge";
+    private static final String QUIZ_INDEX = "quiz_index";
+    private static final String QUIZ_STATE = "quiz_state";
+    private static final String QUIZ_ANSWERS = "quiz_answers";
     private static final String BOT = "bot";
     private static final String GOAL = "goal";
     private static final String GOAL_PROTOTYPE = "goal_prototype";
@@ -175,17 +183,47 @@ public class Persisted {
         dooitSharedPreferences.setComplex(CHALLENGE, activeChallenge);
     }
 
-    public Object getCurrentChallenge() {
+    public BaseChallenge getCurrentChallenge() {
         return loadCurrentChallenge();
     }
 
     private BaseChallenge loadCurrentChallenge() {
-        return dooitSharedPreferences.getComplex(TOKEN, BaseChallenge.class);
+        return dooitSharedPreferences.getComplex(CHALLENGE, BaseChallenge.class);
     }
 
     public boolean hasCurrentChallenge() {
         BaseChallenge challenge = loadCurrentChallenge();
         return challenge != null;
+    }
+
+    public void clearCurrentChallenge() {
+        dooitSharedPreferences.remove(CHALLENGE);
+    }
+
+    public void saveQuizChallengeState(Map<Long, QuizChallengeQuestionState> state) {
+        dooitSharedPreferences.setComplex(QUIZ_STATE, state);
+    }
+
+    public Map<Long, QuizChallengeQuestionState> loadQuizChallengeState() {
+        MapParameterizedType type = new MapParameterizedType(Long.class, QuizChallengeQuestionState.class);
+        return dooitSharedPreferences.getComplex(QUIZ_STATE, type);
+    }
+
+    public void clearQuizChallengeState() {
+        dooitSharedPreferences.remove(QUIZ_STATE);
+    }
+
+    public void saveQuizChallengeAnswers(List<ParticipantAnswer> answers) {
+        dooitSharedPreferences.setComplex(QUIZ_ANSWERS, answers);
+    }
+
+    public List<ParticipantAnswer> loadQuizChallengeAnswers() {
+        ListParameterizedType type = new ListParameterizedType(ParticipantAnswer.class);
+        return dooitSharedPreferences.getComplex(QUIZ_ANSWERS, type);
+    }
+
+    public void clearQuizChallengeAnswers() {
+        dooitSharedPreferences.remove(QUIZ_ANSWERS);
     }
 
     /*** Tips ***/

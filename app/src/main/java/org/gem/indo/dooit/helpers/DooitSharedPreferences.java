@@ -6,11 +6,13 @@ import android.content.SharedPreferences;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
+import org.gem.indo.dooit.api.serializers.ChallengeSerializer;
 import org.gem.indo.dooit.api.serializers.DateTimeSerializer;
 import org.gem.indo.dooit.api.serializers.LocalDateSerializer;
 import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 
+import java.lang.reflect.Type;
 import java.util.Set;
 
 import javax.inject.Singleton;
@@ -32,6 +34,7 @@ public class DooitSharedPreferences {
         gson = new GsonBuilder()
                 .registerTypeAdapter(DateTime.class, new DateTimeSerializer())
                 .registerTypeAdapter(LocalDate.class, new LocalDateSerializer())
+                .registerTypeAdapterFactory(ChallengeSerializer.getChallengeAdapterFactory())
                 .create();
     }
 
@@ -73,6 +76,14 @@ public class DooitSharedPreferences {
 
     public <T> T getComplex(String key, Class<T> clazz) {
         return gson.fromJson(getString(key, ""), clazz);
+    }
+
+    public <T> T getComplex(String key, Type type) {
+        try {
+            return gson.fromJson(getString(key, ""), type);
+        } catch (Exception e) {
+            return null;
+        }
     }
 
     public void setString(String key, String value) {

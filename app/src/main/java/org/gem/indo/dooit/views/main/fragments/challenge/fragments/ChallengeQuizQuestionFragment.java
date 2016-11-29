@@ -85,7 +85,6 @@ public class ChallengeQuizQuestionFragment extends Fragment implements OnOptionC
         if (challengeFragment instanceof ChallengeQuizFragment) {
             controller = ((ChallengeQuizFragment) challengeFragment);
             controller.addOptionChangeListener(this);
-//            controller.addQuestionCompletedListener(this);
         }
     }
 
