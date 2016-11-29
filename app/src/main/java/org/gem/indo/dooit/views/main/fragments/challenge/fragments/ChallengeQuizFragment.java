@@ -196,11 +196,16 @@ public class ChallengeQuizFragment extends Fragment implements OnOptionChangeLis
             @Override
             public void onError(DooitAPIError error) {
                 Log.d(TAG, "Could not submit challenge entry");
+                FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
+                Fragment f = ChallengeFragment.newInstance();
+                ft.replace(R.id.fragment_challenge_container, f, "fragment_challenge");
+                ft.commit();
             }
         }).subscribe(new Action1<QuizChallengeEntry>() {
             @Override
             public void call(QuizChallengeEntry entry) {
                 Log.d(TAG, "Entry submitted");
+                persisted.clearCurrentChallenge();
                 clearState();
                 challengeCompleted = true;
                 FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
