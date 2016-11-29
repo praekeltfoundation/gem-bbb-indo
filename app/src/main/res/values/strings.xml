@@ -13,6 +13,7 @@
     <string name="main_tab_text_3">TIPS</string>
 
     <!-- Common labels -->
+    <string name="label_cancel">Cancel</string>
     <string name="label_check_result">Check</string>
     <string name="label_clear_content">Clear</string>
     <string name="label_continue">Continue</string>
@@ -37,6 +38,8 @@
     <string name="label_submit">Submit</string>
     <string name="label_try_again">Try again</string>
     <string name="label_uploading">Uploading</string>
+    <string name="label_take_picture">Take photo using camera</string>
+    <string name="label_select_gallery">Choose from gallery</string>
 
     <!-- Welcome -->
     <string name="welcome_page_empty">Welcome Page</string>
