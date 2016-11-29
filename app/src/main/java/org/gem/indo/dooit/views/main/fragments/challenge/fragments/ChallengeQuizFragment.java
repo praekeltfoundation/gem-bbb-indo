@@ -27,6 +27,7 @@ import org.gem.indo.dooit.models.challenge.QuizChallenge;
 import org.gem.indo.dooit.models.challenge.QuizChallengeEntry;
 import org.gem.indo.dooit.models.challenge.QuizChallengeOption;
 import org.gem.indo.dooit.models.challenge.QuizChallengeQuestion;
+import org.gem.indo.dooit.models.challenge.QuizChallengeQuestionState;
 import org.gem.indo.dooit.views.main.fragments.challenge.adapters.ChallengeQuizPagerAdapter;
 import org.gem.indo.dooit.views.main.fragments.challenge.interfaces.OnOptionChangeListener;
 import org.gem.indo.dooit.views.main.fragments.challenge.interfaces.OnQuestionCompletedListener;
@@ -81,7 +82,7 @@ public class ChallengeQuizFragment extends Fragment implements OnOptionChangeLis
 
     private ChallengeQuizPagerAdapter mAdapter;
     private List<ParticipantAnswer> answers = new ArrayList<ParticipantAnswer>();
-    private Map<Long, QuestionState> selections = new HashMap<>();
+    private Map<Long, QuizChallengeQuestionState> selections = new HashMap<>();
     private Participant participant;
     private QuizChallenge mChallenge;
     private QuizChallengeOption currentOption = null;
@@ -265,7 +266,7 @@ public class ChallengeQuizFragment extends Fragment implements OnOptionChangeLis
         currentQuestion = question;
         currentOption = option;
         long questionId = question.getId();
-        selections.put(questionId, new QuestionState(option.getId(), isCompleted(questionId)));
+        selections.put(questionId, new QuizChallengeQuestionState(option.getId(), isCompleted(questionId)));
         for (OnOptionChangeListener l : optionChangeListeners) {
             if (l != null) {
                 l.onOptionChange(question, option);
@@ -283,7 +284,7 @@ public class ChallengeQuizFragment extends Fragment implements OnOptionChangeLis
 
     public void setCompleted(long questionId) {
         if (selections.containsKey(questionId)) {
-            selections.put(questionId, new QuestionState(selections.get(questionId).optionId, true));
+            selections.put(questionId, new QuizChallengeQuestionState(selections.get(questionId).optionId, true));
         }
         for (OnQuestionCompletedListener l : questionCompletedListeners) {
             if (l != null) {
@@ -302,19 +303,9 @@ public class ChallengeQuizFragment extends Fragment implements OnOptionChangeLis
 
     public int numCompleted() {
         int total = 0;
-        for (QuestionState state : selections.values()) {
+        for (QuizChallengeQuestionState state : selections.values()) {
             total += state.completed ? 1 : 0;
         }
         return total;
-    }
-
-    private class QuestionState {
-        private long optionId = -1;
-        private boolean completed = false;
-
-        QuestionState(long optionId, boolean completed) {
-            this.optionId = optionId;
-            this.completed = completed;
-        }
     }
 }
