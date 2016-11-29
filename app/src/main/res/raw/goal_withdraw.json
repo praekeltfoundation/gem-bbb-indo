@@ -26,7 +26,8 @@
     "answers": [
       {
         "name": "goal_withdraw_keep_saving_end",
-        "text": "$(goal_withdraw_keep_saving_end)"
+        "text": "$(goal_withdraw_keep_saving_end)",
+        "next": "goal_withdraw_end"
       }
     ]
   },
