@@ -64,15 +64,12 @@ public class MainActivity extends DooitActivity {
                 @Override
                 public void onGlobalLayout() {
                     // Remember to remove it if you don't want it to fire every time
-                    MainActivity.this.toolbar.getViewTreeObserver().removeGlobalOnLayoutListener(this);
-                    getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_d_profile);
+//                    MainActivity.this.toolbar.getViewTreeObserver().removeGlobalOnLayoutListener(this);
                     simpleDraweeViewProfile.setImageURI(persisted.getCurrentUser().getProfile().getProfileImageUrl());
 
                 }
             });
             toolbar.setPadding(0, 0, 0, 0);
-
-            getSupportActionBar().setHomeAsUpIndicator(org.gem.indo.dooit.R.drawable.ic_d_profile);
         }
         mainTabAdapter = new MainTabAdapter(getSupportFragmentManager(), this);
         viewPager.setAdapter(mainTabAdapter);
