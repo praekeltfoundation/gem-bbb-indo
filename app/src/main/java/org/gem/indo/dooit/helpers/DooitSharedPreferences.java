@@ -12,6 +12,8 @@ import org.gem.indo.dooit.api.serializers.LocalDateSerializer;
 import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 
+import java.lang.reflect.ParameterizedType;
+import java.lang.reflect.Type;
 import java.util.Set;
 
 import javax.inject.Singleton;
@@ -75,6 +77,14 @@ public class DooitSharedPreferences {
 
     public <T> T getComplex(String key, Class<T> clazz) {
         return gson.fromJson(getString(key, ""), clazz);
+    }
+
+    public <T> T getComplex(String key, Type type) {
+        try {
+            return gson.fromJson(getString(key, ""), type);
+        } catch (Exception e) {
+            return null;
+        }
     }
 
     public void setString(String key, String value) {
