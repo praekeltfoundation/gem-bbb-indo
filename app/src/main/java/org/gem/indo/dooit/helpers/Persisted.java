@@ -36,6 +36,7 @@ public class Persisted {
     private static final String TOKEN = "token";
     private static final String USER = "user";
     private static final String CHALLENGE = "challenge";
+    private static final String QUIZ_INDEX = "quiz_index";
     private static final String QUIZ_STATE = "quiz_state";
     private static final String QUIZ_ANSWERS = "quiz_answers";
     private static final String BOT = "bot";
@@ -181,6 +182,18 @@ public class Persisted {
     public Map<Long, QuizChallengeQuestionState> loadQuizChallengeState() {
         MapParameterizedType type = new MapParameterizedType(Long.class, QuizChallengeQuestionState.class);
         return (Map<Long, QuizChallengeQuestionState>) dooitSharedPreferences.getComplex(QUIZ_STATE, type.getClass());
+    }
+
+    public void saveQuizChallengeIndex(int idx) {
+        dooitSharedPreferences.setInteger(QUIZ_INDEX, idx);
+    }
+
+    public int loadQuizChallengeIndex() {
+        return dooitSharedPreferences.getInteger(QUIZ_INDEX, -1);
+    }
+
+    public void clearQuizChallengeIndex() {
+        dooitSharedPreferences.remove(QUIZ_INDEX);
     }
 
     public void clearQuizChallengeState() {
