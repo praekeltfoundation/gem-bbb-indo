@@ -9,5 +9,6 @@ public enum ChallengeFragmentState {
     QUIZ,
     FREEFORM,
     PICTURE,
+    REGISTER,
     NONE
 }

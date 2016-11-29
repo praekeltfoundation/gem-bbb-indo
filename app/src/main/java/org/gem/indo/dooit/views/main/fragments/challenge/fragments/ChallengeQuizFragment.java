@@ -66,9 +66,6 @@ public class ChallengeQuizFragment extends Fragment implements OnOptionChangeLis
     @Inject
     ChallengeManager challengeManager;
 
-    @BindView(R.id.fragment_chalenge_nested_bg)
-    View background;
-
     @BindView(R.id.fragment_challenge_quiz_progressbar)
     ProgressBar mProgressBar;
 
@@ -132,7 +129,6 @@ public class ChallengeQuizFragment extends Fragment implements OnOptionChangeLis
         // Inflate the layout for this fragment
         View view = inflater.inflate(org.gem.indo.dooit.R.layout.fragment_challenge_quiz, container, false);
         unbinder = ButterKnife.bind(this, view);
-        SquiggleBackgroundHelper.setBackground(getContext(), R.color.grey_back, R.color.grey_fore, background);
         mPager.setAdapter(mAdapter);
         updateProgressCounter(0);
         return view;
