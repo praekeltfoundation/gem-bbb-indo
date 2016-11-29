@@ -37,7 +37,6 @@ import org.gem.indo.dooit.views.main.fragments.target.callbacks.GoalAddCallback;
 import org.gem.indo.dooit.views.main.fragments.target.callbacks.GoalDepositCallback;
 import org.gem.indo.dooit.views.main.fragments.target.callbacks.GoalWithdrawCallback;
 
-import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -67,6 +66,9 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
 
     @Inject
     Persisted persisted;
+
+    @Inject
+    GoalManager goalManager;
 
     BotType type = BotType.DEFAULT;
     BotCallback callback;
@@ -136,6 +138,10 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
     @Override
     public void onActive() {
         super.onActive();
+        createFeed();
+    }
+
+    private void createFeed() {
         feed = new BotFeed<>(getContext());
         switch (type) {
             case DEFAULT:
@@ -152,13 +158,10 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
                 initializeBot();
                 break;
         }
-
     }
 
-    @Inject
-    GoalManager goalManager;
-
     private void getGoalAddResources() {
+        // TODO: Refactor into own class
         ArrayList<Observable> reqSync = new ArrayList<>();
         Observable goalProtos = goalManager.retrieveGoalPrototypes(new DooitErrorHandler() {
             @Override
@@ -276,20 +279,6 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
         }
     }
 
-    private Type getBotCallbackClass(BotType botType) {
-        switch (botType) {
-            case DEFAULT:
-            case GOAL_ADD:
-                return GoalAddCallback.class;
-            case GOAL_DEPOSIT:
-                return GoalDepositCallback.class;
-            case GOAL_WITHDRAW:
-                return GoalWithdrawCallback.class;
-            default:
-                return null;
-        }
-    }
-
     public BotAdapter getBotAdapter() {
         if (conversationRecyclerView != null) {
             return (BotAdapter) conversationRecyclerView.getAdapter();
@@ -300,43 +289,37 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
     @Override
     public void onItemClicked(Object item) {
         Answer answer = (Answer) item;
-        switch (type) {
-            case DEFAULT:
-            case GOAL_ADD:
-            case GOAL_DEPOSIT:
-            case GOAL_WITHDRAW:
-                if (!TextUtils.isEmpty(answer.getRemoveOnSelect())) {
-                    for (BaseBotModel model : new ArrayList<>(getBotAdapter().getDataSet())) {
-                        if (answer.getRemoveOnSelect().equals(model.getName())) {
-                            getBotAdapter().removeItem(model);
-                        }
-                    }
-                }
-                if (answer.getChangeOnSelect() != null) {
-                    BaseBotModel model = feed.getItem(answer.getChangeOnSelect().first);
-                    model.setText(answer.getChangeOnSelect().second);
-                    model.setType(BotMessageType.TEXT);
+
+        if (!TextUtils.isEmpty(answer.getRemoveOnSelect())) {
+            for (BaseBotModel model : new ArrayList<>(getBotAdapter().getDataSet())) {
+                if (answer.getRemoveOnSelect().equals(model.getName())) {
                     getBotAdapter().removeItem(model);
-                    getBotAdapter().addItem(model);
                 }
-                getBotAdapter().addItem(answer);
-                conversationRecyclerView.scrollToPosition(getBotAdapter().getItemCount() - 1);
-                persisted.saveConversationState(type, getBotAdapter().getDataSet());
-                if (!TextUtils.isEmpty(answer.getNext())) {
-                    getAndAddNode(answer.getNext());
-                    if (BotMessageType.getValueOf(currentModel.getType()) == BotMessageType.END)
-                        if (callback != null) {
-                            callback.onDone(createAnswerLog(getBotAdapter().getDataSet()));
-                            persisted.clearConversation();
-                            persisted.clearConvoGoals();
-                        }
-                } else {
-                    answerView.setData(new ArrayList<>());
-                }
-                break;
-            case SAVINGS:
-                break;
+            }
         }
+        if (answer.getChangeOnSelect() != null) {
+            BaseBotModel model = feed.getItem(answer.getChangeOnSelect().first);
+            model.setText(answer.getChangeOnSelect().second);
+            model.setType(BotMessageType.TEXT);
+            getBotAdapter().removeItem(model);
+            getBotAdapter().addItem(model);
+        }
+        getBotAdapter().addItem(answer);
+        conversationRecyclerView.scrollToPosition(getBotAdapter().getItemCount() - 1);
+        persisted.saveConversationState(type, getBotAdapter().getDataSet());
+        if (!TextUtils.isEmpty(answer.getNext())) {
+            getAndAddNode(answer.getNext());
+            if (BotMessageType.getValueOf(currentModel.getType()) == BotMessageType.END)
+                if (callback != null) {
+                    callback.onDone(createAnswerLog(getBotAdapter().getDataSet()));
+                    persisted.clearConversation();
+                    persisted.clearConvoGoals();
+                }
+        } else {
+            answerView.setData(new ArrayList<>());
+        }
+
+
         persisted.saveConversationState(type, getBotAdapter().getDataSet());
     }
 
