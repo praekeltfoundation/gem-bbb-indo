@@ -163,6 +163,10 @@ public class Persisted {
         return challenge != null;
     }
 
+    public void clearCurrentChallenge() {
+        dooitSharedPreferences.remove(CHALLENGE);
+    }
+
     /*** Tips ***/
 
     public List<Tip> getTips() {
