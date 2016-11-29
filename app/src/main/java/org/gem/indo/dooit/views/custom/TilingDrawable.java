@@ -1,4 +1,4 @@
-package org.gem.indo.dooit.helpers;
+package org.gem.indo.dooit.views.custom;
 
 import android.graphics.Canvas;
 import android.graphics.Rect;

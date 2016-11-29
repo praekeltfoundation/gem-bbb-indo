@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<org.gem.indo.dooit.views.custom.DesignSafeRecyclerView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/item_view_bot_carousel_recycler_view"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingStart="@dimen/bot_left_margin"
+    android:paddingEnd="@dimen/bot_left_margin"
+    android:clipToPadding="false">
+
+</org.gem.indo.dooit.views.custom.DesignSafeRecyclerView>
