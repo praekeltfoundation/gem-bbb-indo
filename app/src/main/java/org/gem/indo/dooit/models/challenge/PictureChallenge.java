@@ -24,7 +24,7 @@ public class PictureChallenge extends BaseChallenge {
             return new PictureChallenge[size];
         }
     };
-    @SerializedName("freetext_question") PictureChallengeQuestion question;
+    @SerializedName("picture_question") PictureChallengeQuestion question;
 
     PictureChallenge() {
         // Mandatory empty constructor
