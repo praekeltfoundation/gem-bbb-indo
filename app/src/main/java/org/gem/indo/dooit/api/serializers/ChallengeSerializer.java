@@ -5,6 +5,7 @@ import com.google.gson.TypeAdapterFactory;
 import org.gem.indo.dooit.adapter.RuntimeTypeAdapterFactory;
 import org.gem.indo.dooit.models.challenge.BaseChallenge;
 import org.gem.indo.dooit.models.challenge.FreeformChallenge;
+import org.gem.indo.dooit.models.challenge.PictureChallenge;
 import org.gem.indo.dooit.models.challenge.QuizChallenge;
 
 /**
@@ -14,8 +15,9 @@ import org.gem.indo.dooit.models.challenge.QuizChallenge;
 public class ChallengeSerializer {
     public static TypeAdapterFactory getChallengeAdapterFactory() {
         RuntimeTypeAdapterFactory<BaseChallenge> challengeAdapterFactory = RuntimeTypeAdapterFactory.of(BaseChallenge.class, "type");
-        challengeAdapterFactory.registerSubtype(QuizChallenge.class, "quiz");
         challengeAdapterFactory.registerSubtype(FreeformChallenge.class, "freeform");
+        challengeAdapterFactory.registerSubtype(PictureChallenge.class, "picture");
+        challengeAdapterFactory.registerSubtype(QuizChallenge.class, "quiz");
         return challengeAdapterFactory;
     }
 }

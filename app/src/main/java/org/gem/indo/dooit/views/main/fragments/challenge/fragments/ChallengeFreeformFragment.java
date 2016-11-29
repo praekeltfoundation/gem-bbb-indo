@@ -50,9 +50,6 @@ public class ChallengeFreeformFragment extends Fragment {
     private FreeformChallengeQuestion question;
     private Participant participant;
 
-    @BindView(R.id.fragment_challenge_container)
-    View background;
-
     @BindView(R.id.fragment_challenge_freeform_title)
     TextView title;
 
@@ -99,7 +96,6 @@ public class ChallengeFreeformFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(org.gem.indo.dooit.R.layout.fragment_challenge_freeform, container, false);
         ButterKnife.bind(this, view);
-        SquiggleBackgroundHelper.setBackground(getContext(), R.color.grey_back, R.color.grey_fore, background);
         title.setText(question != null ? question.getText() : getString(R.string.challenge_no_question));
         fetchAnswer();
         return view;
@@ -146,6 +142,7 @@ public class ChallengeFreeformFragment extends Fragment {
                 Log.d(TAG, "Entry submitted");
             }
         });
+        persisted.clearCurrentChallenge();
     }
 
     @OnClick(R.id.fragment_challenge_freeform_submitbutton)
