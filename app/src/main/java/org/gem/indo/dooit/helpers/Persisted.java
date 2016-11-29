@@ -6,6 +6,7 @@ import android.util.Log;
 
 import com.google.gson.Gson;
 import com.google.gson.internal.LinkedTreeMap;
+import com.google.gson.reflect.TypeToken;
 
 import org.gem.indo.dooit.DooitApplication;
 import org.gem.indo.dooit.helpers.bot.ListParameterizedType;
@@ -24,8 +25,10 @@ import org.gem.indo.dooit.models.enums.BotType;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.lang.reflect.Type;
 
 import javax.inject.Inject;
 
@@ -181,7 +184,7 @@ public class Persisted {
 
     public Map<Long, QuizChallengeQuestionState> loadQuizChallengeState() {
         MapParameterizedType type = new MapParameterizedType(Long.class, QuizChallengeQuestionState.class);
-        return (Map<Long, QuizChallengeQuestionState>) dooitSharedPreferences.getComplex(QUIZ_STATE, type.getClass());
+        return dooitSharedPreferences.getComplex(QUIZ_STATE, type);
     }
 
     public void saveQuizChallengeIndex(int idx) {
@@ -206,7 +209,11 @@ public class Persisted {
 
     public List<ParticipantAnswer> loadQuizChallengeAnswers() {
         ListParameterizedType type = new ListParameterizedType(ParticipantAnswer.class);
-        return (List<ParticipantAnswer>) dooitSharedPreferences.getComplex(QUIZ_ANSWERS, type.getClass());
+        ParticipantAnswer[] answers = dooitSharedPreferences.getComplex(QUIZ_ANSWERS, ParticipantAnswer[].class);
+        if (answers != null)
+            return new ArrayList<>(Arrays.asList(answers));
+        return new ArrayList<ParticipantAnswer>();
+//        return dooitSharedPreferences.getComplex(QUIZ_ANSWERS, type.getClass());
     }
 
     public void clearQuizChallengeAnswers() {
