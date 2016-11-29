@@ -43,6 +43,7 @@ public class Persisted {
     private static final String BOT = "bot";
     private static final String GOAL = "goal";
     private static final String GOAL_PROTOTYPE = "goal_prototype";
+    private static final String BOT_TIP = "bot_tip";
     private static final String TIPS = "tips";
     private static final String FAVOURITES = "favourites";
     private static final String TAG = Persisted.class.getName();
@@ -133,6 +134,24 @@ public class Persisted {
 
     public void clearGoalProtos() {
         dooitSharedPreferences.remove(GOAL_PROTOTYPE);
+    }
+
+    public void saveConvoTip(Tip tip){
+        dooitSharedPreferences.setComplex(BOT_TIP, tip);
+    }
+
+    public boolean hasConvoTip() {
+        return dooitSharedPreferences.containsKey(BOT_TIP);
+    }
+
+    public Tip loadConvoTip() {
+        if (hasConvoTip())
+            return dooitSharedPreferences.getComplex(BOT_TIP, Tip.class);
+        return null;
+    }
+
+    public void clearConvoTip() {
+        dooitSharedPreferences.remove(BOT_TIP);
     }
 
     /*** User ***/

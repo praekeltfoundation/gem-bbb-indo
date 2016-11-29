@@ -21,7 +21,7 @@ public class Goal {
     private double value;
     private double target;
     @SerializedName("image_url")
-    private String image;
+    private String imageUrl;
     @SerializedName("start_date")
     private LocalDate startDate;
     @SerializedName("end_date")
@@ -38,6 +38,9 @@ public class Goal {
     @SerializedName("weekly_average")
     private double weeklyAverage;
     private long user;
+
+    // The id of the predefined Goal
+    private long prototype;
 
     public long getId() {
         return id;
@@ -71,12 +74,12 @@ public class Goal {
         this.target = target;
     }
 
-    public String getImage() {
-        return image;
+    public String getImageUrl() {
+        return imageUrl;
     }
 
-    public void setImage(String image) {
-        this.image = image;
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
     }
 
     public LocalDate getStartDate() {
@@ -145,6 +148,14 @@ public class Goal {
 
     public void setUser(long user) {
         this.user = user;
+    }
+
+    public long getPrototype() {
+        return prototype;
+    }
+
+    public void setPrototype(long prototype) {
+        this.prototype = prototype;
     }
 
     public void setTransactions(List<GoalTransaction> transactions) {

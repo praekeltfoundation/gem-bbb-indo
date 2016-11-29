@@ -40,7 +40,7 @@
     "answers": [
       {
         "name": "deposit_amount",
-        "nextOnFinish": "goal_deposit_end",
+        "nextOnFinish": "goal_deposit_end_congrats",
         "type": "inlineCurrency",
         "typeOnFinish": "textCurrency",
         "inlineEditHint": "$(type_currency_hint)"
@@ -48,8 +48,13 @@
     ]
   },
   {
+    "name": "goal_deposit_end_congrats",
+    "type": "text",
+    "text": "$(goal_deposit_end_congrats)",
+    "autoNext": "goal_deposit_end"
+  },
+  {
     "name": "goal_deposit_end",
-    "type": "end",
-    "text": "$(goal_deposit_end)"
+    "type": "end"
   }
 ]

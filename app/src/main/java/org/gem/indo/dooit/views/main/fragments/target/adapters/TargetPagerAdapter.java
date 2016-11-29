@@ -31,7 +31,7 @@ public class TargetPagerAdapter extends PagerAdapter {
         ViewGroup layout = (ViewGroup) inflater.inflate(org.gem.indo.dooit.R.layout.fragment_target_progress, container, false);
 
         ((ArcProgressBar) layout.findViewById(R.id.fragment_target_progress_view)).setProgress((int) ((goals.get(position).getValue() / goals.get(position).getTarget()) * 100));
-        ((SimpleDraweeView) layout.findViewById(R.id.fragment_target_progress_image)).setImageURI(goals.get(position).getImage());
+        ((SimpleDraweeView) layout.findViewById(R.id.fragment_target_progress_image)).setImageURI(goals.get(position).getImageUrl());
         container.addView(layout);
         return layout;
     }
