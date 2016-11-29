@@ -1,25 +1,40 @@
 [
   {
-    "name": "goalGreeting",
+    "name": "goal_add_greeting",
     "type": "text",
-    "text": "$(goalGreeting)",
+    "text": "$(goal_add_greeting)",
     "textParams": [
       "USERNAME"
     ],
-    "autoNext": "goalIntroduction"
+    "autoNext": "goal_add_intro"
   },
   {
-    "name": "goalIntroduction",
+    "name": "goal_add_intro",
     "type": "text",
-    "text": "$(goalIntroduction)",
+    "text": "$(goal_add_intro)",
     "answers": [
       {
-        "name": "greeting",
-        "next": "askGoalName",
-        "text": "$(greeting)"
+        "name": "goal_add_greeting_response",
+        "next": "goal_add_ask_goal",
+        "text": "$(goal_add_greeting_response)"
       }
     ]
   },
+  {
+    "name": "goal_add_ask_goal",
+    "type": "text",
+    "text": "$(goal_add_ask_goal)",
+    "autoAnswer": "goal_add_carousel_answer",
+    "answers": [
+      {
+        "name": "goal_add_carousel_answer",
+        "nextOnFinish": "goal_add_ask_amount",
+        "type": "goalGallery"
+      }
+    ]
+  },
+
+
   {
     "name": "askGoalName",
     "type": "goalSelection",
@@ -85,18 +100,18 @@
       {
         "name": "Accept",
         "text": "$(Accept)",
-        "next": "askGoalAmount"
+        "next": "goal_add_ask_amount"
       }
     ]
   },
   {
-    "name": "askGoalAmount",
+    "name": "goal_add_ask_amount",
     "type": "text",
-    "text": "$(askGoalAmount)",
-    "autoAnswer": "goalAmount",
+    "text": "$(goal_add_ask_amount)",
+    "autoAnswer": "goal_amount",
     "answers": [
       {
-        "name": "goalAmount",
+        "name": "goal_amount",
         "nextOnFinish": "askGoalDate",
         "type": "inlineCurrency",
         "typeOnFinish": "textCurrency",

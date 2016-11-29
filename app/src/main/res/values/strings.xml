@@ -127,6 +127,18 @@
     <string name="validationFailPriorSavedAmount">Sorry, I do not understand that and have not  been taught how to handle it yet.</string>
     <string name="infoGoalEnd">Thank you. That concludes the goal-setting process.</string>
 
+    <!-- goal_add -->
+    <!-- Questions -->
+    <string name="goal_add_greeting">Hello %s!</string>
+    <string name="goal_add_intro">My Name is Dooit. I\'m gonna help  you save!</string>
+    <string name="goal_add_ask_goal">So what are you you saving for?</string>
+
+    <string name="goal_add_ask_amount">Do you know how much you need to save?</string>
+
+    <!-- Answers -->
+    <string name="goal_add_greeting_response">Hola!</string>
+    <string name="goal_add_custom">Add own goal</string>
+
     <!-- goal_deposit -->
     <!-- User clicks on add savings (+ Deposit) on Goal saving page  -->
     <string name="goal_deposit_intro">Let\'s add your savings!</string>

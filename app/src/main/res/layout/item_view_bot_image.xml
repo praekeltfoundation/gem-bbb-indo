@@ -23,11 +23,6 @@
             fresco:fadeDuration="300"
             fresco:placeholderImage="@drawable/empty_image"
             fresco:placeholderImageScaleType="centerInside"
-            fresco:roundBottomLeft="true"
-            fresco:roundBottomRight="true"
-            fresco:roundTopLeft="true"
-            fresco:roundTopRight="true"
-            fresco:roundedCornerRadius="4dp"
             tools:visibility="visible" />
 
         <ImageView
