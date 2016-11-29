@@ -50,7 +50,7 @@
   {
     "name": "goal_deposit_end_congrats",
     "type": "text",
-    "text": "$(goal_deposit_end)",
+    "text": "$(goal_deposit_end_congrats)",
     "autoNext": "goal_deposit_end"
   },
   {
