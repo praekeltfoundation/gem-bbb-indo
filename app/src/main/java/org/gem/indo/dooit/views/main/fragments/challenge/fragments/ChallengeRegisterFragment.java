@@ -1,5 +1,6 @@
 package org.gem.indo.dooit.views.main.fragments.challenge.fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -19,13 +20,17 @@ import org.gem.indo.dooit.api.DooitAPIError;
 import org.gem.indo.dooit.api.DooitErrorHandler;
 import org.gem.indo.dooit.api.managers.ChallengeManager;
 import org.gem.indo.dooit.helpers.Persisted;
+import org.gem.indo.dooit.helpers.RequestCodes;
 import org.gem.indo.dooit.helpers.SquiggleBackgroundHelper;
 import org.gem.indo.dooit.models.challenge.BaseChallenge;
 import org.gem.indo.dooit.models.challenge.FreeformChallenge;
 import org.gem.indo.dooit.models.challenge.Participant;
+import org.gem.indo.dooit.models.challenge.PictureChallenge;
 import org.gem.indo.dooit.models.challenge.QuizChallenge;
 import org.gem.indo.dooit.models.challenge.QuizChallengeOption;
 import org.gem.indo.dooit.models.challenge.QuizChallengeQuestion;
+import org.gem.indo.dooit.views.main.fragments.challenge.ChallengeFragmentState;
+import org.gem.indo.dooit.views.main.fragments.challenge.interfaces.HasChallengeFragmentState;
 
 import javax.inject.Inject;
 
@@ -41,19 +46,17 @@ import rx.functions.Action1;
  * Use the {@link ChallengeRegisterFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class ChallengeRegisterFragment extends Fragment {
+public class ChallengeRegisterFragment extends Fragment implements HasChallengeFragmentState {
     private static final String TAG = "ChallengeRegister";
     private static final String ARG_CHALLENGE = "challenge";
     private static final String ARG_HASACTIVE = "has_active";
+    private static final ChallengeFragmentState FRAGMENT_STATE = ChallengeFragmentState.REGISTER;
 
     @Inject
     ChallengeManager challengeManager;
 
     @Inject
     Persisted persist;
-
-    @BindView(R.id.fragment_challenge_container)
-    View background;
 
     @BindView(R.id.fragment_challenge_register_image)
     SimpleDraweeView topImage;
@@ -118,7 +121,6 @@ public class ChallengeRegisterFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(org.gem.indo.dooit.R.layout.fragment_challenge_register, container, false);
         unbinder = ButterKnife.bind(this, view);
-        SquiggleBackgroundHelper.setBackground(getContext(), R.color.grey_back, R.color.grey_fore, background);
         if (hasActive) {
             register.setText(getText(R.string.label_continue));
         }
@@ -179,6 +181,16 @@ public class ChallengeRegisterFragment extends Fragment {
         return ChallengeFreeformFragment.newInstance(participant, freeformChallenge);
     }
 
+    private Fragment startPictureChallenge(Participant participant, PictureChallenge pictureChallenge) {
+//        if (pictureChallenge.getQuestion() == null) {
+//            return ChallengeNoneFragment.newInstance("Picture challenge has no question.");
+//        } else if (pictureChallenge.getQuestion().getText() == null ||
+//                pictureChallenge.getQuestion().getText().isEmpty()) {
+//            return ChallengeNoneFragment.newInstance("Picture challenge question is empty.");
+//        }
+        return ChallengePictureFragment.newInstance(participant, pictureChallenge);
+    }
+
     @OnClick(R.id.fragment_challenge_register_button)
     void registerClick() {
         Participant participant = new Participant();
@@ -218,14 +230,40 @@ public class ChallengeRegisterFragment extends Fragment {
                     fragment = startFreeformChallenge(participant, (FreeformChallenge) challenge);
                 }
                 break;
+            case PICTURE:
+                if (challenge instanceof PictureChallenge) {
+                    fragment = startPictureChallenge(participant, (PictureChallenge) challenge);
+                }
+                break;
             default:
                 throw new RuntimeException("Invalid challenge type provided");
         }
 
         if (fragment != null) {
-            //ft.setCustomAnimations(R.anim.slide_in_left, R.anim.slide_out_right);
+            ft.setCustomAnimations(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
             ft.replace(R.id.fragment_challenge_container, fragment, "fragment_challenge");
             ft.commit();
         }
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        switch (requestCode) {
+            case RequestCodes.RESPONSE_GALLERY_REQUEST_CHALLENGE_IMAGE:
+            case RequestCodes.RESPONSE_CAMERA_REQUEST_CHALLENGE_IMAGE:
+                if (getActivity() != null) {
+                    FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
+                    Fragment fragment = new ChallengePictureFragment();
+                    ft.replace(R.id.fragment_challenge_container, fragment, "fragment_challenge");
+                    ft.commit();
+                }
+                break;
+        }
+    }
+
+    @Override
+    public ChallengeFragmentState getFragmentState() {
+        return FRAGMENT_STATE;
     }
 }
