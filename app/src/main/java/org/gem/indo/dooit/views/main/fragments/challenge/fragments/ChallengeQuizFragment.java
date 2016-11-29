@@ -334,7 +334,6 @@ public class ChallengeQuizFragment extends Fragment implements OnOptionChangeLis
     }
 
     private void saveState() {
-        persisted.saveQuizChallengeIndex(mPager.getCurrentItem());
         persisted.saveQuizChallengeState(selections);
         persisted.saveQuizChallengeAnswers(answers);
     }
@@ -342,15 +341,12 @@ public class ChallengeQuizFragment extends Fragment implements OnOptionChangeLis
     private void loadState() {
         Map<Long, QuizChallengeQuestionState> state = null;
         List<ParticipantAnswer> prevAnswers = null;
-        int idx = -1;
         try {
-            Log.d(TAG, "Loading state. (0/3)");
+            Log.d(TAG, "Loading state. (0/2)");
             state = persisted.loadQuizChallengeState();
-            Log.d(TAG, "Loading answers. (1/3)");
+            Log.d(TAG, "Loading answers. (1/2)");
             prevAnswers = persisted.loadQuizChallengeAnswers();
-            Log.d(TAG, "Loading page index. (2/3)");
-            idx = persisted.loadQuizChallengeIndex();
-            Log.d(TAG, "State fully loaded. (3/3)");
+            Log.d(TAG, "Loading page index. (2/2)");
         } catch (Exception e) {
             Log.d(TAG, "Failed to load quiz state. Resetting.");
             e.printStackTrace();
@@ -366,7 +362,7 @@ public class ChallengeQuizFragment extends Fragment implements OnOptionChangeLis
         }
 
         int len = mChallenge.numQuestions();
-        idx = 0;
+        int idx = 0;
         List<QuizChallengeQuestion > questions = mChallenge.getQuestions();
         while (idx < len && isCompleted(questions.get(idx).getId())) {
             idx++;
@@ -377,6 +373,5 @@ public class ChallengeQuizFragment extends Fragment implements OnOptionChangeLis
     private void clearState() {
         persisted.clearQuizChallengeState();
         persisted.clearQuizChallengeAnswers();
-        persisted.clearQuizChallengeIndex();
     }
 }
