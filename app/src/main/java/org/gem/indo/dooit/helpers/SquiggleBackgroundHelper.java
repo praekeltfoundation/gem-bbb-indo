@@ -1,7 +1,6 @@
 package org.gem.indo.dooit.helpers;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.LayerDrawable;
 import android.graphics.drawable.ShapeDrawable;
@@ -10,6 +9,7 @@ import android.support.v4.graphics.drawable.DrawableCompat;
 import android.view.View;
 
 import org.gem.indo.dooit.R;
+import org.gem.indo.dooit.views.custom.TilingDrawable;
 
 /**
  * Created by Rudolph Jacobs on 2016-11-24.

@@ -76,7 +76,7 @@ public class ChangePasswordActivity extends DooitActivity {
         ViewValidation.Result result = ViewValidation.isPasswordValid(password.getText().toString());
         if (passwordOld.getText().toString().equals(password.getText().toString())) {
             valid = false;
-            passwordHint.setText(R.string.reg_change_password_error_1);
+            passwordHint.setText(R.string.profile_change_password_error_1);
             passwordHint.setTextColor(ResourcesCompat.getColor(getResources(), android.R.color.holo_red_light, getTheme()));
         } else if (result.valid) {
             passwordHint.setText(R.string.reg_example_password);
@@ -104,7 +104,7 @@ public class ChangePasswordActivity extends DooitActivity {
         }).subscribe(new Action1<EmptyResponse>() {
             @Override
             public void call(EmptyResponse emptyResponse) {
-                Snackbar.make(changePasswordButton, R.string.change_password_success, Snackbar.LENGTH_SHORT).show();
+                Snackbar.make(changePasswordButton, R.string.profile_change_password_success, Snackbar.LENGTH_SHORT).show();
                 user.setPassword(newPassword);
                 ChangePasswordActivity.this.persisted.setCurrentUser(user);
                 login(user, newPassword);

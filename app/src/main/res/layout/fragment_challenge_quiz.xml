@@ -30,12 +30,12 @@
             android:textAppearance="@style/AppTheme.TextView.Quiz.Subtitle"
             tools:text="Question X/Y" />
 
-        <android.support.v4.view.ViewPager
+        <org.gem.indo.dooit.views.custom.NonSwipableViewPager
             android:id="@+id/fragment_challenge_quiz_pager"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_above="@+id/fragment_challenge_quiz_checkbutton"
-            android:layout_below="@+id/fragment_challenge_quiz_progresscounter"></android.support.v4.view.ViewPager>
+            android:layout_below="@+id/fragment_challenge_quiz_progresscounter" />
 
         <Button
             android:id="@+id/fragment_challenge_quiz_checkbutton"
@@ -44,7 +44,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:layout_marginTop="8dp"
-            android:text="@string/fragment_challenge_check_button" />
+            android:text="@string/label_check_result" />
 
     </RelativeLayout>
 </FrameLayout>
