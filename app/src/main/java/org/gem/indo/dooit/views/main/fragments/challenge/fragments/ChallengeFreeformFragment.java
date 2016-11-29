@@ -153,7 +153,7 @@ public class ChallengeFreeformFragment extends Fragment {
         Log.d(TAG, "Submitting freeform answer.");
         submitAnswer(submissionBox.getText().toString());
         FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
-        Fragment fragment = ChallengeNoneFragment.newInstance();
+        Fragment fragment = ChallengeDoneFragment.newInstance(challenge);
         ft.replace(R.id.fragment_challenge_container, fragment);
         ft.commit();
     }

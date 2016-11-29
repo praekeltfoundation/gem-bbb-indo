@@ -27,7 +27,7 @@ public interface ChallengeAPI {
     Observable<BaseChallenge> getChallenge(@Path("id") int id);
 
     @GET("/api/challenges/current/")
-    Observable<BaseChallenge> getCurrentChallenge(@Query("exclude-done") boolean excludeDone);
+    Observable<BaseChallenge> getCurrentChallenge();
 
     @POST("/api/entries/")
     Observable<QuizChallengeEntry> postEntry(@Body QuizChallengeEntry quizChallengeEntry);

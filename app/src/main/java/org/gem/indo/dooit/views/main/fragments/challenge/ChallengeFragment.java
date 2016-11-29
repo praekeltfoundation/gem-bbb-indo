@@ -24,8 +24,6 @@ import org.gem.indo.dooit.views.main.fragments.MainFragment;
 import org.gem.indo.dooit.views.main.fragments.challenge.fragments.ChallengeNoneFragment;
 import org.gem.indo.dooit.views.main.fragments.challenge.fragments.ChallengeRegisterFragment;
 
-import java.util.List;
-
 import javax.inject.Inject;
 
 import butterknife.BindView;
@@ -133,8 +131,12 @@ public class ChallengeFragment extends MainFragment {
                         getActivity().runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
-                                progressBar.setVisibility(View.GONE);
-                                progressText.setVisibility(View.GONE);
+                                if (progressBar != null) {
+                                    progressBar.setVisibility(View.GONE);
+                                }
+                                if (progressText != null) {
+                                    progressText.setVisibility(View.GONE);
+                                }
 
                             }
                         });

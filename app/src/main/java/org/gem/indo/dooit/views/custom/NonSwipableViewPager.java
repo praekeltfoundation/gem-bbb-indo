@@ -34,6 +34,7 @@ public class NonSwipableViewPager extends ViewPager {
     }
 
     private void setSmoothScroller() {
+        /* Fixes tab animation on API 19 */
         try {
             Class<?> viewpager = ViewPager.class;
             Field scroller = viewpager.getDeclaredField("mScroller");
