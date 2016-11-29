@@ -388,7 +388,7 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
         persisted.saveConversationState(type, getBotAdapter().getDataSet());
     }
 
-    private void finishConverstation() {
+    private void finishConversation() {
         if (callback != null)
             callback.onDone(createAnswerLog(getBotAdapter().getDataSet()));
         persisted.clearConversation();
@@ -426,7 +426,7 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
 
             if (BotMessageType.getValueOf(currentModel.getType()) == BotMessageType.END)
                 // Reached explicit end of current conversation
-                finishConverstation();
+                finishConversation();
 
             addAnswerOptions(node);
         }
@@ -458,7 +458,7 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
         } else if (!TextUtils.isEmpty(node.getAutoNext())) {
             if (BotMessageType.getValueOf(node.getType()) == BotMessageType.STARTCONVO) {
                 // Auto load next conversation
-                finishConverstation();
+                finishConversation();
                 BotType botType = BotType.valueOf(node.getAutoNext().toUpperCase());
                 setBotType(botType);
                 createFeed();
