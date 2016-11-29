@@ -146,6 +146,7 @@ public class ChallengeFreeformFragment extends Fragment {
                 Log.d(TAG, "Entry submitted");
             }
         });
+        persisted.clearCurrentChallenge();
     }
 
     @OnClick(R.id.fragment_challenge_freeform_submitbutton)
