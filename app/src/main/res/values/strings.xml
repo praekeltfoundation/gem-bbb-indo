@@ -99,6 +99,7 @@
 
     <!-- Bot -->
     <string name="bot_carousel_card_select">Select</string>
+    <string name="bot_tip_intro">%s</string>
 
     <!--JSON GOALS-->
     <string name="greeting">Hola!</string>

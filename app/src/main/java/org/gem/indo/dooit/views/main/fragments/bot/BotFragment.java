@@ -419,7 +419,6 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
         if (node != null) {
             node.setIconHidden(iconHidden);
 
-            // Don't add views for BLANK and STARTCONVO
             if (shouldAdd(currentModel)) {
                 getBotAdapter().addItem(currentModel);
             }

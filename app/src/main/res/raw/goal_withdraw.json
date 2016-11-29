@@ -59,7 +59,7 @@
       {
         "name": "goal_withdraw_tip",
         "text": "$(goal_withdraw_tip)",
-        "next": "goal_withdraw_show_tip"
+        "next": "goal_withdraw_tip_intro"
       },
       {
         "name": "goal_withdraw_challenge",
@@ -73,7 +73,15 @@
       }
     ]
   },
-
+  {
+    "name": "goal_withdraw_tip_intro",
+    "type": "text",
+    "text": "$(bot_tip_intro)",
+    "textParams" : [
+      "TIP_INTRO"
+    ],
+    "autoNext": "goal_withdraw_show_tip"
+  },
   {
     "name": "goal_withdraw_show_tip",
     "type": "tip",
