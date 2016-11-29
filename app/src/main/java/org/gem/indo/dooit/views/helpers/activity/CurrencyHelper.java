@@ -2,7 +2,6 @@ package org.gem.indo.dooit.views.helpers.activity;
 
 import com.crashlytics.android.Crashlytics;
 
-import java.math.BigDecimal;
 import java.text.NumberFormat;
 import java.util.Currency;
 import java.util.Locale;
@@ -13,11 +12,10 @@ import java.util.Locale;
 
 public class CurrencyHelper {
     public static double DEFAULT_VALUE = 0.0f;
+
     public static String format(Object o) {
         try {
-            String value = String.valueOf(o);
-            BigDecimal number = new BigDecimal(value);
-            return NumberFormat.getCurrencyInstance().format(number);
+            return NumberFormat.getCurrencyInstance().format(Double.valueOf((String.valueOf(o))));
         } catch (Exception e) {
             Crashlytics.log("Error converting number to currency [" + String.valueOf(o) + "]");
             Crashlytics.logException(e);

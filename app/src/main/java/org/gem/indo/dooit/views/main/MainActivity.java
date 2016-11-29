@@ -2,43 +2,41 @@ package org.gem.indo.dooit.views.main;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
-import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
-import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewTreeObserver;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.facebook.drawee.view.SimpleDraweeView;
 
 import org.gem.indo.dooit.DooitApplication;
 import org.gem.indo.dooit.R;
 import org.gem.indo.dooit.helpers.Persisted;
 import org.gem.indo.dooit.helpers.activity.result.ActivityForResultHelper;
-import org.gem.indo.dooit.models.User;
 import org.gem.indo.dooit.views.DooitActivity;
 import org.gem.indo.dooit.views.helpers.activity.DooitActivityBuilder;
 import org.gem.indo.dooit.views.main.adapters.MainTabAdapter;
 import org.gem.indo.dooit.views.profile.ProfileActivity;
 
-import java.io.InputStream;
-
 import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
+import butterknife.OnPageChange;
 
 public class MainActivity extends DooitActivity {
 
     @BindView(R.id.toolbar)
     Toolbar toolbar;
+
+    @BindView(R.id.activity_main_profile_image)
+    SimpleDraweeView simpleDraweeViewProfile;
 
     @BindView(R.id.content_main_view_pager)
     ViewPager viewPager;
@@ -53,6 +51,7 @@ public class MainActivity extends DooitActivity {
     @Inject
     Persisted persisted;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -60,41 +59,6 @@ public class MainActivity extends DooitActivity {
         ((DooitApplication) getApplication()).component.inject(this);
         ButterKnife.bind(this);
         setSupportActionBar(toolbar);
-        if (getSupportActionBar() != null) {
-            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-            toolbar.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
-                @Override
-                public void onGlobalLayout() {
-                    // Remember to remove it if you don't want it to fire every time
-                    MainActivity.this.toolbar.getViewTreeObserver().removeGlobalOnLayoutListener(this);
-
-                    int abHeight = (int) (getSupportActionBar().getHeight() * 0.7);
-                    try {
-                        User user = persisted.getCurrentUser();
-                        Uri profileImageUri = Uri.parse(user.getProfile().getProfileImageUrl());
-                        InputStream inputStream = getContentResolver().openInputStream(profileImageUri);
-                        Bitmap squareProfileImage = BitmapFactory.decodeStream(inputStream);
-                        int scaledWidth = (squareProfileImage.getWidth() * abHeight) / squareProfileImage.getHeight();
-                        Bitmap squareScaledProfileImage = Bitmap.createScaledBitmap(squareProfileImage, scaledWidth, abHeight, false);
-                        RoundedBitmapDrawable roundedProfileImage = RoundedBitmapDrawableFactory.create(getResources(), squareScaledProfileImage);
-                        roundedProfileImage.setCircular(true);
-
-                        getSupportActionBar().setHomeAsUpIndicator(roundedProfileImage);
-                    } catch (Exception e) {
-                        getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_d_profile);
-                    }
-
-                }
-            });
-            getSupportActionBar().setHomeAsUpIndicator(org.gem.indo.dooit.R.drawable.ic_d_profile);
-
-            toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    openProfile();
-                }
-            });
-        }
         mainTabAdapter = new MainTabAdapter(getSupportFragmentManager(), this);
         viewPager.setAdapter(mainTabAdapter);
         tabLayout.setupWithViewPager(viewPager);
@@ -110,43 +74,34 @@ public class MainActivity extends DooitActivity {
                 MainViewPagerPositions.setInActiveState(tab.getCustomView());
             }
         }
-        viewPager.addOnPageChangeListener(
-                new ViewPager.OnPageChangeListener() {
-                    @Override
-                    public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-
-                    }
-
-                    @Override
-                    public void onPageSelected(int position) {
-                        for (int i = 0; i < tabLayout.getTabCount(); i++) {
-                            TabLayout.Tab tab = tabLayout.getTabAt(i);
-                            View tabView = tab.getCustomView();
-                            ImageView icon = (ImageView) tabView.findViewById(R.id.tab_custom_icon);
-                            TextView text = (TextView) tabView.findViewById(R.id.tab_custom_title);
-
-                            if (position == i) {
-                                MainViewPagerPositions.setActiveState(tabView);
-
-                            } else {
-                                MainViewPagerPositions.setInActiveState(tabView);
-
-                            }
-
-                        }
-                    }
-
-                    @Override
-                    public void onPageScrollStateChanged(int state) {
-
-                    }
-                }
-
-        );
     }
 
-    private void openProfile() {
+    @OnPageChange(value = R.id.content_main_view_pager, callback = OnPageChange.Callback.PAGE_SELECTED)
+    public void onMainPagerPageSelected(int position) {
+        for (int i = 0; i < tabLayout.getTabCount(); i++) {
+            TabLayout.Tab tab = tabLayout.getTabAt(i);
+            View tabView = tab.getCustomView();
+
+            if (position == i) {
+                MainViewPagerPositions.setActiveState(tabView);
+
+            } else {
+                MainViewPagerPositions.setInActiveState(tabView);
+
+            }
+
+        }
+    }
+
+    @OnClick(R.id.activity_main_profile_image)
+    void openProfile() {
         ProfileActivity.Builder.create(this).startActivity();
+    }
+
+	@Override
+    protected void onResume() {
+        super.onResume();
+        simpleDraweeViewProfile.setImageURI(persisted.getCurrentUser().getProfile().getProfileImageUrl());
     }
 
     @Override
