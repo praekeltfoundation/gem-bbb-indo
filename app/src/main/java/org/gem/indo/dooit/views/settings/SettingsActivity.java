@@ -1,21 +1,25 @@
 package org.gem.indo.dooit.views.settings;
 
+import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.TextView;
 
 import org.gem.indo.dooit.Constants;
 import org.gem.indo.dooit.DooitApplication;
 import org.gem.indo.dooit.R;
 import org.gem.indo.dooit.helpers.DooitSharedPreferences;
 import org.gem.indo.dooit.helpers.SquiggleBackgroundHelper;
+import org.gem.indo.dooit.views.DooitActivity;
 import org.gem.indo.dooit.views.RootActivity;
 import org.gem.indo.dooit.views.helpers.activity.DooitActivityBuilder;
 import org.gem.indo.dooit.views.onboarding.ChangeNameActivity;
 import org.gem.indo.dooit.views.onboarding.ChangePasswordActivity;
+import org.w3c.dom.Text;
 
 import javax.inject.Inject;
 
@@ -26,7 +30,7 @@ import butterknife.OnClick;
 /**
  * Created by Bernhard Müller on 2016/07/22.
  */
-public class SettingsActivity extends AppCompatActivity {
+public class SettingsActivity extends DooitActivity {
 
     @BindView(R.id.activity_settings)
     View background;
@@ -34,6 +38,8 @@ public class SettingsActivity extends AppCompatActivity {
     @BindView(R.id.toolbar)
     Toolbar toolbar;
 
+    @BindView(R.id.toolbar_title)
+    TextView title;
     @Inject
     DooitSharedPreferences dooitSharedPreferences;
 
@@ -56,8 +62,7 @@ public class SettingsActivity extends AppCompatActivity {
                 }
             });
         }
-
-        // Background
+                // Background
         SquiggleBackgroundHelper.setBackground(this, R.color.grey_back, R.color.grey_fore, background);
     }
 
