@@ -2,7 +2,6 @@ package org.gem.indo.dooit.views.main;
 
 import android.content.Context;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
@@ -14,9 +13,6 @@ import android.view.ViewTreeObserver;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.crashlytics.android.Crashlytics;
-import com.facebook.drawee.interfaces.DraweeController;
-import com.facebook.drawee.view.DraweeView;
 import com.facebook.drawee.view.SimpleDraweeView;
 
 import org.gem.indo.dooit.DooitApplication;
@@ -28,15 +24,11 @@ import org.gem.indo.dooit.views.helpers.activity.DooitActivityBuilder;
 import org.gem.indo.dooit.views.main.adapters.MainTabAdapter;
 import org.gem.indo.dooit.views.profile.ProfileActivity;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.HttpURLConnection;
-import java.net.URL;
-
 import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 public class MainActivity extends DooitActivity {
 
@@ -78,16 +70,9 @@ public class MainActivity extends DooitActivity {
 
                 }
             });
-            toolbar.setPadding(0,0,0,0);
+            toolbar.setPadding(0, 0, 0, 0);
 
             getSupportActionBar().setHomeAsUpIndicator(org.gem.indo.dooit.R.drawable.ic_d_profile);
-
-            toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    openProfile();
-                }
-            });
         }
         mainTabAdapter = new MainTabAdapter(getSupportFragmentManager(), this);
         viewPager.setAdapter(mainTabAdapter);
@@ -141,6 +126,11 @@ public class MainActivity extends DooitActivity {
 
     private void openProfile() {
         ProfileActivity.Builder.create(this).startActivity();
+    }
+
+    @OnClick(R.id.activity_main_profile_image)
+    public void onProfileImageClick(View view) {
+        openProfile();
     }
 
     @Override
