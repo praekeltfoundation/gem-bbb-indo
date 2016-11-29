@@ -37,6 +37,10 @@ public class ChallengeManager extends DooitManager {
         return useNetwork(challengeAPI.getChallenge(challengeId), errorHandler);
     }
 
+    public Observable<BaseChallenge> retrieveCurrentChallenge(boolean excludeDone, DooitErrorHandler errorHandler) {
+        return useNetwork(challengeAPI.getCurrentChallenge(excludeDone), errorHandler);
+    }
+
     public Observable<QuizChallengeEntry> createEntry(QuizChallengeEntry quizChallengeEntry, DooitErrorHandler errorHandler) {
         return useNetwork(challengeAPI.postEntry(quizChallengeEntry), errorHandler);
     }

@@ -52,7 +52,7 @@ public class ChallengeFragment extends MainFragment {
     BaseChallenge challenge;
 
     Unbinder unbinder;
-    private Observable<List<BaseChallenge>> challengeSubscription;
+    private Observable<BaseChallenge> challengeSubscription;
 
     public ChallengeFragment() {
         // Required empty public constructor
@@ -99,7 +99,7 @@ public class ChallengeFragment extends MainFragment {
     @Override
     public void onStart() {
         super.onStart();
-        challengeSubscription = challengeManager.retrieveChallenges(new DooitErrorHandler() {
+        challengeSubscription = challengeManager.retrieveCurrentChallenge(false, new DooitErrorHandler() {
             @Override
             public void onError(DooitAPIError error) {
                 Toast.makeText(getContext(), "Could not retrieve challenges", Toast.LENGTH_SHORT).show();
@@ -107,11 +107,11 @@ public class ChallengeFragment extends MainFragment {
         });
 
         challengeSubscription
-                .subscribe(new Action1<List<BaseChallenge>>() {
+                .subscribe(new Action1<BaseChallenge>() {
                     @Override
-                    public void call(List<BaseChallenge> challenges) {
-                        if (challenges.size() > 0) {
-                            challenge = challenges.get(0);
+                    public void call(BaseChallenge challenge) {
+                        if (challenge != null) {
+                            ChallengeFragment.this.challenge = challenge;
                             persisted.setActiveChallenge(challenge);
 
                             if (getActivity() == null) return;
