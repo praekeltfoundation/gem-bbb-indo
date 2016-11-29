@@ -77,10 +77,6 @@ public class ChallengeFragment extends MainFragment {
         unbinder = ButterKnife.bind(this, view);
         progressBar.setVisibility(View.VISIBLE);
         progressText.setVisibility(View.VISIBLE);
-////        if (persisted.hasCurrentChallenge()) {
-////            challenge = (BaseChallenge) persisted.getCurrentChallenge();
-////            startChallenge();
-////        }
         return view;
     }
 
@@ -94,8 +90,36 @@ public class ChallengeFragment extends MainFragment {
         super.onDestroyView();
     }
 
+    private void loadTypeFragment(BaseChallenge challenge) {
+        if (challenge != null) {
+            ChallengeFragment.this.challenge = challenge;
+            persisted.setActiveChallenge(challenge);
+
+            if (getActivity() != null) {
+                FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
+                Fragment fragment = ChallengeRegisterFragment.newInstance();
+                Bundle args = new Bundle();
+                args.putParcelable("challenge", challenge);
+                fragment.setArguments(args);
+                ft.replace(R.id.fragment_challenge_container, fragment, "fragment_challenge");
+                ft.commit();
+            }
+        } else {
+            FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
+            Fragment fragment = ChallengeNoneFragment.newInstance();
+            ft.replace(R.id.fragment_challenge_container, fragment);
+            ft.commit();
+        }
+    }
+
     @Override
     public void onStart() {
+//        if (persisted.hasCurrentChallenge()) {
+//            challenge = (BaseChallenge) persisted.getCurrentChallenge();
+//            startChallenge();
+//            return;
+//        }
+
         super.onStart();
         challengeSubscription = challengeManager.retrieveCurrentChallenge(false, new DooitErrorHandler() {
             @Override
@@ -108,26 +132,7 @@ public class ChallengeFragment extends MainFragment {
                 .subscribe(new Action1<BaseChallenge>() {
                     @Override
                     public void call(BaseChallenge challenge) {
-                        if (challenge != null) {
-                            ChallengeFragment.this.challenge = challenge;
-                            persisted.setActiveChallenge(challenge);
-
-                            if (getActivity() == null) return;
-                            if (getActivity().findViewById(R.id.fragment_challenge_container) != null) {
-                                FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
-                                Fragment fragment = ChallengeRegisterFragment.newInstance();
-                                Bundle args = new Bundle();
-                                args.putParcelable("challenge", challenge);
-                                fragment.setArguments(args);
-                                ft.replace(R.id.fragment_challenge_container, fragment, "fragment_challenge");
-                                ft.commit();
-                            }
-                        } else {
-                            FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
-                            Fragment fragment = ChallengeNoneFragment.newInstance();
-                            ft.replace(R.id.fragment_challenge_container, fragment);
-                            ft.commit();
-                        }
+                        loadTypeFragment(challenge);
                         getActivity().runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
