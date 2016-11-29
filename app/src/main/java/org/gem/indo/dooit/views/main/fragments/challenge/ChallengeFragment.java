@@ -117,8 +117,12 @@ public class ChallengeFragment extends MainFragment {
         if (persisted.hasCurrentChallenge()) {
             try {
                 challenge = (BaseChallenge) persisted.getCurrentChallenge();
-                loadTypeFragment(challenge, true);
-                return;
+                if (challenge.getDeactivationDate().isBeforeNow()) {
+                    persisted.clearCurrentChallenge();
+                } else {
+                    loadTypeFragment(challenge, true);
+                    return;
+                }
             } catch (Exception e) {
                 Log.d(TAG, "Could not load persisted challenge");
                 persisted.clearCurrentChallenge();
