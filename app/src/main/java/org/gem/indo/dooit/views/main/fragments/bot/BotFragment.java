@@ -385,7 +385,7 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
             answerView.setData(new ArrayList<>());
         }
 
-        persisted.saveConversationState(type, getBotAdapter().getDataSet());
+//        persisted.saveConversationState(type, getBotAdapter().getDataSet());
     }
 
     private void finishConversation() {
@@ -393,6 +393,7 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
             callback.onDone(createAnswerLog(getBotAdapter().getDataSet()));
         persisted.clearConversation();
         persisted.clearConvoGoals();
+        setBotType(BotType.DEFAULT);
     }
 
     private Map<String, Answer> createAnswerLog(List<BaseBotModel> converstation) {
@@ -424,11 +425,15 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
             conversationRecyclerView.scrollToPosition(getBotAdapter().getItemCount() - 1);
             persisted.saveConversationState(type, getBotAdapter().getDataSet());
 
-            if (BotMessageType.getValueOf(currentModel.getType()) == BotMessageType.END)
+            if (BotMessageType.getValueOf(currentModel.getType()) == BotMessageType.END) {
                 // Reached explicit end of current conversation
                 finishConversation();
 
-            addAnswerOptions(node);
+                // Clear answers
+                answerView.setData(new ArrayList<>());
+            } else {
+                addAnswerOptions(node);
+            }
         }
     }
 
