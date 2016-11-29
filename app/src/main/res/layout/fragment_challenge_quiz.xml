@@ -44,7 +44,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:layout_marginTop="8dp"
-            android:text="@string/fragment_challenge_check_button" />
+            android:text="@string/label_check_result" />
 
     </RelativeLayout>
 </FrameLayout>

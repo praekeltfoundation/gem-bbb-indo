@@ -12,6 +12,9 @@ import org.gem.indo.dooit.models.enums.BotMessageType;
  */
 
 public class BaseBotModel {
+
+    private static final String TAG = BaseBotModel.class.getName();
+
     protected final String classType;
     protected String text;
     protected String name;
@@ -29,7 +32,7 @@ public class BaseBotModel {
             String resourceString = jsonResourceName.replace("$(", "").replace(")", "").replaceAll(" +", "");
             return context.getString(context.getResources().getIdentifier(resourceString, "string", context.getPackageName()));
         } catch (Resources.NotFoundException ex) {
-            Log.d("PARSING", jsonResourceName);
+            Log.d(TAG, jsonResourceName);
             throw ex;
         }
     }

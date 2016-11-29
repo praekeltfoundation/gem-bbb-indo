@@ -17,10 +17,14 @@ import com.greenfrvr.hashtagview.HashtagView;
 
 import org.gem.indo.dooit.DooitApplication;
 import org.gem.indo.dooit.R;
+import org.gem.indo.dooit.api.DooitAPIError;
+import org.gem.indo.dooit.api.DooitErrorHandler;
+import org.gem.indo.dooit.api.managers.GoalManager;
 import org.gem.indo.dooit.helpers.Persisted;
 import org.gem.indo.dooit.helpers.SquiggleBackgroundHelper;
 import org.gem.indo.dooit.helpers.bot.BotFeed;
 import org.gem.indo.dooit.models.Goal;
+import org.gem.indo.dooit.models.GoalPrototype;
 import org.gem.indo.dooit.models.bot.Answer;
 import org.gem.indo.dooit.models.bot.BaseBotModel;
 import org.gem.indo.dooit.models.bot.BotCallback;
@@ -31,6 +35,7 @@ import org.gem.indo.dooit.views.main.fragments.MainFragment;
 import org.gem.indo.dooit.views.main.fragments.bot.adapters.BotAdapter;
 import org.gem.indo.dooit.views.main.fragments.target.callbacks.GoalAddCallback;
 import org.gem.indo.dooit.views.main.fragments.target.callbacks.GoalDepositCallback;
+import org.gem.indo.dooit.views.main.fragments.target.callbacks.GoalWithdrawCallback;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
@@ -42,6 +47,10 @@ import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import rx.Observable;
+import rx.functions.Action0;
+import rx.functions.Action1;
+import rx.functions.Func1;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -127,18 +136,80 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
     @Override
     public void onActive() {
         super.onActive();
+        feed = new BotFeed<>(getContext());
         switch (type) {
             case DEFAULT:
             case GOAL_ADD:
-                feed = new BotFeed<>(getContext());
-                feed.parse(org.gem.indo.dooit.R.raw.goal_add, Node.class);
+                feed.parse(R.raw.goal_add, Node.class);
+                getGoalAddResources();
                 break;
             case GOAL_DEPOSIT:
-                feed = new BotFeed<>(getContext());
-                feed.parse(org.gem.indo.dooit.R.raw.goal_deposit, Node.class);
+                feed.parse(R.raw.goal_deposit, Node.class);
+                initializeBot();
+                break;
+            case GOAL_WITHDRAW:
+                feed.parse(R.raw.goal_withdraw, Node.class);
+                initializeBot();
                 break;
         }
 
+    }
+
+    @Inject
+    GoalManager goalManager;
+
+    private void getGoalAddResources() {
+        ArrayList<Observable> reqSync = new ArrayList<>();
+        Observable goalProtos = goalManager.retrieveGoalPrototypes(new DooitErrorHandler() {
+            @Override
+            public void onError(DooitAPIError error) {
+
+            }
+        });
+        if (persisted.hasGoalProtos())
+            goalProtos.subscribe(new Action1<List<GoalPrototype>>() {
+                @Override
+                public void call(List<GoalPrototype> goalPrototypes) {
+                    persisted.saveGoalProtos(goalPrototypes);
+                }
+            });
+        else
+            reqSync.add(goalProtos);
+
+        if (reqSync.size() > 0) {
+            //ShowLoader
+            Observable.from(reqSync).flatMap(new Func1<Observable, Observable<?>>() {
+                @Override
+                public Observable<?> call(Observable observable) {
+                    return observable;
+                }
+            }).doOnCompleted(new Action0() {
+                @Override
+                public void call() {
+                    if (getContext() != null) {
+                        getActivity().runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                initializeBot();
+                            }
+                        });
+                    }
+                }
+            }).subscribe(new Action1<Object>() {
+                @Override
+                public void call(Object o) {
+                    if (o instanceof List) {
+                        if (((List) o).size() == 0) return;
+                        if (((List) o).get(0) instanceof GoalPrototype)
+                            persisted.saveGoalProtos((List<GoalPrototype>) o);
+                    }
+                }
+            });
+        } else
+            initializeBot();
+    }
+
+    private void initializeBot() {
         if (persisted.hasConversation(type)) {
             ArrayList<BaseBotModel> data = persisted.loadConversationState(type);
             if (data.size() > 0) {
@@ -171,11 +242,13 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
                 getAndAddNode(null);
                 break;
             case GOAL_ADD:
-                getAndAddNode("askGoalName");
+                getAndAddNode("goal_add_carousel_test");
                 break;
             case GOAL_DEPOSIT:
-                getAndAddNode("depositIntroduction");
+                getAndAddNode("goal_deposit_intro");
                 break;
+            case GOAL_WITHDRAW:
+                getAndAddNode("goal_withdraw_intro");
         }
     }
 
@@ -189,10 +262,15 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
             case GOAL_ADD:
                 return new GoalAddCallback((DooitApplication) getActivity().getApplication());
             case GOAL_DEPOSIT:
-                Goal goal = persisted.loadConvoGoal(BotType.GOAL_DEPOSIT);
-                if (goal == null)
+                Goal g1 = persisted.loadConvoGoal(BotType.GOAL_DEPOSIT);
+                if (g1 == null)
                     throw new RuntimeException("No Goal was persisted for Goal Deposit conversation.");
-                return new GoalDepositCallback((DooitApplication) getActivity().getApplication(), goal);
+                return new GoalDepositCallback((DooitApplication) getActivity().getApplication(), g1);
+            case GOAL_WITHDRAW:
+                Goal g2 = persisted.loadConvoGoal(BotType.GOAL_WITHDRAW);
+                if (g2 == null)
+                    throw new RuntimeException("No Goal was persisted for Goal Withdraw conversation.");
+                return new GoalWithdrawCallback((DooitApplication) getActivity().getApplication(), g2);
             default:
                 return null;
         }
@@ -205,6 +283,8 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
                 return GoalAddCallback.class;
             case GOAL_DEPOSIT:
                 return GoalDepositCallback.class;
+            case GOAL_WITHDRAW:
+                return GoalWithdrawCallback.class;
             default:
                 return null;
         }
@@ -224,6 +304,7 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
             case DEFAULT:
             case GOAL_ADD:
             case GOAL_DEPOSIT:
+            case GOAL_WITHDRAW:
                 if (!TextUtils.isEmpty(answer.getRemoveOnSelect())) {
                     for (BaseBotModel model : new ArrayList<>(getBotAdapter().getDataSet())) {
                         if (answer.getRemoveOnSelect().equals(model.getName())) {

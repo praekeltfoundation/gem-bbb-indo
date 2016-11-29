@@ -14,6 +14,7 @@ import android.widget.Filter;
 import android.widget.Filterable;
 
 import org.gem.indo.dooit.DooitApplication;
+import org.gem.indo.dooit.R;
 import org.gem.indo.dooit.api.managers.TipManager;
 import org.gem.indo.dooit.helpers.Persisted;
 import org.gem.indo.dooit.models.Tip;
@@ -61,7 +62,7 @@ public class TipsListAdapter extends RecyclerView.Adapter<TipViewHolder> impleme
     @Override
     public TipViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
-                .inflate(org.gem.indo.dooit.R.layout.card_tip, parent, false);
+                .inflate(R.layout.card_tip, parent, false);
         return new TipViewHolder(view);
     }
 

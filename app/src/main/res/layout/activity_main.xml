@@ -21,10 +21,27 @@
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
                 android:background="@color/white"
+                app:contentInsetStart="8dp"
                 app:popupTheme="@style/AppTheme.PopupOverlay"
                 app:subtitleTextAppearance="@style/AppTheme.Toolbar.SubTitle"
                 app:titleTextAppearance="@style/AppTheme.Toolbar.Title"
-                tools:text="Dooit" />
+                tools:text="Dooit">
+
+                <com.facebook.drawee.view.SimpleDraweeView
+                    android:id="@+id/activity_main_profile_image"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:layout_gravity="start"
+                    android:padding="8dp"
+                    app:actualImageScaleType="centerCrop"
+                    app:fadeDuration="300"
+                    app:failureImage="@drawable/ic_d_profile"
+                    app:failureImageScaleType="fitXY"
+                    app:placeholderImage="@drawable/ic_d_profile"
+                    app:placeholderImageScaleType="centerCrop"
+                    app:roundAsCircle="true"
+                    app:roundedCornerRadius="1dp" />
+            </android.support.v7.widget.Toolbar>
 
             <ImageView
                 android:id="@+id/fragment_challenge_close_image_view"

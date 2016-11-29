@@ -31,7 +31,7 @@ public class GoalDepositCallback implements BotCallback {
 
     @Override
     public void onDone(Map<String, Answer> answerLog) {
-        GoalTransaction trans = new GoalTransaction(Double.parseDouble(answerLog.get("depositAmount").getValue()));
+        GoalTransaction trans = new GoalTransaction(Double.parseDouble(answerLog.get("deposit_amount").getValue()));
 
         goalManager.addGoalTransaction(goal, trans, new DooitErrorHandler() {
             @Override

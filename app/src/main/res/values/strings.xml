@@ -1,12 +1,18 @@
 <resources>
+
+    <!-- General -->
     <string name="app_name">Dooit</string>
-    <string name="title_activity_main"> </string>
+
+    <!-- Activity Titles  -->
+    <string name="title_activity_main"></string>
     <string name="title_activity_profile">Profile</string>
+    <string name="title_activity_profile_image">Upload Photo</string>
     <string name="title_activity_settings">Settings</string>
     <string name="title_activity_terms_and_conditions">Terms &amp; Conditions</string>
     <string name="title_activity_privacy_policy">Privacy Policy</string>
     <string name="action_settings">Settings</string>
 
+    <!-- Bottom Navigation -->
     <string name="main_tab_text_0">COACH</string>
     <string name="main_tab_text_1">TARGET</string>
     <string name="main_tab_text_2">CHALLENGE</string>
@@ -34,7 +40,7 @@
     <string name="label_settings">Settings</string>
     <string name="label_share">Share</string>
     <string name="label_skip">Skip</string>
-    <string name="label_start">Start</string>
+    <string name="label_start">Start</string> <!-- Used on the unused card_challenge_start layout -->
     <string name="label_submit">Submit</string>
     <string name="label_try_again">Try again</string>
     <string name="label_uploading">Uploading</string>
@@ -52,12 +58,12 @@
     <string name="tips_tab_favourites">Favourite</string>
     <string name="tips_tab_all">All</string>
     <string name="tips_card_read_more">Read more</string>
-    <string name="tips_card_empty_tag">tag</string>
     <string name="tips_search_hint">Search for: Topics, titles, tags, etc…</string>
     <string name="tips_search_placeholder_fav">Search favourite tips</string>
     <string name="tips_search_placeholder_all">Search all tips</string>
     <string name="tips_article_opening">Opening \'%s\'</string>
-    <string name="tips_article_add_fav">Added \'%s\' to favourites</string>
+    <string name="tips_article_add_fav">Adding \'%s\' to favourites</string>
+    <string name="tips_article_remove_fav">Removing \'%s\' from favourites</string>
     <string name="tips_list_filter">Filtering \'%s\'</string>
 
     <!-- Registration -->
@@ -80,12 +86,9 @@
     <string name="reg_example_password">Must have at least 6 characters</string>
     <string name="reg_example_password_error_1">Password can\'t be blank</string>
     <string name="reg_example_password_error_2">Password must be longer than 6 characters</string>
-    <string name="reg_change_password_error_1">Passwords can\'t be the same</string>
 
     <string name="already_registered_log_in">Already registered? Log in</string>
     <string name="forgot_password">Forgot password?</string>
-    <string name="challenge_t_c">By taking this challenge you\nagree to our Terms &amp; Conditions</string>
-    <string name="register">Register</string>
 
     <!--LOGIN-->
     <string name="login_title">@string/label_log_in</string>
@@ -96,6 +99,9 @@
     <string name="login_example_name_error_1">Name can\'t be blank</string>
     <string name="login_example_password">Must have at least 6 characters</string>
     <string name="login_example_password_error_1">Password can\'t be blank</string>
+
+    <!-- Bot -->
+    <string name="bot_carousel_card_select">Select</string>
 
     <!--JSON GOALS-->
     <string name="greeting">Hola!</string>
@@ -123,11 +129,29 @@
     <string name="validationFailPriorSavedAmount">Sorry, I do not understand that and have not  been taught how to handle it yet.</string>
     <string name="infoGoalEnd">Thank you. That concludes the goal-setting process.</string>
 
-    <string name="depositIntroduction">Let\'s add your savings!</string>
-    <string name="depositReminder">Remember you have to save %1$s %2$s each week to reach %3$s by %4$s.</string>
-    <string name="depositRemainder">That is %1$s weeks and %2$s days from now.</string>
-    <string name="askDepositAddAmount">Add Amount</string>
-    <string name="depositEnd">Nice going! You added your first saving!</string>
+    <!-- goal_deposit -->
+    <!-- User clicks on add savings (+ Deposit) on Goal saving page  -->
+    <string name="goal_deposit_intro">Let\'s add your savings!</string>
+    <string name="goal_deposit_reminder">Remember you have to save %1$s %2$s each week to reach %3$s by %4$s.</string>
+    <string name="goal_deposit_remaining">That is %1$s weeks and %2$s days from now.</string>
+    <string name="goal_deposit_ask_amount">Add Amount</string>
+    <string name="goal_deposit_end">Well done!</string>
+
+    <!-- goal_withdraw -->
+    <!-- User clicks on withdraw savings (- Withdraw) on goal saving page  -->
+    <!-- Questions -->
+    <string name="goal_withdraw_intro">You\'re working hard to get to your goal. You should only withdraw if it\'s to spend on an emergency</string>
+    <string name="goal_withdraw_keep_saving">You\'ve made a good choice not to withdraw your savings. I\'m proud of you %s!</string>
+    <string name="goal_withdraw_enter_amount">How much do you want to withdraw?</string>
+    <string name="goal_withdraw_tips_challenge">Get back on track with your savings, check out these easy tips.</string>
+    <string name="goal_withdraw_end">Great job. Remember to come back every time you need to track your savings. Keep up the good work!</string>
+    <!-- Answers -->
+    <string name="goal_withdraw_cancel">I understand, keep saving</string>
+    <string name="goal_withdraw_keep_saving_end">Yay me!</string>
+    <string name="goal_withdraw_continue">Withdraw anyway</string>
+    <string name="goal_withdraw_tip">Yes! I want to learn more</string>
+    <string name="goal_withdraw_challenge">Can I take this week\'s challenge instead?</string>
+    <string name="goal_withdraw_do_end">No thanks, maybe next time!</string>
 
     <!--Buttons-->
     <string name="Skip">Skip</string>
@@ -169,7 +193,9 @@
     <string name="TfourY">Yes</string>
 
     <!-- Challenges -->
+    <string name="challenge_t_c">By taking this challenge, you are agreeing to our Terms &amp; Conditions.</string>
     <string name="challenge_no_question">No question</string>
+    <string name="challenge_register">Register</string>
     <string name="challenge_freeform_submit">Submitting freeform answer</string>
     <string name="challenge_all_questions_complete">You have completed all questions</string>
     <string name="challenge_none_available">No challenge available. Please try again soon!</string>
@@ -190,21 +216,21 @@
     <string name="night">Can you land on the sun at night?</string>
 
     <!-- TARGET -->
-    <string name="save">+ More</string>
-    <string name="withdraw">- Pull</string>
-    <string name="savings_history">Savings History</string>
-    <string name="weeks">Weeks</string>
-    <string name="add_goal">ADD GOAL</string>
-    <string name="savings_message" formatted="false">Save %s %s each week to get your %s in %s weeks.</string>
-    <string name="edit_savings_plan">Edit Savings Plan</string>
-    <string name="savings_plan">Savings Plan</string>
+    <string name="target_save">+ Deposit</string>
+    <string name="target_withdraw">- Withdraw</string>
+    <string name="target_savings_history">Savings History</string>
+    <string name="target_weeks">Weeks</string>
+    <string name="target_add_goal">ADD GOAL</string>
+    <string name="target_savings_message" formatted="false">Save %s %s each week to get your %s in %s weeks.</string>
+    <string name="target_edit_savings_plan">Edit Savings Plan</string>
+    <string name="target_savings_plan">Savings Plan</string>
     <string name="target_date">Target Date</string>
 
     <!-- Profile -->
-    <string name="profile_settings_title">Settings</string>
-    <string name="profile_section_account">Your account</string>
     <string name="profile_week_streak_singular">%s week</string>
     <string name="profile_week_streak_plural">%s weeks</string>
+    <string name="profile_settings_title">Settings</string>
+    <string name="profile_section_account">Your account</string>
     <string name="profile_account_change_name">Change name</string>
     <string name="profile_account_change_password">Change password</string>
     <string name="profile_account_sign_out">Sign out</string>
@@ -222,11 +248,14 @@
     <string name="profile_image_cancel">Cancel</string>
     <string name="profile_image_progress">We\'re uploading your profile image&#8230;</string>
 
-    <!-- Change Username -->
-    <string name="change_username_success">Your username has been changed to \'%s\'</string>
+    <!-- Profile: Change Username -->
+    <string name="profile_change_username_progress">We\'re changing your username&#8230;</string>
+    <string name="profile_change_username_success">Your username has been changed to \'%s\'</string>
 
-    <!-- Change Password -->
-    <string name="change_password_success">Your password has been changed</string>
+    <!-- Profile: Change Password -->
+    <string name="profile_change_password_progress">We\'re changing your password&#8230;</string>
+    <string name="profile_change_password_success">Your password has been changed</string>
+    <string name="profile_change_password_error_1">Passwords can\'t be the same</string>
 
     <!-- Legends -->
     <string name="legend_label_average">Average</string>
@@ -238,19 +267,20 @@
     <string name="placeholder_label_short" translatable="false">Placeholder</string>
     <string name="placeholder_label_long" translatable="false"><![CDATA[Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce at justo tortor. Curabitur in leo suscipit, molestie augue ut, gravida quam. Donec scelerisque nulla id finibus porttitor. In et ultrices augue. Donec ut odio elit. Maecenas ut sagittis libero. Integer ut ultricies felis, in porttitor dolor. Cras turpis magna, lobortis quis leo sed, tempus elementum massa. Ut blandit vitae sapien pretium facilisis. ]]></string>
 
+    <string name="bot_goal_display_todo">TODO: Goal Display</string>
+    <string name="bot_todo">TODO</string>
+
     <string name="knowAmountN">No</string>
     <string name="knowDateN">No</string>
     <string name="knowAmountY">Yes</string>
     <string name="knowDateY">Yes</string>
     <string name="hasSavedY">Yes</string>
     <string name="hasSavedN">No</string>
-    <string name="fragment_challenge_check_button">Check</string>
-    <string name="button_submit">@string/label_submit</string>
+
     <string name="heading_registration">Registration</string>
     <string name="heading_change_name">Change name</string>
     <string name="heading_change_password">Change password</string>
 
-    <string name="prompt_upload_photo">Upload Photo</string>
     <string name="target_prefix_saved">saved</string>
     <string name="heading_current_saving_streak">Current Saving Streak</string>
     <string name="heading_achievements">Achievements</string>
