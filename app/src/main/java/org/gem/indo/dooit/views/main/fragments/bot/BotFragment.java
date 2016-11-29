@@ -378,10 +378,6 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
 
         if (!TextUtils.isEmpty(answer.getNext())) {
             getAndAddNode(answer.getNext());
-            if (BotMessageType.getValueOf(currentModel.getType()) == BotMessageType.END) {
-                // Reached explicit end of current converstation
-                finishConverstation();
-            }
         } else {
             answerView.setData(new ArrayList<>());
         }
@@ -390,9 +386,8 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
     }
 
     private void finishConverstation() {
-        if (callback != null) {
+        if (callback != null)
             callback.onDone(createAnswerLog(getBotAdapter().getDataSet()));
-        }
         persisted.clearConversation();
         persisted.clearConvoGoals();
     }
@@ -425,6 +420,11 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
 
             conversationRecyclerView.scrollToPosition(getBotAdapter().getItemCount() - 1);
             persisted.saveConversationState(type, getBotAdapter().getDataSet());
+
+            if (BotMessageType.getValueOf(currentModel.getType()) == BotMessageType.END)
+                // Reached explicit end of current conversation
+                finishConverstation();
+
             addAnswerOptions(node);
         }
     }
@@ -454,13 +454,13 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
             }
         } else if (!TextUtils.isEmpty(node.getAutoNext())) {
             if (BotMessageType.getValueOf(node.getType()) == BotMessageType.STARTCONVO) {
-                // Auto load next converstation
+                // Auto load next conversation
                 finishConverstation();
                 BotType botType = BotType.valueOf(node.getAutoNext().toUpperCase());
                 setBotType(botType);
                 createFeed();
             } else {
-                // Auto load next node in current converstation
+                // Auto load next node in current conversation
                 getAndAddNode(node.getAutoNext(), true);
             }
         }
