@@ -184,18 +184,6 @@ public class Persisted {
         return dooitSharedPreferences.getComplex(QUIZ_STATE, type);
     }
 
-    public void saveQuizChallengeIndex(int idx) {
-        dooitSharedPreferences.setInteger(QUIZ_INDEX, idx);
-    }
-
-    public int loadQuizChallengeIndex() {
-        return dooitSharedPreferences.getInteger(QUIZ_INDEX, -1);
-    }
-
-    public void clearQuizChallengeIndex() {
-        dooitSharedPreferences.remove(QUIZ_INDEX);
-    }
-
     public void clearQuizChallengeState() {
         dooitSharedPreferences.remove(QUIZ_STATE);
     }
