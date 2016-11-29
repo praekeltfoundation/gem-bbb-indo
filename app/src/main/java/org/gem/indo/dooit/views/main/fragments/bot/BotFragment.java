@@ -157,6 +157,10 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
                 feed.parse(R.raw.goal_withdraw, Node.class);
                 initializeBot();
                 break;
+            case TIP_INTRO:
+                feed.parse(R.raw.tip_intro, Node.class);
+                initializeBot();
+                break;
         }
     }
 
@@ -250,6 +254,10 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
                 break;
             case GOAL_WITHDRAW:
                 getAndAddNode("goal_withdraw_intro");
+                break;
+            case TIP_INTRO:
+                getAndAddNode("tip_intro_inline_link");
+                break;
         }
     }
 

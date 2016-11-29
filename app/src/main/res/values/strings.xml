@@ -150,6 +150,9 @@
     <string name="goal_withdraw_challenge">Can I take this week\'s challenge instead?</string>
     <string name="goal_withdraw_do_end">No thanks, maybe next time!</string>
 
+    <!-- tip_intro -->
+    <string name="tip_intro_inline_link">TODO: Show Tip</string>
+
     <!--Buttons-->
     <string name="Skip">Skip</string>
     <string name="Capture">Add photo</string>

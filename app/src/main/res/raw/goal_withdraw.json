@@ -76,7 +76,7 @@
   {
     "name": "goal_withdraw_start_tip",
     "type": "startConvo",
-    "autoNext": "DEFAULT"
+    "autoNext": "TIP_INTRO"
   },
   {
     "name": "todo",
