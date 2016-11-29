@@ -15,6 +15,7 @@ import android.webkit.WebView;
 import android.widget.ProgressBar;
 
 import org.gem.indo.dooit.R;
+import org.gem.indo.dooit.views.DooitActivity;
 import org.gem.indo.dooit.views.helpers.activity.DooitActivityBuilder;
 
 import butterknife.BindView;
@@ -23,7 +24,7 @@ import butterknife.ButterKnife;
 /**
  * Created by Bernhard Müller on 2016/07/22.
  */
-public class SettingsWebViewActivity extends AppCompatActivity {
+public class SettingsWebViewActivity extends DooitActivity {
     private static final String INTENT_URL = "intent_webView_url";
     private static final String INTENT_TITLE = "intent_webView_title";
     @BindView(R.id.toolbar)
@@ -41,8 +42,9 @@ public class SettingsWebViewActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-            getSupportActionBar().setDisplayShowHomeEnabled(true);
-            getSupportActionBar().setHomeAsUpIndicator(org.gem.indo.dooit.R.drawable.ic_d_back_arrow);
+            getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_d_back_caret_pink);
+            getSupportActionBar().setTitle("");
+
             toolbar.setNavigationOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -107,11 +109,11 @@ public class SettingsWebViewActivity extends AppCompatActivity {
 
         @Override
         protected boolean checkIntentCompleteness() {
-            return intent.hasExtra(INTENT_URL) && intent.hasExtra(INTENT_TITLE);
+            return intent.hasExtra(INTENT_URL); // && intent.hasExtra(INTENT_TITLE);
         }
 
         public Builder setTitle(String title) {
-            intent.putExtra(INTENT_TITLE, title);
+            //intent.putExtra(INTENT_TITLE, title);
             return this;
         }
 
