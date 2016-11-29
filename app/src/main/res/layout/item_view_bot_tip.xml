@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="@dimen/bot_tip_card_width"
+    android:layout_height="match_parent"
+    tools:context=".views.main.MainActivity">
+
+    <com.facebook.drawee.view.SimpleDraweeView
+        android:id="@+id/item_view_bot_tip_image"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/bot_tip_card_image_height" />
+
+    <TextView
+        android:id="@+id/item_view_bot_tip_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/item_view_bot_tip_image"
+        android:layout_centerHorizontal="true"
+        tools:text="Tip Title"/>
+
+    <View
+        android:id="@+id/item_view_bot_tip_separator"
+        android:layout_width="match_parent"
+        android:layout_height="1.5dp"
+        android:layout_below="@id/item_view_bot_tip_title"
+        android:layout_marginTop="4dp"
+        android:background="@drawable/bkg_carousel_separator"
+        />
+
+    <TextView
+        android:id="@+id/item_view_bot_tip_share"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/item_view_bot_tip_separator"
+        android:layout_centerHorizontal="true"
+        android:text="@string/label_share"/>
+</RelativeLayout>

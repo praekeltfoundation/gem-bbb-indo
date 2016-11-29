@@ -33,16 +33,19 @@
 
     <!-- Bot -->
     <dimen name="bot_left_margin">36dp</dimen>
+
     <dimen name="bot_carousel_card_width">250dp</dimen>
     <dimen name="bot_carousel_card_image_height">150dp</dimen>
     <dimen name="bot_carousel_card_horizontal_margin">16dp</dimen>
+
+    <dimen name="bot_tip_card_width">250dp</dimen>
+    <dimen name="bot_tip_card_image_height">150dp</dimen>
 
     <!-- Challenges -->
     <dimen name="challenge_margins">8dp</dimen>
     <dimen name="challenge_option_margins">16dp</dimen>
     <dimen name="challenge_option_padding">8dp</dimen>
     <dimen name="challenge_card_image_height">200dp</dimen>
-
 
     <!-- Tips -->
     <dimen name="tip_card_margin">12dp</dimen>

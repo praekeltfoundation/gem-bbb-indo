@@ -21,6 +21,7 @@ import org.gem.indo.dooit.views.main.fragments.bot.viewholders.AnswerViewHolder;
 import org.gem.indo.dooit.views.main.fragments.bot.viewholders.BaseBotViewHolder;
 import org.gem.indo.dooit.views.main.fragments.bot.viewholders.GoalVerificationViewHolder;
 import org.gem.indo.dooit.views.main.fragments.bot.viewholders.TextViewHolder;
+import org.gem.indo.dooit.views.main.fragments.bot.viewholders.TipBotViewHolder;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -67,6 +68,8 @@ public class BotAdapter extends RecyclerView.Adapter<BaseBotViewHolder> {
                 return new AnswerGoalGalleryViewHolder(LayoutInflater.from(context).inflate(R.layout.item_view_bot_carousel, parent, false), this, tagsClickListener);
             case GOALVERIFICATION:
                 return new GoalVerificationViewHolder(LayoutInflater.from(context).inflate(org.gem.indo.dooit.R.layout.item_view_bot_text, parent, false), this);
+            case TIP:
+                return new TipBotViewHolder(LayoutInflater.from(context).inflate(R.layout.item_view_bot_tip, parent, false), tagsClickListener);
             case UNDEFINED:
             default:
                 return new TextViewHolder(LayoutInflater.from(context).inflate(org.gem.indo.dooit.R.layout.item_view_bot_text, parent, false), this);

@@ -20,11 +20,13 @@ import org.gem.indo.dooit.R;
 import org.gem.indo.dooit.api.DooitAPIError;
 import org.gem.indo.dooit.api.DooitErrorHandler;
 import org.gem.indo.dooit.api.managers.GoalManager;
+import org.gem.indo.dooit.api.managers.TipManager;
 import org.gem.indo.dooit.helpers.Persisted;
 import org.gem.indo.dooit.helpers.SquiggleBackgroundHelper;
 import org.gem.indo.dooit.helpers.bot.BotFeed;
 import org.gem.indo.dooit.models.Goal;
 import org.gem.indo.dooit.models.GoalPrototype;
+import org.gem.indo.dooit.models.Tip;
 import org.gem.indo.dooit.models.bot.Answer;
 import org.gem.indo.dooit.models.bot.BaseBotModel;
 import org.gem.indo.dooit.models.bot.BotCallback;
@@ -69,6 +71,9 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
 
     @Inject
     GoalManager goalManager;
+
+    @Inject
+    TipManager tipManager;
 
     BotType type = BotType.DEFAULT;
     BotCallback callback;
@@ -155,7 +160,7 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
                 break;
             case GOAL_WITHDRAW:
                 feed.parse(R.raw.goal_withdraw, Node.class);
-                initializeBot();
+                getGoalWithdrawResources();
                 break;
             case TIP_INTRO:
                 feed.parse(R.raw.tip_intro, Node.class);
@@ -209,6 +214,59 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
                         if (((List) o).size() == 0) return;
                         if (((List) o).get(0) instanceof GoalPrototype)
                             persisted.saveGoalProtos((List<GoalPrototype>) o);
+                    }
+                }
+            });
+        } else
+            initializeBot();
+    }
+
+    private void getGoalWithdrawResources() {
+        // TODO: Refactor into own class
+        ArrayList<Observable> reqSync = new ArrayList<>();
+        Observable tips = tipManager.retrieveTips(new DooitErrorHandler() {
+            @Override
+            public void onError(DooitAPIError error) {
+
+            }
+        });
+        if (persisted.hasConvoTip())
+            tips.subscribe(new Action1<List<Tip>>() {
+                @Override
+                public void call(List<Tip> newTips) {
+                    if (!newTips.isEmpty())
+                        persisted.saveConvoTip(newTips.get(0));
+                }
+            });
+        else
+            reqSync.add(tips);
+
+        if (reqSync.size() > 0) {
+            //ShowLoader
+            Observable.from(reqSync).flatMap(new Func1<Observable, Observable<?>>() {
+                @Override
+                public Observable<?> call(Observable observable) {
+                    return observable;
+                }
+            }).doOnCompleted(new Action0() {
+                @Override
+                public void call() {
+                    if (getContext() != null) {
+                        getActivity().runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                initializeBot();
+                            }
+                        });
+                    }
+                }
+            }).subscribe(new Action1<Object>() {
+                @Override
+                public void call(Object o) {
+                    if (o instanceof List) {
+                        if (((List) o).size() == 0) return;
+                        if (((List) o).get(0) instanceof Tip)
+                            persisted.saveConvoTip((Tip) ((List) o).get(0));
                     }
                 }
             });
@@ -360,8 +418,7 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
             node.setIconHidden(iconHidden);
 
             // Don't add views for BLANK and STARTCONVO
-            if (!BotMessageType.BLANK.equals(BotMessageType.getValueOf(currentModel.getType())) &&
-                    !BotMessageType.STARTCONVO.equals(BotMessageType.getValueOf(currentModel.getType()))) {
+            if (shouldAdd(currentModel)) {
                 getBotAdapter().addItem(currentModel);
             }
 
@@ -405,6 +462,21 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
                 // Auto load next node in current converstation
                 getAndAddNode(node.getAutoNext(), true);
             }
+        }
+    }
+
+    /**
+     * Helper to indicate whether a Node should be added to the conversation's view.
+     * @param model
+     * @return
+     */
+    public static boolean shouldAdd(BaseBotModel model) {
+        switch(BotMessageType.getValueOf(model.getType())) {
+            case BLANK:
+            case STARTCONVO:
+                return false;
+            default:
+                return true;
         }
     }
 }
