@@ -21,6 +21,7 @@ import java.io.IOException;
 
 import javax.inject.Inject;
 
+import okhttp3.Cache;
 import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -47,13 +48,34 @@ public class DooitManager {
     @Inject
     Persisted persisted;
     private Context context;
+    private static final Interceptor RewriteCacheControlInterceptor = new Interceptor() {
+        @Override
+        public Response intercept(Chain chain) throws IOException {
+            if(false){
+                /// other example code to use cache as fallback mechanism for network issue
+                boolean hasNetwork = false;
+                Request request = chain.request();
+                if (hasNetwork) {
+                    request = request.newBuilder().header("Cache-Control", "public, max-age=" + 60).build();
+                } else {
+                    request = request.newBuilder().header("Cache-Control", "public, only-if-cached, max-stale=" + 60 * 60 * 24 * 7).build();
+                }
+                return chain.proceed(request);
+            }
+            Response originalResponse = chain.proceed(chain.request());
 
-    public DooitManager(Application application) {
+            return originalResponse.newBuilder()
+                    .header("Cache-Control", String.format("max-age=%d, only-if-cached, max-stale=%d", 30*60, 0))
+                    .build();
+        }
+    };
+    public DooitManager(final Application application) {
         ((DooitApplication) application).component.inject(this);
         context = application.getApplicationContext();
 
         OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
-
+        Cache cache = new Cache(application.getApplicationContext().getCacheDir(), 1024 * 1024 * 30);
+        httpClient.cache(cache).addInterceptor(RewriteCacheControlInterceptor);
         HttpLoggingInterceptor logging = new HttpLoggingInterceptor(new HttpLoggingInterceptor.Logger() {
             @Override
             public void log(String message) {
@@ -61,7 +83,6 @@ public class DooitManager {
             }
         });
         logging.setLevel(HttpLoggingInterceptor.Level.BODY);
-
 
         httpClient.addInterceptor(new Interceptor() {
             @Override
