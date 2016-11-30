@@ -1,6 +1,7 @@
 package org.gem.indo.dooit.views.main.fragments.bot.viewholders;
 
 import android.content.Context;
+import android.support.v4.content.ContextCompat;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -32,10 +33,13 @@ import butterknife.ButterKnife;
  */
 
 public class GoalVerificationViewHolder extends BaseBotViewHolder<Node> {
+
     @BindView(R.id.item_view_bot_text)
     TextView textView;
+
     @BindView(R.id.item_view_bot_icon)
     ImageView botIcon;
+
     @Inject
     Persisted persisted;
 
@@ -52,6 +56,8 @@ public class GoalVerificationViewHolder extends BaseBotViewHolder<Node> {
         this.botAdapter = botAdapter;
         ((DooitApplication) getContext().getApplicationContext()).component.inject(this);
         ButterKnife.bind(this, itemView);
+
+        textView.setBackground(ContextCompat.getDrawable(itemView.getContext(), R.drawable.ic_d_bot_dialogue_bkg));
     }
 
     @Override

@@ -1,6 +1,7 @@
 package org.gem.indo.dooit.views.main.fragments.bot.viewholders;
 
 import android.content.Context;
+import android.support.v4.content.ContextCompat;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -22,6 +23,9 @@ public class AnswerViewHolder extends BaseBotViewHolder<Answer> {
     public AnswerViewHolder(View itemView) {
         super(itemView);
         ButterKnife.bind(this, itemView);
+
+        // Must assign programmatically for Support Library to wrap before API 21
+        textView.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.ic_d_answer_dialogue_bkg));
     }
 
     @Override

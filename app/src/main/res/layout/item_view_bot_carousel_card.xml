@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/item_view_bot_carousel_card"
     android:layout_width="@dimen/bot_carousel_card_width"
     android:layout_height="wrap_content"
     android:layout_marginEnd="@dimen/bot_carousel_card_horizontal_margin"
     android:layout_marginBottom="4dp"
-    android:background="@drawable/bkg_carousel_card">
+    tools:background="@drawable/bkg_carousel_card">
 
     <com.facebook.drawee.view.SimpleDraweeView
         android:id="@+id/item_view_bot_carousel_card_image"
@@ -30,7 +31,7 @@
         android:layout_height="1.5dp"
         android:layout_below="@id/item_view_bot_carousel_card_title"
         android:layout_marginTop="4dp"
-        android:background="@drawable/bkg_carousel_separator"
+        tools:background="@drawable/bkg_carousel_separator"
         />
 
     <TextView
