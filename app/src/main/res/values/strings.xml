@@ -280,8 +280,8 @@
     <string name="legend_label_total">Total</string>
 
     <!-- Dev only -->
-    <string name="placeholder_label_short" translatable="false">Placeholder</string>
-    <string name="placeholder_label_long" translatable="false"><![CDATA[Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce at justo tortor. Curabitur in leo suscipit, molestie augue ut, gravida quam. Donec scelerisque nulla id finibus porttitor. In et ultrices augue. Donec ut odio elit. Maecenas ut sagittis libero. Integer ut ultricies felis, in porttitor dolor. Cras turpis magna, lobortis quis leo sed, tempus elementum massa. Ut blandit vitae sapien pretium facilisis. ]]></string>
+    <string name="placeholder_label_short">Placeholder</string>
+    <string name="placeholder_label_long"><![CDATA[Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce at justo tortor. Curabitur in leo suscipit, molestie augue ut, gravida quam. Donec scelerisque nulla id finibus porttitor. In et ultrices augue. Donec ut odio elit. Maecenas ut sagittis libero. Integer ut ultricies felis, in porttitor dolor. Cras turpis magna, lobortis quis leo sed, tempus elementum massa. Ut blandit vitae sapien pretium facilisis. ]]></string>
 
     <string name="bot_goal_display_todo">TODO: Goal Display</string>
     <string name="bot_todo">TODO</string>
