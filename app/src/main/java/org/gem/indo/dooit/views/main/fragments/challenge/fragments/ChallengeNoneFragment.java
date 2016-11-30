@@ -22,8 +22,8 @@ import butterknife.Unbinder;
  */
 public class ChallengeNoneFragment extends Fragment {
     public static final String ARG_MESSAGE = "message";
-    private static final ChallengeFragmentState FRAGMENT_STATE = ChallengeFragmentState.FREEFORM;
-    
+    private static final ChallengeFragmentState FRAGMENT_STATE = ChallengeFragmentState.NONE;
+
     @BindView(R.id.fragment_challenge_none_text)
     TextView messageText;
     private String message = null;
