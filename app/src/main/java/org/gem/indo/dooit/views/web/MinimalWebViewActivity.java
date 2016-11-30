@@ -27,6 +27,7 @@ import butterknife.ButterKnife;
 public class MinimalWebViewActivity extends DooitActivity {
     private static final String INTENT_URL = "intent_webView_url";
     private static final String INTENT_TITLE = "intent_webView_title";
+    private static final String INTENT_NO_CARET = "intent_noCaret_title";
     @BindView(R.id.toolbar)
     Toolbar toolbar;
     @BindView(R.id.activity_settings_web_view)
@@ -43,7 +44,14 @@ public class MinimalWebViewActivity extends DooitActivity {
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
             actionBar.setDisplayHomeAsUpEnabled(true);
-            actionBar.setHomeAsUpIndicator(R.drawable.ic_d_back_caret_pink);
+            if(getIntent().hasExtra(INTENT_NO_CARET)){
+                actionBar.setDisplayHomeAsUpEnabled(false);
+            }
+            else{
+                actionBar.setDisplayHomeAsUpEnabled(true);
+                actionBar.setHomeAsUpIndicator(R.drawable.ic_d_back_caret_pink);
+            }
+
             if (getIntent().hasExtra(INTENT_TITLE))
                 actionBar.setTitle(getIntent().getStringExtra(INTENT_TITLE));
             else
@@ -120,6 +128,10 @@ public class MinimalWebViewActivity extends DooitActivity {
 
         public Builder setUrl(String url) {
             intent.putExtra(INTENT_URL, url);
+            return this;
+        }
+        public Builder setNoCaret() {
+            intent.putExtra(INTENT_NO_CARET, "caret");
             return this;
         }
     }
