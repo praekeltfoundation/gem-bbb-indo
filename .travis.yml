@@ -46,6 +46,7 @@ before_install:
 
 before_script:
   - chmod +x gradlew
+  - sudo chmod u+x createPassfile
   - sudo ./createPassfile -pwd $KEYSTORE_PASS;
 
 script:
