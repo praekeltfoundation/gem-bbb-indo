@@ -28,7 +28,8 @@ public enum BotMessageType {
     STARTCONVO(15),
     TIP(16),
     BLANKANSWER(17), // Answer that displays nothing
-    END(18);
+    END(18),
+    GOALINFO(19);
 
     private static Map<Integer, BotMessageType> map = new HashMap<>();
 

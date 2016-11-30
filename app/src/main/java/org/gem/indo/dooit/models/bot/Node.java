@@ -1,5 +1,7 @@
 package org.gem.indo.dooit.models.bot;
 
+import android.text.TextUtils;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,6 +22,7 @@ public class Node extends BaseBotModel {
     private String autoNext;
     private List<Answer> answers;
     private boolean iconHidden;
+    private String answerName;
     private String autoAnswer;
 
     public Node() {
@@ -50,5 +53,9 @@ public class Node extends BaseBotModel {
 
     public CharSequence getAutoAnswer() {
         return autoAnswer;
+    }
+
+    public String getAnswerName() {
+        return TextUtils.isEmpty(answerName) ? name : answerName;
     }
 }

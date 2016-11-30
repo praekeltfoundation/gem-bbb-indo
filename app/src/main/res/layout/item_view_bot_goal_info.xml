@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="200dp"
+    android:layout_marginStart="@dimen/bot_left_margin"
+    android:layout_height="wrap_content"
+    android:padding="4dp"
+    tools:context=".views.main.MainActivity">
+
+    <TextView
+        android:id="@+id/item_view_bot_goal_info_title"
+        style="@style/AppTheme.TextView.Regular.Medium"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="8dp"
+        tools:text="Tip Title" />
+
+    <include
+        android:id="@+id/item_view_bot_goal_info_progress"
+        layout="@layout/custom_arc_progress"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:layout_below="@+id/item_view_bot_goal_info_title"
+        android:layout_centerHorizontal="true" />
+
+    <TextView
+        android:id="@+id/item_view_bot_goal_info_saved_text"
+        style="@style/AppTheme.TextView.Regular.Medium"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/item_view_bot_goal_info_progress"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="8dp"
+        android:layout_marginTop="8dp"
+        android:text="@string/saved" />
+
+    <TextView
+        android:id="@+id/item_view_bot_goal_info_current"
+        style="@style/AppTheme.TextView.Bold.ExtraLarge"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/item_view_bot_goal_info_saved_text"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="8dp"
+        android:textStyle="bold"
+        tools:text="Rp 5.000 of" />
+
+    <TextView
+        android:id="@+id/item_view_bot_goal_info_total"
+        style="@style/AppTheme.TextView.Regular.Medium"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/item_view_bot_goal_info_current"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="8dp"
+        tools:text="Rp 10.000" />
+</RelativeLayout>
