@@ -22,7 +22,7 @@
             android:id="@+id/fragment_target_goal_name_text_view"
             style="@style/AppTheme.TextView.Regular.XXXLarge"
             android:layout_width="match_parent"
-            fontPath="fonts/Lato-Bold.ttf"
+            fontPath="fonts/LondrinaSolid-Regular.ttf"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
             android:layout_marginTop="6dp"
@@ -67,7 +67,7 @@
 
         <TextView
             android:id="@+id/fragment_target_saved"
-            style="@style/AppTheme.TextView.Regular"
+            style="@style/AppTheme.TextView.Bold.Large"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
@@ -80,7 +80,7 @@
         <TextView
             android:id="@+id/fragment_target_saved_text_view"
             style="@style/AppTheme.TextView.Regular.XXXLarge"
-            fontPath="fonts/Lato-Bold.ttf"
+            fontPath="fonts/LondrinaSolid-Regular.ttf"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/fragment_target_saved"
@@ -91,7 +91,7 @@
 
         <TextView
             android:id="@+id/fragment_target_total_text_view"
-            style="@style/AppTheme.TextView.Regular"
+            style="@style/AppTheme.TextView.Bold.Large"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
@@ -126,7 +126,7 @@
 
         <TextView
             android:id="@+id/fragment_target_savings_history"
-            style="@style/AppTheme.TextView.Regular.Medium"
+            style="@style/AppTheme.TextView.Bold.Medium"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
@@ -262,7 +262,7 @@
 
         <TextView
             android:id="@+id/fragment_target_savings_plan"
-            style="@style/AppTheme.TextView.Regular.Medium"
+            style="@style/AppTheme.TextView.Bold.Medium"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/fragment_target_savings_graph"
@@ -285,7 +285,7 @@
 
         <TextView
             android:id="@+id/fragment_target_savings_plan_edit"
-            style="@style/AppTheme.TextView.Regular.Medium"
+            style="@style/AppTheme.TextView.Bold.Medium"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/fragment_target_savings_plan_message"
