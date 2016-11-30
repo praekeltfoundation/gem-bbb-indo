@@ -10,6 +10,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.TextView;
@@ -47,6 +48,12 @@ public class TargetFragment extends MainFragment {
 
     @BindView(R.id.fragment_target_nested_scroll_view)
     NestedScrollView nestedScrollView;
+
+    @BindView(R.id.fragment_target_no_goals)
+    View noGoalView;
+
+    @BindView(R.id.fragment_target_add_goal_button)
+    Button addGoal;
 
     @BindView(R.id.fragment_target_targets_view_pagers)
     ViewPager viewPager;
@@ -204,6 +211,11 @@ public class TargetFragment extends MainFragment {
         startBot(BotType.GOAL_EDIT);
     }
 
+    @OnClick(R.id.fragment_target_add_goal_button)
+    public void onAddGoalClick(View view) {
+        startBot(BotType.GOAL_ADD);
+    }
+
     private void populateGoal(Goal goal) {
         goalName.setText(goal.getName());
         saved.setText(CurrencyHelper.format(goal.getValue()));
@@ -224,21 +236,11 @@ public class TargetFragment extends MainFragment {
                     @Override
                     public void run() {
                         Toast.makeText(getContext(), "Error retrieving goals.", Toast.LENGTH_SHORT).show();
+                        showNoGoals();
                     }
                 });
             }
         })
-                .doOnCompleted(new Action0() {
-                    @Override
-                    public void call() {
-                        getActivity().runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                hideLoadingProgress();
-                            }
-                        });
-                    }
-                })
                 .subscribe(new Action1<List<Goal>>() {
                     @Override
                     public void call(final List<Goal> goals) {
@@ -251,6 +253,9 @@ public class TargetFragment extends MainFragment {
                                     if (goals.size() > 0) {
                                         populateGoal(goals.get(0));
                                         rightTarget.setVisibility(View.VISIBLE);
+                                        showGoals();
+                                    } else {
+                                        showNoGoals();
                                     }
                                 }
                             });
@@ -260,11 +265,19 @@ public class TargetFragment extends MainFragment {
 
     private void showLoadingProgress() {
         nestedScrollView.setVisibility(View.GONE);
+        noGoalView.setVisibility(View.GONE);
         loadingProgress.setVisibility(View.VISIBLE);
     }
 
-    private void hideLoadingProgress() {
+    private void showGoals() {
         nestedScrollView.setVisibility(View.VISIBLE);
+        noGoalView.setVisibility(View.GONE);
+        loadingProgress.setVisibility(View.GONE);
+    }
+
+    private void showNoGoals() {
+        nestedScrollView.setVisibility(View.GONE);
+        noGoalView.setVisibility(View.VISIBLE);
         loadingProgress.setVisibility(View.GONE);
     }
 }
