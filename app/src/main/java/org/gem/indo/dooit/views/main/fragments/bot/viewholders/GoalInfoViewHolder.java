@@ -1,6 +1,7 @@
 package org.gem.indo.dooit.views.main.fragments.bot.viewholders;
 
 import android.content.Context;
+import android.support.v4.content.ContextCompat;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -61,6 +62,7 @@ public class GoalInfoViewHolder extends BaseBotViewHolder<Node> {
         this.botAdapter = botAdapter;
         ((DooitApplication) getContext().getApplicationContext()).component.inject(this);
         ButterKnife.bind(this, itemView);
+        itemView.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.ic_d_bot_dialogue_bkg));
     }
 
     @Override
@@ -106,8 +108,7 @@ public class GoalInfoViewHolder extends BaseBotViewHolder<Node> {
         }
 
         titleTextView.setText(goalName);
-        arcProgressBar.setProgress((int) current);
-        arcProgressBar.setMax((int) target);
+        arcProgressBar.setProgress((int) (current / target * 100));
         image.setImageURI(goalImage);
         currentTextView.setText(String.format("%s %.2f", CurrencyHelper.getCurrencySymbol(), current));
         totalTextView.setText(getContext().getString(R.string.of_target_amount, CurrencyHelper.getCurrencySymbol(), target));

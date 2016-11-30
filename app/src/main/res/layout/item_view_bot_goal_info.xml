@@ -2,8 +2,8 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="200dp"
-    android:layout_marginStart="@dimen/bot_left_margin"
     android:layout_height="wrap_content"
+    android:layout_marginStart="@dimen/bot_left_margin"
     android:padding="4dp"
     tools:context=".views.main.MainActivity">
 
