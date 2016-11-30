@@ -221,6 +221,9 @@
     <string name="challenge_quiz_sorry_incorrect">Sorry, try again.</string>
     <string name="challenge_quiz_empty_option">Quiz question has option without text.</string>
     <string name="challenge_quiz_no_correct_answer">Quiz question without correct option.</string>
+    <string name="fragment_challenge_correct_text">You are correct!</string>
+    <string name="fragment_challenge_wrong_text">Try again!</string>
+    <string name="challenge_quiz_counter_fmt">Question %1$d/%2$d</string>
     <string name="challenge_hint_template">Hint: %1$s</string>
     <string name="challenge_hint_none">Sorry, I don\'t have a hint for you</string>
 
@@ -277,8 +280,8 @@
     <string name="legend_label_total">Total</string>
 
     <!-- Dev only -->
-    <string name="placeholder_label_short" translatable="false">Placeholder</string>
-    <string name="placeholder_label_long" translatable="false"><![CDATA[Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce at justo tortor. Curabitur in leo suscipit, molestie augue ut, gravida quam. Donec scelerisque nulla id finibus porttitor. In et ultrices augue. Donec ut odio elit. Maecenas ut sagittis libero. Integer ut ultricies felis, in porttitor dolor. Cras turpis magna, lobortis quis leo sed, tempus elementum massa. Ut blandit vitae sapien pretium facilisis. ]]></string>
+    <string name="placeholder_label_short">Placeholder</string>
+    <string name="placeholder_label_long"><![CDATA[Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce at justo tortor. Curabitur in leo suscipit, molestie augue ut, gravida quam. Donec scelerisque nulla id finibus porttitor. In et ultrices augue. Donec ut odio elit. Maecenas ut sagittis libero. Integer ut ultricies felis, in porttitor dolor. Cras turpis magna, lobortis quis leo sed, tempus elementum massa. Ut blandit vitae sapien pretium facilisis. ]]></string>
 
     <string name="bot_goal_display_todo">TODO: Goal Display</string>
     <string name="bot_todo">TODO</string>
@@ -297,8 +300,10 @@
     <string name="target_prefix_saved">saved</string>
     <string name="heading_current_saving_streak">Current Saving Streak</string>
     <string name="heading_achievements">Achievements</string>
-    <string name="fragment_challenge_correct_text">You are correct!</string>
-    <string name="fragment_challenge_wrong_text">Try again!</string>
-    <string name="challenge_quiz_counter_fmt">Question %1$d/%2$d</string>
+    <string name="challenge_done">Challenge done!</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="challenge_completed">Challenge complete</string>
 
 </resources>
