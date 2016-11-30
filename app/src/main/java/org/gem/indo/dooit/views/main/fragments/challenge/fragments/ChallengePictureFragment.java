@@ -33,6 +33,7 @@ import org.gem.indo.dooit.models.User;
 import org.gem.indo.dooit.models.challenge.Participant;
 import org.gem.indo.dooit.models.challenge.PictureChallenge;
 import org.gem.indo.dooit.models.challenge.PictureChallengeQuestion;
+import org.gem.indo.dooit.views.main.fragments.challenge.ChallengeFragment;
 import org.gem.indo.dooit.views.main.fragments.challenge.ChallengeFragmentState;
 import org.gem.indo.dooit.views.main.fragments.challenge.interfaces.HasChallengeFragmentState;
 
@@ -191,6 +192,7 @@ public class ChallengePictureFragment extends Fragment implements HasChallengeFr
     @Override
     public void onSaveInstanceState(Bundle outState) {
         if (outState != null) {
+            outState.putSerializable(ChallengeFragment.ARG_PAGE, FRAGMENT_STATE);
             outState.putParcelable(ARG_PARTICIPANT, participant);
             outState.putParcelable(ARG_CHALLENGE, challenge);
         }
@@ -200,8 +202,8 @@ public class ChallengePictureFragment extends Fragment implements HasChallengeFr
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         if (savedInstanceState != null) {
-            savedInstanceState.putParcelable(ARG_PARTICIPANT, participant);
-            savedInstanceState.putParcelable(ARG_CHALLENGE, challenge);
+            savedInstanceState.getParcelable(ARG_PARTICIPANT);
+            savedInstanceState.getParcelable(ARG_CHALLENGE);
         }
         super.onActivityCreated(savedInstanceState);
     }
