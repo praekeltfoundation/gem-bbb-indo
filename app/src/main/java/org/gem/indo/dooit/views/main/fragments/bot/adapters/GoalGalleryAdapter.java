@@ -31,7 +31,7 @@ public class GoalGalleryAdapter extends RecyclerView.Adapter<AnswerGoalGalleryIt
 
     @Override
     public int getItemCount() {
-        return prototypes.size();
+        return prototypes == null ? 0 : prototypes.size();
     }
 
     @Override
