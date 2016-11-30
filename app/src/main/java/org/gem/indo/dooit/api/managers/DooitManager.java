@@ -64,11 +64,11 @@ public class DooitManager {
                 return chain.proceed(request);
             }
             Request originalRequest = chain.request();
-            Request.Builder request = originalRequest.newBuilder();
-            if (originalRequest.header("fresh") != null) {
-                request.cacheControl(CacheControl.FORCE_NETWORK);
-            }
-            Response originalResponse = chain.proceed(request.build());
+            //Request.Builder request = originalRequest.newBuilder();
+            //if (originalRequest.header("fresh") != null) {
+            //    request.cacheControl(CacheControl.FORCE_NETWORK);
+            //}
+            Response originalResponse = chain.proceed(originalRequest);
 
             return originalResponse.newBuilder()
                     .removeHeader("Pragma")
@@ -82,8 +82,22 @@ public class DooitManager {
         context = application.getApplicationContext();
 
         OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
-        Cache cache = new Cache(application.getApplicationContext().getCacheDir(), 1024 * 1024 * 30);
-        httpClient.cache(cache).addInterceptor(RewriteCacheControlInterceptor);
+        final Cache cache = new Cache(application.getApplicationContext().getCacheDir(), 1024 * 1024 * 30);
+
+        httpClient.addInterceptor( new Interceptor() {
+            @Override
+            public Response intercept(Chain chain) throws IOException {
+                int hc = cache.hitCount();
+                Request originalRequest = chain.request();
+                Response originalResponse = chain.proceed(originalRequest);
+
+                return originalResponse.newBuilder()
+                        .removeHeader("Pragma")
+                        .removeHeader("Cache-Control")
+                        .header("Cache-Control", String.format("max-age=%d, only-if-cached, max-stale=%d", 30*60, 0))
+                        .build();
+            }
+        });
         HttpLoggingInterceptor logging = new HttpLoggingInterceptor(new HttpLoggingInterceptor.Logger() {
             @Override
             public void log(String message) {
@@ -110,7 +124,7 @@ public class DooitManager {
         });
         httpClient.addInterceptor(logging);
 
-        OkHttpClient client = httpClient.build();
+        OkHttpClient client = httpClient.cache(cache).build();
 
         retrofit = new Retrofit.Builder()
                 .baseUrl(Constants.BASE_URL)
