@@ -2,9 +2,11 @@ package org.gem.indo.dooit.api.managers;
 
 import android.app.Application;
 import android.content.Context;
+import android.net.Network;
 import android.util.Log;
 
 import com.google.gson.GsonBuilder;
+import com.ncornette.cache.OkCacheControl;
 
 import org.gem.indo.dooit.Constants;
 import org.gem.indo.dooit.DooitApplication;
@@ -37,6 +39,8 @@ import rx.Scheduler;
 import rx.functions.Func2;
 import rx.schedulers.Schedulers;
 
+import static java.util.concurrent.TimeUnit.MINUTES;
+
 /**
  * Created by herman on 2016/11/05.
  */
@@ -49,55 +53,13 @@ public class DooitManager {
     @Inject
     Persisted persisted;
     private Context context;
-    private static final Interceptor RewriteCacheControlInterceptor = new Interceptor() {
-        @Override
-        public Response intercept(Chain chain) throws IOException {
-            if(false){
-                /// other example code to use cache as fallback mechanism for network issue
-                boolean hasNetwork = false;
-                Request request = chain.request();
-                if (hasNetwork) {
-                    request = request.newBuilder().header("Cache-Control", "public, max-age=" + 60).build();
-                } else {
-                    request = request.newBuilder().header("Cache-Control", "public, only-if-cached, max-stale=" + 60 * 60 * 24 * 7).build();
-                }
-                return chain.proceed(request);
-            }
-            Request originalRequest = chain.request();
-            //Request.Builder request = originalRequest.newBuilder();
-            //if (originalRequest.header("fresh") != null) {
-            //    request.cacheControl(CacheControl.FORCE_NETWORK);
-            //}
-            Response originalResponse = chain.proceed(originalRequest);
-
-            return originalResponse.newBuilder()
-                    .removeHeader("Pragma")
-                    .removeHeader("Cache-Control")
-                    .header("Cache-Control", String.format("max-age=%d, only-if-cached, max-stale=%d", 30*60, 0))
-                    .build();
-        }
-    };
+    protected OkHttpClient client;
     public DooitManager(final Application application) {
         ((DooitApplication) application).component.inject(this);
         context = application.getApplicationContext();
 
         OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
-        final Cache cache = new Cache(application.getApplicationContext().getCacheDir(), 1024 * 1024 * 30);
 
-        httpClient.addInterceptor( new Interceptor() {
-            @Override
-            public Response intercept(Chain chain) throws IOException {
-                int hc = cache.hitCount();
-                Request originalRequest = chain.request();
-                Response originalResponse = chain.proceed(originalRequest);
-
-                return originalResponse.newBuilder()
-                        .removeHeader("Pragma")
-                        .removeHeader("Cache-Control")
-                        .header("Cache-Control", String.format("max-age=%d, only-if-cached, max-stale=%d", 30*60, 0))
-                        .build();
-            }
-        });
         HttpLoggingInterceptor logging = new HttpLoggingInterceptor(new HttpLoggingInterceptor.Logger() {
             @Override
             public void log(String message) {
@@ -123,8 +85,23 @@ public class DooitManager {
             }
         });
         httpClient.addInterceptor(logging);
+        boolean doOfflineCache = true;
+        if(doOfflineCache) {
+            this.client = OkCacheControl.on(httpClient)
+                    .overrideServerCachePolicy(30, MINUTES)
+                    .forceCacheWhenOffline(new OkCacheControl.NetworkMonitor() {
+                        @Override
+                        public boolean isOnline() {
+                            return false;
+                        }
+                    })
+                    .apply() // return to the OkHttpClient.Builder instance
+                    .cache(new Cache(application.getCacheDir(), 10 * 1024 * 1024))
+                    .build();
+        }else{
 
-        OkHttpClient client = httpClient.cache(cache).build();
+            this.client = httpClient.build();
+        }
 
         retrofit = new Retrofit.Builder()
                 .baseUrl(Constants.BASE_URL)
@@ -138,6 +115,7 @@ public class DooitManager {
                                 .create())
                 )
                 .build();
+
     }
 
     protected Request.Builder addTokenToRequest(Request.Builder requestBuilder) {
