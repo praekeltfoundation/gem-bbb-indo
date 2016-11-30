@@ -188,6 +188,13 @@ public class TargetFragment extends MainFragment {
         startBot(BotType.GOAL_WITHDRAW);
     }
 
+    @OnClick(R.id.fragment_target_savings_plan_edit)
+    public void onEditClick(View view) {
+        Goal goal = goals.get(viewPager.getCurrentItem());
+        persisted.saveConvoGoal(BotType.GOAL_EDIT, goal);
+        startBot(BotType.GOAL_EDIT);
+    }
+
     private void populateGoal(Goal goal) {
         goalName.setText(goal.getName());
         saved.setText(CurrencyHelper.format(goal.getValue()));
