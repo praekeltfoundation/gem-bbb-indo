@@ -1,10 +1,8 @@
 package org.gem.indo.dooit.views.settings;
 
-import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.TextView;
@@ -19,7 +17,7 @@ import org.gem.indo.dooit.views.RootActivity;
 import org.gem.indo.dooit.views.helpers.activity.DooitActivityBuilder;
 import org.gem.indo.dooit.views.onboarding.ChangeNameActivity;
 import org.gem.indo.dooit.views.onboarding.ChangePasswordActivity;
-import org.w3c.dom.Text;
+import org.gem.indo.dooit.views.web.MinimalWebViewActivity;
 
 import javax.inject.Inject;
 
@@ -86,15 +84,15 @@ public class SettingsActivity extends DooitActivity {
 
     @OnClick({R.id.settings_about_terms})
     public void terms(View view) {
-        SettingsWebViewActivity.Builder.create(this)
-                .setTitle(getString(org.gem.indo.dooit.R.string.title_activity_terms_and_conditions))
+        MinimalWebViewActivity.Builder.create(this)
+                //.setTitle(getString(org.gem.indo.dooit.R.string.title_activity_terms_and_conditions))
                 .setUrl(Constants.TERMS_URL)
                 .startActivity();
     }
 
     @OnClick({R.id.settings_about_privacy})
     public void privacy(View view) {
-        SettingsWebViewActivity.Builder.create(this)
+        MinimalWebViewActivity.Builder.create(this)
                 .setTitle(getString(org.gem.indo.dooit.R.string.title_activity_privacy_policy))
                 .setUrl(Constants.PRIVACY_URL)
                 .startActivity();

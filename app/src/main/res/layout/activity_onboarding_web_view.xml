@@ -4,7 +4,7 @@
     android:id="@+id/activity_terms_conditions"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="org.gem.indo.dooit.views.onboarding.OnboardingWebActivity">
+    tools:context="org.gem.indo.dooit.views.web.MinimalWebViewActivity">
 
 
     <WebView

@@ -70,7 +70,7 @@
             android:theme="@style/AppTheme.NoActionBar" />
 
         <activity
-            android:name="org.gem.indo.dooit.views.settings.SettingsWebViewActivity"
+            android:name="org.gem.indo.dooit.views.web.MinimalWebViewActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
 
@@ -81,10 +81,6 @@
 
         <activity
             android:name="org.gem.indo.dooit.views.tip.TipArticleActivity"
-            android:screenOrientation="portrait" />
-
-        <activity
-            android:name="org.gem.indo.dooit.views.onboarding.OnboardingWebActivity"
             android:screenOrientation="portrait" />
 
         <service
