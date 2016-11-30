@@ -103,7 +103,7 @@ public class GoalVerificationViewHolder extends BaseBotViewHolder<Node> {
             goalWeeks = amountLeft / weeklyTarget;
         }
 
-        String[] params = new String[]{
+        Object[] params = new String[]{
                 String.valueOf((int) Math.ceil(weeklyTarget)),
                 goalName,
                 String.valueOf((int) goalWeeks),
