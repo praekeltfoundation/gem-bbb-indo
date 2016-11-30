@@ -41,7 +41,6 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.OnPageChange;
-import rx.functions.Action0;
 import rx.functions.Action1;
 
 public class TargetFragment extends MainFragment {
@@ -142,9 +141,17 @@ public class TargetFragment extends MainFragment {
             rightTarget.setVisibility(View.GONE);
             leftTarget.setVisibility(View.GONE);
         }
+    }
 
-        showLoadingProgress();
-        retrieveGoals();
+    @Override
+    public void onPageEnter() {
+        if (persisted.hasGoals()) {
+            goals = persisted.loadGoals();
+            updateGoals(goals);
+        } else {
+            showLoadingProgress();
+            retrieveGoals();
+        }
     }
 
     @OnPageChange(value = R.id.fragment_target_targets_view_pagers, callback = OnPageChange.Callback.PAGE_SELECTED)
@@ -249,18 +256,23 @@ public class TargetFragment extends MainFragment {
                             getActivity().runOnUiThread(new Runnable() {
                                 @Override
                                 public void run() {
-                                    adapter.updateGoals(goals);
-                                    if (goals.size() > 0) {
-                                        populateGoal(goals.get(0));
-                                        rightTarget.setVisibility(View.VISIBLE);
-                                        showGoals();
-                                    } else {
-                                        showNoGoals();
-                                    }
+                                    persisted.saveGoals(goals);
+                                    updateGoals(goals);
                                 }
                             });
                     }
                 });
+    }
+
+    private void updateGoals(List<Goal> goals) {
+        adapter.updateGoals(goals);
+        if (goals.size() > 0) {
+            populateGoal(goals.get(0));
+            rightTarget.setVisibility(View.VISIBLE);
+            showGoals();
+        } else {
+            showNoGoals();
+        }
     }
 
     private void showLoadingProgress() {

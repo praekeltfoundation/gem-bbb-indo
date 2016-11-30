@@ -46,4 +46,7 @@ public class MainFragment extends Fragment {
         return Locale.getDefault();
     }
 
+    public void onPageEnter() {
+        // Override me
+    }
 }

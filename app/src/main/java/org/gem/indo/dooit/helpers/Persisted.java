@@ -42,6 +42,7 @@ public class Persisted {
     private static final String QUIZ_ANSWERS = "quiz_answers";
     private static final String BOT = "bot";
     private static final String GOAL = "goal";
+    private static final String GOALS = "goals";
     private static final String GOAL_PROTOTYPE = "goal_prototype";
     private static final String BOT_TIP = "bot_tip";
     private static final String TIPS = "tips";
@@ -56,7 +57,9 @@ public class Persisted {
         ((DooitApplication) application).component.inject(this);
     }
 
-    /*** Bot ***/
+    /***
+     * Bot
+     ***/
 
     public ArrayList<BaseBotModel> loadConversationState(BotType type) {
         String conv = dooitSharedPreferences.getString(BOT + type.name(), "");
@@ -119,7 +122,7 @@ public class Persisted {
 
     public List<GoalPrototype> loadGoalProtos() {
         if (hasGoalProtos()) {
-             GoalPrototype[] protos = dooitSharedPreferences.getComplex(GOAL_PROTOTYPE, GoalPrototype[].class);
+            GoalPrototype[] protos = dooitSharedPreferences.getComplex(GOAL_PROTOTYPE, GoalPrototype[].class);
             if (protos != null)
                 return new ArrayList<GoalPrototype>(Arrays.asList(protos));
             else
@@ -136,7 +139,7 @@ public class Persisted {
         dooitSharedPreferences.remove(GOAL_PROTOTYPE);
     }
 
-    public void saveConvoTip(Tip tip){
+    public void saveConvoTip(Tip tip) {
         dooitSharedPreferences.setComplex(BOT_TIP, tip);
     }
 
@@ -154,7 +157,9 @@ public class Persisted {
         dooitSharedPreferences.remove(BOT_TIP);
     }
 
-    /*** User ***/
+    /***
+     * User
+     ***/
 
     public User getCurrentUser() {
         User user = dooitSharedPreferences.getComplex(USER, User.class);
@@ -196,7 +201,33 @@ public class Persisted {
         dooitSharedPreferences.remove(TOKEN);
     }
 
-    /*** Challenge ***/
+    /***
+     * Goal
+     ***/
+
+    public void saveGoals(List<Goal> goals) {
+        dooitSharedPreferences.setComplex(GOALS, goals);
+    }
+
+    public boolean hasGoals() {
+        return dooitSharedPreferences.containsKey(GOALS);
+    }
+
+    public List<Goal> loadGoals() {
+        Goal[] goals = dooitSharedPreferences.getComplex(GOALS, Goal[].class);
+        if (goals != null)
+            return new ArrayList<Goal>(Arrays.asList(goals));
+        else
+            return new ArrayList<Goal>();
+    }
+
+    public void clearGoals() {
+        dooitSharedPreferences.remove(GOALS);
+    }
+
+    /***
+     * Challenge
+     ***/
 
     public void setActiveChallenge(BaseChallenge activeChallenge) {
         dooitSharedPreferences.setComplex(CHALLENGE, activeChallenge);
@@ -245,7 +276,9 @@ public class Persisted {
         dooitSharedPreferences.remove(QUIZ_ANSWERS);
     }
 
-    /*** Tips ***/
+    /***
+     * Tips
+     ***/
 
     public List<Tip> getTips() {
         return loadTips(TIPS);
