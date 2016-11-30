@@ -3,6 +3,7 @@ package org.gem.indo.dooit.views.main.fragments.target;
 import android.graphics.Point;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
+import android.support.v4.widget.NestedScrollView;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -39,9 +40,13 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.OnPageChange;
+import rx.functions.Action0;
 import rx.functions.Action1;
 
 public class TargetFragment extends MainFragment {
+
+    @BindView(R.id.fragment_target_nested_scroll_view)
+    NestedScrollView nestedScrollView;
 
     @BindView(R.id.fragment_target_targets_view_pagers)
     ViewPager viewPager;
@@ -72,6 +77,9 @@ public class TargetFragment extends MainFragment {
 
     @BindView(R.id.fragment_target_right_image_button)
     ImageButton rightTarget;
+
+    @BindView(R.id.fragment_target_loading_progress_container)
+    View loadingProgress;
 
     @BindString(R.string.target_savings_message)
     String savingsMessage;
@@ -128,6 +136,7 @@ public class TargetFragment extends MainFragment {
             leftTarget.setVisibility(View.GONE);
         }
 
+        showLoadingProgress();
         retrieveGoals();
     }
 
@@ -219,6 +228,17 @@ public class TargetFragment extends MainFragment {
                 });
             }
         })
+                .doOnCompleted(new Action0() {
+                    @Override
+                    public void call() {
+                        getActivity().runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                hideLoadingProgress();
+                            }
+                        });
+                    }
+                })
                 .subscribe(new Action1<List<Goal>>() {
                     @Override
                     public void call(final List<Goal> goals) {
@@ -236,5 +256,15 @@ public class TargetFragment extends MainFragment {
                             });
                     }
                 });
+    }
+
+    private void showLoadingProgress() {
+        nestedScrollView.setVisibility(View.GONE);
+        loadingProgress.setVisibility(View.VISIBLE);
+    }
+
+    private void hideLoadingProgress() {
+        nestedScrollView.setVisibility(View.VISIBLE);
+        loadingProgress.setVisibility(View.GONE);
     }
 }
