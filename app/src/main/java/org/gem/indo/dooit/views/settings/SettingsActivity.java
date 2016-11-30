@@ -3,6 +3,8 @@ package org.gem.indo.dooit.views.settings;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.ActionBar;
+import android.support.v7.widget.ActionBarContainer;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.TextView;
@@ -49,10 +51,11 @@ public class SettingsActivity extends DooitActivity {
         ButterKnife.bind(this);
 
         setSupportActionBar(toolbar);
-        if (getSupportActionBar() != null) {
-            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-            getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_d_back_caret_pink);
-            getSupportActionBar().setTitle("");
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null) {
+            actionBar.setDisplayHomeAsUpEnabled(true);
+            actionBar.setHomeAsUpIndicator(R.drawable.ic_d_back_caret_pink);
+            actionBar.setTitle("");
             toolbar.setNavigationOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -60,7 +63,7 @@ public class SettingsActivity extends DooitActivity {
                 }
             });
         }
-                // Background
+        // Background
         SquiggleBackgroundHelper.setBackground(this, R.color.grey_back, R.color.grey_fore, background);
     }
 
@@ -93,7 +96,7 @@ public class SettingsActivity extends DooitActivity {
     @OnClick({R.id.settings_about_privacy})
     public void privacy(View view) {
         MinimalWebViewActivity.Builder.create(this)
-                .setTitle(getString(org.gem.indo.dooit.R.string.title_activity_privacy_policy))
+                //.setTitle(getString(org.gem.indo.dooit.R.string.title_activity_privacy_policy))
                 .setUrl(Constants.PRIVACY_URL)
                 .startActivity();
     }
