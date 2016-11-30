@@ -7,9 +7,6 @@ jdk:
 sudo:
   required
 
-#services:
-#  - docker
-
 env:
   matrix:
     - ANDROID_TARGET=android-24 ANDROID_ABI=armeabi-v7a
@@ -26,14 +23,10 @@ android:
         - extra-google-google_play_services
         - extra-google-m2repository
         - extra-android-m2repository
-        #- sys-img-armeabi-v7a-android-24
 
     licenses:
         - 'android-sdk-license-.+'
         - 'google-gdk-license-.+'
-
-#notifications:
-#  slack: teamkalido:GeHbkancJDuiNjDKBoN6lZ2K
 
 before_cache:
     - rm -f $HOME/.gradle/caches/modules-2/modules-2.lock
@@ -53,33 +46,7 @@ before_install:
 
 before_script:
   - chmod +x gradlew
-    #- if [[ $TRAVIS_COMMIT == *"$RUN_UI_TESTS"* ]]; then
-    #  android list targets;
-    #  sudo echo y | android update sdk --all --no-ui --filter "sys-img-armeabi-v7a-android-24";
-    #  sudo apt-get install apt-transport-https ca-certificates;
-    #  sudo apt-key adv --keyserver hkp://p80.pool.sks-keyservers.net:80 --recv-keys 58118E89F3A912897C070ADBF76221572C52609D;
-    #  sudo rm -f /etc/apt/sources.list.d/docker.list;
-    #  sudo touch /etc/apt/sources.list.d/docker.list;
-    #  sudo bash -c "echo 'deb https://apt.dockerproject.org/repo ubuntu-precise main' >> /etc/apt/sources.list.d/docker.list";
-    #  sudo apt-get update;
-    #  sudo apt-get purge -m lxc-docker;
-    #  sudo apt-cache policy docker-engine;
-    #  sudo apt-get update;
-    #  sudo apt-get install docker-engine;
-    #  sudo docker login -e $DOCKER_EMAIL -u $DOCKER_USER -p $DOCKER_PASS;
-    #  sudo docker pull kalidomedocker/kalido;
-    #  sudo docker images; sudo docker ps -a;
-    #  sudo chmod u+x create_docker_files;
-    #  sudo ./create_docker_files -c "sudo docker run -d --entrypoint /start.sh -p 127.0.0.1:8000:8000 -p 127.0.0.1:5555:5432 kalidomedocker/kalido:latest";
-    #  sudo ./startDocker.sh;
-    #  echo no | android create avd --force -n test -t $ANDROID_TARGET --abi $ANDROID_ABI;
-    #  emulator -avd test -no-skin -no-audio -no-window;
-    #  android-wait-for-emulator;
-    #  adb shell input keyevent 82;
-    #  fi
+  - sudo ./createPassfile -pwd $KEYSTORE_PASS;
 
 script:
-    #- if [[ $TRAVIS_COMMIT == *"$RUN_UI_TESTS"* ]]; then
-    #  ./gradlew connectedAutomationDebugAndroidTest;
-    #  fi
     - if [ $TRAVIS_BRANCH == "release_candidate" ]; then ./gradlew assembleStagingRelease crashlyticsUploadDistributionStagingRelease; else ./gradlew assembleStagingRelease; fi
