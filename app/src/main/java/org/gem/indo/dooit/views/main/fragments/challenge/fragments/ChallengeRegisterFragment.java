@@ -29,6 +29,7 @@ import org.gem.indo.dooit.models.challenge.PictureChallenge;
 import org.gem.indo.dooit.models.challenge.QuizChallenge;
 import org.gem.indo.dooit.models.challenge.QuizChallengeOption;
 import org.gem.indo.dooit.models.challenge.QuizChallengeQuestion;
+import org.gem.indo.dooit.views.main.fragments.challenge.ChallengeFragment;
 import org.gem.indo.dooit.views.main.fragments.challenge.ChallengeFragmentState;
 import org.gem.indo.dooit.views.main.fragments.challenge.interfaces.HasChallengeFragmentState;
 
@@ -48,7 +49,6 @@ import rx.functions.Action1;
  */
 public class ChallengeRegisterFragment extends Fragment implements HasChallengeFragmentState {
     private static final String TAG = "ChallengeRegister";
-    private static final String ARG_CHALLENGE = "challenge";
     private static final String ARG_HASACTIVE = "has_active";
     private static final ChallengeFragmentState FRAGMENT_STATE = ChallengeFragmentState.REGISTER;
 
@@ -91,7 +91,7 @@ public class ChallengeRegisterFragment extends Fragment implements HasChallengeF
     public static ChallengeRegisterFragment newInstance(BaseChallenge challenge) {
         ChallengeRegisterFragment fragment = new ChallengeRegisterFragment();
         Bundle args = new Bundle();
-        args.putParcelable(ARG_CHALLENGE, challenge);
+        args.putParcelable(ChallengeFragment.ARG_CHALLENGE, challenge);
         args.putBoolean(ARG_HASACTIVE, false);
         fragment.setArguments(args);
         return fragment;
@@ -100,7 +100,7 @@ public class ChallengeRegisterFragment extends Fragment implements HasChallengeF
     public static ChallengeRegisterFragment newInstance(BaseChallenge challenge, boolean hasActive) {
         ChallengeRegisterFragment fragment = new ChallengeRegisterFragment();
         Bundle args = new Bundle();
-        args.putParcelable(ARG_CHALLENGE, challenge);
+        args.putParcelable(ChallengeFragment.ARG_CHALLENGE, challenge);
         args.putBoolean(ARG_HASACTIVE, hasActive);
         fragment.setArguments(args);
         return fragment;
@@ -110,7 +110,7 @@ public class ChallengeRegisterFragment extends Fragment implements HasChallengeF
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            challenge = getArguments().getParcelable(ARG_CHALLENGE);
+            challenge = getArguments().getParcelable(ChallengeFragment.ARG_CHALLENGE);
             hasActive = getArguments().getBoolean(ARG_HASACTIVE);
         }
         ((DooitApplication) getActivity().getApplication()).component.inject(this);

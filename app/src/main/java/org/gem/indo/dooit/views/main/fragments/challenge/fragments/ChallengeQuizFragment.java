@@ -29,6 +29,7 @@ import org.gem.indo.dooit.models.challenge.QuizChallengeOption;
 import org.gem.indo.dooit.models.challenge.QuizChallengeQuestion;
 import org.gem.indo.dooit.models.challenge.QuizChallengeQuestionState;
 import org.gem.indo.dooit.views.main.fragments.challenge.ChallengeFragment;
+import org.gem.indo.dooit.views.main.fragments.challenge.ChallengeFragmentState;
 import org.gem.indo.dooit.views.main.fragments.challenge.adapters.ChallengeQuizPagerAdapter;
 import org.gem.indo.dooit.views.main.fragments.challenge.interfaces.OnOptionChangeListener;
 import org.gem.indo.dooit.views.main.fragments.challenge.interfaces.OnQuestionCompletedListener;
@@ -57,8 +58,7 @@ import rx.functions.Action1;
  */
 public class ChallengeQuizFragment extends Fragment implements OnOptionChangeListener {
     private static final String TAG = "ChallengeQuiz";
-    private static final String ARG_CHALLENGE = "challenge";
-    private static final String ARG_PARTICIPANT = "participant";
+    private static final ChallengeFragmentState FRAGMENT_STATE = ChallengeFragmentState.QUIZ;
 
     @Inject
     Persisted persisted;
@@ -105,8 +105,8 @@ public class ChallengeQuizFragment extends Fragment implements OnOptionChangeLis
     public static ChallengeQuizFragment newInstance(Participant participant, QuizChallenge challenge) {
         ChallengeQuizFragment fragment = new ChallengeQuizFragment();
         Bundle args = new Bundle();
-        args.putParcelable(ARG_PARTICIPANT, participant);
-        args.putParcelable(ARG_CHALLENGE, challenge);
+        args.putParcelable(ChallengeFragment.ARG_PARTICIPANT, participant);
+        args.putParcelable(ChallengeFragment.ARG_CHALLENGE, challenge);
         fragment.setArguments(args);
         return fragment;
     }
@@ -115,8 +115,8 @@ public class ChallengeQuizFragment extends Fragment implements OnOptionChangeLis
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            participant = getArguments().getParcelable(ARG_PARTICIPANT);
-            mChallenge = getArguments().getParcelable(ARG_CHALLENGE);
+            participant = getArguments().getParcelable(ChallengeFragment.ARG_PARTICIPANT);
+            mChallenge = getArguments().getParcelable(ChallengeFragment.ARG_CHALLENGE);
         }
         ((DooitApplication) getActivity().getApplication()).component.inject(this);
         mAdapter = new ChallengeQuizPagerAdapter(this, getChildFragmentManager(), mChallenge);

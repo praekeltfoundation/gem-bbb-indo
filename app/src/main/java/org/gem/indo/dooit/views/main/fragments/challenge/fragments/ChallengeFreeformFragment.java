@@ -22,6 +22,8 @@ import org.gem.indo.dooit.models.challenge.FreeformChallenge;
 import org.gem.indo.dooit.models.challenge.FreeformChallengeQuestion;
 import org.gem.indo.dooit.models.challenge.Participant;
 import org.gem.indo.dooit.models.challenge.ParticipantFreeformAnswer;
+import org.gem.indo.dooit.views.main.fragments.challenge.ChallengeFragment;
+import org.gem.indo.dooit.views.main.fragments.challenge.ChallengeFragmentState;
 
 import javax.inject.Inject;
 
@@ -37,8 +39,7 @@ import rx.functions.Action1;
  */
 public class ChallengeFreeformFragment extends Fragment {
     private static final String TAG = "ChallengeFreeform";
-    private static final String ARG_CHALLENGE = "challenge";
-    private static final String ARG_PARTICIPANT = "participant";
+    private static final ChallengeFragmentState FRAGMENT_STATE = ChallengeFragmentState.FREEFORM;
 
     @Inject
     ChallengeManager challengeManager;
@@ -74,8 +75,8 @@ public class ChallengeFreeformFragment extends Fragment {
     public static ChallengeFreeformFragment newInstance(Participant participant, FreeformChallenge challenge) {
         ChallengeFreeformFragment fragment = new ChallengeFreeformFragment();
         Bundle args = new Bundle();
-        args.putParcelable(ARG_PARTICIPANT, participant);
-        args.putParcelable(ARG_CHALLENGE, challenge);
+        args.putParcelable(ChallengeFragment.ARG_PARTICIPANT, participant);
+        args.putParcelable(ChallengeFragment.ARG_CHALLENGE, challenge);
         fragment.setArguments(args);
         return fragment;
     }
@@ -85,8 +86,8 @@ public class ChallengeFreeformFragment extends Fragment {
         super.onCreate(savedInstanceState);
         ((DooitApplication) getActivity().getApplication()).component.inject(this);
         if (getArguments() != null) {
-            participant = getArguments().getParcelable(ARG_PARTICIPANT);
-            challenge = getArguments().getParcelable(ARG_CHALLENGE);
+            participant = getArguments().getParcelable(ChallengeFragment.ARG_PARTICIPANT);
+            challenge = getArguments().getParcelable(ChallengeFragment.ARG_CHALLENGE);
             question = challenge != null ? challenge.getQuestion() : null;
         }
     }

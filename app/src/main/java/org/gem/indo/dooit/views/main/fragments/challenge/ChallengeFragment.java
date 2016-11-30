@@ -42,6 +42,7 @@ public class ChallengeFragment extends MainFragment {
     public static final String TAG = "ChallengeMain";
     public static final String ARG_CHALLENGE = "challenge";
     public static final String ARG_PAGE = "challenge_page";
+    public static final String ARG_PARTICIPANT = "participant";
 
     @Inject
     ChallengeManager challengeManager;

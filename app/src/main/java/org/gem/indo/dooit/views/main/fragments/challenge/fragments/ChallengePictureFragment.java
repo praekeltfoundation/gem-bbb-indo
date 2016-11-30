@@ -55,8 +55,6 @@ import static android.app.Activity.RESULT_OK;
  */
 public class ChallengePictureFragment extends Fragment implements HasChallengeFragmentState {
     public static final String TAG = "PictureChallenge";
-    public static final String ARG_CHALLENGE = "challenge";
-    public static final String ARG_PARTICIPANT = "participant";
     private static final ChallengeFragmentState FRAGMENT_STATE = ChallengeFragmentState.PICTURE;
 
     @Inject
@@ -86,8 +84,8 @@ public class ChallengePictureFragment extends Fragment implements HasChallengeFr
     public static ChallengePictureFragment newInstance(Participant participant, PictureChallenge challenge) {
         ChallengePictureFragment fragment = new ChallengePictureFragment();
         Bundle args = new Bundle();
-        args.putParcelable(ARG_PARTICIPANT, participant);
-        args.putParcelable(ARG_CHALLENGE, challenge);
+        args.putParcelable(ChallengeFragment.ARG_PARTICIPANT, participant);
+        args.putParcelable(ChallengeFragment.ARG_CHALLENGE, challenge);
         fragment.setArguments(args);
         return fragment;
     }
@@ -97,8 +95,8 @@ public class ChallengePictureFragment extends Fragment implements HasChallengeFr
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
         if (getArguments() != null) {
-            participant = getArguments().getParcelable(ARG_PARTICIPANT);
-            challenge = getArguments().getParcelable(ARG_CHALLENGE);
+            participant = getArguments().getParcelable(ChallengeFragment.ARG_PARTICIPANT);
+            challenge = getArguments().getParcelable(ChallengeFragment.ARG_CHALLENGE);
         }
         ((DooitApplication) getActivity().getApplication()).component.inject(this);
     }
@@ -193,8 +191,8 @@ public class ChallengePictureFragment extends Fragment implements HasChallengeFr
     public void onSaveInstanceState(Bundle outState) {
         if (outState != null) {
             outState.putSerializable(ChallengeFragment.ARG_PAGE, FRAGMENT_STATE);
-            outState.putParcelable(ARG_PARTICIPANT, participant);
-            outState.putParcelable(ARG_CHALLENGE, challenge);
+            outState.putParcelable(ChallengeFragment.ARG_PARTICIPANT, participant);
+            outState.putParcelable(ChallengeFragment.ARG_CHALLENGE, challenge);
         }
         super.onSaveInstanceState(outState);
     }
@@ -202,8 +200,8 @@ public class ChallengePictureFragment extends Fragment implements HasChallengeFr
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         if (savedInstanceState != null) {
-            savedInstanceState.getParcelable(ARG_PARTICIPANT);
-            savedInstanceState.getParcelable(ARG_CHALLENGE);
+            savedInstanceState.getParcelable(ChallengeFragment.ARG_PARTICIPANT);
+            savedInstanceState.getParcelable(ChallengeFragment.ARG_CHALLENGE);
         }
         super.onActivityCreated(savedInstanceState);
     }
