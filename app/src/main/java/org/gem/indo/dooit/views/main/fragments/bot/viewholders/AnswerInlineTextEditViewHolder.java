@@ -1,6 +1,7 @@
 package org.gem.indo.dooit.views.main.fragments.bot.viewholders;
 
 import android.content.Context;
+import android.support.v4.content.ContextCompat;
 import android.text.InputType;
 import android.view.KeyEvent;
 import android.view.View;
@@ -23,8 +24,10 @@ import butterknife.ButterKnife;
  */
 
 public class AnswerInlineTextEditViewHolder extends BaseBotViewHolder<Answer> {
+
     @BindView(R.id.item_view_bot_inline_edit_view)
     EditText editText;
+
     BotAdapter botAdapter;
     HashtagView.TagsClickListener tagsClickListener;
 
@@ -33,6 +36,8 @@ public class AnswerInlineTextEditViewHolder extends BaseBotViewHolder<Answer> {
         this.botAdapter = botAdapter;
         this.tagsClickListener = tagsClickListener;
         ButterKnife.bind(this, itemView);
+
+        editText.setBackground(ContextCompat.getDrawable(itemView.getContext(), R.drawable.ic_d_answer_dialogue_bkg));
     }
 
     @Override

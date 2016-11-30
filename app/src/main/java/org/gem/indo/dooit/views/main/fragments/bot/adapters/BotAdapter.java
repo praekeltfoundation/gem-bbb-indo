@@ -45,7 +45,6 @@ public class BotAdapter extends RecyclerView.Adapter<BaseBotViewHolder> {
     public BaseBotViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         switch (BotMessageType.getValueOf(viewType)) {
             case TEXT:
-                return new TextViewHolder(LayoutInflater.from(context).inflate(org.gem.indo.dooit.R.layout.item_view_bot_text, parent, false), this);
             case GOALSELECTION:
                 return new TextViewHolder(LayoutInflater.from(context).inflate(org.gem.indo.dooit.R.layout.item_view_bot_text, parent, false), this);
             case ANSWER:
