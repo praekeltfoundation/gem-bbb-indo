@@ -213,6 +213,7 @@ public class WeekGraph extends FrameLayout {
         this.mGoal = mGoal;
 
         mValues = mGoal.getWeeklyTotals();
+        mMaxValue = 0d;
         mWeeklyTarget = mGoal.getWeeklyTarget();
         mWeeklyAverage = mGoal.getWeeklyAverage();
 
