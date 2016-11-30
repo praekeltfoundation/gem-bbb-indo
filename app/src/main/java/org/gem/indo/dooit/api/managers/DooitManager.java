@@ -22,6 +22,7 @@ import java.io.IOException;
 import javax.inject.Inject;
 
 import okhttp3.Cache;
+import okhttp3.CacheControl;
 import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -62,9 +63,16 @@ public class DooitManager {
                 }
                 return chain.proceed(request);
             }
-            Response originalResponse = chain.proceed(chain.request());
+            Request originalRequest = chain.request();
+            Request.Builder request = originalRequest.newBuilder();
+            if (originalRequest.header("fresh") != null) {
+                request.cacheControl(CacheControl.FORCE_NETWORK);
+            }
+            Response originalResponse = chain.proceed(request.build());
 
             return originalResponse.newBuilder()
+                    .removeHeader("Pragma")
+                    .removeHeader("Cache-Control")
                     .header("Cache-Control", String.format("max-age=%d, only-if-cached, max-stale=%d", 30*60, 0))
                     .build();
         }
