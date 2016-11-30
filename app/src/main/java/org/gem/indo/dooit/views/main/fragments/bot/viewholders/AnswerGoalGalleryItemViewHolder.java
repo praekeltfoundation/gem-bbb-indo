@@ -1,5 +1,6 @@
 package org.gem.indo.dooit.views.main.fragments.bot.viewholders;
 
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.TextView;
@@ -23,11 +24,17 @@ import butterknife.ButterKnife;
 
 public class AnswerGoalGalleryItemViewHolder extends RecyclerView.ViewHolder {
 
+    @BindView(R.id.item_view_bot_carousel_card)
+    View background;
+
     @BindView(R.id.item_view_bot_carousel_card_image)
     SimpleDraweeView image;
 
     @BindView(R.id.item_view_bot_carousel_card_title)
     TextView title;
+
+    @BindView(R.id.item_view_bot_carousel_card_separator)
+    View separator;
 
     @BindView(R.id.item_view_bot_carousel_card_select)
     TextView select;
@@ -39,6 +46,10 @@ public class AnswerGoalGalleryItemViewHolder extends RecyclerView.ViewHolder {
         super(itemView);
         ButterKnife.bind(this, itemView);
         this.listener = listener;
+
+        // Must assign programmatically for Support Library to wrap before API 21
+        background.setBackground(ContextCompat.getDrawable(itemView.getContext(), R.drawable.bkg_carousel_card));
+        separator.setBackground(ContextCompat.getDrawable(itemView.getContext(), R.drawable.bkg_carousel_separator));
     }
 
     public void populate(final GoalPrototype prototype, Answer model) {

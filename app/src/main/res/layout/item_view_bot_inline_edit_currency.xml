@@ -7,14 +7,15 @@
     android:orientation="vertical">
 
     <RelativeLayout
+        android:id="@+id/item_view_bot_inline_edit_currency_container"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="right"
-        android:background="@drawable/ic_d_answer_dialogue_bkg"
         android:paddingBottom="@dimen/bot_text_padding_vertical"
         android:paddingEnd="@dimen/bot_text_padding_horizontal"
         android:paddingStart="@dimen/bot_text_padding_horizontal"
-        android:paddingTop="@dimen/bot_text_padding_vertical">
+        android:paddingTop="@dimen/bot_text_padding_vertical"
+        tools:background="@drawable/ic_d_answer_dialogue_bkg">
 
         <TextView
             android:id="@+id/item_view_bot_inline_edit_currency_view"

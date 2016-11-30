@@ -12,7 +12,6 @@
         style="@style/AppTheme.TextView.Regular.Large"
         android:layout_width="200dp"
         android:layout_height="wrap_content"
-        android:background="@drawable/ic_d_answer_dialogue_bkg"
         android:focusable="true"
         android:imeOptions="actionDone"
         android:inputType="text"
@@ -22,5 +21,6 @@
         android:paddingEnd="@dimen/bot_text_padding_horizontal"
         android:paddingStart="@dimen/bot_text_padding_horizontal"
         android:paddingTop="@dimen/bot_text_padding_vertical"
+        tools:background="@drawable/ic_d_answer_dialogue_bkg"
         tools:text="Blank Answer" />
 </RelativeLayout>
