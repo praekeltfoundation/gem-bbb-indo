@@ -55,6 +55,7 @@ import static android.app.Activity.RESULT_OK;
  */
 public class ChallengePictureFragment extends Fragment implements HasChallengeFragmentState {
     public static final String TAG = "PictureChallenge";
+    public static final String ARG_IMGURI = "challenge_picture_uri";
     private static final ChallengeFragmentState FRAGMENT_STATE = ChallengeFragmentState.PICTURE;
 
     @Inject
@@ -193,6 +194,7 @@ public class ChallengePictureFragment extends Fragment implements HasChallengeFr
             outState.putSerializable(ChallengeFragment.ARG_PAGE, FRAGMENT_STATE);
             outState.putParcelable(ChallengeFragment.ARG_PARTICIPANT, participant);
             outState.putParcelable(ChallengeFragment.ARG_CHALLENGE, challenge);
+            outState.putString(ARG_IMGURI, imageUri == null ? null : imageUri.toString());
         }
         super.onSaveInstanceState(outState);
     }
@@ -200,8 +202,14 @@ public class ChallengePictureFragment extends Fragment implements HasChallengeFr
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         if (savedInstanceState != null) {
-            savedInstanceState.getParcelable(ChallengeFragment.ARG_PARTICIPANT);
-            savedInstanceState.getParcelable(ChallengeFragment.ARG_CHALLENGE);
+            participant = savedInstanceState.getParcelable(ChallengeFragment.ARG_PARTICIPANT);
+            challenge = savedInstanceState.getParcelable(ChallengeFragment.ARG_CHALLENGE);
+            String uriString = savedInstanceState.getString(ARG_IMGURI);
+            if (uriString != null && !uriString.isEmpty()) {
+                imageUri = Uri.parse(uriString);
+                imagePath = MediaUriHelper.getPath(getContext(), imageUri);
+                image.setImageURI(imageUri);
+            }
         }
         super.onActivityCreated(savedInstanceState);
     }
@@ -213,7 +221,6 @@ public class ChallengePictureFragment extends Fragment implements HasChallengeFr
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == RequestCodes.RESPONSE_GALLERY_REQUEST_CHALLENGE_IMAGE) {
             if (resultCode == RESULT_OK) {
                 imagePath = MediaUriHelper.getPath(getContext(), data.getData());
@@ -223,6 +230,7 @@ public class ChallengePictureFragment extends Fragment implements HasChallengeFr
                 }
             }
         }
+        super.onActivityResult(requestCode, resultCode, data);
     }
 
     @OnClick(R.id.fragment_challenge_picture_submit_button)

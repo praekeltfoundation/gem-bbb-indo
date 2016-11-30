@@ -240,11 +240,17 @@ public class ChallengeFragment extends MainFragment {
             } finally {
                 challenge = savedInstanceState.getParcelable(ARG_CHALLENGE);
                 FragmentTransaction ft = getChildFragmentManager().beginTransaction();
-                Fragment f = createEmptyChildFragment(page);
+                Fragment f = getChildFragment();
                 if (f == null) {
-                    loadChallenge();
+                    f = createEmptyChildFragment(page);
+                    if (f == null) {
+                        loadChallenge();
+                    } else {
+                        f.setArguments(savedInstanceState);
+                        ft.replace(R.id.fragment_challenge_container, f, "fragment_challenge");
+                        ft.commit();
+                    }
                 } else {
-                    f.setArguments(savedInstanceState);
                     ft.replace(R.id.fragment_challenge_container, f, "fragment_challenge");
                     ft.commit();
                 }
