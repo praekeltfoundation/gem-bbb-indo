@@ -19,6 +19,7 @@ public class BaseBotModel {
     protected String text;
     protected String name;
     protected String type;
+    private String next;
     protected String[] textParams = new String[0];
 
     public BaseBotModel(String classType) {
@@ -67,5 +68,13 @@ public class BaseBotModel {
 
     public String getClassType() {
         return classType;
+    }
+
+    public String getNext() {
+        return next;
+    }
+
+    public void setNext(String next) {
+        this.next = next;
     }
 }

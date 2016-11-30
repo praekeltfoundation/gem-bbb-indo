@@ -16,7 +16,6 @@ import java.util.Map;
 public class Answer extends BaseBotModel {
     protected String inlineEditHint;
     private String value;
-    private String next;
     private String nextOnFinish;
     private String removeOnSelect;
     private String[] changeOnSelect;
@@ -27,14 +26,6 @@ public class Answer extends BaseBotModel {
         super(Answer.class.toString());
         type = BotMessageType.ANSWER.name();
         typeOnFinish = type;
-    }
-
-    public String getNext() {
-        return next;
-    }
-
-    public void setNext(String next) {
-        this.next = next;
     }
 
     @Override
