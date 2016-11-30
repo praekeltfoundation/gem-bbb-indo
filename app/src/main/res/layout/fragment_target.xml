@@ -337,7 +337,15 @@
         android:layout_height="match_parent"
         android:background="@color/yellow"
         android:visibility="gone"
-        tools:visibility="gone">
+        tools:visibility="visible">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="400dp"
+            android:src="@drawable/no_goal"
+            android:layout_alignParentTop="true"
+            android:layout_marginTop="-20dp"
+            android:scaleType="centerInside"/>
 
         <TextView
             android:layout_width="wrap_content"
