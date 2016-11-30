@@ -3,6 +3,8 @@ package org.gem.indo.dooit.models.challenge;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.io.Serializable;
 
 /**
@@ -17,6 +19,7 @@ public class QuizChallengeQuestionState implements Parcelable, Serializable {
 
     public boolean completed = false;
 
+    @SerializedName("option_id")
     public long optionId = -1;
 
 

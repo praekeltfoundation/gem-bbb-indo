@@ -6,12 +6,13 @@ import android.text.TextUtils;
 import android.util.Log;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import com.google.gson.internal.LinkedTreeMap;
 
 import org.gem.indo.dooit.DooitApplication;
 import org.gem.indo.dooit.helpers.bot.ListParameterizedType;
-import org.gem.indo.dooit.helpers.challenge.LongSparseArrayParameterizedType;
-import org.gem.indo.dooit.helpers.challenge.MapParameterizedType;
 import org.gem.indo.dooit.models.Goal;
 import org.gem.indo.dooit.models.GoalPrototype;
 import org.gem.indo.dooit.models.Tip;
@@ -28,7 +29,6 @@ import org.gem.indo.dooit.models.enums.BotType;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Map;
 
 import javax.inject.Inject;
 
@@ -226,8 +226,20 @@ public class Persisted {
     }
 
     public LongSparseArray<QuizChallengeQuestionState> loadQuizChallengeState() {
-        LongSparseArrayParameterizedType type = new LongSparseArrayParameterizedType(QuizChallengeQuestionState.class);
-        return dooitSharedPreferences.getComplex(QUIZ_STATE, type);
+        String stored = dooitSharedPreferences.getString(QUIZ_STATE, "");
+        if (stored == null || stored.isEmpty()) return null;
+        Gson gson = new Gson();
+        JsonObject obj = new JsonParser().parse(stored).getAsJsonObject();
+        if (!obj.has("mKeys") || !obj.has("mValues")) return null;
+        JsonArray keys = obj.get("mKeys").getAsJsonArray();
+        JsonArray vals = obj.get("mValues").getAsJsonArray();
+        LongSparseArray<QuizChallengeQuestionState> state = new LongSparseArray<>();
+        int i = 0;
+        while (i < vals.size() && vals.get(i) != null) {
+            state.put(keys.get(i).getAsLong(), gson.fromJson(vals.get(i), QuizChallengeQuestionState.class));
+            i++;
+        }
+        return state;
     }
 
     public void clearQuizChallengeState() {

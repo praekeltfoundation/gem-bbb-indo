@@ -316,7 +316,10 @@ public class ChallengeQuizFragment extends Fragment implements OnOptionChangeLis
         int total = 0;
         for (int i = 0; i < selections.size(); i++) {
             long key = selections.keyAt(i);
-            total += selections.get(key).completed ? 1 : 0;
+            QuizChallengeQuestionState st = selections.get(key);
+            if (st != null && st.completed) {
+                total++;
+            }
         }
         return total;
     }
