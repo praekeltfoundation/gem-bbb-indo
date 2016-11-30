@@ -75,12 +75,12 @@ public class ChallengeFragment extends MainFragment {
      **************************/
 
     private boolean childFragmentExists() {
-        return getActivity().getSupportFragmentManager().findFragmentByTag("fragment_challenge") != null;
+        return getChildFragmentManager().findFragmentByTag("fragment_challenge") != null;
     }
 
     private Fragment getChildFragment() {
         if (getActivity() == null) return null;
-        return getActivity().getSupportFragmentManager().findFragmentByTag("fragment_challenge");
+        return getChildFragmentManager().findFragmentByTag("fragment_challenge");
     }
 
     private Fragment createEmptyChildFragment(ChallengeFragmentState state) {
@@ -216,9 +216,11 @@ public class ChallengeFragment extends MainFragment {
     @Override
     public void onSaveInstanceState(Bundle outState) {
         if (outState != null) {
-            Fragment f = getChildFragment();
-            if (f != null) {
-                f.onSaveInstanceState(outState);
+            if (getActivity() != null && childFragmentExists()) {
+                Fragment f = getChildFragment();
+                if (f != null) {
+                    f.onSaveInstanceState(outState);
+                }
             }
         }
         super.onSaveInstanceState(outState);
