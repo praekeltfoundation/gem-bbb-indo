@@ -20,15 +20,14 @@ import org.gem.indo.dooit.api.DooitAPIError;
 import org.gem.indo.dooit.api.DooitErrorHandler;
 import org.gem.indo.dooit.api.managers.ChallengeManager;
 import org.gem.indo.dooit.helpers.Persisted;
-import org.gem.indo.dooit.helpers.RequestCodes;
 import org.gem.indo.dooit.helpers.SquiggleBackgroundHelper;
 import org.gem.indo.dooit.models.challenge.BaseChallenge;
-import org.gem.indo.dooit.models.challenge.PictureChallenge;
 import org.gem.indo.dooit.views.main.fragments.MainFragment;
+import org.gem.indo.dooit.views.main.fragments.challenge.fragments.ChallengeFreeformFragment;
 import org.gem.indo.dooit.views.main.fragments.challenge.fragments.ChallengeNoneFragment;
 import org.gem.indo.dooit.views.main.fragments.challenge.fragments.ChallengePictureFragment;
+import org.gem.indo.dooit.views.main.fragments.challenge.fragments.ChallengeQuizFragment;
 import org.gem.indo.dooit.views.main.fragments.challenge.fragments.ChallengeRegisterFragment;
-import org.gem.indo.dooit.views.main.fragments.challenge.interfaces.HasChallengeFragmentState;
 
 import javax.inject.Inject;
 
@@ -50,18 +49,10 @@ public class ChallengeFragment extends MainFragment {
     @Inject
     Persisted persisted;
 
-//    @BindView(R.id.fragment_challenge_loadingprogress)
-//    ProgressBar progressBar;
-//
-//    @BindView(R.id.fragment_challenge_loadingtext)
-//    TextView progressText;
-
     @BindView(R.id.fragment_challenge_container)
     FrameLayout container;
 
     BaseChallenge challenge;
-
-    ChallengeFragmentState page = ChallengeFragmentState.NONE;
 
     Unbinder unbinder;
     private Observable<BaseChallenge> challengeSubscription;
@@ -77,33 +68,40 @@ public class ChallengeFragment extends MainFragment {
         return fragment;
     }
 
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setHasOptionsMenu(true);
-        ((DooitApplication) getActivity().getApplication()).component.inject(this);
+
+    /**************************
+     * Child fragment helpers *
+     **************************/
+
+    private boolean childFragmentExists() {
+        return getActivity().getSupportFragmentManager().findFragmentByTag("fragment_challenge") != null;
     }
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        View view = inflater.inflate(org.gem.indo.dooit.R.layout.fragment_challenge, container, false);
-        unbinder = ButterKnife.bind(this, view);
-        SquiggleBackgroundHelper.setBackground(getContext(), R.color.grey_back, R.color.grey_fore, container);
-//        progressBar.setVisibility(View.VISIBLE);
-//        progressText.setVisibility(View.VISIBLE);
-        return view;
+    private Fragment getChildFragment() {
+        if (getActivity() == null) return null;
+        return getActivity().getSupportFragmentManager().findFragmentByTag("fragment_challenge");
     }
 
-    @Override
-    public void onDestroyView() {
-//        progressBar.setVisibility(View.GONE);
-//        progressText.setVisibility(View.GONE);
-        if (unbinder != null) {
-            unbinder.unbind();
+    private Fragment createEmptyChildFragment(ChallengeFragmentState state) {
+        if (state == null) return null;
+        switch (state) {
+            case FREEFORM:
+                return new ChallengeFreeformFragment();
+            case PICTURE:
+                return new ChallengePictureFragment();
+            case QUIZ:
+                return new ChallengeQuizFragment();
+            case REGISTER:
+                return new ChallengeRegisterFragment();
+            default:
+                return null;
         }
-        super.onDestroyView();
     }
+
+
+    /****************
+     * Load helpers *
+     ****************/
 
     private void loadTypeFragment(BaseChallenge challenge, boolean hasActive) {
         if (challenge != null) {
@@ -112,13 +110,13 @@ public class ChallengeFragment extends MainFragment {
             if (getActivity() != null) {
                 FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
                 Fragment fragment = ChallengeRegisterFragment.newInstance(challenge, hasActive);
-                ft.add(R.id.fragment_challenge_container, fragment, "fragment_challenge");
+                ft.replace(R.id.fragment_challenge_container, fragment, "fragment_challenge");
                 ft.commit();
             }
         } else {
             FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
             Fragment fragment = ChallengeNoneFragment.newInstance();
-            ft.add(R.id.fragment_challenge_container, fragment, "fragment_challenge");
+            ft.replace(R.id.fragment_challenge_container, fragment, "fragment_challenge");
             ft.commit();
         }
     }
@@ -126,7 +124,7 @@ public class ChallengeFragment extends MainFragment {
     private void loadChallenge() {
         if (persisted.hasCurrentChallenge()) {
             try {
-                challenge = (BaseChallenge) persisted.getCurrentChallenge();
+                challenge = persisted.getCurrentChallenge();
                 if (challenge.getDeactivationDate().isBeforeNow()) {
                     persisted.clearCurrentChallenge();
                 } else {
@@ -146,31 +144,39 @@ public class ChallengeFragment extends MainFragment {
             }
         });
 
-        challengeSubscription
-                .subscribe(new Action1<BaseChallenge>() {
-                    @Override
-                    public void call(BaseChallenge challenge) {
-                        loadTypeFragment(challenge, false);
-//                        getActivity().runOnUiThread(new Runnable() {
-//                            @Override
-//                            public void run() {
-//                                if (progressBar != null) {
-//                                    progressBar.setVisibility(View.GONE);
-//                                }
-//                                if (progressText != null) {
-//                                    progressText.setVisibility(View.GONE);
-//                                }
-//
-//                            }
-//                        });
-                    }
-                });
+        challengeSubscription.subscribe(new Action1<BaseChallenge>() {
+            @Override
+            public void call(BaseChallenge challenge) {
+                loadTypeFragment(challenge, false);
+            }
+        });
+    }
+
+
+    /************************
+     * Life-cycle overrides *
+     ************************/
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
+        ((DooitApplication) getActivity().getApplication()).component.inject(this);
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        View view = inflater.inflate(org.gem.indo.dooit.R.layout.fragment_challenge, container, false);
+        unbinder = ButterKnife.bind(this, view);
+        SquiggleBackgroundHelper.setBackground(getContext(), R.color.grey_back, R.color.grey_fore, container);
+        return view;
     }
 
     @Override
     public void onStart() {
         super.onStart();
-        if (page == ChallengeFragmentState.NONE) {
+        if (getActivity() != null && !childFragmentExists()) {
             loadChallenge();
         }
     }
@@ -182,9 +188,16 @@ public class ChallengeFragment extends MainFragment {
             challengeSubscription.doOnUnsubscribe(new Action0() {
                 @Override
                 public void call() {
-
                 }
             });
+    }
+
+    @Override
+    public void onDestroyView() {
+        if (unbinder != null) {
+            unbinder.unbind();
+        }
+        super.onDestroyView();
     }
 
     @Override
@@ -194,16 +207,18 @@ public class ChallengeFragment extends MainFragment {
         getActivity().getMenuInflater().inflate(org.gem.indo.dooit.R.menu.menu_main_challenge, menu);
     }
 
+
+    /*************************
+     * State-keeping methods *
+     *************************/
+
     @Override
     public void onSaveInstanceState(Bundle outState) {
         if (outState != null) {
-            Fragment f = getActivity().getSupportFragmentManager().findFragmentByTag("fragment_challenge");
-            if (f instanceof HasChallengeFragmentState) {
-                outState.putSerializable(ARG_PAGE, ((HasChallengeFragmentState) f).getFragmentState());
+            Fragment f = getChildFragment();
+            if (f != null) {
                 f.onSaveInstanceState(outState);
             }
-//            outState.putParcelable(ARG_PARTICIPANT, participant);
-            outState.putParcelable(ARG_CHALLENGE, challenge);
         }
         super.onSaveInstanceState(outState);
     }
@@ -212,42 +227,33 @@ public class ChallengeFragment extends MainFragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         if (savedInstanceState != null) {
+            ChallengeFragmentState page = null;
             try {
                 page = (ChallengeFragmentState) savedInstanceState.getSerializable(ARG_PAGE);
             } catch (Exception e) {
                 Log.d(TAG, "Could not load saved challenge state");
-                page = ChallengeFragmentState.NONE;
-            }
-            challenge = savedInstanceState.getParcelable(ARG_CHALLENGE);
-            FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
-            Fragment f;
-            switch (page) {
-                case PICTURE:
-                    f = new ChallengePictureFragment();
-                    break;
-                default:
+                e.printStackTrace();
+            } finally {
+                challenge = savedInstanceState.getParcelable(ARG_CHALLENGE);
+                FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
+                Fragment f = createEmptyChildFragment(page);
+                if (f == null) {
                     loadChallenge();
-                    return;
+                } else {
+                    f.setArguments(savedInstanceState);
+                    ft.replace(R.id.fragment_challenge_container, f, "fragment_challenge");
+                    ft.commit();
+                }
             }
-            f.setArguments(savedInstanceState);
-            ft.replace(R.id.fragment_challenge_container, f, "fragment_challenge");
-            ft.commit();
         }
     }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        switch (requestCode) {
-            case RequestCodes.RESPONSE_GALLERY_REQUEST_CHALLENGE_IMAGE:
-            case RequestCodes.RESPONSE_CAMERA_REQUEST_CHALLENGE_IMAGE:
-                if (getActivity() != null) {
-                    Fragment fragment = getActivity().getSupportFragmentManager().findFragmentByTag("fragment_challenge");
-                    if (fragment != null) {
-                        fragment.onActivityResult(requestCode, resultCode, data);
-                    }
-                }
-                break;
+        Fragment fragment = getChildFragment();
+        if (fragment != null) {
+            fragment.onActivityResult(requestCode, resultCode, data);
         }
     }
 }
