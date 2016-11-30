@@ -75,6 +75,7 @@ public class ChallengeFragment extends MainFragment {
      **************************/
 
     private boolean childFragmentExists() {
+        if (getActivity() == null) return false;
         return getChildFragmentManager().findFragmentByTag("fragment_challenge") != null;
     }
 
@@ -109,20 +110,20 @@ public class ChallengeFragment extends MainFragment {
             ChallengeFragment.this.challenge = challenge;
 
             if (getActivity() != null) {
-                FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
+                FragmentTransaction ft = getChildFragmentManager().beginTransaction();
                 Fragment fragment = ChallengeRegisterFragment.newInstance(challenge, hasActive);
                 ft.replace(R.id.fragment_challenge_container, fragment, "fragment_challenge");
                 ft.commit();
             }
         } else {
-            FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
+            FragmentTransaction ft = getChildFragmentManager().beginTransaction();
             Fragment fragment = ChallengeNoneFragment.newInstance();
             ft.replace(R.id.fragment_challenge_container, fragment, "fragment_challenge");
             ft.commit();
         }
     }
 
-    private void loadChallenge() {
+    public void loadChallenge() {
         if (persisted.hasCurrentChallenge()) {
             try {
                 challenge = persisted.getCurrentChallenge();
@@ -238,7 +239,7 @@ public class ChallengeFragment extends MainFragment {
                 e.printStackTrace();
             } finally {
                 challenge = savedInstanceState.getParcelable(ARG_CHALLENGE);
-                FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
+                FragmentTransaction ft = getChildFragmentManager().beginTransaction();
                 Fragment f = createEmptyChildFragment(page);
                 if (f == null) {
                     loadChallenge();

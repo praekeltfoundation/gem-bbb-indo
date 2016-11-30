@@ -198,10 +198,7 @@ public class ChallengeQuizFragment extends Fragment implements OnOptionChangeLis
             @Override
             public void onError(DooitAPIError error) {
                 Log.d(TAG, "Could not submit challenge entry");
-                FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
-                Fragment f = ChallengeFragment.newInstance();
-                ft.replace(R.id.fragment_challenge_container, f, "fragment_challenge");
-                ft.commit();
+                returnToParent();
             }
         }).subscribe(new Action1<QuizChallengeEntry>() {
             @Override
@@ -210,10 +207,7 @@ public class ChallengeQuizFragment extends Fragment implements OnOptionChangeLis
                 persisted.clearCurrentChallenge();
                 clearState();
                 challengeCompleted = true;
-                FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
-                Fragment f = ChallengeFragment.newInstance();
-                ft.replace(R.id.fragment_challenge_container, f, "fragment_challenge");
-                ft.commit();
+                returnToParent();
             }
         });
     }
@@ -226,10 +220,14 @@ public class ChallengeQuizFragment extends Fragment implements OnOptionChangeLis
         } else {
             Toast.makeText(getContext(), org.gem.indo.dooit.R.string.challenge_all_questions_complete, Toast.LENGTH_SHORT).show();
             submitParticipantEntry();
-            FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
-            Fragment fragment = ChallengeNoneFragment.newInstance();
-            ft.replace(R.id.fragment_challenge_container, fragment, "fragment_challenge");
-            ft.commit();
+            returnToParent();
+        }
+    }
+
+    private void returnToParent() {
+        Fragment f = getParentFragment();
+        if (f != null && f instanceof ChallengeFragment) {
+            ((ChallengeFragment) f).loadChallenge();
         }
     }
 

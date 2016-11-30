@@ -112,7 +112,7 @@ public class ChallengeDoneFragment extends Fragment {
 
     @OnClick(R.id.challenge_done_button)
     public void finishChallenge() {
-        FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
+        FragmentTransaction ft = getFragmentManager().beginTransaction();
         Fragment f = ChallengeFragment.newInstance();
         ft.replace(R.id.fragment_challenge_container, f, "fragment_challenge");
         ft.commit();

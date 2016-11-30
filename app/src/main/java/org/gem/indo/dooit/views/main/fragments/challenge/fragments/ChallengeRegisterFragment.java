@@ -216,7 +216,7 @@ public class ChallengeRegisterFragment extends Fragment implements HasChallengeF
     }
 
     void startChallenge(Participant participant) {
-        FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
+        FragmentTransaction ft = getFragmentManager().beginTransaction();
         Fragment fragment = null;
 
         switch (challenge.getType()) {
@@ -253,7 +253,7 @@ public class ChallengeRegisterFragment extends Fragment implements HasChallengeF
             case RequestCodes.RESPONSE_GALLERY_REQUEST_CHALLENGE_IMAGE:
             case RequestCodes.RESPONSE_CAMERA_REQUEST_CHALLENGE_IMAGE:
                 if (getActivity() != null) {
-                    FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
+                    FragmentTransaction ft = getFragmentManager().beginTransaction();
                     Fragment fragment = new ChallengePictureFragment();
                     ft.replace(R.id.fragment_challenge_container, fragment, "fragment_challenge");
                     ft.commit();

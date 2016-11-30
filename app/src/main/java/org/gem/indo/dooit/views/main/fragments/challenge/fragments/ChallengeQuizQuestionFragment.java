@@ -81,7 +81,7 @@ public class ChallengeQuizQuestionFragment extends Fragment implements OnOptionC
             completed = getArguments().getBoolean(ARG_COMPLETED);
         }
 
-        Fragment challengeFragment = getActivity().getSupportFragmentManager().findFragmentByTag("fragment_challenge");
+        Fragment challengeFragment = getParentFragment();
         if (challengeFragment instanceof ChallengeQuizFragment) {
             controller = ((ChallengeQuizFragment) challengeFragment);
             controller.addOptionChangeListener(this);
