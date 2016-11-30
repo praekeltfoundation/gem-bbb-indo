@@ -49,6 +49,8 @@
             android:layout_below="@+id/activity_registration_name_text_view"
             android:layout_marginTop="4dp"
             android:inputType="textPersonName"
+            android:imeOptions="actionNext"
+            android:maxLines="1"
             android:nextFocusDown="@+id/activity_registration_age_spinner"
             tools:text="Aida" />
 
@@ -89,6 +91,7 @@
             android:background="@drawable/bkg_edit_view"
             android:spinnerMode="dialog"
             android:nextFocusDown="@+id/activity_registration_gender_radiogroup"
+            android:imeOptions="actionNext"
             tools:listitem="@layout/item_spinner_age" />
 
         <TextView
@@ -122,6 +125,8 @@
             android:layout_below="@+id/activity_registration_gender_text_view"
             android:layout_marginTop="8dp"
             android:orientation="horizontal"
+            android:imeOptions="actionNext"
+            android:nextFocusDown="@+id/activity_registration_number_text_edit"
             tools:checkedButton="@id/activity_registration_gender_girl">
 
             <RadioButton
@@ -134,6 +139,7 @@
                 android:paddingStart="8dp"
                 android:text="@string/reg_gender_girl"
                 android:textAppearance="@style/AppTheme.TextView.Regular.ExtraLarge"
+                android:imeOptions="actionNext"
                 android:nextFocusDown="@+id/activity_registration_gender_boy"
                 android:textColor="@color/white" />
 
@@ -147,6 +153,7 @@
                 android:paddingStart="8dp"
                 android:text="@string/reg_gender_boy"
                 android:textAppearance="@style/AppTheme.TextView.Regular.ExtraLarge"
+                android:imeOptions="actionNext"
                 android:nextFocusDown="@+id/activity_registration_number_text_edit"
                 android:textColor="@color/white" />
 
@@ -173,7 +180,9 @@
             android:layout_alignParentStart="true"
             android:layout_below="@+id/activity_registration_number_text_view"
             android:layout_marginTop="4dp"
+            android:imeOptions="actionNext"
             android:nextFocusDown="@+id/activity_registration_password_edit_text"
+            android:maxLines="1"
             android:inputType="text"
             tools:text="+110002223" />
 
@@ -209,8 +218,9 @@
             android:layout_alignParentStart="true"
             android:layout_below="@+id/activity_registration_password_text_view"
             android:nextFocusDown="@+id/activity_registration_register_button"
-
+            android:imeOptions="actionNext"
             android:layout_marginTop="4dp"
+            android:maxLines="1"
             android:inputType="textPassword"
             tools:text="qwertyuiop" />
 
