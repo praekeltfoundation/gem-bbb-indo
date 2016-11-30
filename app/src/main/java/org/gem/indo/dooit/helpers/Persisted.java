@@ -1,6 +1,7 @@
 package org.gem.indo.dooit.helpers;
 
 import android.app.Application;
+import android.support.v4.util.LongSparseArray;
 import android.text.TextUtils;
 import android.util.Log;
 
@@ -9,6 +10,7 @@ import com.google.gson.internal.LinkedTreeMap;
 
 import org.gem.indo.dooit.DooitApplication;
 import org.gem.indo.dooit.helpers.bot.ListParameterizedType;
+import org.gem.indo.dooit.helpers.challenge.LongSparseArrayParameterizedType;
 import org.gem.indo.dooit.helpers.challenge.MapParameterizedType;
 import org.gem.indo.dooit.models.Goal;
 import org.gem.indo.dooit.models.GoalPrototype;
@@ -219,12 +221,12 @@ public class Persisted {
         dooitSharedPreferences.remove(CHALLENGE);
     }
 
-    public void saveQuizChallengeState(Map<Long, QuizChallengeQuestionState> state) {
+    public void saveQuizChallengeState(LongSparseArray<QuizChallengeQuestionState> state) {
         dooitSharedPreferences.setComplex(QUIZ_STATE, state);
     }
 
-    public Map<Long, QuizChallengeQuestionState> loadQuizChallengeState() {
-        MapParameterizedType type = new MapParameterizedType(Long.class, QuizChallengeQuestionState.class);
+    public LongSparseArray<QuizChallengeQuestionState> loadQuizChallengeState() {
+        LongSparseArrayParameterizedType type = new LongSparseArrayParameterizedType(QuizChallengeQuestionState.class);
         return dooitSharedPreferences.getComplex(QUIZ_STATE, type);
     }
 

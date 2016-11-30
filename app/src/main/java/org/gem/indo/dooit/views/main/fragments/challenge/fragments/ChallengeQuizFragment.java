@@ -2,8 +2,12 @@ package org.gem.indo.dooit.views.main.fragments.challenge.fragments;
 
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.os.Parcel;
+import android.os.Parcelable;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.util.LongSparseArray;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -20,7 +24,6 @@ import org.gem.indo.dooit.api.DooitAPIError;
 import org.gem.indo.dooit.api.DooitErrorHandler;
 import org.gem.indo.dooit.api.managers.ChallengeManager;
 import org.gem.indo.dooit.helpers.Persisted;
-import org.gem.indo.dooit.helpers.SquiggleBackgroundHelper;
 import org.gem.indo.dooit.models.challenge.Participant;
 import org.gem.indo.dooit.models.challenge.ParticipantAnswer;
 import org.gem.indo.dooit.models.challenge.QuizChallenge;
@@ -36,6 +39,7 @@ import org.gem.indo.dooit.views.main.fragments.challenge.interfaces.OnQuestionCo
 import org.joda.time.DateTime;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -58,6 +62,8 @@ import rx.functions.Action1;
  */
 public class ChallengeQuizFragment extends Fragment implements OnOptionChangeListener {
     private static final String TAG = "ChallengeQuiz";
+    private static final String ARG_ANSWERS = "quiz_answers";
+    private static final String ARG_STATE = "quiz_state";
     private static final ChallengeFragmentState FRAGMENT_STATE = ChallengeFragmentState.QUIZ;
 
     @Inject
@@ -81,9 +87,9 @@ public class ChallengeQuizFragment extends Fragment implements OnOptionChangeLis
     private boolean challengeCompleted = false;
     private ChallengeQuizPagerAdapter mAdapter;
     private List<ParticipantAnswer> answers = new ArrayList<ParticipantAnswer>();
-    private Map<Long, QuizChallengeQuestionState> selections = new HashMap<>();
+    private LongSparseArray<QuizChallengeQuestionState> selections = new LongSparseArray<>();
     private Participant participant;
-    private QuizChallenge mChallenge;
+    private QuizChallenge challenge;
     private QuizChallengeOption currentOption = null;
     private QuizChallengeQuestion currentQuestion = null;
     private Set<OnOptionChangeListener> optionChangeListeners = new HashSet<>();
@@ -116,10 +122,10 @@ public class ChallengeQuizFragment extends Fragment implements OnOptionChangeLis
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
             participant = getArguments().getParcelable(ChallengeFragment.ARG_PARTICIPANT);
-            mChallenge = getArguments().getParcelable(ChallengeFragment.ARG_CHALLENGE);
+            challenge = getArguments().getParcelable(ChallengeFragment.ARG_CHALLENGE);
         }
         ((DooitApplication) getActivity().getApplication()).component.inject(this);
-        mAdapter = new ChallengeQuizPagerAdapter(this, getChildFragmentManager(), mChallenge);
+        mAdapter = new ChallengeQuizPagerAdapter(this, getChildFragmentManager(), challenge);
         addOptionChangeListener(mAdapter);
     }
 
@@ -150,7 +156,7 @@ public class ChallengeQuizFragment extends Fragment implements OnOptionChangeLis
 
     @OnClick(R.id.fragment_challenge_quiz_checkbutton)
     public void checkAnswer() {
-        if (mPager.getCurrentItem() >= mChallenge.numQuestions()) {
+        if (mPager.getCurrentItem() >= challenge.numQuestions()) {
             submitParticipantEntry();
             return;
         }
@@ -180,7 +186,7 @@ public class ChallengeQuizFragment extends Fragment implements OnOptionChangeLis
     }
 
     public void captureAnswer(QuizChallengeQuestion question, QuizChallengeOption option) {
-        answers.add(new ParticipantAnswer(persisted.getCurrentUser().getId(), mChallenge.getId(), question.getId(), option.getId()));
+        answers.add(new ParticipantAnswer(persisted.getCurrentUser().getId(), challenge.getId(), question.getId(), option.getId()));
     }
 
     public void submitParticipantEntry() {
@@ -232,8 +238,8 @@ public class ChallengeQuizFragment extends Fragment implements OnOptionChangeLis
             return;
         }
 
-        if (position < mChallenge.numQuestions()) {
-            mProgressCounter.setText(String.format(getString(org.gem.indo.dooit.R.string.challenge_quiz_counter_fmt), position + 1, mChallenge.numQuestions()));
+        if (position < challenge.numQuestions()) {
+            mProgressCounter.setText(String.format(getString(org.gem.indo.dooit.R.string.challenge_quiz_counter_fmt), position + 1, challenge.numQuestions()));
         } else {
             mProgressCounter.setText("");
         }
@@ -244,7 +250,7 @@ public class ChallengeQuizFragment extends Fragment implements OnOptionChangeLis
             return;
         }
 
-        mProgressBar.setProgress(100 * numCompleted() / mChallenge.numQuestions());
+        mProgressBar.setProgress(100 * numCompleted() / challenge.numQuestions());
     }
 
     @OnPageChange(R.id.fragment_challenge_quiz_pager)
@@ -288,7 +294,7 @@ public class ChallengeQuizFragment extends Fragment implements OnOptionChangeLis
     }
 
     public void setCompleted(long questionId) {
-        if (selections.containsKey(questionId)) {
+        if (selections.get(questionId) != null) {
             selections.put(questionId, new QuizChallengeQuestionState(selections.get(questionId).optionId, true));
         }
         for (OnQuestionCompletedListener l : questionCompletedListeners) {
@@ -299,17 +305,18 @@ public class ChallengeQuizFragment extends Fragment implements OnOptionChangeLis
     }
 
     public boolean isCompleted(long questionId) {
-        return selections.containsKey(questionId) && selections.get(questionId).completed;
+        return selections.get(questionId) != null && selections.get(questionId).completed;
     }
 
     public long getSelectedOption(long questionId) {
-        return selections.containsKey(questionId) ? selections.get(questionId).optionId : -1;
+        return selections.get(questionId) != null ? selections.get(questionId).optionId : -1;
     }
 
     public int numCompleted() {
         int total = 0;
-        for (QuizChallengeQuestionState state : selections.values()) {
-            total += state.completed ? 1 : 0;
+        for (int i = 0; i < selections.size(); i++) {
+            long key = selections.keyAt(i);
+            total += selections.get(key).completed ? 1 : 0;
         }
         return total;
     }
@@ -340,7 +347,7 @@ public class ChallengeQuizFragment extends Fragment implements OnOptionChangeLis
     }
 
     private void loadState() {
-        Map<Long, QuizChallengeQuestionState> state = null;
+        LongSparseArray<QuizChallengeQuestionState> state = null;
         List<ParticipantAnswer> prevAnswers = null;
         try {
             Log.d(TAG, "Loading state. (0/2)");
@@ -362,9 +369,9 @@ public class ChallengeQuizFragment extends Fragment implements OnOptionChangeLis
             answers = persisted.loadQuizChallengeAnswers();
         }
 
-        int len = mChallenge.numQuestions();
+        int len = challenge.numQuestions();
         int idx = 0;
-        List<QuizChallengeQuestion > questions = mChallenge.getQuestions();
+        List<QuizChallengeQuestion > questions = challenge.getQuestions();
         while (idx < len && isCompleted(questions.get(idx).getId())) {
             idx++;
         }
@@ -374,5 +381,40 @@ public class ChallengeQuizFragment extends Fragment implements OnOptionChangeLis
     private void clearState() {
         persisted.clearQuizChallengeState();
         persisted.clearQuizChallengeAnswers();
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        if (outState != null) {
+            outState.putSerializable(ChallengeFragment.ARG_PAGE, FRAGMENT_STATE);
+            outState.putParcelable(ChallengeFragment.ARG_PARTICIPANT, participant);
+            outState.putParcelable(ChallengeFragment.ARG_CHALLENGE, challenge);
+            outState.putParcelableArray(ARG_ANSWERS, answers.toArray(new ParticipantAnswer[]{}));
+            Bundle state = new Bundle();
+            for (int i = 0; i < selections.size(); i++) {
+                state.putParcelable(String.valueOf(selections.keyAt(i)), selections.get(i));
+            }
+            outState.putBundle(ARG_STATE, state);
+        }
+        super.onSaveInstanceState(outState);
+    }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        if (savedInstanceState != null) {
+            participant = savedInstanceState.getParcelable(ChallengeFragment.ARG_PARTICIPANT);
+            challenge = savedInstanceState.getParcelable(ChallengeFragment.ARG_CHALLENGE);
+            ParticipantAnswer storedAnswers[] = (ParticipantAnswer[]) savedInstanceState.getParcelableArray(ARG_ANSWERS);
+            if (storedAnswers != null) {
+                answers = Arrays.asList(storedAnswers);
+            }
+            Bundle storedSelections = savedInstanceState.getBundle(ARG_STATE);
+            if (storedSelections != null) {
+                for (String key: storedSelections.keySet()) {
+                    selections.put(Long.valueOf(key), (QuizChallengeQuestionState) storedSelections.getParcelable(key));
+                }
+            }
+        }
+        super.onActivityCreated(savedInstanceState);
     }
 }
