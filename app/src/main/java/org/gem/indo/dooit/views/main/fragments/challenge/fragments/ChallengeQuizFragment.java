@@ -27,6 +27,8 @@ import org.gem.indo.dooit.models.challenge.QuizChallenge;
 import org.gem.indo.dooit.models.challenge.QuizChallengeEntry;
 import org.gem.indo.dooit.models.challenge.QuizChallengeOption;
 import org.gem.indo.dooit.models.challenge.QuizChallengeQuestion;
+import org.gem.indo.dooit.models.challenge.QuizChallengeQuestionState;
+import org.gem.indo.dooit.views.main.fragments.challenge.ChallengeFragment;
 import org.gem.indo.dooit.views.main.fragments.challenge.adapters.ChallengeQuizPagerAdapter;
 import org.gem.indo.dooit.views.main.fragments.challenge.interfaces.OnOptionChangeListener;
 import org.gem.indo.dooit.views.main.fragments.challenge.interfaces.OnQuestionCompletedListener;
@@ -64,9 +66,6 @@ public class ChallengeQuizFragment extends Fragment implements OnOptionChangeLis
     @Inject
     ChallengeManager challengeManager;
 
-    @BindView(R.id.fragment_chalenge_nested_bg)
-    View background;
-
     @BindView(R.id.fragment_challenge_quiz_progressbar)
     ProgressBar mProgressBar;
 
@@ -79,9 +78,10 @@ public class ChallengeQuizFragment extends Fragment implements OnOptionChangeLis
     @BindView(org.gem.indo.dooit.R.id.fragment_challenge_quiz_checkbutton)
     Button checkButton;
 
+    private boolean challengeCompleted = false;
     private ChallengeQuizPagerAdapter mAdapter;
     private List<ParticipantAnswer> answers = new ArrayList<ParticipantAnswer>();
-    private Map<Long, QuestionState> selections = new HashMap<>();
+    private Map<Long, QuizChallengeQuestionState> selections = new HashMap<>();
     private Participant participant;
     private QuizChallenge mChallenge;
     private QuizChallengeOption currentOption = null;
@@ -129,7 +129,6 @@ public class ChallengeQuizFragment extends Fragment implements OnOptionChangeLis
         // Inflate the layout for this fragment
         View view = inflater.inflate(org.gem.indo.dooit.R.layout.fragment_challenge_quiz, container, false);
         unbinder = ButterKnife.bind(this, view);
-        SquiggleBackgroundHelper.setBackground(getContext(), R.color.grey_back, R.color.grey_fore, background);
         mPager.setAdapter(mAdapter);
         updateProgressCounter(0);
         return view;
@@ -193,14 +192,21 @@ public class ChallengeQuizFragment extends Fragment implements OnOptionChangeLis
             @Override
             public void onError(DooitAPIError error) {
                 Log.d(TAG, "Could not submit challenge entry");
+                FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
+                Fragment f = ChallengeFragment.newInstance();
+                ft.replace(R.id.fragment_challenge_container, f, "fragment_challenge");
+                ft.commit();
             }
         }).subscribe(new Action1<QuizChallengeEntry>() {
             @Override
             public void call(QuizChallengeEntry entry) {
                 Log.d(TAG, "Entry submitted");
+                persisted.clearCurrentChallenge();
+                clearState();
+                challengeCompleted = true;
                 FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
-                Fragment fragment = ChallengeNoneFragment.newInstance("Thank you for participating!");
-                ft.replace(R.id.fragment_challenge_container, fragment, "fragment_challenge");
+                Fragment f = ChallengeFragment.newInstance();
+                ft.replace(R.id.fragment_challenge_container, f, "fragment_challenge");
                 ft.commit();
             }
         });
@@ -243,7 +249,7 @@ public class ChallengeQuizFragment extends Fragment implements OnOptionChangeLis
 
     @OnPageChange(R.id.fragment_challenge_quiz_pager)
     public void onPageSelected(int position) {
-        Log.d(TAG, "Page change: " + String.valueOf(position));
+        Log.d(TAG, "Quiz page change: " + String.valueOf(position));
         updateProgressCounter(position);
         if (position == mAdapter.getCount() - 1) {
             checkButton.setText(org.gem.indo.dooit.R.string.label_done);
@@ -265,7 +271,7 @@ public class ChallengeQuizFragment extends Fragment implements OnOptionChangeLis
         currentQuestion = question;
         currentOption = option;
         long questionId = question.getId();
-        selections.put(questionId, new QuestionState(option.getId(), isCompleted(questionId)));
+        selections.put(questionId, new QuizChallengeQuestionState(option.getId(), isCompleted(questionId)));
         for (OnOptionChangeListener l : optionChangeListeners) {
             if (l != null) {
                 l.onOptionChange(question, option);
@@ -283,7 +289,7 @@ public class ChallengeQuizFragment extends Fragment implements OnOptionChangeLis
 
     public void setCompleted(long questionId) {
         if (selections.containsKey(questionId)) {
-            selections.put(questionId, new QuestionState(selections.get(questionId).optionId, true));
+            selections.put(questionId, new QuizChallengeQuestionState(selections.get(questionId).optionId, true));
         }
         for (OnQuestionCompletedListener l : questionCompletedListeners) {
             if (l != null) {
@@ -302,19 +308,71 @@ public class ChallengeQuizFragment extends Fragment implements OnOptionChangeLis
 
     public int numCompleted() {
         int total = 0;
-        for (QuestionState state : selections.values()) {
+        for (QuizChallengeQuestionState state : selections.values()) {
             total += state.completed ? 1 : 0;
         }
         return total;
     }
 
-    private class QuestionState {
-        private long optionId = -1;
-        private boolean completed = false;
+    @Override
+    public void onStart() {
+        super.onStart();
+        loadState();
+    }
 
-        QuestionState(long optionId, boolean completed) {
-            this.optionId = optionId;
-            this.completed = completed;
+    @Override
+    public void onStop() {
+        if (!challengeCompleted) {
+            saveState();
         }
+        super.onStop();
+    }
+
+    public int calcPagerIdx(int idx) {
+        if (idx >= mPager.getChildCount()) idx = mPager.getChildCount() - 1;
+        if (idx < 0) idx = 0;
+        return idx;
+    }
+
+    private void saveState() {
+        persisted.saveQuizChallengeState(selections);
+        persisted.saveQuizChallengeAnswers(answers);
+    }
+
+    private void loadState() {
+        Map<Long, QuizChallengeQuestionState> state = null;
+        List<ParticipantAnswer> prevAnswers = null;
+        try {
+            Log.d(TAG, "Loading state. (0/2)");
+            state = persisted.loadQuizChallengeState();
+            Log.d(TAG, "Loading answers. (1/2)");
+            prevAnswers = persisted.loadQuizChallengeAnswers();
+            Log.d(TAG, "Loading page index. (2/2)");
+        } catch (Exception e) {
+            Log.d(TAG, "Failed to load quiz state. Resetting.");
+            e.printStackTrace();
+            clearState();
+        }
+
+        if (state != null) {
+            selections = state;
+        }
+
+        if (prevAnswers != null) {
+            answers = persisted.loadQuizChallengeAnswers();
+        }
+
+        int len = mChallenge.numQuestions();
+        int idx = 0;
+        List<QuizChallengeQuestion > questions = mChallenge.getQuestions();
+        while (idx < len && isCompleted(questions.get(idx).getId())) {
+            idx++;
+        }
+        mPager.setCurrentItem(idx);
+    }
+
+    private void clearState() {
+        persisted.clearQuizChallengeState();
+        persisted.clearQuizChallengeAnswers();
     }
 }

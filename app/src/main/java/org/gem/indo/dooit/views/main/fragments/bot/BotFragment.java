@@ -20,11 +20,13 @@ import org.gem.indo.dooit.R;
 import org.gem.indo.dooit.api.DooitAPIError;
 import org.gem.indo.dooit.api.DooitErrorHandler;
 import org.gem.indo.dooit.api.managers.GoalManager;
+import org.gem.indo.dooit.api.managers.TipManager;
 import org.gem.indo.dooit.helpers.Persisted;
 import org.gem.indo.dooit.helpers.SquiggleBackgroundHelper;
 import org.gem.indo.dooit.helpers.bot.BotFeed;
 import org.gem.indo.dooit.models.Goal;
 import org.gem.indo.dooit.models.GoalPrototype;
+import org.gem.indo.dooit.models.Tip;
 import org.gem.indo.dooit.models.bot.Answer;
 import org.gem.indo.dooit.models.bot.BaseBotModel;
 import org.gem.indo.dooit.models.bot.BotCallback;
@@ -37,7 +39,6 @@ import org.gem.indo.dooit.views.main.fragments.target.callbacks.GoalAddCallback;
 import org.gem.indo.dooit.views.main.fragments.target.callbacks.GoalDepositCallback;
 import org.gem.indo.dooit.views.main.fragments.target.callbacks.GoalWithdrawCallback;
 
-import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -59,6 +60,9 @@ import rx.functions.Func1;
  */
 public class BotFragment extends MainFragment implements HashtagView.TagsClickListener {
 
+    @BindView(R.id.fragment_bot)
+    View background;
+
     @BindView(R.id.fragment_bot_conversation_recycler_view)
     RecyclerView conversationRecyclerView;
 
@@ -67,6 +71,12 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
 
     @Inject
     Persisted persisted;
+
+    @Inject
+    GoalManager goalManager;
+
+    @Inject
+    TipManager tipManager;
 
     BotType type = BotType.DEFAULT;
     BotCallback callback;
@@ -102,7 +112,7 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
         // Inflate the layout for this fragment
         View view = inflater.inflate(org.gem.indo.dooit.R.layout.fragment_bot, container, false);
         ButterKnife.bind(this, view);
-        SquiggleBackgroundHelper.setBackground(getContext(), R.color.grey_back, R.color.grey_fore, conversationRecyclerView);
+        SquiggleBackgroundHelper.setBackground(getContext(), R.color.grey_back, R.color.grey_fore, background);
         answerView.addOnTagClickListener(this);
         conversationRecyclerView.setHasFixedSize(true);
         conversationRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -136,6 +146,10 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
     @Override
     public void onActive() {
         super.onActive();
+        createFeed();
+    }
+
+    private void createFeed() {
         feed = new BotFeed<>(getContext());
         switch (type) {
             case DEFAULT:
@@ -149,16 +163,17 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
                 break;
             case GOAL_WITHDRAW:
                 feed.parse(R.raw.goal_withdraw, Node.class);
+                getGoalWithdrawResources();
+                break;
+            case TIP_INTRO:
+                feed.parse(R.raw.tip_intro, Node.class);
                 initializeBot();
                 break;
         }
-
     }
 
-    @Inject
-    GoalManager goalManager;
-
     private void getGoalAddResources() {
+        // TODO: Refactor into own class
         ArrayList<Observable> reqSync = new ArrayList<>();
         Observable goalProtos = goalManager.retrieveGoalPrototypes(new DooitErrorHandler() {
             @Override
@@ -209,6 +224,59 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
             initializeBot();
     }
 
+    private void getGoalWithdrawResources() {
+        // TODO: Refactor into own class
+        ArrayList<Observable> reqSync = new ArrayList<>();
+        Observable tips = tipManager.retrieveTips(new DooitErrorHandler() {
+            @Override
+            public void onError(DooitAPIError error) {
+
+            }
+        });
+        if (persisted.hasConvoTip())
+            tips.subscribe(new Action1<List<Tip>>() {
+                @Override
+                public void call(List<Tip> newTips) {
+                    if (!newTips.isEmpty())
+                        persisted.saveConvoTip(newTips.get(0));
+                }
+            });
+        else
+            reqSync.add(tips);
+
+        if (reqSync.size() > 0) {
+            //ShowLoader
+            Observable.from(reqSync).flatMap(new Func1<Observable, Observable<?>>() {
+                @Override
+                public Observable<?> call(Observable observable) {
+                    return observable;
+                }
+            }).doOnCompleted(new Action0() {
+                @Override
+                public void call() {
+                    if (getContext() != null) {
+                        getActivity().runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                initializeBot();
+                            }
+                        });
+                    }
+                }
+            }).subscribe(new Action1<Object>() {
+                @Override
+                public void call(Object o) {
+                    if (o instanceof List) {
+                        if (((List) o).size() == 0) return;
+                        if (((List) o).get(0) instanceof Tip)
+                            persisted.saveConvoTip((Tip) ((List) o).get(0));
+                    }
+                }
+            });
+        } else
+            initializeBot();
+    }
+
     private void initializeBot() {
         if (persisted.hasConversation(type)) {
             ArrayList<BaseBotModel> data = persisted.loadConversationState(type);
@@ -230,25 +298,27 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
                 }
                 return;
             }
-
-            // TODO: Load persisted
-            callback = createBotCallback(type);
-        } else {
-            callback = createBotCallback(type);
         }
 
+        callback = createBotCallback(type);
+
+        // Jump to first node
         switch (type) {
             case DEFAULT:
                 getAndAddNode(null);
                 break;
             case GOAL_ADD:
-                getAndAddNode("goal_add_carousel_test");
+                getAndAddNode("goal_add_ask_goal");
                 break;
             case GOAL_DEPOSIT:
                 getAndAddNode("goal_deposit_intro");
                 break;
             case GOAL_WITHDRAW:
                 getAndAddNode("goal_withdraw_intro");
+                break;
+            case TIP_INTRO:
+                getAndAddNode("tip_intro_inline_link");
+                break;
         }
     }
 
@@ -276,20 +346,6 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
         }
     }
 
-    private Type getBotCallbackClass(BotType botType) {
-        switch (botType) {
-            case DEFAULT:
-            case GOAL_ADD:
-                return GoalAddCallback.class;
-            case GOAL_DEPOSIT:
-                return GoalDepositCallback.class;
-            case GOAL_WITHDRAW:
-                return GoalWithdrawCallback.class;
-            default:
-                return null;
-        }
-    }
-
     public BotAdapter getBotAdapter() {
         if (conversationRecyclerView != null) {
             return (BotAdapter) conversationRecyclerView.getAdapter();
@@ -300,44 +356,44 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
     @Override
     public void onItemClicked(Object item) {
         Answer answer = (Answer) item;
-        switch (type) {
-            case DEFAULT:
-            case GOAL_ADD:
-            case GOAL_DEPOSIT:
-            case GOAL_WITHDRAW:
-                if (!TextUtils.isEmpty(answer.getRemoveOnSelect())) {
-                    for (BaseBotModel model : new ArrayList<>(getBotAdapter().getDataSet())) {
-                        if (answer.getRemoveOnSelect().equals(model.getName())) {
-                            getBotAdapter().removeItem(model);
-                        }
-                    }
-                }
-                if (answer.getChangeOnSelect() != null) {
-                    BaseBotModel model = feed.getItem(answer.getChangeOnSelect().first);
-                    model.setText(answer.getChangeOnSelect().second);
-                    model.setType(BotMessageType.TEXT);
+
+        // For replacing existing nodes in the converstation
+        if (!TextUtils.isEmpty(answer.getRemoveOnSelect())) {
+            for (BaseBotModel model : new ArrayList<>(getBotAdapter().getDataSet())) {
+                if (answer.getRemoveOnSelect().equals(model.getName())) {
                     getBotAdapter().removeItem(model);
-                    getBotAdapter().addItem(model);
                 }
-                getBotAdapter().addItem(answer);
-                conversationRecyclerView.scrollToPosition(getBotAdapter().getItemCount() - 1);
-                persisted.saveConversationState(type, getBotAdapter().getDataSet());
-                if (!TextUtils.isEmpty(answer.getNext())) {
-                    getAndAddNode(answer.getNext());
-                    if (BotMessageType.getValueOf(currentModel.getType()) == BotMessageType.END)
-                        if (callback != null) {
-                            callback.onDone(createAnswerLog(getBotAdapter().getDataSet()));
-                            persisted.clearConversation();
-                            persisted.clearConvoGoals();
-                        }
-                } else {
-                    answerView.setData(new ArrayList<>());
-                }
-                break;
-            case SAVINGS:
-                break;
+            }
         }
+
+        if (answer.getChangeOnSelect() != null) {
+            BaseBotModel model = feed.getItem(answer.getChangeOnSelect().first);
+            model.setText(answer.getChangeOnSelect().second);
+            model.setType(BotMessageType.TEXT);
+            getBotAdapter().removeItem(model);
+            getBotAdapter().addItem(model);
+        }
+
+        if (shouldAdd(answer))
+            getBotAdapter().addItem(answer);
+        conversationRecyclerView.scrollToPosition(getBotAdapter().getItemCount() - 1);
         persisted.saveConversationState(type, getBotAdapter().getDataSet());
+
+        if (!TextUtils.isEmpty(answer.getNext())) {
+            getAndAddNode(answer.getNext());
+        } else {
+            answerView.setData(new ArrayList<>());
+        }
+
+//        persisted.saveConversationState(type, getBotAdapter().getDataSet());
+    }
+
+    private void finishConversation() {
+        if (callback != null)
+            callback.onDone(createAnswerLog(getBotAdapter().getDataSet()));
+        persisted.clearConversation();
+        persisted.clearConvoGoals();
+        setBotType(BotType.DEFAULT);
     }
 
     private Map<String, Answer> createAnswerLog(List<BaseBotModel> converstation) {
@@ -361,12 +417,23 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
         Node node = (Node) currentModel;
         if (node != null) {
             node.setIconHidden(iconHidden);
-            if (!BotMessageType.BLANK.equals(BotMessageType.getValueOf(currentModel.getType()))) {
+
+            if (shouldAdd(currentModel)) {
                 getBotAdapter().addItem(currentModel);
             }
+
             conversationRecyclerView.scrollToPosition(getBotAdapter().getItemCount() - 1);
             persisted.saveConversationState(type, getBotAdapter().getDataSet());
-            addAnswerOptions(node);
+
+            if (BotMessageType.getValueOf(currentModel.getType()) == BotMessageType.END) {
+                // Reached explicit end of current conversation
+                finishConversation();
+
+                // Clear answers
+                answerView.setData(new ArrayList<>());
+            } else {
+                addAnswerOptions(node);
+            }
         }
     }
 
@@ -394,7 +461,33 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
                 }
             }
         } else if (!TextUtils.isEmpty(node.getAutoNext())) {
-            getAndAddNode(node.getAutoNext(), true);
+            if (BotMessageType.getValueOf(node.getType()) == BotMessageType.STARTCONVO) {
+                // Auto load next conversation
+                finishConversation();
+                BotType botType = BotType.valueOf(node.getAutoNext().toUpperCase());
+                setBotType(botType);
+                createFeed();
+            } else {
+                // Auto load next node in current conversation
+                getAndAddNode(node.getAutoNext(), true);
+            }
+        }
+    }
+
+    /**
+     * Helper to indicate whether a Node should be added to the conversation's view.
+     * @param model
+     * @return
+     */
+    public static boolean shouldAdd(BaseBotModel model) {
+        switch(BotMessageType.getValueOf(model.getType())) {
+            case BLANK:
+            case STARTCONVO:
+            case END:
+            case BLANKANSWER:
+                return false;
+            default:
+                return true;
         }
     }
 }

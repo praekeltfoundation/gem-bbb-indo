@@ -12,10 +12,17 @@ public class Tip {
 
     private int id;
     private String title;
-    @SerializedName("article_url") private String articleUrl;
-    @SerializedName("cover_image_url") private String coverImageUrl;
+    private String intro;
+
+    @SerializedName("article_url")
+    private String articleUrl;
+
+    @SerializedName("cover_image_url")
+    private String coverImageUrl;
+
     @SerializedName("is_favourite")
     private boolean isFavourite;
+
     private List<String> tags;
 
     public Tip() {
@@ -40,6 +47,14 @@ public class Tip {
 
     public void setTitle(String title) {
         this.title = title;
+    }
+
+    public String getIntro() {
+        return intro;
+    }
+
+    public void setIntro(String intro) {
+        this.intro = intro;
     }
 
     public String getArticleUrl() {

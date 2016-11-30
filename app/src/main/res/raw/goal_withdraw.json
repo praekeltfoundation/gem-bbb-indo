@@ -18,7 +18,7 @@
   },
   {
     "name": "goal_withdraw_keep_saving",
-    "type": "end",
+    "type": "text",
     "text": "$(goal_withdraw_keep_saving)",
     "textParams": [
       "USERNAME"
@@ -26,7 +26,8 @@
     "answers": [
       {
         "name": "goal_withdraw_keep_saving_end",
-        "text": "$(goal_withdraw_keep_saving_end)"
+        "text": "$(goal_withdraw_keep_saving_end)",
+        "next": "goal_withdraw_end"
       }
     ]
   },
@@ -59,7 +60,7 @@
       {
         "name": "goal_withdraw_tip",
         "text": "$(goal_withdraw_tip)",
-        "next": "todo"
+        "next": "goal_withdraw_tip_intro"
       },
       {
         "name": "goal_withdraw_challenge",
@@ -74,13 +75,34 @@
     ]
   },
   {
-    "name": "todo",
-    "type": "end",
-    "text": "$(bot_todo)"
+    "name": "goal_withdraw_tip_intro",
+    "type": "text",
+    "text": "$(bot_tip_intro)",
+    "textParams" : [
+      "TIP_INTRO"
+    ],
+    "autoNext": "goal_withdraw_show_tip"
   },
   {
+    "name": "goal_withdraw_show_tip",
+    "type": "tip",
+    "autoNext": "goal_withdraw_end"
+  },
+  {
+    "name": "todo",
+    "type": "text",
+    "text": "$(bot_todo)",
+    "autoNext": "goal_withdraw_end"
+  },
+  {
+    "name": "goal_withdraw_end_message",
+    "type": "text",
+    "text": "$(goal_withdraw_end_message)",
+    "autoNext": "goal_withdraw_end"
+  },
+
+  {
     "name": "goal_withdraw_end",
-    "type": "end",
-    "text": "$(goal_withdraw_end)"
+    "type": "end"
   }
 ]

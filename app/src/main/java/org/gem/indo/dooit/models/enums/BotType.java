@@ -10,5 +10,5 @@ public enum BotType {
     GOAL_DEPOSIT,
     GOAL_WITHDRAW,
     GOAL_EDIT,
-    SAVINGS
+    TIP_INTRO
 }

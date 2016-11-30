@@ -83,6 +83,9 @@ public class TextViewHolder extends BaseBotViewHolder<Node> {
                     int days = Utils.dayDiff(persisted.loadConvoGoal(BotType.GOAL_DEPOSIT).getEndDate().toDate().getTime());
                     params[i] = String.valueOf(days - (Utils.weekDiff(persisted.loadConvoGoal(BotType.GOAL_DEPOSIT).getEndDate().toDate().getTime(), Utils.ROUNDWEEK.DOWN) * 7));
                     break;
+                case "TIP_INTRO":
+                    params[i] = persisted.loadConvoTip().getIntro();
+                    break;
                 default:
                     for (BaseBotModel baseBotModel : botAdapter.getDataSet()) {
                         if (baseBotModel.getClassType().equals(Answer.class.toString())
@@ -94,7 +97,7 @@ public class TextViewHolder extends BaseBotViewHolder<Node> {
         }
 
         if (text.contains("%"))
-            textView.setText(String.format(text, params));
+            textView.setText(String.format(text, (Object[]) params));
         else
             textView.setText(text);
         RelativeLayout.LayoutParams lp = ((RelativeLayout.LayoutParams) textView.getLayoutParams());

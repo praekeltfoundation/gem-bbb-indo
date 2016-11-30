@@ -36,8 +36,17 @@ public class GoalAddCallback implements BotCallback {
     @Override
     public void onDone(Map<String, Answer> answerLog) {
         Goal goal = new Goal();
-        goal.setName(answerLog.get("goalName").getValue());
-        goal.setTarget(Float.parseFloat(answerLog.get("goalAmount").getValue()));
+        if (answerLog.containsKey("goal_add_carousel_answer")) {
+            // Predefined Goal
+            Answer answer = answerLog.get("goal_add_carousel_answer");
+            goal.setPrototype(Long.parseLong(answer.get("prototype")));
+            goal.setName(answer.get("name"));
+            goal.setImageUrl(answer.get("image_url"));
+        } else {
+            // Custom Goal
+            goal.setName(answerLog.get("goal_name").getValue());
+        }
+        goal.setTarget(Float.parseFloat(answerLog.get("goal_amount").getValue()));
         goal.setStartDate(LocalDate.now());
         goal.setEndDate(DateTimeFormat.forPattern("yyyy-MM-dd")
                 .parseLocalDate(answerLog.get("goalDate").getValue().substring(0, 10)));

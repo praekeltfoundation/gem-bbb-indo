@@ -31,4 +31,10 @@ public class FileUploadManager extends DooitManager {
         String filename = file.getName();
         return useNetwork(fileUploadAPI.upload(userId, RequestBody.create(mediaTypeHeader, file), "attachment;filename=\"" + filename + "\""), errorHandler);
     }
+
+    public Observable<EmptyResponse> uploadParticipantPicture(long participantId, String mediaType, File file, DooitErrorHandler errorHandler) {
+        MediaType mediaTypeHeader = MediaType.parse(mediaType);
+        String filename = file.getName();
+        return useNetwork(fileUploadAPI.uploadParticipantPicture(participantId, RequestBody.create(mediaTypeHeader, file), "attachment;filename=\"" + filename + "\""), errorHandler);
+    }
 }

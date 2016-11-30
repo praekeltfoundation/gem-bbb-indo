@@ -11,8 +11,10 @@ import org.gem.indo.dooit.views.main.fragments.bot.viewholders.AnswerGoalGallery
 import org.gem.indo.dooit.views.main.fragments.bot.viewholders.AnswerImageSelectViewHolder;
 import org.gem.indo.dooit.views.main.fragments.bot.viewholders.GoalVerificationViewHolder;
 import org.gem.indo.dooit.views.main.fragments.bot.viewholders.TextViewHolder;
+import org.gem.indo.dooit.views.main.fragments.bot.viewholders.TipBotViewHolder;
 import org.gem.indo.dooit.views.main.fragments.challenge.ChallengeFragment;
 import org.gem.indo.dooit.views.main.fragments.challenge.fragments.ChallengeFreeformFragment;
+import org.gem.indo.dooit.views.main.fragments.challenge.fragments.ChallengePictureFragment;
 import org.gem.indo.dooit.views.main.fragments.challenge.fragments.ChallengeQuizFragment;
 import org.gem.indo.dooit.views.main.fragments.challenge.fragments.ChallengeRegisterFragment;
 import org.gem.indo.dooit.views.main.fragments.target.TargetFragment;
@@ -54,6 +56,8 @@ public interface DooitComponent {
     void inject(ChallengeFragment o);
 
     void inject(ChallengeFreeformFragment o);
+
+    void inject(ChallengePictureFragment o);
 
     void inject(ChallengeQuizFragment o);
 
@@ -98,6 +102,8 @@ public interface DooitComponent {
     void inject(TextViewHolder o);
 
     void inject(TipArticleActivity o);
+
+    void inject(TipBotViewHolder o);
 
     void inject(TipProvider o);
 

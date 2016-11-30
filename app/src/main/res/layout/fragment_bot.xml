@@ -1,6 +1,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/fragment_bot"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="org.gem.indo.dooit.views.main.fragments.bot.BotFragment">
@@ -21,9 +22,14 @@
         android:layout_alignParentStart="true"
         android:padding="4dp"
         app:selectionMode="false"
-        app:tagBackground="@drawable/rounded_squre_light_blue"
+        app:rowGravity="right"
+        app:tagPaddingLeft="@dimen/bot_text_padding_horizontal"
+        app:tagPaddingRight="@dimen/bot_text_padding_horizontal"
+        app:tagPaddingTop="@dimen/bot_text_padding_vertical"
+        app:tagPaddingBottom="@dimen/bot_text_padding_vertical"
+        app:tagBackground="@drawable/ic_d_answer_dialogue_bkg"
         app:tagEllipsize="end"
-        app:tagTextColor="@color/black"
+        app:tagTextColor="@color/grey_fore"
         app:tagTextGravity="center"
-        app:tagTextSize="@dimen/k_font_medium" />
+        app:tagTextSize="@dimen/k_font_large" />
 </RelativeLayout>
