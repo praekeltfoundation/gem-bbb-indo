@@ -25,7 +25,7 @@ public class ChallengeManager extends DooitManager {
 
     @Inject
     public ChallengeManager(Application application) {
-        super(application);
+        super(application,false);
         challengeAPI = retrofit.create(ChallengeAPI.class);
     }
 

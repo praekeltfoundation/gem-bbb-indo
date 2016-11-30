@@ -23,7 +23,7 @@ public class UserManager extends DooitManager {
 
     @Inject
     public UserManager(Application application) {
-        super(application);
+        super(application,true);
         userAPI = retrofit.create(UserAPI.class);
     }
 

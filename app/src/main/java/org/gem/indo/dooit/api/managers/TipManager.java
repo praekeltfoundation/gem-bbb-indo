@@ -23,7 +23,7 @@ public class TipManager extends DooitManager {
 
     @Inject
     public TipManager(Application application) {
-        super(application);
+        super(application,true);
         tipAPI = retrofit.create(TipAPI.class);
     }
 

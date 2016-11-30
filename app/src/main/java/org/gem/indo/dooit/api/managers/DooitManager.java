@@ -2,7 +2,9 @@ package org.gem.indo.dooit.api.managers;
 
 import android.app.Application;
 import android.content.Context;
+import android.net.ConnectivityManager;
 import android.net.Network;
+import android.net.NetworkInfo;
 import android.util.Log;
 
 import com.google.gson.GsonBuilder;
@@ -54,7 +56,7 @@ public class DooitManager {
     Persisted persisted;
     private Context context;
     protected OkHttpClient client;
-    public DooitManager(final Application application) {
+    public DooitManager(final Application application, boolean doOfflineCache ) {
         ((DooitApplication) application).component.inject(this);
         context = application.getApplicationContext();
 
@@ -85,18 +87,25 @@ public class DooitManager {
             }
         });
         httpClient.addInterceptor(logging);
-        boolean doOfflineCache = true;
         if(doOfflineCache) {
+            final Cache cache = new Cache(application.getCacheDir(), 10 * 1024 * 1024);
             this.client = OkCacheControl.on(httpClient)
                     .overrideServerCachePolicy(30, MINUTES)
                     .forceCacheWhenOffline(new OkCacheControl.NetworkMonitor() {
                         @Override
                         public boolean isOnline() {
-                            return false;
+                            ConnectivityManager cm =
+                                    (ConnectivityManager)context.getSystemService(Context.CONNECTIVITY_SERVICE);
+
+                            NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
+                            boolean isConnected = activeNetwork != null &&
+                                    activeNetwork.isConnectedOrConnecting();
+
+                            return isConnected;
                         }
                     })
                     .apply() // return to the OkHttpClient.Builder instance
-                    .cache(new Cache(application.getCacheDir(), 10 * 1024 * 1024))
+                    .cache(cache)
                     .build();
         }else{
 

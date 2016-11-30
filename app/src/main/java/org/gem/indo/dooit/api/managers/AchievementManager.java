@@ -17,7 +17,7 @@ public class AchievementManager extends DooitManager {
     private final AchievementAPI achievementAPI;
 
     public AchievementManager(Application application) {
-        super(application);
+        super(application,true);
         achievementAPI = retrofit.create(AchievementAPI.class);
     }
 

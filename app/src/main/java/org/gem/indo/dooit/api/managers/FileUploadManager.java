@@ -22,7 +22,7 @@ public class FileUploadManager extends DooitManager {
 
     @Inject
     public FileUploadManager(Application application) {
-        super(application);
+        super(application,false);
         fileUploadAPI = retrofit.create(FileUploadAPI.class);
     }
 

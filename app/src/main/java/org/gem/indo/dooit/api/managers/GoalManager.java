@@ -26,7 +26,7 @@ public class GoalManager extends DooitManager {
 
     @Inject
     public GoalManager(Application application) {
-        super(application);
+        super(application,true);
         goalAPI = retrofit.create(GoalAPI.class);
     }
 

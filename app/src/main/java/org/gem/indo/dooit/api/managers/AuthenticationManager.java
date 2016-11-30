@@ -24,7 +24,7 @@ public class AuthenticationManager extends DooitManager {
 
     @Inject
     public AuthenticationManager(Application application) {
-        super(application);
+        super(application,true);
         authenticationAPI = retrofit.create(AuthenticationAPI.class);
     }
 
