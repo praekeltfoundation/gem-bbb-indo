@@ -24,10 +24,10 @@
     "name": "goal_add_ask_goal",
     "type": "text",
     "text": "$(goal_add_ask_goal)",
-    "autoNext": "askGoalName"
+    "autoNext": "goal_add_ask_goal_gallery"
   },
   {
-    "name": "askGoalName",
+    "name": "goal_add_ask_goal_gallery",
     "type": "goalGallery",
     "text": "",
     "next": "goalNameCongrats",
@@ -36,7 +36,7 @@
         "name": "goalNameOption",
         "next": "askGoalNameInput",
         "text": "$(addOwnGoal)",
-        "removeOnSelect": "askGoalName"
+        "removeOnSelect": "goal_add_ask_goal_gallery"
       }
     ]
   },
@@ -44,10 +44,10 @@
     "name": "askGoalNameInput",
     "type": "text",
     "text": "$(askGoalNameInput)",
-    "autoAnswer": "goalName",
+    "autoAnswer": "goal_name",
     "answers": [
       {
-        "name": "goalName",
+        "name": "goal_name",
         "nextOnFinish": "goalNameCongrats",
         "type": "inlineText",
         "inlineEditHint": "$(type_name_hint)"

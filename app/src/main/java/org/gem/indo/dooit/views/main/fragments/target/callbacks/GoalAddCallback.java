@@ -1,24 +1,31 @@
 package org.gem.indo.dooit.views.main.fragments.target.callbacks;
 
+import android.util.Log;
 import android.app.Activity;
 import android.content.Context;
-import android.util.Log;
+import android.net.Uri;
 
 import org.gem.indo.dooit.DooitApplication;
 import org.gem.indo.dooit.api.DooitAPIError;
 import org.gem.indo.dooit.api.DooitErrorHandler;
+import org.gem.indo.dooit.api.managers.FileUploadManager;
 import org.gem.indo.dooit.api.managers.GoalManager;
+import org.gem.indo.dooit.helpers.MediaUriHelper;
 import org.gem.indo.dooit.models.Goal;
 import org.gem.indo.dooit.models.bot.Answer;
+import org.gem.indo.dooit.models.bot.BaseBotModel;
 import org.gem.indo.dooit.models.bot.BotCallback;
 import org.gem.indo.dooit.views.main.MainActivity;
+import org.gem.indo.dooit.views.main.fragments.MainFragment;
 import org.joda.time.LocalDate;
 import org.joda.time.format.DateTimeFormat;
 
+import java.io.File;
 import java.util.Map;
 
 import javax.inject.Inject;
 
+import rx.Observable;
 import rx.functions.Action1;
 
 /**
@@ -32,6 +39,11 @@ public class GoalAddCallback implements BotCallback {
 
     @Inject
     transient GoalManager goalManager;
+ 
+    @Inject
+    transient FileUploadManager fileUploadManager;
+
+    private transient MainFragment fragment;
 
     public GoalAddCallback(Activity activity) {
         ((DooitApplication) activity.getApplication()).component.inject(this);
@@ -41,16 +53,17 @@ public class GoalAddCallback implements BotCallback {
     @Override
     public void onDone(Map<String, Answer> answerLog) {
         Goal goal = new Goal();
-        if (answerLog.containsKey("goal_add_carousel_answer")) {
-            // Predefined Goal
-            Answer answer = answerLog.get("goal_add_carousel_answer");
+
+        if (answerLog.containsKey("goal_add_ask_goal_gallery")) {
+            // Predefined Goal branch
+            Answer answer = answerLog.get("goal_add_ask_goal_gallery");
             goal.setPrototype(Long.parseLong(answer.get("prototype")));
             goal.setName(answer.get("name"));
-            goal.setImageUrl(answer.get("image_url"));
         } else {
-            // Custom Goal
+            // Custom Goal branch
             goal.setName(answerLog.get("goal_name").getValue());
         }
+
         goal.setTarget(Float.parseFloat(answerLog.get("goal_amount").getValue()));
         goal.setStartDate(LocalDate.now());
         goal.setEndDate(DateTimeFormat.forPattern("yyyy-MM-dd")
@@ -59,21 +72,54 @@ public class GoalAddCallback implements BotCallback {
         if (answerLog.containsKey("hasSavedY"))
             goal.createTransaction(Double.parseDouble(answerLog.get("priorSaveAmount").getValue()));
 
-        Log.d(TAG, "Created " + goal);
-
-        goalManager.createGoal(goal, new DooitErrorHandler() {
+        // Ready Goal request
+        Observable<Goal> observe = goalManager.createGoal(goal, new DooitErrorHandler() {
             @Override
             public void onError(DooitAPIError error) {
 
             }
-        }).subscribe(new Action1<Goal>() {
+        });
+
+        // Find Image
+        Uri imageUri = null;
+        if (answerLog.containsKey("Capture"))
+            imageUri = Uri.parse(answerLog.get("Capture").getValue());
+        else if (answerLog.containsKey("Gallery"))
+            imageUri = Uri.parse(answerLog.get("Gallery").getValue());
+
+        // Upload image if set
+        if (imageUri != null){
+            final String mimetype = fragment.getContext().getContentResolver().getType(imageUri);
+            final String path = MediaUriHelper.getPath(fragment.getContext(), imageUri);
+            observe.subscribe(new Action1<Goal>() {
+                @Override
+                public void call(Goal goal) {
+                    uploadImage(goal, mimetype, new File(path));
+                }
+            });
+        } else {
+            observe.subscribe();
+        }
+    }
+
+    private void uploadImage(Goal goal, String mimetype, File file) {
+        fileUploadManager.uploadGoalImage(goal.getId(), mimetype, file, new DooitErrorHandler() {
             @Override
+            public void call(Goal goal) {
+                Log.d(TAG, goal + " successfully created");
             public void call(Goal goal) {
                 Log.d(TAG, goal + " successfully created");
                 if (context instanceof MainActivity) {
                     ((MainActivity) context).refreshGoals();
                 }
+            public void onError(DooitAPIError error) {
+
             }
-        });
+        }).subscribe();
+    }
+
+    @Override
+    public void onCall(String key, Map<String, Answer> answerLog, BaseBotModel model) {
+
     }
 }

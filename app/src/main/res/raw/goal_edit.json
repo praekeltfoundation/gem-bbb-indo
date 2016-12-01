@@ -1,0 +1,148 @@
+[
+  {
+    "name": "goal_edit_intro",
+    "type": "text",
+    "text": "$(goal_edit_intro)",
+    "textParams": [
+      "USERNAME"
+    ],
+    "autoNext": "goal_edit_ask_options"
+  },
+  {
+    "name": "goal_edit_ask_options",
+    "type": "text",
+    "text": "$(goal_edit_ask_options)",
+    "answers": [
+      {
+        "name": "goal_edit_choice_date",
+        "text": "$(goal_edit_choice_date)",
+        "next": "goal_edit_date"
+      },
+      {
+        "name": "goal_edit_choice_target",
+        "text": "$(goal_edit_choice_target)",
+        "next": "goal_edit_target"
+      },
+      {
+        "name": "goal_edit_choice_image",
+        "text": "$(goal_edit_choice_image)",
+        "next": "goal_edit_image_choose"
+      },
+      {
+        "name": "goal_edit_choice_delete",
+        "text": "$(goal_edit_choice_delete)",
+        "next": ""
+      }
+    ]
+  },
+  {
+    "name": "goal_edit_date",
+    "type": "blank",
+    "autoAnswer": "goal_end_date",
+    "answers": [
+      {
+        "name": "goal_end_date",
+        "nextOnFinish": "goal_edit_do_update",
+        "type": "inlineDate",
+        "inlineEditHint": "$(type_date_hint)"
+      }
+    ]
+  },
+  {
+    "name": "goal_edit_target",
+    "type": "text",
+    "text": "$(goal_edit_target)",
+    "autoAnswer": "goal_target",
+    "answers": [
+      {
+        "name": "goal_target",
+        "nextOnFinish": "goal_edit_target_confirm",
+        "type": "inlineCurrency",
+        "inlineEditHint": "$(type_currency_hint)"
+      }
+    ]
+  },
+  {
+    "name": "goal_edit_target_confirm",
+    "type": "text",
+    "text": "$(goal_edit_target_confirm)",
+    "answers": [
+      {
+        "name": "goal_edit_target_accept",
+        "text": "$(goal_edit_target_accept)",
+        "next": "goal_edit_do_update"
+      },
+      {
+        "name": "goal_edit_target_cancel",
+        "text": "$(goal_edit_target_cancel)",
+        "next": "goal_edit_target_cancel_edit"
+      }
+    ]
+  },
+  {
+    "name": "goal_edit_target_cancel_edit",
+    "text": "$(goal_edit_target_cancel_edit)",
+    "answers": [
+      {
+        "name": "goal_edit_tip",
+        "text": "$(goal_edit_tip)",
+        "next": "goal_edit_end"
+      },
+      {
+        "name": "goal_edit_challenge",
+        "text": "$(goal_edit_challenge)",
+        "next": "goal_edit_end"
+      },
+      {
+        "name": "goal_edit_no_thanks",
+        "text": "$(goal_edit_no_thanks)",
+        "next": "goal_edit_come_back"
+      }
+    ]
+  },
+  {
+    "name": "goal_edit_image_choose",
+    "type": "blank",
+    "answers": [
+      {
+        "name": "goal_edit_camera",
+        "text": "$(goal_edit_camera)",
+        "type": "captureUpload",
+        "nextOnFinish": "goal_edit_do_update",
+        "removeOnSelect": "goal_edit_camera"
+      },
+      {
+        "name": "goal_edit_gallery",
+        "text": "$(goal_edit_gallery)",
+        "type": "galleryUpload",
+        "nextOnFinish": "goal_edit_do_update",
+        "removeOnSelect": "goal_edit_camera"
+      }
+    ]
+  },
+  {
+    "name": "goal_edit_come_back",
+    "text": "$(goal_edit_come_back)",
+    "autoNext": "goal_edit_end"
+  },
+  {
+    "name": "goal_edit_do_update",
+    "type": "blank",
+    "callback": "do_update",
+    "autoNext": "goal_edit_updated"
+  },
+  {
+    "name": "goal_edit_updated",
+    "type": "text",
+    "text": "$(goal_edit_updated)",
+    "autoNext": "goal_edit_end"
+  },
+  {
+    "name": "goal_edit_info",
+    "type": "goalInfo"
+  },
+  {
+    "name": "goal_edit_end",
+    "type": "end"
+  }
+]

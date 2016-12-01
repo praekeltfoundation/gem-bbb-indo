@@ -11,6 +11,7 @@ import org.gem.indo.dooit.api.responses.EmptyResponse;
 import org.gem.indo.dooit.models.Goal;
 import org.gem.indo.dooit.models.GoalTransaction;
 import org.gem.indo.dooit.models.bot.Answer;
+import org.gem.indo.dooit.models.bot.BaseBotModel;
 import org.gem.indo.dooit.models.bot.BotCallback;
 import org.gem.indo.dooit.views.main.MainActivity;
 
@@ -55,5 +56,10 @@ public class GoalDepositCallback implements BotCallback {
                 }
             }
         });
+    }
+
+    @Override
+    public void onCall(String key, Map<String, Answer> answerLog, BaseBotModel model) {
+
     }
 }
