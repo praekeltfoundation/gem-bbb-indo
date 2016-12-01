@@ -61,6 +61,7 @@
         app:layout_constraintBottom_toTopOf="@+id/fragment_challenge_quiz_checkbutton"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
+        tools:layout="@layout/fragment_challengequizquestion"
         tools:background="@color/grey" />
 
     <Button
