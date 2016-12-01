@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -243,7 +244,10 @@ public class ChallengePictureFragment extends Fragment {
             @Override
             public void call(EmptyResponse emptyResponse) {
                 Log.d(TAG, "Uploaded image");
-                returnToParent();
+                FragmentTransaction ft = getFragmentManager().beginTransaction();
+                Fragment f = ChallengeDoneFragment.newInstance(challenge);
+                ft.replace(R.id.fragment_challenge_container, f, "fragment_challenge");
+                ft.commit();
             }
         });
     }
