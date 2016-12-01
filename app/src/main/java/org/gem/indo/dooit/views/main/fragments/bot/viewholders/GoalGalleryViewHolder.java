@@ -64,6 +64,5 @@ public class GoalGalleryViewHolder extends BaseBotViewHolder<Node> {
     public void populate(Node model) {
         dataModel = model;
         galleryAdapter.setDataModel(model);
-//        galleryAdapter.notifyDataSetChanged();
     }
 }
