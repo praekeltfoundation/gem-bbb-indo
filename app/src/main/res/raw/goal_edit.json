@@ -65,9 +65,35 @@
       {
         "name": "goal_edit_target_cancel",
         "text": "$(goal_edit_target_cancel)",
-        "next": ""
+        "next": "goal_edit_target_cancel_edit"
       }
     ]
+  },
+  {
+    "name": "goal_edit_target_cancel_edit",
+    "text": "$(goal_edit_target_cancel_edit)",
+    "answers": [
+      {
+        "name": "goal_edit_tip",
+        "text": "$(goal_edit_tip)",
+        "next": "goal_edit_end"
+      },
+      {
+        "name": "goal_edit_challenge",
+        "text": "$(goal_edit_challenge)",
+        "next": "goal_edit_end"
+      },
+      {
+        "name": "goal_edit_no_thanks",
+        "text": "$(goal_edit_no_thanks)",
+        "next": "goal_edit_come_back"
+      }
+    ]
+  },
+  {
+    "name": "goal_edit_come_back",
+    "text": "$(goal_edit_come_back)",
+    "autoNext": "goal_edit_end"
   },
   {
     "name": "goal_edit_do_update",
