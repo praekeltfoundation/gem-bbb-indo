@@ -137,6 +137,7 @@ public class ChallengeQuizFragment extends Fragment implements OnOptionChangeLis
         unbinder = ButterKnife.bind(this, view);
         mPager.setAdapter(mAdapter);
         updateProgressCounter(0);
+        updateProgressBar();
         return view;
     }
 
@@ -248,7 +249,7 @@ public class ChallengeQuizFragment extends Fragment implements OnOptionChangeLis
             return;
         }
 
-        mProgressBar.setProgress(100 * numCompleted() / challenge.numQuestions());
+        mProgressBar.setProgress(5 + (95 * numCompleted() / challenge.numQuestions()));
     }
 
     @OnPageChange(R.id.fragment_challenge_quiz_pager)

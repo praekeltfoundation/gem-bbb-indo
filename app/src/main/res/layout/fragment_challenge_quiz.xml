@@ -23,13 +23,15 @@
         android:id="@+id/fragment_challenge_quiz_progressbar"
         style="?android:attr/progressBarStyleHorizontal"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         app:layout_constraintRight_toRightOf="parent"
         android:layout_marginStart="8dp"
         app:layout_constraintLeft_toRightOf="@+id/fragment_challenge_quiz_close"
         app:layout_constraintBottom_toBottomOf="@+id/fragment_challenge_quiz_close"
-        app:layout_constraintTop_toTopOf="@+id/fragment_challenge_quiz_close" />
+        app:layout_constraintTop_toTopOf="@+id/fragment_challenge_quiz_close"
+        android:progressDrawable="@drawable/quiz_progress_drawable"
+        tools:progress="33"
+        android:layout_height="3dp" />
 
     <TextView
         android:id="@+id/fragment_challenge_quiz_progresscounter"
