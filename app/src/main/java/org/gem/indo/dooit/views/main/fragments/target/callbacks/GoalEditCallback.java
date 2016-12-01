@@ -116,6 +116,11 @@ public class GoalEditCallback implements BotCallback {
     }
 
     private void doDelete(Map<String, Answer> answerLog) {
-
+        goalManager.deleteGoal(goal, new DooitErrorHandler() {
+            @Override
+            public void onError(DooitAPIError error) {
+                
+            }
+        }).subscribe();
     }
 }
