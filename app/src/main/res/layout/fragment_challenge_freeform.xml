@@ -1,49 +1,86 @@
-<FrameLayout
+<android.support.constraint.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/fragment_challenge_inner"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:padding="@dimen/challenge_inset_small"
+    tools:background="@drawable/ic_d_pattern_grey"
     tools:context="org.gem.indo.dooit.views.main.fragments.challenge.fragments.ChallengeFreeformFragment">
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+    <ImageButton
+        android:id="@+id/imageButton"
+        android:layout_width="26dp"
+        app:srcCompat="@drawable/quiz_close"
+        android:background="@null"
+        android:layout_height="25dp"
+        android:scaleType="fitXY"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent" />
 
-        <TextView
-            android:id="@+id/fragment_challenge_freeform_title"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:layout_margin="@dimen/text_margin"
-            android:textAlignment="center"
-            android:textAppearance="@style/AppTheme.TextView.Quiz.Title"
-            tools:text="This is the title of the question?" />
+    <TextView
+        android:id="@+id/fragment_challenge_freeform_title"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_margin="@dimen/text_margin"
+        android:textAlignment="center"
+        android:textAppearance="@style/AppTheme.TextView.Quiz.Title"
+        tools:text="This is the title of the question?"
+        android:layout_marginTop="@dimen/challenge_inset_large"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginEnd="@dimen/challenge_inset_small"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginStart="@dimen/challenge_inset_small"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/fragment_challenge_freeform_submission" />
 
-        <EditText
-            android:id="@+id/fragment_challenge_freeform_submission"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_above="@+id/fragment_challenge_freeform_submitbutton"
-            android:layout_below="@+id/fragment_challenge_freeform_title"
-            android:layout_centerInParent="true"
-            android:layout_marginEnd="16dp"
-            android:layout_marginStart="16dp"
-            android:background="@color/white"
-            android:ems="10"
-            android:gravity="top"
-            android:inputType="textMultiLine"
-            tools:text="@string/placeholder_label_long" />
+    <ImageView
+        android:id="@+id/fragment_challenge_freeform_box"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:srcCompat="@drawable/multiline_box"
+        android:scaleType="fitXY"
+        android:cropToPadding="false"
+        android:adjustViewBounds="true"
+        app:layout_constraintTop_toTopOf="@+id/fragment_challenge_freeform_submission"
+        app:layout_constraintBottom_toBottomOf="@+id/fragment_challenge_freeform_submission"
+        app:layout_constraintLeft_toLeftOf="@+id/fragment_challenge_freeform_submission"
+        app:layout_constraintRight_toRightOf="@+id/fragment_challenge_freeform_submission" />
 
-        <Button
-            android:id="@+id/fragment_challenge_freeform_submitbutton"
-            style="@style/AppTheme.Button.Big.LightBlue"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_margin="@dimen/challenge_margins"
-            android:text="@string/label_submit" />
+    <EditText
+        android:id="@+id/fragment_challenge_freeform_submission"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/challenge_inset_small"
+        android:background="@null"
+        android:padding="@dimen/challenge_inset_small"
+        android:lines="5"
+        android:scrollbars="vertical"
+        android:gravity="top"
+        android:inputType="textMultiLine"
+        tools:text="@string/placeholder_label_long"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_marginTop="@dimen/challenge_inset_large"
+        app:layout_constraintTop_toBottomOf="@+id/fragment_challenge_freeform_title"
+        app:layout_constraintBottom_toTopOf="@+id/fragment_challenge_freeform_submitbutton"
+        android:layout_marginBottom="@dimen/challenge_inset_large"
+        android:textAllCaps="false"
+        android:scrollbarAlwaysDrawVerticalTrack="false" />
 
-    </RelativeLayout>
+    <Button
+        android:id="@+id/fragment_challenge_freeform_submitbutton"
+        style="@style/AppTheme.Button.Big.LightBlue"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:text="@string/label_submit"
+        android:layout_margin="@dimen/text_margin"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintHorizontal_bias="0.46" />
 
-</FrameLayout>
+</android.support.constraint.ConstraintLayout>
