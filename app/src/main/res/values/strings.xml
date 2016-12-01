@@ -19,6 +19,7 @@
     <string name="main_tab_text_3">TIPS</string>
 
     <!-- Common labels -->
+    <string name="label_accept">Accept</string>
     <string name="label_cancel">Cancel</string>
     <string name="label_take_picture">Take photo using camera</string>
     <string name="label_select_gallery">Select gallery</string>
@@ -172,6 +173,9 @@
     <string name="goal_edit_intro">Hey %s!</string>
     <string name="goal_edit_ask_options">What do you want to edit?</string>
     <string name="goal_edit_updated">Your goal has been updated!</string>
+    <string name="goal_edit_target">How much money do you think can you save each week?</string>
+    <string name="goal_edit_target_confirm">If you save Rp. [weekly_goal] per week, you’ll have enough money to get your [goal_name] in only [total_weeks] weeks.</string>
+    <string name="goal_edit_target_cancel_edit">Don\'t worry, we can get you back on track with your savings in no time. Have a look at our tips or take this week\'s challenge!</string>
 
     <!-- Answers -->
     <string name="goal_edit_choice_date">Date</string>
@@ -179,6 +183,8 @@
     <string name="goal_edit_choice_weekly_target">Weekly Savings</string>
     <string name="goal_edit_choice_image">Photo</string>
     <string name="goal_edit_choice_delete">Delete Goal</string>
+    <string name="goal_edit_target_accept">@string/label_accept</string>
+    <string name="goal_edit_target_cancel">@string/label_cancel</string>
 
     <!-- BOT: tip_intro -->
     <string name="tip_intro_inline_link">TODO: Show Tip</string>

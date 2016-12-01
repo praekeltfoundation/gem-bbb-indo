@@ -37,9 +37,19 @@ public class GoalEditCallback implements BotCallback {
 
     @Override
     public void onCall(String key, Map<String, Answer> answerLog, BaseBotModel model) {
+        switch (key) {
+            case "do_update":
+                doUpdate(answerLog);
+                break;
+        }
+    }
+
+    private void doUpdate(Map<String, Answer> answerLog) {
         if (answerLog.containsKey("goal_edit_choice_date"))
             goal.setEndDate(DateTimeFormat.forPattern("yyyy-MM-dd")
                     .parseLocalDate(answerLog.get("goal_end_date").getValue().substring(0, 10)));
+        else if (answerLog.containsKey("goal_edit_target_accept"))
+            goal.setTarget(Double.parseDouble(answerLog.get("goal_target").getValue()));
 
         goalManager.updateGoal(goal, new DooitErrorHandler() {
             @Override

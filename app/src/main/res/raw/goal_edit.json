@@ -21,7 +21,7 @@
       {
         "name": "goal_edit_choice_target",
         "text": "$(goal_edit_choice_target)",
-        "next": ""
+        "next": "goal_edit_target"
       }
     ]
   },
@@ -35,6 +35,37 @@
         "nextOnFinish": "goal_edit_do_update",
         "type": "inlineDate",
         "inlineEditHint": "$(type_date_hint)"
+      }
+    ]
+  },
+  {
+    "name": "goal_edit_target",
+    "type": "text",
+    "text": "$(goal_edit_target)",
+    "autoAnswer": "goal_target",
+    "answers": [
+      {
+        "name": "goal_target",
+        "nextOnFinish": "goal_edit_target_confirm",
+        "type": "inlineCurrency",
+        "inlineEditHint": "$(type_currency_hint)"
+      }
+    ]
+  },
+  {
+    "name": "goal_edit_target_confirm",
+    "type": "text",
+    "text": "$(goal_edit_target_confirm)",
+    "answers": [
+      {
+        "name": "goal_edit_target_accept",
+        "text": "$(goal_edit_target_accept)",
+        "next": "goal_edit_do_update"
+      },
+      {
+        "name": "goal_edit_target_cancel",
+        "text": "$(goal_edit_target_cancel)",
+        "next": ""
       }
     ]
   },
