@@ -33,6 +33,7 @@ import org.gem.indo.dooit.models.Profile;
 import org.gem.indo.dooit.models.User;
 import org.gem.indo.dooit.views.DooitActivity;
 import org.gem.indo.dooit.views.helpers.activity.DooitActivityBuilder;
+import org.gem.indo.dooit.views.web.MinimalWebViewActivity;
 
 import java.util.regex.Pattern;
 
@@ -133,8 +134,8 @@ public class RegistrationActivity extends DooitActivity {
 
     @OnClick(R.id.activity_registration_t_c_text_view)
     public void openTC() {
-        OnboardingWebActivity.Builder.create(this)
-                .setTitle(getString(org.gem.indo.dooit.R.string.title_activity_terms_and_conditions))
+        MinimalWebViewActivity.Builder.create(this)
+                //.setTitle(getString(org.gem.indo.dooit.R.string.title_activity_terms_and_conditions))
                 .setUrl(Constants.TERMS_URL)
                 .startActivity();
     }

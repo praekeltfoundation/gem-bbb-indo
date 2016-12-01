@@ -16,6 +16,7 @@ import org.gem.indo.dooit.models.bot.Answer;
 import org.gem.indo.dooit.models.bot.Node;
 import org.gem.indo.dooit.models.enums.BotMessageType;
 import org.gem.indo.dooit.views.tip.TipArticleActivity;
+import org.gem.indo.dooit.views.web.MinimalWebViewActivity;
 
 import javax.inject.Inject;
 
@@ -78,10 +79,13 @@ public class TipBotViewHolder extends BaseBotViewHolder<Node> {
                     listener.onItemClicked(answer);
 
                     Toast.makeText(getContext(), String.format(openingText, tip.getTitle()), Toast.LENGTH_LONG).show();
-
-                    TipArticleActivity.Builder.create(getContext())
-                        .putArticleUrl(tip.getArticleUrl())
-                        .startActivity();
+                    MinimalWebViewActivity.Builder.create(getContext())
+                            .setUrl(tip.getArticleUrl())
+                            .setNoCaret()
+                            .startActivity();
+                    //TipArticleActivity.Builder.create(getContext())
+                    //    .putArticleUrl(tip.getArticleUrl())
+                    //    .startActivity();
                 }
             });
 
