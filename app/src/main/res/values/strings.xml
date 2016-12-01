@@ -119,7 +119,7 @@
     <string name="infoDontKnowAmount">No problem.</string>
     <string name="askKnowGoalDate">That is a big goal. Let us get saving then. Do you have a date that you want to save this by?</string>
     <string name="askGoalDate">When would you like to have saved this much?</string>
-    <string name="askGoalWeeklySaveAmount">How much can you save each week?</string>
+    <string name="askGoalWeeklySaveAmount">No problem, I can help. How much can money can you afford to save each week??</string>
     <string name="askGoalSaveAmountOther">How much can you save?</string>
     <string name="askGoalPriorSave">Have you saved anything towards this goal yet?</string>
     <string name="askPriorSavedAmount">How much have you already saved?</string>
@@ -129,6 +129,7 @@
     <string name="validationFailSaveAmountOther">Sorry, I do not understand that and have not t been taught how to handle it yet.</string>
     <string name="validationFailPriorSavedAmount">Sorry, I do not understand that and have not  been taught how to handle it yet.</string>
     <string name="infoGoalEnd">Thank you. That concludes the goal-setting process.</string>
+    <string name="infoGoalAddedCongratulations">Great job! You\'ve set your first savings goal! </string>
 
     <!-- goal_add -->
     <!-- Questions -->
@@ -199,6 +200,7 @@
     <string name="type_number_hint">Type number…</string>
     <string name="type_currency_hint">Type amount…</string>
     <string name="type_date_hint">Type date…</string>
+    <string name="yay_me">Yay me!</string>
 
     <string name="ToneY">Yes</string>
     <string name="ToneN">No</string>
@@ -305,5 +307,7 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="challenge_completed">Challenge complete</string>
+    <string name="saved">saved</string>
+    <string name="of_target_amount">of %1$s %2$.2f</string>
 
 </resources>

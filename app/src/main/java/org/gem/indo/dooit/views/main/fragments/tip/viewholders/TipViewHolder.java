@@ -5,6 +5,7 @@ import android.net.Uri;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.text.SpannableString;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -21,6 +22,7 @@ import org.gem.indo.dooit.api.managers.TipManager;
 import org.gem.indo.dooit.api.responses.EmptyResponse;
 import org.gem.indo.dooit.helpers.Persisted;
 import org.gem.indo.dooit.views.tip.TipArticleActivity;
+import org.gem.indo.dooit.views.web.MinimalWebViewActivity;
 
 import java.util.List;
 
@@ -87,9 +89,14 @@ public class TipViewHolder extends RecyclerView.ViewHolder {
         Toast.makeText(view.getContext(),
                 String.format(openingArticleText, titleView.getText().toString()),
                 Toast.LENGTH_SHORT).show();
-        TipArticleActivity.Builder.create(getContext())
-                .putArticleUrl(articleUrl)
+        MinimalWebViewActivity.Builder.create(getContext())
+                .setUrl(articleUrl)
+                .setNoCaret()
                 .startActivity();
+
+        //TipArticleActivity.Builder.create(getContext())
+        //        .putArticleUrl(articleUrl)
+        //        .startActivity();
     }
 
     @OnClick(R.id.card_tip_fav)
@@ -98,7 +105,7 @@ public class TipViewHolder extends RecyclerView.ViewHolder {
             tipManager.unfavourite(id, new DooitErrorHandler() {
                 @Override
                 public void onError(DooitAPIError error) {
-
+                    Log.d("TIPS","Tip favourite status could not be set " + error.getMessage());
                 }
             }).subscribe(new Action1<EmptyResponse>() {
                 @Override
