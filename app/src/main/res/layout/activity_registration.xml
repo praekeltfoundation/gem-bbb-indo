@@ -183,7 +183,7 @@
             android:imeOptions="actionNext"
             android:nextFocusDown="@+id/activity_registration_password_edit_text"
             android:maxLines="1"
-            android:inputType="text"
+            android:inputType="phone"
             tools:text="+110002223" />
 
         <TextView

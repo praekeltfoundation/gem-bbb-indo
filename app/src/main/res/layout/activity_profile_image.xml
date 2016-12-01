@@ -36,6 +36,8 @@
             android:layout_above="@+id/activity_profile_image_next_button"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="32dp"
+            android:layout_marginBottom="18dp"
+            android:textSize="18dp"
             android:gravity="center_horizontal"
             android:text="@string/label_skip"
             android:textColor="@color/pink" />

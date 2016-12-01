@@ -96,7 +96,12 @@ public class ProfileActivity extends DooitActivity {
 
     private User user;
     private Uri imageUri;
-
+    protected void hideProgress(){
+        View view = this.findViewById(R.id.achievements_progress_container);
+        if (view != null) {
+            view.setVisibility(View.GONE);
+        }
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -151,6 +156,12 @@ public class ProfileActivity extends DooitActivity {
             @Override
             public void onError(DooitAPIError error) {
                 Toast.makeText(ProfileActivity.this, "Error retrieving achievements", Toast.LENGTH_SHORT).show();
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                    ProfileActivity.this.hideProgress();
+                    }
+                });
             }
         }).subscribe(new Action1<AchievementResponse>() {
             @Override
@@ -158,7 +169,8 @@ public class ProfileActivity extends DooitActivity {
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        setStreak(response.getWeeklyStreak());
+                    setStreak(response.getWeeklyStreak());
+                    ProfileActivity.this.hideProgress();
                     }
                 });
             }
