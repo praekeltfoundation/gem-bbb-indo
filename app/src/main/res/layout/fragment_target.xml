@@ -1,300 +1,370 @@
-<android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/fragment_target"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="org.gem.indo.dooit.views.main.fragments.target.TargetFragment">
 
-    <RelativeLayout
+    <android.support.v4.widget.NestedScrollView
+        android:id="@+id/fragment_target_nested_scroll_view"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:layout_height="match_parent">
 
-        <View
-            android:id="@+id/view"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_alignBottom="@+id/fragment_target_withdraw_button"
-            android:layout_alignParentTop="true"
-            android:background="@color/yellow" />
-
-        <TextView
-            android:id="@+id/fragment_target_goal_name_text_view"
-            style="@style/AppTheme.TextView.Regular.XXXLarge"
-            android:layout_width="match_parent"
-            fontPath="fonts/Lato-Bold.ttf"
-            android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:layout_marginTop="6dp"
-            android:gravity="center_horizontal"
-            android:textColor="@color/black"
-            android:textStyle="bold"
-            tools:text="Goal Name" />
-
-        <android.support.v4.view.ViewPager
-            android:id="@+id/fragment_target_targets_view_pagers"
-            android:layout_width="wrap_content"
-            android:layout_height="200dp"
-            android:layout_below="@+id/fragment_target_goal_name_text_view"
-            android:layout_marginTop="24dp" />
-
-        <ImageButton
-            android:id="@+id/fragment_target_left_image_button"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
-            android:layout_alignBottom="@+id/fragment_target_targets_view_pagers"
-            android:layout_alignStart="@+id/fragment_target_targets_view_pagers"
-            android:layout_alignTop="@+id/fragment_target_targets_view_pagers"
-            android:layout_gravity="center_vertical|start"
-            android:background="?android:selectableItemBackground"
-            android:visibility="gone"
-            app:srcCompat="@drawable/ic_d_left_chevron"
-            tools:visibility="visible" />
-
-        <ImageButton
-            android:id="@+id/fragment_target_right_image_button"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
-            android:layout_alignBottom="@+id/fragment_target_targets_view_pagers"
-            android:layout_alignEnd="@+id/fragment_target_targets_view_pagers"
-            android:layout_alignTop="@+id/fragment_target_targets_view_pagers"
-            android:layout_gravity="center_vertical|end"
-            android:background="?android:selectableItemBackground"
-            android:visibility="gone"
-            app:srcCompat="@drawable/ic_d_right_chevron"
-            tools:visibility="visible" />
-
-
-        <TextView
-            android:id="@+id/fragment_target_saved"
-            style="@style/AppTheme.TextView.Regular"
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:layout_below="@+id/fragment_target_targets_view_pagers"
-            android:gravity="center_horizontal"
-            android:text="@string/target_prefix_saved"
-            android:textColor="@color/black"
-            android:textStyle="bold" />
+            android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/fragment_target_saved_text_view"
-            style="@style/AppTheme.TextView.Regular.XXXLarge"
-            fontPath="fonts/Lato-Bold.ttf"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/fragment_target_saved"
-            android:gravity="center_horizontal"
-            android:textColor="@color/black"
-            android:textStyle="bold"
-            tools:text="$ 38.000" />
+            <View
+                android:id="@+id/view"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_alignBottom="@+id/fragment_target_withdraw_button"
+                android:layout_alignParentTop="true"
+                android:background="@color/yellow" />
 
-        <TextView
-            android:id="@+id/fragment_target_total_text_view"
-            style="@style/AppTheme.TextView.Regular"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
-            android:layout_below="@+id/fragment_target_saved_text_view"
-            android:gravity="center_horizontal"
-            android:textColor="@color/black"
-            android:textStyle="bold"
-            tools:text="of $ 50.000" />
+            <TextView
+                android:id="@+id/fragment_target_goal_name_text_view"
+                style="@style/AppTheme.TextView.Regular.XXXLarge"
+                android:layout_width="match_parent"
+                fontPath="fonts/LondrinaSolid-Regular.ttf"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_marginTop="6dp"
+                android:gravity="center_horizontal"
+                android:textColor="@color/black"
+                android:textStyle="bold"
+                tools:text="Goal Name" />
 
-        <Button
-            android:id="@+id/fragment_target_deposit_button"
-            style="@style/AppTheme.Button.Big.LightBlue"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/fragment_target_total_text_view"
-            android:layout_gravity="center"
-            android:layout_marginEnd="18dp"
-            android:layout_marginStart="18dp"
-            android:layout_marginTop="16dp"
-            android:text="@string/target_save" />
+            <android.support.v4.view.ViewPager
+                android:id="@+id/fragment_target_targets_view_pagers"
+                android:layout_width="wrap_content"
+                android:layout_height="200dp"
+                android:layout_below="@+id/fragment_target_goal_name_text_view"
+                android:layout_marginTop="24dp" />
 
-        <Button
-            android:id="@+id/fragment_target_withdraw_button"
-            style="@style/AppTheme.Button.Medium"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/fragment_target_deposit_button"
-            android:layout_gravity="center"
-            android:text="@string/target_withdraw"
-            android:textColor="@color/grey"
-            android:textStyle="bold" />
+            <ImageButton
+                android:id="@+id/fragment_target_left_image_button"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:layout_alignBottom="@+id/fragment_target_targets_view_pagers"
+                android:layout_alignStart="@+id/fragment_target_targets_view_pagers"
+                android:layout_alignTop="@+id/fragment_target_targets_view_pagers"
+                android:layout_gravity="center_vertical|start"
+                android:background="?android:selectableItemBackground"
+                android:visibility="gone"
+                app:srcCompat="@drawable/ic_d_left_chevron"
+                tools:visibility="visible" />
 
-        <TextView
-            android:id="@+id/fragment_target_savings_history"
-            style="@style/AppTheme.TextView.Regular.Medium"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
-            android:layout_below="@+id/view"
-            android:layout_marginTop="16dp"
-            android:gravity="center_horizontal"
-            android:text="@string/target_savings_history"
-            android:textAllCaps="true"
-            android:textColor="@color/black" />
+            <ImageButton
+                android:id="@+id/fragment_target_right_image_button"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:layout_alignBottom="@+id/fragment_target_targets_view_pagers"
+                android:layout_alignEnd="@+id/fragment_target_targets_view_pagers"
+                android:layout_alignTop="@+id/fragment_target_targets_view_pagers"
+                android:layout_gravity="center_vertical|end"
+                android:background="?android:selectableItemBackground"
+                android:visibility="gone"
+                app:srcCompat="@drawable/ic_d_right_chevron"
+                tools:visibility="visible" />
 
-        <TextView
-            android:id="@+id/fragment_target_weeks"
-            style="@style/AppTheme.TextView.Regular.Small"
-            fontPath="fonts/Lato-Regular.ttf"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/fragment_target_savings_history"
-            android:layout_marginTop="4dp"
-            android:gravity="center_horizontal"
-            android:text="@string/target_weeks"
-            android:textColor="@color/grey" />
 
-        <TextView
-            android:id="@+id/fragment_target_legend_goals"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignTop="@+id/fragment_target_legend_average"
-            android:layout_below="@+id/fragment_target_weeks"
-            android:layout_toStartOf="@+id/fragment_target_legend_average"
-            android:drawableStart="@drawable/target_legend_goals"
-            android:gravity="center_vertical"
-            android:text="@string/legend_label_goals" />
+            <TextView
+                android:id="@+id/fragment_target_saved"
+                style="@style/AppTheme.TextView.Bold.Large"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:layout_below="@+id/fragment_target_targets_view_pagers"
+                android:gravity="center_horizontal"
+                android:text="@string/target_prefix_saved"
+                android:textColor="@color/black"
+                android:textStyle="bold" />
 
-        <TextView
-            android:id="@+id/fragment_target_legend_average"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/fragment_target_weeks"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="4dp"
-            android:drawableStart="@drawable/target_legend_average"
-            android:gravity="center_vertical"
-            android:text="@string/legend_label_average" />
+            <TextView
+                android:id="@+id/fragment_target_saved_text_view"
+                style="@style/AppTheme.TextView.Regular.XXXLarge"
+                fontPath="fonts/LondrinaSolid-Regular.ttf"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/fragment_target_saved"
+                android:gravity="center_horizontal"
+                android:textColor="@color/black"
+                android:textStyle="bold"
+                tools:text="$ 38.000" />
 
-        <TextView
-            android:id="@+id/fragment_target_legend_saved"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignTop="@+id/fragment_target_legend_average"
-            android:layout_below="@+id/fragment_target_weeks"
-            android:layout_toEndOf="@+id/fragment_target_legend_average"
-            android:drawableStart="@drawable/target_legend_saved"
-            android:gravity="center_vertical"
-            android:text="@string/legend_label_saved" />
+            <TextView
+                android:id="@+id/fragment_target_total_text_view"
+                style="@style/AppTheme.TextView.Bold.Large"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:layout_below="@+id/fragment_target_saved_text_view"
+                android:gravity="center_horizontal"
+                android:textColor="@color/black"
+                android:textStyle="bold"
+                tools:text="of $ 50.000" />
 
-        <HorizontalScrollView
-            android:id="@+id/fragment_target_savings_graph"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:scrollbarSize="2dp"
-            android:scrollbarThumbHorizontal="@drawable/scrollbar_horizontal"
-            android:layout_below="@+id/fragment_target_legend_saved"
-            android:paddingBottom="16dp"
-            android:paddingTop="16dp">
+            <Button
+                android:id="@+id/fragment_target_deposit_button"
+                style="@style/AppTheme.Button.Big.LightBlue"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/fragment_target_total_text_view"
+                android:layout_gravity="center"
+                android:layout_marginEnd="18dp"
+                android:layout_marginStart="18dp"
+                android:layout_marginTop="16dp"
+                android:text="@string/target_save" />
 
-            <LinearLayout
+            <Button
+                android:id="@+id/fragment_target_withdraw_button"
+                style="@style/AppTheme.Button.Medium"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/fragment_target_deposit_button"
+                android:layout_gravity="center"
+                android:text="@string/target_withdraw"
+                android:textColor="@color/grey"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/fragment_target_savings_history"
+                style="@style/AppTheme.TextView.Bold.Medium"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_below="@+id/view"
+                android:layout_marginTop="16dp"
+                android:gravity="center_horizontal"
+                android:text="@string/target_savings_history"
+                android:textAllCaps="true"
+                android:textColor="@color/black" />
+
+            <TextView
+                android:id="@+id/fragment_target_weeks"
+                style="@style/AppTheme.TextView.Regular.Small"
+                fontPath="fonts/Lato-Regular.ttf"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/fragment_target_savings_history"
+                android:layout_marginTop="4dp"
+                android:gravity="center_horizontal"
+                android:text="@string/target_weeks"
+                android:textColor="@color/grey" />
+
+            <TextView
+                android:id="@+id/fragment_target_legend_goals"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:layout_alignTop="@+id/fragment_target_legend_average"
+                android:layout_below="@+id/fragment_target_weeks"
+                android:layout_toStartOf="@+id/fragment_target_legend_average"
+                android:drawableStart="@drawable/target_legend_goals"
+                android:gravity="center_vertical"
+                android:text="@string/legend_label_goals" />
 
-                <org.gem.indo.dooit.views.custom.WeekGraph
-                    android:id="@+id/fragment_target_week_graph_view"
+            <TextView
+                android:id="@+id/fragment_target_legend_average"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/fragment_target_weeks"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="4dp"
+                android:drawableStart="@drawable/target_legend_average"
+                android:gravity="center_vertical"
+                android:text="@string/legend_label_average" />
+
+            <TextView
+                android:id="@+id/fragment_target_legend_saved"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignTop="@+id/fragment_target_legend_average"
+                android:layout_below="@+id/fragment_target_weeks"
+                android:layout_toEndOf="@+id/fragment_target_legend_average"
+                android:drawableStart="@drawable/target_legend_saved"
+                android:gravity="center_vertical"
+                android:text="@string/legend_label_saved" />
+
+            <HorizontalScrollView
+                android:id="@+id/fragment_target_savings_graph"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:scrollbarSize="2dp"
+                android:scrollbarThumbHorizontal="@drawable/scrollbar_horizontal"
+                android:layout_below="@+id/fragment_target_legend_saved"
+                android:paddingBottom="16dp"
+                android:paddingTop="16dp">
+
+                <LinearLayout
                     android:layout_width="wrap_content"
-                    android:layout_height="150dp"
-                    android:layout_marginEnd="16dp"
-                    android:orientation="horizontal"
-                    app:gw_bar_avgColor="@color/grey"
-                    app:gw_bar_avgHeight="2dp"
-                    app:gw_bar_drawable="@drawable/week_bar"
-                    app:gw_bar_marginEnd="0dp"
-                    app:gw_bar_marginStart="5dp"
-                    app:gw_bar_targetColor="@color/yellow"
-                    app:gw_bar_targetHeight="2dp"
-                    app:gw_bar_textHeight="20dp"
-                    app:gw_bar_width="24dp"
-                    tools:layout_width="150dp" />
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
 
-                <FrameLayout
-                    android:id="@+id/fragment_target_history_date_container"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
-                    <android.support.constraint.ConstraintLayout
-                        android:layout_width="150dp"
+                    <org.gem.indo.dooit.views.custom.WeekGraph
+                        android:id="@+id/fragment_target_week_graph_view"
+                        android:layout_width="wrap_content"
                         android:layout_height="150dp"
-                        android:layout_gravity="center_horizontal"
-                        android:background="@drawable/target_date">
+                        android:layout_marginEnd="16dp"
+                        android:orientation="horizontal"
+                        app:gw_bar_avgColor="@color/grey"
+                        app:gw_bar_avgHeight="2dp"
+                        app:gw_bar_drawable="@drawable/week_bar"
+                        app:gw_bar_marginEnd="0dp"
+                        app:gw_bar_marginStart="5dp"
+                        app:gw_bar_targetColor="@color/yellow"
+                        app:gw_bar_targetHeight="2dp"
+                        app:gw_bar_textHeight="20dp"
+                        app:gw_bar_width="24dp"
+                        tools:layout_width="150dp" />
 
-                        <TextView
-                            android:id="@+id/fragment_target_history_date_title"
-                            style="@style/AppTheme.TextView.Regular.Medium"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/target_date"
-                            android:textColor="@color/grey"
-                            android:textStyle="bold"
-                            android:textAllCaps="true"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintLeft_toLeftOf="parent"
-                            app:layout_constraintRight_toRightOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent"
-                            app:layout_constraintVertical_bias="0.4" />
+                    <FrameLayout
+                        android:id="@+id/fragment_target_history_date_container"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
 
-                        <TextView
-                            android:id="@+id/fragment_target_history_date"
-                            style="@style/AppTheme.TextView.Regular.Medium"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="4dp"
-                            android:textStyle="bold"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintLeft_toLeftOf="parent"
-                            app:layout_constraintRight_toRightOf="parent"
-                            app:layout_constraintTop_toBottomOf="@+id/fragment_target_history_date_title"
-                            app:layout_constraintVertical_bias="0.0"
-                            tools:text="29 December 2016" />
-                    </android.support.constraint.ConstraintLayout>
-                </FrameLayout>
-            </LinearLayout>
-        </HorizontalScrollView>
+                        <android.support.constraint.ConstraintLayout
+                            android:layout_width="150dp"
+                            android:layout_height="150dp"
+                            android:layout_gravity="center_horizontal"
+                            android:background="@drawable/target_date">
 
-        <TextView
-            android:id="@+id/fragment_target_savings_plan"
-            style="@style/AppTheme.TextView.Regular.Medium"
+                            <TextView
+                                android:id="@+id/fragment_target_history_date_title"
+                                style="@style/AppTheme.TextView.Regular.Medium"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/target_date"
+                                android:textColor="@color/grey"
+                                android:textStyle="bold"
+                                android:textAllCaps="true"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintLeft_toLeftOf="parent"
+                                app:layout_constraintRight_toRightOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent"
+                                app:layout_constraintVertical_bias="0.4" />
+
+                            <TextView
+                                android:id="@+id/fragment_target_history_date"
+                                style="@style/AppTheme.TextView.Regular.Medium"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="4dp"
+                                android:textStyle="bold"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintLeft_toLeftOf="parent"
+                                app:layout_constraintRight_toRightOf="parent"
+                                app:layout_constraintTop_toBottomOf="@+id/fragment_target_history_date_title"
+                                app:layout_constraintVertical_bias="0.0"
+                                tools:text="29 December 2016" />
+                        </android.support.constraint.ConstraintLayout>
+                    </FrameLayout>
+                </LinearLayout>
+            </HorizontalScrollView>
+
+            <TextView
+                android:id="@+id/fragment_target_savings_plan"
+                style="@style/AppTheme.TextView.Bold.Medium"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/fragment_target_savings_graph"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="24dp"
+                android:text="@string/target_savings_plan"
+                android:textAllCaps="true"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/fragment_target_savings_plan_message"
+                style="@style/AppTheme.TextView.Regular.Medium"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/fragment_target_savings_plan"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="4dp"
+                android:text="@string/target_savings_message"
+                android:textAlignment="center" />
+
+            <TextView
+                android:id="@+id/fragment_target_savings_plan_edit"
+                style="@style/AppTheme.TextView.Bold.Medium"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/fragment_target_savings_plan_message"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="24dp"
+                android:text="@string/target_edit_savings_plan"
+                android:textAlignment="center"
+                android:layout_marginBottom="30dp"
+                android:textAllCaps="true"
+                android:textColor="@color/grey" />
+
+        </RelativeLayout>
+
+    </android.support.v4.widget.NestedScrollView>
+
+
+    <RelativeLayout
+        android:id="@+id/fragment_target_loading_progress_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone">
+
+        <ProgressBar
+            android:id="@+id/fragment_target_loading_progress"
+            style="?android:attr/progressBarStyleLarge"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/fragment_target_savings_graph"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="24dp"
-            android:text="@string/target_savings_plan"
-            android:textAllCaps="true"
-            android:textStyle="bold" />
+            android:layout_centerInParent="true"
+            android:indeterminate="true" />
 
         <TextView
-            android:id="@+id/fragment_target_savings_plan_message"
-            style="@style/AppTheme.TextView.Regular.Medium"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/fragment_target_savings_plan"
+            android:layout_below="@id/fragment_target_loading_progress"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="4dp"
-            android:text="@string/target_savings_message"
-            android:textAlignment="center" />
+            android:text="@string/label_loading"/>
 
-        <TextView
-            android:id="@+id/fragment_target_savings_plan_edit"
-            style="@style/AppTheme.TextView.Regular.Medium"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/fragment_target_savings_plan_message"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="24dp"
-            android:text="@string/target_edit_savings_plan"
-            android:textAlignment="center"
-            android:layout_marginBottom="30dp"
-            android:textAllCaps="true"
-            android:textColor="@color/grey" />
     </RelativeLayout>
-</android.support.v4.widget.NestedScrollView>
+
+    <RelativeLayout
+        android:id="@+id/fragment_target_no_goals"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/yellow"
+        android:visibility="gone"
+        tools:visibility="visible">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="400dp"
+            android:src="@drawable/no_goal"
+            android:layout_alignParentTop="true"
+            android:layout_marginTop="-20dp"
+            android:scaleType="centerInside"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/AppTheme.TextView.Bold.Large"
+            android:layout_centerHorizontal="true"
+            android:layout_above="@+id/fragment_target_add_goal_button"
+            android:text="@string/target_no_goal"/>
+
+        <Button
+            android:id="@+id/fragment_target_add_goal_button"
+            style="@style/AppTheme.Button.Big.Black"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_margin="24dp"
+            android:text="@string/target_add_goal" />
+
+    </RelativeLayout>
+
+
+</FrameLayout>
