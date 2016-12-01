@@ -1,6 +1,5 @@
 package org.gem.indo.dooit.views.main.fragments.target.callbacks;
 
-import android.util.Log;
 import android.app.Activity;
 import android.content.Context;
 import android.net.Uri;
@@ -26,6 +25,7 @@ import java.util.Map;
 import javax.inject.Inject;
 
 import rx.Observable;
+import rx.functions.Action0;
 import rx.functions.Action1;
 
 /**
@@ -39,11 +39,9 @@ public class GoalAddCallback implements BotCallback {
 
     @Inject
     transient GoalManager goalManager;
- 
+
     @Inject
     transient FileUploadManager fileUploadManager;
-
-    private transient MainFragment fragment;
 
     public GoalAddCallback(Activity activity) {
         ((DooitApplication) activity.getApplication()).component.inject(this);
@@ -78,6 +76,13 @@ public class GoalAddCallback implements BotCallback {
             public void onError(DooitAPIError error) {
 
             }
+        }).doOnCompleted(new Action0() {
+            @Override
+            public void call() {
+                if (context instanceof MainActivity) {
+                    ((MainActivity) context).refreshGoals();
+                }
+            }
         });
 
         // Find Image
@@ -88,9 +93,9 @@ public class GoalAddCallback implements BotCallback {
             imageUri = Uri.parse(answerLog.get("Gallery").getValue());
 
         // Upload image if set
-        if (imageUri != null){
-            final String mimetype = fragment.getContext().getContentResolver().getType(imageUri);
-            final String path = MediaUriHelper.getPath(fragment.getContext(), imageUri);
+        if (imageUri != null) {
+            final String mimetype = context.getContentResolver().getType(imageUri);
+            final String path = MediaUriHelper.getPath(context, imageUri);
             observe.subscribe(new Action1<Goal>() {
                 @Override
                 public void call(Goal goal) {
@@ -105,13 +110,6 @@ public class GoalAddCallback implements BotCallback {
     private void uploadImage(Goal goal, String mimetype, File file) {
         fileUploadManager.uploadGoalImage(goal.getId(), mimetype, file, new DooitErrorHandler() {
             @Override
-            public void call(Goal goal) {
-                Log.d(TAG, goal + " successfully created");
-            public void call(Goal goal) {
-                Log.d(TAG, goal + " successfully created");
-                if (context instanceof MainActivity) {
-                    ((MainActivity) context).refreshGoals();
-                }
             public void onError(DooitAPIError error) {
 
             }

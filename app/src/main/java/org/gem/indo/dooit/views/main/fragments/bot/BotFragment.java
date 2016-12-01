@@ -141,6 +141,8 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
         if (item.getItemId() == R.id.menu_main_bot_clear) {
             persisted.clearConversation();
             persisted.clearConvoGoals();
+            type = BotType.DEFAULT;
+            createFeed();
         }
         return super.onOptionsItemSelected(item);
     }
@@ -494,11 +496,12 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
 
     /**
      * Helper to indicate whether a Node should be added to the conversation's view.
+     *
      * @param model
      * @return
      */
     public static boolean shouldAdd(BaseBotModel model) {
-        switch(BotMessageType.getValueOf(model.getType())) {
+        switch (BotMessageType.getValueOf(model.getType())) {
             case BLANK:
             case STARTCONVO:
             case END:
