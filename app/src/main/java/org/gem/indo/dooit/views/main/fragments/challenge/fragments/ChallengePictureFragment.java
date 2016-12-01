@@ -109,6 +109,12 @@ public class ChallengePictureFragment extends Fragment implements HasChallengeFr
         View view = inflater.inflate(R.layout.fragment_challenge_picture, container, false);
         ButterKnife.bind(this, view);
         PictureChallengeQuestion question = challenge.getQuestion();
+        if (savedInstanceState != null) {
+            String uriString = savedInstanceState.getString(ARG_IMGURI);
+            if (uriString != null && !uriString.isEmpty()) {
+                image.setImageURI(Uri.parse(uriString));
+            }
+        }
         return view;
     }
 
@@ -208,7 +214,6 @@ public class ChallengePictureFragment extends Fragment implements HasChallengeFr
             if (uriString != null && !uriString.isEmpty()) {
                 imageUri = Uri.parse(uriString);
                 imagePath = MediaUriHelper.getPath(getContext(), imageUri);
-                image.setImageURI(imageUri);
             }
         }
         super.onActivityCreated(savedInstanceState);
@@ -226,7 +231,7 @@ public class ChallengePictureFragment extends Fragment implements HasChallengeFr
                 imagePath = MediaUriHelper.getPath(getContext(), data.getData());
                 imageUri = data.getData();
                 if (image != null) {
-                    image.setImageURI(data.getData());
+                    image.setImageURI(imageUri);
                 }
             }
         }
