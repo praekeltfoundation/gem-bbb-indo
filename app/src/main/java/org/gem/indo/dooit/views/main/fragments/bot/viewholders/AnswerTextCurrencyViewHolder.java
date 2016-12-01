@@ -1,6 +1,7 @@
 package org.gem.indo.dooit.views.main.fragments.bot.viewholders;
 
 import android.content.Context;
+import android.support.v4.content.ContextCompat;
 import android.view.View;
 import android.widget.TextView;
 
@@ -17,6 +18,7 @@ import butterknife.ButterKnife;
  */
 
 public class AnswerTextCurrencyViewHolder extends BaseBotViewHolder<Answer> {
+
     @BindView(R.id.item_view_bot_answer_text)
     TextView textView;
 
@@ -26,12 +28,14 @@ public class AnswerTextCurrencyViewHolder extends BaseBotViewHolder<Answer> {
         super(itemView);
         this.botAdapter = botAdapter;
         ButterKnife.bind(this, itemView);
+
+        textView.setBackground(ContextCompat.getDrawable(itemView.getContext(), R.drawable.ic_d_answer_dialogue_bkg));
     }
 
     @Override
     public void populate(Answer model) {
         this.dataModel = model;
-        textView.setText(CurrencyHelper.format(dataModel.getText(getContext())));
+        textView.setText(CurrencyHelper.format(dataModel.getValue()));
     }
 
     public Context getContext() {

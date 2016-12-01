@@ -11,6 +11,12 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 
+import org.gem.indo.dooit.models.bot.Answer;
+import org.gem.indo.dooit.models.bot.BaseBotModel;
+import org.gem.indo.dooit.models.enums.BotType;
+import org.gem.indo.dooit.views.helpers.activity.CurrencyHelper;
+import org.gem.indo.dooit.views.main.fragments.bot.adapters.BotAdapter;
+
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
@@ -82,6 +88,57 @@ public class Utils {
 
     public static String formatDate(Date date) {
         return new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(date);
+    }
+
+    public static String populateFromPersisted(Persisted persisted, BotAdapter botAdapter, String text, String[] params) {
+        if (!text.contains("%"))
+            return text;
+
+        for (int i = 0; i < params.length; i++) {
+            String param = params[i];
+
+            switch (param) {
+                case "USERNAME":
+                    params[i] = persisted.getCurrentUser().getUsername();
+                    break;
+                case "FIRSTNAME":
+                    params[i] = persisted.getCurrentUser().getFirstName();
+                    break;
+                case "LASTNAME":
+                    params[i] = persisted.getCurrentUser().getLastName();
+                    break;
+                case "LOCAL_CURRENCY":
+                    params[i] = CurrencyHelper.getCurrencySymbol();
+                    break;
+                case "GOAL_DEPOSIT_TARGET":
+                    params[i] = String.format(Locale.getDefault(), "%s", (int) persisted.loadConvoGoal(BotType.GOAL_DEPOSIT).getTarget());
+                    break;
+                case "GOAL_DEPOSIT_WEEKLY_TARGET":
+                    params[i] = String.format(Locale.getDefault(), "%s", (int) Math.ceil(persisted.loadConvoGoal(BotType.GOAL_DEPOSIT).getWeeklyTarget()));
+                    break;
+                case "GOAL_DEPOSIT_END_DATE":
+                    params[i] = Utils.formatDate(persisted.loadConvoGoal(BotType.GOAL_DEPOSIT).getEndDate().toDate());
+                    break;
+                case "GOAL_DEPOSIT_WEEKS_LEFT":
+                    params[i] = String.valueOf(Utils.weekDiff(persisted.loadConvoGoal(BotType.GOAL_DEPOSIT).getEndDate().toDate().getTime(), Utils.ROUNDWEEK.DOWN));
+                    break;
+                case "GOAL_DEPOSIT_DAYS_LEFT":
+                    int days = Utils.dayDiff(persisted.loadConvoGoal(BotType.GOAL_DEPOSIT).getEndDate().toDate().getTime());
+                    params[i] = String.valueOf(days - (Utils.weekDiff(persisted.loadConvoGoal(BotType.GOAL_DEPOSIT).getEndDate().toDate().getTime(), Utils.ROUNDWEEK.DOWN) * 7));
+                    break;
+                case "TIP_INTRO":
+                    params[i] = persisted.loadConvoTip().getIntro();
+                    break;
+                default:
+                    for (BaseBotModel baseBotModel : botAdapter.getDataSet()) {
+                        if (baseBotModel.getClassType().equals(Answer.class.toString())
+                                && param.equals(baseBotModel.getName())) {
+                            params[i] = ((Answer) baseBotModel).getValue();
+                        }
+                    }
+            }
+        }
+        return String.format(text, (Object[]) params);
     }
 
     public enum ROUNDWEEK {

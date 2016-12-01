@@ -23,6 +23,7 @@ import org.gem.indo.dooit.api.managers.GoalManager;
 import org.gem.indo.dooit.api.managers.TipManager;
 import org.gem.indo.dooit.helpers.Persisted;
 import org.gem.indo.dooit.helpers.SquiggleBackgroundHelper;
+import org.gem.indo.dooit.helpers.Utils;
 import org.gem.indo.dooit.helpers.bot.BotFeed;
 import org.gem.indo.dooit.models.Goal;
 import org.gem.indo.dooit.models.GoalPrototype;
@@ -444,12 +445,12 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
                 answerView.setData(node.getAnswers(), new HashtagView.DataStateTransform<Answer>() {
                     @Override
                     public CharSequence prepareSelected(Answer item) {
-                        return item.getText(getContext());
+                        return Utils.populateFromPersisted(persisted, getBotAdapter(), item.getText(getContext()), item.getTextParams());
                     }
 
                     @Override
                     public CharSequence prepare(Answer item) {
-                        return item.getText(getContext());
+                        return Utils.populateFromPersisted(persisted, getBotAdapter(), item.getText(getContext()), item.getTextParams());
                     }
                 });
             } else {

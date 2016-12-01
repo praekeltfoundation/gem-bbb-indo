@@ -1,5 +1,6 @@
 package org.gem.indo.dooit.views.main.fragments.bot.viewholders;
 
+import android.support.v4.content.ContextCompat;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -32,6 +33,9 @@ public class TipBotViewHolder extends BaseBotViewHolder<Node> {
     @BindString(R.string.tips_article_opening)
     String openingText;
 
+    @BindView(R.id.item_view_bot_tip)
+    View background;
+
     @BindView(R.id.item_view_bot_tip_image)
     SimpleDraweeView image;
 
@@ -51,6 +55,8 @@ public class TipBotViewHolder extends BaseBotViewHolder<Node> {
         ((DooitApplication) getContext().getApplicationContext()).component.inject(this);
         ButterKnife.bind(this, itemView);
         this.listener = listener;
+
+        background.setBackground(ContextCompat.getDrawable(itemView.getContext(), R.drawable.bkg_carousel_card));
     }
 
     @Override

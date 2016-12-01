@@ -24,11 +24,11 @@
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
         android:layout_marginEnd="8dp"
-        android:background="@drawable/ic_d_answer_dialogue_bkg"
         android:paddingTop="@dimen/bot_text_padding_vertical"
         android:paddingBottom="@dimen/bot_text_padding_vertical"
         android:paddingStart="@dimen/bot_text_padding_horizontal"
         android:paddingEnd="@dimen/bot_text_padding_horizontal"
         android:textColor="@color/grey_fore"
+        tools:background="@drawable/ic_d_answer_dialogue_bkg"
         tools:text="Blank Answer" />
 </RelativeLayout>
