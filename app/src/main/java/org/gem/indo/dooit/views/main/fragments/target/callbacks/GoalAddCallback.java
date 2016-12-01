@@ -10,6 +10,7 @@ import org.gem.indo.dooit.api.managers.GoalManager;
 import org.gem.indo.dooit.helpers.MediaUriHelper;
 import org.gem.indo.dooit.models.Goal;
 import org.gem.indo.dooit.models.bot.Answer;
+import org.gem.indo.dooit.models.bot.BaseBotModel;
 import org.gem.indo.dooit.models.bot.BotCallback;
 import org.gem.indo.dooit.views.main.fragments.MainFragment;
 import org.joda.time.LocalDate;
@@ -103,5 +104,10 @@ public class GoalAddCallback implements BotCallback {
 
             }
         }).subscribe();
+    }
+
+    @Override
+    public void onCall(String key, Map<String, Answer> answerLog, BaseBotModel model) {
+
     }
 }

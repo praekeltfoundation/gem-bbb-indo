@@ -5,45 +5,47 @@ import org.gem.indo.dooit.api.DooitAPIError;
 import org.gem.indo.dooit.api.DooitErrorHandler;
 import org.gem.indo.dooit.api.managers.GoalManager;
 import org.gem.indo.dooit.models.Goal;
-import org.gem.indo.dooit.models.GoalTransaction;
 import org.gem.indo.dooit.models.bot.Answer;
 import org.gem.indo.dooit.models.bot.BaseBotModel;
 import org.gem.indo.dooit.models.bot.BotCallback;
+import org.joda.time.format.DateTimeFormat;
 
 import java.util.Map;
 
 import javax.inject.Inject;
 
 /**
- * Created by Wimpie Victor on 2016/11/21.
+ * Created by Wimpie Victor on 2016/12/01.
  */
 
-public class GoalDepositCallback implements BotCallback {
+public class GoalEditCallback implements BotCallback {
 
     @Inject
     transient GoalManager goalManager;
 
     private Goal goal;
 
-    public GoalDepositCallback(DooitApplication application, Goal goal) {
+    public GoalEditCallback(DooitApplication application, Goal goal) {
         application.component.inject(this);
         this.goal = goal;
     }
 
     @Override
     public void onDone(Map<String, Answer> answerLog) {
-        GoalTransaction trans = new GoalTransaction(Double.parseDouble(answerLog.get("deposit_amount").getValue()));
 
-        goalManager.addGoalTransaction(goal, trans, new DooitErrorHandler() {
+    }
+
+    @Override
+    public void onCall(String key, Map<String, Answer> answerLog, BaseBotModel model) {
+        if (answerLog.containsKey("goal_edit_choice_date"))
+            goal.setEndDate(DateTimeFormat.forPattern("yyyy-MM-dd")
+                    .parseLocalDate(answerLog.get("goal_end_date").getValue().substring(0, 10)));
+
+        goalManager.updateGoal(goal, new DooitErrorHandler() {
             @Override
             public void onError(DooitAPIError error) {
 
             }
         }).subscribe();
-    }
-
-    @Override
-    public void onCall(String key, Map<String, Answer> answerLog, BaseBotModel model) {
-
     }
 }

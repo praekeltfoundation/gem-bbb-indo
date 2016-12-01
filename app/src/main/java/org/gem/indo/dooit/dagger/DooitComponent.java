@@ -21,6 +21,7 @@ import org.gem.indo.dooit.views.main.fragments.challenge.fragments.ChallengeRegi
 import org.gem.indo.dooit.views.main.fragments.target.TargetFragment;
 import org.gem.indo.dooit.views.main.fragments.target.callbacks.GoalAddCallback;
 import org.gem.indo.dooit.views.main.fragments.target.callbacks.GoalDepositCallback;
+import org.gem.indo.dooit.views.main.fragments.target.callbacks.GoalEditCallback;
 import org.gem.indo.dooit.views.main.fragments.target.callbacks.GoalWithdrawCallback;
 import org.gem.indo.dooit.views.main.fragments.tip.TipsFragment;
 import org.gem.indo.dooit.views.main.fragments.tip.TipsListFragment;
@@ -79,6 +80,8 @@ public interface DooitComponent {
     void inject(GoalDepositCallback o);
 
     void inject(GoalWithdrawCallback o);
+
+    void inject(GoalEditCallback o);
 
     void inject(GoalVerificationViewHolder o);
 
