@@ -25,13 +25,17 @@ import butterknife.ButterKnife;
  * Created by Bernhard Müller on 2016/07/22.
  */
 public class MinimalWebViewActivity extends DooitActivity {
+
     private static final String INTENT_URL = "intent_webView_url";
     private static final String INTENT_TITLE = "intent_webView_title";
     private static final String INTENT_NO_CARET = "intent_noCaret_title";
+
     @BindView(R.id.toolbar)
     Toolbar toolbar;
+
     @BindView(R.id.activity_settings_web_view)
     WebView webView;
+
     @BindView(R.id.activity_settings_web_progress)
     ProgressBar progressBar;
 

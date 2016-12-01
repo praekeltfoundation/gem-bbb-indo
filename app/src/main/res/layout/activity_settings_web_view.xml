@@ -33,44 +33,17 @@
         android:layout_alignTop="@+id/activity_settings_web_view"
         app:elevation="0dp">
 
-        <android.support.design.widget.CollapsingToolbarLayout
-            android:id="@+id/toolbar_t_and_c_layout"
-
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:contentScrim="@color/transparent"
-            app:layout_scrollFlags="scroll|exitUntilCollapsed|snap"
-            app:titleEnabled="false">
-
-            <TextView
-                android:id="@+id/toolbar_t_and_c"
-                style="@style/AppTheme.TextView.Regular.ExtraLarge"
-                fontPath="fonts/LondrinaSolid-Regular.ttf"
-                android:layout_width="match_parent"
-                android:layout_height="?attr/actionBarSize"
-                android:layout_gravity="top"
-                android:layout_marginEnd="?attr/actionBarSize"
-                android:layout_marginStart="?attr/actionBarSize"
-                android:background="@null"
-                android:ellipsize="end"
-                android:gravity="center"
-                android:maxLines="1"
-                android:text=""
-                android:textColor="@color/black"
-                app:layout_collapseMode="pin" />
-
-            <android.support.v7.widget.Toolbar
-                android:id="@+id/toolbar"
-                android:layout_width="match_parent"
-                android:layout_height="?attr/actionBarSize"
-                android:background="@color/transparent"
-                app:layout_collapseMode="pin"
-                app:layout_scrollFlags="scroll|enterAlways"
-                app:popupTheme="@style/AppTheme.PopupOverlay"
-                app:subtitleTextAppearance="@style/AppTheme.Toolbar.SubTitle"
-                app:titleTextColor="@color/profileSettingsTitle" />
-
-        </android.support.design.widget.CollapsingToolbarLayout>
+            android:layout_height="?attr/actionBarSize"
+            android:background="@color/transparent"
+            app:layout_collapseMode="pin"
+            app:layout_scrollFlags="scroll|enterAlways"
+            app:popupTheme="@style/AppTheme.PopupOverlay"
+            app:subtitleTextAppearance="@style/AppTheme.Toolbar.SubTitle"
+            app:titleTextColor="@color/profileSettingsTitle"
+            android:layout_weight="1" />
 
     </android.support.design.widget.AppBarLayout>
 
