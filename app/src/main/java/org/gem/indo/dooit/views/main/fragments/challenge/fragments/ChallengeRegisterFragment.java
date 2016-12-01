@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,6 +23,7 @@ import org.gem.indo.dooit.api.managers.ChallengeManager;
 import org.gem.indo.dooit.helpers.Persisted;
 import org.gem.indo.dooit.helpers.RequestCodes;
 import org.gem.indo.dooit.helpers.SquiggleBackgroundHelper;
+import org.gem.indo.dooit.helpers.TextSpannableHelper;
 import org.gem.indo.dooit.models.challenge.BaseChallenge;
 import org.gem.indo.dooit.models.challenge.FreeformChallenge;
 import org.gem.indo.dooit.models.challenge.Participant;
@@ -124,6 +126,23 @@ public class ChallengeRegisterFragment extends Fragment implements HasChallengeF
         if (hasActive) {
             register.setText(getText(R.string.label_continue));
         }
+
+        if (instruction.getText() == null || instruction.getText().equals("")) {
+            instruction.setVisibility(View.GONE);
+        } else {
+            instruction.setVisibility(View.VISIBLE);
+        }
+
+        if (title.getText() == null || title.getText().equals("")) {
+            title.setVisibility(View.GONE);
+        } else {
+            title.setVisibility(View.VISIBLE);
+        }
+
+        String tcString = getResources().getString(R.string.challenge_t_c);
+        TextSpannableHelper spanHelper = new TextSpannableHelper();
+        tc.setText(spanHelper.styleText(getContext(), R.style.AppTheme_TextView_Bold_Small_Accented, tcString));
+
         return view;
     }
 

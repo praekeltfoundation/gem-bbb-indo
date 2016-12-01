@@ -63,7 +63,7 @@
                 android:layout_marginEnd="16dp"
                 android:layout_marginStart="4dp"
                 android:layout_toEndOf="@+id/fragment_challenge_close_image_view"
-                android:theme="@style/AppTheme.HorsontalProgress"
+                android:theme="@style/AppTheme.HorizontalProgress"
                 android:visibility="gone"
                 tools:progress="30"
                 tools:visibility="visible" />
