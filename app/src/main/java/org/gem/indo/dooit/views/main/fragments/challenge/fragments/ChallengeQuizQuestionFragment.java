@@ -1,5 +1,6 @@
 package org.gem.indo.dooit.views.main.fragments.challenge.fragments;
 
+import android.graphics.Rect;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -104,6 +105,34 @@ public class ChallengeQuizQuestionFragment extends Fragment implements OnOptionC
         optionList.setLayoutManager(new LinearLayoutManager(getContext()));
         selectItem(optionId);
         optionList.setEnabled(completed);
+        optionList.addItemDecoration(new RecyclerView.ItemDecoration() {
+            @Override
+            public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state) {
+                final int gapHeight = 4;
+                int pos = parent.getChildAdapterPosition(view);
+                if (pos == 0) {
+                    int totalHeight = parent.getHeight();
+                    RecyclerView.LayoutManager layMan = parent.getLayoutManager();
+                    int numVisible = parent.getLayoutManager().getChildCount();
+                    int visibleChildHeight = 2 * gapHeight * numVisible;
+                    for (int i = 0; i < numVisible; i++) {
+                        View child = layMan.getChildAt(i);
+                        child.measure(
+                                View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED),
+                                View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED)
+                        );
+                        visibleChildHeight += child.getMeasuredHeight();
+                    }
+                    int offset = gapHeight;
+                    if (visibleChildHeight < totalHeight) {
+                        offset = (totalHeight - visibleChildHeight) / 2 - gapHeight;
+                    }
+                    outRect.set(0, offset, 0, gapHeight);
+                } else {
+                    outRect.set(0, gapHeight, 0, gapHeight);
+                }
+            }
+        });
         return view;
     }
 
