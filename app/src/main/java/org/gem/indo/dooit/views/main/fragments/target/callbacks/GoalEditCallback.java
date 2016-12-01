@@ -58,6 +58,9 @@ public class GoalEditCallback implements BotCallback {
             case "do_update":
                 doUpdate(answerLog);
                 break;
+            case "do_delete":
+                doDelete(answerLog);
+                break;
         }
     }
 
@@ -110,5 +113,14 @@ public class GoalEditCallback implements BotCallback {
             }
         });
 
+    }
+
+    private void doDelete(Map<String, Answer> answerLog) {
+        goalManager.deleteGoal(goal, new DooitErrorHandler() {
+            @Override
+            public void onError(DooitAPIError error) {
+                
+            }
+        }).subscribe();
     }
 }

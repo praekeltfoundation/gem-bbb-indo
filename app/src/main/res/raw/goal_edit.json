@@ -31,10 +31,14 @@
       {
         "name": "goal_edit_choice_delete",
         "text": "$(goal_edit_choice_delete)",
-        "next": ""
+        "next": "goal_edit_delete_confirm"
       }
     ]
   },
+
+
+
+
   {
     "name": "goal_edit_date",
     "type": "blank",
@@ -48,6 +52,10 @@
       }
     ]
   },
+
+
+
+
   {
     "name": "goal_edit_target",
     "type": "text",
@@ -75,13 +83,99 @@
       {
         "name": "goal_edit_target_cancel",
         "text": "$(goal_edit_target_cancel)",
-        "next": "goal_edit_target_cancel_edit"
+        "next": "goal_edit_end"
+      }
+    ]
+  },
+  
+
+
+
+  {
+    "name": "goal_edit_image_choose",
+    "type": "blank",
+    "answers": [
+      {
+        "name": "goal_edit_camera",
+        "text": "$(goal_edit_camera)",
+        "type": "captureUpload",
+        "nextOnFinish": "goal_edit_do_update",
+        "removeOnSelect": "goal_edit_camera"
+      },
+      {
+        "name": "goal_edit_gallery",
+        "text": "$(goal_edit_gallery)",
+        "type": "galleryUpload",
+        "nextOnFinish": "goal_edit_do_update",
+        "removeOnSelect": "goal_edit_gallery"
+      },
+      {
+        "name": "goal_edit_image_cancel",
+        "text": "$(goal_edit_image_cancel)",
+        "next": "goal_edit_end"
+      }
+    ]
+  },
+
+
+
+
+
+  {
+    "name": "goal_edit_delete_confirm",
+    "type": "text",
+    "text": "$(goal_edit_delete_confirm)",
+    "answers": [
+      {
+        "name": "goal_edit_delete_reason_reached",
+        "text": "$(goal_edit_delete_reason_reached)",
+        "next": "goal_edit_delete_reached"
+      },
+      {
+        "name": "goal_edit_delete_reason_difficult",
+        "text": "$(goal_edit_delete_reason_difficult)",
+        "next": "goal_edit_delete_difficult"
+      },
+      {
+        "name": "goal_edit_delete_reason_do_not_want",
+        "text": "$(goal_edit_delete_reason_do_not_want)",
+        "next": "goal_edit_do_delete"
+      },
+      {
+        "name": "goal_edit_delete_reason_misc",
+        "text": "$(goal_edit_delete_reason_misc)",
+        "next": "goal_edit_do_delete"
+      },
+      {
+        "name": "goal_edit_delete_reason_cancel",
+        "text": "$(goal_edit_delete_reason_cancel)",
+        "next": "goal_edit_end"
       }
     ]
   },
   {
-    "name": "goal_edit_target_cancel_edit",
-    "text": "$(goal_edit_target_cancel_edit)",
+    "name": "goal_edit_delete_reached",
+    "type": "text",
+    "text": "$(goal_edit_delete_reached)",
+    "next": "goal_edit_end"
+  },
+  {
+    "name": "goal_edit_delete_difficult",
+    "type": "text",
+    "text": "$(goal_edit_delete_difficult)",
+    "answers": [
+      
+    ]
+  },
+  {
+    "name": "goal_edit_do_delete",
+    "type": "blank",
+    "callback": "do_delete",
+    "autoNext": "goal_edit_delete_done"
+  },
+  {
+    "name": "goal_edit_delete_done",
+    "text": "$(goal_edit_delete_done)",
     "answers": [
       {
         "name": "goal_edit_tip",
@@ -101,30 +195,15 @@
     ]
   },
   {
-    "name": "goal_edit_image_choose",
-    "type": "blank",
-    "answers": [
-      {
-        "name": "goal_edit_camera",
-        "text": "$(goal_edit_camera)",
-        "type": "captureUpload",
-        "nextOnFinish": "goal_edit_do_update",
-        "removeOnSelect": "goal_edit_camera"
-      },
-      {
-        "name": "goal_edit_gallery",
-        "text": "$(goal_edit_gallery)",
-        "type": "galleryUpload",
-        "nextOnFinish": "goal_edit_do_update",
-        "removeOnSelect": "goal_edit_camera"
-      }
-    ]
-  },
-  {
     "name": "goal_edit_come_back",
     "text": "$(goal_edit_come_back)",
     "autoNext": "goal_edit_end"
   },
+
+
+
+
+
   {
     "name": "goal_edit_do_update",
     "type": "blank",
@@ -145,4 +224,8 @@
     "name": "goal_edit_end",
     "type": "end"
   }
+
+
+
+
 ]
