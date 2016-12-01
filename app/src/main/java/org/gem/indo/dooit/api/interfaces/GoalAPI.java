@@ -8,6 +8,7 @@ import org.gem.indo.dooit.models.GoalTransaction;
 import java.util.List;
 
 import retrofit2.http.Body;
+import retrofit2.http.DELETE;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
@@ -35,4 +36,7 @@ public interface GoalAPI {
 
     @PUT("/api/goals/{id}/")
     Observable<Goal> updateGoal(@Path("id") long goalId, @Body Goal goal);
+
+    @DELETE("/api/goals/{id}/")
+    Observable<EmptyResponse> deleteGoal(@Path("id") long goalId);
 }

@@ -175,8 +175,12 @@
     <string name="goal_edit_updated">Your goal has been updated!</string>
     <string name="goal_edit_target">How much money do you think can you save each week?</string>
     <string name="goal_edit_target_confirm">If you save Rp. [weekly_goal] per week, you\’ll have enough money to get your [goal_name] in only [total_weeks] weeks.</string>
-    <string name="goal_edit_target_cancel_edit">Don\'t worry, we can get you back on track with your savings in no time. Have a look at our tips or take this week\'s challenge!</string>
     <string name="goal_edit_come_back">Come back to track your savings weekly and watch as your goal becomes a reality!</string>
+    <string name="goal_edit_delete_confirm">Oh? Why do you want to delete this goal?</string>
+    <string name="goal_edit_delete_reached">Congratulations! That is great news. I\'ll update this now.</string>
+    <string name="goal_edit_delete_difficult">I can help you work out another savings plan that will be easier to afford.</string>
+    <string name="goal_edit_delete_cancel">Don\'t worry, we can get you back on track with your savings in no time. Have a look at our tips or take this week\'s challenge!</string>
+    <string name="goal_edit_delete_done">Goal deleted</string>
 
     <!-- Answers -->
     <string name="goal_edit_choice_date">Date</string>
@@ -189,6 +193,14 @@
     <string name="goal_edit_tip">Thanks! I want to check out savings tips.</string>
     <string name="goal_edit_challenge">Cool! Let\'s take a challenge.</string>
     <string name="goal_edit_no_thanks">No thanks, I\'m done for now. Let\'s exit.</string>
+    <string name="goal_edit_camera">Upload my own picture.</string>
+    <string name="goal_edit_gallery">Select a picture from the gallery.</string>
+    <string name="goal_edit_image_cancel">@string/label_cancel</string>
+    <string name="goal_edit_delete_reason_reached">I\'ve already achieved this goal.</string>
+    <string name="goal_edit_delete_reason_difficult">It\'s too difficult to save!</string>
+    <string name="goal_edit_delete_reason_do_not_want">I don\'t want [goal_name] anymore.</string>
+    <string name="goal_edit_delete_reason_misc">No reason, I just want to delete it.</string>
+    <string name="goal_edit_delete_reason_cancel">Never mind! I want to keep saving.</string>
 
     <!-- BOT: tip_intro -->
     <string name="tip_intro_inline_link">TODO: Show Tip</string>
