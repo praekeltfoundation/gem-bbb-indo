@@ -49,6 +49,7 @@
     <!-- Challenges -->
     <dimen name="challenge_inset_small">16dp</dimen>
     <dimen name="challenge_inset_large">24dp</dimen>
+    <dimen name="challenge_inset_xlarge">36dp</dimen>
     <dimen name="challenge_margins">8dp</dimen>
     <dimen name="challenge_option_margins">16dp</dimen>
     <dimen name="challenge_option_padding">8dp</dimen>
