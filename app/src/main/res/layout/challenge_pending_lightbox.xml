@@ -20,7 +20,7 @@
         app:layout_constraintRight_toRightOf="parent"
         android:layout_marginStart="16dp"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintBottom_toTopOf="challenge_pending_dialog_label_next"
+        app:layout_constraintBottom_toTopOf="@+id/challenge_pending_dialog_label_next"
         app:layout_constraintVertical_chainStyle="spread" />
 
     <TextView
@@ -37,7 +37,7 @@
         app:layout_constraintRight_toRightOf="parent"
         android:layout_marginStart="16dp"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintBottom_toTopOf="challenge_pending_dialog_name" />
+        app:layout_constraintBottom_toTopOf="@+id/challenge_pending_dialog_name" />
 
     <TextView
         android:id="@+id/challenge_pending_dialog_name"
@@ -50,7 +50,7 @@
         app:layout_constraintRight_toRightOf="parent"
         android:layout_marginStart="16dp"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintBottom_toTopOf="challenge_pending_dialog_calltoaction"
+        app:layout_constraintBottom_toTopOf="@+id/challenge_pending_dialog_calltoaction"
         android:textAppearance="@style/AppTheme.TextView.Regular.ExtraLarge.Bold"
         android:textColor="@color/lightbox_text" />
 
@@ -66,7 +66,7 @@
         android:layout_marginStart="16dp"
         app:layout_constraintLeft_toLeftOf="parent"
         android:textAlignment="center"
-        app:layout_constraintBottom_toTopOf="challenge_pending_dialog_checkbackdate"
+        app:layout_constraintBottom_toTopOf="@+id/challenge_pending_dialog_checkbackdate"
         android:textColor="@color/lightbox_text" />
 
     <TextView
@@ -81,7 +81,7 @@
         android:layout_marginStart="16dp"
         app:layout_constraintLeft_toLeftOf="parent"
         android:textAlignment="center"
-        app:layout_constraintBottom_toTopOf="challenge_pending_dialog_close"
+        app:layout_constraintBottom_toTopOf="@+id/challenge_pending_dialog_close"
         android:textColor="@color/lightbox_text" />
 
     <ImageButton
