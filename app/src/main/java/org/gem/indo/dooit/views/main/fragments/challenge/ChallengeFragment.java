@@ -39,6 +39,11 @@ import rx.functions.Action0;
 import rx.functions.Action1;
 
 public class ChallengeFragment extends MainFragment {
+
+    /*************
+     * Variables *
+     *************/
+
     public static final String TAG = "ChallengeMain";
     public static final String ARG_CHALLENGE = "challenge";
     public static final String ARG_PAGE = "challenge_page";
@@ -57,6 +62,11 @@ public class ChallengeFragment extends MainFragment {
 
     Unbinder unbinder;
     private Observable<BaseChallenge> challengeSubscription;
+
+
+    /****************
+     * Constructors *
+     ****************/
 
     public ChallengeFragment() {
         // Required empty public constructor
