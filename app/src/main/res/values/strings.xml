@@ -309,5 +309,6 @@
     <string name="challenge_completed">Challenge complete</string>
     <string name="saved">saved</string>
     <string name="of_target_amount">of %1$s %2$.2f</string>
+    <string name="label_select_picture">Select picture</string>
 
 </resources>
