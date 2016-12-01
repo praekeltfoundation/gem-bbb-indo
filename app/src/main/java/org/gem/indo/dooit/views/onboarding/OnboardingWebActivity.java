@@ -6,6 +6,8 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
+import android.view.View;
 import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
@@ -30,20 +32,35 @@ public class OnboardingWebActivity extends DooitActivity {
     @BindView(R.id.activity_onboarding_web_progress)
     ProgressBar progressBar;
 
+    @BindView(R.id.toolbar)
+    Toolbar toolbar;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(org.gem.indo.dooit.R.layout.activity_onboarding_web_view);
         ((DooitApplication) getApplication()).component.inject(this);
         ButterKnife.bind(this);
+        setSupportActionBar(toolbar);
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_d_back_caret_pink);
+            getSupportActionBar().setTitle("");
 
+            toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    finish();
+                }
+            });
+        }
         if (Build.VERSION_CODES.JELLY_BEAN_MR2 == Build.VERSION.SDK_INT)
             webView.getSettings().setAppCacheMaxSize(5 * 1024 * 1024); // 5MB
-        webView.getSettings().setAppCachePath(getApplicationContext().getCacheDir().getAbsolutePath());
-        webView.getSettings().setAllowFileAccess(true);
-        webView.getSettings().setAppCacheEnabled(true);
-        webView.getSettings().setJavaScriptEnabled(true);
-        webView.getSettings().setCacheMode(WebSettings.LOAD_DEFAULT); // load online by default
+            webView.getSettings().setAppCachePath(getApplicationContext().getCacheDir().getAbsolutePath());
+            webView.getSettings().setAllowFileAccess(true);
+            webView.getSettings().setAppCacheEnabled(true);
+            webView.getSettings().setJavaScriptEnabled(true);
+            webView.getSettings().setCacheMode(WebSettings.LOAD_DEFAULT); // load online by default
 
         if (!hasInternetConnection()) { // loading offline
             webView.getSettings().setCacheMode(WebSettings.LOAD_CACHE_ELSE_NETWORK);

@@ -87,7 +87,7 @@ public class SettingsActivity extends DooitActivity {
     @OnClick({R.id.settings_about_terms})
     public void terms(View view) {
         SettingsWebViewActivity.Builder.create(this)
-                .setTitle(getString(org.gem.indo.dooit.R.string.title_activity_terms_and_conditions))
+                .setTitle("") //getString(org.gem.indo.dooit.R.string.title_activity_terms_and_conditions)
                 .setUrl(Constants.TERMS_URL)
                 .startActivity();
     }
