@@ -131,7 +131,7 @@
     <string name="infoGoalEnd">Thank you. That concludes the goal-setting process.</string>
     <string name="infoGoalAddedCongratulations">Great job! You\'ve set your first savings goal! </string>
 
-    <!-- goal_add -->
+    <!-- BOT: goal_add -->
     <!-- Questions -->
     <string name="goal_add_greeting">Hello %s!</string>
     <string name="goal_add_intro">My Name is Dooit. I\'m gonna help  you save!</string>
@@ -143,7 +143,7 @@
     <string name="goal_add_greeting_response">Hola!</string>
     <string name="goal_add_custom">Add own goal</string>
 
-    <!-- goal_deposit -->
+    <!-- BOT: goal_deposit -->
     <!-- User clicks on add savings (+ Deposit) on Goal saving page  -->
     <string name="goal_deposit_intro">Let\'s add your savings!</string>
     <string name="goal_deposit_reminder">Remember you have to save %1$s %2$s each week to reach %3$s by %4$s.</string>
@@ -151,7 +151,7 @@
     <string name="goal_deposit_ask_amount">Add Amount</string>
     <string name="goal_deposit_end_congrats">Well done!</string>
 
-    <!-- goal_withdraw -->
+    <!-- BOT: goal_withdraw -->
     <!-- User clicks on withdraw savings (- Withdraw) on goal saving page  -->
     <!-- Questions -->
     <string name="goal_withdraw_intro">You\'re working hard to get to your goal. You should only withdraw if it\'s to spend on an emergency</string>
@@ -167,7 +167,20 @@
     <string name="goal_withdraw_challenge">Can I take this week\'s challenge instead?</string>
     <string name="goal_withdraw_do_end">No thanks, maybe next time!</string>
 
-    <!-- tip_intro -->
+    <!-- BOT: goal_edit -->
+    <!-- Questions -->
+    <string name="goal_edit_intro">Hey %s!</string>
+    <string name="goal_edit_ask_options">What do you want to edit?</string>
+    <string name="goal_edit_updated">Your goal has been updated!</string>
+
+    <!-- Answers -->
+    <string name="goal_edit_choice_date">Date</string>
+    <string name="goal_edit_choice_target">Amount</string>
+    <string name="goal_edit_choice_weekly_target">Weekly Savings</string>
+    <string name="goal_edit_choice_image">Photo</string>
+    <string name="goal_edit_choice_delete">Delete Goal</string>
+
+    <!-- BOT: tip_intro -->
     <string name="tip_intro_inline_link">TODO: Show Tip</string>
 
     <!--Buttons-->
