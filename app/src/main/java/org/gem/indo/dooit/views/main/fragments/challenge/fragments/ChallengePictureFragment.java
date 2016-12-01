@@ -27,6 +27,7 @@ import org.gem.indo.dooit.api.DooitErrorHandler;
 import org.gem.indo.dooit.api.managers.FileUploadManager;
 import org.gem.indo.dooit.api.responses.EmptyResponse;
 import org.gem.indo.dooit.helpers.MediaUriHelper;
+import org.gem.indo.dooit.helpers.Persisted;
 import org.gem.indo.dooit.helpers.RequestCodes;
 import org.gem.indo.dooit.helpers.permissions.PermissionCallback;
 import org.gem.indo.dooit.helpers.permissions.PermissionsHelper;
@@ -66,10 +67,13 @@ public class ChallengePictureFragment extends Fragment {
     private static final ChallengeFragmentState FRAGMENT_STATE = ChallengeFragmentState.PICTURE;
 
     @Inject
+    FileUploadManager fileUploadManager;
+
+    @Inject
     PermissionsHelper permissionsHelper;
 
     @Inject
-    FileUploadManager fileUploadManager;
+    Persisted persist;
 
     @BindView(R.id.fragment_challenge_picture_image)
     SimpleDraweeView image;
@@ -244,6 +248,7 @@ public class ChallengePictureFragment extends Fragment {
             @Override
             public void call(EmptyResponse emptyResponse) {
                 Log.d(TAG, "Uploaded image");
+                persist.clearCurrentChallenge();
                 FragmentTransaction ft = getFragmentManager().beginTransaction();
                 Fragment f = ChallengeDoneFragment.newInstance(challenge);
                 ft.replace(R.id.fragment_challenge_container, f, "fragment_challenge");

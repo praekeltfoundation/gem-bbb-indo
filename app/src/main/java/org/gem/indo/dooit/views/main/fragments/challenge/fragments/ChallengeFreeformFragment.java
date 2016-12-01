@@ -115,6 +115,7 @@ public class ChallengeFreeformFragment extends Fragment {
         if (savedInstanceState == null) {
             fetchAnswer();
         } else {
+            Log.d(TAG, "Restoring state from bundle");
             String answerText = savedInstanceState.getString(ARG_ANSWER);
             submissionBox.setText(answerText == null ? "" : answerText);
         }
