@@ -280,4 +280,8 @@ public class TargetFragment extends MainFragment {
         noGoalView.setVisibility(View.VISIBLE);
         loadingProgress.setVisibility(View.GONE);
     }
+
+    public void refreshGoals() {
+        retrieveGoals();
+    }
 }

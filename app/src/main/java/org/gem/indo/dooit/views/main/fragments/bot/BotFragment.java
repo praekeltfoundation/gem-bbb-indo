@@ -331,12 +331,12 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
         switch (botType) {
             case DEFAULT:
             case GOAL_ADD:
-                return new GoalAddCallback((DooitApplication) getActivity().getApplication());
+                return new GoalAddCallback(getActivity());
             case GOAL_DEPOSIT:
                 Goal g1 = persisted.loadConvoGoal(BotType.GOAL_DEPOSIT);
                 if (g1 == null)
                     throw new RuntimeException("No Goal was persisted for Goal Deposit conversation.");
-                return new GoalDepositCallback((DooitApplication) getActivity().getApplication(), g1);
+                return new GoalDepositCallback(getActivity(), g1);
             case GOAL_WITHDRAW:
                 Goal g2 = persisted.loadConvoGoal(BotType.GOAL_WITHDRAW);
                 if (g2 == null)

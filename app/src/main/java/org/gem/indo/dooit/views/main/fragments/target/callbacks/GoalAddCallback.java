@@ -1,5 +1,7 @@
 package org.gem.indo.dooit.views.main.fragments.target.callbacks;
 
+import android.app.Activity;
+import android.content.Context;
 import android.util.Log;
 
 import org.gem.indo.dooit.DooitApplication;
@@ -9,6 +11,7 @@ import org.gem.indo.dooit.api.managers.GoalManager;
 import org.gem.indo.dooit.models.Goal;
 import org.gem.indo.dooit.models.bot.Answer;
 import org.gem.indo.dooit.models.bot.BotCallback;
+import org.gem.indo.dooit.views.main.MainActivity;
 import org.joda.time.LocalDate;
 import org.joda.time.format.DateTimeFormat;
 
@@ -25,12 +28,14 @@ import rx.functions.Action1;
 public class GoalAddCallback implements BotCallback {
 
     private static final String TAG = GoalAddCallback.class.getName();
+    Context context;
 
     @Inject
     transient GoalManager goalManager;
 
-    public GoalAddCallback(DooitApplication application) {
-        application.component.inject(this);
+    public GoalAddCallback(Activity activity) {
+        ((DooitApplication) activity.getApplication()).component.inject(this);
+        context = activity;
     }
 
     @Override
@@ -65,6 +70,9 @@ public class GoalAddCallback implements BotCallback {
             @Override
             public void call(Goal goal) {
                 Log.d(TAG, goal + " successfully created");
+                if (context instanceof MainActivity) {
+                    ((MainActivity) context).refreshGoals();
+                }
             }
         });
     }
