@@ -44,6 +44,7 @@ import javax.inject.Inject;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import butterknife.Unbinder;
 import rx.functions.Action1;
 
 import static android.app.Activity.RESULT_OK;
@@ -53,7 +54,12 @@ import static android.app.Activity.RESULT_OK;
  * Use the {@link ChallengePictureFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class ChallengePictureFragment extends Fragment implements HasChallengeFragmentState {
+public class ChallengePictureFragment extends Fragment {
+
+    /*************
+     * Variables *
+     *************/
+
     public static final String TAG = "PictureChallenge";
     public static final String ARG_IMGURI = "challenge_picture_uri";
     private static final ChallengeFragmentState FRAGMENT_STATE = ChallengeFragmentState.PICTURE;
@@ -77,6 +83,12 @@ public class ChallengePictureFragment extends Fragment implements HasChallengeFr
     private PictureChallenge challenge = null;
     private String imagePath = null;
     private Uri imageUri = null;
+    private Unbinder unbinder = null;
+
+
+    /****************
+     * Constructors *
+     ****************/
 
     public ChallengePictureFragment() {
         // Required empty public constructor
@@ -90,6 +102,11 @@ public class ChallengePictureFragment extends Fragment implements HasChallengeFr
         fragment.setArguments(args);
         return fragment;
     }
+
+
+    /************************
+     * Life-cycle overrides *
+     ************************/
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -107,7 +124,7 @@ public class ChallengePictureFragment extends Fragment implements HasChallengeFr
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_challenge_picture, container, false);
-        ButterKnife.bind(this, view);
+        unbinder = ButterKnife.bind(this, view);
         PictureChallengeQuestion question = challenge.getQuestion();
         if (savedInstanceState != null) {
             String uriString = savedInstanceState.getString(ARG_IMGURI);
@@ -116,6 +133,14 @@ public class ChallengePictureFragment extends Fragment implements HasChallengeFr
             }
         }
         return view;
+    }
+
+    @Override
+    public void onDestroyView() {
+        if (unbinder != null) {
+            unbinder.unbind();
+        }
+        super.onDestroyView();
     }
 
 
@@ -148,6 +173,11 @@ public class ChallengePictureFragment extends Fragment implements HasChallengeFr
         });
         builder.show();
     }
+
+
+    /***************************
+     * Image selection helpers *
+     ***************************/
 
     protected void startCamera() {
         permissionsHelper.askForPermission(this, PermissionsHelper.D_WRITE_EXTERNAL_STORAGE, new PermissionCallback() {
@@ -194,50 +224,6 @@ public class ChallengePictureFragment extends Fragment implements HasChallengeFr
 
     }
 
-    @Override
-    public void onSaveInstanceState(Bundle outState) {
-        if (outState != null) {
-            outState.putSerializable(ChallengeFragment.ARG_PAGE, FRAGMENT_STATE);
-            outState.putParcelable(ChallengeFragment.ARG_PARTICIPANT, participant);
-            outState.putParcelable(ChallengeFragment.ARG_CHALLENGE, challenge);
-            outState.putString(ARG_IMGURI, imageUri == null ? null : imageUri.toString());
-        }
-        super.onSaveInstanceState(outState);
-    }
-
-    @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        if (savedInstanceState != null) {
-            participant = savedInstanceState.getParcelable(ChallengeFragment.ARG_PARTICIPANT);
-            challenge = savedInstanceState.getParcelable(ChallengeFragment.ARG_CHALLENGE);
-            String uriString = savedInstanceState.getString(ARG_IMGURI);
-            if (uriString != null && !uriString.isEmpty()) {
-                imageUri = Uri.parse(uriString);
-                imagePath = MediaUriHelper.getPath(getContext(), imageUri);
-            }
-        }
-        super.onActivityCreated(savedInstanceState);
-    }
-
-    @Override
-    public ChallengeFragmentState getFragmentState() {
-        return FRAGMENT_STATE;
-    }
-
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == RequestCodes.RESPONSE_GALLERY_REQUEST_CHALLENGE_IMAGE) {
-            if (resultCode == RESULT_OK) {
-                imagePath = MediaUriHelper.getPath(getContext(), data.getData());
-                imageUri = data.getData();
-                if (image != null) {
-                    image.setImageURI(imageUri);
-                }
-            }
-        }
-        super.onActivityResult(requestCode, resultCode, data);
-    }
-
     @OnClick(R.id.fragment_challenge_picture_submit_button)
     public void submitImage() {
         if (imagePath == null || imagePath.isEmpty()) {
@@ -257,7 +243,51 @@ public class ChallengePictureFragment extends Fragment implements HasChallengeFr
             @Override
             public void call(EmptyResponse emptyResponse) {
                 Log.d(TAG, "Uploaded image");
+                returnToParent();
             }
         });
+    }
+
+
+    /***********
+     * Cleanup *
+     ***********/
+
+    private void returnToParent() {
+        Fragment f = getParentFragment();
+        if (f != null && f instanceof ChallengeFragment) {
+            ((ChallengeFragment) f).loadChallenge();
+        }
+    }
+
+
+    /*************************
+     * State-keeping methods *
+     *************************/
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        if (outState != null) {
+            outState.putSerializable(ChallengeFragment.ARG_PAGE, FRAGMENT_STATE);
+            outState.putParcelable(ChallengeFragment.ARG_PARTICIPANT, participant);
+            outState.putParcelable(ChallengeFragment.ARG_CHALLENGE, challenge);
+            outState.putString(ARG_IMGURI, imageUri == null ? null : imageUri.toString());
+        }
+        super.onSaveInstanceState(outState);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == RequestCodes.RESPONSE_GALLERY_REQUEST_CHALLENGE_IMAGE ||
+                requestCode == RequestCodes.RESPONSE_CAMERA_REQUEST_CHALLENGE_IMAGE) {
+            if (resultCode == RESULT_OK) {
+                imagePath = MediaUriHelper.getPath(getContext(), data.getData());
+                imageUri = data.getData();
+                if (image != null) {
+                    image.setImageURI(imageUri);
+                }
+            }
+        }
+        super.onActivityResult(requestCode, resultCode, data);
     }
 }
