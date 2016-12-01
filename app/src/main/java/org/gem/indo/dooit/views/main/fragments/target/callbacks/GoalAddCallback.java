@@ -36,9 +36,9 @@ public class GoalAddCallback implements BotCallback {
     @Override
     public void onDone(Map<String, Answer> answerLog) {
         Goal goal = new Goal();
-        if (answerLog.containsKey("goal_add_carousel_answer")) {
+        if (answerLog.containsKey("goal_add_ask_goal_gallery")) {
             // Predefined Goal
-            Answer answer = answerLog.get("goal_add_carousel_answer");
+            Answer answer = answerLog.get("goal_add_ask_goal_gallery");
             goal.setPrototype(Long.parseLong(answer.get("prototype")));
             goal.setName(answer.get("name"));
             goal.setImageUrl(answer.get("image_url"));
@@ -65,7 +65,12 @@ public class GoalAddCallback implements BotCallback {
             @Override
             public void call(Goal goal) {
                 Log.d(TAG, goal + " successfully created");
+//                uploadImage(goal, );
             }
         });
+    }
+
+    private void uploadImage(Goal goal, String filePath) {
+
     }
 }

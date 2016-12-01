@@ -1,5 +1,7 @@
 package org.gem.indo.dooit.models;
 
+import android.support.annotation.Nullable;
+
 import com.google.gson.annotations.SerializedName;
 
 import org.joda.time.DateTime;
@@ -39,8 +41,8 @@ public class Goal {
     private double weeklyAverage;
     private long user;
 
-    // The id of the predefined Goal
-    private long prototype;
+    // The id of the predefined Goal. null means custom.
+    private Long prototype;
 
     public long getId() {
         return id;
@@ -150,12 +152,16 @@ public class Goal {
         this.user = user;
     }
 
-    public long getPrototype() {
+    public Long getPrototype() {
         return prototype;
     }
 
-    public void setPrototype(long prototype) {
+    public void setPrototype(Long prototype) {
         this.prototype = prototype;
+    }
+
+    public boolean isCustom() {
+        return prototype == null;
     }
 
     public void setTransactions(List<GoalTransaction> transactions) {

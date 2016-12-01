@@ -71,6 +71,9 @@ public class GoalInfoViewHolder extends BaseBotViewHolder<Node> {
         String text = dataModel.getText(getContext());
         for (BaseBotModel baseBotModel : botAdapter.getDataSet()) {
             switch (baseBotModel.getName()) {
+                case "goal_add_ask_goal_gallery":
+                    goalName = ((Answer) baseBotModel).get("name");
+                    break;
                 case "goalDate":
                     try {
                         String fmDate = ((Answer) baseBotModel).getValue().substring(0, 10);
@@ -89,7 +92,7 @@ public class GoalInfoViewHolder extends BaseBotViewHolder<Node> {
                 case "goal_amount":
                     target = ((Answer) baseBotModel).getValue() == null ? 0 : Double.parseDouble(((Answer) baseBotModel).getValue());
                     break;
-                case "goalName":
+                case "goal_name":
                     goalName = ((Answer) baseBotModel).getValue();
                     break;
                 case "askGoalName":
