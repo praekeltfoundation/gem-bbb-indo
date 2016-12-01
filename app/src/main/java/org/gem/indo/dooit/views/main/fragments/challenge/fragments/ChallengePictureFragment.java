@@ -75,6 +75,9 @@ public class ChallengePictureFragment extends Fragment {
     @Inject
     Persisted persist;
 
+    @BindView(R.id.fragment_challenge_picture_question)
+    TextView questionText;
+
     @BindView(R.id.fragment_challenge_picture_image)
     SimpleDraweeView image;
 
@@ -131,6 +134,13 @@ public class ChallengePictureFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_challenge_picture, container, false);
         unbinder = ButterKnife.bind(this, view);
         PictureChallengeQuestion question = challenge.getQuestion();
+        if (question == null || question.getText() == null || question.getText().isEmpty()) {
+            questionText.setVisibility(View.GONE);
+        } else {
+            questionText.setText(question.getText());
+            questionText.setVisibility(View.VISIBLE);
+        }
+
         if (savedInstanceState != null) {
             String uriString = savedInstanceState.getString(ARG_IMGURI);
             if (uriString != null && !uriString.isEmpty()) {
