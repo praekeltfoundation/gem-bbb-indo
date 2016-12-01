@@ -189,6 +189,8 @@
     <string name="goal_edit_tip">Thanks! I want to check out savings tips.</string>
     <string name="goal_edit_challenge">Cool! Let\'s take a challenge.</string>
     <string name="goal_edit_no_thanks">No thanks, I\'m done for now. Let\'s exit.</string>
+    <string name="goal_edit_camera">Upload my own picture.</string>
+    <string name="goal_edit_gallery">Select a picture from the gallery.</string>
 
     <!-- BOT: tip_intro -->
     <string name="tip_intro_inline_link">TODO: Show Tip</string>

@@ -354,7 +354,7 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
                 Goal g3 = persisted.loadConvoGoal(BotType.GOAL_EDIT);
                 if (g3 == null)
                     throw new RuntimeException("No Goal was persisted for Goal Edit converstation");
-                return new GoalEditCallback((DooitApplication) getActivity().getApplication(), g3);
+                return new GoalEditCallback((DooitApplication) getActivity().getApplication(), this, g3);
             default:
                 return null;
         }

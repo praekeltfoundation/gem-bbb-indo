@@ -22,6 +22,16 @@
         "name": "goal_edit_choice_target",
         "text": "$(goal_edit_choice_target)",
         "next": "goal_edit_target"
+      },
+      {
+        "name": "goal_edit_choice_image",
+        "text": "$(goal_edit_choice_image)",
+        "next": "goal_edit_image_choose"
+      },
+      {
+        "name": "goal_edit_choice_delete",
+        "text": "$(goal_edit_choice_delete)",
+        "next": ""
       }
     ]
   },
@@ -87,6 +97,26 @@
         "name": "goal_edit_no_thanks",
         "text": "$(goal_edit_no_thanks)",
         "next": "goal_edit_come_back"
+      }
+    ]
+  },
+  {
+    "name": "goal_edit_image_choose",
+    "type": "blank",
+    "answers": [
+      {
+        "name": "goal_edit_camera",
+        "text": "$(goal_edit_camera)",
+        "type": "captureUpload",
+        "nextOnFinish": "goal_edit_do_update",
+        "removeOnSelect": "goal_edit_camera"
+      },
+      {
+        "name": "goal_edit_gallery",
+        "text": "$(goal_edit_gallery)",
+        "type": "galleryUpload",
+        "nextOnFinish": "goal_edit_do_update",
+        "removeOnSelect": "goal_edit_camera"
       }
     ]
   },
