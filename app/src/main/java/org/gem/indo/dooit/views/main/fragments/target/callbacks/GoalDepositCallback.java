@@ -4,8 +4,6 @@ import org.gem.indo.dooit.DooitApplication;
 import org.gem.indo.dooit.api.DooitAPIError;
 import org.gem.indo.dooit.api.DooitErrorHandler;
 import org.gem.indo.dooit.api.managers.GoalManager;
-import org.gem.indo.dooit.api.responses.EmptyResponse;
-import org.gem.indo.dooit.helpers.Persisted;
 import org.gem.indo.dooit.models.Goal;
 import org.gem.indo.dooit.models.GoalTransaction;
 import org.gem.indo.dooit.models.bot.Answer;
@@ -15,8 +13,6 @@ import java.util.Map;
 
 import javax.inject.Inject;
 
-import rx.functions.Action1;
-
 /**
  * Created by Wimpie Victor on 2016/11/21.
  */
@@ -25,9 +21,6 @@ public class GoalDepositCallback implements BotCallback {
 
     @Inject
     transient GoalManager goalManager;
-
-    @Inject
-    transient Persisted persisted;
 
     private Goal goal;
 
@@ -45,11 +38,6 @@ public class GoalDepositCallback implements BotCallback {
             public void onError(DooitAPIError error) {
 
             }
-        }).subscribe(new Action1<EmptyResponse>() {
-            @Override
-            public void call(EmptyResponse emptyResponse) {
-                persisted.clearGoals();
-            }
-        });
+        }).subscribe();
     }
 }

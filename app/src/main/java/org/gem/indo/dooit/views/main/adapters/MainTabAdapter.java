@@ -6,13 +6,11 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import org.gem.indo.dooit.R;
 import org.gem.indo.dooit.views.main.MainViewPagerPositions;
-import org.gem.indo.dooit.views.main.fragments.MainFragment;
 import org.gem.indo.dooit.views.main.fragments.challenge.ChallengeFragment;
 import org.gem.indo.dooit.views.main.fragments.tip.TipsFragment;
 import org.gem.indo.dooit.views.main.fragments.bot.BotFragment;
@@ -62,13 +60,6 @@ public class MainTabAdapter extends FragmentStatePagerAdapter {
         if (MainViewPagerPositions.getValueOf(position).getTitleRes() == null)
             return "";
         return context.getString(MainViewPagerPositions.getValueOf(position).getTitleRes());
-    }
-
-    @Override
-    public void setPrimaryItem(ViewGroup container, int position, Object object) {
-        if (object != null && object instanceof MainFragment)
-            ((MainFragment) object).onPageEnter();
-        super.setPrimaryItem(container, position, object);
     }
 
     public View getTabView(int position) {

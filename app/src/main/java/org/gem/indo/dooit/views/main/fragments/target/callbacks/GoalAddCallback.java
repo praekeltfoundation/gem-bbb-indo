@@ -6,7 +6,6 @@ import org.gem.indo.dooit.DooitApplication;
 import org.gem.indo.dooit.api.DooitAPIError;
 import org.gem.indo.dooit.api.DooitErrorHandler;
 import org.gem.indo.dooit.api.managers.GoalManager;
-import org.gem.indo.dooit.helpers.Persisted;
 import org.gem.indo.dooit.models.Goal;
 import org.gem.indo.dooit.models.bot.Answer;
 import org.gem.indo.dooit.models.bot.BotCallback;
@@ -29,9 +28,6 @@ public class GoalAddCallback implements BotCallback {
 
     @Inject
     transient GoalManager goalManager;
-
-    @Inject
-    transient Persisted persisted;
 
     public GoalAddCallback(DooitApplication application) {
         application.component.inject(this);
@@ -69,7 +65,6 @@ public class GoalAddCallback implements BotCallback {
             @Override
             public void call(Goal goal) {
                 Log.d(TAG, goal + " successfully created");
-                persisted.clearGoals();
             }
         });
     }
