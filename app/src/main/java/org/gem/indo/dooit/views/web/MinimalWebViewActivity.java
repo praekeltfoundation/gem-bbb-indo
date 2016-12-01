@@ -42,7 +42,7 @@ public class MinimalWebViewActivity extends DooitActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(org.gem.indo.dooit.R.layout.activity_settings_web_view);
+        setContentView(org.gem.indo.dooit.R.layout.activity_web_view);
         ButterKnife.bind(this);
         setSupportActionBar(toolbar);
         ActionBar actionBar = getSupportActionBar();
