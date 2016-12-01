@@ -17,15 +17,13 @@
             android:id="@+id/card_tip_image"
             android:layout_width="match_parent"
             android:layout_height="@dimen/tip_card_image_height"
-            app:placeholderImage="@color/light_grey" />
-
-        <ImageView
-            android:id="@+id/card_tip_gradient"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/tip_card_overlay_height"
-            android:layout_alignBottom="@+id/card_tip_image"
-            android:scaleType="fitXY"
-            android:src="@drawable/overlay_tip_gradient" />
+            app:failureImage="@drawable/download_tip_broken_image"
+            app:failureImageScaleType="fitXY"
+            app:overlayImage="@drawable/overlay_tip_gradient"
+            app:placeholderImage="@color/light_grey"
+            app:placeholderImageScaleType="fitCenter"
+            app:retryImage="@drawable/download_tip_retry"
+            app:retryImageScaleType="fitXY" />
 
         <LinearLayout
             android:layout_width="match_parent"

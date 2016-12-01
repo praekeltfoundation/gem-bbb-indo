@@ -1,6 +1,8 @@
 package org.gem.indo.dooit.views.main.fragments.tip.viewholders;
 
 import android.content.Context;
+import android.graphics.drawable.Drawable;
+import android.graphics.drawable.ScaleDrawable;
 import android.net.Uri;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
@@ -10,7 +12,13 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.facebook.drawee.backends.pipeline.Fresco;
+import com.facebook.drawee.drawable.ScalingUtils;
+import com.facebook.drawee.generic.GenericDraweeHierarchy;
+import com.facebook.drawee.interfaces.DraweeController;
 import com.facebook.drawee.view.SimpleDraweeView;
+import com.facebook.imagepipeline.common.RotationOptions;
+import com.facebook.imagepipeline.request.ImageRequestBuilder;
 import com.greenfrvr.hashtagview.HashtagView;
 
 import org.gem.indo.dooit.DooitApplication;
@@ -76,6 +84,7 @@ public class TipViewHolder extends RecyclerView.ViewHolder {
         super(itemView);
         ((DooitApplication) getContext().getApplicationContext()).component.inject(this);
         ButterKnife.bind(this, itemView);
+
     }
 
     public Context getContext() {
@@ -143,7 +152,18 @@ public class TipViewHolder extends RecyclerView.ViewHolder {
     }
 
     public void setImageUri(Uri uri) {
-        imageView.setImageURI(uri);
+        GenericDraweeHierarchy hierarchy = imageView.getHierarchy();
+        DraweeController controller = Fresco.newDraweeControllerBuilder()
+                .setImageRequest(ImageRequestBuilder.newBuilderWithSource(uri)
+                        .setRotationOptions(RotationOptions.autoRotateAtRenderTime())
+                        .setProgressiveRenderingEnabled(true).build())
+                .setTapToRetryEnabled(true)
+                .setOldController(imageView.getController())
+                .build();
+ 
+        hierarchy.setProgressBarImage(ContextCompat.getDrawable(getContext(), R.drawable.progress_bar), ScalingUtils.ScaleType.CENTER);
+        imageView.setController(controller);
+        imageView.setHierarchy(hierarchy);
     }
 
     public void setId(int id) {

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item>
+        <shape android:shape="rectangle">
+            <solid android:color="@color/purple_light" />
+        </shape>
+    </item>
+    <item>
+        <!-- Our grey ring, 1st element of our list -->
+        <shape
+            android:innerRadius="140dp"
+            android:shape="ring"
+            android:thicknessRatio="24"
+            android:useLevel="false"> <!-- Higher values, thinner line -->
+            <solid android:color="@color/light_blue" />
+        </shape>
+    </item>
+
+    <item>
+        <!-- Our red ring, 2nd element of our list -->
+        <shape
+            android:innerRadius="140dp"
+            android:shape="ring"
+            android:thicknessRatio="24"
+            android:useLevel="true">
+            <solid android:color="@color/yellow" />
+        </shape>
+    </item>
+</layer-list>

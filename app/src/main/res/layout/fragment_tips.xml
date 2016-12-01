@@ -45,15 +45,13 @@
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="4dp"
                     android:layout_below="@+id/fragment_tips_search_hint"
-                    >
+                    android:layout_marginTop="4dp">
 
                     <include
                         android:id="@+id/fragment_tips_list_filter"
                         layout="@layout/filter_tip"
-                        android:visibility="gone"
-                         />
+                        android:visibility="gone" />
 
                 </LinearLayout>
 
@@ -106,8 +104,7 @@
         android:id="@+id/fragment_tip_progress_container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:visibility="visible"
-        >
+        android:visibility="visible">
 
         <ProgressBar
             android:id="@+id/fragment_tip_loadingprogress"
@@ -122,7 +119,7 @@
             android:id="@+id/fragment_tip_loadingtext"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/fragment_challenge_loadingprogress"
+            android:layout_below="@+id/fragment_tip_loadingprogress"
             android:layout_centerHorizontal="true"
             android:text="@string/label_loading" />
     </RelativeLayout>

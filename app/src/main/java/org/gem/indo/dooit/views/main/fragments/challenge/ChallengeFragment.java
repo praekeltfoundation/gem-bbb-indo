@@ -23,7 +23,6 @@ import org.gem.indo.dooit.helpers.Persisted;
 import org.gem.indo.dooit.helpers.RequestCodes;
 import org.gem.indo.dooit.helpers.SquiggleBackgroundHelper;
 import org.gem.indo.dooit.models.challenge.BaseChallenge;
-import org.gem.indo.dooit.models.challenge.PictureChallenge;
 import org.gem.indo.dooit.views.main.fragments.MainFragment;
 import org.gem.indo.dooit.views.main.fragments.challenge.fragments.ChallengeNoneFragment;
 import org.gem.indo.dooit.views.main.fragments.challenge.fragments.ChallengePictureFragment;
@@ -221,13 +220,18 @@ public class ChallengeFragment extends MainFragment {
             challenge = savedInstanceState.getParcelable(ARG_CHALLENGE);
             FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
             Fragment f;
-            switch (page) {
-                case PICTURE:
-                    f = new ChallengePictureFragment();
-                    break;
-                default:
-                    loadChallenge();
-                    return;
+            if (page != null)
+                switch (page) {
+                    case PICTURE:
+                        f = new ChallengePictureFragment();
+                        break;
+                    default:
+                        loadChallenge();
+                        return;
+                }
+            else {
+                loadChallenge();
+                return;
             }
             f.setArguments(savedInstanceState);
             ft.replace(R.id.fragment_challenge_container, f, "fragment_challenge");
