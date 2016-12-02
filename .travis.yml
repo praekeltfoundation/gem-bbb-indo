@@ -46,9 +46,4 @@ before_script:
   - sudo ./createPassfile -pwd $KEYSTORE_PASS;
 
 script:
-  - sudo mkdir $ANDROID_HOME/licenses
-  - sudo touch "$ANDROID_HOME/licenses/android-sdk-license"
-  - sudo touch "$ANDROID_HOME/licenses/android-sdk-preview-license"
-  - sudo bash -c 'sudo echo -e "\n8933bad161af4178b1185d1a37fbf41ea5269c55" >> "$ANDROID_HOME/licenses/android-sdk-license"'
-  - sudo bash -c 'sudo echo -e "\n504667f4c0de7af1a06de9f4b1727b84351f2910" >> "$ANDROID_HOME/licenses/android-sdk-preview-license"'
-  - if [ $TRAVIS_BRANCH == "release_candidate" ]; then ./gradlew assembleStagingRelease crashlyticsUploadDistributionStagingRelease; else ./gradlew assembleStagingDebug; fi
+    - if [ $TRAVIS_BRANCH == "release_candidate" ]; then ./gradlew assembleStagingRelease crashlyticsUploadDistributionStagingRelease; else ./gradlew assembleStagingDebug; fi
