@@ -1,44 +1,80 @@
-<RelativeLayout
+<android.support.constraint.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/fragment_challenge_inner"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:background="@drawable/ic_d_pattern_grey"
-    android:padding="8dp"
+    android:padding="@dimen/challenge_inset_small"
     tools:context="org.gem.indo.dooit.views.main.fragments.challenge.fragments.ChallengeQuizFragment">
+
+    <ImageButton
+        android:id="@+id/fragment_challenge_quiz_close"
+        app:srcCompat="@drawable/quiz_close"
+        android:scaleType="fitCenter"
+        android:layout_width="26dp"
+        android:layout_height="25dp"
+        android:background="@null"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <ProgressBar
         android:id="@+id/fragment_challenge_quiz_progressbar"
         style="?android:attr/progressBarStyleHorizontal"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true" />
+        android:layout_width="0dp"
+        android:layout_alignParentTop="true"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginStart="8dp"
+        app:layout_constraintLeft_toRightOf="@+id/fragment_challenge_quiz_close"
+        app:layout_constraintBottom_toBottomOf="@+id/fragment_challenge_quiz_close"
+        app:layout_constraintTop_toTopOf="@+id/fragment_challenge_quiz_close"
+        android:progressDrawable="@drawable/quiz_progress_drawable"
+        tools:progress="33"
+        android:layout_height="3dp" />
 
     <TextView
         android:id="@+id/fragment_challenge_quiz_progresscounter"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_below="@+id/fragment_challenge_quiz_progressbar"
-        android:layout_margin="@dimen/text_margin"
+        android:layout_marginTop="@dimen/challenge_inset_large"
+        android:layout_marginBottom="@dimen/challenge_inset_small"
         android:textAlignment="center"
         android:textAppearance="@style/AppTheme.TextView.Quiz.Subtitle"
-        tools:text="Question X/Y" />
+        tools:text="Question X/Y"
+        app:layout_constraintTop_toBottomOf="@+id/fragment_challenge_quiz_close"
+        app:layout_constraintLeft_toLeftOf="@+id/fragment_challenge_quiz_pager"
+        app:layout_constraintRight_toRightOf="@+id/fragment_challenge_quiz_pager"
+        android:textAllCaps="true" />
 
     <org.gem.indo.dooit.views.custom.NonSwipableViewPager
         android:id="@+id/fragment_challenge_quiz_pager"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         android:layout_above="@+id/fragment_challenge_quiz_checkbutton"
-        android:layout_below="@+id/fragment_challenge_quiz_progresscounter" />
+        android:layout_below="@+id/fragment_challenge_quiz_progresscounter"
+        android:visibility="visible"
+        android:layout_marginTop="@dimen/challenge_inset_small"
+        android:layout_marginBottom="@dimen/challenge_inset_small"
+        android:layout_marginStart="@dimen/challenge_inset_small"
+        android:layout_marginEnd="@dimen/challenge_inset_small"
+        app:layout_constraintTop_toBottomOf="@+id/fragment_challenge_quiz_progresscounter"
+        app:layout_constraintBottom_toTopOf="@+id/fragment_challenge_quiz_checkbutton"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        tools:layout="@layout/fragment_challengequizquestion"
+        tools:background="@color/grey" />
 
     <Button
         android:id="@+id/fragment_challenge_quiz_checkbutton"
         style="@style/AppTheme.Button.Big.LightBlue"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_marginTop="8dp"
-        android:text="@string/label_check_result" />
+        android:layout_marginBottom="@dimen/challenge_inset_small"
+        android:text="@string/label_check_result"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintRight_toRightOf="@+id/fragment_challenge_quiz_pager"
+        app:layout_constraintLeft_toLeftOf="@+id/fragment_challenge_quiz_pager" />
 
-</RelativeLayout>
+</android.support.constraint.ConstraintLayout>

@@ -4,6 +4,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.content.ContextCompat;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,6 +24,7 @@ import org.gem.indo.dooit.api.managers.ChallengeManager;
 import org.gem.indo.dooit.helpers.Persisted;
 import org.gem.indo.dooit.helpers.RequestCodes;
 import org.gem.indo.dooit.helpers.SquiggleBackgroundHelper;
+import org.gem.indo.dooit.helpers.TextSpannableHelper;
 import org.gem.indo.dooit.models.challenge.BaseChallenge;
 import org.gem.indo.dooit.models.challenge.FreeformChallenge;
 import org.gem.indo.dooit.models.challenge.Participant;
@@ -124,6 +127,23 @@ public class ChallengeRegisterFragment extends Fragment implements HasChallengeF
         if (hasActive) {
             register.setText(getText(R.string.label_continue));
         }
+
+        if (TextUtils.isEmpty(instruction.getText())) {
+            instruction.setVisibility(View.GONE);
+        } else {
+            instruction.setVisibility(View.VISIBLE);
+        }
+
+        if (TextUtils.isEmpty(title.getText())) {
+            title.setVisibility(View.GONE);
+        } else {
+            title.setVisibility(View.VISIBLE);
+        }
+
+        String tcString = getResources().getString(R.string.challenge_t_c);
+        TextSpannableHelper spanHelper = new TextSpannableHelper();
+        tc.setText(spanHelper.styleText(getContext(), R.style.AppTheme_TextView_Bold_Small_Accented, tcString));
+
         return view;
     }
 
@@ -150,7 +170,7 @@ public class ChallengeRegisterFragment extends Fragment implements HasChallengeF
 
         for (QuizChallengeQuestion q : quizChallenge.getQuestions()) {
             // check for empty question or empty list of options for question
-            if (q.getText() == null || q.getText().length() <= 0) {
+            if (TextUtils.isEmpty(q.getText())) {
                 return ChallengeNoneFragment.newInstance(getString(org.gem.indo.dooit.R.string.challenge_quiz_no_questions));
             } else if (q.getOptions() == null || q.getOptions().size() <= 0) {
                 return ChallengeNoneFragment.newInstance(getString(org.gem.indo.dooit.R.string.challenge_quiz_no_questions));
@@ -159,7 +179,7 @@ public class ChallengeRegisterFragment extends Fragment implements HasChallengeF
             // check whether any options are empty or none of the question's options are correct
             boolean hasCorrect = false;
             for (QuizChallengeOption o : q.getOptions()) {
-                if (o.getText() == null || o.getText().length() <= 0) {
+                if (TextUtils.isEmpty(o.getText())) {
                     return ChallengeNoneFragment.newInstance(getString(org.gem.indo.dooit.R.string.challenge_quiz_empty_option));
                 }
                 hasCorrect |= o.getCorrect();

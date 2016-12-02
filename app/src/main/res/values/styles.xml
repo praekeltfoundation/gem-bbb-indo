@@ -45,7 +45,7 @@
         <item name="android:gravity">center_horizontal</item>
     </style>
 
-    <style name="AppTheme.HorsontalProgress" parent="Widget.AppCompat.ProgressBar.Horizontal">
+    <style name="AppTheme.HorizontalProgress" parent="Widget.AppCompat.ProgressBar.Horizontal">
         <item name="colorAccent">@color/light_blue</item>
         <item name="android:progressBackgroundTint">@color/grey</item>
     </style>
@@ -114,6 +114,12 @@
     <!-- Dialog -->
     <style name="NoAnim">
         <item name="android:windowAnimationStyle">@null</item>
+    </style>
+
+    <!-- Challenge -->
+
+    <style name="AppTheme.TextView.Bold.Small.Accented" parent="AppTheme.TextView.Bold.Small">
+        <item name="android:textColor">@color/pink</item>
     </style>
 
 </resources>

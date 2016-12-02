@@ -38,4 +38,7 @@
     <!-- Tips -->
     <color name="tips_tab_background_selected">@color/yellow</color>
     <color name="tips_tab_background_unselected">@color/light_grey</color>
+
+    <!-- Lightbox -->
+    <color name="lightbox_text">@color/white</color>
 </resources>

@@ -10,6 +10,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AlertDialog;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -75,6 +76,9 @@ public class ChallengePictureFragment extends Fragment {
     @Inject
     Persisted persist;
 
+    @BindView(R.id.fragment_challenge_picture_question)
+    TextView questionText;
+
     @BindView(R.id.fragment_challenge_picture_image)
     SimpleDraweeView image;
 
@@ -131,9 +135,16 @@ public class ChallengePictureFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_challenge_picture, container, false);
         unbinder = ButterKnife.bind(this, view);
         PictureChallengeQuestion question = challenge.getQuestion();
+        if (question == null || TextUtils.isEmpty(question.getText())) {
+            questionText.setVisibility(View.GONE);
+        } else {
+            questionText.setText(question.getText());
+            questionText.setVisibility(View.VISIBLE);
+        }
+
         if (savedInstanceState != null) {
             String uriString = savedInstanceState.getString(ARG_IMGURI);
-            if (uriString != null && !uriString.isEmpty()) {
+            if (!TextUtils.isEmpty(uriString)) {
                 image.setImageURI(Uri.parse(uriString));
             }
         }
@@ -231,7 +242,7 @@ public class ChallengePictureFragment extends Fragment {
 
     @OnClick(R.id.fragment_challenge_picture_submit_button)
     public void submitImage() {
-        if (imagePath == null || imagePath.isEmpty()) {
+        if (TextUtils.isEmpty(imagePath)) {
             Log.d(TAG, "Attempted to submit empty image");
             Toast.makeText(getContext(), "Must select a picture to submit", Toast.LENGTH_SHORT).show();
             return;
@@ -264,7 +275,7 @@ public class ChallengePictureFragment extends Fragment {
 
     private void returnToParent() {
         Fragment f = getParentFragment();
-        if (f != null && f instanceof ChallengeFragment) {
+        if (f instanceof ChallengeFragment) {
             ((ChallengeFragment) f).loadChallenge();
         }
     }

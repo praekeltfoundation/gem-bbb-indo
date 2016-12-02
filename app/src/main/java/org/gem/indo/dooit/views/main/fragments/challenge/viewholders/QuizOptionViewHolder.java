@@ -1,9 +1,12 @@
 package org.gem.indo.dooit.views.main.fragments.challenge.viewholders;
 
 import android.content.Context;
+import android.graphics.drawable.Drawable;
+import android.support.v4.content.ContextCompat;
+import android.support.v4.graphics.drawable.DrawableCompat;
+import android.support.v7.widget.AppCompatImageView;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.widget.LinearLayout;
 import android.widget.RadioButton;
 
 import org.gem.indo.dooit.R;
@@ -18,8 +21,12 @@ import butterknife.ButterKnife;
  */
 
 public class QuizOptionViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-    @BindView(R.id.option_text) RadioButton radio;
-    @BindView(R.id.option_background) LinearLayout optionBackground;
+    @BindView(R.id.option_text)
+    RadioButton radio;
+
+    @BindView(R.id.option_background)
+    AppCompatImageView optionBackground;
+
     private QuizChallengeOption option;
     private ChallengeQuizOptionsListAdapter adapter;
 
@@ -28,6 +35,9 @@ public class QuizOptionViewHolder extends RecyclerView.ViewHolder implements Vie
         ButterKnife.bind(this, itemView);
         itemView.setOnClickListener(this);
         this.adapter = adapter;
+        Drawable back = ContextCompat.getDrawable(getContext(), R.drawable.quiz_option_box);
+        DrawableCompat.setTintList(back, ContextCompat.getColorStateList(getContext(), R.color.quiz_option_tint));
+        optionBackground.setImageDrawable(back);
     }
 
     public void populate(final QuizChallengeOption item) {
@@ -55,6 +65,7 @@ public class QuizOptionViewHolder extends RecyclerView.ViewHolder implements Vie
 
     public void setSelected(boolean selected) {
         itemView.setSelected(selected);
+        optionBackground.setSelected(selected);
         radio.setChecked(selected);
     }
 
