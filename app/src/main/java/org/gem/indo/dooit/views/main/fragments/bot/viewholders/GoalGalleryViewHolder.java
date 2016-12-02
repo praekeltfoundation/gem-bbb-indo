@@ -28,9 +28,9 @@ import butterknife.ButterKnife;
  * Created by Wimpie Victor on 2016/11/24.
  */
 
-public class AnswerGoalGalleryViewHolder extends BaseBotViewHolder<Answer> {
+public class GoalGalleryViewHolder extends BaseBotViewHolder<Node> {
 
-    private static final String TAG = AnswerGoalGalleryViewHolder.class.getName();
+    private static final String TAG = GoalGalleryViewHolder.class.getName();
 
     @BindView(R.id.item_view_bot_carousel_recycler_view)
     RecyclerView recyclerView;
@@ -46,7 +46,7 @@ public class AnswerGoalGalleryViewHolder extends BaseBotViewHolder<Answer> {
     private BotAdapter botAdapter;
     private HashtagView.TagsClickListener listener;
 
-    public AnswerGoalGalleryViewHolder(View itemView, BotAdapter botAdapter, HashtagView.TagsClickListener tagsClickListener) {
+    public GoalGalleryViewHolder(View itemView, BotAdapter botAdapter, HashtagView.TagsClickListener tagsClickListener) {
         super(itemView);
         ((DooitApplication) getContext().getApplicationContext()).component.inject(this);
         ButterKnife.bind(this, itemView);
@@ -61,9 +61,8 @@ public class AnswerGoalGalleryViewHolder extends BaseBotViewHolder<Answer> {
     }
 
     @Override
-    public void populate(Answer model) {
+    public void populate(Node model) {
         dataModel = model;
         galleryAdapter.setDataModel(model);
-//        galleryAdapter.notifyDataSetChanged();
     }
 }

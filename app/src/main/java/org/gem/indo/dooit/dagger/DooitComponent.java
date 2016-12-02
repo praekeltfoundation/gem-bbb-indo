@@ -7,8 +7,9 @@ import org.gem.indo.dooit.views.DooitActivity;
 import org.gem.indo.dooit.views.RootActivity;
 import org.gem.indo.dooit.views.main.MainActivity;
 import org.gem.indo.dooit.views.main.fragments.bot.BotFragment;
-import org.gem.indo.dooit.views.main.fragments.bot.viewholders.AnswerGoalGalleryViewHolder;
+import org.gem.indo.dooit.views.main.fragments.bot.viewholders.GoalGalleryViewHolder;
 import org.gem.indo.dooit.views.main.fragments.bot.viewholders.AnswerImageSelectViewHolder;
+import org.gem.indo.dooit.views.main.fragments.bot.viewholders.GoalInfoViewHolder;
 import org.gem.indo.dooit.views.main.fragments.bot.viewholders.GoalVerificationViewHolder;
 import org.gem.indo.dooit.views.main.fragments.bot.viewholders.TextViewHolder;
 import org.gem.indo.dooit.views.main.fragments.bot.viewholders.TipBotViewHolder;
@@ -20,6 +21,7 @@ import org.gem.indo.dooit.views.main.fragments.challenge.fragments.ChallengeRegi
 import org.gem.indo.dooit.views.main.fragments.target.TargetFragment;
 import org.gem.indo.dooit.views.main.fragments.target.callbacks.GoalAddCallback;
 import org.gem.indo.dooit.views.main.fragments.target.callbacks.GoalDepositCallback;
+import org.gem.indo.dooit.views.main.fragments.target.callbacks.GoalEditCallback;
 import org.gem.indo.dooit.views.main.fragments.target.callbacks.GoalWithdrawCallback;
 import org.gem.indo.dooit.views.main.fragments.tip.TipsFragment;
 import org.gem.indo.dooit.views.main.fragments.tip.TipsListFragment;
@@ -49,7 +51,7 @@ public interface DooitComponent {
 
     void inject(AnswerImageSelectViewHolder o);
 
-    void inject(AnswerGoalGalleryViewHolder o);
+    void inject(GoalGalleryViewHolder o);
 
     void inject(BotFragment o);
 
@@ -79,7 +81,11 @@ public interface DooitComponent {
 
     void inject(GoalWithdrawCallback o);
 
+    void inject(GoalEditCallback o);
+
     void inject(GoalVerificationViewHolder o);
+
+    void inject(GoalInfoViewHolder o);
 
     void inject(LoginActivity o);
 

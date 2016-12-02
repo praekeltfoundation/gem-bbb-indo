@@ -24,37 +24,30 @@
     "name": "goal_add_ask_goal",
     "type": "text",
     "text": "$(goal_add_ask_goal)",
-    "autoAnswer": "goal_add_carousel_answer",
-    "answers": [
-      {
-        "name": "goal_add_carousel_answer",
-        "nextOnFinish": "goal_add_ask_amount",
-        "type": "goalGallery"
-      }
-    ]
+    "autoNext": "goal_add_ask_goal_gallery"
   },
-
-
   {
-    "name": "askGoalName",
-    "type": "goalSelection",
-    "text": " $(askGoalName) ",
+    "name": "goal_add_ask_goal_gallery",
+    "type": "goalGallery",
+    "text": "",
+    "next": "goalNameCongrats",
     "answers": [
       {
         "name": "goalNameOption",
         "next": "askGoalNameInput",
-        "text": "$(addOwnGoal)"
+        "text": "$(addOwnGoal)",
+        "removeOnSelect": "goal_add_ask_goal_gallery"
       }
     ]
   },
   {
     "name": "askGoalNameInput",
     "type": "text",
-    "text": " $(askGoalNameInput) ",
-    "autoAnswer": "goalName",
+    "text": "$(askGoalNameInput)",
+    "autoAnswer": "goal_name",
     "answers": [
       {
-        "name": "goalName",
+        "name": "goal_name",
         "nextOnFinish": "goalNameCongrats",
         "type": "inlineText",
         "inlineEditHint": "$(type_name_hint)"
@@ -125,7 +118,7 @@
     "text": "$(askGoalDate)",
     "textParams": [
       "LOCAL_CURRENCY",
-      "goalAmount"
+      "goal_amount"
     ],
     "answers": [
       {
@@ -136,7 +129,7 @@
       {
         "name": "knowDateN",
         "text": "$(unknownDate)",
-        "next": "askGoalPriorSave"
+        "next": "askGoalWeeklySaveAmount"
       }
     ]
   },
@@ -189,16 +182,11 @@
     "name": "verifyGoalAmount",
     "type": "goalVerification",
     "text": "$(verifyGoalAmount)",
-    "textParams": [
-      "goalAmount",
-      "goalAmount",
-      "goalAmount"
-    ],
     "answers": [
       {
         "name": "acceptGoal",
         "text": "$(acceptGoal)",
-        "next": "infoGoalEnd"
+        "next": "infoGoalAddedCongratulations"
       },
       {
         "name": "changeDate",
@@ -226,6 +214,9 @@
         "name": "weeklySaveAmount",
         "value": "500",
         "text": "$(five)",
+        "textParams": [
+          "LOCAL_CURRENCY"
+        ],
         "next": "askGoalPriorSave",
         "type": "textCurrency"
       },
@@ -233,6 +224,9 @@
         "name": "weeklySaveAmount",
         "value": "1000",
         "text": "$(thousand)",
+        "textParams": [
+          "LOCAL_CURRENCY"
+        ],
         "next": "askGoalPriorSave",
         "type": "textCurrency"
       },
@@ -240,6 +234,9 @@
         "name": "weeklySaveAmount",
         "value": "1500",
         "text": "$(thousandFive)",
+        "textParams": [
+          "LOCAL_CURRENCY"
+        ],
         "next": "askGoalPriorSave",
         "type": "textCurrency"
       },
@@ -247,6 +244,9 @@
         "name": "weeklySaveAmount",
         "value": "2000",
         "text": "$(twoThousand)",
+        "textParams": [
+          "LOCAL_CURRENCY"
+        ],
         "next": "askGoalPriorSave",
         "type": "textCurrency"
       },
@@ -254,13 +254,14 @@
         "name": "otherSaveAmount",
         "value": "other",
         "text": "$(otherSaveAmount)",
+        "type": "blankAnswer",
         "next": "askGoalSaveAmountOther"
       }
     ]
   },
   {
     "name": "askGoalSaveAmountOther",
-    "type": "text",
+    "type": "blank",
     "text": "$(askGoalSaveAmountOther)",
     "autoAnswer": "weeklySaveAmount",
     "answers": [
@@ -270,6 +271,23 @@
         "type": "inlineCurrency",
         "typeOnFinish": "textCurrency",
         "inlineEditHint": "$(type_currency_hint)"
+      }
+    ]
+  },
+  {
+    "name": "infoGoalAddedCongratulations",
+    "type": "text",
+    "text": "$(infoGoalAddedCongratulations)",
+    "autoNext": "finalInfoGoal"
+  },
+  {
+    "name": "finalInfoGoal",
+    "type": "goalInfo",
+    "answers": [
+      {
+        "name": "weeklySaveAmount",
+        "next": "infoGoalEnd",
+        "text": "$(yay_me)"
       }
     ]
   },

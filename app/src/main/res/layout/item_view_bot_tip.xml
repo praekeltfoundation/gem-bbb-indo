@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/item_view_bot_tip"
     android:layout_width="@dimen/bot_tip_card_width"
     android:layout_height="wrap_content"
-    android:background="@drawable/bkg_carousel_card"
     android:layout_marginStart="@dimen/bot_left_margin"
     android:layout_marginEnd="@dimen/bot_left_margin"
+    tools:background="@drawable/bkg_carousel_card"
     tools:context=".views.main.MainActivity">
 
     <com.facebook.drawee.view.SimpleDraweeView

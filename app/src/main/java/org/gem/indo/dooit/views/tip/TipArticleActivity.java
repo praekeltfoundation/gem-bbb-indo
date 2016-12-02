@@ -15,7 +15,7 @@ import org.gem.indo.dooit.views.helpers.activity.DooitActivityBuilder;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-
+@Deprecated
 public class TipArticleActivity extends DooitActivity {
 
     public static final String ARTICLE_URL = "articleUrl";

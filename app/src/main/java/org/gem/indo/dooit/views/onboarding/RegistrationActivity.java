@@ -12,6 +12,8 @@ import android.text.style.ForegroundColorSpan;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -33,6 +35,7 @@ import org.gem.indo.dooit.models.Profile;
 import org.gem.indo.dooit.models.User;
 import org.gem.indo.dooit.views.DooitActivity;
 import org.gem.indo.dooit.views.helpers.activity.DooitActivityBuilder;
+import org.gem.indo.dooit.views.web.MinimalWebViewActivity;
 
 import java.util.regex.Pattern;
 
@@ -115,9 +118,7 @@ public class RegistrationActivity extends DooitActivity {
         for (int i = MIN_AGE; i <= MAX_AGE; i++)
             ageAdapter.add(i);
         age.setAdapter(ageAdapter);
-        age.setSelection(4); // 16
-        age.setFocusable(true);
-        age.setFocusableInTouchMode(true);
+
         // Default gender
         gender.check(R.id.activity_registration_gender_girl);
 
@@ -129,12 +130,14 @@ public class RegistrationActivity extends DooitActivity {
         textViewLogin.setText(spanLogin);
         SquiggleBackgroundHelper.setBackground(this, R.color.purple, R.color.purple_light, background);
         password.setImeActionLabel(getString(R.string.label_register), EditorInfo.IME_ACTION_DONE);
+        age.setSelection(16 - MIN_AGE); // 16
     }
+
 
     @OnClick(R.id.activity_registration_t_c_text_view)
     public void openTC() {
-        OnboardingWebActivity.Builder.create(this)
-                .setTitle(getString(org.gem.indo.dooit.R.string.title_activity_terms_and_conditions))
+        MinimalWebViewActivity.Builder.create(this)
+                //.setTitle(getString(org.gem.indo.dooit.R.string.title_activity_terms_and_conditions))
                 .setUrl(Constants.TERMS_URL)
                 .startActivity();
     }

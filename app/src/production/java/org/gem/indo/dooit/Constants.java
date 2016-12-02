@@ -7,11 +7,8 @@ package org.gem.indo.dooit;
 public class Constants {
 
     public static final Boolean DEBUG = false;
-    //    public static final String BASE_URL = "http://gem-bbb.seed.p16n.org";
-    public static final String BASE_URL = "http:/" +
-            "/gem-bbb.seed.p16n.org";
+    public static final String BASE_URL = "http://http://bbb-prd.gem.molo.unicore.io";
 
-    public static final String TERMS_URL = "http://gem-bbb.seed.p16n.org/terms.html";
-    public static final String PRIVACY_URL = "http://gem-bbb.seed.p16n.org/privacy.html";
-
+    public static final String TERMS_URL = BASE_URL + "/terms-conditions/";
+    public static final String PRIVACY_URL = BASE_URL + "/privacy/";
 }

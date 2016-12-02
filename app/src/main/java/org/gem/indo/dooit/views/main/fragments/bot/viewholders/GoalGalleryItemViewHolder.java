@@ -1,5 +1,6 @@
 package org.gem.indo.dooit.views.main.fragments.bot.viewholders;
 
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.TextView;
@@ -10,6 +11,7 @@ import com.greenfrvr.hashtagview.HashtagView;
 import org.gem.indo.dooit.R;
 import org.gem.indo.dooit.models.GoalPrototype;
 import org.gem.indo.dooit.models.bot.Answer;
+import org.gem.indo.dooit.models.bot.Node;
 import org.gem.indo.dooit.models.enums.BotMessageType;
 
 import butterknife.BindView;
@@ -21,7 +23,10 @@ import butterknife.ButterKnife;
  * Created by Wimpie Victor on 2016/11/24.
  */
 
-public class AnswerGoalGalleryItemViewHolder extends RecyclerView.ViewHolder {
+public class GoalGalleryItemViewHolder extends RecyclerView.ViewHolder {
+
+    @BindView(R.id.item_view_bot_carousel_card)
+    View background;
 
     @BindView(R.id.item_view_bot_carousel_card_image)
     SimpleDraweeView image;
@@ -29,33 +34,40 @@ public class AnswerGoalGalleryItemViewHolder extends RecyclerView.ViewHolder {
     @BindView(R.id.item_view_bot_carousel_card_title)
     TextView title;
 
+    @BindView(R.id.item_view_bot_carousel_card_separator)
+    View separator;
+
     @BindView(R.id.item_view_bot_carousel_card_select)
     TextView select;
 
     private HashtagView.TagsClickListener listener;
-    private Answer dataModel;
+    private Node dataModel;
 
-    public AnswerGoalGalleryItemViewHolder(View itemView, HashtagView.TagsClickListener listener) {
+    public GoalGalleryItemViewHolder(View itemView, HashtagView.TagsClickListener listener) {
         super(itemView);
         ButterKnife.bind(this, itemView);
         this.listener = listener;
+
+        // Must assign programmatically for Support Library to wrap before API 21
+        background.setBackground(ContextCompat.getDrawable(itemView.getContext(), R.drawable.bkg_carousel_card));
+        separator.setBackground(ContextCompat.getDrawable(itemView.getContext(), R.drawable.bkg_carousel_separator));
     }
 
-    public void populate(final GoalPrototype prototype, Answer model) {
+    public void populate(final GoalPrototype prototype, Node model) {
         image.setImageURI(prototype.getImageUrl());
         title.setText(prototype.getName());
         dataModel = model;
-        select.setOnClickListener(new View.OnClickListener() {
+        itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Answer answer = new Answer();
-                answer.setName(dataModel.getName());
+                answer.setName(dataModel.getAnswerName());
                 answer.setType(BotMessageType.IMAGE);
                 answer.setValue(prototype.getImageUrl());
                 answer.put("prototype", Long.toString(prototype.getId()));
                 answer.put("name", prototype.getName());
                 answer.put("image_url", prototype.getImageUrl());
-                answer.setNext(dataModel.getNextOnFinish());
+                answer.setNext(dataModel.getNext());
                 answer.setRemoveOnSelect(dataModel.getName());
                 answer.setText(null);
                 listener.onItemClicked(answer);

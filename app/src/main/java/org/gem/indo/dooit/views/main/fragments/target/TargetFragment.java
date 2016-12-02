@@ -3,12 +3,14 @@ package org.gem.indo.dooit.views.main.fragments.target;
 import android.graphics.Point;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
+import android.support.v4.widget.NestedScrollView;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.TextView;
@@ -39,9 +41,19 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.OnPageChange;
+import rx.functions.Action0;
 import rx.functions.Action1;
 
 public class TargetFragment extends MainFragment {
+
+    @BindView(R.id.fragment_target_nested_scroll_view)
+    NestedScrollView nestedScrollView;
+
+    @BindView(R.id.fragment_target_no_goals)
+    View noGoalView;
+
+    @BindView(R.id.fragment_target_add_goal_button)
+    Button addGoal;
 
     @BindView(R.id.fragment_target_targets_view_pagers)
     ViewPager viewPager;
@@ -72,6 +84,9 @@ public class TargetFragment extends MainFragment {
 
     @BindView(R.id.fragment_target_right_image_button)
     ImageButton rightTarget;
+
+    @BindView(R.id.fragment_target_loading_progress_container)
+    View loadingProgress;
 
     @BindString(R.string.target_savings_message)
     String savingsMessage;
@@ -128,6 +143,7 @@ public class TargetFragment extends MainFragment {
             leftTarget.setVisibility(View.GONE);
         }
 
+        showLoadingProgress();
         retrieveGoals();
     }
 
@@ -188,6 +204,18 @@ public class TargetFragment extends MainFragment {
         startBot(BotType.GOAL_WITHDRAW);
     }
 
+    @OnClick(R.id.fragment_target_savings_plan_edit)
+    public void onEditClick(View view) {
+        Goal goal = goals.get(viewPager.getCurrentItem());
+        persisted.saveConvoGoal(BotType.GOAL_EDIT, goal);
+        startBot(BotType.GOAL_EDIT);
+    }
+
+    @OnClick(R.id.fragment_target_add_goal_button)
+    public void onAddGoalClick(View view) {
+        startBot(BotType.GOAL_ADD);
+    }
+
     private void populateGoal(Goal goal) {
         goalName.setText(goal.getName());
         saved.setText(CurrencyHelper.format(goal.getValue()));
@@ -208,6 +236,7 @@ public class TargetFragment extends MainFragment {
                     @Override
                     public void run() {
                         Toast.makeText(getContext(), "Error retrieving goals.", Toast.LENGTH_SHORT).show();
+                        showNoGoals();
                     }
                 });
             }
@@ -224,10 +253,35 @@ public class TargetFragment extends MainFragment {
                                     if (goals.size() > 0) {
                                         populateGoal(goals.get(0));
                                         rightTarget.setVisibility(View.VISIBLE);
+                                        showGoals();
+                                    } else {
+                                        showNoGoals();
                                     }
                                 }
                             });
                     }
                 });
+    }
+
+    private void showLoadingProgress() {
+        nestedScrollView.setVisibility(View.GONE);
+        noGoalView.setVisibility(View.GONE);
+        loadingProgress.setVisibility(View.VISIBLE);
+    }
+
+    private void showGoals() {
+        nestedScrollView.setVisibility(View.VISIBLE);
+        noGoalView.setVisibility(View.GONE);
+        loadingProgress.setVisibility(View.GONE);
+    }
+
+    private void showNoGoals() {
+        nestedScrollView.setVisibility(View.GONE);
+        noGoalView.setVisibility(View.VISIBLE);
+        loadingProgress.setVisibility(View.GONE);
+    }
+
+    public void refreshGoals() {
+        retrieveGoals();
     }
 }

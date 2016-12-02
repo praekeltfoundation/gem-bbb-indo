@@ -13,6 +13,7 @@
     <color name="dark_transparent">#CC000000</color>
     <color name="white">@android:color/white</color>
     <color name="black">@android:color/black</color>
+    <color name="black_transparent">#42000000</color>
     <color name="purple">#391563</color>
     <color name="purple_light">#45236c</color>
     <color name="pink">#E93988</color>
@@ -22,6 +23,7 @@
     <color name="yellow">#FDDF5B</color>
     <color name="yellow_light">#fde58c</color>
     <color name="green">#B9D154</color>
+    <color name="salmon">#ec4b0c</color>
     <color name="corn_silk">#FFF6DC</color>
     <color name="light_blue">#01BFE3</color>
     <color name="light_blue_alpha">#8201BFE3</color>

@@ -6,37 +6,46 @@
     android:layout_height="match_parent"
     android:fitsSystemWindows="true">
 
+    <WebView
+        android:id="@+id/activity_settings_web_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        />
+
     <android.support.design.widget.AppBarLayout
         android:id="@+id/app_bar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:theme="@style/AppTheme.AppBarOverlay">
+        android:theme="@style/AppTheme.AppBarOverlay"
+        android:background="@color/transparent"
+        android:layout_marginTop="7dp"
+        android:fitsSystemWindows="false"
+        android:layout_alignTop="@+id/activity_settings_web_view"
+        app:elevation="0dp">
 
         <android.support.v7.widget.Toolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            android:background="?attr/colorPrimary"
+            android:background="@color/transparent"
+            app:layout_collapseMode="pin"
+            app:layout_scrollFlags="scroll|enterAlways"
             app:popupTheme="@style/AppTheme.PopupOverlay"
             app:subtitleTextAppearance="@style/AppTheme.Toolbar.SubTitle"
-            app:titleTextAppearance="@style/AppTheme.Toolbar.Title"
-            app:titleTextColor="@color/black" />
+            app:titleTextColor="@color/profileSettingsTitle"
+            android:layout_weight="1" />
 
     </android.support.design.widget.AppBarLayout>
 
-    <WebView
-        android:id="@+id/activity_settings_web_view"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@+id/app_bar" />
-
     <ProgressBar
         android:id="@+id/activity_settings_web_progress"
-        style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+        style="@android:style/Widget.DeviceDefault.Light.ProgressBar.Large"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/app_bar"
+        android:layout_centerInParent="true"
         android:max="100"
         android:progress="0"
         tools:progress="50" />
+
+
 </RelativeLayout>

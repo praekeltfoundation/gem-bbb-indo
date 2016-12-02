@@ -7,6 +7,7 @@ import org.gem.indo.dooit.api.managers.GoalManager;
 import org.gem.indo.dooit.models.Goal;
 import org.gem.indo.dooit.models.GoalTransaction;
 import org.gem.indo.dooit.models.bot.Answer;
+import org.gem.indo.dooit.models.bot.BaseBotModel;
 import org.gem.indo.dooit.models.bot.BotCallback;
 
 import java.util.Map;
@@ -42,5 +43,10 @@ public class GoalWithdrawCallback implements BotCallback {
                 }
             }).subscribe();
         }
+    }
+
+    @Override
+    public void onCall(String key, Map<String, Answer> answerLog, BaseBotModel model) {
+
     }
 }

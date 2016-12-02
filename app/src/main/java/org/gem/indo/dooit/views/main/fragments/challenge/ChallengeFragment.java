@@ -218,6 +218,8 @@ public class ChallengeFragment extends MainFragment {
                 Log.d(TAG, "Could not load saved challenge state");
                 page = ChallengeFragmentState.NONE;
             }
+            if (page == null)
+                page = ChallengeFragmentState.NONE;
             challenge = savedInstanceState.getParcelable(ARG_CHALLENGE);
             FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
             Fragment f;

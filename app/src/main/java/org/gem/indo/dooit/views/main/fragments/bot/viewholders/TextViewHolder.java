@@ -1,6 +1,7 @@
 package org.gem.indo.dooit.views.main.fragments.bot.viewholders;
 
 import android.content.Context;
+import android.support.v4.content.ContextCompat;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -43,6 +44,9 @@ public class TextViewHolder extends BaseBotViewHolder<Node> {
         this.botAdapter = botAdapter;
         ((DooitApplication) getContext().getApplicationContext()).component.inject(this);
         ButterKnife.bind(this, itemView);
+
+        // Must assign programmatically for Support Library to wrap before API 21
+        textView.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.ic_d_bot_dialogue_bkg));
     }
 
     @Override
@@ -50,56 +54,8 @@ public class TextViewHolder extends BaseBotViewHolder<Node> {
         this.dataModel = model;
 
         String text = dataModel.getText(getContext());
-        String[] params = dataModel.getTextParams();
-        for (int i = 0; i < params.length; i++) {
-            String param = params[i];
+        textView.setText(Utils.populateFromPersisted(persisted, botAdapter, text, model.getTextParams()));
 
-            switch (param) {
-                case "USERNAME":
-                    params[i] = persisted.getCurrentUser().getUsername();
-                    break;
-                case "FIRSTNAME":
-                    params[i] = persisted.getCurrentUser().getFirstName();
-                    break;
-                case "LASTNAME":
-                    params[i] = persisted.getCurrentUser().getLastName();
-                    break;
-                case "LOCAL_CURRENCY":
-                    params[i] = CurrencyHelper.getCurrencySymbol();
-                    break;
-                case "GOAL_DEPOSIT_TARGET":
-                    params[i] = String.format(Locale.getDefault(), "%s", (int) persisted.loadConvoGoal(BotType.GOAL_DEPOSIT).getTarget());
-                    break;
-                case "GOAL_DEPOSIT_WEEKLY_TARGET":
-                    params[i] = String.format(Locale.getDefault(), "%s", (int) Math.ceil(persisted.loadConvoGoal(BotType.GOAL_DEPOSIT).getWeeklyTarget()));
-                    break;
-                case "GOAL_DEPOSIT_END_DATE":
-                    params[i] = Utils.formatDate(persisted.loadConvoGoal(BotType.GOAL_DEPOSIT).getEndDate().toDate());
-                    break;
-                case "GOAL_DEPOSIT_WEEKS_LEFT":
-                    params[i] = String.valueOf(Utils.weekDiff(persisted.loadConvoGoal(BotType.GOAL_DEPOSIT).getEndDate().toDate().getTime(), Utils.ROUNDWEEK.DOWN));
-                    break;
-                case "GOAL_DEPOSIT_DAYS_LEFT":
-                    int days = Utils.dayDiff(persisted.loadConvoGoal(BotType.GOAL_DEPOSIT).getEndDate().toDate().getTime());
-                    params[i] = String.valueOf(days - (Utils.weekDiff(persisted.loadConvoGoal(BotType.GOAL_DEPOSIT).getEndDate().toDate().getTime(), Utils.ROUNDWEEK.DOWN) * 7));
-                    break;
-                case "TIP_INTRO":
-                    params[i] = persisted.loadConvoTip().getIntro();
-                    break;
-                default:
-                    for (BaseBotModel baseBotModel : botAdapter.getDataSet()) {
-                        if (baseBotModel.getClassType().equals(Answer.class.toString())
-                                && param.equals(baseBotModel.getName())) {
-                            params[i] = ((Answer) baseBotModel).getValue();
-                        }
-                    }
-            }
-        }
-
-        if (text.contains("%"))
-            textView.setText(String.format(text, (Object[]) params));
-        else
-            textView.setText(text);
         RelativeLayout.LayoutParams lp = ((RelativeLayout.LayoutParams) textView.getLayoutParams());
         if (dataModel.isIconHidden()) {
             botIcon.setVisibility(View.GONE);
