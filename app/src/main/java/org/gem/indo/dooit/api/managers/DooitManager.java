@@ -49,8 +49,11 @@ import static java.util.concurrent.TimeUnit.MINUTES;
  */
 
 public class DooitManager {
+    static Cache cache = null;
     private static class StatefullNetworkMonitor implements DooitCacheControl.NetworkMonitor{
+
         final Context context;
+
         boolean cacheDisabled;
         StatefullNetworkMonitor(Context context){
             this.context = context;
@@ -121,10 +124,11 @@ public class DooitManager {
         });
         httpClient.addInterceptor(logging);
         if(doOfflineCache) {
-            final Cache cache = new Cache(application.getCacheDir(), 10 * 1024 * 1024);
+            if(cache == null)
+                cache = new Cache(application.getCacheDir(), 10 * 1024 * 1024);
 
             this.client = DooitCacheControl.on(httpClient)
-                    .overrideServerCachePolicy(30, MINUTES)
+                    //.overrideServerCachePolicy(30, MINUTES)
                     .forceCacheWhenOffline(this.statefullNetworkMonitor)
                     .apply() // return to the OkHttpClient.Builder instance
                     .cache(cache)
@@ -156,24 +160,25 @@ public class DooitManager {
     }
 
     public <T> Observable<T> disableCaching(final Observable<T> observable){
-        DooitManager.this.statefullNetworkMonitor.setCacheDisabled();
+        if(false) {
+            DooitManager.this.statefullNetworkMonitor.setCacheDisabled();
 
-        observable.subscribe(new Observer<T>(){
-            @Override
-            public void onCompleted() {
-                DooitManager.this.statefullNetworkMonitor.setCacheEnabled();
-            }
+            observable.subscribe(new Observer<T>() {
+                @Override
+                public void onCompleted() {
+                    DooitManager.this.statefullNetworkMonitor.setCacheEnabled();
+                }
 
-            @Override
-            public void onError(Throwable e) {
-                DooitManager.this.statefullNetworkMonitor.setCacheEnabled();
-            }
+                @Override
+                public void onError(Throwable e) {
+                    DooitManager.this.statefullNetworkMonitor.setCacheEnabled();
+                }
 
-            @Override
-            public void onNext(T t) {
-            }
-        });
-
+                @Override
+                public void onNext(T t) {
+                }
+            });
+        }
         return observable;
     }
     private <T> Observable<T> addErrorHandling(Observable<T> observable,

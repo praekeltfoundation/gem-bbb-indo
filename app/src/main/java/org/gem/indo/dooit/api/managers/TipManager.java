@@ -32,7 +32,7 @@ public class TipManager extends DooitManager {
     }
 
     public Observable<List<Tip>> retrieveFavourites(DooitErrorHandler errorHandler) {
-        return useNetwork(tipAPI.getFavourites(), errorHandler);
+        return useNetwork(this.disableCaching(tipAPI.getFavourites()), errorHandler);
     }
 
     public Observable<EmptyResponse> favourite(int id, DooitErrorHandler errorHandler) {
