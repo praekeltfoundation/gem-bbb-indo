@@ -11,7 +11,7 @@ import org.gem.indo.dooit.models.enums.BotMessageType;
  * Created by Bernhard Müller on 11/7/2016.
  */
 
-public class BaseBotModel {
+public abstract class BaseBotModel {
 
     private static final String TAG = BaseBotModel.class.getName();
 
@@ -20,6 +20,7 @@ public class BaseBotModel {
     protected String name;
     protected String type;
     private String next;
+    protected String callback;
     protected String[] textParams = new String[0];
 
     public BaseBotModel(String classType) {
@@ -76,5 +77,13 @@ public class BaseBotModel {
 
     public void setNext(String next) {
         this.next = next;
+    }
+
+    public String getCallback() {
+        return callback;
+    }
+
+    public boolean hasCallback() {
+        return callback != null && !TextUtils.isEmpty(callback);
     }
 }

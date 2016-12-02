@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="200dp"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
     android:layout_gravity="center"
-    android:padding="5dp"
-    android:layout_height="200dp">
+    android:padding="5dp">
 
 
     <com.facebook.drawee.view.SimpleDraweeView
@@ -27,9 +27,9 @@
         android:layout_gravity="center"
         app:arc_angle="330"
         app:arc_bottom_text="10%"
-        app:arc_bottom_text_margin_top="00dp"
+        app:arc_bottom_text_margin_top="-1dp"
         app:arc_finished_color="#0199B6"
         app:arc_progress="10"
         app:arc_text_color="@color/black"
-        app:arc_unfinished_color="#CAB249" />
+        app:arc_unfinished_color="@color/black_transparent" />
 </FrameLayout>

@@ -26,6 +26,10 @@ public class FileUploadManager extends DooitManager {
         fileUploadAPI = retrofit.create(FileUploadAPI.class);
     }
 
+    protected static String makeContentDisposition(String filename) {
+        return String.format("attachment;filename=\"%s\"", filename);
+    }
+
     public Observable<EmptyResponse> upload(long userId, String mediaType, File file, DooitErrorHandler errorHandler) {
         MediaType mediaTypeHeader = MediaType.parse(mediaType);
         String filename = file.getName();
@@ -36,5 +40,12 @@ public class FileUploadManager extends DooitManager {
         MediaType mediaTypeHeader = MediaType.parse(mediaType);
         String filename = file.getName();
         return useNetwork(fileUploadAPI.uploadParticipantPicture(participantId, RequestBody.create(mediaTypeHeader, file), "attachment;filename=\"" + filename + "\""), errorHandler);
+    }
+
+    public Observable<EmptyResponse> uploadGoalImage(long goalId, String mediaType, File file, DooitErrorHandler errorHandler) {
+        MediaType mediaTypeHeader = MediaType.parse(mediaType);
+        String filename = file.getName();
+        String contentDisposition = makeContentDisposition(filename);
+        return useNetwork(fileUploadAPI.uploadGoalImage(goalId, RequestBody.create(mediaTypeHeader, file), contentDisposition), errorHandler);
     }
 }
