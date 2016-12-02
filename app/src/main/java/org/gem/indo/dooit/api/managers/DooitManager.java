@@ -49,7 +49,13 @@ import static java.util.concurrent.TimeUnit.MINUTES;
  */
 
 public class DooitManager {
-    static Cache cache = null;
+    private static Cache cache = null;
+    private static synchronized Cache getCache(Context context){
+        if(cache == null){
+            cache = new Cache(application.getCacheDir(), 10 * 1024 * 1024);
+        }
+        return cache;
+    }
     private static class StatefullNetworkMonitor implements DooitCacheControl.NetworkMonitor{
 
         final Context context;
@@ -124,14 +130,13 @@ public class DooitManager {
         });
         httpClient.addInterceptor(logging);
         if(doOfflineCache) {
-            if(cache == null)
-                cache = new Cache(application.getCacheDir(), 10 * 1024 * 1024);
+
 
             this.client = DooitCacheControl.on(httpClient)
                     //.overrideServerCachePolicy(30, MINUTES)
                     .forceCacheWhenOffline(this.statefullNetworkMonitor)
                     .apply() // return to the OkHttpClient.Builder instance
-                    .cache(cache)
+                    .cache(getCache(context))
                     .build();
         }else{
 
