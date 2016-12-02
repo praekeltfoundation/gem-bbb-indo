@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -26,6 +27,7 @@ import org.gem.indo.dooit.api.DooitErrorHandler;
 import org.gem.indo.dooit.api.managers.FileUploadManager;
 import org.gem.indo.dooit.api.responses.EmptyResponse;
 import org.gem.indo.dooit.helpers.MediaUriHelper;
+import org.gem.indo.dooit.helpers.Persisted;
 import org.gem.indo.dooit.helpers.RequestCodes;
 import org.gem.indo.dooit.helpers.permissions.PermissionCallback;
 import org.gem.indo.dooit.helpers.permissions.PermissionsHelper;
@@ -33,6 +35,7 @@ import org.gem.indo.dooit.models.User;
 import org.gem.indo.dooit.models.challenge.Participant;
 import org.gem.indo.dooit.models.challenge.PictureChallenge;
 import org.gem.indo.dooit.models.challenge.PictureChallengeQuestion;
+import org.gem.indo.dooit.views.main.fragments.challenge.ChallengeFragment;
 import org.gem.indo.dooit.views.main.fragments.challenge.ChallengeFragmentState;
 import org.gem.indo.dooit.views.main.fragments.challenge.interfaces.HasChallengeFragmentState;
 
@@ -43,6 +46,7 @@ import javax.inject.Inject;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import butterknife.Unbinder;
 import rx.functions.Action1;
 
 import static android.app.Activity.RESULT_OK;
@@ -52,17 +56,24 @@ import static android.app.Activity.RESULT_OK;
  * Use the {@link ChallengePictureFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class ChallengePictureFragment extends Fragment implements HasChallengeFragmentState {
+public class ChallengePictureFragment extends Fragment {
+
+    /*************
+     * Variables *
+     *************/
+
     public static final String TAG = "PictureChallenge";
-    public static final String ARG_CHALLENGE = "challenge";
-    public static final String ARG_PARTICIPANT = "participant";
+    public static final String ARG_IMGURI = "challenge_picture_uri";
     private static final ChallengeFragmentState FRAGMENT_STATE = ChallengeFragmentState.PICTURE;
+
+    @Inject
+    FileUploadManager fileUploadManager;
 
     @Inject
     PermissionsHelper permissionsHelper;
 
     @Inject
-    FileUploadManager fileUploadManager;
+    Persisted persist;
 
     @BindView(R.id.fragment_challenge_picture_image)
     SimpleDraweeView image;
@@ -77,6 +88,12 @@ public class ChallengePictureFragment extends Fragment implements HasChallengeFr
     private PictureChallenge challenge = null;
     private String imagePath = null;
     private Uri imageUri = null;
+    private Unbinder unbinder = null;
+
+
+    /****************
+     * Constructors *
+     ****************/
 
     public ChallengePictureFragment() {
         // Required empty public constructor
@@ -85,19 +102,24 @@ public class ChallengePictureFragment extends Fragment implements HasChallengeFr
     public static ChallengePictureFragment newInstance(Participant participant, PictureChallenge challenge) {
         ChallengePictureFragment fragment = new ChallengePictureFragment();
         Bundle args = new Bundle();
-        args.putParcelable(ARG_PARTICIPANT, participant);
-        args.putParcelable(ARG_CHALLENGE, challenge);
+        args.putParcelable(ChallengeFragment.ARG_PARTICIPANT, participant);
+        args.putParcelable(ChallengeFragment.ARG_CHALLENGE, challenge);
         fragment.setArguments(args);
         return fragment;
     }
+
+
+    /************************
+     * Life-cycle overrides *
+     ************************/
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
         if (getArguments() != null) {
-            participant = getArguments().getParcelable(ARG_PARTICIPANT);
-            challenge = getArguments().getParcelable(ARG_CHALLENGE);
+            participant = getArguments().getParcelable(ChallengeFragment.ARG_PARTICIPANT);
+            challenge = getArguments().getParcelable(ChallengeFragment.ARG_CHALLENGE);
         }
         ((DooitApplication) getActivity().getApplication()).component.inject(this);
     }
@@ -107,9 +129,23 @@ public class ChallengePictureFragment extends Fragment implements HasChallengeFr
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_challenge_picture, container, false);
-        ButterKnife.bind(this, view);
+        unbinder = ButterKnife.bind(this, view);
         PictureChallengeQuestion question = challenge.getQuestion();
+        if (savedInstanceState != null) {
+            String uriString = savedInstanceState.getString(ARG_IMGURI);
+            if (uriString != null && !uriString.isEmpty()) {
+                image.setImageURI(Uri.parse(uriString));
+            }
+        }
         return view;
+    }
+
+    @Override
+    public void onDestroyView() {
+        if (unbinder != null) {
+            unbinder.unbind();
+        }
+        super.onDestroyView();
     }
 
 
@@ -142,6 +178,11 @@ public class ChallengePictureFragment extends Fragment implements HasChallengeFr
         });
         builder.show();
     }
+
+
+    /***************************
+     * Image selection helpers *
+     ***************************/
 
     protected void startCamera() {
         permissionsHelper.askForPermission(this, PermissionsHelper.D_WRITE_EXTERNAL_STORAGE, new PermissionCallback() {
@@ -188,43 +229,6 @@ public class ChallengePictureFragment extends Fragment implements HasChallengeFr
 
     }
 
-    @Override
-    public void onSaveInstanceState(Bundle outState) {
-        if (outState != null) {
-            outState.putParcelable(ARG_PARTICIPANT, participant);
-            outState.putParcelable(ARG_CHALLENGE, challenge);
-        }
-        super.onSaveInstanceState(outState);
-    }
-
-    @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        if (savedInstanceState != null) {
-            savedInstanceState.putParcelable(ARG_PARTICIPANT, participant);
-            savedInstanceState.putParcelable(ARG_CHALLENGE, challenge);
-        }
-        super.onActivityCreated(savedInstanceState);
-    }
-
-    @Override
-    public ChallengeFragmentState getFragmentState() {
-        return FRAGMENT_STATE;
-    }
-
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == RequestCodes.RESPONSE_GALLERY_REQUEST_CHALLENGE_IMAGE) {
-            if (resultCode == RESULT_OK) {
-                imagePath = MediaUriHelper.getPath(getContext(), data.getData());
-                imageUri = data.getData();
-                if (image != null) {
-                    image.setImageURI(data.getData());
-                }
-            }
-        }
-    }
-
     @OnClick(R.id.fragment_challenge_picture_submit_button)
     public void submitImage() {
         if (imagePath == null || imagePath.isEmpty()) {
@@ -244,7 +248,55 @@ public class ChallengePictureFragment extends Fragment implements HasChallengeFr
             @Override
             public void call(EmptyResponse emptyResponse) {
                 Log.d(TAG, "Uploaded image");
+                persist.clearCurrentChallenge();
+                FragmentTransaction ft = getFragmentManager().beginTransaction();
+                Fragment f = ChallengeDoneFragment.newInstance(challenge);
+                ft.replace(R.id.fragment_challenge_container, f, "fragment_challenge");
+                ft.commit();
             }
         });
+    }
+
+
+    /***********
+     * Cleanup *
+     ***********/
+
+    private void returnToParent() {
+        Fragment f = getParentFragment();
+        if (f != null && f instanceof ChallengeFragment) {
+            ((ChallengeFragment) f).loadChallenge();
+        }
+    }
+
+
+    /*************************
+     * State-keeping methods *
+     *************************/
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        if (outState != null) {
+            outState.putSerializable(ChallengeFragment.ARG_PAGE, FRAGMENT_STATE);
+            outState.putParcelable(ChallengeFragment.ARG_PARTICIPANT, participant);
+            outState.putParcelable(ChallengeFragment.ARG_CHALLENGE, challenge);
+            outState.putString(ARG_IMGURI, imageUri == null ? null : imageUri.toString());
+        }
+        super.onSaveInstanceState(outState);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == RequestCodes.RESPONSE_GALLERY_REQUEST_CHALLENGE_IMAGE ||
+                requestCode == RequestCodes.RESPONSE_CAMERA_REQUEST_CHALLENGE_IMAGE) {
+            if (resultCode == RESULT_OK) {
+                imagePath = MediaUriHelper.getPath(getContext(), data.getData());
+                imageUri = data.getData();
+                if (image != null) {
+                    image.setImageURI(imageUri);
+                }
+            }
+        }
+        super.onActivityResult(requestCode, resultCode, data);
     }
 }

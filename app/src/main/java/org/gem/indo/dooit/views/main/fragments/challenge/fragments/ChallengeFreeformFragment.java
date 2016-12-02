@@ -1,6 +1,7 @@
 package org.gem.indo.dooit.views.main.fragments.challenge.fragments;
 
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
@@ -22,12 +23,15 @@ import org.gem.indo.dooit.models.challenge.FreeformChallenge;
 import org.gem.indo.dooit.models.challenge.FreeformChallengeQuestion;
 import org.gem.indo.dooit.models.challenge.Participant;
 import org.gem.indo.dooit.models.challenge.ParticipantFreeformAnswer;
+import org.gem.indo.dooit.views.main.fragments.challenge.ChallengeFragment;
+import org.gem.indo.dooit.views.main.fragments.challenge.ChallengeFragmentState;
 
 import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import butterknife.Unbinder;
 import rx.functions.Action1;
 
 /**
@@ -36,9 +40,14 @@ import rx.functions.Action1;
  * create an instance of this fragment.
  */
 public class ChallengeFreeformFragment extends Fragment {
+
+    /*************
+     * Variables *
+     *************/
+
     private static final String TAG = "ChallengeFreeform";
-    private static final String ARG_CHALLENGE = "challenge";
-    private static final String ARG_PARTICIPANT = "participant";
+    private static final String ARG_ANSWER = "challenge_freeform_answer";
+    private static final ChallengeFragmentState FRAGMENT_STATE = ChallengeFragmentState.FREEFORM;
 
     @Inject
     ChallengeManager challengeManager;
@@ -47,8 +56,12 @@ public class ChallengeFreeformFragment extends Fragment {
     Persisted persisted;
 
     private FreeformChallenge challenge;
+
     private FreeformChallengeQuestion question;
+
     private Participant participant;
+
+    private Unbinder unbinder = null;
 
     @BindView(R.id.fragment_challenge_freeform_title)
     TextView title;
@@ -59,34 +72,36 @@ public class ChallengeFreeformFragment extends Fragment {
     @BindView(R.id.fragment_challenge_freeform_submitbutton)
     Button submitButton;
 
+
+    /****************
+     * Constructors *
+     ****************/
+
     public ChallengeFreeformFragment() {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param challenge Freeform type challenge.
-     * @return A new instance of fragment ChallengeFreeformFragment.
-     */
-    // TODO: Rename and change types and number of parameters
     public static ChallengeFreeformFragment newInstance(Participant participant, FreeformChallenge challenge) {
         ChallengeFreeformFragment fragment = new ChallengeFreeformFragment();
         Bundle args = new Bundle();
-        args.putParcelable(ARG_PARTICIPANT, participant);
-        args.putParcelable(ARG_CHALLENGE, challenge);
+        args.putParcelable(ChallengeFragment.ARG_PARTICIPANT, participant);
+        args.putParcelable(ChallengeFragment.ARG_CHALLENGE, challenge);
         fragment.setArguments(args);
         return fragment;
     }
+
+
+    /************************
+     * Life-cycle overrides *
+     ************************/
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         ((DooitApplication) getActivity().getApplication()).component.inject(this);
         if (getArguments() != null) {
-            participant = getArguments().getParcelable(ARG_PARTICIPANT);
-            challenge = getArguments().getParcelable(ARG_CHALLENGE);
+            participant = getArguments().getParcelable(ChallengeFragment.ARG_PARTICIPANT);
+            challenge = getArguments().getParcelable(ChallengeFragment.ARG_CHALLENGE);
             question = challenge != null ? challenge.getQuestion() : null;
         }
     }
@@ -95,11 +110,30 @@ public class ChallengeFreeformFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(org.gem.indo.dooit.R.layout.fragment_challenge_freeform, container, false);
-        ButterKnife.bind(this, view);
+        unbinder = ButterKnife.bind(this, view);
         title.setText(question != null ? question.getText() : getString(R.string.challenge_no_question));
-        fetchAnswer();
+        if (savedInstanceState == null) {
+            fetchAnswer();
+        } else {
+            Log.d(TAG, "Restoring state from bundle");
+            String answerText = savedInstanceState.getString(ARG_ANSWER);
+            submissionBox.setText(answerText == null ? "" : answerText);
+        }
         return view;
     }
+
+    @Override
+    public void onDestroyView() {
+        if (unbinder != null) {
+            unbinder.unbind();
+        }
+        super.onDestroyView();
+    }
+
+
+    /****************
+     * Load helpers *
+     ****************/
 
     public void fetchAnswer() {
         challengeManager.fetchParticipantFreeformAnswer(challenge.getId(), new DooitErrorHandler() {
@@ -126,6 +160,11 @@ public class ChallengeFreeformFragment extends Fragment {
         });
     }
 
+
+    /******************
+     * Submit helpers *
+     ******************/
+
     public void submitAnswer(String text) {
         ParticipantFreeformAnswer answer = new ParticipantFreeformAnswer();
         answer.setParticipant(participant.getId());
@@ -149,9 +188,25 @@ public class ChallengeFreeformFragment extends Fragment {
     public void submitFreeformAnswer() {
         Log.d(TAG, "Submitting freeform answer.");
         submitAnswer(submissionBox.getText().toString());
-        FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
+        FragmentTransaction ft = getFragmentManager().beginTransaction();
         Fragment fragment = ChallengeDoneFragment.newInstance(challenge);
         ft.replace(R.id.fragment_challenge_container, fragment);
         ft.commit();
+    }
+
+
+    /*************************
+     * State-keeping methods *
+     *************************/
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        if (outState != null) {
+            outState.putSerializable(ChallengeFragment.ARG_PAGE, FRAGMENT_STATE);
+            outState.putParcelable(ChallengeFragment.ARG_PARTICIPANT, participant);
+            outState.putParcelable(ChallengeFragment.ARG_CHALLENGE, challenge);
+            outState.putString(ARG_ANSWER, submissionBox == null ? "" : submissionBox.toString());
+        }
+        super.onSaveInstanceState(outState);
     }
 }

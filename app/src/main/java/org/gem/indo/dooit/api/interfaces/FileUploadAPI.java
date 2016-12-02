@@ -18,9 +18,9 @@ public interface FileUploadAPI {
     @POST("/api/profile-image/{id}/")
     Observable<EmptyResponse> upload(@Path("id") long id, @Body RequestBody requestBody, @Header("Content-Disposition") String contentDisposition);
 
-    @POST("/api/participant-image/")
-    Observable<EmptyResponse> uploadParticipantPicture(@Query("participant_pk") long id, @Body RequestBody requestBody, @Header("Content-Disposition") String contentDisposition);
-
+    @POST("/api/participant-image/{id}/")
+    Observable<EmptyResponse> uploadParticipantPicture(@Path("id") long id, @Body RequestBody requestBody, @Header("Content-Disposition") String contentDisposition);
+    
     @POST("/api/goal-image/{id}/")
     Observable<EmptyResponse> uploadGoalImage(@Path("id") long goalId, @Body RequestBody requestBody, @Header("Content-Disposition") String contentDisposition);
 }

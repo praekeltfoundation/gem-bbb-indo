@@ -2,6 +2,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/fragment_challenge_inner"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="org.gem.indo.dooit.views.main.fragments.challenge.fragments.ChallengePictureFragment">
