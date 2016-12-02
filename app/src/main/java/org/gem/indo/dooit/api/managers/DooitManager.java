@@ -50,7 +50,7 @@ import static java.util.concurrent.TimeUnit.MINUTES;
 
 public class DooitManager {
     private static Cache cache = null;
-    private static synchronized Cache getCache(Context context){
+    private static synchronized Cache getCache(Context application){
         if(cache == null){
             cache = new Cache(application.getCacheDir(), 10 * 1024 * 1024);
         }
