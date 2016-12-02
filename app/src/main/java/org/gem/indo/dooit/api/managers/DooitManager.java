@@ -133,7 +133,7 @@ public class DooitManager {
 
 
             this.client = DooitCacheControl.on(httpClient)
-                    //.overrideServerCachePolicy(30, MINUTES)
+                    .overrideServerCachePolicy(30, MINUTES)
                     .forceCacheWhenOffline(this.statefullNetworkMonitor)
                     .apply() // return to the OkHttpClient.Builder instance
                     .cache(getCache(context))
@@ -165,7 +165,7 @@ public class DooitManager {
     }
 
     public <T> Observable<T> disableCaching(final Observable<T> observable){
-        if(false) {
+        if(true) {
             DooitManager.this.statefullNetworkMonitor.setCacheDisabled();
 
             observable.subscribe(new Observer<T>() {
