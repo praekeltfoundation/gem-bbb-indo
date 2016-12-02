@@ -58,9 +58,9 @@ public class DooitManager {
     }
     private static class StatefullNetworkMonitor implements DooitCacheControl.NetworkMonitor{
 
-        final Context context;
+        private final Context context;
+        private boolean cacheDisabled;
 
-        boolean cacheDisabled;
         StatefullNetworkMonitor(Context context){
             this.context = context;
             this.cacheDisabled = false;
@@ -165,25 +165,24 @@ public class DooitManager {
     }
 
     public <T> Observable<T> disableCaching(final Observable<T> observable){
-        if(true) {
-            DooitManager.this.statefullNetworkMonitor.setCacheDisabled();
+        DooitManager.this.statefullNetworkMonitor.setCacheDisabled();
 
-            observable.subscribe(new Observer<T>() {
-                @Override
-                public void onCompleted() {
-                    DooitManager.this.statefullNetworkMonitor.setCacheEnabled();
-                }
+        observable.subscribe(new Observer<T>() {
+            @Override
+            public void onCompleted() {
+                DooitManager.this.statefullNetworkMonitor.setCacheEnabled();
+            }
 
-                @Override
-                public void onError(Throwable e) {
-                    DooitManager.this.statefullNetworkMonitor.setCacheEnabled();
-                }
+            @Override
+            public void onError(Throwable e) {
+                DooitManager.this.statefullNetworkMonitor.setCacheEnabled();
+            }
 
-                @Override
-                public void onNext(T t) {
-                }
-            });
-        }
+            @Override
+            public void onNext(T t) {
+            }
+        });
+
         return observable;
     }
     private <T> Observable<T> addErrorHandling(Observable<T> observable,
