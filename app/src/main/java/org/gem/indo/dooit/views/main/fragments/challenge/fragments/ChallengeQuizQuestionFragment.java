@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +14,7 @@ import android.widget.TextView;
 import org.gem.indo.dooit.R;
 import org.gem.indo.dooit.models.challenge.QuizChallengeOption;
 import org.gem.indo.dooit.models.challenge.QuizChallengeQuestion;
+import org.gem.indo.dooit.models.challenge.QuizChallengeQuestionState;
 import org.gem.indo.dooit.views.main.fragments.challenge.adapters.ChallengeQuizOptionsListAdapter;
 import org.gem.indo.dooit.views.main.fragments.challenge.interfaces.OnOptionChangeListener;
 import org.gem.indo.dooit.views.main.fragments.challenge.viewholders.QuizOptionViewHolder;
@@ -86,6 +88,13 @@ public class ChallengeQuizQuestionFragment extends Fragment implements OnOptionC
         if (challengeFragment instanceof ChallengeQuizFragment) {
             controller = ((ChallengeQuizFragment) challengeFragment);
             controller.addOptionChangeListener(this);
+            if (mQuestion != null) {
+                QuizChallengeQuestionState state = controller.getQuestionState(mQuestion.getId());
+                if (state != null) {
+                    optionId = state.optionId;
+                    completed = state.completed;
+                }
+            }
         }
     }
 
@@ -96,44 +105,52 @@ public class ChallengeQuizQuestionFragment extends Fragment implements OnOptionC
         unbinder = ButterKnife.bind(this, view);
         title.setText(mQuestion.getText());
 
-        adapter = new ChallengeQuizOptionsListAdapter(controller, mQuestion, optionId);
-        if (controller != null) {
-            controller.addQuestionCompletedListener(adapter);
-        }
+        if (adapter == null) {
+            adapter = new ChallengeQuizOptionsListAdapter(controller, mQuestion, optionId);
 
-        optionList.setAdapter(adapter);
-        optionList.setLayoutManager(new LinearLayoutManager(getContext()));
-        selectItem(optionId);
-        optionList.setEnabled(completed);
-        optionList.addItemDecoration(new RecyclerView.ItemDecoration() {
-            @Override
-            public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state) {
-                final int gapHeight = 4;
-                int pos = parent.getChildAdapterPosition(view);
-                if (pos == 0) {
-                    int totalHeight = parent.getHeight();
-                    RecyclerView.LayoutManager layMan = parent.getLayoutManager();
-                    int numVisible = parent.getLayoutManager().getChildCount();
-                    int visibleChildHeight = 2 * gapHeight * numVisible;
-                    for (int i = 0; i < numVisible; i++) {
-                        View child = layMan.getChildAt(i);
-                        child.measure(
-                                View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED),
-                                View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED)
-                        );
-                        visibleChildHeight += child.getMeasuredHeight();
-                    }
-                    int offset = gapHeight;
-                    if (visibleChildHeight < totalHeight) {
-                        offset = (totalHeight - visibleChildHeight) / 2 - gapHeight;
-                    }
-                    outRect.set(0, offset, 0, gapHeight);
-                } else {
-                    outRect.set(0, gapHeight, 0, gapHeight);
-                }
+            if (controller != null) {
+                controller.addQuestionCompletedListener(adapter);
             }
-        });
+
+            optionList.setAdapter(adapter);
+            optionList.setLayoutManager(new LinearLayoutManager(getContext()));
+            optionList.setEnabled(!completed);
+            optionList.addItemDecoration(new RecyclerView.ItemDecoration() {
+                @Override
+                public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state) {
+                    final int gapHeight = 8;
+                    int pos = parent.getChildAdapterPosition(view);
+                    if (pos == 0) {
+                        int totalHeight = parent.getHeight();
+                        RecyclerView.LayoutManager layMan = parent.getLayoutManager();
+                        int numVisible = parent.getLayoutManager().getChildCount();
+                        int visibleChildHeight = gapHeight * (numVisible - 1);
+                        for (int i = 0; i < numVisible; i++) {
+                            View child = layMan.getChildAt(i);
+                            child.measure(
+                                    View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED),
+                                    View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED)
+                            );
+                            visibleChildHeight += child.getMeasuredHeight();
+                        }
+                        int offset = gapHeight;
+                        if (visibleChildHeight < totalHeight) {
+                            offset = (totalHeight - visibleChildHeight) / 2 - gapHeight;
+                        }
+                        outRect.set(0, offset, 0, gapHeight);
+                    } else {
+                        outRect.set(0, gapHeight, 0, gapHeight);
+                    }
+                }
+            });
+        }
         return view;
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        selectItem(optionId);
     }
 
     @Override
@@ -156,8 +173,15 @@ public class ChallengeQuizQuestionFragment extends Fragment implements OnOptionC
     }
 
     public void selectItem(long id) {
+        if (adapter != null) {
+            adapter.setSelectedId(id);
+        }
+
+        long oldId = optionId;
+        optionId = id;
+
         if (optionList != null) {
-            RecyclerView.ViewHolder old = optionList.findViewHolderForItemId(optionId);
+            RecyclerView.ViewHolder old = optionList.findViewHolderForItemId(oldId);
             if (old instanceof QuizOptionViewHolder) {
                 ((QuizOptionViewHolder) old).setSelected(false);
             }
@@ -167,12 +191,6 @@ public class ChallengeQuizQuestionFragment extends Fragment implements OnOptionC
                 ((QuizOptionViewHolder) holder).setSelected(true);
             }
         }
-
-        if (adapter != null) {
-            adapter.setSelectedId(id);
-        }
-
-        optionId = id;
     }
 
     public void setOnOptionChangeListener(OnOptionChangeListener listener) {
