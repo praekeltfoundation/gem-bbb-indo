@@ -50,7 +50,7 @@ public class ChallengeManager extends DooitManager {
     }
 
     public Observable<ParticipantFreeformAnswer> fetchParticipantFreeformAnswer(long challengeID, DooitErrorHandler errorHandler) {
-        return useNetwork(challengeAPI.fetchParticipantFreeform(challengeID), errorHandler);
+        return useNetwork(disableCaching(challengeAPI.fetchParticipantFreeform(challengeID)), errorHandler);
     }
 
     public Observable<Participant> registerParticipant(Participant participant, DooitErrorHandler errorHandler) {

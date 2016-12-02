@@ -8,11 +8,11 @@ import android.net.NetworkInfo;
 import android.util.Log;
 
 import com.google.gson.GsonBuilder;
-import com.ncornette.cache.OkCacheControl;
 
 import org.gem.indo.dooit.Constants;
 import org.gem.indo.dooit.DooitApplication;
 import org.gem.indo.dooit.api.DooitErrorHandler;
+import org.gem.indo.dooit.api.managers.cache.DooitCacheControl;
 import org.gem.indo.dooit.api.serializers.ChallengeSerializer;
 import org.gem.indo.dooit.api.serializers.DateTimeSerializer;
 import org.gem.indo.dooit.api.serializers.LocalDateSerializer;
@@ -37,6 +37,7 @@ import retrofit2.adapter.rxjava.HttpException;
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 import rx.Observable;
+import rx.Observer;
 import rx.Scheduler;
 import rx.functions.Func2;
 import rx.schedulers.Schedulers;
@@ -48,7 +49,36 @@ import static java.util.concurrent.TimeUnit.MINUTES;
  */
 
 public class DooitManager {
+    private static class StatefullNetworkMonitor implements DooitCacheControl.NetworkMonitor{
+        final Context context;
+        boolean cacheDisabled;
+        StatefullNetworkMonitor(Context context){
+            this.context = context;
+            this.cacheDisabled = false;
+        }
+        void setCacheEnabled(){
+            this.cacheDisabled = false;
+        }
+        void setCacheDisabled(){
+            this.cacheDisabled = true;
+        }
+        @Override
+        public boolean isCacheDisabled(Request request) {
+            return this.cacheDisabled;
+        }
 
+        @Override
+        public boolean isOnline() {
+            ConnectivityManager cm =
+                    (ConnectivityManager)context.getSystemService(Context.CONNECTIVITY_SERVICE);
+
+            NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
+            boolean isConnected = activeNetwork != null &&
+                    activeNetwork.isConnectedOrConnecting();
+
+            return isConnected;
+        }
+    }
     protected Retrofit retrofit;
     @Inject
     DooitSharedPreferences sharedPreferences;
@@ -56,12 +86,15 @@ public class DooitManager {
     Persisted persisted;
     private Context context;
     protected OkHttpClient client;
+    private StatefullNetworkMonitor statefullNetworkMonitor;
+
+
     public DooitManager(final Application application, boolean doOfflineCache ) {
         ((DooitApplication) application).component.inject(this);
         context = application.getApplicationContext();
 
         OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
-
+        this.statefullNetworkMonitor = new StatefullNetworkMonitor(context);
         HttpLoggingInterceptor logging = new HttpLoggingInterceptor(new HttpLoggingInterceptor.Logger() {
             @Override
             public void log(String message) {
@@ -89,21 +122,10 @@ public class DooitManager {
         httpClient.addInterceptor(logging);
         if(doOfflineCache) {
             final Cache cache = new Cache(application.getCacheDir(), 10 * 1024 * 1024);
-            this.client = OkCacheControl.on(httpClient)
+
+            this.client = DooitCacheControl.on(httpClient)
                     .overrideServerCachePolicy(30, MINUTES)
-                    .forceCacheWhenOffline(new OkCacheControl.NetworkMonitor() {
-                        @Override
-                        public boolean isOnline() {
-                            ConnectivityManager cm =
-                                    (ConnectivityManager)context.getSystemService(Context.CONNECTIVITY_SERVICE);
-
-                            NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
-                            boolean isConnected = activeNetwork != null &&
-                                    activeNetwork.isConnectedOrConnecting();
-
-                            return isConnected;
-                        }
-                    })
+                    .forceCacheWhenOffline(this.statefullNetworkMonitor)
                     .apply() // return to the OkHttpClient.Builder instance
                     .cache(cache)
                     .build();
@@ -133,9 +155,31 @@ public class DooitManager {
         return requestBuilder;
     }
 
+    public <T> Observable<T> disableCaching(final Observable<T> observable){
+        DooitManager.this.statefullNetworkMonitor.setCacheDisabled();
+
+        observable.subscribe(new Observer<T>(){
+            @Override
+            public void onCompleted() {
+                DooitManager.this.statefullNetworkMonitor.setCacheEnabled();
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                DooitManager.this.statefullNetworkMonitor.setCacheEnabled();
+            }
+
+            @Override
+            public void onNext(T t) {
+            }
+        });
+
+        return observable;
+    }
     private <T> Observable<T> addErrorHandling(Observable<T> observable,
                                                DooitErrorHandler errorHandler) {
         errorHandler.attachContext(context);
+
         return observable.retry(new Func2<Integer, Throwable, Boolean>() {
             @Override
             public Boolean call(Integer count, Throwable throwable) {
