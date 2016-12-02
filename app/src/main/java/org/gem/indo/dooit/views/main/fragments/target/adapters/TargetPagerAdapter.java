@@ -28,7 +28,7 @@ public class TargetPagerAdapter extends PagerAdapter {
     @Override
     public Object instantiateItem(ViewGroup container, int position) {
         LayoutInflater inflater = LayoutInflater.from(container.getContext());
-        ViewGroup layout = (ViewGroup) inflater.inflate(R.layout.custom_arc_progress, container, false);
+        ViewGroup layout = (ViewGroup) inflater.inflate(R.layout.fragment_target_arc_progress, container, false);
 
         ((ArcProgressBar) layout.findViewById(R.id.progress_arc)).setProgress((int) ((goals.get(position).getValue() / goals.get(position).getTarget()) * 100));
         ((SimpleDraweeView) layout.findViewById(R.id.progress_image)).setImageURI(goals.get(position).getImageUrl());

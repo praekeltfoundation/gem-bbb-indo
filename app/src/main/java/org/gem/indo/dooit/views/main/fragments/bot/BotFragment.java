@@ -141,6 +141,8 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
         if (item.getItemId() == R.id.menu_main_bot_clear) {
             persisted.clearConversation();
             persisted.clearConvoGoals();
+            type = BotType.DEFAULT;
+            createFeed();
         }
         return super.onOptionsItemSelected(item);
     }
@@ -339,12 +341,12 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
         switch (botType) {
             case DEFAULT:
             case GOAL_ADD:
-                return new GoalAddCallback((DooitApplication) getActivity().getApplication(), this);
+                return new GoalAddCallback(getActivity());
             case GOAL_DEPOSIT:
                 Goal g1 = persisted.loadConvoGoal(BotType.GOAL_DEPOSIT);
                 if (g1 == null)
                     throw new RuntimeException("No Goal was persisted for Goal Deposit conversation.");
-                return new GoalDepositCallback((DooitApplication) getActivity().getApplication(), g1);
+                return new GoalDepositCallback(getActivity(), g1);
             case GOAL_WITHDRAW:
                 Goal g2 = persisted.loadConvoGoal(BotType.GOAL_WITHDRAW);
                 if (g2 == null)
@@ -494,11 +496,12 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
 
     /**
      * Helper to indicate whether a Node should be added to the conversation's view.
+     *
      * @param model
      * @return
      */
     public static boolean shouldAdd(BaseBotModel model) {
-        switch(BotMessageType.getValueOf(model.getType())) {
+        switch (BotMessageType.getValueOf(model.getType())) {
             case BLANK:
             case STARTCONVO:
             case END:

@@ -336,4 +336,6 @@ public class ArcProgressBar extends View {
         }
         super.onRestoreInstanceState(state);
     }
+
+
 }

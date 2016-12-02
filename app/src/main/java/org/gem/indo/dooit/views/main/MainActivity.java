@@ -21,6 +21,8 @@ import org.gem.indo.dooit.helpers.activity.result.ActivityForResultHelper;
 import org.gem.indo.dooit.views.DooitActivity;
 import org.gem.indo.dooit.views.helpers.activity.DooitActivityBuilder;
 import org.gem.indo.dooit.views.main.adapters.MainTabAdapter;
+import org.gem.indo.dooit.views.main.fragments.MainFragment;
+import org.gem.indo.dooit.views.main.fragments.target.TargetFragment;
 import org.gem.indo.dooit.views.profile.ProfileActivity;
 
 import javax.inject.Inject;
@@ -120,6 +122,14 @@ public class MainActivity extends DooitActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         return super.onOptionsItemSelected(item);
+    }
+
+    public MainFragment getFragment(MainViewPagerPositions MainViewPagerPositions) {
+        return ((MainFragment) mainTabAdapter.instantiateItem(viewPager, MainViewPagerPositions.getValue()));
+    }
+
+    public void refreshGoals(){
+        ((TargetFragment)getFragment(MainViewPagerPositions.TARGET)).refreshGoals();
     }
 
     public static class Builder extends DooitActivityBuilder<Builder> {

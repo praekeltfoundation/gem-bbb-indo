@@ -1,5 +1,7 @@
 package org.gem.indo.dooit.views.main.fragments.target.callbacks;
 
+import android.app.Activity;
+import android.content.Context;
 import android.net.Uri;
 
 import org.gem.indo.dooit.DooitApplication;
@@ -12,6 +14,7 @@ import org.gem.indo.dooit.models.Goal;
 import org.gem.indo.dooit.models.bot.Answer;
 import org.gem.indo.dooit.models.bot.BaseBotModel;
 import org.gem.indo.dooit.models.bot.BotCallback;
+import org.gem.indo.dooit.views.main.MainActivity;
 import org.gem.indo.dooit.views.main.fragments.MainFragment;
 import org.joda.time.LocalDate;
 import org.joda.time.format.DateTimeFormat;
@@ -22,6 +25,7 @@ import java.util.Map;
 import javax.inject.Inject;
 
 import rx.Observable;
+import rx.functions.Action0;
 import rx.functions.Action1;
 
 /**
@@ -31,6 +35,7 @@ import rx.functions.Action1;
 public class GoalAddCallback implements BotCallback {
 
     private static final String TAG = GoalAddCallback.class.getName();
+    Context context;
 
     @Inject
     transient GoalManager goalManager;
@@ -38,11 +43,9 @@ public class GoalAddCallback implements BotCallback {
     @Inject
     transient FileUploadManager fileUploadManager;
 
-    private transient MainFragment fragment;
-
-    public GoalAddCallback(DooitApplication application, MainFragment fragment) {
-        application.component.inject(this);
-        this.fragment = fragment;
+    public GoalAddCallback(Activity activity) {
+        ((DooitApplication) activity.getApplication()).component.inject(this);
+        context = activity;
     }
 
     @Override
@@ -73,6 +76,13 @@ public class GoalAddCallback implements BotCallback {
             public void onError(DooitAPIError error) {
 
             }
+        }).doOnCompleted(new Action0() {
+            @Override
+            public void call() {
+                if (context instanceof MainActivity) {
+                    ((MainActivity) context).refreshGoals();
+                }
+            }
         });
 
         // Find Image
@@ -83,9 +93,9 @@ public class GoalAddCallback implements BotCallback {
             imageUri = Uri.parse(answerLog.get("Gallery").getValue());
 
         // Upload image if set
-        if (imageUri != null){
-            final String mimetype = fragment.getContext().getContentResolver().getType(imageUri);
-            final String path = MediaUriHelper.getPath(fragment.getContext(), imageUri);
+        if (imageUri != null) {
+            final String mimetype = context.getContentResolver().getType(imageUri);
+            final String path = MediaUriHelper.getPath(context, imageUri);
             observe.subscribe(new Action1<Goal>() {
                 @Override
                 public void call(Goal goal) {
