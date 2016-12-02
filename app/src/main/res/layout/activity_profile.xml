@@ -134,6 +134,35 @@
                 android:divider="@color/divider"
                 android:dividerHeight="1dp"
                 tools:listitem="@layout/activity_profile_achievement_item" />
+
+            <RelativeLayout
+                android:id="@+id/achievements_progress_container"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="130dp"
+                android:visibility="visible"
+                >
+
+                <ProgressBar
+                    android:id="@+id/fragment_achievement_loadingprogress"
+                    style="?android:attr/progressBarStyleLarge"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="bottom"
+                    android:layout_centerInParent="true"
+                    android:indeterminate="true" />
+
+
+                <TextView
+                    android:id="@+id/fragment_acheivement_loadingtext"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/fragment_achievement_loadingprogress"
+                    android:layout_marginTop="18dp"
+                    android:layout_centerHorizontal="true"
+                    android:text="@string/label_loading" />
+            </RelativeLayout>
+
         </RelativeLayout>
 
     </android.support.v4.widget.NestedScrollView>
