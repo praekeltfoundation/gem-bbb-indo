@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.content.ContextCompat;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -74,7 +75,7 @@ public class ChallengeSuccessLightboxFragment extends DialogFragment {
         unbinder = ButterKnife.bind(this, view);
 
         if (hintText != null) {
-            if (hint != null && !hint.isEmpty()) {
+            if (!TextUtils.isEmpty(hint)) {
                 hintText.setText(String.format(getString(R.string.challenge_hint_template), hint));
             } else {
                 hintText.setText(R.string.challenge_hint_none);

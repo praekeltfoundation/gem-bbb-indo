@@ -227,7 +227,7 @@ public class ChallengeQuizFragment extends Fragment implements OnOptionChangeLis
 
     private void returnToParent() {
         Fragment f = getParentFragment();
-        if (f != null && f instanceof ChallengeFragment) {
+        if (f instanceof ChallengeFragment) {
             ((ChallengeFragment) f).loadChallenge();
         }
     }

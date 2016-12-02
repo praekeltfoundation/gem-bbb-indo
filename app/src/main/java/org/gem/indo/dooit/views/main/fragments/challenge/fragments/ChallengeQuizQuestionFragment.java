@@ -158,12 +158,12 @@ public class ChallengeQuizQuestionFragment extends Fragment implements OnOptionC
     public void selectItem(long id) {
         if (optionList != null) {
             RecyclerView.ViewHolder old = optionList.findViewHolderForItemId(optionId);
-            if (old != null && old instanceof QuizOptionViewHolder) {
+            if (old instanceof QuizOptionViewHolder) {
                 ((QuizOptionViewHolder) old).setSelected(false);
             }
 
             RecyclerView.ViewHolder holder = optionList.findViewHolderForItemId(id);
-            if (holder != null && holder instanceof QuizOptionViewHolder) {
+            if (holder instanceof QuizOptionViewHolder) {
                 ((QuizOptionViewHolder) holder).setSelected(true);
             }
         }
