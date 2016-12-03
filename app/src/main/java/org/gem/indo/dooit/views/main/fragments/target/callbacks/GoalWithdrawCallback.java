@@ -35,14 +35,27 @@ public class GoalWithdrawCallback extends BotCallback {
 
     @Override
     public void onCall(String key, Map<String, Answer> answerLog, BaseBotModel model) {
-
+        switch (key) {
+            case "do_withdraw":
+                doWithdraw(answerLog);
+                break;
+        }
     }
 
     @Override
     public void onDone(Map<String, Answer> answerLog) {
+
+    }
+
+    @Override
+    public Object provide() {
+        return goal;
+    }
+
+    private void doWithdraw(Map<String, Answer> answerLog) {
         if (answerLog.containsKey("withdraw_amount")) {
             // Withdraw subtracts from the goal
-            GoalTransaction trans = new GoalTransaction(-1 * Double.parseDouble(answerLog.get("withdraw_amount").getValue()));
+            GoalTransaction trans = goal.createTransaction(-1 * Double.parseDouble(answerLog.get("withdraw_amount").getValue()));
 
             goalManager.addGoalTransaction(goal, trans, new DooitErrorHandler() {
                 @Override

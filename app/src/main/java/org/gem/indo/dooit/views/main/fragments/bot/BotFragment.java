@@ -309,6 +309,7 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
         }
 
         callback = createBotCallback(type);
+        getBotAdapter().setCallback(callback);
 
         // Jump to first node
         switch (type) {
@@ -373,7 +374,7 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
     public void onItemClicked(Object item) {
         Answer answer = (Answer) item;
 
-        // For replacing existing nodes in the converstation
+        // For replacing existing nodes in the conversation
         if (!TextUtils.isEmpty(answer.getRemoveOnSelect())) {
             for (BaseBotModel model : new ArrayList<>(getBotAdapter().getDataSet())) {
                 if (answer.getRemoveOnSelect().equals(model.getName())) {
@@ -409,6 +410,8 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
             callback.onDone(createAnswerLog(getBotAdapter().getDataSet()));
         persisted.clearConversation();
         persisted.clearConvoGoals();
+        callback = null;
+        getBotAdapter().setCallback(null);
         setBotType(BotType.DEFAULT);
     }
 
@@ -430,13 +433,14 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
             getBotAdapter().clear();
         } else
             currentModel = feed.getItem(name);
+
         Node node = (Node) currentModel;
+
         if (node != null) {
             node.setIconHidden(iconHidden);
 
-            if (shouldAdd(currentModel)) {
+            if (shouldAdd(currentModel))
                 getBotAdapter().addItem(currentModel);
-            }
 
             conversationRecyclerView.scrollToPosition(getBotAdapter().getItemCount() - 1);
             persisted.saveConversationState(type, getBotAdapter().getDataSet());
@@ -496,9 +500,6 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
 
     /**
      * Helper to indicate whether a Node should be added to the conversation's view.
-     *
-     * @param model
-     * @return
      */
     public static boolean shouldAdd(BaseBotModel model) {
         switch (BotMessageType.getValueOf(model.getType())) {

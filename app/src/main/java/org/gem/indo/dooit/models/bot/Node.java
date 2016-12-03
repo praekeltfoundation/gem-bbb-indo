@@ -58,4 +58,9 @@ public class Node extends BaseBotModel {
     public String getAnswerName() {
         return TextUtils.isEmpty(answerName) ? name : answerName;
     }
+
+    @Override
+    public String toString() {
+        return "Node{" + name + "}";
+    }
 }

@@ -10,9 +10,12 @@ import com.facebook.drawee.view.SimpleDraweeView;
 import org.gem.indo.dooit.DooitApplication;
 import org.gem.indo.dooit.R;
 import org.gem.indo.dooit.helpers.Persisted;
+import org.gem.indo.dooit.models.Goal;
 import org.gem.indo.dooit.models.bot.Answer;
 import org.gem.indo.dooit.models.bot.BaseBotModel;
+import org.gem.indo.dooit.models.bot.BotCallback;
 import org.gem.indo.dooit.models.bot.Node;
+import org.gem.indo.dooit.models.exceptions.BotCallbackRequired;
 import org.gem.indo.dooit.views.custom.ArcProgressBar;
 import org.gem.indo.dooit.views.helpers.activity.CurrencyHelper;
 import org.gem.indo.dooit.views.main.fragments.bot.adapters.BotAdapter;
@@ -33,6 +36,9 @@ import butterknife.ButterKnife;
  */
 
 public class GoalInfoViewHolder extends BaseBotViewHolder<Node> {
+
+    private static final String TAG = GoalInfoViewHolder.class.getName();
+
     @BindView(R.id.item_view_bot_goal_info_current)
     TextView currentTextView;
     @BindView(R.id.item_view_bot_goal_info_title)
@@ -59,11 +65,14 @@ public class GoalInfoViewHolder extends BaseBotViewHolder<Node> {
         ((DooitApplication) getContext().getApplicationContext()).component.inject(this);
         ButterKnife.bind(this, itemView);
         itemView.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.ic_d_bot_dialogue_bkg));
+
+        if (!botAdapter.hasCallback())
+            throw new BotCallbackRequired(String.format("%s requires adapter to have callback", TAG));
     }
 
     @Override
     public void populate(Node model) {
-        this.dataModel = model;
+        super.populate(model);
 
         // Iterates over the conversation up until now and picks out the values needed
         for (BaseBotModel baseBotModel : botAdapter.getDataSet()) {
@@ -97,11 +106,13 @@ public class GoalInfoViewHolder extends BaseBotViewHolder<Node> {
             }
         }
 
-        titleTextView.setText(goalName);
-        arcProgressBar.setProgress((int) ((goalValue / goalTarget) * 100));
-        image.setImageURI(goalImageUrl);
-        currentTextView.setText(String.format("%s %.2f", CurrencyHelper.getCurrencySymbol(), goalValue));
-        totalTextView.setText(getContext().getString(R.string.of_target_amount, CurrencyHelper.getCurrencySymbol(), goalTarget));
+        Goal goal = (Goal) botAdapter.getCallback().provide();
+
+        titleTextView.setText(goal.getName());
+        arcProgressBar.setProgress((int) ((goal.getValue() / goal.getTarget()) * 100));
+        image.setImageURI(goal.getImageUrl());
+        currentTextView.setText(String.format("%s %.2f", CurrencyHelper.getCurrencySymbol(), goal.getValue()));
+        totalTextView.setText(getContext().getString(R.string.of_target_amount, CurrencyHelper.getCurrencySymbol(), goal.getTarget()));
     }
 
     public Context getContext() {

@@ -30,4 +30,12 @@ public abstract class BotCallback {
      * @param model The calling Node or Answer
      */
     public abstract void onCall(String key, Map<String, Answer> answerLog, BaseBotModel model);
+
+    /**
+     * Provide a conversation level object that a Node may require.
+     * @return
+     */
+    public Object provide() {
+        return null;
+    }
 }

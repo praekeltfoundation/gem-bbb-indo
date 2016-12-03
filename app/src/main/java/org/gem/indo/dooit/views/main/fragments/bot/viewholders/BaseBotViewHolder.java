@@ -8,6 +8,7 @@ import android.net.Uri;
 import android.os.Handler;
 import android.os.Looper;
 import android.provider.MediaStore;
+import android.support.annotation.CallSuper;
 import android.support.annotation.StringRes;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -27,7 +28,14 @@ public abstract class BaseBotViewHolder<T extends BaseBotModel> extends Recycler
         super(itemView);
     }
 
-    public abstract void populate(T model);
+
+    @CallSuper
+    public void populate(T model) {
+        dataModel = model;
+        reset();
+    }
+
+    public void reset() {}
 
     public Context getContext() {
         return itemView.getContext();
