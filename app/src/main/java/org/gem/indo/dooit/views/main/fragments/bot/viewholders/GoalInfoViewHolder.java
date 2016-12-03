@@ -3,8 +3,6 @@ package org.gem.indo.dooit.views.main.fragments.bot.viewholders;
 import android.content.Context;
 import android.support.v4.content.ContextCompat;
 import android.view.View;
-import android.widget.ImageView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.facebook.drawee.view.SimpleDraweeView;
@@ -12,7 +10,6 @@ import com.facebook.drawee.view.SimpleDraweeView;
 import org.gem.indo.dooit.DooitApplication;
 import org.gem.indo.dooit.R;
 import org.gem.indo.dooit.helpers.Persisted;
-import org.gem.indo.dooit.helpers.Utils;
 import org.gem.indo.dooit.models.bot.Answer;
 import org.gem.indo.dooit.models.bot.BaseBotModel;
 import org.gem.indo.dooit.models.bot.Node;
@@ -49,13 +46,12 @@ public class GoalInfoViewHolder extends BaseBotViewHolder<Node> {
     @Inject
     Persisted persisted;
 
-    BotAdapter botAdapter;
-    Date goalDate;        //goalDate
-    double current;     //priorSaveAmount
-    Double weeklyTarget;      //weeklySaveAmount
-    double target;      //goalAmount
-    String goalName;
-    String goalImage;
+    private BotAdapter botAdapter;
+    private String goalName;
+    private Date goalDate;        //goalDate
+    private double goalValue;     //priorSaveAmount
+    private double goalTarget;      //goalAmount
+    private String goalImageUrl;
 
     public GoalInfoViewHolder(View itemView, BotAdapter botAdapter) {
         super(itemView);
@@ -68,11 +64,14 @@ public class GoalInfoViewHolder extends BaseBotViewHolder<Node> {
     @Override
     public void populate(Node model) {
         this.dataModel = model;
-        String text = dataModel.getText(getContext());
+
+        // Iterates over the conversation up until now and picks out the values needed
         for (BaseBotModel baseBotModel : botAdapter.getDataSet()) {
-            switch (baseBotModel.getName()) {
-                case "goal_add_ask_goal_gallery":
+            String fieldName = model.getFieldName(baseBotModel.getName());
+            switch (fieldName) {
+                case "goalGallery":
                     goalName = ((Answer) baseBotModel).get("name");
+                    goalImageUrl = ((Answer) baseBotModel).get("image_url");
                     break;
                 case "goalDate":
                     try {
@@ -83,38 +82,26 @@ public class GoalInfoViewHolder extends BaseBotViewHolder<Node> {
                         e.printStackTrace();
                     }
                     break;
-                case "priorSaveAmount":
-                    current = Double.parseDouble(((Answer) baseBotModel).getValue());
+                case "goalValue":
+                    goalValue = Double.parseDouble(((Answer) baseBotModel).getValue());
                     break;
-                case "weeklySaveAmount":
-                    weeklyTarget = Double.parseDouble(((Answer) baseBotModel).getValue());
+                case "goalTarget":
+                    goalTarget = ((Answer) baseBotModel).getValue() == null ? 0 : Double.parseDouble(((Answer) baseBotModel).getValue());
                     break;
-                case "goal_amount":
-                    target = ((Answer) baseBotModel).getValue() == null ? 0 : Double.parseDouble(((Answer) baseBotModel).getValue());
-                    break;
-                case "goal_name":
+                case "goalName":
                     goalName = ((Answer) baseBotModel).getValue();
                     break;
-                case "askGoalName":
-                    if (baseBotModel instanceof Answer) {
-                        goalName = ((Answer) baseBotModel).get("name");
-                        goalImage = ((Answer) baseBotModel).getValue();
-                    }
-                    break;
-                case "Capture":
-                    goalImage = ((Answer) baseBotModel).getValue();
-                    break;
-                case "Gallery":
-                    goalImage = ((Answer) baseBotModel).getValue();
+                case "goalImageUrl":
+                    goalImageUrl = ((Answer) baseBotModel).getValue();
                     break;
             }
         }
 
         titleTextView.setText(goalName);
-        arcProgressBar.setProgress((int) (current / target * 100));
-        image.setImageURI(goalImage);
-        currentTextView.setText(String.format("%s %.2f", CurrencyHelper.getCurrencySymbol(), current));
-        totalTextView.setText(getContext().getString(R.string.of_target_amount, CurrencyHelper.getCurrencySymbol(), target));
+        arcProgressBar.setProgress((int) ((goalValue / goalTarget) * 100));
+        image.setImageURI(goalImageUrl);
+        currentTextView.setText(String.format("%s %.2f", CurrencyHelper.getCurrencySymbol(), goalValue));
+        totalTextView.setText(getContext().getString(R.string.of_target_amount, CurrencyHelper.getCurrencySymbol(), goalTarget));
     }
 
     public Context getContext() {

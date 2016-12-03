@@ -1,7 +1,5 @@
 package org.gem.indo.dooit.models;
 
-import android.support.annotation.Nullable;
-
 import com.google.gson.annotations.SerializedName;
 
 import org.joda.time.DateTime;

@@ -7,6 +7,9 @@ import android.util.Log;
 
 import org.gem.indo.dooit.models.enums.BotMessageType;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * Created by Bernhard Müller on 11/7/2016.
  */
@@ -22,6 +25,11 @@ public abstract class BaseBotModel {
     private String next;
     protected String callback;
     protected String[] textParams = new String[0];
+
+    /**
+     * Mapping of Node names to fields in the info view holder.
+     */
+    protected Map<String, String> infoMap = new HashMap<>();
 
     public BaseBotModel(String classType) {
         this.classType = classType;
@@ -85,5 +93,12 @@ public abstract class BaseBotModel {
 
     public boolean hasCallback() {
         return callback != null && !TextUtils.isEmpty(callback);
+    }
+
+    public String getFieldName(String nodeName) {
+        if (infoMap.containsKey(nodeName))
+            return infoMap.get(nodeName);
+        else
+            return nodeName;
     }
 }
