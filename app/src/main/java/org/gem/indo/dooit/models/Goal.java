@@ -1,5 +1,7 @@
 package org.gem.indo.dooit.models;
 
+import android.net.Uri;
+
 import com.google.gson.annotations.SerializedName;
 
 import org.joda.time.DateTime;
@@ -15,7 +17,7 @@ import java.util.List;
 
 public class Goal {
 
-
+    // Remote properties
     private long id;
     private String name;
     private double value;
@@ -38,9 +40,11 @@ public class Goal {
     @SerializedName("weekly_average")
     private double weeklyAverage;
     private long user;
-
     // The id of the predefined Goal. null means custom.
     private Long prototype;
+
+    // Local Properties
+    private Uri localImageUri;
 
     public long getId() {
         return id;
@@ -176,4 +180,15 @@ public class Goal {
         return trans;
     }
 
+    public Uri getLocalImageUri() {
+        return localImageUri;
+    }
+
+    public void setLocalImageUri(Uri localImageUri) {
+        this.localImageUri = localImageUri;
+    }
+
+    public boolean hasLocalImageUri() {
+        return localImageUri != null;
+    }
 }

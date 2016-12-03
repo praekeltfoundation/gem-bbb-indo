@@ -104,16 +104,15 @@ public class GoalAddCallback extends BotCallback {
         });
 
         // Find Image
-        Uri imageUri = null;
         if (answerLog.containsKey("Capture"))
-            imageUri = Uri.parse(answerLog.get("Capture").getValue());
+            goal.setLocalImageUri(Uri.parse(answerLog.get("Capture").getValue()));
         else if (answerLog.containsKey("Gallery"))
-            imageUri = Uri.parse(answerLog.get("Gallery").getValue());
+            goal.setLocalImageUri(Uri.parse(answerLog.get("Gallery").getValue()));
 
         // Upload image if set
-        if (imageUri != null) {
-            final String mimetype = context.getContentResolver().getType(imageUri);
-            final String path = MediaUriHelper.getPath(context, imageUri);
+        if (!goal.hasLocalImageUri()) {
+            final String mimetype = context.getContentResolver().getType(goal.getLocalImageUri());
+            final String path = MediaUriHelper.getPath(context, goal.getLocalImageUri());
             observe.subscribe(new Action1<Goal>() {
                 @Override
                 public void call(Goal goal) {
