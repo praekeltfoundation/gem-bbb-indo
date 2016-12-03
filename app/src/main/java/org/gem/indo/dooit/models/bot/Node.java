@@ -24,6 +24,8 @@ public class Node extends BaseBotModel {
     private boolean iconHidden;
     private String answerName;
     private String autoAnswer;
+    // Allows a converstation to open a different screen
+    private String autoNextScreen;
 
     public Node() {
         super(Node.class.toString());
@@ -57,5 +59,22 @@ public class Node extends BaseBotModel {
 
     public String getAnswerName() {
         return TextUtils.isEmpty(answerName) ? name : answerName;
+    }
+
+    public String getNextScreen() {
+        return autoNextScreen;
+    }
+
+    public void setNextScreen(String nextScreen) {
+        this.autoNextScreen = nextScreen;
+    }
+
+    public boolean hasNextScreen() {
+        return !TextUtils.isEmpty(autoNextScreen);
+    }
+
+    @Override
+    public String toString() {
+        return "Node{" + name + "}";
     }
 }

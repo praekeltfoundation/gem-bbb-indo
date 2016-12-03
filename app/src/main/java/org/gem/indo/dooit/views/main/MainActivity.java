@@ -95,6 +95,10 @@ public class MainActivity extends DooitActivity {
         }
     }
 
+    public void startPage(MainViewPagerPositions pos) {
+        viewPager.setCurrentItem(pos.getValue(), true);
+    }
+
     @OnClick(R.id.activity_main_profile_image)
     void openProfile() {
         ProfileActivity.Builder.create(this).startActivity();

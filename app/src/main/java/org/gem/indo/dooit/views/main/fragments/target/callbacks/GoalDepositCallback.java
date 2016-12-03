@@ -25,7 +25,7 @@ import rx.functions.Action1;
  * Created by Wimpie Victor on 2016/11/21.
  */
 
-public class GoalDepositCallback implements BotCallback {
+public class GoalDepositCallback extends BotCallback {
 
     @Inject
     transient GoalManager goalManager;
@@ -34,14 +34,33 @@ public class GoalDepositCallback implements BotCallback {
     private Goal goal;
 
     public GoalDepositCallback(Activity activity, Goal goal) {
+        super(activity);
         ((DooitApplication) activity.getApplication()).component.inject(this);
         context = activity;
         this.goal = goal;
     }
 
     @Override
+    public void onCall(String key, Map<String, Answer> answerLog, BaseBotModel model) {
+        switch (key) {
+            case "do_deposit":
+                doDeposit(answerLog);
+                break;
+        }
+    }
+
+    @Override
     public void onDone(Map<String, Answer> answerLog) {
-        GoalTransaction trans = new GoalTransaction(Double.parseDouble(answerLog.get("deposit_amount").getValue()));
+
+    }
+
+    @Override
+    public Object getObject() {
+        return goal;
+    }
+
+    private void doDeposit(Map<String, Answer> answerLog) {
+        GoalTransaction trans = goal.createTransaction(Double.parseDouble(answerLog.get("deposit_amount").getValue()));
 
         goalManager.addGoalTransaction(goal, trans, new DooitErrorHandler() {
             @Override
@@ -51,15 +70,9 @@ public class GoalDepositCallback implements BotCallback {
         }).subscribe(new Action1<EmptyResponse>() {
             @Override
             public void call(EmptyResponse emptyResponse) {
-                if (context instanceof MainActivity) {
+                if (context instanceof MainActivity)
                     ((MainActivity) context).refreshGoals();
-                }
             }
         });
-    }
-
-    @Override
-    public void onCall(String key, Map<String, Answer> answerLog, BaseBotModel model) {
-
     }
 }

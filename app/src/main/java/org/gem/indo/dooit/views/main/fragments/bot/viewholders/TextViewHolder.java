@@ -51,7 +51,7 @@ public class TextViewHolder extends BaseBotViewHolder<Node> {
 
     @Override
     public void populate(Node model) {
-        this.dataModel = model;
+        super.populate(model);
 
         String text = dataModel.getText(getContext());
         textView.setText(Utils.populateFromPersisted(persisted, botAdapter, text, model.getTextParams()));
@@ -61,9 +61,15 @@ public class TextViewHolder extends BaseBotViewHolder<Node> {
             botIcon.setVisibility(View.GONE);
             lp.setMargins(lp.leftMargin, 0, lp.rightMargin, lp.bottomMargin);
         } else {
+            botIcon.setVisibility(View.VISIBLE);
             lp.setMargins(lp.leftMargin, lp.rightMargin, lp.rightMargin, lp.bottomMargin);
         }
         textView.setLayoutParams(lp);
+    }
+
+    @Override
+    public void reset() {
+        botIcon.setVisibility(View.VISIBLE);
     }
 
     public Context getContext() {

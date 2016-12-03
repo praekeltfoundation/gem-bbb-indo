@@ -39,19 +39,32 @@
     "answers": [
       {
         "name": "withdraw_amount",
-        "nextOnFinish": "goal_withdraw_show_goal",
+        "nextOnFinish": "goal_withdraw_do_withdraw",
         "type": "inlineCurrency",
         "typeOnFinish": "textCurrency",
         "inlineEditHint": "$(type_currency_hint)"
       }
     ]
   },
+
+
+
+
   {
-    "name": "goal_withdraw_show_goal",
-    "type": "text",
-    "text": "$(bot_goal_display_todo)",
+    "name": "goal_withdraw_do_withdraw",
+    "type": "blank",
+    "callback": "do_withdraw",
+    "autoNext": "goal_withdraw_info"
+  },
+  {
+    "name": "goal_withdraw_info",
+    "type": "goalInfo",
     "autoNext": "goal_withdraw_tips_challenge"
   },
+
+
+
+
   {
     "name": "goal_withdraw_tips_challenge",
     "type": "text",
@@ -65,7 +78,7 @@
       {
         "name": "goal_withdraw_challenge",
         "text": "$(goal_withdraw_challenge)",
-        "next": "todo"
+        "next": "goal_withdraw_challenge_intro"
       },
       {
         "name": "goal_withdraw_do_end",
@@ -74,6 +87,10 @@
       }
     ]
   },
+
+
+
+
   {
     "name": "goal_withdraw_tip_intro",
     "type": "text",
@@ -88,12 +105,29 @@
     "type": "tip",
     "autoNext": "goal_withdraw_end"
   },
+
+
+
+
+  {
+    "name": "goal_withdraw_challenge_intro",
+    "type": "end",
+    "autoNextScreen": "CHALLENGE"
+  },
+
+
+
+
   {
     "name": "todo",
     "type": "text",
     "text": "$(bot_todo)",
     "autoNext": "goal_withdraw_end"
   },
+
+
+
+
   {
     "name": "goal_withdraw_end_message",
     "type": "text",

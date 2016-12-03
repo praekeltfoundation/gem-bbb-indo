@@ -3,8 +3,6 @@ package org.gem.indo.dooit.views.main.fragments.bot.viewholders;
 import android.content.Context;
 import android.support.v4.content.ContextCompat;
 import android.view.View;
-import android.widget.ImageView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.facebook.drawee.view.SimpleDraweeView;
@@ -12,19 +10,12 @@ import com.facebook.drawee.view.SimpleDraweeView;
 import org.gem.indo.dooit.DooitApplication;
 import org.gem.indo.dooit.R;
 import org.gem.indo.dooit.helpers.Persisted;
-import org.gem.indo.dooit.helpers.Utils;
-import org.gem.indo.dooit.models.bot.Answer;
-import org.gem.indo.dooit.models.bot.BaseBotModel;
+import org.gem.indo.dooit.models.Goal;
 import org.gem.indo.dooit.models.bot.Node;
+import org.gem.indo.dooit.models.exceptions.BotCallbackRequired;
 import org.gem.indo.dooit.views.custom.ArcProgressBar;
 import org.gem.indo.dooit.views.helpers.activity.CurrencyHelper;
 import org.gem.indo.dooit.views.main.fragments.bot.adapters.BotAdapter;
-
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Locale;
 
 import javax.inject.Inject;
 
@@ -36,6 +27,9 @@ import butterknife.ButterKnife;
  */
 
 public class GoalInfoViewHolder extends BaseBotViewHolder<Node> {
+
+    private static final String TAG = GoalInfoViewHolder.class.getName();
+
     @BindView(R.id.item_view_bot_goal_info_current)
     TextView currentTextView;
     @BindView(R.id.item_view_bot_goal_info_title)
@@ -49,13 +43,7 @@ public class GoalInfoViewHolder extends BaseBotViewHolder<Node> {
     @Inject
     Persisted persisted;
 
-    BotAdapter botAdapter;
-    Date goalDate;        //goalDate
-    double current;     //priorSaveAmount
-    Double weeklyTarget;      //weeklySaveAmount
-    double target;      //goalAmount
-    String goalName;
-    String goalImage;
+    private BotAdapter botAdapter;
 
     public GoalInfoViewHolder(View itemView, BotAdapter botAdapter) {
         super(itemView);
@@ -63,58 +51,28 @@ public class GoalInfoViewHolder extends BaseBotViewHolder<Node> {
         ((DooitApplication) getContext().getApplicationContext()).component.inject(this);
         ButterKnife.bind(this, itemView);
         itemView.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.ic_d_bot_dialogue_bkg));
+
+        if (!botAdapter.hasCallback())
+            throw new BotCallbackRequired(String.format("%s requires adapter to have callback", TAG));
     }
 
     @Override
     public void populate(Node model) {
-        this.dataModel = model;
-        String text = dataModel.getText(getContext());
-        for (BaseBotModel baseBotModel : botAdapter.getDataSet()) {
-            switch (baseBotModel.getName()) {
-                case "goal_add_ask_goal_gallery":
-                    goalName = ((Answer) baseBotModel).get("name");
-                    break;
-                case "goalDate":
-                    try {
-                        String fmDate = ((Answer) baseBotModel).getValue().substring(0, 10);
-                        DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
-                        goalDate = formatter.parse(fmDate);
-                    } catch (ParseException e) {
-                        e.printStackTrace();
-                    }
-                    break;
-                case "priorSaveAmount":
-                    current = Double.parseDouble(((Answer) baseBotModel).getValue());
-                    break;
-                case "weeklySaveAmount":
-                    weeklyTarget = Double.parseDouble(((Answer) baseBotModel).getValue());
-                    break;
-                case "goal_amount":
-                    target = ((Answer) baseBotModel).getValue() == null ? 0 : Double.parseDouble(((Answer) baseBotModel).getValue());
-                    break;
-                case "goal_name":
-                    goalName = ((Answer) baseBotModel).getValue();
-                    break;
-                case "askGoalName":
-                    if (baseBotModel instanceof Answer) {
-                        goalName = ((Answer) baseBotModel).get("name");
-                        goalImage = ((Answer) baseBotModel).getValue();
-                    }
-                    break;
-                case "Capture":
-                    goalImage = ((Answer) baseBotModel).getValue();
-                    break;
-                case "Gallery":
-                    goalImage = ((Answer) baseBotModel).getValue();
-                    break;
-            }
-        }
+        super.populate(model);
 
-        titleTextView.setText(goalName);
-        arcProgressBar.setProgress((int) (current / target * 100));
-        image.setImageURI(goalImage);
-        currentTextView.setText(String.format("%s %.2f", CurrencyHelper.getCurrencySymbol(), current));
-        totalTextView.setText(getContext().getString(R.string.of_target_amount, CurrencyHelper.getCurrencySymbol(), target));
+        Goal goal = (Goal) botAdapter.getCallback().getObject();
+
+        titleTextView.setText(goal.getName());
+        arcProgressBar.setProgress((int) ((goal.getValue() / goal.getTarget()) * 100));
+        currentTextView.setText(String.format("%s %.2f", CurrencyHelper.getCurrencySymbol(), goal.getValue()));
+        totalTextView.setText(getContext().getString(R.string.of_target_amount, CurrencyHelper.getCurrencySymbol(), goal.getTarget()));
+
+        // Prefer a local image. Some conversations set the image from phone storage, and others
+        // rely on the remote image.
+        if (goal.hasLocalImageUri())
+            image.setImageURI(goal.getLocalImageUri());
+        else
+            image.setImageURI(goal.getImageUrl());
     }
 
     public Context getContext() {

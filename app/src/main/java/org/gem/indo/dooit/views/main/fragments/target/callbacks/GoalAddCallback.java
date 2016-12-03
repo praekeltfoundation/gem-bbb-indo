@@ -15,7 +15,6 @@ import org.gem.indo.dooit.models.bot.Answer;
 import org.gem.indo.dooit.models.bot.BaseBotModel;
 import org.gem.indo.dooit.models.bot.BotCallback;
 import org.gem.indo.dooit.views.main.MainActivity;
-import org.gem.indo.dooit.views.main.fragments.MainFragment;
 import org.joda.time.LocalDate;
 import org.joda.time.format.DateTimeFormat;
 
@@ -32,10 +31,9 @@ import rx.functions.Action1;
  * Created by Wimpie Victor on 2016/11/20.
  */
 
-public class GoalAddCallback implements BotCallback {
+public class GoalAddCallback extends BotCallback {
 
     private static final String TAG = GoalAddCallback.class.getName();
-    Context context;
 
     @Inject
     transient GoalManager goalManager;
@@ -43,14 +41,34 @@ public class GoalAddCallback implements BotCallback {
     @Inject
     transient FileUploadManager fileUploadManager;
 
-    public GoalAddCallback(Activity activity) {
+    private Goal goal;
+
+    public GoalAddCallback(Activity activity, Goal goal) {
+        super(activity);
         ((DooitApplication) activity.getApplication()).component.inject(this);
-        context = activity;
+        this.goal = goal;
+    }
+
+    @Override
+    public void onCall(String key, Map<String, Answer> answerLog, BaseBotModel model) {
+        switch(key) {
+            case "do_create":
+                doCreate(answerLog);
+                break;
+        }
     }
 
     @Override
     public void onDone(Map<String, Answer> answerLog) {
-        Goal goal = new Goal();
+
+    }
+
+    @Override
+    public Object getObject() {
+        return goal;
+    }
+
+    private void doCreate(Map<String, Answer> answerLog) {
 
         if (answerLog.containsKey("goal_add_ask_goal_gallery")) {
             // Predefined Goal branch
@@ -86,16 +104,15 @@ public class GoalAddCallback implements BotCallback {
         });
 
         // Find Image
-        Uri imageUri = null;
         if (answerLog.containsKey("Capture"))
-            imageUri = Uri.parse(answerLog.get("Capture").getValue());
+            goal.setLocalImageUri(Uri.parse(answerLog.get("Capture").getValue()));
         else if (answerLog.containsKey("Gallery"))
-            imageUri = Uri.parse(answerLog.get("Gallery").getValue());
+            goal.setLocalImageUri(Uri.parse(answerLog.get("Gallery").getValue()));
 
         // Upload image if set
-        if (imageUri != null) {
-            final String mimetype = context.getContentResolver().getType(imageUri);
-            final String path = MediaUriHelper.getPath(context, imageUri);
+        if (!goal.hasLocalImageUri()) {
+            final String mimetype = context.getContentResolver().getType(goal.getLocalImageUri());
+            final String path = MediaUriHelper.getPath(context, goal.getLocalImageUri());
             observe.subscribe(new Action1<Goal>() {
                 @Override
                 public void call(Goal goal) {
@@ -114,10 +131,5 @@ public class GoalAddCallback implements BotCallback {
 
             }
         }).subscribe();
-    }
-
-    @Override
-    public void onCall(String key, Map<String, Answer> answerLog, BaseBotModel model) {
-
     }
 }

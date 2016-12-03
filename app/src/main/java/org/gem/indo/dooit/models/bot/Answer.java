@@ -88,4 +88,9 @@ public class Answer extends BaseBotModel {
     public boolean contains(String key) {
         return valueMap.containsKey(key);
     }
+
+    @Override
+    public String toString() {
+        return "Answer{" + name + "}";
+    }
 }

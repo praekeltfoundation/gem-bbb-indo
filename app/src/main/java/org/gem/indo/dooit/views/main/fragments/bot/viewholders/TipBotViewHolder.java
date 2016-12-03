@@ -61,7 +61,7 @@ public class TipBotViewHolder extends BaseBotViewHolder<Node> {
 
     @Override
     public void populate(Node model) {
-        dataModel= model;
+        super.populate(model);
 
         // If no Tip is saved, the view will still display, but be empty
         if (persisted.hasConvoTip()) {
@@ -83,9 +83,6 @@ public class TipBotViewHolder extends BaseBotViewHolder<Node> {
                             .setUrl(tip.getArticleUrl())
                             .setNoCaret()
                             .startActivity();
-                    //TipArticleActivity.Builder.create(getContext())
-                    //    .putArticleUrl(tip.getArticleUrl())
-                    //    .startActivity();
                 }
             });
 

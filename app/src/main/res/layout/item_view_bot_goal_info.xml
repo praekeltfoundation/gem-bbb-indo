@@ -9,7 +9,7 @@
 
     <TextView
         android:id="@+id/item_view_bot_goal_info_title"
-        style="@style/AppTheme.TextView.Regular.Medium"
+        style="@style/AppTheme.TextView.Regular.Large"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
@@ -37,7 +37,8 @@
 
     <TextView
         android:id="@+id/item_view_bot_goal_info_current"
-        style="@style/AppTheme.TextView.Bold.ExtraLarge"
+        style="@style/AppTheme.TextView.Bold.XXXLarge"
+        fontPath="fonts/LondrinaSolid-Regular.ttf"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/item_view_bot_goal_info_saved_text"
@@ -48,7 +49,7 @@
 
     <TextView
         android:id="@+id/item_view_bot_goal_info_total"
-        style="@style/AppTheme.TextView.Regular.Medium"
+        style="@style/AppTheme.TextView.Regular.Large"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/item_view_bot_goal_info_current"
