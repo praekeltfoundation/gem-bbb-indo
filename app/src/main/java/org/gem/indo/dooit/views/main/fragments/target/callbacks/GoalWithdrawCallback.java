@@ -6,15 +6,19 @@ import org.gem.indo.dooit.DooitApplication;
 import org.gem.indo.dooit.api.DooitAPIError;
 import org.gem.indo.dooit.api.DooitErrorHandler;
 import org.gem.indo.dooit.api.managers.GoalManager;
+import org.gem.indo.dooit.api.responses.EmptyResponse;
 import org.gem.indo.dooit.models.Goal;
 import org.gem.indo.dooit.models.GoalTransaction;
 import org.gem.indo.dooit.models.bot.Answer;
 import org.gem.indo.dooit.models.bot.BaseBotModel;
 import org.gem.indo.dooit.models.bot.BotCallback;
+import org.gem.indo.dooit.views.main.MainActivity;
 
 import java.util.Map;
 
 import javax.inject.Inject;
+
+import rx.functions.Action1;
 
 /**
  * Created by Wimpie Victor on 2016/11/27.
@@ -62,7 +66,13 @@ public class GoalWithdrawCallback extends BotCallback {
                 public void onError(DooitAPIError error) {
 
                 }
-            }).subscribe();
+            }).subscribe(new Action1<EmptyResponse>() {
+                @Override
+                public void call(EmptyResponse emptyResponse) {
+                    if (context instanceof MainActivity)
+                        ((MainActivity) context).refreshGoals();
+                }
+            });
         }
     }
 }

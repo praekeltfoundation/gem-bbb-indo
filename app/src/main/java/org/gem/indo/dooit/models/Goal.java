@@ -70,6 +70,12 @@ public class Goal {
         this.value = value;
     }
 
+    private void calculateValue() {
+        value = 0;
+        for (GoalTransaction trans : transactions)
+            value += trans.getValue();
+    }
+
     public double getTarget() {
         return target;
     }
@@ -172,6 +178,7 @@ public class Goal {
 
     public void addTransaction(GoalTransaction transaction) {
         this.transactions.add(transaction);
+        calculateValue();
     }
 
     public GoalTransaction createTransaction(double value) {

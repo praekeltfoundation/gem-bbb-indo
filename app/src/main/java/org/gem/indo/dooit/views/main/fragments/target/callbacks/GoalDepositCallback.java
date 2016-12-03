@@ -60,7 +60,7 @@ public class GoalDepositCallback extends BotCallback {
     }
 
     private void doDeposit(Map<String, Answer> answerLog) {
-        GoalTransaction trans = new GoalTransaction(Double.parseDouble(answerLog.get("deposit_amount").getValue()));
+        GoalTransaction trans = goal.createTransaction(Double.parseDouble(answerLog.get("deposit_amount").getValue()));
 
         goalManager.addGoalTransaction(goal, trans, new DooitErrorHandler() {
             @Override
@@ -70,9 +70,8 @@ public class GoalDepositCallback extends BotCallback {
         }).subscribe(new Action1<EmptyResponse>() {
             @Override
             public void call(EmptyResponse emptyResponse) {
-                if (context instanceof MainActivity) {
+                if (context instanceof MainActivity)
                     ((MainActivity) context).refreshGoals();
-                }
             }
         });
     }
