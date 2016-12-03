@@ -34,7 +34,6 @@ import rx.functions.Action1;
 public class GoalAddCallback extends BotCallback {
 
     private static final String TAG = GoalAddCallback.class.getName();
-    Context context;
 
     @Inject
     transient GoalManager goalManager;
@@ -42,10 +41,12 @@ public class GoalAddCallback extends BotCallback {
     @Inject
     transient FileUploadManager fileUploadManager;
 
-    public GoalAddCallback(Activity activity) {
+    private Goal goal;
+
+    public GoalAddCallback(Activity activity, Goal goal) {
         super(activity);
         ((DooitApplication) activity.getApplication()).component.inject(this);
-        context = activity;
+        this.goal = goal;
     }
 
     @Override
@@ -62,8 +63,12 @@ public class GoalAddCallback extends BotCallback {
 
     }
 
+    @Override
+    public Object getObject() {
+        return goal;
+    }
+
     private void doCreate(Map<String, Answer> answerLog) {
-        Goal goal = new Goal();
 
         if (answerLog.containsKey("goal_add_ask_goal_gallery")) {
             // Predefined Goal branch

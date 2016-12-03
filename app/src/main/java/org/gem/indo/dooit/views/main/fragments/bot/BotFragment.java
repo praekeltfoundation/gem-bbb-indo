@@ -286,6 +286,10 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
     }
 
     private void initializeBot() {
+        callback = createBotCallback(type);
+        getBotAdapter().setCallback(callback);
+
+        // Load existing
         if (persisted.hasConversation(type)) {
             ArrayList<BaseBotModel> data = persisted.loadConversationState(type);
             if (data.size() > 0) {
@@ -307,9 +311,6 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
                 return;
             }
         }
-
-        callback = createBotCallback(type);
-        getBotAdapter().setCallback(callback);
 
         // Jump to first node
         switch (type) {
@@ -342,22 +343,25 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
         switch (botType) {
             case DEFAULT:
             case GOAL_ADD:
-                return new GoalAddCallback(getActivity());
-            case GOAL_DEPOSIT:
                 Goal g1 = persisted.loadConvoGoal(BotType.GOAL_DEPOSIT);
                 if (g1 == null)
-                    throw new RuntimeException("No Goal was persisted for Goal Deposit conversation.");
-                return new GoalDepositCallback(getActivity(), g1);
-            case GOAL_WITHDRAW:
-                Goal g2 = persisted.loadConvoGoal(BotType.GOAL_WITHDRAW);
+                    g1 = new Goal();
+                return new GoalAddCallback(getActivity(), g1);
+            case GOAL_DEPOSIT:
+                Goal g2 = persisted.loadConvoGoal(BotType.GOAL_DEPOSIT);
                 if (g2 == null)
-                    throw new RuntimeException("No Goal was persisted for Goal Withdraw conversation.");
-                return new GoalWithdrawCallback(getActivity(), g2);
-            case GOAL_EDIT:
-                Goal g3 = persisted.loadConvoGoal(BotType.GOAL_EDIT);
+                    throw new RuntimeException("No Goal was persisted for Goal Deposit conversation.");
+                return new GoalDepositCallback(getActivity(), g2);
+            case GOAL_WITHDRAW:
+                Goal g3 = persisted.loadConvoGoal(BotType.GOAL_WITHDRAW);
                 if (g3 == null)
+                    throw new RuntimeException("No Goal was persisted for Goal Withdraw conversation.");
+                return new GoalWithdrawCallback(getActivity(), g3);
+            case GOAL_EDIT:
+                Goal g4 = persisted.loadConvoGoal(BotType.GOAL_EDIT);
+                if (g4 == null)
                     throw new RuntimeException("No Goal was persisted for Goal Edit converstation");
-                return new GoalEditCallback(getActivity(), g3);
+                return new GoalEditCallback(getActivity(), g4);
             default:
                 return null;
         }

@@ -13,7 +13,6 @@ import org.gem.indo.dooit.helpers.Persisted;
 import org.gem.indo.dooit.models.Goal;
 import org.gem.indo.dooit.models.bot.Answer;
 import org.gem.indo.dooit.models.bot.BaseBotModel;
-import org.gem.indo.dooit.models.bot.BotCallback;
 import org.gem.indo.dooit.models.bot.Node;
 import org.gem.indo.dooit.models.exceptions.BotCallbackRequired;
 import org.gem.indo.dooit.views.custom.ArcProgressBar;
@@ -73,40 +72,8 @@ public class GoalInfoViewHolder extends BaseBotViewHolder<Node> {
     @Override
     public void populate(Node model) {
         super.populate(model);
-
-        // Iterates over the conversation up until now and picks out the values needed
-        for (BaseBotModel baseBotModel : botAdapter.getDataSet()) {
-            String fieldName = model.getFieldName(baseBotModel.getName());
-            switch (fieldName) {
-                case "goalGallery":
-                    goalName = ((Answer) baseBotModel).get("name");
-                    goalImageUrl = ((Answer) baseBotModel).get("image_url");
-                    break;
-                case "goalDate":
-                    try {
-                        String fmDate = ((Answer) baseBotModel).getValue().substring(0, 10);
-                        DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
-                        goalDate = formatter.parse(fmDate);
-                    } catch (ParseException e) {
-                        e.printStackTrace();
-                    }
-                    break;
-                case "goalValue":
-                    goalValue = Double.parseDouble(((Answer) baseBotModel).getValue());
-                    break;
-                case "goalTarget":
-                    goalTarget = ((Answer) baseBotModel).getValue() == null ? 0 : Double.parseDouble(((Answer) baseBotModel).getValue());
-                    break;
-                case "goalName":
-                    goalName = ((Answer) baseBotModel).getValue();
-                    break;
-                case "goalImageUrl":
-                    goalImageUrl = ((Answer) baseBotModel).getValue();
-                    break;
-            }
-        }
-
-        Goal goal = (Goal) botAdapter.getCallback().provide();
+        
+        Goal goal = (Goal) botAdapter.getCallback().getObject();
 
         titleTextView.setText(goal.getName());
         arcProgressBar.setProgress((int) ((goal.getValue() / goal.getTarget()) * 100));

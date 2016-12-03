@@ -65,6 +65,11 @@ public class GoalEditCallback extends BotCallback {
 
     }
 
+    @Override
+    public Object getObject() {
+        return goal;
+    }
+
     private void doUpdate(Map<String, Answer> answerLog) {
         if (answerLog.containsKey("goal_edit_choice_date"))
             goal.setEndDate(DateTimeFormat.forPattern("yyyy-MM-dd")

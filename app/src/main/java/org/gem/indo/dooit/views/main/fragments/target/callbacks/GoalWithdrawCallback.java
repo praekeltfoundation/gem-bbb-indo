@@ -48,7 +48,7 @@ public class GoalWithdrawCallback extends BotCallback {
     }
 
     @Override
-    public Object provide() {
+    public Object getObject() {
         return goal;
     }
 

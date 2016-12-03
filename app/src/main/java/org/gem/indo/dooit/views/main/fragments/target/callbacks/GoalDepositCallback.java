@@ -41,6 +41,11 @@ public class GoalDepositCallback extends BotCallback {
     }
 
     @Override
+    public void onCall(String key, Map<String, Answer> answerLog, BaseBotModel model) {
+
+    }
+
+    @Override
     public void onDone(Map<String, Answer> answerLog) {
         GoalTransaction trans = new GoalTransaction(Double.parseDouble(answerLog.get("deposit_amount").getValue()));
 
@@ -60,7 +65,7 @@ public class GoalDepositCallback extends BotCallback {
     }
 
     @Override
-    public void onCall(String key, Map<String, Answer> answerLog, BaseBotModel model) {
-
+    public Object getObject() {
+        return goal;
     }
 }
