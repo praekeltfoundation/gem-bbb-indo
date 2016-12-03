@@ -1,5 +1,7 @@
 package org.gem.indo.dooit.views.main.fragments.target.callbacks;
 
+import android.app.Activity;
+
 import org.gem.indo.dooit.DooitApplication;
 import org.gem.indo.dooit.api.DooitAPIError;
 import org.gem.indo.dooit.api.DooitErrorHandler;
@@ -18,16 +20,22 @@ import javax.inject.Inject;
  * Created by Wimpie Victor on 2016/11/27.
  */
 
-public class GoalWithdrawCallback implements BotCallback {
+public class GoalWithdrawCallback extends BotCallback {
 
     @Inject
     transient GoalManager goalManager;
 
     private Goal goal;
 
-    public GoalWithdrawCallback(DooitApplication application, Goal goal) {
-        application.component.inject(this);
+    public GoalWithdrawCallback(Activity activity, Goal goal) {
+        super(activity);
+        ((DooitApplication) activity.getApplication()).component.inject(this);
         this.goal = goal;
+    }
+
+    @Override
+    public void onCall(String key, Map<String, Answer> answerLog, BaseBotModel model) {
+
     }
 
     @Override
@@ -43,10 +51,5 @@ public class GoalWithdrawCallback implements BotCallback {
                 }
             }).subscribe();
         }
-    }
-
-    @Override
-    public void onCall(String key, Map<String, Answer> answerLog, BaseBotModel model) {
-
     }
 }

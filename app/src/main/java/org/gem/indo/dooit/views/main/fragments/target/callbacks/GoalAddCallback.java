@@ -31,7 +31,7 @@ import rx.functions.Action1;
  * Created by Wimpie Victor on 2016/11/20.
  */
 
-public class GoalAddCallback implements BotCallback {
+public class GoalAddCallback extends BotCallback {
 
     private static final String TAG = GoalAddCallback.class.getName();
     Context context;
@@ -43,6 +43,7 @@ public class GoalAddCallback implements BotCallback {
     transient FileUploadManager fileUploadManager;
 
     public GoalAddCallback(Activity activity) {
+        super(activity);
         ((DooitApplication) activity.getApplication()).component.inject(this);
         context = activity;
     }

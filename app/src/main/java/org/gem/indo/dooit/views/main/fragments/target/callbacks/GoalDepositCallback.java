@@ -25,7 +25,7 @@ import rx.functions.Action1;
  * Created by Wimpie Victor on 2016/11/21.
  */
 
-public class GoalDepositCallback implements BotCallback {
+public class GoalDepositCallback extends BotCallback {
 
     @Inject
     transient GoalManager goalManager;
@@ -34,6 +34,7 @@ public class GoalDepositCallback implements BotCallback {
     private Goal goal;
 
     public GoalDepositCallback(Activity activity, Goal goal) {
+        super(activity);
         ((DooitApplication) activity.getApplication()).component.inject(this);
         context = activity;
         this.goal = goal;

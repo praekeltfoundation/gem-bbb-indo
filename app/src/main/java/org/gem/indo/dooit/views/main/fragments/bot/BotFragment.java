@@ -351,12 +351,12 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
                 Goal g2 = persisted.loadConvoGoal(BotType.GOAL_WITHDRAW);
                 if (g2 == null)
                     throw new RuntimeException("No Goal was persisted for Goal Withdraw conversation.");
-                return new GoalWithdrawCallback((DooitApplication) getActivity().getApplication(), g2);
+                return new GoalWithdrawCallback(getActivity(), g2);
             case GOAL_EDIT:
                 Goal g3 = persisted.loadConvoGoal(BotType.GOAL_EDIT);
                 if (g3 == null)
                     throw new RuntimeException("No Goal was persisted for Goal Edit converstation");
-                return new GoalEditCallback((DooitApplication) getActivity().getApplication(), this, g3);
+                return new GoalEditCallback(getActivity(), g3);
             default:
                 return null;
         }

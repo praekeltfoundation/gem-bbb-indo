@@ -1,5 +1,6 @@
 package org.gem.indo.dooit.views.main.fragments.target.callbacks;
 
+import android.app.Activity;
 import android.net.Uri;
 
 import com.facebook.drawee.backends.pipeline.Fresco;
@@ -16,7 +17,7 @@ import org.gem.indo.dooit.models.Goal;
 import org.gem.indo.dooit.models.bot.Answer;
 import org.gem.indo.dooit.models.bot.BaseBotModel;
 import org.gem.indo.dooit.models.bot.BotCallback;
-import org.gem.indo.dooit.views.main.fragments.MainFragment;
+import org.gem.indo.dooit.views.main.MainActivity;
 import org.joda.time.format.DateTimeFormat;
 
 import java.io.File;
@@ -24,13 +25,14 @@ import java.util.Map;
 
 import javax.inject.Inject;
 
+import rx.functions.Action0;
 import rx.functions.Action1;
 
 /**
  * Created by Wimpie Victor on 2016/12/01.
  */
 
-public class GoalEditCallback implements BotCallback {
+public class GoalEditCallback extends BotCallback {
 
     @Inject
     transient GoalManager goalManager;
@@ -38,18 +40,12 @@ public class GoalEditCallback implements BotCallback {
     @Inject
     transient FileUploadManager fileUploadManager;
 
-    private transient MainFragment fragment;
     private Goal goal;
 
-    public GoalEditCallback(DooitApplication application, MainFragment fragment, Goal goal) {
-        application.component.inject(this);
-        this.fragment = fragment;
+    public GoalEditCallback(Activity activity, Goal goal) {
+        super(activity);
+        ((DooitApplication) activity.getApplication()).component.inject(this);
         this.goal = goal;
-    }
-
-    @Override
-    public void onDone(Map<String, Answer> answerLog) {
-
     }
 
     @Override
@@ -62,6 +58,11 @@ public class GoalEditCallback implements BotCallback {
                 doDelete(answerLog);
                 break;
         }
+    }
+
+    @Override
+    public void onDone(Map<String, Answer> answerLog) {
+
     }
 
     private void doUpdate(Map<String, Answer> answerLog) {
@@ -92,8 +93,8 @@ public class GoalEditCallback implements BotCallback {
         else if (answerLog.containsKey("goal_edit_camera"))
             imageUri = Uri.parse(answerLog.get("goal_edit_camera").getValue());
 
-        final String mimetype = fragment.getContext().getContentResolver().getType(imageUri);
-        final String path = MediaUriHelper.getPath(fragment.getContext(), imageUri);
+        final String mimetype = context.getContentResolver().getType(imageUri);
+        final String path = MediaUriHelper.getPath(context, imageUri);
         uploadImage(goal, mimetype, new File(path));
     }
 
@@ -102,6 +103,12 @@ public class GoalEditCallback implements BotCallback {
             @Override
             public void onError(DooitAPIError error) {
 
+            }
+        }).doOnCompleted(new Action0() {
+            @Override
+            public void call() {
+                if (context instanceof MainActivity)
+                    ((MainActivity) context).refreshGoals();
             }
         }).subscribe(new Action1<EmptyResponse>() {
             @Override
@@ -119,7 +126,13 @@ public class GoalEditCallback implements BotCallback {
         goalManager.deleteGoal(goal, new DooitErrorHandler() {
             @Override
             public void onError(DooitAPIError error) {
-                
+
+            }
+        }).doOnCompleted(new Action0() {
+            @Override
+            public void call() {
+                if (context instanceof MainActivity)
+                    ((MainActivity) context).refreshGoals();
             }
         }).subscribe();
     }
