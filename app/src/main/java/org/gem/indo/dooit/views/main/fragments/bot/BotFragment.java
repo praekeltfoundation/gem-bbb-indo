@@ -34,6 +34,8 @@ import org.gem.indo.dooit.models.bot.BotCallback;
 import org.gem.indo.dooit.models.bot.Node;
 import org.gem.indo.dooit.models.enums.BotMessageType;
 import org.gem.indo.dooit.models.enums.BotType;
+import org.gem.indo.dooit.views.main.MainActivity;
+import org.gem.indo.dooit.views.main.MainViewPagerPositions;
 import org.gem.indo.dooit.views.main.fragments.MainFragment;
 import org.gem.indo.dooit.views.main.fragments.bot.adapters.BotAdapter;
 import org.gem.indo.dooit.views.main.fragments.target.callbacks.GoalAddCallback;
@@ -440,10 +442,17 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
             persisted.saveConversationState(type, getBotAdapter().getDataSet());
 
             // Reached a callback Node
-            if (currentModel.hasCallback() && callback != null)
-                callback.onCall(currentModel.getCallback(), createAnswerLog(getBotAdapter().getDataSet()), currentModel);
+            if (node.hasCallback() && callback != null)
+                callback.onCall(node.getCallback(), createAnswerLog(getBotAdapter().getDataSet()), node);
 
             if (BotMessageType.getValueOf(currentModel.getType()) == BotMessageType.END) {
+                if (node.hasNextScreen()) {
+                    // Conversation wants to open another fragment
+                    MainViewPagerPositions pos = MainViewPagerPositions.valueOf(node.getNextScreen());
+                    if (getActivity() instanceof MainActivity)
+                        ((MainActivity) getActivity()).startPage(pos);
+                }
+
                 // Reached explicit end of current conversation
                 finishConversation();
 

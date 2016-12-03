@@ -78,7 +78,7 @@
       {
         "name": "goal_withdraw_challenge",
         "text": "$(goal_withdraw_challenge)",
-        "next": "todo"
+        "next": "goal_withdraw_challenge_intro"
       },
       {
         "name": "goal_withdraw_do_end",
@@ -104,6 +104,15 @@
     "name": "goal_withdraw_show_tip",
     "type": "tip",
     "autoNext": "goal_withdraw_end"
+  },
+
+
+
+
+  {
+    "name": "goal_withdraw_challenge_intro",
+    "type": "end",
+    "autoNextScreen": "CHALLENGE"
   },
 
 
