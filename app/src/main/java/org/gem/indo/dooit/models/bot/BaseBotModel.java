@@ -28,11 +28,6 @@ public abstract class BaseBotModel {
     protected String callback;
     protected String[] textParams = new String[0];
 
-    /**
-     * Mapping of Node names to fields in the info view holder.
-     */
-    protected Map<String, String> infoMap = new HashMap<>();
-
     public BaseBotModel(String classType) {
         this.classType = classType;
     }
@@ -95,12 +90,5 @@ public abstract class BaseBotModel {
 
     public boolean hasCallback() {
         return callback != null && !TextUtils.isEmpty(callback);
-    }
-
-    public String getFieldName(String nodeName) {
-        if (infoMap.containsKey(nodeName))
-            return infoMap.get(nodeName);
-        else
-            return nodeName;
     }
 }
