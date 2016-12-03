@@ -409,16 +409,6 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
 //        persisted.saveConversationState(type, getBotAdapter().getDataSet());
     }
 
-    private void finishConversation() {
-        if (callback != null)
-            callback.onDone(createAnswerLog(getBotAdapter().getDataSet()));
-        persisted.clearConversation();
-        persisted.clearConvoGoals();
-        callback = null;
-        getBotAdapter().setCallback(null);
-        setBotType(BotType.DEFAULT);
-    }
-
     private Map<String, Answer> createAnswerLog(List<BaseBotModel> converstation) {
         Map<String, Answer> answerLog = new LinkedHashMap<>();
         for (BaseBotModel model : converstation)
@@ -500,6 +490,17 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
                 getAndAddNode(node.getAutoNext(), true);
             }
         }
+    }
+
+    private void finishConversation() {
+        if (callback != null)
+            callback.onDone(createAnswerLog(getBotAdapter().getDataSet()));
+        persisted.clearConversation();
+        persisted.clearConvoGoals();
+        callback = null;
+        // FIXME: Clearing the callback happens after the data has been added and before the view holder is instantiated. Viewholder will get null callback.
+        // getBotAdapter().setCallback(null);
+        setBotType(BotType.DEFAULT);
     }
 
     /**

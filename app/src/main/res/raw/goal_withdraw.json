@@ -59,7 +59,6 @@
   {
     "name": "goal_withdraw_info",
     "type": "goalInfo",
-    "requires": "goal",
     "autoNext": "goal_withdraw_tips_challenge"
   },
 

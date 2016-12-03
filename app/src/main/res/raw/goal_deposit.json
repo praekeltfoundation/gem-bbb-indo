@@ -11,6 +11,7 @@
     "text": "$(goal_deposit_reminder)",
     "autoNext": "goal_deposit_remaining",
     "textParams": [
+      "USERNAME",
       "LOCAL_CURRENCY",
       "GOAL_DEPOSIT_WEEKLY_TARGET",
       "GOAL_DEPOSIT_TARGET",
@@ -33,6 +34,10 @@
       }
     ]
   },
+
+
+
+
   {
     "name": "goal_deposit_ask_amount",
     "type": "blank",
@@ -47,11 +52,21 @@
       }
     ]
   },
+
+
+
+
   {
     "name": "goal_deposit_end_congrats",
     "type": "text",
+    "callback": "do_deposit",
     "text": "$(goal_deposit_end_congrats)",
-    "autoNext": "goal_deposit_end"
+    "autoNext": "goal_deposit_info"
+  },
+  {
+    "name": "goal_deposit_info",
+    "type": "goalInfo",
+    "autoNext": "goal_deposit_end" 
   },
   {
     "name": "goal_deposit_end",
