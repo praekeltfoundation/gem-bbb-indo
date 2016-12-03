@@ -186,7 +186,7 @@
       {
         "name": "acceptGoal",
         "text": "$(acceptGoal)",
-        "next": "infoGoalAddedCongratulations"
+        "next": "goal_add_do_create"
       },
       {
         "name": "changeDate",
@@ -274,6 +274,19 @@
       }
     ]
   },
+
+
+
+  {
+    "name": "goal_add_do_create",
+    "type": "blank",
+    "callback": "do_create",
+    "autoNext": "infoGoalAddedCongratulations"
+  },
+
+
+
+
   {
     "name": "infoGoalAddedCongratulations",
     "type": "text",
@@ -300,6 +313,11 @@
       }
     ]
   },
+
+
+
+
+
   {
     "name": "infoGoalEnd",
     "type": "text",

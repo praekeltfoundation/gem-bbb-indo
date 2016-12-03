@@ -15,7 +15,6 @@ import org.gem.indo.dooit.models.bot.Answer;
 import org.gem.indo.dooit.models.bot.BaseBotModel;
 import org.gem.indo.dooit.models.bot.BotCallback;
 import org.gem.indo.dooit.views.main.MainActivity;
-import org.gem.indo.dooit.views.main.fragments.MainFragment;
 import org.joda.time.LocalDate;
 import org.joda.time.format.DateTimeFormat;
 
@@ -49,7 +48,20 @@ public class GoalAddCallback implements BotCallback {
     }
 
     @Override
+    public void onCall(String key, Map<String, Answer> answerLog, BaseBotModel model) {
+        switch(key) {
+            case "do_create":
+                doCreate(answerLog);
+                break;
+        }
+    }
+
+    @Override
     public void onDone(Map<String, Answer> answerLog) {
+
+    }
+
+    private void doCreate(Map<String, Answer> answerLog) {
         Goal goal = new Goal();
 
         if (answerLog.containsKey("goal_add_ask_goal_gallery")) {
@@ -114,10 +126,5 @@ public class GoalAddCallback implements BotCallback {
 
             }
         }).subscribe();
-    }
-
-    @Override
-    public void onCall(String key, Map<String, Answer> answerLog, BaseBotModel model) {
-
     }
 }
