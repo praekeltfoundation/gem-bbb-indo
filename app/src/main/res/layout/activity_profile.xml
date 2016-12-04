@@ -126,8 +126,8 @@
                 android:textColor="@color/grey"
                 android:textStyle="bold" />
 
-            <ListView
-                android:id="@+id/profile_current_achievement_value"
+            <org.gem.indo.dooit.views.custom.DesignSafeRecyclerView
+                android:id="@+id/activity_profile_achievement_recycler_view"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_below="@+id/profile_current_achievement_title"

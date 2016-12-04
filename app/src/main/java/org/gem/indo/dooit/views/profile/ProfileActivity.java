@@ -11,6 +11,9 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.design.widget.AppBarLayout;
 import android.support.v7.app.AlertDialog;
+import android.support.v7.widget.DividerItemDecoration;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -39,6 +42,7 @@ import org.gem.indo.dooit.helpers.permissions.PermissionsHelper;
 import org.gem.indo.dooit.models.User;
 import org.gem.indo.dooit.views.DooitActivity;
 import org.gem.indo.dooit.views.helpers.activity.DooitActivityBuilder;
+import org.gem.indo.dooit.views.profile.adapters.BadgeAdapter;
 import org.gem.indo.dooit.views.settings.SettingsActivity;
 
 import java.io.File;
@@ -79,6 +83,9 @@ public class ProfileActivity extends DooitActivity {
     @BindView(R.id.profile_current_streak_value)
     TextView streakView;
 
+    @BindView(R.id.activity_profile_achievement_recycler_view)
+    RecyclerView achievementRecyclerView;
+
     @BindString(R.string.profile_week_streak_singular)
     String streakSingular;
 
@@ -96,12 +103,9 @@ public class ProfileActivity extends DooitActivity {
 
     private User user;
     private Uri imageUri;
-    protected void hideProgress(){
-        View view = this.findViewById(R.id.achievements_progress_container);
-        if (view != null) {
-            view.setVisibility(View.GONE);
-        }
-    }
+    private BadgeAdapter adapter;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -152,6 +156,13 @@ public class ProfileActivity extends DooitActivity {
         // Achievevments
         setStreak(0);
 
+        adapter = new BadgeAdapter();
+        LinearLayoutManager manager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
+        DividerItemDecoration separator = new DividerItemDecoration(this, manager.getOrientation());
+        achievementRecyclerView.setLayoutManager(manager);
+        achievementRecyclerView.addItemDecoration(separator);
+        achievementRecyclerView.setAdapter(adapter);
+
         achievementManager.retrieveAchievement(user.getId(), new DooitErrorHandler() {
             @Override
             public void onError(DooitAPIError error) {
@@ -159,7 +170,17 @@ public class ProfileActivity extends DooitActivity {
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                    ProfileActivity.this.hideProgress();
+                        ProfileActivity.this.hideProgress();
+                    }
+                });
+            }
+        }).doOnCompleted(new Action0() {
+            @Override
+            public void call() {
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        hideProgress();
                     }
                 });
             }
@@ -169,8 +190,8 @@ public class ProfileActivity extends DooitActivity {
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                    setStreak(response.getWeeklyStreak());
-                    ProfileActivity.this.hideProgress();
+                        setStreak(response.getWeeklyStreak());
+                        adapter.addAll(response.getBadges());
                     }
                 });
             }
@@ -355,6 +376,13 @@ public class ProfileActivity extends DooitActivity {
             streakView.setText(String.format(streakSingular, streak));
         else
             streakView.setText(String.format(streakPlural, streak));
+    }
+
+    protected void hideProgress() {
+        View view = this.findViewById(R.id.achievements_progress_container);
+        if (view != null) {
+            view.setVisibility(View.GONE);
+        }
     }
 
     public static class Builder extends DooitActivityBuilder<Builder> {
