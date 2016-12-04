@@ -26,6 +26,7 @@ public abstract class BaseBotModel {
     protected String type;
     private String next;
     protected String callback;
+    protected String asyncCall;
     protected String[] textParams = new String[0];
 
     public BaseBotModel(String classType) {
@@ -90,5 +91,13 @@ public abstract class BaseBotModel {
 
     public boolean hasCallback() {
         return callback != null && !TextUtils.isEmpty(callback);
+    }
+
+    public String getAsyncCall() {
+        return asyncCall;
+    }
+
+    public boolean hasAsyncCall() {
+        return !TextUtils.isEmpty(asyncCall);
     }
 }

@@ -42,6 +42,8 @@ public class Goal {
     private long user;
     // The id of the predefined Goal. null means custom.
     private Long prototype;
+    // New badges are awarded on responses
+    private List<Badge> newBadges = new ArrayList<>();
 
     // Local Properties
     private Uri localImageUri;
@@ -185,6 +187,14 @@ public class Goal {
         GoalTransaction trans = new GoalTransaction(DateTime.now(), value);
         addTransaction(trans);
         return trans;
+    }
+
+    public List<Badge> getNewBadges() {
+        return newBadges;
+    }
+
+    public boolean hasNewBadges() {
+        return !newBadges.isEmpty();
     }
 
     public Uri getLocalImageUri() {
