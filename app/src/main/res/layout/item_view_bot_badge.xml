@@ -5,6 +5,7 @@
     android:layout_width="@dimen/bot_badge_card_width"
     android:layout_height="wrap_content"
     android:layout_marginStart="@dimen/bot_left_margin"
+    tools:background="@drawable/bkg_carousel_card"
     tools:context=".views.main.MainActivity">
 
     <com.facebook.drawee.view.SimpleDraweeView
