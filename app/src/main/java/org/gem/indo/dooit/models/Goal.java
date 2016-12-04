@@ -1,6 +1,6 @@
 package org.gem.indo.dooit.models;
 
-import android.net.Uri;
+import android.text.TextUtils;
 
 import com.google.gson.annotations.SerializedName;
 
@@ -46,7 +46,7 @@ public class Goal {
     private List<Badge> newBadges = new ArrayList<>();
 
     // Local Properties
-    private Uri localImageUri;
+    private String localImageUri;
 
     public long getId() {
         return id;
@@ -197,15 +197,15 @@ public class Goal {
         return !newBadges.isEmpty();
     }
 
-    public Uri getLocalImageUri() {
+    public String getLocalImageUri() {
         return localImageUri;
     }
 
-    public void setLocalImageUri(Uri localImageUri) {
+    public void setLocalImageUri(String localImageUri) {
         this.localImageUri = localImageUri;
     }
 
     public boolean hasLocalImageUri() {
-        return localImageUri != null;
+        return !TextUtils.isEmpty(localImageUri);
     }
 }

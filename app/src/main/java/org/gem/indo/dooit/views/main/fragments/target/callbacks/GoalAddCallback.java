@@ -1,7 +1,6 @@
 package org.gem.indo.dooit.views.main.fragments.target.callbacks;
 
 import android.app.Activity;
-import android.content.Context;
 import android.net.Uri;
 
 import org.gem.indo.dooit.DooitApplication;
@@ -10,10 +9,12 @@ import org.gem.indo.dooit.api.DooitErrorHandler;
 import org.gem.indo.dooit.api.managers.FileUploadManager;
 import org.gem.indo.dooit.api.managers.GoalManager;
 import org.gem.indo.dooit.helpers.MediaUriHelper;
+import org.gem.indo.dooit.helpers.Persisted;
 import org.gem.indo.dooit.models.Goal;
 import org.gem.indo.dooit.models.bot.Answer;
 import org.gem.indo.dooit.models.bot.BaseBotModel;
 import org.gem.indo.dooit.models.bot.BotCallback;
+import org.gem.indo.dooit.models.enums.BotType;
 import org.gem.indo.dooit.views.main.MainActivity;
 import org.joda.time.LocalDate;
 import org.joda.time.format.DateTimeFormat;
@@ -36,10 +37,13 @@ public class GoalAddCallback extends BotCallback {
     private static final String TAG = GoalAddCallback.class.getName();
 
     @Inject
-    transient GoalManager goalManager;
+    GoalManager goalManager;
 
     @Inject
-    transient FileUploadManager fileUploadManager;
+    FileUploadManager fileUploadManager;
+
+    @Inject
+    Persisted persisted;
 
     private Goal goal;
 
@@ -51,9 +55,14 @@ public class GoalAddCallback extends BotCallback {
 
     @Override
     public void onCall(String key, Map<String, Answer> answerLog, BaseBotModel model) {
-        switch(key) {
+
+    }
+
+    @Override
+    public void onAsyncCall(String key, Map<String, Answer> answerLog, OnAsyncListener listener) {
+        switch (key) {
             case "do_create":
-                doCreate(answerLog);
+                doCreate(answerLog, listener);
                 break;
         }
     }
@@ -68,7 +77,7 @@ public class GoalAddCallback extends BotCallback {
         return goal;
     }
 
-    private void doCreate(Map<String, Answer> answerLog) {
+    private void doCreate(Map<String, Answer> answerLog, final OnAsyncListener listener) {
 
         if (answerLog.containsKey("goal_add_ask_goal_gallery")) {
             // Predefined Goal branch
@@ -97,22 +106,23 @@ public class GoalAddCallback extends BotCallback {
         }).doOnCompleted(new Action0() {
             @Override
             public void call() {
-                if (context instanceof MainActivity) {
+                if (context instanceof MainActivity)
                     ((MainActivity) context).refreshGoals();
-                }
+                notifyDone(listener);
             }
         });
 
         // Find Image
         if (answerLog.containsKey("Capture"))
-            goal.setLocalImageUri(Uri.parse(answerLog.get("Capture").getValue()));
+            goal.setLocalImageUri(answerLog.get("Capture").getValue());
         else if (answerLog.containsKey("Gallery"))
-            goal.setLocalImageUri(Uri.parse(answerLog.get("Gallery").getValue()));
+            goal.setLocalImageUri(answerLog.get("Gallery").getValue());
 
         // Upload image if set
-        if (!goal.hasLocalImageUri()) {
-            final String mimetype = context.getContentResolver().getType(goal.getLocalImageUri());
-            final String path = MediaUriHelper.getPath(context, goal.getLocalImageUri());
+        if (goal.hasLocalImageUri()) {
+            Uri uri = Uri.parse(goal.getLocalImageUri());
+            final String mimetype = context.getContentResolver().getType(uri);
+            final String path = MediaUriHelper.getPath(context, uri);
             observe.subscribe(new Action1<Goal>() {
                 @Override
                 public void call(Goal goal) {
@@ -122,6 +132,10 @@ public class GoalAddCallback extends BotCallback {
         } else {
             observe.subscribe();
         }
+
+        // Persist goal so that when user leaves conversation and returns, the view holders can
+        // display their previous data properly.
+        persisted.saveConvoGoal(BotType.GOAL_ADD, goal);
     }
 
     private void uploadImage(Goal goal, String mimetype, File file) {

@@ -1,12 +1,10 @@
 package org.gem.indo.dooit.models.bot;
 
 import android.content.Context;
-
-import org.gem.indo.dooit.models.enums.BotCallbackObjectType;
+import android.os.Handler;
+import android.os.Looper;
 
 import java.util.Map;
-
-import rx.Observable;
 
 /**
  * Created by Wimpie Victor on 2016/11/20.
@@ -15,9 +13,12 @@ import rx.Observable;
 public abstract class BotCallback {
 
     protected Context context;
+    protected OnAsyncListener listener;
+    protected Handler handler;
 
     protected BotCallback(Context context) {
         this.context = context;
+        handler = new Handler(Looper.getMainLooper());
     }
 
     /**
@@ -41,10 +42,10 @@ public abstract class BotCallback {
      *
      * @param key       The value of the `callback` field
      * @param answerLog The Answer Log up to the point of the calling Node
-     * @param model     The calling Node or Answer
+     * @param listener  Listener to be called when async operation is done
      */
-    public Observable<Object> onAsyncCall(String key, Map<String, Answer> answerLog, BaseBotModel model) {
-        return null;
+    public void onAsyncCall(String key, Map<String, Answer> answerLog, OnAsyncListener listener) {
+
     }
 
     /**
@@ -56,10 +57,16 @@ public abstract class BotCallback {
         return null;
     }
 
-    /**
-     * Provide a conversation level model object that a Node may require, based on provided key.
-     */
-    public Object getObject(BotCallbackObjectType objType) {
-        return null;
+    protected void notifyDone(final OnAsyncListener listener) {
+        handler.post(new Runnable() {
+            @Override
+            public void run() {
+                listener.onDone();
+            }
+        });
+    }
+
+    public interface OnAsyncListener {
+        void onDone();
     }
 }
