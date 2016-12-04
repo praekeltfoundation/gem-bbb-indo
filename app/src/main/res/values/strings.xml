@@ -191,6 +191,7 @@
     <string name="goal_edit_delete_difficult">I can help you work out another savings plan that will be easier to afford.</string>
     <string name="goal_edit_delete_cancel">Don\'t worry, we can get you back on track with your savings in no time. Have a look at our tips or take this week\'s challenge!</string>
     <string name="goal_edit_delete_done">Goal deleted</string>
+    <string name="goal_edit_end_come_back">Come back to track your savings weekly and watch as your goal becomes a reality!</string>
 
     <!-- Answers -->
     <string name="goal_edit_choice_date">Date</string>
@@ -211,6 +212,7 @@
     <string name="goal_edit_delete_reason_do_not_want">I don\'t want [goal_name] anymore.</string>
     <string name="goal_edit_delete_reason_misc">No reason, I just want to delete it.</string>
     <string name="goal_edit_delete_reason_cancel">Never mind! I want to keep saving.</string>
+    <string name="goal_edit_info_exit">Okay, I\'m done for now. Can we exit?</string>
 
     <!-- BOT: tip_intro -->
     <string name="tip_intro_inline_link">TODO: Show Tip</string>
