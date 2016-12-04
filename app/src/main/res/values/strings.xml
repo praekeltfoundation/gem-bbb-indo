@@ -160,17 +160,20 @@
 
     <!-- BOT: goal_withdraw -->
     <!-- User clicks on withdraw savings (- Withdraw) on goal saving page  -->
-    <!-- Questions -->
-    <string name="goal_withdraw_intro">You\'re working hard to get to your goal. You should only withdraw if it\'s to spend on an emergency</string>
+    <string name="goal_withdraw_intro">You\'ve been working so hard to reach your goal! You should only withdraw money if you need it for an emergency.</string>
+    <string name="goal_withdraw_cancel">I understand. Never mind, I want to keep saving.</string>
+    <string name="goal_withdraw_continue">I understand, but I still want to withdraw the money.</string>
+
     <string name="goal_withdraw_keep_saving">You\'ve made a good choice not to withdraw your savings. I\'m proud of you %s!</string>
-    <string name="goal_withdraw_enter_amount">How much do you want to withdraw?</string>
-    <string name="goal_withdraw_tips_challenge">Get back on track with your savings, check out these easy tips.</string>
-    <string name="goal_withdraw_end_message">Great job. Remember to come back every time you need to track your savings. Keep up the good work!</string>
-    <!-- Answers -->
-    <string name="goal_withdraw_cancel">I understand, keep saving</string>
     <string name="goal_withdraw_keep_saving_end">Yay me!</string>
-    <string name="goal_withdraw_continue">Withdraw anyway</string>
-    <string name="goal_withdraw_tip">Yes! I want to learn more</string>
+
+    <string name="goal_withdraw_cancel_end_message">Stay on track with your savings by checking out these easy tips.</string>
+
+    <string name="goal_withdraw_enter_amount">How much do you want to withdraw?</string>
+    <string name="goal_withdraw_tips_challenge">Get back on track with your savings by checking out these easy tips.</string>
+    <string name="goal_withdraw_end_message">Remember to come back every week to track your savings. Keep up the good work, %s!</string>
+
+    <string name="goal_withdraw_tip">Yes! Show me savings tips!</string>
     <string name="goal_withdraw_challenge">Can I take this week\'s challenge instead?</string>
     <string name="goal_withdraw_do_end">No thanks, maybe next time!</string>
 
