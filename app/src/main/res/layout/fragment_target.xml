@@ -127,7 +127,7 @@
                 android:layout_below="@+id/fragment_target_deposit_button"
                 android:layout_gravity="center"
                 android:text="@string/target_withdraw"
-                android:textColor="@color/grey"
+                android:textColor="@color/fragment_target_withdraw_text"
                 android:textStyle="bold" />
 
             <TextView

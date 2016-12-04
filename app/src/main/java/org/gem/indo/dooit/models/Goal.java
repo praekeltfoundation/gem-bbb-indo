@@ -190,6 +190,18 @@ public class Goal {
         return trans;
     }
 
+    public boolean canDeposit() {
+        return value < target;
+    }
+
+    public boolean canWithdraw() {
+        return value > 0;
+    }
+
+    public boolean isReached() {
+        return value >= target;
+    }
+
     public List<Badge> getNewBadges() {
         return newBadges;
     }

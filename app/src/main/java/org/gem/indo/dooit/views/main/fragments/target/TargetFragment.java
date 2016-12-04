@@ -41,7 +41,6 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.OnPageChange;
-import rx.functions.Action0;
 import rx.functions.Action1;
 
 public class TargetFragment extends MainFragment {
@@ -87,6 +86,12 @@ public class TargetFragment extends MainFragment {
 
     @BindView(R.id.fragment_target_loading_progress_container)
     View loadingProgress;
+
+    @BindView(R.id.fragment_target_deposit_button)
+    Button depositButton;
+
+    @BindView(R.id.fragment_target_withdraw_button)
+    Button withdrawButton;
 
     @BindString(R.string.target_savings_message)
     String savingsMessage;
@@ -226,6 +231,9 @@ public class TargetFragment extends MainFragment {
         bars.requestLayout();
         goalMessage.setText(String.format(savingsMessage, CurrencyHelper.getCurrencySymbol(), (int) toSavePerWeek, goal.getTarget(), weeks));
         endDate.setText(Utils.formatDate(goal.getEndDate().toDate()));
+
+        depositButton.setEnabled(goal.canDeposit());
+        withdrawButton.setEnabled(goal.canWithdraw() && !goal.isReached());
     }
 
     private void retrieveGoals() {
@@ -240,27 +248,26 @@ public class TargetFragment extends MainFragment {
                     }
                 });
             }
-        })
-                .subscribe(new Action1<List<Goal>>() {
-                    @Override
-                    public void call(final List<Goal> goals) {
-                        TargetFragment.this.goals = goals;
-                        if (getActivity() != null && goals != null)
-                            getActivity().runOnUiThread(new Runnable() {
-                                @Override
-                                public void run() {
-                                    adapter.updateGoals(goals);
-                                    if (goals.size() > 0) {
-                                        populateGoal(goals.get(0));
-                                        rightTarget.setVisibility(View.VISIBLE);
-                                        showGoals();
-                                    } else {
-                                        showNoGoals();
-                                    }
-                                }
-                            });
-                    }
-                });
+        }).subscribe(new Action1<List<Goal>>() {
+            @Override
+            public void call(final List<Goal> goals) {
+                TargetFragment.this.goals = goals;
+                if (getActivity() != null && goals != null)
+                    getActivity().runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            adapter.updateGoals(goals);
+                            if (goals.size() > 0) {
+                                populateGoal(goals.get(0));
+                                rightTarget.setVisibility(View.VISIBLE);
+                                showGoals();
+                            } else {
+                                showNoGoals();
+                            }
+                        }
+                    });
+            }
+        });
     }
 
     private void showLoadingProgress() {
