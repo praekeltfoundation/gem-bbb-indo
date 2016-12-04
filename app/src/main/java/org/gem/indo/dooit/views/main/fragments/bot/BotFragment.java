@@ -353,7 +353,7 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
                 Goal g1 = persisted.loadConvoGoal(BotType.GOAL_ADD);
                 if (g1 == null)
                     g1 = new Goal();
-                return new GoalAddCallback(getActivity(), g1);
+                return new GoalAddCallback(getActivity(), getBotAdapter(), g1);
             case GOAL_DEPOSIT:
                 Goal g2 = persisted.loadConvoGoal(BotType.GOAL_DEPOSIT);
                 if (g2 == null)
@@ -457,6 +457,7 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
                 callback.onAsyncCall(
                         node.getAsyncCall(),
                         createAnswerLog(getBotAdapter().getDataSet()),
+                        node,
                         new BotCallback.OnAsyncListener() {
                             @Override
                             public void onDone() {

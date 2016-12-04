@@ -10,12 +10,16 @@ import org.gem.indo.dooit.api.managers.FileUploadManager;
 import org.gem.indo.dooit.api.managers.GoalManager;
 import org.gem.indo.dooit.helpers.MediaUriHelper;
 import org.gem.indo.dooit.helpers.Persisted;
+import org.gem.indo.dooit.models.Badge;
 import org.gem.indo.dooit.models.Goal;
 import org.gem.indo.dooit.models.bot.Answer;
 import org.gem.indo.dooit.models.bot.BaseBotModel;
 import org.gem.indo.dooit.models.bot.BotCallback;
+import org.gem.indo.dooit.models.bot.Node;
+import org.gem.indo.dooit.models.enums.BotMessageType;
 import org.gem.indo.dooit.models.enums.BotType;
 import org.gem.indo.dooit.views.main.MainActivity;
+import org.gem.indo.dooit.views.main.fragments.bot.adapters.BotAdapter;
 import org.joda.time.LocalDate;
 import org.joda.time.format.DateTimeFormat;
 
@@ -45,24 +49,30 @@ public class GoalAddCallback extends BotCallback {
     @Inject
     Persisted persisted;
 
+    private BotAdapter botAdapter;
     private Goal goal;
 
-    public GoalAddCallback(Activity activity, Goal goal) {
+    public GoalAddCallback(Activity activity, BotAdapter botAdapter, Goal goal) {
         super(activity);
         ((DooitApplication) activity.getApplication()).component.inject(this);
+        this.botAdapter = botAdapter;
         this.goal = goal;
     }
 
     @Override
     public void onCall(String key, Map<String, Answer> answerLog, BaseBotModel model) {
-
+        switch (key) {
+            case "add_badge":
+                addBadge(model);
+                break;
+        }
     }
 
     @Override
-    public void onAsyncCall(String key, Map<String, Answer> answerLog, OnAsyncListener listener) {
+    public void onAsyncCall(String key, Map<String, Answer> answerLog, BaseBotModel model, OnAsyncListener listener) {
         switch (key) {
             case "do_create":
-                doCreate(answerLog, listener);
+                doCreate(answerLog, model, listener);
                 break;
         }
     }
@@ -77,7 +87,7 @@ public class GoalAddCallback extends BotCallback {
         return goal;
     }
 
-    private void doCreate(Map<String, Answer> answerLog, final OnAsyncListener listener) {
+    private void doCreate(Map<String, Answer> answerLog, final BaseBotModel model, final OnAsyncListener listener) {
 
         if (answerLog.containsKey("goal_add_ask_goal_gallery")) {
             // Predefined Goal branch
@@ -125,8 +135,8 @@ public class GoalAddCallback extends BotCallback {
             final String path = MediaUriHelper.getPath(context, uri);
             observe.subscribe(new Action1<Goal>() {
                 @Override
-                public void call(Goal goal) {
-                    uploadImage(goal, mimetype, new File(path));
+                public void call(final Goal newGoal) {
+                    uploadImage(newGoal, mimetype, new File(path));
                 }
             });
         } else {
@@ -145,5 +155,15 @@ public class GoalAddCallback extends BotCallback {
 
             }
         }).subscribe();
+    }
+
+    private void addBadge(BaseBotModel model) {
+        if (goal.hasNewBadges()) {
+            //Badge badge = goal.getNewBadges().get(0);
+            Node node = new Node();
+            node.setName(model.getName() + "_badge");
+            node.setType(BotMessageType.BADGE);
+            botAdapter.addItem(node);
+        }
     }
 }

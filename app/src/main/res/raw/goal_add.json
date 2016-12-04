@@ -307,12 +307,11 @@
 
 
 
-
-
   {
     "name": "infoGoalEnd",
     "type": "text",
     "text": "$(infoGoalEnd)",
+    "callback": "add_badge",
     "autoNext": "goal_add_end"
   },
   {

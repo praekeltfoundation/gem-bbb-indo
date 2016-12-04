@@ -62,7 +62,7 @@ public class GoalVerificationViewHolder extends BaseBotViewHolder<Node> {
 
     @Override
     public void populate(Node model) {
-        this.dataModel = model;
+        super.populate(model);
 
         String text = dataModel.getText(getContext());
 

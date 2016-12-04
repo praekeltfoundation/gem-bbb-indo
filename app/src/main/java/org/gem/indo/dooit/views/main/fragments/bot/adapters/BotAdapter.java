@@ -11,6 +11,7 @@ import org.gem.indo.dooit.R;
 import org.gem.indo.dooit.models.bot.BaseBotModel;
 import org.gem.indo.dooit.models.bot.BotCallback;
 import org.gem.indo.dooit.models.enums.BotMessageType;
+import org.gem.indo.dooit.views.main.fragments.bot.viewholders.BadgeViewHolder;
 import org.gem.indo.dooit.views.main.fragments.bot.viewholders.GoalGalleryViewHolder;
 import org.gem.indo.dooit.views.main.fragments.bot.viewholders.AnswerImageSelectViewHolder;
 import org.gem.indo.dooit.views.main.fragments.bot.viewholders.AnswerImageViewHolder;
@@ -75,6 +76,8 @@ public class BotAdapter extends RecyclerView.Adapter<BaseBotViewHolder> {
                 return new TipBotViewHolder(LayoutInflater.from(context).inflate(R.layout.item_view_bot_tip, parent, false), tagsClickListener);
             case GOALINFO:
                 return new GoalInfoViewHolder(LayoutInflater.from(context).inflate(R.layout.item_view_bot_goal_info, parent, false), this);
+            case BADGE:
+                return new BadgeViewHolder(LayoutInflater.from(context).inflate(R.layout.item_view_bot_badge, parent, false), this);
             case UNDEFINED:
             default:
                 return new TextViewHolder(LayoutInflater.from(context).inflate(org.gem.indo.dooit.R.layout.item_view_bot_text, parent, false), this);

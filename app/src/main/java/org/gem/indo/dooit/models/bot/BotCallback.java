@@ -42,9 +42,10 @@ public abstract class BotCallback {
      *
      * @param key       The value of the `callback` field
      * @param answerLog The Answer Log up to the point of the calling Node
+     * @param model     The calling Node or Answer
      * @param listener  Listener to be called when async operation is done
      */
-    public void onAsyncCall(String key, Map<String, Answer> answerLog, OnAsyncListener listener) {
+    public void onAsyncCall(String key, Map<String, Answer> answerLog, BaseBotModel model, OnAsyncListener listener) {
 
     }
 

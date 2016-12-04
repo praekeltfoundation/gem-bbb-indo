@@ -43,7 +43,8 @@ public class Goal {
     // The id of the predefined Goal. null means custom.
     private Long prototype;
     // New badges are awarded on responses
-    private List<Badge> newBadges = new ArrayList<>();
+    @SerializedName("new_badges")
+    private List<Badge> newBadges;
 
     // Local Properties
     private String localImageUri;
@@ -194,7 +195,7 @@ public class Goal {
     }
 
     public boolean hasNewBadges() {
-        return !newBadges.isEmpty();
+        return newBadges != null && !newBadges.isEmpty();
     }
 
     public String getLocalImageUri() {
