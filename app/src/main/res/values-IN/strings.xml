@@ -146,16 +146,18 @@
 
     <!-- BOT: goal_deposit -->
     <!-- User clicks on add savings (+ Deposit) on Goal saving page  -->
-    <string name="goal_deposit_intro">Let\'s add your savings!</string>
-    <string name="goal_deposit_reminder">%1$s, you have to save %2$s each week to reach your %3$s by %4$s.</string>
-    <string name="goal_deposit_remaining">That\'s %1$s and %2$s from now.</string>
-    <string name="goal_deposit_end_congrats">Look at you go! Well done for adding to your savings!</string>
+    <string name="goal_deposit_intro">Yuk kita tambahkan tabunganmu.</string>
+    <string name="goal_deposit_reminder">%1$s kamu telah menabung %2$s tiap minggunya untuk mencapai %3$s pada %4$s.</string>
+    <string name="goal_deposit_remaining">Itu adalah %1$s dan %2$s dari sekarang.</string>
+    <string name="goal_deposit_ask_amount">Tambahkan jumlah tabungan</string>
 
-    <!-- Questions -->
-    <string name="goal_deposit_ask_amount">Add Savings Amount</string>
-    <string name="goal_deposit_challenge">Awesome! Take me to this week\'s challenge.</string>
-    <string name="goal_deposit_tip">Show me tips to grow my savings.</string>
-    <string name="goal_deposit_close">Thanks! I\'m done for now.</string>
+    <string name="goal_deposit_end_congrats">Wah lihat! Selamat sudah menambahkan jumlah tabunganmu!</string>
+
+    <string name="goal_deposit_challenge">Keren! Arahkan aku ke tantangan minggu ini.</string>
+    <string name="goal_deposit_tip">Beri tau aku tips untuk memperbanyak tabunganku.</string>
+    <string name="goal_deposit_close">Makasih, sudah dulu ya.</string>
+
+    <string name="goal_deposit_end_keep_up">Kerja yang bagus. Ingat untuk terus kembali ke sini kapanpun kamu butuh memantau tabunganmu! Tetap menabung ya!</string>
 
     <!-- BOT: goal_withdraw -->
     <!-- User clicks on withdraw savings (- Withdraw) on goal saving page  -->
