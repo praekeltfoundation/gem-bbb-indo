@@ -16,6 +16,7 @@ import android.widget.Toast;
 
 import com.facebook.drawee.view.SimpleDraweeView;
 
+import org.gem.indo.dooit.Constants;
 import org.gem.indo.dooit.DooitApplication;
 import org.gem.indo.dooit.R;
 import org.gem.indo.dooit.api.DooitAPIError;
@@ -35,6 +36,7 @@ import org.gem.indo.dooit.models.challenge.QuizChallengeQuestion;
 import org.gem.indo.dooit.views.main.fragments.challenge.ChallengeFragment;
 import org.gem.indo.dooit.views.main.fragments.challenge.ChallengeFragmentState;
 import org.gem.indo.dooit.views.main.fragments.challenge.interfaces.HasChallengeFragmentState;
+import org.gem.indo.dooit.views.web.MinimalWebViewActivity;
 
 import javax.inject.Inject;
 
@@ -209,6 +211,14 @@ public class ChallengeRegisterFragment extends Fragment implements HasChallengeF
 //            return ChallengeNoneFragment.newInstance("Picture challenge question is empty.");
 //        }
         return ChallengePictureFragment.newInstance(participant, pictureChallenge);
+    }
+
+    @OnClick(R.id.fragment_challenge_t_c_text_view)
+    void termsClick(View view) {
+        MinimalWebViewActivity.Builder.create(getContext())
+            //.setTitle(getString(org.gem.indo.dooit.R.string.title_activity_privacy_policy))
+            .setUrl(Constants.TERMS_URL)
+            .startActivity();
     }
 
     @OnClick(R.id.fragment_challenge_register_button)
