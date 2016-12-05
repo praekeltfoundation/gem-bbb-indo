@@ -42,7 +42,7 @@ public class AnswerInlineTextEditViewHolder extends BaseBotViewHolder<Answer> {
 
     @Override
     public void populate(Answer model) {
-        this.dataModel = model;
+        super.populate(model);
         editText.setHint(dataModel.getInlineEditHint(getContext()));
         editText.setImeActionLabel("Done", EditorInfo.IME_ACTION_DONE);
         editText.setInputType(InputType.TYPE_TEXT_FLAG_CAP_SENTENCES);

@@ -12,6 +12,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 
 import com.greenfrvr.hashtagview.HashtagView;
 
@@ -125,6 +126,12 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
         conversationRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         conversationRecyclerView.setItemAnimator(new DefaultItemAnimator());
         conversationRecyclerView.setAdapter(new BotAdapter(getContext(), this));
+        answerView.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+            @Override
+            public void onGlobalLayout() {
+                conversationRecyclerView.scrollToPosition(getBotAdapter().getItemCount() - 1);
+            }
+        });
         return view;
     }
 
@@ -218,7 +225,7 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
                         getActivity().runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
-                                showConverstation();
+                                showConversation();
                                 initializeBot();
                             }
                         });
@@ -272,7 +279,7 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
                         getActivity().runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
-                                showConverstation();
+                                showConversation();
                                 initializeBot();
                             }
                         });
@@ -562,7 +569,7 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
         progressBarContainer.setVisibility(View.VISIBLE);
     }
 
-    private void showConverstation() {
+    private void showConversation() {
         conversationRecyclerView.setVisibility(View.VISIBLE);
         answerView.setVisibility(View.VISIBLE);
         progressBarContainer.setVisibility(View.GONE);
