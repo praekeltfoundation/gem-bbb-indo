@@ -1,11 +1,16 @@
 package org.gem.indo.dooit.views.main.fragments.bot.viewholders;
 
+import android.net.Uri;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.TextView;
 
+import com.facebook.drawee.backends.pipeline.Fresco;
+import com.facebook.drawee.interfaces.DraweeController;
 import com.facebook.drawee.view.SimpleDraweeView;
+import com.facebook.imagepipeline.request.ImageRequest;
+import com.facebook.imagepipeline.request.ImageRequestBuilder;
 import com.greenfrvr.hashtagview.HashtagView;
 
 import org.gem.indo.dooit.R;
@@ -54,7 +59,15 @@ public class GoalGalleryItemViewHolder extends RecyclerView.ViewHolder {
     }
 
     public void populate(final GoalPrototype prototype, Node model) {
-        image.setImageURI(prototype.getImageUrl());
+        ImageRequest request = ImageRequestBuilder.newBuilderWithSource(Uri.parse(prototype.getImageUrl()))
+                .setProgressiveRenderingEnabled(true)
+                .build();
+        DraweeController controller = Fresco.newDraweeControllerBuilder()
+                .setImageRequest(request)
+                .setOldController(image.getController())
+                .build();
+
+        image.setController(controller);
         title.setText(prototype.getName());
         dataModel = model;
         itemView.setOnClickListener(new View.OnClickListener() {

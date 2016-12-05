@@ -1,6 +1,6 @@
 package org.gem.indo.dooit.models;
 
-import android.net.Uri;
+import android.text.TextUtils;
 
 import com.google.gson.annotations.SerializedName;
 
@@ -42,9 +42,12 @@ public class Goal {
     private long user;
     // The id of the predefined Goal. null means custom.
     private Long prototype;
+    // New badges are awarded on responses
+    @SerializedName("new_badges")
+    private List<Badge> newBadges;
 
     // Local Properties
-    private Uri localImageUri;
+    private String localImageUri;
 
     public long getId() {
         return id;
@@ -187,15 +190,35 @@ public class Goal {
         return trans;
     }
 
-    public Uri getLocalImageUri() {
+    public boolean canDeposit() {
+        return value < target;
+    }
+
+    public boolean canWithdraw() {
+        return value > 0;
+    }
+
+    public boolean isReached() {
+        return value >= target;
+    }
+
+    public List<Badge> getNewBadges() {
+        return newBadges;
+    }
+
+    public boolean hasNewBadges() {
+        return newBadges != null && !newBadges.isEmpty();
+    }
+
+    public String getLocalImageUri() {
         return localImageUri;
     }
 
-    public void setLocalImageUri(Uri localImageUri) {
+    public void setLocalImageUri(String localImageUri) {
         this.localImageUri = localImageUri;
     }
 
     public boolean hasLocalImageUri() {
-        return localImageUri != null;
+        return !TextUtils.isEmpty(localImageUri);
     }
 }

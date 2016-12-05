@@ -11,7 +11,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.facebook.drawee.backends.pipeline.Fresco;
+import com.facebook.drawee.interfaces.DraweeController;
 import com.facebook.drawee.view.SimpleDraweeView;
+import com.facebook.imagepipeline.request.ImageRequest;
+import com.facebook.imagepipeline.request.ImageRequestBuilder;
 import com.greenfrvr.hashtagview.HashtagView;
 
 import org.gem.indo.dooit.DooitApplication;
@@ -21,7 +25,6 @@ import org.gem.indo.dooit.api.DooitErrorHandler;
 import org.gem.indo.dooit.api.managers.TipManager;
 import org.gem.indo.dooit.api.responses.EmptyResponse;
 import org.gem.indo.dooit.helpers.Persisted;
-import org.gem.indo.dooit.views.tip.TipArticleActivity;
 import org.gem.indo.dooit.views.web.MinimalWebViewActivity;
 
 import java.util.List;
@@ -105,7 +108,7 @@ public class TipViewHolder extends RecyclerView.ViewHolder {
             tipManager.unfavourite(id, new DooitErrorHandler() {
                 @Override
                 public void onError(DooitAPIError error) {
-                    Log.d("TIPS","Tip favourite status could not be set " + error.getMessage());
+                    Log.d("TIPS", "Tip favourite status could not be set " + error.getMessage());
                 }
             }).subscribe(new Action1<EmptyResponse>() {
                 @Override
@@ -150,7 +153,14 @@ public class TipViewHolder extends RecyclerView.ViewHolder {
     }
 
     public void setImageUri(Uri uri) {
-        imageView.setImageURI(uri);
+        ImageRequest request = ImageRequestBuilder.newBuilderWithSource(uri)
+                .setProgressiveRenderingEnabled(true)
+                .build();
+        DraweeController controller = Fresco.newDraweeControllerBuilder()
+                .setImageRequest(request)
+                .setOldController(imageView.getController())
+                .build();
+        imageView.setController(controller);
     }
 
     public void setId(int id) {

@@ -178,17 +178,17 @@
     "text": "$(goal_edit_delete_done)",
     "answers": [
       {
-        "name": "goal_edit_tip",
+        "name": "goal_edit_delete_tip",
         "text": "$(goal_edit_tip)",
         "next": "goal_edit_end"
       },
       {
-        "name": "goal_edit_challenge",
+        "name": "goal_edit_delete_challenge",
         "text": "$(goal_edit_challenge)",
         "next": "goal_edit_end"
       },
       {
-        "name": "goal_edit_no_thanks",
+        "name": "goal_edit_delete_no_thanks",
         "text": "$(goal_edit_no_thanks)",
         "next": "goal_edit_come_back"
       }
@@ -214,11 +214,28 @@
     "name": "goal_edit_updated",
     "type": "text",
     "text": "$(goal_edit_updated)",
-    "autoNext": "goal_edit_end"
+    "autoNext": "goal_edit_info"
   },
   {
     "name": "goal_edit_info",
-    "type": "goalInfo"
+    "type": "goalInfo",
+    "answers": [
+      {
+        "name": "goal_edit_info_tip",
+        "text": "$(goal_edit_tip)",
+        "next": "goal_edit_end"
+      },
+      {
+        "name": "goal_edit_info_challenge",
+        "text": "$(goal_edit_challenge)",
+        "next": "goal_edit_end"
+      },
+      {
+        "name": "goal_edit_info_exit",
+        "text": "$(goal_edit_info_exit)",
+        "next": "goal_edit_end"
+      }
+    ]
   },
   {
     "name": "goal_edit_end",

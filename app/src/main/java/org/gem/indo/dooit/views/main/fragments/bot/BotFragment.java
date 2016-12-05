@@ -12,6 +12,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 
 import com.greenfrvr.hashtagview.HashtagView;
 
@@ -69,6 +70,9 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
 
     @BindView(R.id.fragment_bot_conversation_recycler_view)
     RecyclerView conversationRecyclerView;
+
+    @BindView(R.id.fragment_bot_progress_bar_container)
+    View progressBarContainer;
 
     @BindView(R.id.fragment_bot_answer_hash_view)
     HashtagView answerView;
@@ -202,7 +206,7 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
             reqSync.add(goalProtos);
 
         if (reqSync.size() > 0) {
-            //ShowLoader
+            showProgressBar();
             Observable.from(reqSync).flatMap(new Func1<Observable, Observable<?>>() {
                 @Override
                 public Observable<?> call(Observable observable) {
@@ -215,6 +219,7 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
                         getActivity().runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
+                                showConversation();
                                 initializeBot();
                             }
                         });
@@ -255,7 +260,7 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
             reqSync.add(tips);
 
         if (reqSync.size() > 0) {
-            //ShowLoader
+            showProgressBar();
             Observable.from(reqSync).flatMap(new Func1<Observable, Observable<?>>() {
                 @Override
                 public Observable<?> call(Observable observable) {
@@ -268,6 +273,7 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
                         getActivity().runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
+                                showConversation();
                                 initializeBot();
                             }
                         });
@@ -345,10 +351,10 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
         switch (botType) {
             case DEFAULT:
             case GOAL_ADD:
-                Goal g1 = persisted.loadConvoGoal(BotType.GOAL_DEPOSIT);
+                Goal g1 = persisted.loadConvoGoal(BotType.GOAL_ADD);
                 if (g1 == null)
                     g1 = new Goal();
-                return new GoalAddCallback(getActivity(), g1);
+                return new GoalAddCallback(getActivity(), getBotAdapter(), g1);
             case GOAL_DEPOSIT:
                 Goal g2 = persisted.loadConvoGoal(BotType.GOAL_DEPOSIT);
                 if (g2 == null)
@@ -430,7 +436,7 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
         } else
             currentModel = feed.getItem(name);
 
-        Node node = (Node) currentModel;
+        final Node node = (Node) currentModel;
 
         if (node != null) {
             node.setIconHidden(iconHidden);
@@ -445,27 +451,53 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
             if (node.hasCallback() && callback != null)
                 callback.onCall(node.getCallback(), createAnswerLog(getBotAdapter().getDataSet()), node);
 
-            if (BotMessageType.getValueOf(currentModel.getType()) == BotMessageType.END) {
-                if (node.hasNextScreen()) {
-                    // Conversation wants to open another fragment
-                    MainViewPagerPositions pos = MainViewPagerPositions.valueOf(node.getNextScreen());
-                    if (getActivity() instanceof MainActivity)
-                        ((MainActivity) getActivity()).startPage(pos);
-                }
-
-                // Reached explicit end of current conversation
-                finishConversation();
-
-                // Clear answers
-                answerView.setData(new ArrayList<>());
+            // Reached an async callback Node
+            if (node.hasAsyncCall() && callback != null) {
+                // Show loader
+                clearAnswerView();
+                callback.onAsyncCall(
+                        node.getAsyncCall(),
+                        createAnswerLog(getBotAdapter().getDataSet()),
+                        node,
+                        new BotCallback.OnAsyncListener() {
+                            @Override
+                            public void onDone() {
+                                checkEndOrAddAnswers(node);
+                            }
+                        }
+                );
             } else {
-                addAnswerOptions(node);
+                // Continue synchronously
+                checkEndOrAddAnswers(node);
             }
+        }
+    }
+
+    private void checkEndOrAddAnswers(Node node) {
+        // Reached explicit end of current conversation
+        if (BotMessageType.getValueOf(node.getType()) == BotMessageType.END) {
+            if (node.hasNextScreen()) {
+                // Conversation wants to open another fragment
+                MainViewPagerPositions pos = MainViewPagerPositions.valueOf(node.getNextScreen());
+                if (getActivity() instanceof MainActivity)
+                    ((MainActivity) getActivity()).startPage(pos);
+            }
+            finishConversation();
+        } else {
+            addAnswerOptions(node);
         }
     }
 
     private void addAnswerOptions(Node node) {
         answerView.setData(new ArrayList<>());
+        answerView.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+            @Override
+            public void onGlobalLayout() {
+                answerView.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+                conversationRecyclerView.scrollToPosition(getBotAdapter().getItemCount() - 1);
+            }
+        });
+
         if (node.getAnswers().size() > 0) {
             if (TextUtils.isEmpty(node.getAutoAnswer())) {
                 answerView.setData(node.getAnswers(), new HashtagView.DataStateTransform<Answer>() {
@@ -501,9 +533,15 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
         }
     }
 
+    private void clearAnswerView() {
+        answerView.setData(new ArrayList<>());
+    }
+
     private void finishConversation() {
         if (callback != null)
             callback.onDone(createAnswerLog(getBotAdapter().getDataSet()));
+        // Clear answers
+        answerView.setData(new ArrayList<>());
         persisted.clearConversation();
         persisted.clearConvoGoals();
         callback = null;
@@ -525,5 +563,17 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
             default:
                 return true;
         }
+    }
+
+    private void showProgressBar() {
+        conversationRecyclerView.setVisibility(View.GONE);
+        answerView.setVisibility(View.GONE);
+        progressBarContainer.setVisibility(View.VISIBLE);
+    }
+
+    private void showConversation() {
+        conversationRecyclerView.setVisibility(View.VISIBLE);
+        answerView.setVisibility(View.VISIBLE);
+        progressBarContainer.setVisibility(View.GONE);
     }
 }

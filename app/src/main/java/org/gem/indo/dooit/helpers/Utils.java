@@ -110,11 +110,14 @@ public class Utils {
                 case "LOCAL_CURRENCY":
                     params[i] = CurrencyHelper.getCurrencySymbol();
                     break;
+                case "GOAL_DEPOSIT_GOAL_NAME":
+                    params[i] = persisted.loadConvoGoal(BotType.GOAL_DEPOSIT).getName();
+                    break;
                 case "GOAL_DEPOSIT_TARGET":
-                    params[i] = String.format(Locale.getDefault(), "%s", (int) persisted.loadConvoGoal(BotType.GOAL_DEPOSIT).getTarget());
+                    params[i] = String.format(Locale.getDefault(), "%s %s", CurrencyHelper.getCurrencySymbol(), (int) persisted.loadConvoGoal(BotType.GOAL_DEPOSIT).getTarget());
                     break;
                 case "GOAL_DEPOSIT_WEEKLY_TARGET":
-                    params[i] = String.format(Locale.getDefault(), "%s", (int) Math.ceil(persisted.loadConvoGoal(BotType.GOAL_DEPOSIT).getWeeklyTarget()));
+                    params[i] = String.format(Locale.getDefault(), "%s %s", CurrencyHelper.getCurrencySymbol(), (int) Math.ceil(persisted.loadConvoGoal(BotType.GOAL_DEPOSIT).getWeeklyTarget()));
                     break;
                 case "GOAL_DEPOSIT_END_DATE":
                     params[i] = Utils.formatDate(persisted.loadConvoGoal(BotType.GOAL_DEPOSIT).getEndDate().toDate());
