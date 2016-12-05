@@ -5,57 +5,68 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@null">
+    android:background="@null"
+    tools:background="@color/dark_transparent">
 
     <TextView
         android:id="@+id/fragment_challenge_wrong_text"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="16dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
+        android:layout_margin="@dimen/challenge_inset_small"
         android:text="@string/fragment_challenge_wrong_text"
         android:textAlignment="center"
-        android:textAppearance="@style/AppTheme.TextView.Regular.Large"
+        style="@style/AppTheme.TextView.Lightbox.Heading"
+        android:textColor="@color/white"
         app:layout_constraintBottom_toTopOf="@+id/fragment_challenge_wrong_hint"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.5"
         app:layout_constraintVertical_chainStyle="packed" />
 
     <ImageView
         android:id="@+id/fragment_challenge_wrong_coach"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="16dp"
         android:tint="@color/white"
         app:layout_constraintBottom_toBottomOf="@+id/fragment_challenge_wrong_hint"
-        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintHorizontal_chainStyle="packed"
         app:layout_constraintLeft_toLeftOf="@+id/fragment_challenge_wrong_text"
-        app:layout_constraintRight_toLeftOf="@+id/fragment_challenge_wrong_hint"
         app:layout_constraintTop_toTopOf="@+id/fragment_challenge_wrong_hint"
         app:srcCompat="@drawable/ic_d_bot"
-        tools:src="@drawable/ic_d_bot" />
+        tools:src="@drawable/ic_d_bot"
+        app:layout_constraintVertical_bias="1.0" />
+
+    <ImageView
+        android:id="@+id/fragment_challenge_wrong_hint_bg"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:tint="@color/white"
+        android:scaleType="fitXY"
+        app:layout_constraintBottom_toBottomOf="@+id/fragment_challenge_wrong_hint"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintLeft_toLeftOf="@+id/fragment_challenge_wrong_hint"
+        app:layout_constraintRight_toRightOf="@+id/fragment_challenge_wrong_hint"
+        app:layout_constraintTop_toTopOf="@+id/fragment_challenge_wrong_hint"
+        app:srcCompat="@drawable/quiz_option_box"
+        tools:src="@drawable/quiz_option_box"
+        app:layout_constraintVertical_bias="1.0" />
 
     <TextView
         android:id="@+id/fragment_challenge_wrong_hint"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginBottom="16dp"
         android:layout_marginTop="8dp"
-        android:background="@color/white"
         android:padding="16dp"
         android:textColor="@color/black"
+        android:layout_marginLeft="@dimen/challenge_inset_small"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintLeft_toRightOf="@+id/fragment_challenge_wrong_coach"
         app:layout_constraintRight_toRightOf="@+id/fragment_challenge_wrong_text"
         app:layout_constraintTop_toBottomOf="@+id/fragment_challenge_wrong_text"
-        app:layout_constraintVertical_bias="0.5"
         app:layout_constraintVertical_chainStyle="packed"
-        tools:text="Hint: It's closer to 10" />
+        tools:text="Hint: It's closer to 10 in all cases where blah blah blah"
+        android:layout_marginStart="@dimen/challenge_inset_small" />
 
     <Button
         android:id="@+id/fragment_challenge_continue_button"
