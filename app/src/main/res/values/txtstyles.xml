@@ -92,6 +92,10 @@
         <item name="fontPath">fonts/Lato-Bold.ttf</item>
     </style>
 
+    <style name="AppTheme.TextView.Bold.ExtraExtraLarge" parent="AppTheme.TextView.Bold">
+        <item name="android:textSize">@dimen/k_font_xx_large</item>
+    </style>
+
     <style name="AppTheme.TextView.Bold.ExtraLarge" parent="AppTheme.TextView.Bold">
         <item name="android:textSize">@dimen/k_font_extra_large</item>
     </style>
