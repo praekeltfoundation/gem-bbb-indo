@@ -126,12 +126,6 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
         conversationRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         conversationRecyclerView.setItemAnimator(new DefaultItemAnimator());
         conversationRecyclerView.setAdapter(new BotAdapter(getContext(), this));
-        answerView.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
-            @Override
-            public void onGlobalLayout() {
-                conversationRecyclerView.scrollToPosition(getBotAdapter().getItemCount() - 1);
-            }
-        });
         return view;
     }
 
@@ -496,6 +490,14 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
 
     private void addAnswerOptions(Node node) {
         answerView.setData(new ArrayList<>());
+        answerView.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+            @Override
+            public void onGlobalLayout() {
+                answerView.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+                conversationRecyclerView.scrollToPosition(getBotAdapter().getItemCount() - 1);
+            }
+        });
+
         if (node.getAnswers().size() > 0) {
             if (TextUtils.isEmpty(node.getAutoAnswer())) {
                 answerView.setData(node.getAnswers(), new HashtagView.DataStateTransform<Answer>() {
