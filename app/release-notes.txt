@@ -1,11 +1,7 @@
-Registration, Profile Image Upload and Login Designs
-Terms & Conditions Design
-Username change from Settings
-Password change from Settings
-Quiz popups for correct and incorrect answers
-Quiz and Freeform Challenge entry submission
-Collapsing Tip list screen
-Tip list screen Design
-Tip article Design
-Basic conversation flow for creating a Goal
-Basic conversation flow for depositing Savings
+Fixed Profile Image issues
+Creating, Editing and Deleting Goals via Coach
+Depositing and Withdrawing savings via Coach
+Uploading Goal image on create and edit
+Fixed issues with various Challenge screens
+Fixed Picture Challenge submission
+Styling on various screens

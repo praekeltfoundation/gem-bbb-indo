@@ -34,6 +34,8 @@ import org.gem.indo.dooit.models.bot.BotCallback;
 import org.gem.indo.dooit.models.bot.Node;
 import org.gem.indo.dooit.models.enums.BotMessageType;
 import org.gem.indo.dooit.models.enums.BotType;
+import org.gem.indo.dooit.views.main.MainActivity;
+import org.gem.indo.dooit.views.main.MainViewPagerPositions;
 import org.gem.indo.dooit.views.main.fragments.MainFragment;
 import org.gem.indo.dooit.views.main.fragments.bot.adapters.BotAdapter;
 import org.gem.indo.dooit.views.main.fragments.target.callbacks.GoalAddCallback;
@@ -286,6 +288,10 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
     }
 
     private void initializeBot() {
+        callback = createBotCallback(type);
+        getBotAdapter().setCallback(callback);
+
+        // Load existing
         if (persisted.hasConversation(type)) {
             ArrayList<BaseBotModel> data = persisted.loadConversationState(type);
             if (data.size() > 0) {
@@ -307,8 +313,6 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
                 return;
             }
         }
-
-        callback = createBotCallback(type);
 
         // Jump to first node
         switch (type) {
@@ -341,22 +345,25 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
         switch (botType) {
             case DEFAULT:
             case GOAL_ADD:
-                return new GoalAddCallback(getActivity());
-            case GOAL_DEPOSIT:
                 Goal g1 = persisted.loadConvoGoal(BotType.GOAL_DEPOSIT);
                 if (g1 == null)
-                    throw new RuntimeException("No Goal was persisted for Goal Deposit conversation.");
-                return new GoalDepositCallback(getActivity(), g1);
-            case GOAL_WITHDRAW:
-                Goal g2 = persisted.loadConvoGoal(BotType.GOAL_WITHDRAW);
+                    g1 = new Goal();
+                return new GoalAddCallback(getActivity(), g1);
+            case GOAL_DEPOSIT:
+                Goal g2 = persisted.loadConvoGoal(BotType.GOAL_DEPOSIT);
                 if (g2 == null)
-                    throw new RuntimeException("No Goal was persisted for Goal Withdraw conversation.");
-                return new GoalWithdrawCallback((DooitApplication) getActivity().getApplication(), g2);
-            case GOAL_EDIT:
-                Goal g3 = persisted.loadConvoGoal(BotType.GOAL_EDIT);
+                    throw new RuntimeException("No Goal was persisted for Goal Deposit conversation.");
+                return new GoalDepositCallback(getActivity(), g2);
+            case GOAL_WITHDRAW:
+                Goal g3 = persisted.loadConvoGoal(BotType.GOAL_WITHDRAW);
                 if (g3 == null)
+                    throw new RuntimeException("No Goal was persisted for Goal Withdraw conversation.");
+                return new GoalWithdrawCallback(getActivity(), g3);
+            case GOAL_EDIT:
+                Goal g4 = persisted.loadConvoGoal(BotType.GOAL_EDIT);
+                if (g4 == null)
                     throw new RuntimeException("No Goal was persisted for Goal Edit converstation");
-                return new GoalEditCallback((DooitApplication) getActivity().getApplication(), this, g3);
+                return new GoalEditCallback(getActivity(), g4);
             default:
                 return null;
         }
@@ -373,7 +380,7 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
     public void onItemClicked(Object item) {
         Answer answer = (Answer) item;
 
-        // For replacing existing nodes in the converstation
+        // For replacing existing nodes in the conversation
         if (!TextUtils.isEmpty(answer.getRemoveOnSelect())) {
             for (BaseBotModel model : new ArrayList<>(getBotAdapter().getDataSet())) {
                 if (answer.getRemoveOnSelect().equals(model.getName())) {
@@ -404,14 +411,6 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
 //        persisted.saveConversationState(type, getBotAdapter().getDataSet());
     }
 
-    private void finishConversation() {
-        if (callback != null)
-            callback.onDone(createAnswerLog(getBotAdapter().getDataSet()));
-        persisted.clearConversation();
-        persisted.clearConvoGoals();
-        setBotType(BotType.DEFAULT);
-    }
-
     private Map<String, Answer> createAnswerLog(List<BaseBotModel> converstation) {
         Map<String, Answer> answerLog = new LinkedHashMap<>();
         for (BaseBotModel model : converstation)
@@ -430,22 +429,30 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
             getBotAdapter().clear();
         } else
             currentModel = feed.getItem(name);
+
         Node node = (Node) currentModel;
+
         if (node != null) {
             node.setIconHidden(iconHidden);
 
-            if (shouldAdd(currentModel)) {
+            if (shouldAdd(currentModel))
                 getBotAdapter().addItem(currentModel);
-            }
 
             conversationRecyclerView.scrollToPosition(getBotAdapter().getItemCount() - 1);
             persisted.saveConversationState(type, getBotAdapter().getDataSet());
 
             // Reached a callback Node
-            if (currentModel.hasCallback() && callback != null)
-                callback.onCall(currentModel.getCallback(), createAnswerLog(getBotAdapter().getDataSet()), currentModel);
+            if (node.hasCallback() && callback != null)
+                callback.onCall(node.getCallback(), createAnswerLog(getBotAdapter().getDataSet()), node);
 
             if (BotMessageType.getValueOf(currentModel.getType()) == BotMessageType.END) {
+                if (node.hasNextScreen()) {
+                    // Conversation wants to open another fragment
+                    MainViewPagerPositions pos = MainViewPagerPositions.valueOf(node.getNextScreen());
+                    if (getActivity() instanceof MainActivity)
+                        ((MainActivity) getActivity()).startPage(pos);
+                }
+
                 // Reached explicit end of current conversation
                 finishConversation();
 
@@ -494,11 +501,19 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
         }
     }
 
+    private void finishConversation() {
+        if (callback != null)
+            callback.onDone(createAnswerLog(getBotAdapter().getDataSet()));
+        persisted.clearConversation();
+        persisted.clearConvoGoals();
+        callback = null;
+        // FIXME: Clearing the callback happens after the data has been added and before the view holder is instantiated. Viewholder will get null callback.
+        // getBotAdapter().setCallback(null);
+        setBotType(BotType.DEFAULT);
+    }
+
     /**
      * Helper to indicate whether a Node should be added to the conversation's view.
-     *
-     * @param model
-     * @return
      */
     public static boolean shouldAdd(BaseBotModel model) {
         switch (BotMessageType.getValueOf(model.getType())) {

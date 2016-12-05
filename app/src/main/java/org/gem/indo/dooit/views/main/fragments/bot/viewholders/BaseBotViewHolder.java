@@ -8,6 +8,7 @@ import android.net.Uri;
 import android.os.Handler;
 import android.os.Looper;
 import android.provider.MediaStore;
+import android.support.annotation.CallSuper;
 import android.support.annotation.StringRes;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -27,7 +28,14 @@ public abstract class BaseBotViewHolder<T extends BaseBotModel> extends Recycler
         super(itemView);
     }
 
-    public abstract void populate(T model);
+
+    @CallSuper
+    public void populate(T model) {
+        dataModel = model;
+        reset();
+    }
+
+    public void reset() {}
 
     public Context getContext() {
         return itemView.getContext();
@@ -81,8 +89,8 @@ public abstract class BaseBotViewHolder<T extends BaseBotModel> extends Recycler
     }
 
     /**
-     * Runs the specified action on the UI thread. If the current thread is the UI
-     * thread, then the action is executed immediately. If the current thread is
+     * Runs the specified action on the UI thread. If the goalValue thread is the UI
+     * thread, then the action is executed immediately. If the goalValue thread is
      * not the UI thread, the action is posted to the event queue of the UI thread.
      *
      * @param action the action to run on the UI thread

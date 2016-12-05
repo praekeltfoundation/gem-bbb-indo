@@ -147,10 +147,16 @@
     <!-- BOT: goal_deposit -->
     <!-- User clicks on add savings (+ Deposit) on Goal saving page  -->
     <string name="goal_deposit_intro">Let\'s add your savings!</string>
-    <string name="goal_deposit_reminder">Remember you have to save %1$s %2$s each week to reach %3$s by %4$s.</string>
-    <string name="goal_deposit_remaining">That is %1$s weeks and %2$s days from now.</string>
-    <string name="goal_deposit_ask_amount">Add Amount</string>
-    <string name="goal_deposit_end_congrats">Well done!</string>
+    <string name="goal_deposit_reminder">%1$s, you have to save %2$s each week to reach your %3$s by %4$s.</string>
+    <string name="goal_deposit_remaining">That\'s %1$s and %2$s from now.</string>
+    <string name="goal_deposit_end_congrats">Look at you go! Well done for adding to your savings!</string>
+
+    <!-- Questions -->
+    <string name="goal_deposit_ask_amount">Add Savings Amount</string>
+    <string name="goal_deposit_challenge">Awesome! Take me to this week\'s challenge.</string>
+    <string name="goal_deposit_tip">Show me tips to grow my savings.</string>
+    <string name="goal_deposit_close">Thanks! I\'m done for now.</string>
+
 
     <!-- BOT: goal_withdraw -->
     <!-- User clicks on withdraw savings (- Withdraw) on goal saving page  -->

@@ -7,6 +7,11 @@ import android.util.Log;
 
 import org.gem.indo.dooit.models.enums.BotMessageType;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 /**
  * Created by Bernhard Müller on 11/7/2016.
  */
