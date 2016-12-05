@@ -6,11 +6,11 @@
     <!-- Activity Titles  -->
     <string name="title_activity_main"></string>
     <string name="title_activity_profile">Profil</string>
-    <string name="title_activity_profile_image">Upload Photo</string>
+    <string name="title_activity_profile_image">Upload Foto</string>
     <string name="title_activity_settings">Pengaturan</string>
-    <string name="title_activity_terms_and_conditions">Terms &amp; Conditions</string>
-    <string name="title_activity_privacy_policy">Privacy Policy</string>
-    <string name="action_settings">Settings</string>
+    <string name="title_activity_terms_and_conditions">Syarat &amp; Ketentuan</string>
+    <string name="title_activity_privacy_policy">Kebijakan</string>
+    <string name="action_settings">Pengaturan</string>
 
     <!-- Bottom Navigation -->
     <string name="main_tab_text_0">COACH</string>
@@ -20,86 +20,86 @@
 
     <!-- Common labels -->
     <string name="label_accept">Accept</string>
-    <string name="label_cancel">Cancel</string>
+    <string name="label_cancel">Batalkan</string>
     <string name="label_take_picture">Take photo using camera</string>
     <string name="label_select_gallery">Select gallery</string>
-    <string name="label_check_result">Check</string>
-    <string name="label_clear_content">Clear</string>
-    <string name="label_continue">Continue</string>
-    <string name="label_done">Done</string>
+    <string name="label_check_result">Cek</string>
+    <string name="label_clear_content">Bersihkan</string>
+    <string name="label_continue">Lanjutkan</string>
+    <string name="label_done">Selesai</string>
     <string name="label_loading">Loading</string>
-    <string name="label_log_in">Log in</string>
-    <string name="label_mobile_number">Mobile number</string>
-    <string name="label_name">Name</string>
-    <string name="label_next">Next</string>
-    <string name="label_new_password">New Password</string>
-    <string name="label_old_password">Old Password</string>
+    <string name="label_log_in">Masuk</string>
+    <string name="label_mobile_number">Nomer telepon</string>
+    <string name="label_name">Nama</string>
+    <string name="label_next">Selanjutnya</string>
+    <string name="label_new_password">Kata Sandi Baru</string>
+    <string name="label_old_password">Kata Sandi Lama</string>
 
-    <string name="label_password">Password</string>
-    <string name="label_register">Register</string>
+    <string name="label_password">Kata Sandi</string>
+    <string name="label_register">Daftar</string>
 
-    <string name="label_change_name">Change Name</string>
-    <string name="label_change_password">Change Password</string>
-    <string name="label_settings">Settings</string>
-    <string name="label_share">Share</string>
-    <string name="label_skip">Skip</string>
+    <string name="label_change_name">Ubah Nama</string>
+    <string name="label_change_password">Ubah Kata Sandi</string>
+    <string name="label_settings">Pengaturan</string>
+    <string name="label_share">Bagikan</string>
+    <string name="label_skip">Lewati</string>
     <string name="label_start">Start</string>
-    <string name="label_submit">Submit</string>
-    <string name="label_try_again">Try again</string>
-    <string name="label_uploading">Uploading</string>
+    <string name="label_submit">Kirim</string>
+    <string name="label_try_again">Coba lagi</string>
+    <string name="label_uploading">Sedang Mengupload</string>
 
     <!-- Welcome -->
-    <string name="welcome_page_empty">Welcome Page</string>
-    <string name="welcome_page_1">Gunakan Dooit untuk membantu kalian menabung!</string>
-    <string name="welcome_page_2">Pantau capaianmu menuju tujuan menabungmu!</string>
-    <string name="welcome_page_3">Dapatkan hadiah untuk kegigihan kalian dalam menabung!</string>
-    <string name="lets_start">ayo mulai</string>
+    <string name="welcome_page_empty">Selamat datang!</string>
+    <string name="welcome_page_1">Gunakan Dooit untuk membantu kamu menabung!</string>
+    <string name="welcome_page_2">Pantau capaianmu dalam menabung!</string>
+    <string name="welcome_page_3">Dapatkan hadiah karena telah rajin menabung!</string>
+    <string name="lets_start">Mulai, yuk!</string>
 
     <!-- Tips -->
     <string name="tips_tab_favourites">Favorit</string>
     <string name="tips_tab_all">Semua</string>
-    <string name="tips_card_read_more">Baca lebih banyak</string>
+    <string name="tips_card_read_more">Baca selengkapnya...</string>
     <string name="tips_search_hint">Cari: Topik, judul, tag, dll...</string>
     <string name="tips_search_placeholder_fav">Cari tips favorit</string>
     <string name="tips_search_placeholder_all">Cari semua tips</string>
-    <string name="tips_article_opening">\'%s\' pembuka</string>
+    <string name="tips_article_opening">Membuka \'%s\'</string>
     <string name="tips_article_add_fav">Menambahkan \'%s\' ke favorit</string>
-    <string name="tips_article_remove_fav">Removed \'%s\' from favourites</string>
-    <string name="tips_list_filter">Filtering \'%s\'</string>
+    <string name="tips_article_remove_fav">Menghapus \'%s\' dari favorit</string>
+    <string name="tips_list_filter">Menyaring \'%s\'</string>
 
     <!-- Registration -->
-    <string name="reg_t_c">Dengan mengklik register, Anda setuju dengan Persyaratan dan Kondisi kami></string>
+    <string name="reg_t_c">Dengan meng-klik \'Daftar\', kamu telah menyetujui Syarat &amp; Ketentuan yang berlaku.</string>
     <string name="reg_example_name">Contoh: Aulia Dharmaningtyas</string>
-    <string name="reg_example_name_error_1">Nama tidak boleh kosong</string>
-    <string name="reg_example_name_error_2">Name can\'t contain spaces</string>
-    <string name="reg_example_name_error_3">Name can only contain letters and numbers</string>
-    <string name="reg_example_name_error_4">Name can\'t be longer than 150 characters</string>
-    <string name="reg_age">Berapakah umur Anda?</string>
+    <string name="reg_example_name_error_1">Maaf, kolom nama harus terisi.</string>
+    <string name="reg_example_name_error_2">Nama tidak boleh ada spasi</string>
+    <string name="reg_example_name_error_3">Nama hanya boleh ada huruf dan angka</string>
+    <string name="reg_example_name_error_4">Nama tidak boleh lebih panjang dari 150 karakter</string>
+    <string name="reg_age">Berapa umur kamu?</string>
     <string name="reg_example_age">Contoh: 16</string>
-    <string name="reg_example_age_error_1">Umur tidak boleh kosong</string>
-    <string name="reg_gender">Jenis kelamin</string>
+    <string name="reg_example_age_error_1">Maaf, kolom umur harus terisi.</string>
+    <string name="reg_gender">Jenis Kelamin</string>
     <string name="reg_gender_boy">Laki-laki</string>
-    <string name="reg_gender_girl">Gadis</string>
-    <string name="reg_example_number">Contoh: 1234567890</string>
-    <string name="reg_example_number_error_1">Nomor ponsel tidak boleh kosong</string>
-    <string name="reg_example_number_error_2">Mobile Number must be longer than 9 digits</string>
-    <string name="reg_example_number_error_3">Mobile Number must be shorter than 15 digits</string>
-    <string name="reg_example_password">Harus memiliki minimal 6 karakter</string>
-    <string name="reg_example_password_error_1">Password tidak boleh kosong</string>
-    <string name="reg_example_password_error_2">Password must be longer than 6 characters</string>
+    <string name="reg_gender_girl">Perempuan</string>
+    <string name="reg_example_number">Contoh: 0813987654321</string>
+    <string name="reg_example_number_error_1">Maaf, kolom nomor HP harus terisi.</string>
+    <string name="reg_example_number_error_2">Nomor HP harus lebih panjang dari 9 angka</string>
+    <string name="reg_example_number_error_3">Nomor HP harus lebih pendek dari 15 angka</string>
+    <string name="reg_example_password">Kata sandi harus terdiri dari 6 karakter.</string>
+    <string name="reg_example_password_error_1">Maaf, kolom kata sandi harus terisi.</string>
+    <string name="reg_example_password_error_2">Kata sandi harus lebih panjang dari 6 karakter.</string>
 
-    <string name="already_registered_log_in">Sudah terdaftar? Masuk</string>
-    <string name="forgot_password">Lupa kata sandi?</string>
+    <string name="already_registered_log_in">Sudah daftar? Log in disini!</string>
+    <string name="forgot_password">Ups! Lupa kata sandimu?</string>
 
     <!--LOGIN-->
-    <string name="login_title">@string/label_log_in</string>
-    <string name="invalid_credentials">Unable to log in with provided credentials.</string>
+    <string name="login_title">Log In</string>
+    <string name="invalid_credentials">Ups. Nama pengguna dan kata sandi yang kamu masukkan salah.</string>
     <string name="login_name">@string/label_name</string>
     <string name="login_password">@string/label_password</string>
-    <string name="login_example_name">Example: Aulia Dharmaningtyas</string>
-    <string name="login_example_name_error_1">Name can\'t be blank</string>
-    <string name="login_example_password">Must have at least 6 characters</string>
-    <string name="login_example_password_error_1">Password can\'t be blank</string>
+    <string name="login_example_name">Contoh: Aulia Dharmanigtyas</string>
+    <string name="login_example_name_error_1">Maaf, kolom nama harus terisi.</string>
+    <string name="login_example_password">Kata sandi harus terdiri dari 6 karakter.</string>
+    <string name="login_example_password_error_1">Maaf, kolom kata sandi harus terisi.</string>
 
     <!-- Bot -->
     <string name="bot_carousel_card_select">Select</string>
@@ -192,6 +192,7 @@
     <string name="goal_edit_delete_difficult">I can help you work out another savings plan that will be easier to afford.</string>
     <string name="goal_edit_delete_cancel">Don\'t worry, we can get you back on track with your savings in no time. Have a look at our tips or take this week\'s challenge!</string>
     <string name="goal_edit_delete_done">Goal deleted</string>
+    <string name="goal_edit_end_come_back">Come back to track your savings weekly and watch as your goal becomes a reality!</string>
 
     <!-- Answers -->
     <string name="goal_edit_choice_date">Date</string>
@@ -212,6 +213,7 @@
     <string name="goal_edit_delete_reason_do_not_want">I don\'t want [goal_name] anymore.</string>
     <string name="goal_edit_delete_reason_misc">No reason, I just want to delete it.</string>
     <string name="goal_edit_delete_reason_cancel">Never mind! I want to keep saving.</string>
+    <string name="goal_edit_info_exit">Okay, I\'m done for now. Can we exit?</string>
 
     <!-- BOT: tip_intro -->
     <string name="tip_intro_inline_link">TODO: Show Tip</string>
@@ -258,22 +260,22 @@
 
     <!-- Challenges -->
     <string name="challenge_t_c">Dengan mengikuti tantangan ini, kamu telah menyetujui Syarat &amp; Ketentuan yang berlaku.</string>
-    <string name="challenge_no_question">No question</string>
+    <string name="challenge_no_question">Tidak ada pertanyaan</string>
     <string name="challenge_register">Daftar</string>
-    <string name="challenge_freeform_submit">Submitting freeform answer</string>
-    <string name="challenge_all_questions_complete">You have completed all questions</string>
-    <string name="challenge_none_available">No challenge available. Please try again soon!</string>
-    <string name="challenge_quiz_select_option_required">You must select an answer</string>
+    <string name="challenge_freeform_submit">Kirim jawaban</string>
+    <string name="challenge_all_questions_complete">Hore! Kamu telah menjawab semua pertanyaannya.</string>
+    <string name="challenge_none_available">Wah. Belum ada tantangan yang tersedia. Coba lagi nanti ya!</string>
+    <string name="challenge_quiz_select_option_required">Kamu harus memilih jawaban untuk pertanyaan ini.</string>
     <string name="challenge_quiz_no_questions">No questions available</string>
-    <string name="challenge_quiz_congratulate_correct">Well done!</string>
-    <string name="challenge_quiz_sorry_incorrect">Sorry, try again.</string>
-    <string name="challenge_quiz_empty_option">Quiz question has option without text.</string>
-    <string name="challenge_quiz_no_correct_answer">Quiz question without correct option.</string>
-    <string name="fragment_challenge_correct_text">You are correct!</string>
-    <string name="fragment_challenge_wrong_text">Try again!</string>
-    <string name="challenge_quiz_counter_fmt">Question %1$d/%2$d</string>
-    <string name="challenge_hint_template">Hint: %1$s</string>
-    <string name="challenge_hint_none">Sorry, I don\'t have a hint for you</string>
+    <string name="challenge_quiz_congratulate_correct">Yay! Jawabanmu benar. </string>
+    <string name="challenge_quiz_sorry_incorrect">Uh-oh. Coba lagi!</string>
+    <string name="challenge_quiz_empty_option">Pertanyaan kuis punya pilihan tanpa teks.</string>
+    <string name="challenge_quiz_no_correct_answer">Pertanyaan kuis tanpa jawaban yang benar.</string>
+    <string name="fragment_challenge_correct_text">Kamu benar!</string>
+    <string name="fragment_challenge_wrong_text">Coba lagi!</string>
+    <string name="challenge_quiz_counter_fmt">Pertanyaan %1$d/%2$d</string>
+    <string name="challenge_hint_template">Petunjuk: %1$s</string>
+    <string name="challenge_hint_none">Maaf, Aku tidak punya petunjuk untuk kamu</string>
 
     <!--JSON CHALLENGES-->
     <string name="toes">Can you touch your toes?</string>
@@ -282,50 +284,50 @@
     <!-- TARGET -->
     <string name="target_save">+ Tambah</string>
     <string name="target_withdraw">- Tarik</string>
-    <string name="target_savings_history">Savings History</string>
-    <string name="target_weeks">Weeks</string>
-    <string name="target_add_goal">ADD GOAL</string>
-    <string name="target_savings_message" formatted="false">Save %s %s each week to get your %s in %s weeks.</string>
-    <string name="target_edit_savings_plan">Edit Savings Plan</string>
-    <string name="target_savings_plan">Savings Plan</string>
-    <string name="target_date">Target Date</string>
+    <string name="target_savings_history">Grafik Tabungan</string>
+    <string name="target_weeks">Waktu</string>
+    <string name="target_add_goal">TAMBAHKAN TUJUAN BARU</string>
+    <string name="target_savings_message" formatted="false">Tabung %s %s per minggu untuk dapat %s dalam waktu %s minggu.</string>
+    <string name="target_edit_savings_plan">Edit Rencana Tabungan</string>
+    <string name="target_savings_plan">Rencana Tabungan</string>
+    <string name="target_date">Deadline Menabung</string>
     <string name="target_no_goal">No goal added</string>
 
     <!-- Profile -->
-    <string name="profile_week_streak_singular">%s week</string>
-    <string name="profile_week_streak_plural">%s weeks</string>
-    <string name="profile_settings_title">Settings</string>
-    <string name="profile_section_account">Your account</string>
-    <string name="profile_account_change_name">Change name</string>
-    <string name="profile_account_change_password">Change password</string>
-    <string name="profile_account_sign_out">Sign out</string>
-    <string name="profile_section_notifications">Notifications</string>
-    <string name="profile_section_help"><![CDATA[About & Help]]></string>
+    <string name="profile_week_streak_singular">%s minggu</string>
+    <string name="profile_week_streak_plural">%s minggu</string>
+    <string name="profile_settings_title">@string/title_activity_settings</string>
+    <string name="profile_section_account">Akunmu</string>
+    <string name="profile_account_change_name">Ubah nama</string>
+    <string name="profile_account_change_password">Ubah kata sandi</string>
+    <string name="profile_account_sign_out">Keluar</string>
+    <string name="profile_section_notifications">Notifikasi</string>
+    <string name="profile_section_help">Tentang Dooit</string>
     <string name="profile_help_help">Help</string>
-    <string name="profile_help_report_problem">Report A Problem</string>
-    <string name="profile_help_feedback">Feedback</string>
-    <string name="profile_help_terms_conditions"><![CDATA[Terms & Conditions]]></string>
-    <string name="profile_help_privacy_policy">Privacy Policy</string>
+    <string name="profile_help_report_problem">Laporkan Keluhan</string>
+    <string name="profile_help_feedback">Masukan</string>
+    <string name="profile_help_terms_conditions">Syarat &amp; Ketentuan</string>
+    <string name="profile_help_privacy_policy">Kebijakan Privasi</string>
 
     <!-- Profile image -->
-    <string name="profile_image_camera">Take Photo using Camera</string>
-    <string name="profile_image_gallery">Choose from Gallery</string>
-    <string name="profile_image_cancel">Cancel</string>
-    <string name="profile_image_progress">We\'re uploading your profile image&#8230;</string>
+    <string name="profile_image_camera">Ambil Foto dengan Kamera</string>
+    <string name="profile_image_gallery">Pilih dari Galeri</string>
+    <string name="profile_image_cancel">Batalkan</string>
+    <string name="profile_image_progress">Kami sedang meng-upload foto profilmu&#8230;</string>
 
     <!-- Profile: Change Username -->
-    <string name="profile_change_username_progress">We\'re changing your username&#8230;</string>
-    <string name="profile_change_username_success">Your username has been changed to \'%s\'</string>
+    <string name="profile_change_username_progress">Kami mengubah username-mu&#8230;</string>
+    <string name="profile_change_username_success">Username-mu telah diubah menjadi \'%s\'</string>
 
     <!-- Profile: Change Password -->
-    <string name="profile_change_password_progress">We\'re changing your password&#8230;</string>
-    <string name="profile_change_password_success">Your password has been changed</string>
-    <string name="profile_change_password_error_1">Passwords can\'t be the same</string>
+    <string name="profile_change_password_progress">Kami mengubah kata sandimu&#8230;</string>
+    <string name="profile_change_password_success">Kata sandi sudah diubah</string>
+    <string name="profile_change_password_error_1">Kata sandi tidak boleh sama</string>
 
     <!-- Legends -->
-    <string name="legend_label_average">Average</string>
-    <string name="legend_label_goals">Goals</string>
-    <string name="legend_label_saved">Saved</string>
+    <string name="legend_label_average">Rata-rata</string>
+    <string name="legend_label_goals">Tujuan</string>
+    <string name="legend_label_saved">Tersimpan</string>
     <string name="legend_label_total">Total</string>
 
     <!-- Dev only -->
