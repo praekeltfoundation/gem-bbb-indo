@@ -37,6 +37,12 @@ public class DooitModule {
 
     @Provides
     @Singleton
+    ActivityForResultHelper provideActivityForResultHelper() {
+        return new ActivityForResultHelper();
+    }
+
+    @Provides
+    @Singleton
     @ForApplication
     Context provideApplicationContext() {
         return application;
@@ -62,36 +68,6 @@ public class DooitModule {
 
     @Provides
     @Singleton
-    TipManager provideTipManager() {
-        return new TipManager(application);
-    }
-
-    @Provides
-    @Singleton
-    UserManager provideUserManager() {
-        return new UserManager(application);
-    }
-
-    @Provides
-    @Singleton
-    GoalManager provideGoalManager() {
-        return new GoalManager(application);
-    }
-
-    @Provides
-    @Singleton
-    Persisted providePersisted() {
-        return new Persisted(application);
-    }
-
-    @Provides
-    @Singleton
-    PermissionsHelper providePermissionsHelper() {
-        return new PermissionsHelper();
-    }
-
-    @Provides
-    @Singleton
     DooitSharedPreferences provideDooitSharedPreferences() {
         return new DooitSharedPreferences(application);
     }
@@ -110,7 +86,31 @@ public class DooitModule {
 
     @Provides
     @Singleton
-    ActivityForResultHelper provideActivityForResultHelper() {
-        return new ActivityForResultHelper();
+    GoalManager provideGoalManager() {
+        return new GoalManager(application);
+    }
+
+    @Provides
+    @Singleton
+    PermissionsHelper providePermissionsHelper() {
+        return new PermissionsHelper();
+    }
+
+    @Provides
+    @Singleton
+    Persisted providePersisted() {
+        return new Persisted(application);
+    }
+
+    @Provides
+    @Singleton
+    TipManager provideTipManager() {
+        return new TipManager(application);
+    }
+
+    @Provides
+    @Singleton
+    UserManager provideUserManager() {
+        return new UserManager(application);
     }
 }
