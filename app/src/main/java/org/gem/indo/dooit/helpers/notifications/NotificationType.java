@@ -30,8 +30,6 @@ public enum NotificationType {
     }
 
     public static NotificationType getValueOf(int messageId) {
-        if (!map.containsKey(messageId))
-            return null;
         return map.get(messageId);
     }
 
