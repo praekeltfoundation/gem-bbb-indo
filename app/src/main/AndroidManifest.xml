@@ -85,9 +85,6 @@
             android:screenOrientation="portrait" />
 
         <service
-            android:name=".services.NotificationScheduler"
-            android:enabled="true" />
-        <service
             android:name=".services.NotificationService"
             android:enabled="true" />
 
