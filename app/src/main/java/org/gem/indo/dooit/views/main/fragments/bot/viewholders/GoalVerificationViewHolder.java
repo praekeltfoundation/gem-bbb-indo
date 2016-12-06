@@ -92,7 +92,7 @@ public class GoalVerificationViewHolder extends BaseBotViewHolder<Node> {
                     break;
                 case "askGoalName":
                     if (baseBotModel instanceof Answer) {
-                        goalName = ((Answer) baseBotModel).get("name");
+                        goalName = ((Answer) baseBotModel).values.getString("name");
                     }
                     break;
             }

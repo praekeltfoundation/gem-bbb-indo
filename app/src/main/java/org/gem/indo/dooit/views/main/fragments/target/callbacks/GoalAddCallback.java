@@ -92,8 +92,8 @@ public class GoalAddCallback extends BotCallback {
         if (answerLog.containsKey("goal_add_ask_goal_gallery")) {
             // Predefined Goal branch
             Answer answer = answerLog.get("goal_add_ask_goal_gallery");
-            goal.setPrototype(Long.parseLong(answer.get("prototype")));
-            goal.setName(answer.get("name"));
+            goal.setPrototype(Long.parseLong(answer.values.getString("prototype")));
+            goal.setName(answer.values.getString("name"));
         } else {
             // Custom Goal branch
             goal.setName(answerLog.get("goal_name").getValue());
