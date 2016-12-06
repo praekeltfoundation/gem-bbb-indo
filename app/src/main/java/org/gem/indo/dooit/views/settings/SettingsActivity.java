@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
-import android.support.v7.widget.ActionBarContainer;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.TextView;
@@ -14,6 +13,7 @@ import org.gem.indo.dooit.DooitApplication;
 import org.gem.indo.dooit.R;
 import org.gem.indo.dooit.helpers.DooitSharedPreferences;
 import org.gem.indo.dooit.helpers.SquiggleBackgroundHelper;
+import org.gem.indo.dooit.services.NotificationAlarm;
 import org.gem.indo.dooit.views.DooitActivity;
 import org.gem.indo.dooit.views.RootActivity;
 import org.gem.indo.dooit.views.helpers.activity.DooitActivityBuilder;
@@ -68,17 +68,18 @@ public class SettingsActivity extends DooitActivity {
     }
 
     @OnClick(R.id.settings_account_change_name)
-    public void changeName(View view){
+    public void changeName(View view) {
         ChangeNameActivity.Builder.create(this).startActivity();
     }
 
     @OnClick(R.id.settings_account_change_password)
-    public void changePassword(View view){
+    public void changePassword(View view) {
         ChangePasswordActivity.Builder.create(this).startActivity();
     }
 
     @OnClick({R.id.settings_account_sign_out})
     public void signOut(View view) {
+        NotificationAlarm.cancelAlarm(this);
         dooitSharedPreferences.clear();
         Intent intent = new Intent(this, RootActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
