@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_feedback"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:background="@drawable/pattern_01_purple">
@@ -12,7 +14,6 @@
         android:layout_height="wrap_content"
         android:id="@+id/activity_feedback_heading"
         android:layout_marginTop="@dimen/challenge_inset_small"
-        android:layout_marginBottom="@dimen/challenge_inset_small"
         app:layout_constraintRight_toRightOf="@+id/activity_feedback_label_subject"
         app:layout_constraintTop_toTopOf="parent"
         android:textAppearance="@style/AppTheme.Toolbar.Title.Center"
@@ -37,6 +38,7 @@
         android:layout_height="wrap_content"
         android:textColor="@color/white"
         android:textAlignment="viewStart"
+        android:labelFor="@+id/activity_feedback_subject"
         android:layout_marginTop="@dimen/challenge_inset_large"
         android:layout_marginLeft="@dimen/challenge_inset_xlarge"
         android:layout_marginRight="@dimen/challenge_inset_xlarge"
@@ -61,14 +63,16 @@
 
     <Spinner
         android:id="@+id/activity_feedback_subject"
-        tools:listitem="Feedback about app"
         android:padding="16dp"
         android:layout_width="0dp"
         android:layout_height="48dp"
         android:layout_marginTop="@dimen/challenge_inset_small"
         app:layout_constraintRight_toRightOf="@+id/activity_feedback_label_subject"
         app:layout_constraintLeft_toLeftOf="@+id/activity_feedback_label_subject"
-        app:layout_constraintTop_toBottomOf="@+id/activity_feedback_label_subject" />
+        app:layout_constraintTop_toBottomOf="@+id/activity_feedback_label_subject"
+        android:dropDownWidth="match_parent"
+        android:spinnerMode="dropdown"
+        tools:listitem="@layout/fragment_challengequizquestion_option" />
 
     <TextView
         android:id="@+id/activity_feedback_label_message"
@@ -76,6 +80,8 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/challenge_inset_small"
+        android:gravity="top"
+        android:labelFor="@+id/activity_feedback_message"
         app:layout_constraintTop_toBottomOf="@+id/activity_feedback_subject"
         app:layout_constraintLeft_toLeftOf="@+id/activity_feedback_subject"
         android:textColor="@color/white"
@@ -115,6 +121,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         style="@style/AppTheme.Button.Big.LightBlue"
+        android:layout_marginBottom="@dimen/challenge_inset_large"
         app:layout_constraintRight_toRightOf="@+id/activity_feedback_bg_message"
         app:layout_constraintLeft_toLeftOf="@+id/activity_feedback_bg_message"
         app:layout_constraintBottom_toBottomOf="parent"
