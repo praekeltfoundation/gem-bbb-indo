@@ -14,7 +14,7 @@ import android.widget.TextView;
 import org.gem.indo.dooit.R;
 import org.gem.indo.dooit.models.enums.FeedbackType;
 
-import java.util.Arrays;
+import java.util.Collection;
 import java.util.List;
 
 /**
@@ -24,15 +24,15 @@ import java.util.List;
 public class FeedbackTypeAdapter extends ArrayAdapter<FeedbackType> {
     private Context context;
 
-    private List<FeedbackType> options;
-
-    public FeedbackTypeAdapter(@NonNull Context context, @LayoutRes int layoutRes, List<FeedbackType> options) {
+    public FeedbackTypeAdapter(@NonNull Context context, @LayoutRes int layoutRes, Collection<FeedbackType> options) {
         super(context, layoutRes);
-        if (options == null) {
-            this.options = Arrays.asList(FeedbackType.values());
-        } else {
-            this.options = options;
-        }
+        this.addAll(options);
+        this.context = context;
+    }
+
+    public FeedbackTypeAdapter(@NonNull Context context, @LayoutRes int layoutRes, FeedbackType[] options) {
+        super(context, layoutRes);
+        this.addAll(options);
         this.context = context;
     }
 
@@ -43,15 +43,9 @@ public class FeedbackTypeAdapter extends ArrayAdapter<FeedbackType> {
 
     @Override
     public long getItemId(int position) {
-        FeedbackType ft = options.get(position);
+        FeedbackType ft = getItem(position);
         if (ft == null) return -1;
         return ft.getValue();
-    }
-
-    @Nullable
-    @Override
-    public FeedbackType getItem(int position) {
-        return options == null ? null : options.get(position);
     }
 
     @NonNull
@@ -66,11 +60,6 @@ public class FeedbackTypeAdapter extends ArrayAdapter<FeedbackType> {
         return getCustomView(position, convertView, parent);
     }
 
-    @Override
-    public int getCount() {
-        return options.size();
-    }
-
     private View getCustomView(int position, View convertView, @NonNull ViewGroup parent) {
         View v;
         if (convertView == null) {
@@ -79,7 +68,10 @@ public class FeedbackTypeAdapter extends ArrayAdapter<FeedbackType> {
             v = convertView;
         }
         TextView tv = (TextView) v.findViewById(R.id.item_text);
-        tv.setText(options.get(position).getText());
+        FeedbackType ft = (FeedbackType) getItem(position);
+        if (ft != null) {
+            tv.setText(ft.getText());
+        }
         tv.setTextColor(ContextCompat.getColor(context, R.color.black));
         return v;
     }

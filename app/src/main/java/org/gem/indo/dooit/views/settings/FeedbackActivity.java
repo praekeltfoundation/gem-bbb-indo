@@ -46,6 +46,7 @@ public class FeedbackActivity extends DooitActivity {
      *************/
 
     public static final String TAG = "FeedbackActivity";
+    public static final String ARG_TYPE = "feedback_type";
 
     Subscription feedbackSubscription = null;
 
@@ -91,8 +92,11 @@ public class FeedbackActivity extends DooitActivity {
 
         @Override
         protected Intent createIntent(Context context) {
-            return new Intent(context, FeedbackActivity.class);
+            this.intent = new Intent(context, FeedbackActivity.class);
+            return intent;
         }
+
+
     }
 
 
@@ -114,6 +118,14 @@ public class FeedbackActivity extends DooitActivity {
                 Arrays.asList(FeedbackType.values())
         );
         subject.setAdapter(feedbackTypeArrayAdapter);
+        Intent intent = getIntent();
+        if (intent != null) {
+            FeedbackType type = FeedbackType.getValueOf(intent.getIntExtra(ARG_TYPE, -1));
+            if (type != null) {
+                int i = feedbackTypeArrayAdapter.getPosition(type);
+                subject.setSelection(i >= 0 && i < feedbackTypeArrayAdapter.getCount() ? i : 0);
+            }
+        }
 
         // Background
         SquiggleBackgroundHelper.setBackground(this, R.color.purple, R.color.purple_light, background);
@@ -145,10 +157,16 @@ public class FeedbackActivity extends DooitActivity {
         String msg = message == null ? null : message.getText().toString();
         FeedbackType type = (FeedbackType) subject.getSelectedItem();
 
-        if (TextUtils.isEmpty(msg)) return;
-        if (type == null) return;
+        if (TextUtils.isEmpty(msg) || type == null) {
+            Toast.makeText(
+                    this,
+                    "You need to pick a type and enter a message.",
+                    Toast.LENGTH_SHORT
+            ).show();
+            return;
+        }
 
-        UserFeedback feedback = new UserFeedback(message.toString(), (FeedbackType) subject.getSelectedItem());
+        UserFeedback feedback = new UserFeedback(msg, type);
         feedbackSubscription = feedbackManager.sendFeedback(feedback, new DooitErrorHandler() {
             @Override
             public void onError(DooitAPIError error) {

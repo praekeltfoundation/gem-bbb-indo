@@ -18,7 +18,7 @@ public enum FeedbackType {
     @SerializedName("report")
     REPORT(1, R.string.feedback_option_report),
 
-    @SerializedName("feedback")
+    @SerializedName("general")
     GENERAL(2, R.string.feedback_option_general),
 
     @SerializedName("partner")
@@ -42,7 +42,7 @@ public enum FeedbackType {
 
     public static FeedbackType getValueOf(int value) {
         FeedbackType val = map.get(value);
-        return val == null ? REPORT : map.get(value);
+        return val == null ? null : map.get(value);
     }
 
     public int getText() {

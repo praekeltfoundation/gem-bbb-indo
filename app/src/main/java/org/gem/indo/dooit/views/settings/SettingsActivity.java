@@ -1,5 +1,6 @@
 package org.gem.indo.dooit.views.settings;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -14,6 +15,7 @@ import org.gem.indo.dooit.DooitApplication;
 import org.gem.indo.dooit.R;
 import org.gem.indo.dooit.helpers.DooitSharedPreferences;
 import org.gem.indo.dooit.helpers.SquiggleBackgroundHelper;
+import org.gem.indo.dooit.models.enums.FeedbackType;
 import org.gem.indo.dooit.views.DooitActivity;
 import org.gem.indo.dooit.views.RootActivity;
 import org.gem.indo.dooit.views.helpers.activity.DooitActivityBuilder;
@@ -93,11 +95,19 @@ public class SettingsActivity extends DooitActivity {
                 .startActivity();
     }
 
-    @OnClick({R.id.settings_about_feedback})
+    @OnClick(value = {R.id.settings_about_feedback, R.id.settings_about_report})
     public void feedback(View view) {
-        FeedbackActivity.Builder.create(this)
-                //.setTitle(getString(org.gem.indo.dooit.R.string.title_activity_terms_and_conditions))
-                .startActivity();
+        FeedbackActivity.Builder nextActivity = FeedbackActivity.Builder.create(this);
+        Intent intent = nextActivity.createIntent(this);
+        switch (view.getId()) {
+            case R.id.settings_about_feedback:
+                intent.putExtra(FeedbackActivity.ARG_TYPE, FeedbackType.GENERAL.getValue());
+                break;
+            case R.id.settings_about_report:
+                intent.putExtra(FeedbackActivity.ARG_TYPE, FeedbackType.REPORT.getValue());
+                break;
+        }
+        nextActivity.startActivity();
     }
 
     @OnClick({R.id.settings_about_privacy})
