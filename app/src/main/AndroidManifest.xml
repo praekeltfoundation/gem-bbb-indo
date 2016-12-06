@@ -7,6 +7,7 @@
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
 
     <application
         android:name="org.gem.indo.dooit.DooitApplication"
@@ -86,6 +87,11 @@
         <service
             android:name=".services.NotificationScheduler"
             android:enabled="true" />
+        <service
+            android:name=".services.NotificationService"
+            android:enabled="true" />
+
+        <receiver android:name=".services.NotificationAlarm"/>
 
         <meta-data
             android:name="io.fabric.ApiKey"

@@ -17,7 +17,7 @@ import org.gem.indo.dooit.R;
 import org.gem.indo.dooit.helpers.Persisted;
 import org.gem.indo.dooit.helpers.activity.result.ActivityForResultHelper;
 import org.gem.indo.dooit.helpers.notifications.NotificationType;
-import org.gem.indo.dooit.helpers.notifications.Notifier;
+import org.gem.indo.dooit.services.NotificationAlarm;
 import org.gem.indo.dooit.views.DooitActivity;
 import org.gem.indo.dooit.views.helpers.activity.DooitActivityBuilder;
 import org.gem.indo.dooit.views.main.adapters.MainTabAdapter;
@@ -77,6 +77,8 @@ public class MainActivity extends DooitActivity {
             }
         }
 
+        NotificationAlarm.setAlarm(this);
+
         // App opened from notification. Direct to appropriate screen.
         Bundle extras = getIntent().getExtras();
         if (extras != null)
@@ -86,7 +88,7 @@ public class MainActivity extends DooitActivity {
                         startPage(MainViewPagerPositions.CHALLENGE);
                 }
 
-        new Notifier(this).notify(NotificationType.CHALLENGE_AVAILABLE, MainActivity.class, "Challenge title");
+//        new Notifier(this).notify(NotificationType.CHALLENGE_AVAILABLE, MainActivity.class, "Challenge title");
     }
 
     @OnPageChange(value = R.id.content_main_view_pager, callback = OnPageChange.Callback.PAGE_SELECTED)
