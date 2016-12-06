@@ -9,8 +9,6 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.facebook.drawee.view.SimpleDraweeView;
 
@@ -18,6 +16,8 @@ import org.gem.indo.dooit.DooitApplication;
 import org.gem.indo.dooit.R;
 import org.gem.indo.dooit.helpers.Persisted;
 import org.gem.indo.dooit.helpers.activity.result.ActivityForResultHelper;
+import org.gem.indo.dooit.helpers.notifications.NotificationType;
+import org.gem.indo.dooit.helpers.notifications.Notifier;
 import org.gem.indo.dooit.views.DooitActivity;
 import org.gem.indo.dooit.views.helpers.activity.DooitActivityBuilder;
 import org.gem.indo.dooit.views.main.adapters.MainTabAdapter;
@@ -76,6 +76,8 @@ public class MainActivity extends DooitActivity {
                 MainViewPagerPositions.setInActiveState(tab.getCustomView());
             }
         }
+
+        new Notifier(this).notify(NotificationType.CHALLENGE_AVAILABLE, MainActivity.class);
     }
 
     @OnPageChange(value = R.id.content_main_view_pager, callback = OnPageChange.Callback.PAGE_SELECTED)
@@ -104,7 +106,7 @@ public class MainActivity extends DooitActivity {
         ProfileActivity.Builder.create(this).startActivity();
     }
 
-	@Override
+    @Override
     protected void onResume() {
         super.onResume();
         simpleDraweeViewProfile.setImageURI(persisted.getCurrentUser().getProfile().getProfileImageUrl());
@@ -132,8 +134,8 @@ public class MainActivity extends DooitActivity {
         return ((MainFragment) mainTabAdapter.instantiateItem(viewPager, MainViewPagerPositions.getValue()));
     }
 
-    public void refreshGoals(){
-        ((TargetFragment)getFragment(MainViewPagerPositions.TARGET)).refreshGoals();
+    public void refreshGoals() {
+        ((TargetFragment) getFragment(MainViewPagerPositions.TARGET)).refreshGoals();
     }
 
     public static class Builder extends DooitActivityBuilder<Builder> {
