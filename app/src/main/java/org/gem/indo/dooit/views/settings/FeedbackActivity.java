@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import org.gem.indo.dooit.DooitApplication;
 import org.gem.indo.dooit.R;
@@ -31,6 +32,9 @@ import javax.inject.Inject;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import butterknife.Unbinder;
+import rx.Subscription;
+import rx.functions.Action1;
 
 /**
  * Created by Rudolph Jacobs on 2016-12-05.
@@ -43,7 +47,9 @@ public class FeedbackActivity extends DooitActivity {
 
     public static final String TAG = "FeedbackActivity";
 
-    FeedbackType feedbackType = null;
+    Subscription feedbackSubscription = null;
+
+    Unbinder unbinder = null;
 
 
     /************
@@ -99,7 +105,7 @@ public class FeedbackActivity extends DooitActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_feedback);
         ((DooitApplication) getApplication()).component.inject(this);
-        ButterKnife.bind(this);
+        unbinder = ButterKnife.bind(this);
 
         // Populate feedback types
         FeedbackTypeAdapter feedbackTypeArrayAdapter = new FeedbackTypeAdapter(
@@ -114,23 +120,66 @@ public class FeedbackActivity extends DooitActivity {
     }
 
 
+    @Override
+    protected void onStop() {
+        if (feedbackSubscription != null) {
+            feedbackSubscription.unsubscribe();
+        }
+        super.onStop();
+    }
+
+    @Override
+    protected void onDestroy() {
+        if (unbinder != null) {
+            unbinder.unbind();
+        }
+        super.onDestroy();
+    }
+
     /***************
      * Interaction *
      ***************/
 
     @OnClick(R.id.activity_feedback_submit)
     public void submit() {
-        String msg = message == null ? null : message.toString();
+        String msg = message == null ? null : message.getText().toString();
         FeedbackType type = (FeedbackType) subject.getSelectedItem();
 
         if (TextUtils.isEmpty(msg)) return;
         if (type == null) return;
 
         UserFeedback feedback = new UserFeedback(message.toString(), (FeedbackType) subject.getSelectedItem());
-        feedbackManager.sendFeedback(feedback, new DooitErrorHandler() {
+        feedbackSubscription = feedbackManager.sendFeedback(feedback, new DooitErrorHandler() {
             @Override
             public void onError(DooitAPIError error) {
                 Log.d(TAG, "Could not submit feedback.");
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Toast.makeText(
+                                FeedbackActivity.this,
+                                "Sorry, but we couldn't send your feedback.",
+                                Toast.LENGTH_SHORT
+                        ).show();
+                        FeedbackActivity.this.finish();
+                    }
+                });
+            }
+        }).subscribe(new Action1<UserFeedback>() {
+            @Override
+            public void call(UserFeedback userFeedback) {
+                Log.d(TAG, "Feedback successfully submitted.");
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Toast.makeText(
+                                FeedbackActivity.this,
+                                "Thank you for your feedback!",
+                                Toast.LENGTH_SHORT
+                        ).show();
+                        FeedbackActivity.this.finish();
+                    }
+                });
             }
         });
     }
