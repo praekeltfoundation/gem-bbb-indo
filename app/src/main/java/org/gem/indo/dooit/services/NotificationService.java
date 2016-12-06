@@ -7,6 +7,7 @@ import org.gem.indo.dooit.DooitApplication;
 import org.gem.indo.dooit.api.DooitAPIError;
 import org.gem.indo.dooit.api.DooitErrorHandler;
 import org.gem.indo.dooit.api.managers.ChallengeManager;
+import org.gem.indo.dooit.helpers.Persisted;
 import org.gem.indo.dooit.helpers.notifications.NotificationType;
 import org.gem.indo.dooit.helpers.notifications.Notifier;
 import org.gem.indo.dooit.models.challenge.BaseChallenge;
@@ -33,6 +34,9 @@ public class NotificationService extends IntentService {
     @Inject
     ChallengeManager challengeManager;
 
+    @Inject
+    Persisted persisted;
+
     public NotificationService() {
         super(NotificationService.class.getName());
     }
@@ -47,30 +51,35 @@ public class NotificationService extends IntentService {
     protected void onHandleIntent(final Intent intent) {
         List<Observable<?>> requests = new ArrayList<>();
 
-        requests.add(challengeManager.retrieveCurrentChallenge(true, new DooitErrorHandler() {
-            @Override
-            public void onError(DooitAPIError error) {
+        if (persisted.shouldNotify(NotificationType.CHALLENGE_AVAILABLE))
+            requests.add(challengeManager.retrieveCurrentChallenge(true, new DooitErrorHandler() {
+                @Override
+                public void onError(DooitAPIError error) {
 
-            }
-        }));
+                }
+            }));
 
-        Observable.from(requests).flatMap(new Func1<Observable<?>, Observable<?>>() {
-            @Override
-            public Observable<?> call(Observable<?> observable) {
-                return observable;
-            }
-        }).doOnCompleted(new Action0() {
-            @Override
-            public void call() {
-                complete(intent);
-            }
-        }).subscribe(new Action1<Object>() {
-            @Override
-            public void call(Object o) {
-                if (o instanceof BaseChallenge)
-                    currentChallengeRetrieved((BaseChallenge) o);
-            }
-        });
+        if (requests.size() > 0)
+            Observable.from(requests).flatMap(new Func1<Observable<?>, Observable<?>>() {
+                @Override
+                public Observable<?> call(Observable<?> observable) {
+                    return observable;
+                }
+            }).doOnCompleted(new Action0() {
+                @Override
+                public void call() {
+                    complete(intent);
+                }
+            }).subscribe(new Action1<Object>() {
+                @Override
+                public void call(Object o) {
+                    if (o instanceof BaseChallenge)
+                        currentChallengeRetrieved((BaseChallenge) o);
+                }
+            });
+        else
+            // Nothing was requested. All notifications turned off in Settings.
+            complete(intent);
     }
 
     protected void currentChallengeRetrieved(BaseChallenge challenge) {
