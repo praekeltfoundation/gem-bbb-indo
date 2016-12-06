@@ -177,6 +177,7 @@ public class RegistrationActivity extends DooitActivity {
                     public void call(AuthenticationResponse authenticationResponse) {
                         persisted.setCurrentUser(authenticationResponse.getUser());
                         persisted.saveToken(authenticationResponse.getToken());
+                        persisted.setNewBotUser(true);
                         ProfileImageActivity.Builder.create(RegistrationActivity.this).startActivityClearTop();
                     }
                 });

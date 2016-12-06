@@ -13,6 +13,7 @@ import org.gem.indo.dooit.Constants;
 import org.gem.indo.dooit.DooitApplication;
 import org.gem.indo.dooit.R;
 import org.gem.indo.dooit.helpers.DooitSharedPreferences;
+import org.gem.indo.dooit.helpers.Persisted;
 import org.gem.indo.dooit.helpers.SquiggleBackgroundHelper;
 import org.gem.indo.dooit.views.DooitActivity;
 import org.gem.indo.dooit.views.RootActivity;
@@ -40,8 +41,12 @@ public class SettingsActivity extends DooitActivity {
 
     @BindView(R.id.toolbar_title)
     TextView title;
+
     @Inject
     DooitSharedPreferences dooitSharedPreferences;
+
+    @Inject
+    Persisted persisted;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,6 +85,7 @@ public class SettingsActivity extends DooitActivity {
     @OnClick({R.id.settings_account_sign_out})
     public void signOut(View view) {
         dooitSharedPreferences.clear();
+        persisted.setNewBotUser(false); // Keep for next log in
         Intent intent = new Intent(this, RootActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent);

@@ -156,6 +156,14 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
     @Override
     public void onActive() {
         super.onActive();
+
+        // Choose which conversation to instantiate
+        if (persisted.isNewBotUser()) {
+            setBotType(BotType.DEFAULT);
+            persisted.setNewBotUser(false);
+        } else
+            setBotType(BotType.DEFAULT);
+
         createFeed();
     }
 
