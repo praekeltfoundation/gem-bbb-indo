@@ -60,6 +60,7 @@ public class NotificationService extends IntentService {
             }));
 
         if (requests.size() > 0)
+            // Using flatmap to perform requests serially
             Observable.from(requests).flatMap(new Func1<Observable<?>, Observable<?>>() {
                 @Override
                 public Observable<?> call(Observable<?> observable) {
