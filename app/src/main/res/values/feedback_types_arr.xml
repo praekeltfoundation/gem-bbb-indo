@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="feedback_types">
+        <!-- Order is very important -->
+        <!-- Ensure order matches FeedbackType.java -->
+        <item>@string/feedback_option_ask</item>
+        <item>@string/feedback_option_report</item>
+        <item>@string/feedback_option_general</item>
+        <item>@string/feedback_option_partner</item>
+    </string-array>
+</resources>
