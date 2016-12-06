@@ -5,8 +5,10 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.drawable.BitmapDrawable;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.TaskStackBuilder;
+import android.support.v4.content.ContextCompat;
 
 import org.gem.indo.dooit.R;
 import org.gem.indo.dooit.views.main.MainActivity;
@@ -31,7 +33,8 @@ public class Notifier {
     public <T extends Activity> void notify(NotificationType notifyType, Class<T> cls, String contentText) {
         // TODO: Activity class argument might have to be replaced with a DooitActivityBuilder
         NotificationCompat.Builder builder = new NotificationCompat.Builder(context)
-                .setSmallIcon(R.mipmap.ic_launcher)
+                .setSmallIcon(R.drawable.ic_d_notification_icon_small)
+                .setLargeIcon(((BitmapDrawable) ContextCompat.getDrawable(context, R.mipmap.ic_launcher)).getBitmap())
                 .setContentTitle(context.getString(notifyType.getTitleRes()))
                 .setContentText(contentText)
                 .setAutoCancel(true);
