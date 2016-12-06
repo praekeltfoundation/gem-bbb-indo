@@ -2,6 +2,7 @@ package org.gem.indo.dooit.dagger;
 
 import org.gem.indo.dooit.DooitApplication;
 import org.gem.indo.dooit.api.managers.DooitManager;
+import org.gem.indo.dooit.api.managers.FeedbackManager;
 import org.gem.indo.dooit.helpers.Persisted;
 import org.gem.indo.dooit.views.DooitActivity;
 import org.gem.indo.dooit.views.RootActivity;
@@ -34,6 +35,7 @@ import org.gem.indo.dooit.views.onboarding.LoginActivity;
 import org.gem.indo.dooit.views.onboarding.ProfileImageActivity;
 import org.gem.indo.dooit.views.onboarding.RegistrationActivity;
 import org.gem.indo.dooit.views.profile.ProfileActivity;
+import org.gem.indo.dooit.views.settings.FeedbackActivity;
 import org.gem.indo.dooit.views.settings.SettingsActivity;
 import org.gem.indo.dooit.views.tip.TipArticleActivity;
 
@@ -74,6 +76,10 @@ public interface DooitComponent {
     void inject(DooitApplication o);
 
     void inject(DooitManager o);
+
+    void inject(FeedbackActivity o);
+
+    void inject(FeedbackManager o);
 
     void inject(GoalAddCallback o);
 

@@ -1,6 +1,7 @@
 package org.gem.indo.dooit.api.managers;
 
 import android.app.Application;
+import android.support.annotation.NonNull;
 
 import org.gem.indo.dooit.api.DooitErrorHandler;
 import org.gem.indo.dooit.api.interfaces.ChallengeAPI;
@@ -31,7 +32,8 @@ public class FeedbackManager extends DooitManager {
         feedbackAPI = retrofit.create(FeedbackAPI.class);
     }
 
-    public Observable<UserFeedback> sendFeedback(UserFeedback feedback, DooitErrorHandler errorHandler) {
+    public Observable<UserFeedback> sendFeedback(@NonNull UserFeedback feedback,
+                                                 @NonNull DooitErrorHandler errorHandler) {
         return useNetwork(feedbackAPI.sendFeedback(feedback), errorHandler);
     }
 }

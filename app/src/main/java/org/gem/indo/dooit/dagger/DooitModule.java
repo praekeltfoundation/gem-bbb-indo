@@ -7,6 +7,7 @@ import org.gem.indo.dooit.DooitApplication;
 import org.gem.indo.dooit.api.managers.AchievementManager;
 import org.gem.indo.dooit.api.managers.AuthenticationManager;
 import org.gem.indo.dooit.api.managers.ChallengeManager;
+import org.gem.indo.dooit.api.managers.FeedbackManager;
 import org.gem.indo.dooit.api.managers.FileUploadManager;
 import org.gem.indo.dooit.api.managers.GoalManager;
 import org.gem.indo.dooit.api.managers.TipManager;
@@ -70,6 +71,12 @@ public class DooitModule {
     @Singleton
     DooitSharedPreferences provideDooitSharedPreferences() {
         return new DooitSharedPreferences(application);
+    }
+
+    @Provides
+    @Singleton
+    FeedbackManager provideFeedbackManager() {
+        return new FeedbackManager(application);
     }
 
     @Provides
