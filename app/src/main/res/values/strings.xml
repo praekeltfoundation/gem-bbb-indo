@@ -69,7 +69,7 @@
 
     <!-- Registration -->
     <string name="reg_t_c">By clicking register, you are agreeing\n to our Terms &amp; Condition</string>
-    <string name="reg_example_name">Example: Aulia Dharmaningtyas</string>
+    <string name="reg_example_name">Example: AuliaDharmaningtyas</string>
     <string name="reg_example_name_error_1">Name can\'t be blank</string>
     <string name="reg_example_name_error_2">Name can\'t contain spaces</string>
     <string name="reg_example_name_error_3">Name can only contain letters and numbers</string>
