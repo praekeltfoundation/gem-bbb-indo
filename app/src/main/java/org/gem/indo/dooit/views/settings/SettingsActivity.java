@@ -93,6 +93,13 @@ public class SettingsActivity extends DooitActivity {
                 .startActivity();
     }
 
+    @OnClick({R.id.settings_about_feedback})
+    public void feedback(View view) {
+        FeedbackActivity.Builder.create(this)
+                //.setTitle(getString(org.gem.indo.dooit.R.string.title_activity_terms_and_conditions))
+                .startActivity();
+    }
+
     @OnClick({R.id.settings_about_privacy})
     public void privacy(View view) {
         MinimalWebViewActivity.Builder.create(this)
