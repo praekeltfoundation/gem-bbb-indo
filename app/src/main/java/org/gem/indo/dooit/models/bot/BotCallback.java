@@ -58,6 +58,13 @@ public abstract class BotCallback {
         return null;
     }
 
+    /**
+     * Sets up a Bot Model before it is passed to the view holder.
+     */
+    public void setupBotModel(BaseBotModel model) {
+
+    }
+
     protected void notifyDone(final OnAsyncListener listener) {
         handler.post(new Runnable() {
             @Override

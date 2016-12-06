@@ -20,7 +20,6 @@ public class Answer extends BaseBotModel {
     private String removeOnSelect;
     private String[] changeOnSelect;
     private String typeOnFinish;
-    private Map<String, String> valueMap = new LinkedHashMap<>();
 
     public Answer() {
         super(Answer.class.toString());
@@ -75,18 +74,6 @@ public class Answer extends BaseBotModel {
 
     public void setTypeOnFinish(String typeOnFinish) {
         this.typeOnFinish = typeOnFinish;
-    }
-
-    public void put(String key, String value) {
-        valueMap.put(key, value);
-    }
-
-    public String get(String key) {
-        return valueMap.get(key);
-    }
-
-    public boolean contains(String key) {
-        return valueMap.containsKey(key);
     }
 
     @Override

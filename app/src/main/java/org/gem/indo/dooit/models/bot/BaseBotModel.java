@@ -9,6 +9,7 @@ import org.gem.indo.dooit.models.enums.BotMessageType;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -28,6 +29,7 @@ public abstract class BaseBotModel {
     protected String callback;
     protected String asyncCall;
     protected String[] textParams = new String[0];
+    private Map<String, String> valueMap = new LinkedHashMap<>();
 
     public BaseBotModel(String classType) {
         this.classType = classType;
@@ -99,5 +101,17 @@ public abstract class BaseBotModel {
 
     public boolean hasAsyncCall() {
         return !TextUtils.isEmpty(asyncCall);
+    }
+
+    public void put(String key, String value) {
+        valueMap.put(key, value);
+    }
+
+    public String get(String key) {
+        return valueMap.get(key);
+    }
+
+    public boolean contains(String key) {
+        return valueMap.containsKey(key);
     }
 }
