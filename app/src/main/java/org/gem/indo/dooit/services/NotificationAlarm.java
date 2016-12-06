@@ -5,11 +5,6 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v4.content.WakefulBroadcastReceiver;
-import android.widget.Toast;
-
-import org.gem.indo.dooit.helpers.notifications.NotificationType;
-import org.gem.indo.dooit.helpers.notifications.Notifier;
-import org.gem.indo.dooit.views.main.MainActivity;
 
 /**
  * Created by Wimpie Victor on 2016/12/06.
