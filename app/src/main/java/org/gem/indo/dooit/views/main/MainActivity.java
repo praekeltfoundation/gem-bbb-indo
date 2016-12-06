@@ -77,7 +77,16 @@ public class MainActivity extends DooitActivity {
             }
         }
 
-        new Notifier(this).notify(NotificationType.CHALLENGE_AVAILABLE, MainActivity.class);
+        // App opened from notification. Direct to appropriate screen.
+        Bundle extras = getIntent().getExtras();
+        if (extras != null)
+            if (extras.containsKey(NotificationType.NOTIFICATION_TYPE))
+                switch (NotificationType.getValueOf(extras.getInt(NotificationType.NOTIFICATION_TYPE))) {
+                    case CHALLENGE_AVAILABLE:
+                        startPage(MainViewPagerPositions.CHALLENGE);
+                }
+
+        new Notifier(this).notify(NotificationType.CHALLENGE_AVAILABLE, MainActivity.class, "Challenge title");
     }
 
     @OnPageChange(value = R.id.content_main_view_pager, callback = OnPageChange.Callback.PAGE_SELECTED)

@@ -28,12 +28,13 @@ public class Notifier {
      * @param cls
      * @param <T> The Activity type to open when the notification is clicked.
      */
-    public <T extends Activity> void notify(NotificationType notifyType, Class<T> cls) {
+    public <T extends Activity> void notify(NotificationType notifyType, Class<T> cls, String contentText) {
         // TODO: Activity class argument might have to be replaced with a DooitActivityBuilder
         NotificationCompat.Builder builder = new NotificationCompat.Builder(context)
                 .setSmallIcon(R.mipmap.ic_launcher)
-                .setContentTitle("Test Notification")
-                .setContentText("Test Content");
+                .setContentTitle(context.getString(notifyType.getTitleRes()))
+                .setContentText(contentText)
+                .setAutoCancel(true);
 
         // Setting up an artificial activity stack allows the notification to be clicked, open the
         // provided Activity class, and close the app when user clicks back.
@@ -41,10 +42,10 @@ public class Notifier {
         stackBuilder.addParentStack(cls);
 
         Intent intent = new Intent(context, MainActivity.class);
+        intent.putExtra(NotificationType.NOTIFICATION_TYPE, notifyType.getMessageId());
         stackBuilder.addNextIntent(intent);
         PendingIntent pendingIntent = stackBuilder.getPendingIntent(notifyType.getMessageId(),
                 PendingIntent.FLAG_UPDATE_CURRENT);
-
         builder.setContentIntent(pendingIntent);
 
         NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
