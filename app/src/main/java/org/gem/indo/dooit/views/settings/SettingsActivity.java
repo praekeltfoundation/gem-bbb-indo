@@ -23,6 +23,7 @@ import org.gem.indo.dooit.views.RootActivity;
 import org.gem.indo.dooit.views.helpers.activity.DooitActivityBuilder;
 import org.gem.indo.dooit.views.onboarding.ChangeNameActivity;
 import org.gem.indo.dooit.views.onboarding.ChangePasswordActivity;
+import org.gem.indo.dooit.views.onboarding.ChangeSecurityQuestionActivity;
 import org.gem.indo.dooit.views.web.MinimalWebViewActivity;
 
 import javax.inject.Inject;
@@ -94,6 +95,11 @@ public class SettingsActivity extends DooitActivity {
     @OnClick(R.id.settings_account_change_password)
     public void changePassword(View view) {
         ChangePasswordActivity.Builder.create(this).startActivity();
+    }
+
+    @OnClick(R.id.settings_account_change_security_question)
+    public void changeSecurityQuestion(View view) {
+        ChangeSecurityQuestionActivity.Builder.create(this).startActivity();
     }
 
     @OnClick({R.id.settings_account_sign_out})

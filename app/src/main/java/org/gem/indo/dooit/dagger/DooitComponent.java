@@ -32,6 +32,7 @@ import org.gem.indo.dooit.views.main.fragments.tip.providers.TipProvider;
 import org.gem.indo.dooit.views.main.fragments.tip.viewholders.TipViewHolder;
 import org.gem.indo.dooit.views.onboarding.ChangeNameActivity;
 import org.gem.indo.dooit.views.onboarding.ChangePasswordActivity;
+import org.gem.indo.dooit.views.onboarding.ChangeSecurityQuestionActivity;
 import org.gem.indo.dooit.views.onboarding.LoginActivity;
 import org.gem.indo.dooit.views.onboarding.ProfileImageActivity;
 import org.gem.indo.dooit.views.onboarding.RegistrationActivity;
@@ -71,6 +72,8 @@ public interface DooitComponent {
     void inject(ChangeNameActivity o);
 
     void inject(ChangePasswordActivity o);
+
+    void inject(ChangeSecurityQuestionActivity o);
 
     void inject(DooitActivity o);
 

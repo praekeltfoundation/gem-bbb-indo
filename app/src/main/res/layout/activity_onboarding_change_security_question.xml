@@ -3,17 +3,18 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_onboarding_change_secq_background"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    android:padding="@dimen/challenge_inset_xlarge"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:background="@drawable/pattern_01_purple"
     tools:context="org.gem.indo.dooit.views.onboarding.ChangeSecurityQuestionActivity">
 
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:padding="@dimen/challenge_inset_xlarge">
 
         <TextView
             android:id="@+id/activity_onboarding_change_secq_title"
