@@ -110,7 +110,7 @@
     <style name="AppTheme.SpinnerItem" parent="AppTheme.TextView.Regular.Medium">
         <item name="android:padding">@dimen/spinner_item_padding</item>
     </style>
-    
+
     <!-- Dialog -->
     <style name="NoAnim">
         <item name="android:windowAnimationStyle">@null</item>
@@ -126,5 +126,9 @@
         <item name="fontPath">fonts/LondrinaSolid-Regular.ttf</item>
         <item name="android:textColor">@color/white</item>
     </style>
+
+    <style name="AppTheme.NoActionBar.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="AppTheme.NoActionBar.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
 </resources>
