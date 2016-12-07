@@ -12,7 +12,7 @@ import org.gem.indo.dooit.models.Goal;
 import org.gem.indo.dooit.models.GoalTransaction;
 import org.gem.indo.dooit.models.bot.Answer;
 import org.gem.indo.dooit.models.bot.BaseBotModel;
-import org.gem.indo.dooit.models.bot.BotCallback;
+import org.gem.indo.dooit.controllers.BotCallback;
 import org.gem.indo.dooit.views.main.MainActivity;
 
 import java.util.Map;

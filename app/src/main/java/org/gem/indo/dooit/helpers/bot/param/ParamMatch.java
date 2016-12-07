@@ -36,14 +36,21 @@ public class ParamMatch {
         return processed != null;
     }
 
+    public boolean isEmpty() {
+        return args.length <= 0;
+    }
+
+    public int count() {
+        return args.length;
+    }
+
     /**
      * Populate the string with arguments. The arguments must be provided in the same order that
      * they appear in the string.
      *
      * @param objects
      */
-    public String populate(Object[] objects) {
-        // TODO: Support populating using a map for in case the translations have the arguments in different orders
+    public String process(Object[] objects) {
         if (isProcessed())
             throw new RuntimeException(TAG + " is already processed.");
 
@@ -54,5 +61,27 @@ public class ParamMatch {
 
         processed = String.format(forFormat, objects);
         return processed;
+    }
+
+    /**
+     * Alternative process to support cases where arguments are located in different places. For
+     * localisation.
+     *
+     * @param mapping
+     * @return
+     */
+    public String process(Map<String, Object> mapping) {
+        Object[] objects = new Object[args.length];
+        for (int i = 0; i < args.length; i++)
+            objects[i] = mapping.get(args[i].getKey());
+        return process(objects);
+    }
+
+    public String getProcessed() {
+        return processed;
+    }
+
+    public ParamArg[] getArgs() {
+        return args;
     }
 }

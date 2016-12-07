@@ -26,6 +26,9 @@ import org.gem.indo.dooit.views.main.fragments.MainFragment;
 import org.gem.indo.dooit.views.main.fragments.target.TargetFragment;
 import org.gem.indo.dooit.views.profile.ProfileActivity;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import javax.inject.Inject;
 
 import butterknife.BindView;
@@ -89,7 +92,11 @@ public class MainActivity extends DooitActivity {
 
         // Junk to test
         ParamMatch match = ParamParser.parse("qwertyu $(goal.name) bnm, $(goal.week) rtyui dfgh");
-        match.populate(new Object[]{0, 1});
+//        match.process(new Object[]{0, 1});
+        Map<String, Object> map = new HashMap<String, Object>();
+        map.put("goal.name", "Goal 1");
+        map.put("goal.week", "4");
+        match.process(map);
     }
 
     @OnPageChange(value = R.id.content_main_view_pager, callback = OnPageChange.Callback.PAGE_SELECTED)

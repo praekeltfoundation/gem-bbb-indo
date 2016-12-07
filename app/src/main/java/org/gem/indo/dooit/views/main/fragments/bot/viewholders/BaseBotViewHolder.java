@@ -33,7 +33,16 @@ public abstract class BaseBotViewHolder<T extends BaseBotModel> extends Recycler
     public void populate(T model) {
         dataModel = model;
         reset();
+        if (!dataModel.isImmutable()) {
+            populateModel();
+            dataModel.finish();
+        }
     }
+
+    /**
+     * Called when the bot model is mutable, used to process model with data from controller.
+     */
+    protected abstract void populateModel();
 
     public void reset() {}
 

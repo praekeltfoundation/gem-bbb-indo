@@ -125,7 +125,8 @@ public class GoalVerificationViewHolder extends BaseBotViewHolder<Node> {
         textView.setLayoutParams(lp);
     }
 
-    public Context getContext() {
-        return itemView.getContext();
+    @Override
+    protected void populateModel() {
+
     }
 }

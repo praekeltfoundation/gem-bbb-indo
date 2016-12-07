@@ -70,4 +70,17 @@ public enum BotMessageType {
     public boolean equalsTo(int value) {
         return this.value == value;
     }
+
+    /**
+     * @param msgType
+     * @return Does the node contain text that may require parameters?
+     */
+    public boolean isTextType(BotMessageType msgType) {
+        switch (msgType) {
+            case TEXT:
+                return true;
+            default:
+                return false;
+        }
+    }
 }

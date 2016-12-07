@@ -134,7 +134,7 @@
 
     <!-- BOT: goal_add -->
     <!-- Questions -->
-    <string name="goal_add_greeting">Hello %s!</string>
+    <string name="goal_add_greeting">Hello $(user.username)!</string>
     <string name="goal_add_intro">My Name is Dooit. I\'m gonna help  you save!</string>
     <string name="goal_add_ask_goal">So what are you you saving for?</string>
 

@@ -1,8 +1,11 @@
-package org.gem.indo.dooit.models.bot;
+package org.gem.indo.dooit.controllers;
 
 import android.content.Context;
 import android.os.Handler;
 import android.os.Looper;
+
+import org.gem.indo.dooit.models.bot.Answer;
+import org.gem.indo.dooit.models.bot.BaseBotModel;
 
 import java.util.Map;
 
@@ -38,6 +41,24 @@ public abstract class BotCallback {
     public abstract void onCall(String key, Map<String, Answer> answerLog, BaseBotModel model);
 
     /**
+     * Called by viewholders trigger behaviour in the controller.
+     *
+     * @param model
+     * @param key
+     */
+    public void call(BaseBotModel model, String key) {
+        // Override me
+    }
+
+    /**
+     * @param model The bot model that needs the parameter value
+     * @param paramType   The key of the parameter
+     */
+    public void resolveParam(BaseBotModel model, BotParamType paramType) {
+        // Override me
+    }
+
+    /**
      * Called when the `asyncCall` field is set on a Node.
      *
      * @param key       The value of the `callback` field
@@ -46,7 +67,7 @@ public abstract class BotCallback {
      * @param listener  Listener to be called when async operation is done
      */
     public void onAsyncCall(String key, Map<String, Answer> answerLog, BaseBotModel model, OnAsyncListener listener) {
-
+        // Override me
     }
 
     /**
@@ -56,13 +77,6 @@ public abstract class BotCallback {
      */
     public Object getObject() {
         return null;
-    }
-
-    /**
-     * Setup a Bot Model before it is passed to the view holder.
-     */
-    public void populate(BaseBotModel model) {
-
     }
 
     protected void notifyDone(final OnAsyncListener listener) {

@@ -3,6 +3,7 @@ package org.gem.indo.dooit.dagger;
 import org.gem.indo.dooit.DooitApplication;
 import org.gem.indo.dooit.api.managers.DooitManager;
 import org.gem.indo.dooit.api.managers.FeedbackManager;
+import org.gem.indo.dooit.controllers.DooitBotController;
 import org.gem.indo.dooit.helpers.Persisted;
 import org.gem.indo.dooit.services.NotificationService;
 import org.gem.indo.dooit.views.DooitActivity;
@@ -21,7 +22,7 @@ import org.gem.indo.dooit.views.main.fragments.challenge.fragments.ChallengePict
 import org.gem.indo.dooit.views.main.fragments.challenge.fragments.ChallengeQuizFragment;
 import org.gem.indo.dooit.views.main.fragments.challenge.fragments.ChallengeRegisterFragment;
 import org.gem.indo.dooit.views.main.fragments.target.TargetFragment;
-import org.gem.indo.dooit.views.main.fragments.target.callbacks.GoalAddCallback;
+import org.gem.indo.dooit.views.main.fragments.target.callbacks.GoalAddController;
 import org.gem.indo.dooit.views.main.fragments.target.callbacks.GoalDepositCallback;
 import org.gem.indo.dooit.views.main.fragments.target.callbacks.GoalEditCallback;
 import org.gem.indo.dooit.views.main.fragments.target.callbacks.GoalWithdrawCallback;
@@ -76,13 +77,15 @@ public interface DooitComponent {
 
     void inject(DooitApplication o);
 
+    void inject(DooitBotController o);
+
     void inject(DooitManager o);
 
     void inject(FeedbackActivity o);
 
     void inject(FeedbackManager o);
 
-    void inject(GoalAddCallback o);
+    void inject(GoalAddController o);
 
     void inject(GoalDepositCallback o);
 

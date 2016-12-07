@@ -1,17 +1,17 @@
 package org.gem.indo.dooit.helpers;
 
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 /**
  * Convenience class for storing values of different types.
- *
+ * <p>
  * Created by Wimpie Victor on 2016/12/06.
  */
 
 public class ValueMap {
 
-    private Map<String, Object> map = new HashMap<>();
+    private Map<String, Object> map = new LinkedHashMap<>();
 
     public ValueMap() {
 
@@ -91,5 +91,13 @@ public class ValueMap {
 
     public Double getDouble(String key) {
         return (Double) map.get(key);
+    }
+
+    /******************
+     * Map management *
+     ******************/
+
+    public Map<String, Object> getRawMap() {
+        return map;
     }
 }

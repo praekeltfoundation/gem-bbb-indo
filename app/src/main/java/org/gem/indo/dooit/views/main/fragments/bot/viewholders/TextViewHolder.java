@@ -1,6 +1,5 @@
 package org.gem.indo.dooit.views.main.fragments.bot.viewholders;
 
-import android.content.Context;
 import android.support.v4.content.ContextCompat;
 import android.view.View;
 import android.widget.ImageView;
@@ -9,16 +8,14 @@ import android.widget.TextView;
 
 import org.gem.indo.dooit.DooitApplication;
 import org.gem.indo.dooit.R;
+import org.gem.indo.dooit.controllers.BotParamType;
 import org.gem.indo.dooit.helpers.Persisted;
-import org.gem.indo.dooit.helpers.Utils;
-import org.gem.indo.dooit.models.bot.Answer;
-import org.gem.indo.dooit.models.bot.BaseBotModel;
+import org.gem.indo.dooit.helpers.bot.param.ParamArg;
+import org.gem.indo.dooit.helpers.bot.param.ParamMatch;
+import org.gem.indo.dooit.helpers.bot.param.ParamParser;
+import org.gem.indo.dooit.controllers.BotCallback;
 import org.gem.indo.dooit.models.bot.Node;
-import org.gem.indo.dooit.models.enums.BotType;
-import org.gem.indo.dooit.views.helpers.activity.CurrencyHelper;
 import org.gem.indo.dooit.views.main.fragments.bot.adapters.BotAdapter;
-
-import java.util.Locale;
 
 import javax.inject.Inject;
 
@@ -53,9 +50,13 @@ public class TextViewHolder extends BaseBotViewHolder<Node> {
     public void populate(Node model) {
         super.populate(model);
 
-        String text = dataModel.getText(getContext());
-        textView.setText(Utils.populateFromPersisted(persisted, botAdapter, text, model.getTextParams()));
+        textView.setText(dataModel.getProcessedText());
 
+//        String text = dataModel.getText(getContext());
+//        textView.setText(Utils.populateFromPersisted(persisted, botAdapter, text, model.getTextParams()));
+
+
+        // Bot icon
         RelativeLayout.LayoutParams lp = ((RelativeLayout.LayoutParams) textView.getLayoutParams());
         if (dataModel.isIconHidden()) {
             botIcon.setVisibility(View.GONE);
@@ -68,11 +69,22 @@ public class TextViewHolder extends BaseBotViewHolder<Node> {
     }
 
     @Override
+    protected void populateModel() {
+        ParamMatch args = ParamParser.parse(dataModel.getText(getContext()));
+        if (!args.isEmpty() && botAdapter.hasCallback()) {
+            BotCallback cb = botAdapter.getCallback();
+            for (ParamArg arg : args.getArgs())
+                cb.resolveParam(dataModel, BotParamType.byKey(arg.getKey()));
+        }
+        dataModel.setProcessedText(args.process(dataModel.values.getRawMap()));
+    }
+
+    @Override
     public void reset() {
         botIcon.setVisibility(View.VISIBLE);
     }
 
-    public Context getContext() {
+    /*public Context getContext() {
         return itemView.getContext();
-    }
+    }*/
 }

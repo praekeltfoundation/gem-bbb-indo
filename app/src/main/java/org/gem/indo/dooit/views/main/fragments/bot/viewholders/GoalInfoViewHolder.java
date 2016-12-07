@@ -75,7 +75,8 @@ public class GoalInfoViewHolder extends BaseBotViewHolder<Node> {
             image.setImageURI(goal.getImageUrl());
     }
 
-    public Context getContext() {
-        return itemView.getContext();
+    @Override
+    protected void populateModel() {
+
     }
 }

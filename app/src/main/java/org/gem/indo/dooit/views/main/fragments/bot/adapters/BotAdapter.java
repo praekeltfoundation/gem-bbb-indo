@@ -9,7 +9,7 @@ import com.greenfrvr.hashtagview.HashtagView;
 
 import org.gem.indo.dooit.R;
 import org.gem.indo.dooit.models.bot.BaseBotModel;
-import org.gem.indo.dooit.models.bot.BotCallback;
+import org.gem.indo.dooit.controllers.BotCallback;
 import org.gem.indo.dooit.models.enums.BotMessageType;
 import org.gem.indo.dooit.views.main.fragments.bot.viewholders.BadgeViewHolder;
 import org.gem.indo.dooit.views.main.fragments.bot.viewholders.GoalGalleryViewHolder;

@@ -31,7 +31,7 @@ import org.gem.indo.dooit.models.GoalPrototype;
 import org.gem.indo.dooit.models.Tip;
 import org.gem.indo.dooit.models.bot.Answer;
 import org.gem.indo.dooit.models.bot.BaseBotModel;
-import org.gem.indo.dooit.models.bot.BotCallback;
+import org.gem.indo.dooit.controllers.BotCallback;
 import org.gem.indo.dooit.models.bot.Node;
 import org.gem.indo.dooit.models.enums.BotMessageType;
 import org.gem.indo.dooit.models.enums.BotType;
@@ -39,7 +39,7 @@ import org.gem.indo.dooit.views.main.MainActivity;
 import org.gem.indo.dooit.views.main.MainViewPagerPositions;
 import org.gem.indo.dooit.views.main.fragments.MainFragment;
 import org.gem.indo.dooit.views.main.fragments.bot.adapters.BotAdapter;
-import org.gem.indo.dooit.views.main.fragments.target.callbacks.GoalAddCallback;
+import org.gem.indo.dooit.views.main.fragments.target.callbacks.GoalAddController;
 import org.gem.indo.dooit.views.main.fragments.target.callbacks.GoalDepositCallback;
 import org.gem.indo.dooit.views.main.fragments.target.callbacks.GoalEditCallback;
 import org.gem.indo.dooit.views.main.fragments.target.callbacks.GoalWithdrawCallback;
@@ -362,7 +362,7 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
                 Goal g1 = persisted.loadConvoGoal(BotType.GOAL_ADD);
                 if (g1 == null)
                     g1 = new Goal();
-                return new GoalAddCallback(getActivity(), getBotAdapter(), g1);
+                return new GoalAddController(getActivity(), getBotAdapter(), g1);
             case GOAL_DEPOSIT:
                 Goal g2 = persisted.loadConvoGoal(BotType.GOAL_DEPOSIT);
                 if (g2 == null)
@@ -421,8 +421,6 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
         } else {
             answerView.setData(new ArrayList<>());
         }
-
-//        persisted.saveConversationState(type, getBotAdapter().getDataSet());
     }
 
     private Map<String, Answer> createAnswerLog(List<BaseBotModel> converstation) {
@@ -571,6 +569,11 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
             default:
                 return true;
         }
+    }
+
+    protected boolean hasCallback() {
+        // Check both until bot is more robust
+        return callback != null && getBotAdapter().hasCallback();
     }
 
     private void showProgressBar() {

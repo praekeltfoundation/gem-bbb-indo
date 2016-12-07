@@ -62,4 +62,8 @@ public class BadgeViewHolder extends BaseBotViewHolder<Node> {
             image.setImageURI(badge.getImageUrl());
         }
     }
+    @Override
+    protected void populateModel() {
+
+    }
 }
