@@ -3,10 +3,8 @@ package org.gem.indo.dooit.views.onboarding;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.constraint.ConstraintLayout;
-import android.support.v4.view.NestedScrollingChild;
-import android.support.v4.widget.NestedScrollView;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
 
 import org.gem.indo.dooit.DooitApplication;
 import org.gem.indo.dooit.R;
@@ -30,7 +28,7 @@ public class ChangeSecurityQuestionActivity extends AppCompatActivity {
      ************/
 
     @BindView(R.id.activity_onboarding_change_secq_background)
-    NestedScrollView background;
+    View background;
 
 
     /***********************
