@@ -87,7 +87,7 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
     TipManager tipManager;
 
     BotType type = BotType.DEFAULT;
-    BotController callback;
+    BotController controller;
     BotFeed feed;
     BaseBotModel currentModel;
     boolean clearState = false;
@@ -309,8 +309,8 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
     }
 
     private void initializeBot() {
-        callback = createBotCallback(type);
-        getBotAdapter().setCallback(callback);
+        controller = createBotCallback(type);
+        getBotAdapter().setCallback(controller);
 
         // Load existing
         if (persisted.hasConversation(type)) {
@@ -460,15 +460,15 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
             conversationRecyclerView.scrollToPosition(getBotAdapter().getItemCount() - 1);
             persisted.saveConversationState(type, getBotAdapter().getDataSet());
 
-            // Reached a callback Node
-            if (node.hasCallback() && callback != null)
-                callback.onCall(node.getCallback(), createAnswerLog(getBotAdapter().getDataSet()), node);
+            // Reached a controller Node
+            if (node.hasCallback() && controller != null)
+                controller.onCall(node.getCallback(), createAnswerLog(getBotAdapter().getDataSet()), node);
 
-            // Reached an async callback Node
-            if (node.hasAsyncCall() && callback != null) {
+            // Reached an async controller Node
+            if (node.hasAsyncCall() && controller != null) {
                 // Show loader
                 clearAnswerView();
-                callback.onAsyncCall(
+                controller.onAsyncCall(
                         node.getAsyncCall(),
                         createAnswerLog(getBotAdapter().getDataSet()),
                         node,
@@ -552,14 +552,14 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
     }
 
     private void finishConversation() {
-        if (callback != null)
-            callback.onDone(createAnswerLog(getBotAdapter().getDataSet()));
+        if (controller != null)
+            controller.onDone(createAnswerLog(getBotAdapter().getDataSet()));
         // Clear answers
         answerView.setData(new ArrayList<>());
         persisted.clearConversation();
         persisted.clearConvoGoals();
-        callback = null;
-        // FIXME: Clearing the callback happens after the data has been added and before the view holder is instantiated. Viewholder will get null callback.
+        controller = null;
+        // FIXME: Clearing the controller happens after the data has been added and before the view holder is instantiated. Viewholder will get null controller.
         // getBotAdapter().setCallback(null);
         setBotType(BotType.DEFAULT);
     }
@@ -581,7 +581,7 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
 
     protected boolean hasCallback() {
         // Check both until bot is more robust
-        return callback != null && getBotAdapter().hasCallback();
+        return controller != null && getBotAdapter().hasCallback();
     }
 
     public void setClearState(boolean value) {

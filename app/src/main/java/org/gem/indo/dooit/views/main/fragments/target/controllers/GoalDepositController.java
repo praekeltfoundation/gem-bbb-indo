@@ -29,12 +29,9 @@ public class GoalDepositController extends GoalBotController {
     @Inject
     transient GoalManager goalManager;
 
-    private Context context;
-
     public GoalDepositController(Activity activity, Goal goal) {
         super(activity, goal);
         ((DooitApplication) activity.getApplication()).component.inject(this);
-        context = activity;
         this.goal = goal;
     }
 
