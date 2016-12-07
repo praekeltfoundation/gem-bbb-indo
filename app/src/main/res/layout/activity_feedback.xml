@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_feedback"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:background="@drawable/pattern_01_purple">
+
+    <TextView
+        android:text="@string/profile_help_feedback"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/activity_feedback_heading"
+        android:layout_marginTop="@dimen/challenge_inset_small"
+        app:layout_constraintRight_toRightOf="@+id/activity_feedback_label_subject"
+        app:layout_constraintTop_toTopOf="parent"
+        android:textAppearance="@style/AppTheme.Toolbar.Title.Center"
+        android:textAlignment="center"
+        app:layout_constraintLeft_toLeftOf="@+id/activity_feedback_label_subject" />
+
+    <ImageButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:srcCompat="@drawable/ic_d_left_chevron"
+        android:id="@+id/activity_feedback_backbtn"
+        android:background="@null"
+        android:tint="@color/yellow"
+        app:layout_constraintLeft_toLeftOf="@+id/activity_feedback_heading"
+        app:layout_constraintBottom_toBottomOf="@+id/activity_feedback_heading"
+        app:layout_constraintTop_toTopOf="@+id/activity_feedback_heading" />
+
+    <TextView
+        android:id="@+id/activity_feedback_label_subject"
+        android:text="@string/feedback_pick_subject"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:textColor="@color/white"
+        android:textAlignment="viewStart"
+        android:labelFor="@+id/activity_feedback_subject"
+        android:layout_marginTop="@dimen/challenge_inset_large"
+        android:layout_marginLeft="@dimen/challenge_inset_xlarge"
+        android:layout_marginRight="@dimen/challenge_inset_xlarge"
+        app:layout_constraintTop_toBottomOf="@+id/activity_feedback_heading"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_marginStart="@dimen/challenge_inset_xlarge"
+        android:layout_marginEnd="@dimen/challenge_inset_xlarge" />
+
+    <ImageView
+        android:id="@+id/activity_feedback_bg_subject"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:srcCompat="@drawable/quiz_option_box"
+        app:layout_constraintTop_toTopOf="@+id/activity_feedback_subject"
+        app:layout_constraintBottom_toBottomOf="@+id/activity_feedback_subject"
+        app:layout_constraintLeft_toLeftOf="@+id/activity_feedback_subject"
+        app:layout_constraintRight_toRightOf="@+id/activity_feedback_subject"
+        android:scaleType="fitXY"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <Spinner
+        android:id="@+id/activity_feedback_subject"
+        android:padding="16dp"
+        android:layout_width="0dp"
+        android:layout_height="48dp"
+        android:layout_marginTop="@dimen/challenge_inset_small"
+        app:layout_constraintRight_toRightOf="@+id/activity_feedback_label_subject"
+        app:layout_constraintLeft_toLeftOf="@+id/activity_feedback_label_subject"
+        app:layout_constraintTop_toBottomOf="@+id/activity_feedback_label_subject"
+        android:dropDownWidth="match_parent"
+        android:spinnerMode="dropdown"
+        tools:listitem="@layout/fragment_challengequizquestion_option" />
+
+    <TextView
+        android:id="@+id/activity_feedback_label_message"
+        android:text="@string/feedback_your_message"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/challenge_inset_small"
+        android:gravity="top"
+        android:labelFor="@+id/activity_feedback_message"
+        app:layout_constraintTop_toBottomOf="@+id/activity_feedback_subject"
+        app:layout_constraintLeft_toLeftOf="@+id/activity_feedback_subject"
+        android:textColor="@color/white"
+        app:layout_constraintRight_toRightOf="@+id/activity_feedback_subject" />
+
+    <ImageView
+        android:id="@+id/activity_feedback_bg_message"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:srcCompat="@drawable/multiline_box"
+        app:layout_constraintTop_toTopOf="@+id/activity_feedback_message"
+        app:layout_constraintLeft_toLeftOf="@+id/activity_feedback_message"
+        app:layout_constraintRight_toRightOf="@+id/activity_feedback_message"
+        app:layout_constraintBottom_toBottomOf="@+id/activity_feedback_message"
+        android:layout_marginTop="@dimen/challenge_inset_small"
+        android:scaleType="fitXY"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintVertical_bias="1.0"
+        android:layout_marginBottom="8dp" />
+
+    <EditText
+        android:id="@+id/activity_feedback_message"
+        android:padding="@dimen/challenge_inset_small"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:inputType="textMultiLine"
+        android:lines="5"
+        app:layout_constraintTop_toBottomOf="@+id/activity_feedback_label_message"
+        app:layout_constraintBottom_toTopOf="@+id/activity_feedback_submit"
+        app:layout_constraintLeft_toLeftOf="@+id/activity_feedback_subject"
+        app:layout_constraintRight_toRightOf="@+id/activity_feedback_label_message"
+        app:layout_constraintVertical_bias="0.0"
+        tools:text="To whom it may concern. I'm posting this here in hopes of finding a cat." />
+
+    <Button
+        android:id="@+id/activity_feedback_submit"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        style="@style/AppTheme.Button.Big.LightBlue"
+        android:layout_marginBottom="@dimen/challenge_inset_large"
+        app:layout_constraintRight_toRightOf="@+id/activity_feedback_bg_message"
+        app:layout_constraintLeft_toLeftOf="@+id/activity_feedback_bg_message"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:scaleType="fitXY"
+        android:text="@string/label_submit" />
+
+</android.support.constraint.ConstraintLayout>

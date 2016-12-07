@@ -7,6 +7,7 @@ import org.gem.indo.dooit.DooitApplication;
 import org.gem.indo.dooit.api.managers.AchievementManager;
 import org.gem.indo.dooit.api.managers.AuthenticationManager;
 import org.gem.indo.dooit.api.managers.ChallengeManager;
+import org.gem.indo.dooit.api.managers.FeedbackManager;
 import org.gem.indo.dooit.api.managers.FileUploadManager;
 import org.gem.indo.dooit.api.managers.GoalManager;
 import org.gem.indo.dooit.api.managers.TipManager;
@@ -37,6 +38,12 @@ public class DooitModule {
 
     @Provides
     @Singleton
+    ActivityForResultHelper provideActivityForResultHelper() {
+        return new ActivityForResultHelper();
+    }
+
+    @Provides
+    @Singleton
     @ForApplication
     Context provideApplicationContext() {
         return application;
@@ -62,38 +69,14 @@ public class DooitModule {
 
     @Provides
     @Singleton
-    TipManager provideTipManager() {
-        return new TipManager(application);
-    }
-
-    @Provides
-    @Singleton
-    UserManager provideUserManager() {
-        return new UserManager(application);
-    }
-
-    @Provides
-    @Singleton
-    GoalManager provideGoalManager() {
-        return new GoalManager(application);
-    }
-
-    @Provides
-    @Singleton
-    Persisted providePersisted() {
-        return new Persisted(application);
-    }
-
-    @Provides
-    @Singleton
-    PermissionsHelper providePermissionsHelper() {
-        return new PermissionsHelper();
-    }
-
-    @Provides
-    @Singleton
     DooitSharedPreferences provideDooitSharedPreferences() {
         return new DooitSharedPreferences(application);
+    }
+
+    @Provides
+    @Singleton
+    FeedbackManager provideFeedbackManager() {
+        return new FeedbackManager(application);
     }
 
     @Provides
@@ -110,7 +93,31 @@ public class DooitModule {
 
     @Provides
     @Singleton
-    ActivityForResultHelper provideActivityForResultHelper() {
-        return new ActivityForResultHelper();
+    GoalManager provideGoalManager() {
+        return new GoalManager(application);
+    }
+
+    @Provides
+    @Singleton
+    PermissionsHelper providePermissionsHelper() {
+        return new PermissionsHelper();
+    }
+
+    @Provides
+    @Singleton
+    Persisted providePersisted() {
+        return new Persisted(application);
+    }
+
+    @Provides
+    @Singleton
+    TipManager provideTipManager() {
+        return new TipManager(application);
+    }
+
+    @Provides
+    @Singleton
+    UserManager provideUserManager() {
+        return new UserManager(application);
     }
 }
