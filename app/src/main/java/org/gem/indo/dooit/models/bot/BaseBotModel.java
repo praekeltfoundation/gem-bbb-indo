@@ -6,6 +6,7 @@ import android.text.TextUtils;
 import android.util.Log;
 
 import org.gem.indo.dooit.helpers.ValueMap;
+import org.gem.indo.dooit.helpers.bot.param.ParamMatch;
 import org.gem.indo.dooit.models.enums.BotMessageType;
 
 /**
@@ -24,6 +25,7 @@ public abstract class BaseBotModel {
     protected String callback;
     protected String asyncCall;
     protected String[] textParams = new String[0];
+    protected ParamMatch params;
 
     public final ValueMap values = new ValueMap();
 
@@ -45,6 +47,10 @@ public abstract class BaseBotModel {
 
     public String getText(Context context) {
         return getResourceString(context, text);
+    }
+
+    public boolean hasText() {
+        return !TextUtils.isEmpty(text);
     }
 
     public String getName() {

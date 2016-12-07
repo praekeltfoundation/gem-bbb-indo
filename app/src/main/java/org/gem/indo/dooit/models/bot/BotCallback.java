@@ -59,9 +59,9 @@ public abstract class BotCallback {
     }
 
     /**
-     * Sets up a Bot Model before it is passed to the view holder.
+     * Setup a Bot Model before it is passed to the view holder.
      */
-    public void setupBotModel(BaseBotModel model) {
+    public void populate(BaseBotModel model) {
 
     }
 
