@@ -31,7 +31,7 @@ import org.gem.indo.dooit.models.goal.GoalPrototype;
 import org.gem.indo.dooit.models.Tip;
 import org.gem.indo.dooit.models.bot.Answer;
 import org.gem.indo.dooit.models.bot.BaseBotModel;
-import org.gem.indo.dooit.controllers.BotCallback;
+import org.gem.indo.dooit.controllers.BotController;
 import org.gem.indo.dooit.models.bot.Node;
 import org.gem.indo.dooit.models.enums.BotMessageType;
 import org.gem.indo.dooit.models.enums.BotType;
@@ -87,7 +87,7 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
     TipManager tipManager;
 
     BotType type = BotType.DEFAULT;
-    BotCallback callback;
+    BotController callback;
     BotFeed feed;
     BaseBotModel currentModel;
 
@@ -354,7 +354,7 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
         this.type = type;
     }
 
-    private BotCallback createBotCallback(BotType botType) {
+    private BotController createBotCallback(BotType botType) {
         switch (botType) {
             case DEFAULT:
             case GOAL_ADD:
@@ -464,7 +464,7 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
                         node.getAsyncCall(),
                         createAnswerLog(getBotAdapter().getDataSet()),
                         node,
-                        new BotCallback.OnAsyncListener() {
+                        new BotController.OnAsyncListener() {
                             @Override
                             public void onDone() {
                                 checkEndOrAddAnswers(node);

@@ -13,13 +13,13 @@ import java.util.Map;
  * Created by Wimpie Victor on 2016/11/20.
  */
 
-public abstract class BotCallback {
+public abstract class BotController {
 
     protected Context context;
     protected OnAsyncListener listener;
     protected Handler handler;
 
-    protected BotCallback(Context context) {
+    protected BotController(Context context) {
         this.context = context;
         handler = new Handler(Looper.getMainLooper());
     }
@@ -51,14 +51,6 @@ public abstract class BotCallback {
     }
 
     /**
-     * @param model The bot model that needs the parameter value
-     * @param paramType   The key of the parameter
-     */
-    public void resolveParam(BaseBotModel model, BotParamType paramType) {
-        // Override me
-    }
-
-    /**
      * Called when the `asyncCall` field is set on a Node.
      *
      * @param key       The value of the `callback` field
@@ -70,15 +62,6 @@ public abstract class BotCallback {
         // Override me
     }
 
-    /**
-     * Provide a conversation level model object that a Node may require.
-     *
-     * @return
-     */
-    public Object getObject() {
-        return null;
-    }
-
     protected void notifyDone(final OnAsyncListener listener) {
         handler.post(new Runnable() {
             @Override
@@ -86,6 +69,23 @@ public abstract class BotCallback {
                 listener.onDone();
             }
         });
+    }
+
+    /**
+     * @param model The bot model that needs the parameter value
+     * @param paramType   The key of the parameter
+     */
+    public void resolveParam(BaseBotModel model, BotParamType paramType) {
+        // Override me
+    }
+
+    /**
+     * Provide a conversation level model object that a Node may require.
+     *
+     * @return
+     */
+    public Object getObject() {
+        return null;
     }
 
     public interface OnAsyncListener {

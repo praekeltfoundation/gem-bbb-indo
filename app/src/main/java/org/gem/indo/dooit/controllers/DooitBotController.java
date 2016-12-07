@@ -12,7 +12,7 @@ import javax.inject.Inject;
  * Created by Wimpie Victor on 2016/12/07.
  */
 
-public abstract class DooitBotController extends BotCallback {
+public abstract class DooitBotController extends BotController {
 
     @Inject
     protected Persisted persisted;
@@ -24,8 +24,9 @@ public abstract class DooitBotController extends BotCallback {
 
     /**
      * Common parameters.
-     *  @param model The bot model that needs the parameter value
-     * @param paramType   The key of the parameter
+     *
+     * @param model     The bot model that needs the parameter value
+     * @param paramType The key of the parameter
      */
     @Override
     public void resolveParam(BaseBotModel model, BotParamType paramType) {

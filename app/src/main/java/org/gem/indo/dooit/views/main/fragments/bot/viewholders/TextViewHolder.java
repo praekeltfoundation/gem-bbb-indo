@@ -13,7 +13,7 @@ import org.gem.indo.dooit.helpers.Persisted;
 import org.gem.indo.dooit.helpers.bot.param.ParamArg;
 import org.gem.indo.dooit.helpers.bot.param.ParamMatch;
 import org.gem.indo.dooit.helpers.bot.param.ParamParser;
-import org.gem.indo.dooit.controllers.BotCallback;
+import org.gem.indo.dooit.controllers.BotController;
 import org.gem.indo.dooit.models.bot.Node;
 import org.gem.indo.dooit.views.main.fragments.bot.adapters.BotAdapter;
 
@@ -72,7 +72,7 @@ public class TextViewHolder extends BaseBotViewHolder<Node> {
     protected void populateModel() {
         ParamMatch args = ParamParser.parse(dataModel.getText(getContext()));
         if (!args.isEmpty() && botAdapter.hasCallback()) {
-            BotCallback cb = botAdapter.getCallback();
+            BotController cb = botAdapter.getCallback();
             for (ParamArg arg : args.getArgs())
                 cb.resolveParam(dataModel, BotParamType.byKey(arg.getKey()));
         }

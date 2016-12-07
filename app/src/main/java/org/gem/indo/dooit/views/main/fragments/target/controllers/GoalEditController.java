@@ -16,7 +16,7 @@ import org.gem.indo.dooit.helpers.MediaUriHelper;
 import org.gem.indo.dooit.models.goal.Goal;
 import org.gem.indo.dooit.models.bot.Answer;
 import org.gem.indo.dooit.models.bot.BaseBotModel;
-import org.gem.indo.dooit.controllers.BotCallback;
+import org.gem.indo.dooit.controllers.BotController;
 import org.gem.indo.dooit.views.main.MainActivity;
 import org.joda.time.format.DateTimeFormat;
 
@@ -32,7 +32,7 @@ import rx.functions.Action1;
  * Created by Wimpie Victor on 2016/12/01.
  */
 
-public class GoalEditController extends BotCallback {
+public class GoalEditController extends BotController {
 
     @Inject
     transient GoalManager goalManager;

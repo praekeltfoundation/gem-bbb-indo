@@ -11,7 +11,7 @@ import org.gem.indo.dooit.models.goal.Goal;
 import org.gem.indo.dooit.models.goal.GoalTransaction;
 import org.gem.indo.dooit.models.bot.Answer;
 import org.gem.indo.dooit.models.bot.BaseBotModel;
-import org.gem.indo.dooit.controllers.BotCallback;
+import org.gem.indo.dooit.controllers.BotController;
 import org.gem.indo.dooit.views.main.MainActivity;
 
 import java.util.Map;
@@ -24,7 +24,7 @@ import rx.functions.Action1;
  * Created by Wimpie Victor on 2016/11/27.
  */
 
-public class GoalWithdrawController extends BotCallback {
+public class GoalWithdrawController extends BotController {
 
     @Inject
     transient GoalManager goalManager;
