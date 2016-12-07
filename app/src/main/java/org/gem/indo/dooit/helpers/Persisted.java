@@ -13,6 +13,7 @@ import com.google.gson.internal.LinkedTreeMap;
 
 import org.gem.indo.dooit.DooitApplication;
 import org.gem.indo.dooit.helpers.bot.ListParameterizedType;
+import org.gem.indo.dooit.helpers.notifications.NotificationType;
 import org.gem.indo.dooit.models.Goal;
 import org.gem.indo.dooit.models.GoalPrototype;
 import org.gem.indo.dooit.models.Tip;
@@ -48,6 +49,7 @@ public class Persisted {
     private static final String BOT_TIP = "bot_tip";
     private static final String TIPS = "tips";
     private static final String FAVOURITES = "favourites";
+    private static final String NOTIFICATION = "notification";
     private static final String TAG = Persisted.class.getName();
 
     @Inject
@@ -58,7 +60,9 @@ public class Persisted {
         ((DooitApplication) application).component.inject(this);
     }
 
-    /*** Bot ***/
+    /*******
+     * Bot *
+     *******/
 
     public ArrayList<BaseBotModel> loadConversationState(BotType type) {
         String conv = dooitSharedPreferences.getString(BOT + type.name(), "");
@@ -121,7 +125,7 @@ public class Persisted {
 
     public List<GoalPrototype> loadGoalProtos() {
         if (hasGoalProtos()) {
-             GoalPrototype[] protos = dooitSharedPreferences.getComplex(GOAL_PROTOTYPE, GoalPrototype[].class);
+            GoalPrototype[] protos = dooitSharedPreferences.getComplex(GOAL_PROTOTYPE, GoalPrototype[].class);
             if (protos != null)
                 return new ArrayList<GoalPrototype>(Arrays.asList(protos));
             else
@@ -138,7 +142,7 @@ public class Persisted {
         dooitSharedPreferences.remove(GOAL_PROTOTYPE);
     }
 
-    public void saveConvoTip(Tip tip){
+    public void saveConvoTip(Tip tip) {
         dooitSharedPreferences.setComplex(BOT_TIP, tip);
     }
 
@@ -156,7 +160,9 @@ public class Persisted {
         dooitSharedPreferences.remove(BOT_TIP);
     }
 
-    /*** User ***/
+    /********
+     * User *
+     ********/
 
     public User getCurrentUser() {
         User user = dooitSharedPreferences.getComplex(USER, User.class);
@@ -198,7 +204,9 @@ public class Persisted {
         dooitSharedPreferences.remove(TOKEN);
     }
 
-    /*** Challenge ***/
+    /*************
+     * Challenge *
+     *************/
 
     public void setActiveChallenge(BaseChallenge activeChallenge) {
         dooitSharedPreferences.setComplex(CHALLENGE, activeChallenge);
@@ -259,7 +267,9 @@ public class Persisted {
         dooitSharedPreferences.remove(QUIZ_ANSWERS);
     }
 
-    /*** Tips ***/
+    /********
+     * Tips *
+     ********/
 
     public List<Tip> getTips() {
         return loadTips(TIPS);
@@ -304,6 +314,18 @@ public class Persisted {
 
     private void saveTips(String prefKey, List<Tip> tips) {
         dooitSharedPreferences.setComplex(prefKey, tips.toArray());
+    }
+
+    /*****************
+     * Notifications *
+     *****************/
+
+    public boolean shouldNotify(NotificationType notifyType) {
+        return dooitSharedPreferences.getBoolean(NOTIFICATION + notifyType.name(), true);
+    }
+
+    public void setNotify(NotificationType notifyType, boolean value) {
+        dooitSharedPreferences.setBoolean(NOTIFICATION + notifyType.name(), value);
     }
 }
 

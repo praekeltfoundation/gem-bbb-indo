@@ -148,29 +148,33 @@
     <!-- User clicks on add savings (+ Deposit) on Goal saving page  -->
     <string name="goal_deposit_intro">Let\'s add your savings!</string>
     <string name="goal_deposit_reminder">%1$s, you have to save %2$s each week to reach your %3$s by %4$s.</string>
-    <string name="goal_deposit_remaining">That\'s %1$s and %2$s from now.</string>
+    <string name="goal_deposit_remaining">That\'s %1$s weeks and %2$s days from now.</string>
+    <string name="goal_deposit_ask_amount">Add Savings Amount</string>
+
     <string name="goal_deposit_end_congrats">Look at you go! Well done for adding to your savings!</string>
 
-    <!-- Questions -->
-    <string name="goal_deposit_ask_amount">Add Savings Amount</string>
     <string name="goal_deposit_challenge">Awesome! Take me to this week\'s challenge.</string>
     <string name="goal_deposit_tip">Show me tips to grow my savings.</string>
     <string name="goal_deposit_close">Thanks! I\'m done for now.</string>
 
+    <string name="goal_deposit_end_keep_up">Great job. Remember to come back often to track your savings, and keep up the good work!</string>
 
     <!-- BOT: goal_withdraw -->
     <!-- User clicks on withdraw savings (- Withdraw) on goal saving page  -->
-    <!-- Questions -->
-    <string name="goal_withdraw_intro">You\'re working hard to get to your goal. You should only withdraw if it\'s to spend on an emergency</string>
+    <string name="goal_withdraw_intro">You\'ve been working so hard to reach your goal! You should only withdraw money if you need it for an emergency.</string>
+    <string name="goal_withdraw_cancel">I understand. Never mind, I want to keep saving.</string>
+    <string name="goal_withdraw_continue">I understand, but I still want to withdraw the money.</string>
+
     <string name="goal_withdraw_keep_saving">You\'ve made a good choice not to withdraw your savings. I\'m proud of you %s!</string>
-    <string name="goal_withdraw_enter_amount">How much do you want to withdraw?</string>
-    <string name="goal_withdraw_tips_challenge">Get back on track with your savings, check out these easy tips.</string>
-    <string name="goal_withdraw_end_message">Great job. Remember to come back every time you need to track your savings. Keep up the good work!</string>
-    <!-- Answers -->
-    <string name="goal_withdraw_cancel">I understand, keep saving</string>
     <string name="goal_withdraw_keep_saving_end">Yay me!</string>
-    <string name="goal_withdraw_continue">Withdraw anyway</string>
-    <string name="goal_withdraw_tip">Yes! I want to learn more</string>
+
+    <string name="goal_withdraw_cancel_end_message">Stay on track with your savings by checking out these easy tips.</string>
+
+    <string name="goal_withdraw_enter_amount">How much do you want to withdraw?</string>
+    <string name="goal_withdraw_tips_challenge">Get back on track with your savings by checking out these easy tips.</string>
+    <string name="goal_withdraw_end_message">Remember to come back every week to track your savings. Keep up the good work, %s!</string>
+
+    <string name="goal_withdraw_tip">Yes! Show me savings tips!</string>
     <string name="goal_withdraw_challenge">Can I take this week\'s challenge instead?</string>
     <string name="goal_withdraw_do_end">No thanks, maybe next time!</string>
 
@@ -187,6 +191,7 @@
     <string name="goal_edit_delete_difficult">I can help you work out another savings plan that will be easier to afford.</string>
     <string name="goal_edit_delete_cancel">Don\'t worry, we can get you back on track with your savings in no time. Have a look at our tips or take this week\'s challenge!</string>
     <string name="goal_edit_delete_done">Goal deleted</string>
+    <string name="goal_edit_end_come_back">Come back to track your savings weekly and watch as your goal becomes a reality!</string>
 
     <!-- Answers -->
     <string name="goal_edit_choice_date">Date</string>
@@ -207,6 +212,7 @@
     <string name="goal_edit_delete_reason_do_not_want">I don\'t want [goal_name] anymore.</string>
     <string name="goal_edit_delete_reason_misc">No reason, I just want to delete it.</string>
     <string name="goal_edit_delete_reason_cancel">Never mind! I want to keep saving.</string>
+    <string name="goal_edit_info_exit">Okay, I\'m done for now. Can we exit?</string>
 
     <!-- BOT: tip_intro -->
     <string name="tip_intro_inline_link">TODO: Show Tip</string>
@@ -330,6 +336,9 @@
     <string name="legend_label_goals">Goals</string>
     <string name="legend_label_saved">Saved</string>
     <string name="legend_label_total">Total</string>
+
+    <!-- Push Notifications -->
+    <string name="notification_title_challenge_available">Challenge Available</string>
 
     <!-- Dev only -->
     <string name="placeholder_label_short">Placeholder</string>

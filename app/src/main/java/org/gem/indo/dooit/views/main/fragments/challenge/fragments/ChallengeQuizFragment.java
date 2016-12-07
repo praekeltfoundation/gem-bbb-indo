@@ -125,8 +125,10 @@ public class ChallengeQuizFragment extends Fragment implements OnOptionChangeLis
             challenge = getArguments().getParcelable(ChallengeFragment.ARG_CHALLENGE);
         }
         ((DooitApplication) getActivity().getApplication()).component.inject(this);
-        mAdapter = new ChallengeQuizPagerAdapter(this, getChildFragmentManager(), challenge);
-        addOptionChangeListener(mAdapter);
+        if (mAdapter == null) {
+            mAdapter = new ChallengeQuizPagerAdapter(this, getChildFragmentManager(), challenge);
+            addOptionChangeListener(mAdapter);
+        }
     }
 
     @Override
@@ -356,7 +358,7 @@ public class ChallengeQuizFragment extends Fragment implements OnOptionChangeLis
             state = persisted.loadQuizChallengeState();
             Log.d(TAG, "Loading answers. (1/2)");
             prevAnswers = persisted.loadQuizChallengeAnswers();
-            Log.d(TAG, "Loading page index. (2/2)");
+            Log.d(TAG, "Quiz state loaded. (2/2)");
         } catch (Exception e) {
             Log.d(TAG, "Failed to load quiz state. Resetting.");
             e.printStackTrace();
@@ -385,6 +387,10 @@ public class ChallengeQuizFragment extends Fragment implements OnOptionChangeLis
         persisted.clearQuizChallengeAnswers();
     }
 
+    public QuizChallengeQuestionState getQuestionState(long id) {
+        return selections.get(id);
+    }
+
     @Override
     public void onSaveInstanceState(Bundle outState) {
         if (outState != null) {
@@ -397,6 +403,7 @@ public class ChallengeQuizFragment extends Fragment implements OnOptionChangeLis
                 state.putParcelable(String.valueOf(selections.keyAt(i)), selections.get(i));
             }
             outState.putBundle(ARG_STATE, state);
+            View focusedTab = mPager.getFocusedChild();
         }
         super.onSaveInstanceState(outState);
     }

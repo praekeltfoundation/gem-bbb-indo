@@ -12,9 +12,8 @@
     "autoNext": "goal_deposit_remaining",
     "textParams": [
       "USERNAME",
-      "LOCAL_CURRENCY",
       "GOAL_DEPOSIT_WEEKLY_TARGET",
-      "GOAL_DEPOSIT_TARGET",
+      "GOAL_DEPOSIT_GOAL_NAME",
       "GOAL_DEPOSIT_END_DATE"
     ]
   },
@@ -66,10 +65,60 @@
   {
     "name": "goal_deposit_info",
     "type": "goalInfo",
-    "autoNext": "goal_deposit_end" 
+    "answers": [
+      {
+        "name": "goal_deposit_challenge",
+        "text": "$(goal_deposit_challenge)",
+        "next": "goal_deposit_challenge_intro"
+      },
+      {
+        "name": "goal_deposit_tip",
+        "text": "$(goal_deposit_tip)",
+        "next": "goal_deposit_tip_intro"
+      },
+      {
+        "name": "goal_deposit_close",
+        "text": "$(goal_deposit_close)",
+        "next": "goal_deposit_end_keep_up"
+      }
+    ]
+  },
+
+
+  
+  {
+    "name": "goal_deposit_challenge_intro",
+    "type": "end",
+    "autoNextScreen": "CHALLENGE"
+  },
+
+
+
+  {
+    "name": "goal_deposit_tip_intro",
+    "type": "text",
+    "text": "$(bot_tip_intro)",
+    "textParams" : [
+      "TIP_INTRO"
+    ],
+    "autoNext": "goal_deposit_show_tip"
+  },
+  {
+    "name": "goal_deposit_show_tip",
+    "type": "tip",
+    "autoNext": "goal_deposit_end"
+  },
+
+
+
+  {
+    "name": "goal_deposit_end_keep_up",
+    "type": "text",
+    "text": "$(goal_deposit_end_keep_up)",
+    "autoNext": "goal_deposit_end"
   },
   {
     "name": "goal_deposit_end",
     "type": "end"
-  }
+  },
 ]

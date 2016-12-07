@@ -50,7 +50,7 @@ public class GoalInfoViewHolder extends BaseBotViewHolder<Node> {
         this.botAdapter = botAdapter;
         ((DooitApplication) getContext().getApplicationContext()).component.inject(this);
         ButterKnife.bind(this, itemView);
-        itemView.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.ic_d_bot_dialogue_bkg));
+        itemView.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.bkg_carousel_card));
 
         if (!botAdapter.hasCallback())
             throw new BotCallbackRequired(String.format("%s requires adapter to have callback", TAG));

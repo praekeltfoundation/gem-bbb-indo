@@ -1,12 +1,11 @@
 package org.gem.indo.dooit.views.main.fragments.challenge.fragments;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,8 +13,13 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.facebook.drawee.backends.pipeline.Fresco;
+import com.facebook.drawee.interfaces.DraweeController;
 import com.facebook.drawee.view.SimpleDraweeView;
+import com.facebook.imagepipeline.request.ImageRequest;
+import com.facebook.imagepipeline.request.ImageRequestBuilder;
 
+import org.gem.indo.dooit.Constants;
 import org.gem.indo.dooit.DooitApplication;
 import org.gem.indo.dooit.R;
 import org.gem.indo.dooit.api.DooitAPIError;
@@ -23,7 +27,6 @@ import org.gem.indo.dooit.api.DooitErrorHandler;
 import org.gem.indo.dooit.api.managers.ChallengeManager;
 import org.gem.indo.dooit.helpers.Persisted;
 import org.gem.indo.dooit.helpers.RequestCodes;
-import org.gem.indo.dooit.helpers.SquiggleBackgroundHelper;
 import org.gem.indo.dooit.helpers.TextSpannableHelper;
 import org.gem.indo.dooit.models.challenge.BaseChallenge;
 import org.gem.indo.dooit.models.challenge.FreeformChallenge;
@@ -35,6 +38,7 @@ import org.gem.indo.dooit.models.challenge.QuizChallengeQuestion;
 import org.gem.indo.dooit.views.main.fragments.challenge.ChallengeFragment;
 import org.gem.indo.dooit.views.main.fragments.challenge.ChallengeFragmentState;
 import org.gem.indo.dooit.views.main.fragments.challenge.interfaces.HasChallengeFragmentState;
+import org.gem.indo.dooit.views.web.MinimalWebViewActivity;
 
 import javax.inject.Inject;
 
@@ -160,7 +164,15 @@ public class ChallengeRegisterFragment extends Fragment implements HasChallengeF
         super.onStart();
         name.setText(challenge.getName());
         date.setText(challenge.getDeactivationDate().toLocalDateTime().toString("yyyy-MM-dd HH:mm"));
-        topImage.setImageURI(challenge.getImageURL());
+
+        ImageRequest request = ImageRequestBuilder.newBuilderWithSource(Uri.parse(challenge.getImageURL()))
+                .setProgressiveRenderingEnabled(true)
+                .build();
+        DraweeController controller = Fresco.newDraweeControllerBuilder()
+                .setImageRequest(request)
+                .setOldController(topImage.getController())
+                .build();
+        topImage.setController(controller);
     }
 
     private Fragment startQuizChallenge(Participant participant, QuizChallenge quizChallenge) {
@@ -211,19 +223,27 @@ public class ChallengeRegisterFragment extends Fragment implements HasChallengeF
         return ChallengePictureFragment.newInstance(participant, pictureChallenge);
     }
 
+    @OnClick(R.id.fragment_challenge_t_c_text_view)
+    void termsClick(View view) {
+        MinimalWebViewActivity.Builder.create(getContext())
+            //.setTitle(getString(org.gem.indo.dooit.R.string.title_activity_privacy_policy))
+            .setUrl(Constants.TERMS_URL)
+            .startActivity();
+    }
+
     @OnClick(R.id.fragment_challenge_register_button)
     void registerClick() {
         Participant participant = new Participant();
         participant.setChallenge(challenge.getId());
 
         participantSubscription = challengeManager.registerParticipant(
-            participant,
-            new DooitErrorHandler() {
-                @Override
-                public void onError(DooitAPIError error) {
-                    Toast.makeText(getContext(), "Could not confirm registration", Toast.LENGTH_SHORT).show();
+                participant,
+                new DooitErrorHandler() {
+                    @Override
+                    public void onError(DooitAPIError error) {
+                        Toast.makeText(getContext(), "Could not confirm registration", Toast.LENGTH_SHORT).show();
+                    }
                 }
-            }
         );
 
         participantSubscription.subscribe(new Action1<Participant>() {

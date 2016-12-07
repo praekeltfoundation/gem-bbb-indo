@@ -18,6 +18,7 @@ import org.gem.indo.dooit.helpers.Persisted;
 import java.io.IOException;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.concurrent.TimeUnit;
 
 import javax.inject.Inject;
 
@@ -69,6 +70,10 @@ public class DooitApplication extends Application {
                 return chain.proceed(request);
             }
         });
+
+        httpClient.connectTimeout(10, TimeUnit.SECONDS)
+                .writeTimeout(10, TimeUnit.SECONDS)
+                .readTimeout(30, TimeUnit.SECONDS);
 
         Set<RequestListener> requestListeners = new HashSet<>();
         requestListeners.add(new RequestLoggingListener());

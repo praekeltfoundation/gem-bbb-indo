@@ -18,6 +18,7 @@ import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 
 import java.io.IOException;
+import java.util.Locale;
 
 import javax.inject.Inject;
 
@@ -68,9 +69,15 @@ public class DooitManager {
             public Response intercept(Chain chain) throws IOException {
                 Request original = chain.request();
 
+                // Backend framework uses "id" for Indonesian
+                String langCode = Locale.getDefault().getLanguage();
+                if (langCode.toLowerCase().equals("in"))
+                    langCode = "id";
+
                 Request.Builder requestBuilder = original.newBuilder()
                         .url(original.url())
                         .addHeader("Accept", "application/json")
+                        .addHeader("Accept-Language", langCode)
                         .method(original.method(), original.body());
 
                 requestBuilder = addTokenToRequest(requestBuilder);

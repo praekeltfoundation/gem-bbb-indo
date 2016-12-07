@@ -39,6 +39,7 @@
             android:maxLines="1"
             android:paddingStart="4dp"
             android:textColor="@color/white"
+            android:textColorHint="@color/light_grey"
             tools:text="25,000.00" />
     </RelativeLayout>
 </FrameLayout>

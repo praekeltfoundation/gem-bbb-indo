@@ -4,6 +4,7 @@ import org.gem.indo.dooit.DooitApplication;
 import org.gem.indo.dooit.api.managers.DooitManager;
 import org.gem.indo.dooit.api.managers.FeedbackManager;
 import org.gem.indo.dooit.helpers.Persisted;
+import org.gem.indo.dooit.services.NotificationService;
 import org.gem.indo.dooit.views.DooitActivity;
 import org.gem.indo.dooit.views.RootActivity;
 import org.gem.indo.dooit.views.main.MainActivity;
@@ -96,6 +97,8 @@ public interface DooitComponent {
     void inject(LoginActivity o);
 
     void inject(MainActivity o);
+
+    void inject(NotificationService o);
 
     void inject(Persisted o);
 

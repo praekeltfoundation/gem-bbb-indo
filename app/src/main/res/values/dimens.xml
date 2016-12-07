@@ -46,6 +46,10 @@
     <dimen name="bot_tip_card_image_height">150dp</dimen>
     <dimen name="bot_tip_card_vertical_margin">4dp</dimen>
 
+    <dimen name="bot_badge_card_width">250dp</dimen>
+    <dimen name="bot_badge_card_image_height">150dp</dimen>
+    <dimen name="bot_badge_card_vertical_margin">4dp</dimen>
+
     <!-- Challenges -->
     <dimen name="challenge_inset_small">16dp</dimen>
     <dimen name="challenge_inset_large">24dp</dimen>
