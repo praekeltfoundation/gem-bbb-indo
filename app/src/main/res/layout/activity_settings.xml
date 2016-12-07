@@ -156,7 +156,7 @@
                 android:textStyle="bold" />
 
             <android.support.v7.widget.SwitchCompat
-                android:id="@+id/settings_notifications_a"
+                android:id="@+id/settings_notifications_challenge_available"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/settings_notifications"
@@ -164,7 +164,7 @@
                 android:maxLines="1"
                 android:paddingBottom="8dp"
                 android:paddingTop="8dp"
-                android:text="@string/placeholder_label_short"
+                android:text="@string/notification_title_challenge_available"
                 android:textColor="@color/purple"
                 android:textStyle="bold"
                 android:textAppearance="@style/AppTheme.TextView.Settings.Item"/>
@@ -173,8 +173,9 @@
                 android:id="@+id/settings_notifications_a_separator"
                 android:layout_width="match_parent"
                 android:layout_height="0.5dp"
-                android:layout_below="@+id/settings_notifications_a"
-                android:background="@color/divider" />
+                android:layout_below="@+id/settings_notifications_challenge_available"
+                android:background="@color/divider"
+                android:visibility="gone" />
 
             <android.support.v7.widget.SwitchCompat
                 android:id="@+id/settings_notifications_b"
@@ -189,6 +190,7 @@
                 android:textColor="@color/purple"
                 android:textStyle="bold"
                 android:textAppearance="@style/AppTheme.TextView.Settings.Item"
+                android:visibility="gone"
                 />
 
             <View
@@ -196,7 +198,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="0.5dp"
                 android:layout_below="@+id/settings_notifications_b"
-                android:background="@color/divider" />
+                android:background="@color/divider"
+                android:visibility="gone" />
 
             <android.support.v7.widget.SwitchCompat
                 android:id="@+id/settings_notifications_c"
@@ -210,14 +213,16 @@
                 android:text="@string/placeholder_label_short"
                 android:textColor="@color/purple"
                 android:textStyle="bold"
-                android:textAppearance="@style/AppTheme.TextView.Settings.Item"/>
+                android:textAppearance="@style/AppTheme.TextView.Settings.Item"
+                android:visibility="gone" />
 
             <View
                 android:id="@+id/settings_notifications_c_separator"
                 android:layout_width="match_parent"
                 android:layout_height="0.5dp"
                 android:layout_below="@+id/settings_notifications_c"
-                android:background="@color/divider" />
+                android:background="@color/divider"
+                android:visibility="gone"/>
 
             <android.support.v7.widget.SwitchCompat
                 android:id="@+id/settings_notifications_d"
@@ -231,7 +236,8 @@
                 android:text="@string/placeholder_label_short"
                 android:textColor="@color/purple"
                 android:textStyle="bold"
-                android:textAppearance="@style/AppTheme.TextView.Settings.Item"/>
+                android:textAppearance="@style/AppTheme.TextView.Settings.Item"
+                android:visibility="gone" />
 
             <TextView
                 android:id="@+id/settings_about"

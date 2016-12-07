@@ -329,6 +329,9 @@
     <string name="legend_label_saved">Saved</string>
     <string name="legend_label_total">Total</string>
 
+    <!-- Push Notifications -->
+    <string name="notification_title_challenge_available">Challenge Available</string>
+
     <!-- Dev only -->
     <string name="placeholder_label_short">Placeholder</string>
     <string name="placeholder_label_long"><![CDATA[Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce at justo tortor. Curabitur in leo suscipit, molestie augue ut, gravida quam. Donec scelerisque nulla id finibus porttitor. In et ultrices augue. Donec ut odio elit. Maecenas ut sagittis libero. Integer ut ultricies felis, in porttitor dolor. Cras turpis magna, lobortis quis leo sed, tempus elementum massa. Ut blandit vitae sapien pretium facilisis. ]]></string>
