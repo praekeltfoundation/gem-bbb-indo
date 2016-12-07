@@ -172,7 +172,7 @@
 
     <string name="goal_withdraw_enter_amount">How much do you want to withdraw?</string>
     <string name="goal_withdraw_tips_challenge">Get back on track with your savings by checking out these easy tips.</string>
-    <string name="goal_withdraw_end_message">Remember to come back every week to track your savings. Keep up the good work, %s!</string>
+    <string name="goal_withdraw_end_message">Remember to come back every week to track your savings. Keep up the good work, $(user.username)!</string>
 
     <string name="goal_withdraw_tip">Yes! Show me savings tips!</string>
     <string name="goal_withdraw_challenge">Can I take this week\'s challenge instead?</string>
@@ -180,11 +180,11 @@
 
     <!-- BOT: goal_edit -->
     <!-- Questions -->
-    <string name="goal_edit_intro">Hey %s!</string>
+    <string name="goal_edit_intro">Hey $(user.username)!</string>
     <string name="goal_edit_ask_options">What do you want to edit?</string>
     <string name="goal_edit_updated">Your goal has been updated!</string>
     <string name="goal_edit_target">How much money do you think can you save each week?</string>
-    <string name="goal_edit_target_confirm">If you save Rp. [weekly_goal] per week, you\’ll have enough money to get your [goal_name] in only [total_weeks] weeks.</string>
+    <string name="goal_edit_target_confirm">If you save $(goal.weekly_target_currency) per week, you\’ll have enough money to get your $(goal.name) in only $(goal.weeks_left_up) weeks.</string>
     <string name="goal_edit_come_back">Come back to track your savings weekly and watch as your goal becomes a reality!</string>
     <string name="goal_edit_delete_confirm">Oh? Why do you want to delete this goal?</string>
     <string name="goal_edit_delete_reached">Congratulations! That is great news. I\'ll update this now.</string>
