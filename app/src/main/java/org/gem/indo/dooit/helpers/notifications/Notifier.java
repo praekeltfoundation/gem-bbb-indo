@@ -6,6 +6,7 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.BitmapDrawable;
+import android.os.Build;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.TaskStackBuilder;
 import android.support.v4.content.ContextCompat;
@@ -27,17 +28,21 @@ public class Notifier {
 
     /**
      * @param notifyType
-     * @param cls
-     * @param <T> The Activity type to open when the notification is clicked.
+     * @param cls        The Activity type to open when the notification is clicked.
      */
     public <T extends Activity> void notify(NotificationType notifyType, Class<T> cls, String contentText) {
         // TODO: Activity class argument might have to be replaced with a DooitActivityBuilder
         NotificationCompat.Builder builder = new NotificationCompat.Builder(context)
-                .setSmallIcon(R.drawable.ic_d_notification_icon_small)
                 .setLargeIcon(((BitmapDrawable) ContextCompat.getDrawable(context, R.mipmap.ic_launcher)).getBitmap())
                 .setContentTitle(context.getString(notifyType.getTitleRes()))
                 .setContentText(contentText)
                 .setAutoCancel(true);
+
+        // Fix old API vector drawable crash
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
+            builder.setSmallIcon(R.drawable.ic_d_notification_icon_small);
+        else
+            builder.setSmallIcon(R.mipmap.ic_launcher);
 
         // Setting up an artificial activity stack allows the notification to be clicked, open the
         // provided Activity class, and close the app when user clicks back.
