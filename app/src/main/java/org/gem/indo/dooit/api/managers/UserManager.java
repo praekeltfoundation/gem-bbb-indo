@@ -45,8 +45,8 @@ public class UserManager extends DooitManager {
         return useNetwork(userAPI.changePassword(userId,new ChangePassword(oldPassword,newPassword)), errorHandler);
     }
 
-    public Observable<EmptyResponse> alterSecurityQuestion(String username, String question, String answer, DooitErrorHandler errorHandler) {
-        return useNetwork(userAPI.alterSecurityQuestion(username, question, answer), errorHandler);
+    public Observable<EmptyResponse> alterSecurityQuestion(String question, String answer, DooitErrorHandler errorHandler) {
+        return useNetwork(userAPI.alterSecurityQuestion(question, answer), errorHandler);
     }
 
     public Observable<String> getSecurityQuestion(String username, DooitErrorHandler errorHandler) {
@@ -54,6 +54,6 @@ public class UserManager extends DooitManager {
     }
 
     public Observable<EmptyResponse> submitSecurityQuestionResponse(String username, String answer, String password, DooitErrorHandler errorHandler) {
-        return useNetwork(userAPI.alterSecurityQuestion(username, answer, password), errorHandler);
+        return useNetwork(userAPI.submitSecurityQuestionResponse(username, answer, password), errorHandler);
     }
 }

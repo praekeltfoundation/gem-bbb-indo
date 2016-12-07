@@ -39,20 +39,19 @@ public interface UserAPI {
     );
 
     @Multipart
-    @POST("/api/security_question")
+    @POST("/api/users/change_security_question/")
     Observable<EmptyResponse> alterSecurityQuestion(
-        @Query("username") String username,
         @Part("new_question") String question,
         @Part("new_answer") String answer
     );
 
-    @GET("/api/security_question")
+    @GET("/api/security_question/")
     Observable<String> getSecurityQuestion(
         @Query("username") String username
     );
 
     @Multipart
-    @POST("/api/security_question")
+    @POST("/api/security_question/")
     Observable<EmptyResponse> submitSecurityQuestionResponse(
         @Query("username") String username,
         @Part("answer") String answer,
