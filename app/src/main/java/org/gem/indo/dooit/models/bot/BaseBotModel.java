@@ -47,6 +47,8 @@ public abstract class BaseBotModel {
         }
     }
 
+    //
+
     public String getText(Context context) {
         return getResourceString(context, text);
     }

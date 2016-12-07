@@ -103,7 +103,7 @@
 
     <!-- Bot -->
     <string name="bot_carousel_card_select">Select</string>
-    <string name="bot_tip_intro">%s</string>
+    <string name="bot_tip_intro">$(tip.intro)</string>
 
     <!--JSON GOALS-->
     <string name="greeting">Hola!</string>
@@ -147,8 +147,8 @@
     <!-- BOT: goal_deposit -->
     <!-- User clicks on add savings (+ Deposit) on Goal saving page  -->
     <string name="goal_deposit_intro">Let\'s add your savings!</string>
-    <string name="goal_deposit_reminder">$(user.username), you have to save $(goal.weekly_target) each week to reach your $(goal.name) by $(goal.end_date).</string>
-    <string name="goal_deposit_remaining">That\'s $(goal.weeks_left_up) weeks and $(goal.remainder_days_left) days from now.</string>
+    <string name="goal_deposit_reminder">$(user.username), you have to save $(goal.weekly_target_currency) each week to reach your $(goal.name) by $(goal.end_date).</string>
+    <string name="goal_deposit_remaining">That\'s $(goal.weeks_left_down) weeks and $(goal.remainder_days_left) days from now.</string>
     <string name="goal_deposit_ask_amount">Add Savings Amount</string>
 
     <string name="goal_deposit_end_congrats">Look at you go! Well done for adding to your savings!</string>
@@ -165,7 +165,7 @@
     <string name="goal_withdraw_cancel">I understand. Never mind, I want to keep saving.</string>
     <string name="goal_withdraw_continue">I understand, but I still want to withdraw the money.</string>
 
-    <string name="goal_withdraw_keep_saving">You\'ve made a good choice not to withdraw your savings. I\'m proud of you %s!</string>
+    <string name="goal_withdraw_keep_saving">You\'ve made a good choice not to withdraw your savings. I\'m proud of you $(user.username)!</string>
     <string name="goal_withdraw_keep_saving_end">Yay me!</string>
 
     <string name="goal_withdraw_cancel_end_message">Stay on track with your savings by checking out these easy tips.</string>

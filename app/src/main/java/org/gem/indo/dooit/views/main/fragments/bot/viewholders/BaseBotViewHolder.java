@@ -27,14 +27,14 @@ public abstract class BaseBotViewHolder<T extends BaseBotModel> extends Recycler
     public BaseBotViewHolder(View itemView) {
         super(itemView);
     }
-
-
+    
     @CallSuper
     public void populate(T model) {
         dataModel = model;
         reset();
         if (!dataModel.isImmutable()) {
             populateModel();
+            // FIXME: Viewholder is populated after conversation is persisted. Immutable flag not persisted.
             dataModel.finish();
         }
     }

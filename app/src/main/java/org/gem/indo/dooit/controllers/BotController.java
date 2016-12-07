@@ -72,12 +72,14 @@ public abstract class BotController {
     }
 
     /**
-     * @param model The bot model that needs the parameter value
-     * @param paramType   The key of the parameter
+     * @param model     The bot model that needs the parameter value
+     * @param paramType The key of the parameter
      */
     public void resolveParam(BaseBotModel model, BotParamType paramType) {
         // Override me
     }
+
+    public abstract void input(BotParamType inputType, Object value);
 
     /**
      * Provide a conversation level model object that a Node may require.
@@ -85,6 +87,16 @@ public abstract class BotController {
      * @return
      */
     public Object getObject() {
+        return null;
+    }
+
+    /**
+     * Provide a conversation level model object that a Node may require.
+     *
+     * @param objType The business model object type the view holder wants.
+     * @return
+     */
+    public Object getObject(BotObjectType objType) {
         return null;
     }
 

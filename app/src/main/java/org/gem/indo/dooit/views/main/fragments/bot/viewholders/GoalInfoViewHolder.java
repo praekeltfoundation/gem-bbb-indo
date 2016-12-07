@@ -8,6 +8,7 @@ import com.facebook.drawee.view.SimpleDraweeView;
 
 import org.gem.indo.dooit.DooitApplication;
 import org.gem.indo.dooit.R;
+import org.gem.indo.dooit.controllers.BotParamType;
 import org.gem.indo.dooit.helpers.Persisted;
 import org.gem.indo.dooit.models.goal.Goal;
 import org.gem.indo.dooit.models.bot.Node;
@@ -59,23 +60,34 @@ public class GoalInfoViewHolder extends BaseBotViewHolder<Node> {
     public void populate(Node model) {
         super.populate(model);
 
-        Goal goal = (Goal) botAdapter.getCallback().getObject();
+        String name = dataModel.values.getString(BotParamType.GOAL_NAME.getKey());
+        double value = dataModel.values.getDouble(BotParamType.GOAL_VALUE.getKey());
+        double target = dataModel.values.getDouble(BotParamType.GOAL_TARGET.getKey());
+        String imageUrl = dataModel.values.getString(BotParamType.GOAL_IMAGE_URL.getKey());
+        String localImageUri = dataModel.values.getString(BotParamType.GOAL_LOCAL_IMAGE_URI.getKey());
+        boolean hasLocalUri = dataModel.values.getBoolean(BotParamType.GOAL_HAS_LOCAL_IMAGE_URI.getKey());
 
-        titleTextView.setText(goal.getName());
-        arcProgressBar.setProgress((int) ((goal.getValue() / goal.getTarget()) * 100));
-        currentTextView.setText(String.format("%s %.2f", CurrencyHelper.getCurrencySymbol(), goal.getValue()));
-        totalTextView.setText(getContext().getString(R.string.of_target_amount, CurrencyHelper.getCurrencySymbol(), goal.getTarget()));
+        titleTextView.setText(name);
+        arcProgressBar.setProgress((int) ((value / target) * 100));
+        currentTextView.setText(String.format("%s %.2f", CurrencyHelper.getCurrencySymbol(), target));
+        totalTextView.setText(getContext().getString(R.string.of_target_amount, CurrencyHelper.getCurrencySymbol(), target));
 
         // Prefer a local image. Some conversations set the image from phone storage, and others
         // rely on the remote image.
-        if (goal.hasLocalImageUri())
-            image.setImageURI(goal.getLocalImageUri());
+        if (hasLocalUri)
+            image.setImageURI(localImageUri);
         else
-            image.setImageURI(goal.getImageUrl());
+            image.setImageURI(imageUrl);
     }
 
     @Override
     protected void populateModel() {
-
+        Goal goal = (Goal) botAdapter.getCallback().getObject();
+        dataModel.values.put(BotParamType.GOAL_NAME.getKey(), goal.getName());
+        dataModel.values.put(BotParamType.GOAL_VALUE.getKey(), goal.getValue());
+        dataModel.values.put(BotParamType.GOAL_TARGET.getKey(), goal.getTarget());
+        dataModel.values.put(BotParamType.GOAL_IMAGE_URL.getKey(), goal.getImageUrl());
+        dataModel.values.put(BotParamType.GOAL_LOCAL_IMAGE_URI.getKey(), goal.getLocalImageUri());
+        dataModel.values.put(BotParamType.GOAL_HAS_LOCAL_IMAGE_URI.getKey(), goal.hasLocalImageUri());
     }
 }

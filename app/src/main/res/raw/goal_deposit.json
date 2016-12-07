@@ -88,9 +88,6 @@
     "name": "goal_deposit_tip_intro",
     "type": "text",
     "text": "$(bot_tip_intro)",
-    "textParams" : [
-      "TIP_INTRO"
-    ],
     "autoNext": "goal_deposit_show_tip"
   },
   {
@@ -110,5 +107,5 @@
   {
     "name": "goal_deposit_end",
     "type": "end"
-  },
+  }
 ]

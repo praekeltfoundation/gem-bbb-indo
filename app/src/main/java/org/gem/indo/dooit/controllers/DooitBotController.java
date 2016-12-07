@@ -30,6 +30,8 @@ public abstract class DooitBotController extends BotController {
      */
     @Override
     public void resolveParam(BaseBotModel model, BotParamType paramType) {
+        String key = paramType.getKey();
+
         switch (paramType) {
             case USER_USERNAME:
                 model.values.put(paramType.getKey(), persisted.getCurrentUser().getUsername());

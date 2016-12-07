@@ -12,6 +12,7 @@ import org.gem.indo.dooit.api.DooitErrorHandler;
 import org.gem.indo.dooit.api.managers.FileUploadManager;
 import org.gem.indo.dooit.api.managers.GoalManager;
 import org.gem.indo.dooit.api.responses.EmptyResponse;
+import org.gem.indo.dooit.controllers.BotParamType;
 import org.gem.indo.dooit.helpers.MediaUriHelper;
 import org.gem.indo.dooit.models.goal.Goal;
 import org.gem.indo.dooit.models.bot.Answer;
@@ -62,6 +63,11 @@ public class GoalEditController extends BotController {
 
     @Override
     public void onDone(Map<String, Answer> answerLog) {
+
+    }
+
+    @Override
+    public void input(BotParamType inputType, Object value) {
 
     }
 

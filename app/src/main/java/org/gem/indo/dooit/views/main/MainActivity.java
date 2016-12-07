@@ -19,6 +19,7 @@ import org.gem.indo.dooit.helpers.activity.result.ActivityForResultHelper;
 import org.gem.indo.dooit.helpers.bot.param.ParamMatch;
 import org.gem.indo.dooit.helpers.bot.param.ParamParser;
 import org.gem.indo.dooit.helpers.notifications.NotificationType;
+import org.gem.indo.dooit.services.NotificationAlarm;
 import org.gem.indo.dooit.views.DooitActivity;
 import org.gem.indo.dooit.views.helpers.activity.DooitActivityBuilder;
 import org.gem.indo.dooit.views.main.adapters.MainTabAdapter;
@@ -90,13 +91,13 @@ public class MainActivity extends DooitActivity {
                         startPage(MainViewPagerPositions.CHALLENGE);
                 }
 
-        // Junk to test
-        ParamMatch match = ParamParser.parse("qwertyu $(goal.name) bnm, $(goal.week) rtyui dfgh");
-//        match.process(new Object[]{0, 1});
-        Map<String, Object> map = new HashMap<String, Object>();
-        map.put("goal.name", "Goal 1");
-        map.put("goal.week", "4");
-        match.process(map);
+        // Set alarm for when the app opens without going through registration or login
+        NotificationAlarm.setAlarm(this);
+
+        // Clear bot state
+        persisted.clearConversation();
+        persisted.clearConvoGoals();
+        persisted.clearConvoTip();
     }
 
     @OnPageChange(value = R.id.content_main_view_pager, callback = OnPageChange.Callback.PAGE_SELECTED)

@@ -4,8 +4,8 @@ import android.text.TextUtils;
 
 import com.google.gson.annotations.SerializedName;
 
+import org.gem.indo.dooit.helpers.Utils;
 import org.gem.indo.dooit.models.Badge;
-import org.gem.indo.dooit.models.enums.WeekRoundType;
 import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 
@@ -204,12 +204,12 @@ public class Goal {
         return value >= target;
     }
 
-    public int getWeeksLeft(WeekRoundType rounding) {
-        return 0;
+    public int getWeeksLeft(Utils.ROUNDWEEK rounding) {
+        return Utils.weekDiff(endDate.toDate().getTime(), rounding);
     }
 
     public int getRemainderDaysLeft() {
-        return 0;
+        return Utils.dayDiff(endDate.toDate().getTime());
     }
 
     public List<Badge> getNewBadges() {

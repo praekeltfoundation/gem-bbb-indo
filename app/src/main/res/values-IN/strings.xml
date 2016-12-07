@@ -103,7 +103,7 @@
 
     <!-- Bot -->
     <string name="bot_carousel_card_select">Select</string>
-    <string name="bot_tip_intro">%s</string>
+    <string name="bot_tip_intro">$(tip.intro)</string>
 
     <!--JSON GOALS-->
     <string name="greeting">Hola!</string>
@@ -147,8 +147,8 @@
     <!-- BOT: goal_deposit -->
     <!-- User clicks on add savings (+ Deposit) on Goal saving page  -->
     <string name="goal_deposit_intro">Yuk kita tambahkan tabunganmu.</string>
-    <string name="goal_deposit_reminder">$(user.username) kamu telah menabung $(goal.weekly_target) tiap minggunya untuk mencapai $(goal.name) pada $(goal.end_date).</string>
-    <string name="goal_deposit_remaining">Itu adalah %1$s dan %2$s dari sekarang.</string>
+    <string name="goal_deposit_reminder">$(user.username) kamu telah menabung $(goal.weekly_target_currency) tiap minggunya untuk mencapai $(goal.name) pada $(goal.end_date).</string>
+    <string name="goal_deposit_remaining">Itu adalah $(goal.weeks_left_down) dan $(goal.remainder_days_left) dari sekarang.</string>
     <string name="goal_deposit_ask_amount">Tambahkan jumlah tabungan</string>
 
     <string name="goal_deposit_end_congrats">Wah lihat! Selamat sudah menambahkan jumlah tabunganmu!</string>
@@ -166,7 +166,7 @@
     <string name="goal_withdraw_cancel">Aku mengerti, tetap menabung</string>
     <string name="goal_withdraw_continue">Tarik tabunganku.</string>
 
-    <string name="goal_withdraw_keep_saving">Kamu udah membuat pilihan yang tepat dengan gak menarik tabunganmu. Kamu membanggakan %s!</string>
+    <string name="goal_withdraw_keep_saving">Kamu udah membuat pilihan yang tepat dengan gak menarik tabunganmu. Kamu membanggakan $(user.username)!</string>
     <string name="goal_withdraw_keep_saving_end">Hore!</string>
 
     <string name="goal_withdraw_cancel_end_message">Tetap pantau tabunganmu, coba lihat tipsnya.</string>

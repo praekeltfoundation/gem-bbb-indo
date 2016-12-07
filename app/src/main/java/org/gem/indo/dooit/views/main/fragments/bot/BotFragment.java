@@ -490,6 +490,7 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
             finishConversation();
         } else {
             addAnswerOptions(node);
+            persisted.saveConversationState(type, getBotAdapter().getDataSet());
         }
     }
 
