@@ -39,10 +39,10 @@ import org.gem.indo.dooit.views.main.MainActivity;
 import org.gem.indo.dooit.views.main.MainViewPagerPositions;
 import org.gem.indo.dooit.views.main.fragments.MainFragment;
 import org.gem.indo.dooit.views.main.fragments.bot.adapters.BotAdapter;
-import org.gem.indo.dooit.views.main.fragments.target.callbacks.GoalAddController;
-import org.gem.indo.dooit.views.main.fragments.target.callbacks.GoalDepositCallback;
-import org.gem.indo.dooit.views.main.fragments.target.callbacks.GoalEditCallback;
-import org.gem.indo.dooit.views.main.fragments.target.callbacks.GoalWithdrawCallback;
+import org.gem.indo.dooit.views.main.fragments.target.controllers.GoalAddController;
+import org.gem.indo.dooit.views.main.fragments.target.controllers.GoalDepositController;
+import org.gem.indo.dooit.views.main.fragments.target.controllers.GoalEditController;
+import org.gem.indo.dooit.views.main.fragments.target.controllers.GoalWithdrawController;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -367,17 +367,17 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
                 Goal g2 = persisted.loadConvoGoal(BotType.GOAL_DEPOSIT);
                 if (g2 == null)
                     throw new RuntimeException("No Goal was persisted for Goal Deposit conversation.");
-                return new GoalDepositCallback(getActivity(), g2);
+                return new GoalDepositController(getActivity(), g2);
             case GOAL_WITHDRAW:
                 Goal g3 = persisted.loadConvoGoal(BotType.GOAL_WITHDRAW);
                 if (g3 == null)
                     throw new RuntimeException("No Goal was persisted for Goal Withdraw conversation.");
-                return new GoalWithdrawCallback(getActivity(), g3);
+                return new GoalWithdrawController(getActivity(), g3);
             case GOAL_EDIT:
                 Goal g4 = persisted.loadConvoGoal(BotType.GOAL_EDIT);
                 if (g4 == null)
                     throw new RuntimeException("No Goal was persisted for Goal Edit converstation");
-                return new GoalEditCallback(getActivity(), g4);
+                return new GoalEditController(getActivity(), g4);
             default:
                 return null;
         }

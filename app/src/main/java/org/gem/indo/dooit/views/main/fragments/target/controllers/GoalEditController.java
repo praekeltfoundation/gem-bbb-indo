@@ -1,4 +1,4 @@
-package org.gem.indo.dooit.views.main.fragments.target.callbacks;
+package org.gem.indo.dooit.views.main.fragments.target.controllers;
 
 import android.app.Activity;
 import android.net.Uri;
@@ -32,7 +32,7 @@ import rx.functions.Action1;
  * Created by Wimpie Victor on 2016/12/01.
  */
 
-public class GoalEditCallback extends BotCallback {
+public class GoalEditController extends BotCallback {
 
     @Inject
     transient GoalManager goalManager;
@@ -42,7 +42,7 @@ public class GoalEditCallback extends BotCallback {
 
     private Goal goal;
 
-    public GoalEditCallback(Activity activity, Goal goal) {
+    public GoalEditController(Activity activity, Goal goal) {
         super(activity);
         ((DooitApplication) activity.getApplication()).component.inject(this);
         this.goal = goal;

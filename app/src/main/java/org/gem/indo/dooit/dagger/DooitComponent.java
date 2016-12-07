@@ -22,10 +22,10 @@ import org.gem.indo.dooit.views.main.fragments.challenge.fragments.ChallengePict
 import org.gem.indo.dooit.views.main.fragments.challenge.fragments.ChallengeQuizFragment;
 import org.gem.indo.dooit.views.main.fragments.challenge.fragments.ChallengeRegisterFragment;
 import org.gem.indo.dooit.views.main.fragments.target.TargetFragment;
-import org.gem.indo.dooit.views.main.fragments.target.callbacks.GoalAddController;
-import org.gem.indo.dooit.views.main.fragments.target.callbacks.GoalDepositCallback;
-import org.gem.indo.dooit.views.main.fragments.target.callbacks.GoalEditCallback;
-import org.gem.indo.dooit.views.main.fragments.target.callbacks.GoalWithdrawCallback;
+import org.gem.indo.dooit.views.main.fragments.target.controllers.GoalAddController;
+import org.gem.indo.dooit.views.main.fragments.target.controllers.GoalDepositController;
+import org.gem.indo.dooit.views.main.fragments.target.controllers.GoalEditController;
+import org.gem.indo.dooit.views.main.fragments.target.controllers.GoalWithdrawController;
 import org.gem.indo.dooit.views.main.fragments.tip.TipsFragment;
 import org.gem.indo.dooit.views.main.fragments.tip.TipsListFragment;
 import org.gem.indo.dooit.views.main.fragments.tip.adapters.TipsListAdapter;
@@ -87,11 +87,11 @@ public interface DooitComponent {
 
     void inject(GoalAddController o);
 
-    void inject(GoalDepositCallback o);
+    void inject(GoalDepositController o);
 
-    void inject(GoalWithdrawCallback o);
+    void inject(GoalWithdrawController o);
 
-    void inject(GoalEditCallback o);
+    void inject(GoalEditController o);
 
     void inject(GoalVerificationViewHolder o);
 

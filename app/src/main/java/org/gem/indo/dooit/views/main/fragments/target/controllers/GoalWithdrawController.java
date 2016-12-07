@@ -1,7 +1,6 @@
-package org.gem.indo.dooit.views.main.fragments.target.callbacks;
+package org.gem.indo.dooit.views.main.fragments.target.controllers;
 
 import android.app.Activity;
-import android.content.Context;
 
 import org.gem.indo.dooit.DooitApplication;
 import org.gem.indo.dooit.api.DooitAPIError;
@@ -22,29 +21,27 @@ import javax.inject.Inject;
 import rx.functions.Action1;
 
 /**
- * Created by Wimpie Victor on 2016/11/21.
+ * Created by Wimpie Victor on 2016/11/27.
  */
 
-public class GoalDepositController extends BotCallback {
+public class GoalWithdrawController extends BotCallback {
 
     @Inject
     transient GoalManager goalManager;
 
-    private Context context;
     private Goal goal;
 
-    public GoalDepositController(Activity activity, Goal goal) {
+    public GoalWithdrawController(Activity activity, Goal goal) {
         super(activity);
         ((DooitApplication) activity.getApplication()).component.inject(this);
-        context = activity;
         this.goal = goal;
     }
 
     @Override
     public void onCall(String key, Map<String, Answer> answerLog, BaseBotModel model) {
         switch (key) {
-            case "do_deposit":
-                doDeposit(answerLog);
+            case "do_withdraw":
+                doWithdraw(answerLog);
                 break;
         }
     }
@@ -59,20 +56,23 @@ public class GoalDepositController extends BotCallback {
         return goal;
     }
 
-    private void doDeposit(Map<String, Answer> answerLog) {
-        GoalTransaction trans = goal.createTransaction(Double.parseDouble(answerLog.get("deposit_amount").getValue()));
+    private void doWithdraw(Map<String, Answer> answerLog) {
+        if (answerLog.containsKey("withdraw_amount")) {
+            // Withdraw subtracts from the goal
+            GoalTransaction trans = goal.createTransaction(-1 * Double.parseDouble(answerLog.get("withdraw_amount").getValue()));
 
-        goalManager.addGoalTransaction(goal, trans, new DooitErrorHandler() {
-            @Override
-            public void onError(DooitAPIError error) {
+            goalManager.addGoalTransaction(goal, trans, new DooitErrorHandler() {
+                @Override
+                public void onError(DooitAPIError error) {
 
-            }
-        }).subscribe(new Action1<EmptyResponse>() {
-            @Override
-            public void call(EmptyResponse emptyResponse) {
-                if (context instanceof MainActivity)
-                    ((MainActivity) context).refreshGoals();
-            }
-        });
+                }
+            }).subscribe(new Action1<EmptyResponse>() {
+                @Override
+                public void call(EmptyResponse emptyResponse) {
+                    if (context instanceof MainActivity)
+                        ((MainActivity) context).refreshGoals();
+                }
+            });
+        }
     }
 }
