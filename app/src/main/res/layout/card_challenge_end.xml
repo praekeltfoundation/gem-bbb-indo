@@ -19,6 +19,7 @@
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent"
+            app:overlayImage="@drawable/challenge_done_card_gradient"
             app:placeholderImage="@drawable/empty_image" />
 
         <TextView
@@ -29,7 +30,7 @@
             android:layout_margin="8dp"
             android:textAlignment="center"
             android:textAllCaps="true"
-            android:textColor="@color/black"
+            android:textColor="@color/white"
             app:layout_constraintBottom_toTopOf="@+id/card_challenge_title"
             app:layout_constraintLeft_toLeftOf="@+id/card_challenge_title"
             app:layout_constraintRight_toRightOf="@+id/card_challenge_title"
@@ -42,7 +43,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="8dp"
             android:textAlignment="center"
-            android:textColor="@color/black"
+            android:textColor="@color/white"
             app:layout_constraintBottom_toBottomOf="@+id/card_challenge_image"
             app:layout_constraintLeft_toLeftOf="@+id/card_challenge_image"
             app:layout_constraintRight_toRightOf="@+id/card_challenge_image"

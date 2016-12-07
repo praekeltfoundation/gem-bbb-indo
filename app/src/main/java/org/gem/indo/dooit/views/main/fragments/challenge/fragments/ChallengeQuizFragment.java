@@ -218,7 +218,7 @@ public class ChallengeQuizFragment extends Fragment implements OnOptionChangeLis
     public void nextQuestion() {
         currentOption = null;
         int idx = mPager.getCurrentItem() + 1;
-        if (idx < mPager.getChildCount()) {
+        if (idx < mAdapter.getCount()) {
             mPager.setCurrentItem(idx);
         } else {
             Toast.makeText(getContext(), org.gem.indo.dooit.R.string.challenge_all_questions_complete, Toast.LENGTH_SHORT).show();
