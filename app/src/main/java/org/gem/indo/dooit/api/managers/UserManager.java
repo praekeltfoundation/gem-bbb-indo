@@ -1,6 +1,7 @@
 package org.gem.indo.dooit.api.managers;
 
 import android.app.Application;
+import android.support.annotation.NonNull;
 
 import org.gem.indo.dooit.api.DooitErrorHandler;
 import org.gem.indo.dooit.api.interfaces.UserAPI;
@@ -11,6 +12,11 @@ import org.gem.indo.dooit.models.User;
 
 import javax.inject.Inject;
 
+import retrofit2.http.GET;
+import retrofit2.http.Multipart;
+import retrofit2.http.POST;
+import retrofit2.http.Part;
+import retrofit2.http.Query;
 import rx.Observable;
 
 /**
@@ -30,10 +36,24 @@ public class UserManager extends DooitManager {
     public Observable<User> retrieveUser(int userId, DooitErrorHandler errorHandler) {
         return useNetwork(userAPI.getUser(userId), errorHandler);
     }
+
     public Observable<EmptyResponse> updateUser(long userId, String name, DooitErrorHandler errorHandler) {
         return useNetwork(userAPI.renameUser(userId,new ChangeUser(name)), errorHandler);
     }
+
     public Observable<EmptyResponse> changePassword(long userId, String oldPassword,String newPassword,  DooitErrorHandler errorHandler) {
         return useNetwork(userAPI.changePassword(userId,new ChangePassword(oldPassword,newPassword)), errorHandler);
+    }
+
+    public Observable<EmptyResponse> alterSecurityQuestion(String username, String question, String answer, DooitErrorHandler errorHandler) {
+        return useNetwork(userAPI.alterSecurityQuestion(username, question, answer), errorHandler);
+    }
+
+    public Observable<String> getSecurityQuestion(String username, DooitErrorHandler errorHandler) {
+        return useNetwork(userAPI.getSecurityQuestion(username), errorHandler);
+    }
+
+    public Observable<EmptyResponse> submitSecurityQuestionResponse(String username, String answer, String password, DooitErrorHandler errorHandler) {
+        return useNetwork(userAPI.alterSecurityQuestion(username, answer, password), errorHandler);
     }
 }
