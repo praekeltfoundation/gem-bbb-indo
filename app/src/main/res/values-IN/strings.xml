@@ -362,5 +362,12 @@
     <string name="saved">saved</string>
     <string name="of_target_amount">of %1$s %2$.2f</string>
     <string name="label_select_picture">Select picture</string>
+    <string name="feedback_pick_subject">Pick subject</string>
+    <string name="feedback_your_message">Your message</string>
+    <string name="feedback_option_ask">Ask a question</string>
+    <string name="title_activity_feedback">Kontak Dooit</string>
+    <string name="feedback_option_general"><![CDATA[Saran & Komentar]]></string>
+    <string name="feedback_option_report">Laporkan Keluhan</string>
+    <string name="feedback_option_partner">Penawaran Kerjasama</string>
 
 </resources>

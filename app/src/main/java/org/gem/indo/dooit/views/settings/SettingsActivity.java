@@ -4,11 +4,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
-import android.support.v7.widget.SwitchCompat;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.CompoundButton;
-import android.widget.Switch;
 import android.widget.TextView;
 
 import org.gem.indo.dooit.Constants;
@@ -18,6 +16,7 @@ import org.gem.indo.dooit.helpers.DooitSharedPreferences;
 import org.gem.indo.dooit.helpers.Persisted;
 import org.gem.indo.dooit.helpers.SquiggleBackgroundHelper;
 import org.gem.indo.dooit.helpers.notifications.NotificationType;
+import org.gem.indo.dooit.models.enums.FeedbackType;
 import org.gem.indo.dooit.services.NotificationAlarm;
 import org.gem.indo.dooit.views.DooitActivity;
 import org.gem.indo.dooit.views.RootActivity;
@@ -117,6 +116,21 @@ public class SettingsActivity extends DooitActivity {
                 //.setTitle(getString(org.gem.indo.dooit.R.string.title_activity_terms_and_conditions))
                 .setUrl(Constants.TERMS_URL)
                 .startActivity();
+    }
+
+    @OnClick(value = {R.id.settings_about_feedback, R.id.settings_about_report})
+    public void feedback(View view) {
+        FeedbackActivity.Builder nextActivity = FeedbackActivity.Builder.create(this);
+        Intent intent = nextActivity.createIntent(this);
+        switch (view.getId()) {
+            case R.id.settings_about_feedback:
+                intent.putExtra(FeedbackActivity.ARG_TYPE, FeedbackType.GENERAL.getValue());
+                break;
+            case R.id.settings_about_report:
+                intent.putExtra(FeedbackActivity.ARG_TYPE, FeedbackType.REPORT.getValue());
+                break;
+        }
+        nextActivity.startActivity();
     }
 
     @OnClick({R.id.settings_about_privacy})

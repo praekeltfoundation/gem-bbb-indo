@@ -71,6 +71,12 @@
             android:theme="@style/AppTheme.NoActionBar" />
 
         <activity
+            android:name="org.gem.indo.dooit.views.settings.FeedbackActivity"
+            android:label="@string/title_activity_feedback"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar" />
+
+        <activity
             android:name="org.gem.indo.dooit.views.web.MinimalWebViewActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
