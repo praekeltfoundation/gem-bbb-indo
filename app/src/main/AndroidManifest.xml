@@ -15,6 +15,9 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme.NoActionBar">
+
+        <meta-data android:name="com.facebook.sdk.ApplicationId" android:value="@string/facebook_app_id"/>
+
         <activity
             android:name="org.gem.indo.dooit.views.RootActivity"
             android:screenOrientation="portrait"
@@ -86,6 +89,10 @@
         <service
             android:name=".services.NotificationScheduler"
             android:enabled="true" />
+
+        <provider android:authorities="com.facebook.app.FacebookContentProvider1030237547086252"
+            android:name="com.facebook.FacebookContentProvider"
+            android:exported="true"/>
 
         <meta-data
             android:name="io.fabric.ApiKey"

@@ -3,6 +3,7 @@ package org.gem.indo.dooit;
 import android.app.Application;
 
 import com.crashlytics.android.Crashlytics;
+import com.facebook.FacebookSdk;
 import com.facebook.common.logging.FLog;
 import com.facebook.drawee.backends.pipeline.Fresco;
 import com.facebook.imagepipeline.backends.okhttp3.OkHttpImagePipelineConfigFactory;
@@ -46,6 +47,8 @@ public class DooitApplication extends Application {
         if (!BuildConfig.DEBUG) {
             Fabric.with(this, new Crashlytics());
         }
+
+        FacebookSdk.sdkInitialize(getApplicationContext());
 
         component = DaggerDooitComponent.builder()
                 .dooitModule(new DooitModule(this))

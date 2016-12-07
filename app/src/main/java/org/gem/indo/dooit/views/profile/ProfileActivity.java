@@ -21,9 +21,12 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.facebook.CallbackManager;
 import com.facebook.drawee.backends.pipeline.Fresco;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.facebook.imagepipeline.core.ImagePipeline;
+import com.facebook.share.model.ShareLinkContent;
+import com.facebook.share.widget.ShareDialog;
 
 import org.gem.indo.dooit.DooitApplication;
 import org.gem.indo.dooit.R;
@@ -105,6 +108,10 @@ public class ProfileActivity extends DooitActivity {
     private Uri imageUri;
     private BadgeAdapter adapter;
 
+    // Facebook
+    private CallbackManager callbackManager;
+    private ShareDialog shareDialog;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -112,6 +119,11 @@ public class ProfileActivity extends DooitActivity {
         setContentView(org.gem.indo.dooit.R.layout.activity_profile);
         ((DooitApplication) getApplication()).component.inject(this);
         ButterKnife.bind(this);
+
+        // Facebook
+        callbackManager = CallbackManager.Factory.create();
+        shareDialog = new ShareDialog(this);
+        showShareDialog();
 
         // Appbar
         setSupportActionBar(toolbar);
@@ -327,6 +339,8 @@ public class ProfileActivity extends DooitActivity {
                 onActivityImageResult(data);
                 break;
         }
+
+        callbackManager.onActivityResult(requestCode, resultCode, data);
     }
 
     protected void onActivityImageResult(Intent data) {
@@ -382,6 +396,16 @@ public class ProfileActivity extends DooitActivity {
         View view = this.findViewById(R.id.achievements_progress_container);
         if (view != null) {
             view.setVisibility(View.GONE);
+        }
+    }
+
+    protected void showShareDialog() {
+        if (shareDialog.canShow(ShareLinkContent.class)) {
+            ShareLinkContent content = new ShareLinkContent.Builder()
+                    .setContentTitle("Snacks and Hanging Out")
+                    .setContentUrl(Uri.parse("http://localhost:8000/media/images/Snacks__Hanging_Out.original.png"))
+                    .build();
+            shareDialog.show(content);
         }
     }
 
