@@ -3,6 +3,7 @@ package org.gem.indo.dooit.views.main.fragments.challenge.fragments;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -71,6 +72,9 @@ public class ChallengeCompleteFragment extends Fragment {
         if (challenge != null) {
             image.setImageURI(challenge.getImageURL());
             title.setText(challenge.getName());
+        }
+        if (TextUtils.isEmpty(title.getText())) {
+            title.setVisibility(View.GONE);
         }
         return view;
     }
