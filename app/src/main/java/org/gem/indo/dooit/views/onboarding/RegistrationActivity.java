@@ -33,6 +33,7 @@ import org.gem.indo.dooit.helpers.Persisted;
 import org.gem.indo.dooit.helpers.SquiggleBackgroundHelper;
 import org.gem.indo.dooit.models.Profile;
 import org.gem.indo.dooit.models.User;
+import org.gem.indo.dooit.services.NotificationAlarm;
 import org.gem.indo.dooit.views.DooitActivity;
 import org.gem.indo.dooit.views.helpers.activity.DooitActivityBuilder;
 import org.gem.indo.dooit.views.web.MinimalWebViewActivity;
@@ -178,6 +179,7 @@ public class RegistrationActivity extends DooitActivity {
                         persisted.setCurrentUser(authenticationResponse.getUser());
                         persisted.saveToken(authenticationResponse.getToken());
                         persisted.setNewBotUser(true);
+                        NotificationAlarm.setAlarm(RegistrationActivity.this);
                         ProfileImageActivity.Builder.create(RegistrationActivity.this).startActivityClearTop();
                     }
                 });

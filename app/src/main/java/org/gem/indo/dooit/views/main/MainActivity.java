@@ -18,6 +18,7 @@ import org.gem.indo.dooit.helpers.Persisted;
 import org.gem.indo.dooit.helpers.activity.result.ActivityForResultHelper;
 import org.gem.indo.dooit.helpers.bot.param.ParamMatch;
 import org.gem.indo.dooit.helpers.bot.param.ParamParser;
+import org.gem.indo.dooit.helpers.notifications.NotificationType;
 import org.gem.indo.dooit.views.DooitActivity;
 import org.gem.indo.dooit.views.helpers.activity.DooitActivityBuilder;
 import org.gem.indo.dooit.views.main.adapters.MainTabAdapter;
@@ -77,6 +78,16 @@ public class MainActivity extends DooitActivity {
             }
         }
 
+        // App opened from notification. Direct to appropriate screen.
+        Bundle extras = getIntent().getExtras();
+        if (extras != null)
+            if (extras.containsKey(NotificationType.NOTIFICATION_TYPE))
+                switch (NotificationType.getValueOf(extras.getInt(NotificationType.NOTIFICATION_TYPE))) {
+                    case CHALLENGE_AVAILABLE:
+                        startPage(MainViewPagerPositions.CHALLENGE);
+                }
+
+        // Junk to test
         ParamMatch match = ParamParser.parse("qwertyu $(goal.name) bnm, $(goal.week) rtyui dfgh");
         match.populate(new Object[]{0, 1});
     }
