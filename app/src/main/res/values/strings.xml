@@ -307,6 +307,7 @@
     <string name="profile_section_account">Your account</string>
     <string name="profile_account_change_name">Change name</string>
     <string name="profile_account_change_password">Change password</string>
+    <string name="profile_account_change_security_question">Change security question</string>
     <string name="profile_account_sign_out">Sign out</string>
     <string name="profile_section_notifications">Notifications</string>
     <string name="profile_section_help"><![CDATA[About & Help]]></string>

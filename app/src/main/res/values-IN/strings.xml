@@ -369,5 +369,6 @@
     <string name="feedback_option_general"><![CDATA[Saran & Komentar]]></string>
     <string name="feedback_option_report">Laporkan Keluhan</string>
     <string name="feedback_option_partner">Penawaran Kerjasama</string>
+    <string name="profile_account_change_security_question">Change security question</string>
 
 </resources>
