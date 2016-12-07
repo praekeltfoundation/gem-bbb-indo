@@ -8,11 +8,10 @@ import org.gem.indo.dooit.api.DooitErrorHandler;
 import org.gem.indo.dooit.api.managers.GoalManager;
 import org.gem.indo.dooit.api.responses.EmptyResponse;
 import org.gem.indo.dooit.controllers.BotParamType;
-import org.gem.indo.dooit.models.goal.Goal;
-import org.gem.indo.dooit.models.goal.GoalTransaction;
 import org.gem.indo.dooit.models.bot.Answer;
 import org.gem.indo.dooit.models.bot.BaseBotModel;
-import org.gem.indo.dooit.controllers.BotController;
+import org.gem.indo.dooit.models.goal.Goal;
+import org.gem.indo.dooit.models.goal.GoalTransaction;
 import org.gem.indo.dooit.views.main.MainActivity;
 
 import java.util.Map;
@@ -25,15 +24,13 @@ import rx.functions.Action1;
  * Created by Wimpie Victor on 2016/11/27.
  */
 
-public class GoalWithdrawController extends BotController {
+public class GoalWithdrawController extends GoalBotController {
 
     @Inject
     transient GoalManager goalManager;
 
-    private Goal goal;
-
     public GoalWithdrawController(Activity activity, Goal goal) {
-        super(activity);
+        super(activity, goal);
         ((DooitApplication) activity.getApplication()).component.inject(this);
         this.goal = goal;
     }
@@ -55,11 +52,6 @@ public class GoalWithdrawController extends BotController {
     @Override
     public void input(BotParamType inputType, Object value) {
 
-    }
-
-    @Override
-    public Object getObject() {
-        return goal;
     }
 
     private void doWithdraw(Map<String, Answer> answerLog) {

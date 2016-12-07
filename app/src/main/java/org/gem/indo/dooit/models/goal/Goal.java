@@ -209,7 +209,7 @@ public class Goal {
     }
 
     public int getRemainderDaysLeft() {
-        return Utils.dayDiff(endDate.toDate().getTime());
+        return Utils.dayDiff(endDate.toDate().getTime()) - getWeeksLeft(Utils.ROUNDWEEK.DOWN) * 7;
     }
 
     public List<Badge> getNewBadges() {

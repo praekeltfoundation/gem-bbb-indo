@@ -90,6 +90,7 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
     BotController callback;
     BotFeed feed;
     BaseBotModel currentModel;
+    boolean clearState = false;
 
     public BotFragment() {
         // Required empty public constructor
@@ -167,6 +168,13 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
     }
 
     private void createFeed() {
+        if (clearState) {
+            persisted.clearConversation();
+            getBotAdapter().clear();
+            // Don't clear Goals or Tips as they are the current argument passing mechanism
+            clearState = false;
+        }
+
         feed = new BotFeed<>(getContext());
         switch (type) {
             case DEFAULT:
@@ -574,6 +582,10 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
     protected boolean hasCallback() {
         // Check both until bot is more robust
         return callback != null && getBotAdapter().hasCallback();
+    }
+
+    public void setClearState(boolean value) {
+        clearState = value;
     }
 
     private void showProgressBar() {

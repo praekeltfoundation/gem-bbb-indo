@@ -69,7 +69,7 @@ public class GoalInfoViewHolder extends BaseBotViewHolder<Node> {
 
         titleTextView.setText(name);
         arcProgressBar.setProgress((int) ((value / target) * 100));
-        currentTextView.setText(String.format("%s %.2f", CurrencyHelper.getCurrencySymbol(), target));
+        currentTextView.setText(String.format("%s %.2f", CurrencyHelper.getCurrencySymbol(), value));
         totalTextView.setText(getContext().getString(R.string.of_target_amount, CurrencyHelper.getCurrencySymbol(), target));
 
         // Prefer a local image. Some conversations set the image from phone storage, and others

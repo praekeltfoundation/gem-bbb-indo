@@ -93,11 +93,6 @@ public class MainActivity extends DooitActivity {
 
         // Set alarm for when the app opens without going through registration or login
         NotificationAlarm.setAlarm(this);
-
-        // Clear bot state
-        persisted.clearConversation();
-        persisted.clearConvoGoals();
-        persisted.clearConvoTip();
     }
 
     @OnPageChange(value = R.id.content_main_view_pager, callback = OnPageChange.Callback.PAGE_SELECTED)

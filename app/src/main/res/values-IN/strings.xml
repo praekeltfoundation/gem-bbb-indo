@@ -173,7 +173,7 @@
 
     <string name="goal_withdraw_enter_amount">Berapa banyak jumlah uang yang mau kamu tarik?</string>
     <string name="goal_withdraw_tips_challenge">Tetap pantau tabunganmu, cek tips menabungnya.</string>
-    <string name="goal_withdraw_end_message">"Ingat untuk kembali lagi buat memantau tabunganmu. Tetap menabung ya %s!</string>
+    <string name="goal_withdraw_end_message">"Ingat untuk kembali lagi buat memantau tabunganmu. Tetap menabung ya $(user.username)!</string>
 
     <string name="goal_withdraw_tip">Ya! Perlihatkan tipsnya.</string>
     <string name="goal_withdraw_challenge">Boleh gak aku ikutan tantangan minggu ini aja?</string>
