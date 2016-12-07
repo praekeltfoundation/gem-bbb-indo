@@ -15,7 +15,7 @@ import javax.inject.Inject;
 public abstract class DooitBotController extends BotCallback {
 
     @Inject
-    Persisted persisted;
+    protected Persisted persisted;
 
     public DooitBotController(Context context) {
         super(context);

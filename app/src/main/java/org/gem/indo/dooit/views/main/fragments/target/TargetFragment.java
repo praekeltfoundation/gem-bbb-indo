@@ -23,7 +23,7 @@ import org.gem.indo.dooit.api.DooitErrorHandler;
 import org.gem.indo.dooit.api.managers.GoalManager;
 import org.gem.indo.dooit.helpers.Persisted;
 import org.gem.indo.dooit.helpers.Utils;
-import org.gem.indo.dooit.models.Goal;
+import org.gem.indo.dooit.models.goal.Goal;
 import org.gem.indo.dooit.models.enums.BotType;
 import org.gem.indo.dooit.views.custom.WeekGraph;
 import org.gem.indo.dooit.views.helpers.activity.CurrencyHelper;

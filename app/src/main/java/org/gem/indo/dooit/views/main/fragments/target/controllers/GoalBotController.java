@@ -2,10 +2,14 @@ package org.gem.indo.dooit.views.main.fragments.target.controllers;
 
 import android.content.Context;
 
+import org.gem.indo.dooit.DooitApplication;
+import org.gem.indo.dooit.api.managers.GoalManager;
 import org.gem.indo.dooit.controllers.BotParamType;
 import org.gem.indo.dooit.controllers.DooitBotController;
-import org.gem.indo.dooit.models.Goal;
+import org.gem.indo.dooit.models.goal.Goal;
 import org.gem.indo.dooit.models.bot.BaseBotModel;
+
+import javax.inject.Inject;
 
 /**
  * Created by Wimpie Victor on 2016/12/07.
@@ -13,10 +17,14 @@ import org.gem.indo.dooit.models.bot.BaseBotModel;
 
 public abstract class GoalBotController extends DooitBotController {
 
+    @Inject
+    protected GoalManager goalManager;
+
     protected Goal goal;
 
     public GoalBotController(Context context, Goal goal) {
         super(context);
+        ((DooitApplication) context.getApplicationContext()).component.inject(this);
         this.goal = goal;
     }
 

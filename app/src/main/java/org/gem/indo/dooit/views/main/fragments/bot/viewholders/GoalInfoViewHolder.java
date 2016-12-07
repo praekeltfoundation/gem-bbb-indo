@@ -1,6 +1,5 @@
 package org.gem.indo.dooit.views.main.fragments.bot.viewholders;
 
-import android.content.Context;
 import android.support.v4.content.ContextCompat;
 import android.view.View;
 import android.widget.TextView;
@@ -10,7 +9,7 @@ import com.facebook.drawee.view.SimpleDraweeView;
 import org.gem.indo.dooit.DooitApplication;
 import org.gem.indo.dooit.R;
 import org.gem.indo.dooit.helpers.Persisted;
-import org.gem.indo.dooit.models.Goal;
+import org.gem.indo.dooit.models.goal.Goal;
 import org.gem.indo.dooit.models.bot.Node;
 import org.gem.indo.dooit.models.exceptions.BotCallbackRequired;
 import org.gem.indo.dooit.views.custom.ArcProgressBar;

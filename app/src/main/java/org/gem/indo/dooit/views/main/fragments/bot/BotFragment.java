@@ -26,8 +26,8 @@ import org.gem.indo.dooit.helpers.Persisted;
 import org.gem.indo.dooit.helpers.SquiggleBackgroundHelper;
 import org.gem.indo.dooit.helpers.Utils;
 import org.gem.indo.dooit.helpers.bot.BotFeed;
-import org.gem.indo.dooit.models.Goal;
-import org.gem.indo.dooit.models.GoalPrototype;
+import org.gem.indo.dooit.models.goal.Goal;
+import org.gem.indo.dooit.models.goal.GoalPrototype;
 import org.gem.indo.dooit.models.Tip;
 import org.gem.indo.dooit.models.bot.Answer;
 import org.gem.indo.dooit.models.bot.BaseBotModel;
@@ -161,8 +161,7 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
         if (persisted.isNewBotUser()) {
             setBotType(BotType.DEFAULT);
             persisted.setNewBotUser(false);
-        } else
-            setBotType(BotType.DEFAULT);
+        }
 
         createFeed();
     }

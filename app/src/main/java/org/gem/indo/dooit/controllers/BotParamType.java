@@ -15,7 +15,11 @@ public enum BotParamType {
     GOAL_NAME("goal.name"),
     GOAL_VALUE("goal.value"),
     GOAL_TARGET("goal.target"),
-    GOAL_END_DATE("goal.end_date");
+    GOAL_END_DATE("goal.end_date"),
+    GOAL_WEEKLY_TARGET("goal.weekly_target"),
+    GOAL_WEEKS_LEFT_UP("goal.weeks_left_up"),
+    GOAL_WEEKS_LEFT_DOWN("goal.weeks_left_down"),
+    GOAL_REMAINDER_DAYS_LEFT("goal.remainder_days_left");
 
     private static Map<String, BotParamType> map = new HashMap<>();
 

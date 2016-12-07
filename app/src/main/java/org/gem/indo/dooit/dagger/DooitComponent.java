@@ -10,8 +10,8 @@ import org.gem.indo.dooit.views.DooitActivity;
 import org.gem.indo.dooit.views.RootActivity;
 import org.gem.indo.dooit.views.main.MainActivity;
 import org.gem.indo.dooit.views.main.fragments.bot.BotFragment;
-import org.gem.indo.dooit.views.main.fragments.bot.viewholders.GoalGalleryViewHolder;
 import org.gem.indo.dooit.views.main.fragments.bot.viewholders.AnswerImageSelectViewHolder;
+import org.gem.indo.dooit.views.main.fragments.bot.viewholders.GoalGalleryViewHolder;
 import org.gem.indo.dooit.views.main.fragments.bot.viewholders.GoalInfoViewHolder;
 import org.gem.indo.dooit.views.main.fragments.bot.viewholders.GoalVerificationViewHolder;
 import org.gem.indo.dooit.views.main.fragments.bot.viewholders.TextViewHolder;
@@ -23,6 +23,7 @@ import org.gem.indo.dooit.views.main.fragments.challenge.fragments.ChallengeQuiz
 import org.gem.indo.dooit.views.main.fragments.challenge.fragments.ChallengeRegisterFragment;
 import org.gem.indo.dooit.views.main.fragments.target.TargetFragment;
 import org.gem.indo.dooit.views.main.fragments.target.controllers.GoalAddController;
+import org.gem.indo.dooit.views.main.fragments.target.controllers.GoalBotController;
 import org.gem.indo.dooit.views.main.fragments.target.controllers.GoalDepositController;
 import org.gem.indo.dooit.views.main.fragments.target.controllers.GoalEditController;
 import org.gem.indo.dooit.views.main.fragments.target.controllers.GoalWithdrawController;
@@ -86,6 +87,8 @@ public interface DooitComponent {
     void inject(FeedbackManager o);
 
     void inject(GoalAddController o);
+
+    void inject(GoalBotController o);
 
     void inject(GoalDepositController o);
 

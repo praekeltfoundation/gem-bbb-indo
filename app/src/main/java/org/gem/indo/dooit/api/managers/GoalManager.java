@@ -5,9 +5,9 @@ import android.app.Application;
 import org.gem.indo.dooit.api.DooitErrorHandler;
 import org.gem.indo.dooit.api.interfaces.GoalAPI;
 import org.gem.indo.dooit.api.responses.EmptyResponse;
-import org.gem.indo.dooit.models.Goal;
-import org.gem.indo.dooit.models.GoalPrototype;
-import org.gem.indo.dooit.models.GoalTransaction;
+import org.gem.indo.dooit.models.goal.Goal;
+import org.gem.indo.dooit.models.goal.GoalPrototype;
+import org.gem.indo.dooit.models.goal.GoalTransaction;
 
 import java.util.ArrayList;
 import java.util.List;
