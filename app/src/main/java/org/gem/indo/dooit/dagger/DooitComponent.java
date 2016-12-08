@@ -9,8 +9,8 @@ import org.gem.indo.dooit.views.DooitActivity;
 import org.gem.indo.dooit.views.RootActivity;
 import org.gem.indo.dooit.views.main.MainActivity;
 import org.gem.indo.dooit.views.main.fragments.bot.BotFragment;
-import org.gem.indo.dooit.views.main.fragments.bot.viewholders.GoalGalleryViewHolder;
 import org.gem.indo.dooit.views.main.fragments.bot.viewholders.AnswerImageSelectViewHolder;
+import org.gem.indo.dooit.views.main.fragments.bot.viewholders.GoalGalleryViewHolder;
 import org.gem.indo.dooit.views.main.fragments.bot.viewholders.GoalInfoViewHolder;
 import org.gem.indo.dooit.views.main.fragments.bot.viewholders.GoalVerificationViewHolder;
 import org.gem.indo.dooit.views.main.fragments.bot.viewholders.TextViewHolder;
@@ -34,8 +34,10 @@ import org.gem.indo.dooit.views.onboarding.ChangeNameActivity;
 import org.gem.indo.dooit.views.onboarding.ChangePasswordActivity;
 import org.gem.indo.dooit.views.onboarding.ChangeSecurityQuestionActivity;
 import org.gem.indo.dooit.views.onboarding.LoginActivity;
+import org.gem.indo.dooit.views.onboarding.PasswordResetActivity;
 import org.gem.indo.dooit.views.onboarding.ProfileImageActivity;
 import org.gem.indo.dooit.views.onboarding.RegistrationActivity;
+import org.gem.indo.dooit.views.onboarding.fragments.PasswordResetUsernameFragment;
 import org.gem.indo.dooit.views.profile.ProfileActivity;
 import org.gem.indo.dooit.views.settings.FeedbackActivity;
 import org.gem.indo.dooit.views.settings.SettingsActivity;
@@ -102,6 +104,10 @@ public interface DooitComponent {
     void inject(MainActivity o);
 
     void inject(NotificationService o);
+
+    void inject(PasswordResetActivity o);
+
+    void inject(PasswordResetUsernameFragment o);
 
     void inject(Persisted o);
 

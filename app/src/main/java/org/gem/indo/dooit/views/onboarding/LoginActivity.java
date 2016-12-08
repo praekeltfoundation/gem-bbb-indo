@@ -53,6 +53,9 @@ public class LoginActivity extends DooitActivity {
     @BindView(R.id.activity_login_password_example_text_view)
     TextView passwordHint;
 
+    @BindView(R.id.activity_login_forgot_text_view)
+    TextView forgotLink;
+
     @Inject
     AuthenticationManager authenticationManager;
 
@@ -96,6 +99,11 @@ public class LoginActivity extends DooitActivity {
             login();
         }
         return true;
+    }
+
+    @OnClick(R.id.activity_login_forgot_text_view)
+    protected void forgot() {
+        PasswordResetActivity.Builder.create(this).startActivity();
     }
 
     private boolean detailsValid() {
