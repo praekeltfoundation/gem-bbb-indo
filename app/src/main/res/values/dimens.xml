@@ -18,6 +18,10 @@
     <dimen name="edit_text_padding">10dp</dimen>
     <dimen name="spinner_item_padding">10dp</dimen>
 
+    <!-- Common -->
+    <dimen name="wiggly_edit_box_padding_h">16dp</dimen>
+    <dimen name="wiggly_edit_box_padding_v">8dp</dimen>
+
     <!-- Registration -->
     <dimen name="registration_activity_padding">24dp</dimen>
     <dimen name="registration_margin_vertical">36dp</dimen>
