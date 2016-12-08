@@ -67,10 +67,14 @@ public class GoalInfoViewHolder extends BaseBotViewHolder<Node> {
         String localImageUri = dataModel.values.getString(BotParamType.GOAL_LOCAL_IMAGE_URI.getKey());
         boolean hasLocalUri = dataModel.values.getBoolean(BotParamType.GOAL_HAS_LOCAL_IMAGE_URI.getKey());
 
+        // Clamp progress to 0 <= progress <= 100
+        int progress = (int) ((value / target) * 100);
+        progress = Math.min(Math.max(0, progress), 100);
+
         titleTextView.setText(name);
-        arcProgressBar.setProgress((int) ((value / target) * 100));
-        currentTextView.setText(String.format("%s %.2f", CurrencyHelper.getCurrencySymbol(), value));
-        totalTextView.setText(getContext().getString(R.string.of_target_amount, CurrencyHelper.getCurrencySymbol(), target));
+        arcProgressBar.setProgress(progress);
+        currentTextView.setText(CurrencyHelper.format(value));
+        totalTextView.setText(getContext().getString(R.string.of_target_amount, CurrencyHelper.format(target)));
 
         // Prefer a local image. Some conversations set the image from phone storage, and others
         // rely on the remote image.
