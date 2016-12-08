@@ -7,6 +7,7 @@ import org.gem.indo.dooit.api.DooitAPIError;
 import org.gem.indo.dooit.api.DooitErrorHandler;
 import org.gem.indo.dooit.api.managers.GoalManager;
 import org.gem.indo.dooit.api.responses.EmptyResponse;
+import org.gem.indo.dooit.controllers.BotController;
 import org.gem.indo.dooit.models.Tip;
 import org.gem.indo.dooit.models.enums.BotType;
 import org.gem.indo.dooit.models.goal.Goal;
@@ -19,6 +20,7 @@ import java.util.Map;
 
 import javax.inject.Inject;
 
+import rx.functions.Action0;
 import rx.functions.Action1;
 
 /**
@@ -38,9 +40,14 @@ public class GoalDepositController extends GoalBotController {
 
     @Override
     public void onCall(String key, Map<String, Answer> answerLog, BaseBotModel model) {
+
+    }
+
+    @Override
+    public void onAsyncCall(String key, Map<String, Answer> answerLog, BaseBotModel model, OnAsyncListener listener) {
         switch (key) {
             case "do_deposit":
-                doDeposit(answerLog);
+                doDeposit(answerLog, listener);
                 break;
         }
     }
@@ -50,13 +57,18 @@ public class GoalDepositController extends GoalBotController {
 
     }
 
-    private void doDeposit(Map<String, Answer> answerLog) {
+    private void doDeposit(Map<String, Answer> answerLog, final OnAsyncListener listener) {
         GoalTransaction trans = goal.createTransaction(Double.parseDouble(answerLog.get("deposit_amount").getValue()));
 
         goalManager.addGoalTransaction(goal, trans, new DooitErrorHandler() {
             @Override
             public void onError(DooitAPIError error) {
 
+            }
+        }).doOnCompleted(new Action0() {
+            @Override
+            public void call() {
+                notifyDone(listener);
             }
         }).subscribe(new Action1<EmptyResponse>() {
             @Override
@@ -65,5 +77,7 @@ public class GoalDepositController extends GoalBotController {
                     ((MainActivity) context).refreshGoals();
             }
         });
+
+        persisted.saveConvoGoal(botType, goal);
     }
 }
