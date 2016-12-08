@@ -167,7 +167,7 @@
   {
     "name": "goal_edit_do_delete",
     "type": "blank",
-    "callback": "do_delete",
+    "asyncCall": "#do_delete",
     "autoNext": "goal_edit_delete_done"
   },
   {
@@ -204,7 +204,7 @@
   {
     "name": "goal_edit_do_update",
     "type": "blank",
-    "callback": "do_update",
+    "asyncCall": "#do_update",
     "autoNext": "goal_edit_updated"
   },
   {

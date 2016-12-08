@@ -12,6 +12,7 @@ import org.gem.indo.dooit.api.DooitErrorHandler;
 import org.gem.indo.dooit.api.managers.FileUploadManager;
 import org.gem.indo.dooit.api.managers.GoalManager;
 import org.gem.indo.dooit.api.responses.EmptyResponse;
+import org.gem.indo.dooit.controllers.BotController;
 import org.gem.indo.dooit.controllers.goal.GoalBotController;
 import org.gem.indo.dooit.models.enums.BotCallType;
 import org.gem.indo.dooit.helpers.MediaUriHelper;
@@ -51,12 +52,17 @@ public class GoalEditController extends GoalBotController {
 
     @Override
     public void onCall(BotCallType key, Map<String, Answer> answerLog, BaseBotModel model) {
+
+    }
+
+    @Override
+    public void onAsyncCall(BotCallType key, Map<String, Answer> answerLog, BaseBotModel model, OnAsyncListener listener) {
         switch (key) {
             case DO_UPDATE:
-                doUpdate(answerLog);
+                doUpdate(answerLog, listener);
                 break;
             case DO_DELETE:
-                doDelete(answerLog);
+                doDelete(answerLog, listener);
                 break;
         }
     }
@@ -66,12 +72,7 @@ public class GoalEditController extends GoalBotController {
 
     }
 
-    @Override
-    public Object getObject() {
-        return goal;
-    }
-
-    private void doUpdate(Map<String, Answer> answerLog) {
+    private void doUpdate(Map<String, Answer> answerLog, OnAsyncListener listener) {
         if (answerLog.containsKey("goal_edit_choice_date"))
             goal.setEndDate(DateTimeFormat.forPattern("yyyy-MM-dd")
                     .parseLocalDate(answerLog.get("goal_end_date").getValue().substring(0, 10)));
@@ -101,11 +102,12 @@ public class GoalEditController extends GoalBotController {
 
     private void handleImage(Map<String, Answer> answerLog) {
         // Find Image
-        Uri imageUri = null;
         if (answerLog.containsKey("goal_edit_gallery"))
-            imageUri = Uri.parse(answerLog.get("goal_edit_gallery").getValue());
+            goal.setLocalImageUri(answerLog.get("goal_edit_gallery").getValue());
         else if (answerLog.containsKey("goal_edit_camera"))
-            imageUri = Uri.parse(answerLog.get("goal_edit_camera").getValue());
+            goal.setLocalImageUri(answerLog.get("goal_edit_camera").getValue());
+
+        Uri imageUri = Uri.parse(goal.getLocalImageUri());
 
         final String mimetype = context.getContentResolver().getType(imageUri);
         final String path = MediaUriHelper.getPath(context, imageUri);
@@ -121,6 +123,7 @@ public class GoalEditController extends GoalBotController {
         }).doOnCompleted(new Action0() {
             @Override
             public void call() {
+                notifyDone(listener);
                 if (context instanceof MainActivity)
                     ((MainActivity) context).refreshGoals();
             }
@@ -136,7 +139,7 @@ public class GoalEditController extends GoalBotController {
 
     }
 
-    private void doDelete(Map<String, Answer> answerLog) {
+    private void doDelete(Map<String, Answer> answerLog, final OnAsyncListener listener) {
         goalManager.deleteGoal(goal, new DooitErrorHandler() {
             @Override
             public void onError(DooitAPIError error) {
@@ -145,6 +148,7 @@ public class GoalEditController extends GoalBotController {
         }).doOnCompleted(new Action0() {
             @Override
             public void call() {
+                notifyDone(listener);
                 if (context instanceof MainActivity)
                     ((MainActivity) context).refreshGoals();
             }
