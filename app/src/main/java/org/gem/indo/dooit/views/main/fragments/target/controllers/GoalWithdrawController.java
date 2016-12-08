@@ -7,6 +7,7 @@ import org.gem.indo.dooit.api.DooitAPIError;
 import org.gem.indo.dooit.api.DooitErrorHandler;
 import org.gem.indo.dooit.api.managers.GoalManager;
 import org.gem.indo.dooit.api.responses.EmptyResponse;
+import org.gem.indo.dooit.controllers.BotCallType;
 import org.gem.indo.dooit.controllers.BotParamType;
 import org.gem.indo.dooit.models.Tip;
 import org.gem.indo.dooit.models.bot.Answer;
@@ -38,9 +39,9 @@ public class GoalWithdrawController extends GoalBotController {
     }
 
     @Override
-    public void onCall(String key, Map<String, Answer> answerLog, BaseBotModel model) {
+    public void onCall(BotCallType key, Map<String, Answer> answerLog, BaseBotModel model) {
         switch (key) {
-            case "do_withdraw":
+            case DO_WITHDRAW:
                 doWithdraw(answerLog);
                 break;
         }

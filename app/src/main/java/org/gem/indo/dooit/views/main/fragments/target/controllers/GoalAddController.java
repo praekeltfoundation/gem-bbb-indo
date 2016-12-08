@@ -8,6 +8,7 @@ import org.gem.indo.dooit.api.DooitAPIError;
 import org.gem.indo.dooit.api.DooitErrorHandler;
 import org.gem.indo.dooit.api.managers.FileUploadManager;
 import org.gem.indo.dooit.api.managers.GoalManager;
+import org.gem.indo.dooit.controllers.BotCallType;
 import org.gem.indo.dooit.helpers.MediaUriHelper;
 import org.gem.indo.dooit.helpers.Persisted;
 import org.gem.indo.dooit.models.Tip;
@@ -58,18 +59,18 @@ public class GoalAddController extends GoalBotController {
     }
 
     @Override
-    public void onCall(String key, Map<String, Answer> answerLog, BaseBotModel model) {
+    public void onCall(BotCallType key, Map<String, Answer> answerLog, BaseBotModel model) {
         switch (key) {
-            case "add_badge":
+            case ADD_BADGE:
                 addBadge(model);
                 break;
         }
     }
 
     @Override
-    public void onAsyncCall(String key, Map<String, Answer> answerLog, BaseBotModel model, OnAsyncListener listener) {
+    public void onAsyncCall(BotCallType key, Map<String, Answer> answerLog, BaseBotModel model, OnAsyncListener listener) {
         switch (key) {
-            case "do_create":
+            case DO_CREATE:
                 doCreate(answerLog, model, listener);
                 break;
         }

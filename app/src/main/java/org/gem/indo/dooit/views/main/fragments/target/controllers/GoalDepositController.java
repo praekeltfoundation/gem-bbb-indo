@@ -7,7 +7,7 @@ import org.gem.indo.dooit.api.DooitAPIError;
 import org.gem.indo.dooit.api.DooitErrorHandler;
 import org.gem.indo.dooit.api.managers.GoalManager;
 import org.gem.indo.dooit.api.responses.EmptyResponse;
-import org.gem.indo.dooit.controllers.BotController;
+import org.gem.indo.dooit.controllers.BotCallType;
 import org.gem.indo.dooit.models.Tip;
 import org.gem.indo.dooit.models.enums.BotType;
 import org.gem.indo.dooit.models.goal.Goal;
@@ -39,14 +39,14 @@ public class GoalDepositController extends GoalBotController {
     }
 
     @Override
-    public void onCall(String key, Map<String, Answer> answerLog, BaseBotModel model) {
+    public void onCall(BotCallType key, Map<String, Answer> answerLog, BaseBotModel model) {
 
     }
 
     @Override
-    public void onAsyncCall(String key, Map<String, Answer> answerLog, BaseBotModel model, OnAsyncListener listener) {
+    public void onAsyncCall(BotCallType key, Map<String, Answer> answerLog, BaseBotModel model, OnAsyncListener listener) {
         switch (key) {
-            case "do_deposit":
+            case DO_DEPOSIT:
                 doDeposit(answerLog, listener);
                 break;
         }

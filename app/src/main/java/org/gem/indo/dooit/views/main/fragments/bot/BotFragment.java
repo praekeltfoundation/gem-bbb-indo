@@ -461,8 +461,8 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
             persisted.saveConversationState(type, getBotAdapter().getDataSet());
 
             // Reached a controller Node
-            if (node.hasCallback() && controller != null)
-                controller.onCall(node.getCallback(), createAnswerLog(getBotAdapter().getDataSet()), node);
+            if (node.hasCall() && controller != null)
+                controller.onCall(node.getCall(), createAnswerLog(getBotAdapter().getDataSet()), node);
 
             // Reached an async controller Node
             if (node.hasAsyncCall() && controller != null) {

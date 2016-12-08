@@ -41,7 +41,7 @@ public abstract class BotController {
      * @param answerLog The Answer Log up to the point of the calling Node
      * @param model     The calling Node or Answer
      */
-    public abstract void onCall(String key, Map<String, Answer> answerLog, BaseBotModel model);
+    public abstract void onCall(BotCallType key, Map<String, Answer> answerLog, BaseBotModel model);
 
     /**
      * Called by viewholders trigger behaviour in the controller.
@@ -55,13 +55,12 @@ public abstract class BotController {
 
     /**
      * Called when the `asyncCall` field is set on a Node.
-     *
-     * @param key       The value of the `callback` field
+     *  @param key       The value of the `callback` field
      * @param answerLog The Answer Log up to the point of the calling Node
      * @param model     The calling Node or Answer
      * @param listener  Listener to be called when async operation is done
      */
-    public void onAsyncCall(String key, Map<String, Answer> answerLog, BaseBotModel model, OnAsyncListener listener) {
+    public void onAsyncCall(BotCallType key, Map<String, Answer> answerLog, BaseBotModel model, OnAsyncListener listener) {
         // Override me
     }
 

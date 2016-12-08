@@ -280,7 +280,7 @@
   {
     "name": "goal_add_do_create",
     "type": "blank",
-    "asyncCall": "do_create",
+    "asyncCall": "#do_create",
     "autoNext": "infoGoalAddedCongratulations"
   },
 
@@ -311,7 +311,7 @@
     "name": "infoGoalEnd",
     "type": "text",
     "text": "$(infoGoalEnd)",
-    "callback": "add_badge",
+    "call": "#add_badge",
     "autoNext": "goal_add_end"
   },
   {

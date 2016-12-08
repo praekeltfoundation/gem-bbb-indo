@@ -76,7 +76,7 @@
   {
     "name": "goal_withdraw_do_withdraw",
     "type": "blank",
-    "callback": "do_withdraw",
+    "call": "#do_withdraw",
     "autoNext": "goal_withdraw_info"
   },
   {
