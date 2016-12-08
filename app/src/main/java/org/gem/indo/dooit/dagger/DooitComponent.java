@@ -37,6 +37,7 @@ import org.gem.indo.dooit.views.onboarding.LoginActivity;
 import org.gem.indo.dooit.views.onboarding.PasswordResetActivity;
 import org.gem.indo.dooit.views.onboarding.ProfileImageActivity;
 import org.gem.indo.dooit.views.onboarding.RegistrationActivity;
+import org.gem.indo.dooit.views.onboarding.fragments.PasswordResetPasswordFragment;
 import org.gem.indo.dooit.views.onboarding.fragments.PasswordResetUsernameFragment;
 import org.gem.indo.dooit.views.profile.ProfileActivity;
 import org.gem.indo.dooit.views.settings.FeedbackActivity;
@@ -106,6 +107,8 @@ public interface DooitComponent {
     void inject(NotificationService o);
 
     void inject(PasswordResetActivity o);
+
+    void inject(PasswordResetPasswordFragment o);
 
     void inject(PasswordResetUsernameFragment o);
 

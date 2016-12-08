@@ -1,14 +1,15 @@
 package org.gem.indo.dooit.views.onboarding.fragments;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import org.gem.indo.dooit.DooitApplication;
@@ -16,6 +17,7 @@ import org.gem.indo.dooit.R;
 import org.gem.indo.dooit.api.DooitAPIError;
 import org.gem.indo.dooit.api.DooitErrorHandler;
 import org.gem.indo.dooit.api.managers.UserManager;
+import org.gem.indo.dooit.api.responses.EmptyResponse;
 import org.gem.indo.dooit.views.custom.WigglyEditText;
 
 import javax.inject.Inject;
@@ -27,12 +29,22 @@ import butterknife.Unbinder;
 import rx.Subscription;
 import rx.functions.Action1;
 
-public class PasswordResetUsernameFragment extends Fragment {
+public class PasswordResetPasswordFragment extends Fragment {
+    /*************
+     * Constants *
+     *************/
+
+    public static final String ARG_USERNAME = "password_reset_username";
+    public static final String ARG_QUESTION = "password_reset_question";
+
+
     /*************
      * Variables *
      *************/
 
     Subscription dataSubscription = null;
+    String username;
+    String question;
 
 
     /************
@@ -42,8 +54,14 @@ public class PasswordResetUsernameFragment extends Fragment {
     @Inject
     UserManager userManager;
 
-    @BindView(R.id.activity_onboarding_reset_textbox)
-    WigglyEditText usernameBox;
+    @BindView(R.id.activity_onboarding_reset_info)
+    TextView infoView;
+
+    @BindView(R.id.activity_onboarding_reset_answer)
+    WigglyEditText answerBox;
+
+    @BindView(R.id.activity_onboarding_reset_new_password)
+    WigglyEditText passwordBox;
 
     @BindView(R.id.activity_onboarding_reset_button)
     Button submitButton;
@@ -56,13 +74,16 @@ public class PasswordResetUsernameFragment extends Fragment {
      * Constructors *
      ****************/
 
-    public PasswordResetUsernameFragment() {
+    public PasswordResetPasswordFragment() {
         // Required empty public constructor
     }
 
-    public static PasswordResetUsernameFragment newInstance() {
-        PasswordResetUsernameFragment fragment = new PasswordResetUsernameFragment();
+    public static PasswordResetPasswordFragment newInstance(@NonNull String username,
+                                                            @NonNull String question) {
+        PasswordResetPasswordFragment fragment = new PasswordResetPasswordFragment();
         Bundle args = new Bundle();
+        args.putString(ARG_USERNAME, username);
+        args.putString(ARG_QUESTION, question);
         fragment.setArguments(args);
         return fragment;
     }
@@ -77,13 +98,18 @@ public class PasswordResetUsernameFragment extends Fragment {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
         ((DooitApplication) getActivity().getApplication()).component.inject(this);
+        if (getArguments() != null) {
+            username = getArguments().getString(ARG_USERNAME);
+            question = getArguments().getString(ARG_QUESTION);
+        }
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_onboarding_password_reset_username, container, false);
+        View view = inflater.inflate(R.layout.fragment_onboarding_password_reset, container, false);
         unbinder = ButterKnife.bind(this, view);
+        infoView.setText(question);
         return view;
     }
 
@@ -110,39 +136,45 @@ public class PasswordResetUsernameFragment extends Fragment {
 
     @OnClick(R.id.activity_onboarding_reset_button)
     protected void submit() {
-        final String username = usernameBox.getEditText();
+        boolean valid = true;
+        String answer = answerBox.getEditText();
+        String password = passwordBox.getEditText();
 
-        if (TextUtils.isEmpty(username)) {
+        if (TextUtils.isEmpty(answer)) {
             Toast.makeText(getContext(), "Must enter a username.", Toast.LENGTH_SHORT).show();
+            valid = false;
+        }
+
+        if (TextUtils.isEmpty(password)) {
+            Toast.makeText(getContext(), "Must enter new password.", Toast.LENGTH_SHORT).show();
+            valid = false;
+        }
+
+        if (!valid) {
             return;
         }
 
-        userManager.getSecurityQuestion(usernameBox.getEditText(), new DooitErrorHandler() {
+        userManager.submitSecurityQuestionResponse(username, answer, password, new DooitErrorHandler() {
             @Override
             public void onError(DooitAPIError error) {
                 getActivity().runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        Toast.makeText(getContext(), "No such username exists.", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getContext(), "Invalid details.", Toast.LENGTH_SHORT).show();
                     }
                 });
             }
-        }).subscribe(new Action1<String>() {
+        }).subscribe(new Action1<EmptyResponse>() {
             @Override
-            public void call(String s) {
-                if (TextUtils.isEmpty(s)) {
-                    getActivity().runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            Toast.makeText(getContext(), "No security question.", Toast.LENGTH_SHORT).show();
-                        }
-                    });
-                } else {
-                    FragmentTransaction ft = getFragmentManager().beginTransaction();
-                    Fragment f = PasswordResetPasswordFragment.newInstance(username, s);
-                    ft.replace(R.id.activity_container, f, "password_reset_fragment");
-                    ft.commit();
-                }
+            public void call(EmptyResponse response) {
+                getActivity().runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Toast.makeText(getContext(), "Success!", Toast.LENGTH_SHORT).show();
+                    }
+                });
+
+                getActivity().finish();
             }
         });
     }
