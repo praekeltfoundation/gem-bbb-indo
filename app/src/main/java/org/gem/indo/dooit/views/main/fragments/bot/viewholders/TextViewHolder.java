@@ -8,7 +8,7 @@ import android.widget.TextView;
 
 import org.gem.indo.dooit.DooitApplication;
 import org.gem.indo.dooit.R;
-import org.gem.indo.dooit.controllers.BotParamType;
+import org.gem.indo.dooit.models.enums.BotParamType;
 import org.gem.indo.dooit.helpers.Persisted;
 import org.gem.indo.dooit.helpers.bot.param.ParamArg;
 import org.gem.indo.dooit.helpers.bot.param.ParamMatch;

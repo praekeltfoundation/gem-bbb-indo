@@ -8,7 +8,7 @@ import org.gem.indo.dooit.api.DooitAPIError;
 import org.gem.indo.dooit.api.DooitErrorHandler;
 import org.gem.indo.dooit.api.managers.FileUploadManager;
 import org.gem.indo.dooit.api.managers.GoalManager;
-import org.gem.indo.dooit.controllers.BotCallType;
+import org.gem.indo.dooit.models.enums.BotCallType;
 import org.gem.indo.dooit.helpers.MediaUriHelper;
 import org.gem.indo.dooit.helpers.Persisted;
 import org.gem.indo.dooit.models.Tip;

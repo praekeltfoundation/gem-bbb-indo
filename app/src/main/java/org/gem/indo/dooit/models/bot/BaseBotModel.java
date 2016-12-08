@@ -5,7 +5,7 @@ import android.content.res.Resources;
 import android.text.TextUtils;
 import android.util.Log;
 
-import org.gem.indo.dooit.controllers.BotCallType;
+import org.gem.indo.dooit.models.enums.BotCallType;
 import org.gem.indo.dooit.helpers.ValueMap;
 import org.gem.indo.dooit.models.enums.BotMessageType;
 

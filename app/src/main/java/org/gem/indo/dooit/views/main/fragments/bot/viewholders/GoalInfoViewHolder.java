@@ -8,7 +8,7 @@ import com.facebook.drawee.view.SimpleDraweeView;
 
 import org.gem.indo.dooit.DooitApplication;
 import org.gem.indo.dooit.R;
-import org.gem.indo.dooit.controllers.BotParamType;
+import org.gem.indo.dooit.models.enums.BotParamType;
 import org.gem.indo.dooit.helpers.Persisted;
 import org.gem.indo.dooit.models.goal.Goal;
 import org.gem.indo.dooit.models.bot.Node;

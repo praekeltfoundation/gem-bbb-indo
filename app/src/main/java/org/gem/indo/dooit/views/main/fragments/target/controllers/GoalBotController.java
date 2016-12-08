@@ -4,8 +4,8 @@ import android.content.Context;
 
 import org.gem.indo.dooit.DooitApplication;
 import org.gem.indo.dooit.api.managers.GoalManager;
-import org.gem.indo.dooit.controllers.BotObjectType;
-import org.gem.indo.dooit.controllers.BotParamType;
+import org.gem.indo.dooit.models.enums.BotObjectType;
+import org.gem.indo.dooit.models.enums.BotParamType;
 import org.gem.indo.dooit.controllers.DooitBotController;
 import org.gem.indo.dooit.helpers.Utils;
 import org.gem.indo.dooit.models.Tip;

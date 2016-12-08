@@ -1,4 +1,4 @@
-package org.gem.indo.dooit.controllers;
+package org.gem.indo.dooit.models.enums;
 
 /**
  * Created by Wimpie Victor on 2016/12/07.

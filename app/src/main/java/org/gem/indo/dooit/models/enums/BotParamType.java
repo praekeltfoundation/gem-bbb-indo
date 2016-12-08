@@ -1,4 +1,4 @@
-package org.gem.indo.dooit.controllers;
+package org.gem.indo.dooit.models.enums;
 
 import java.util.HashMap;
 import java.util.Map;

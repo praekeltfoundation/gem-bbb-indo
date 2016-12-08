@@ -6,6 +6,9 @@ import android.os.Looper;
 
 import org.gem.indo.dooit.models.bot.Answer;
 import org.gem.indo.dooit.models.bot.BaseBotModel;
+import org.gem.indo.dooit.models.enums.BotCallType;
+import org.gem.indo.dooit.models.enums.BotObjectType;
+import org.gem.indo.dooit.models.enums.BotParamType;
 import org.gem.indo.dooit.models.enums.BotType;
 
 import java.util.Map;

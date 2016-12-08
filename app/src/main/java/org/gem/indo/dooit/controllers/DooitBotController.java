@@ -5,6 +5,7 @@ import android.content.Context;
 import org.gem.indo.dooit.DooitApplication;
 import org.gem.indo.dooit.helpers.Persisted;
 import org.gem.indo.dooit.models.bot.BaseBotModel;
+import org.gem.indo.dooit.models.enums.BotParamType;
 import org.gem.indo.dooit.models.enums.BotType;
 
 import javax.inject.Inject;

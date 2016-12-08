@@ -7,7 +7,7 @@ import org.gem.indo.dooit.api.DooitAPIError;
 import org.gem.indo.dooit.api.DooitErrorHandler;
 import org.gem.indo.dooit.api.managers.GoalManager;
 import org.gem.indo.dooit.api.responses.EmptyResponse;
-import org.gem.indo.dooit.controllers.BotCallType;
+import org.gem.indo.dooit.models.enums.BotCallType;
 import org.gem.indo.dooit.models.Tip;
 import org.gem.indo.dooit.models.enums.BotType;
 import org.gem.indo.dooit.models.goal.Goal;
