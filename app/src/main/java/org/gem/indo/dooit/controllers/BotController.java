@@ -20,7 +20,6 @@ import java.util.Map;
 public abstract class BotController {
 
     protected Context context;
-    protected OnAsyncListener listener;
     protected Handler handler;
     final protected BotType botType;
 

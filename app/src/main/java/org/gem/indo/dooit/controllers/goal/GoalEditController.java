@@ -72,14 +72,14 @@ public class GoalEditController extends GoalBotController {
 
     }
 
-    private void doUpdate(Map<String, Answer> answerLog, OnAsyncListener listener) {
+    private void doUpdate(Map<String, Answer> answerLog, final OnAsyncListener listener) {
         if (answerLog.containsKey("goal_edit_choice_date"))
             goal.setEndDate(DateTimeFormat.forPattern("yyyy-MM-dd")
                     .parseLocalDate(answerLog.get("goal_end_date").getValue().substring(0, 10)));
         else if (answerLog.containsKey("goal_edit_target_accept"))
             goal.setTarget(Double.parseDouble(answerLog.get("goal_target").getValue()));
         else if (answerLog.containsKey("goal_edit_gallery") || answerLog.containsKey("goal_edit_camera")) {
-            handleImage(answerLog);
+            handleImage(answerLog, listener);
             // Don't upload Goal
             return;
         }
@@ -92,6 +92,7 @@ public class GoalEditController extends GoalBotController {
         }).doOnCompleted(new Action0() {
             @Override
             public void call() {
+                notifyDone(listener);
                 if (context instanceof MainActivity)
                     ((MainActivity) context).refreshGoals();
             }
@@ -100,7 +101,7 @@ public class GoalEditController extends GoalBotController {
         persisted.saveConvoGoal(botType, goal);
     }
 
-    private void handleImage(Map<String, Answer> answerLog) {
+    private void handleImage(Map<String, Answer> answerLog, OnAsyncListener listener) {
         // Find Image
         if (answerLog.containsKey("goal_edit_gallery"))
             goal.setLocalImageUri(answerLog.get("goal_edit_gallery").getValue());
@@ -111,10 +112,10 @@ public class GoalEditController extends GoalBotController {
 
         final String mimetype = context.getContentResolver().getType(imageUri);
         final String path = MediaUriHelper.getPath(context, imageUri);
-        uploadImage(goal, mimetype, new File(path));
+        uploadImage(goal, mimetype, new File(path), listener);
     }
 
-    private void uploadImage(final Goal goal, String mimetype, File file) {
+    private void uploadImage(final Goal goal, String mimetype, File file, final OnAsyncListener listener) {
         fileUploadManager.uploadGoalImage(goal.getId(), mimetype, file, new DooitErrorHandler() {
             @Override
             public void onError(DooitAPIError error) {
