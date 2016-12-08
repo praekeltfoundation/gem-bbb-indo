@@ -1,8 +1,11 @@
-package org.gem.indo.dooit.models.bot;
+package org.gem.indo.dooit.controllers;
 
 import android.content.Context;
 import android.os.Handler;
 import android.os.Looper;
+
+import org.gem.indo.dooit.models.bot.Answer;
+import org.gem.indo.dooit.models.bot.BaseBotModel;
 
 import java.util.Map;
 
@@ -10,13 +13,13 @@ import java.util.Map;
  * Created by Wimpie Victor on 2016/11/20.
  */
 
-public abstract class BotCallback {
+public abstract class BotController {
 
     protected Context context;
     protected OnAsyncListener listener;
     protected Handler handler;
 
-    protected BotCallback(Context context) {
+    protected BotController(Context context) {
         this.context = context;
         handler = new Handler(Looper.getMainLooper());
     }
@@ -38,6 +41,16 @@ public abstract class BotCallback {
     public abstract void onCall(String key, Map<String, Answer> answerLog, BaseBotModel model);
 
     /**
+     * Called by viewholders trigger behaviour in the controller.
+     *
+     * @param model
+     * @param key
+     */
+    public void call(BaseBotModel model, String key) {
+        // Override me
+    }
+
+    /**
      * Called when the `asyncCall` field is set on a Node.
      *
      * @param key       The value of the `callback` field
@@ -46,8 +59,27 @@ public abstract class BotCallback {
      * @param listener  Listener to be called when async operation is done
      */
     public void onAsyncCall(String key, Map<String, Answer> answerLog, BaseBotModel model, OnAsyncListener listener) {
-
+        // Override me
     }
+
+    protected void notifyDone(final OnAsyncListener listener) {
+        handler.post(new Runnable() {
+            @Override
+            public void run() {
+                listener.onDone();
+            }
+        });
+    }
+
+    /**
+     * @param model     The bot model that needs the parameter value
+     * @param paramType The key of the parameter
+     */
+    public void resolveParam(BaseBotModel model, BotParamType paramType) {
+        // Override me
+    }
+
+    public abstract void input(BotParamType inputType, Object value);
 
     /**
      * Provide a conversation level model object that a Node may require.
@@ -58,13 +90,14 @@ public abstract class BotCallback {
         return null;
     }
 
-    protected void notifyDone(final OnAsyncListener listener) {
-        handler.post(new Runnable() {
-            @Override
-            public void run() {
-                listener.onDone();
-            }
-        });
+    /**
+     * Provide a conversation level model object that a Node may require.
+     *
+     * @param objType The business model object type the view holder wants.
+     * @return
+     */
+    public Object getObject(BotObjectType objType) {
+        return null;
     }
 
     public interface OnAsyncListener {

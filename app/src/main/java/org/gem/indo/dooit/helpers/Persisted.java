@@ -14,8 +14,8 @@ import com.google.gson.internal.LinkedTreeMap;
 import org.gem.indo.dooit.DooitApplication;
 import org.gem.indo.dooit.helpers.bot.ListParameterizedType;
 import org.gem.indo.dooit.helpers.notifications.NotificationType;
-import org.gem.indo.dooit.models.Goal;
-import org.gem.indo.dooit.models.GoalPrototype;
+import org.gem.indo.dooit.models.goal.Goal;
+import org.gem.indo.dooit.models.goal.GoalPrototype;
 import org.gem.indo.dooit.models.Tip;
 import org.gem.indo.dooit.models.Token;
 import org.gem.indo.dooit.models.User;
@@ -43,6 +43,7 @@ public class Persisted {
     private static final String QUIZ_INDEX = "quiz_index";
     private static final String QUIZ_STATE = "quiz_state";
     private static final String QUIZ_ANSWERS = "quiz_answers";
+    private static final String NEW_BOT_USER = "new_user";
     private static final String BOT = "bot";
     private static final String GOAL = "goal";
     private static final String GOAL_PROTOTYPE = "goal_prototype";
@@ -158,6 +159,14 @@ public class Persisted {
 
     public void clearConvoTip() {
         dooitSharedPreferences.remove(BOT_TIP);
+    }
+
+    public boolean isNewBotUser() {
+        return dooitSharedPreferences.getBoolean(NEW_BOT_USER, true);
+    }
+
+    public void setNewBotUser(boolean value) {
+        dooitSharedPreferences.setBoolean(NEW_BOT_USER, value);
     }
 
     /********

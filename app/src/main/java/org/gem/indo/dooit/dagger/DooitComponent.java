@@ -3,14 +3,15 @@ package org.gem.indo.dooit.dagger;
 import org.gem.indo.dooit.DooitApplication;
 import org.gem.indo.dooit.api.managers.DooitManager;
 import org.gem.indo.dooit.api.managers.FeedbackManager;
+import org.gem.indo.dooit.controllers.DooitBotController;
 import org.gem.indo.dooit.helpers.Persisted;
 import org.gem.indo.dooit.services.NotificationService;
 import org.gem.indo.dooit.views.DooitActivity;
 import org.gem.indo.dooit.views.RootActivity;
 import org.gem.indo.dooit.views.main.MainActivity;
 import org.gem.indo.dooit.views.main.fragments.bot.BotFragment;
-import org.gem.indo.dooit.views.main.fragments.bot.viewholders.GoalGalleryViewHolder;
 import org.gem.indo.dooit.views.main.fragments.bot.viewholders.AnswerImageSelectViewHolder;
+import org.gem.indo.dooit.views.main.fragments.bot.viewholders.GoalGalleryViewHolder;
 import org.gem.indo.dooit.views.main.fragments.bot.viewholders.GoalInfoViewHolder;
 import org.gem.indo.dooit.views.main.fragments.bot.viewholders.GoalVerificationViewHolder;
 import org.gem.indo.dooit.views.main.fragments.bot.viewholders.TextViewHolder;
@@ -21,10 +22,11 @@ import org.gem.indo.dooit.views.main.fragments.challenge.fragments.ChallengePict
 import org.gem.indo.dooit.views.main.fragments.challenge.fragments.ChallengeQuizFragment;
 import org.gem.indo.dooit.views.main.fragments.challenge.fragments.ChallengeRegisterFragment;
 import org.gem.indo.dooit.views.main.fragments.target.TargetFragment;
-import org.gem.indo.dooit.views.main.fragments.target.callbacks.GoalAddCallback;
-import org.gem.indo.dooit.views.main.fragments.target.callbacks.GoalDepositCallback;
-import org.gem.indo.dooit.views.main.fragments.target.callbacks.GoalEditCallback;
-import org.gem.indo.dooit.views.main.fragments.target.callbacks.GoalWithdrawCallback;
+import org.gem.indo.dooit.views.main.fragments.target.controllers.GoalAddController;
+import org.gem.indo.dooit.views.main.fragments.target.controllers.GoalBotController;
+import org.gem.indo.dooit.views.main.fragments.target.controllers.GoalDepositController;
+import org.gem.indo.dooit.views.main.fragments.target.controllers.GoalEditController;
+import org.gem.indo.dooit.views.main.fragments.target.controllers.GoalWithdrawController;
 import org.gem.indo.dooit.views.main.fragments.tip.TipsFragment;
 import org.gem.indo.dooit.views.main.fragments.tip.TipsListFragment;
 import org.gem.indo.dooit.views.main.fragments.tip.adapters.TipsListAdapter;
@@ -76,19 +78,23 @@ public interface DooitComponent {
 
     void inject(DooitApplication o);
 
+    void inject(DooitBotController o);
+
     void inject(DooitManager o);
 
     void inject(FeedbackActivity o);
 
     void inject(FeedbackManager o);
 
-    void inject(GoalAddCallback o);
+    void inject(GoalAddController o);
 
-    void inject(GoalDepositCallback o);
+    void inject(GoalBotController o);
 
-    void inject(GoalWithdrawCallback o);
+    void inject(GoalDepositController o);
 
-    void inject(GoalEditCallback o);
+    void inject(GoalWithdrawController o);
+
+    void inject(GoalEditController o);
 
     void inject(GoalVerificationViewHolder o);
 

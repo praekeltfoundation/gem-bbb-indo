@@ -100,6 +100,7 @@ public class SettingsActivity extends DooitActivity {
     public void signOut(View view) {
         NotificationAlarm.cancelAlarm(this);
         dooitSharedPreferences.clear();
+        persisted.setNewBotUser(false); // Keep for next log in
         Intent intent = new Intent(this, RootActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent);

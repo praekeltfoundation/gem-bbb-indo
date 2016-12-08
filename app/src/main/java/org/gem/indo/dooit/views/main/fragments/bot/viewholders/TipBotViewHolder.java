@@ -95,4 +95,9 @@ public class TipBotViewHolder extends BaseBotViewHolder<Node> {
             });
         }
     }
+
+    @Override
+    protected void populateModel() {
+
+    }
 }

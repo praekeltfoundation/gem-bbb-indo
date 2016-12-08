@@ -5,12 +5,10 @@ import android.content.res.Resources;
 import android.text.TextUtils;
 import android.util.Log;
 
+import org.gem.indo.dooit.helpers.ValueMap;
+import org.gem.indo.dooit.helpers.bot.param.ParamMatch;
+import org.gem.indo.dooit.helpers.bot.param.ParamParser;
 import org.gem.indo.dooit.models.enums.BotMessageType;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 /**
  * Created by Bernhard Müller on 11/7/2016.
@@ -22,12 +20,16 @@ public abstract class BaseBotModel {
 
     protected final String classType;
     protected String text;
+    protected String processedText; // After param parsing
     protected String name;
     protected String type;
     private String next;
     protected String callback;
     protected String asyncCall;
     protected String[] textParams = new String[0];
+    protected boolean immutable = false;
+
+    public final ValueMap values = new ValueMap();
 
     public BaseBotModel(String classType) {
         this.classType = classType;
@@ -45,8 +47,22 @@ public abstract class BaseBotModel {
         }
     }
 
+    //
+
     public String getText(Context context) {
         return getResourceString(context, text);
+    }
+
+    public boolean hasText() {
+        return !TextUtils.isEmpty(text);
+    }
+
+    public String getProcessedText() {
+        return processedText;
+    }
+
+    public void setProcessedText(String processedText) {
+        this.processedText = processedText;
     }
 
     public String getName() {
@@ -99,5 +115,13 @@ public abstract class BaseBotModel {
 
     public boolean hasAsyncCall() {
         return !TextUtils.isEmpty(asyncCall);
+    }
+
+    public void finish() {
+        immutable = true;
+    }
+
+    public boolean isImmutable() {
+        return immutable;
     }
 }

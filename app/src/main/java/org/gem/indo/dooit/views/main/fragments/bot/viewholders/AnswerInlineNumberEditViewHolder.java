@@ -50,7 +50,7 @@ public class AnswerInlineNumberEditViewHolder extends BaseBotViewHolder<Answer> 
 
     @Override
     public void populate(Answer model) {
-        dataModel = model;
+        super.populate(model);
         textViewCurrency.setText(CurrencyHelper.getCurrencySymbol());
         editText.setText("");
         editText.setHint(dataModel.getInlineEditHint(getContext()));
@@ -78,7 +78,8 @@ public class AnswerInlineNumberEditViewHolder extends BaseBotViewHolder<Answer> 
         });
     }
 
-    public Context getContext() {
-        return itemView.getContext();
+    @Override
+    protected void populateModel() {
+
     }
 }

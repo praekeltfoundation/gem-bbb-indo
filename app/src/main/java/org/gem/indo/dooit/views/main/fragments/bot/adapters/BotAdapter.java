@@ -9,7 +9,7 @@ import com.greenfrvr.hashtagview.HashtagView;
 
 import org.gem.indo.dooit.R;
 import org.gem.indo.dooit.models.bot.BaseBotModel;
-import org.gem.indo.dooit.models.bot.BotCallback;
+import org.gem.indo.dooit.controllers.BotController;
 import org.gem.indo.dooit.models.enums.BotMessageType;
 import org.gem.indo.dooit.views.main.fragments.bot.viewholders.BadgeViewHolder;
 import org.gem.indo.dooit.views.main.fragments.bot.viewholders.GoalGalleryViewHolder;
@@ -36,7 +36,7 @@ import java.util.List;
 public class BotAdapter extends RecyclerView.Adapter<BaseBotViewHolder> {
 
     Context context;
-    BotCallback callback;
+    BotController callback;
     ArrayList<BaseBotModel> dataSet = new ArrayList<>();
     HashtagView.TagsClickListener tagsClickListener;
 
@@ -87,11 +87,11 @@ public class BotAdapter extends RecyclerView.Adapter<BaseBotViewHolder> {
     /**
      * Used for injecting callback into viewholders.
      */
-    public void setCallback(BotCallback callback) {
+    public void setCallback(BotController callback) {
         this.callback = callback;
     }
 
-    public BotCallback getCallback() {
+    public BotController getCallback() {
         return callback;
     }
 

@@ -17,6 +17,7 @@ import butterknife.ButterKnife;
  */
 
 public class AnswerViewHolder extends BaseBotViewHolder<Answer> {
+
     @BindView(R.id.item_view_bot_answer_text)
     TextView textView;
 
@@ -40,7 +41,8 @@ public class AnswerViewHolder extends BaseBotViewHolder<Answer> {
         });
     }
 
-    public Context getContext() {
-        return itemView.getContext();
+    @Override
+    protected void populateModel() {
+
     }
 }

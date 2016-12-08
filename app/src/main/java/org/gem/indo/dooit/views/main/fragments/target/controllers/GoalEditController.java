@@ -1,4 +1,4 @@
-package org.gem.indo.dooit.views.main.fragments.target.callbacks;
+package org.gem.indo.dooit.views.main.fragments.target.controllers;
 
 import android.app.Activity;
 import android.net.Uri;
@@ -12,11 +12,12 @@ import org.gem.indo.dooit.api.DooitErrorHandler;
 import org.gem.indo.dooit.api.managers.FileUploadManager;
 import org.gem.indo.dooit.api.managers.GoalManager;
 import org.gem.indo.dooit.api.responses.EmptyResponse;
+import org.gem.indo.dooit.controllers.BotParamType;
 import org.gem.indo.dooit.helpers.MediaUriHelper;
-import org.gem.indo.dooit.models.Goal;
+import org.gem.indo.dooit.models.goal.Goal;
 import org.gem.indo.dooit.models.bot.Answer;
 import org.gem.indo.dooit.models.bot.BaseBotModel;
-import org.gem.indo.dooit.models.bot.BotCallback;
+import org.gem.indo.dooit.controllers.BotController;
 import org.gem.indo.dooit.views.main.MainActivity;
 import org.joda.time.format.DateTimeFormat;
 
@@ -32,7 +33,7 @@ import rx.functions.Action1;
  * Created by Wimpie Victor on 2016/12/01.
  */
 
-public class GoalEditCallback extends BotCallback {
+public class GoalEditController extends BotController {
 
     @Inject
     transient GoalManager goalManager;
@@ -42,7 +43,7 @@ public class GoalEditCallback extends BotCallback {
 
     private Goal goal;
 
-    public GoalEditCallback(Activity activity, Goal goal) {
+    public GoalEditController(Activity activity, Goal goal) {
         super(activity);
         ((DooitApplication) activity.getApplication()).component.inject(this);
         this.goal = goal;
@@ -62,6 +63,11 @@ public class GoalEditCallback extends BotCallback {
 
     @Override
     public void onDone(Map<String, Answer> answerLog) {
+
+    }
+
+    @Override
+    public void input(BotParamType inputType, Object value) {
 
     }
 

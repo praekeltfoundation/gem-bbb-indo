@@ -1,4 +1,4 @@
-package org.gem.indo.dooit.views.main.fragments.target.callbacks;
+package org.gem.indo.dooit.views.main.fragments.target.controllers;
 
 import android.app.Activity;
 import android.content.Context;
@@ -8,11 +8,10 @@ import org.gem.indo.dooit.api.DooitAPIError;
 import org.gem.indo.dooit.api.DooitErrorHandler;
 import org.gem.indo.dooit.api.managers.GoalManager;
 import org.gem.indo.dooit.api.responses.EmptyResponse;
-import org.gem.indo.dooit.models.Goal;
-import org.gem.indo.dooit.models.GoalTransaction;
+import org.gem.indo.dooit.models.goal.Goal;
+import org.gem.indo.dooit.models.goal.GoalTransaction;
 import org.gem.indo.dooit.models.bot.Answer;
 import org.gem.indo.dooit.models.bot.BaseBotModel;
-import org.gem.indo.dooit.models.bot.BotCallback;
 import org.gem.indo.dooit.views.main.MainActivity;
 
 import java.util.Map;
@@ -25,18 +24,14 @@ import rx.functions.Action1;
  * Created by Wimpie Victor on 2016/11/21.
  */
 
-public class GoalDepositCallback extends BotCallback {
+public class GoalDepositController extends GoalBotController {
 
     @Inject
     transient GoalManager goalManager;
 
-    private Context context;
-    private Goal goal;
-
-    public GoalDepositCallback(Activity activity, Goal goal) {
-        super(activity);
+    public GoalDepositController(Activity activity, Goal goal) {
+        super(activity, goal);
         ((DooitApplication) activity.getApplication()).component.inject(this);
-        context = activity;
         this.goal = goal;
     }
 
@@ -52,11 +47,6 @@ public class GoalDepositCallback extends BotCallback {
     @Override
     public void onDone(Map<String, Answer> answerLog) {
 
-    }
-
-    @Override
-    public Object getObject() {
-        return goal;
     }
 
     private void doDeposit(Map<String, Answer> answerLog) {

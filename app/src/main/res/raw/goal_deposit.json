@@ -9,22 +9,12 @@
     "name": "goal_deposit_reminder",
     "type": "text",
     "text": "$(goal_deposit_reminder)",
-    "autoNext": "goal_deposit_remaining",
-    "textParams": [
-      "USERNAME",
-      "GOAL_DEPOSIT_WEEKLY_TARGET",
-      "GOAL_DEPOSIT_GOAL_NAME",
-      "GOAL_DEPOSIT_END_DATE"
-    ]
+    "autoNext": "goal_deposit_remaining"
   },
   {
     "name": "goal_deposit_remaining",
     "type": "text",
     "text": "$(goal_deposit_remaining)",
-    "textParams": [
-      "GOAL_DEPOSIT_WEEKS_LEFT",
-      "GOAL_DEPOSIT_DAYS_LEFT"
-    ],
     "answers": [
       {
         "name": "goal_deposit_ask_amount",
@@ -98,9 +88,6 @@
     "name": "goal_deposit_tip_intro",
     "type": "text",
     "text": "$(bot_tip_intro)",
-    "textParams" : [
-      "TIP_INTRO"
-    ],
     "autoNext": "goal_deposit_show_tip"
   },
   {
@@ -120,5 +107,5 @@
   {
     "name": "goal_deposit_end",
     "type": "end"
-  },
+  }
 ]

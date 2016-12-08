@@ -1,4 +1,4 @@
-package org.gem.indo.dooit.views.main.fragments.target.callbacks;
+package org.gem.indo.dooit.views.main.fragments.target.controllers;
 
 import android.app.Activity;
 import android.net.Uri;
@@ -10,11 +10,9 @@ import org.gem.indo.dooit.api.managers.FileUploadManager;
 import org.gem.indo.dooit.api.managers.GoalManager;
 import org.gem.indo.dooit.helpers.MediaUriHelper;
 import org.gem.indo.dooit.helpers.Persisted;
-import org.gem.indo.dooit.models.Badge;
-import org.gem.indo.dooit.models.Goal;
+import org.gem.indo.dooit.models.goal.Goal;
 import org.gem.indo.dooit.models.bot.Answer;
 import org.gem.indo.dooit.models.bot.BaseBotModel;
-import org.gem.indo.dooit.models.bot.BotCallback;
 import org.gem.indo.dooit.models.bot.Node;
 import org.gem.indo.dooit.models.enums.BotMessageType;
 import org.gem.indo.dooit.models.enums.BotType;
@@ -36,9 +34,9 @@ import rx.functions.Action1;
  * Created by Wimpie Victor on 2016/11/20.
  */
 
-public class GoalAddCallback extends BotCallback {
+public class GoalAddController extends GoalBotController {
 
-    private static final String TAG = GoalAddCallback.class.getName();
+    private static final String TAG = GoalAddController.class.getName();
 
     @Inject
     GoalManager goalManager;
@@ -50,10 +48,9 @@ public class GoalAddCallback extends BotCallback {
     Persisted persisted;
 
     private BotAdapter botAdapter;
-    private Goal goal;
 
-    public GoalAddCallback(Activity activity, BotAdapter botAdapter, Goal goal) {
-        super(activity);
+    public GoalAddController(Activity activity, BotAdapter botAdapter, Goal goal) {
+        super(activity, goal);
         ((DooitApplication) activity.getApplication()).component.inject(this);
         this.botAdapter = botAdapter;
         this.goal = goal;
@@ -82,18 +79,13 @@ public class GoalAddCallback extends BotCallback {
 
     }
 
-    @Override
-    public Object getObject() {
-        return goal;
-    }
-
     private void doCreate(Map<String, Answer> answerLog, final BaseBotModel model, final OnAsyncListener listener) {
 
         if (answerLog.containsKey("goal_add_ask_goal_gallery")) {
             // Predefined Goal branch
             Answer answer = answerLog.get("goal_add_ask_goal_gallery");
-            goal.setPrototype(Long.parseLong(answer.get("prototype")));
-            goal.setName(answer.get("name"));
+            goal.setPrototype(Long.parseLong(answer.values.getString("prototype")));
+            goal.setName(answer.values.getString("name"));
         } else {
             // Custom Goal branch
             goal.setName(answerLog.get("goal_name").getValue());

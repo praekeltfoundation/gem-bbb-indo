@@ -26,12 +26,12 @@ import org.gem.indo.dooit.helpers.Persisted;
 import org.gem.indo.dooit.helpers.SquiggleBackgroundHelper;
 import org.gem.indo.dooit.helpers.Utils;
 import org.gem.indo.dooit.helpers.bot.BotFeed;
-import org.gem.indo.dooit.models.Goal;
-import org.gem.indo.dooit.models.GoalPrototype;
+import org.gem.indo.dooit.models.goal.Goal;
+import org.gem.indo.dooit.models.goal.GoalPrototype;
 import org.gem.indo.dooit.models.Tip;
 import org.gem.indo.dooit.models.bot.Answer;
 import org.gem.indo.dooit.models.bot.BaseBotModel;
-import org.gem.indo.dooit.models.bot.BotCallback;
+import org.gem.indo.dooit.controllers.BotController;
 import org.gem.indo.dooit.models.bot.Node;
 import org.gem.indo.dooit.models.enums.BotMessageType;
 import org.gem.indo.dooit.models.enums.BotType;
@@ -39,10 +39,10 @@ import org.gem.indo.dooit.views.main.MainActivity;
 import org.gem.indo.dooit.views.main.MainViewPagerPositions;
 import org.gem.indo.dooit.views.main.fragments.MainFragment;
 import org.gem.indo.dooit.views.main.fragments.bot.adapters.BotAdapter;
-import org.gem.indo.dooit.views.main.fragments.target.callbacks.GoalAddCallback;
-import org.gem.indo.dooit.views.main.fragments.target.callbacks.GoalDepositCallback;
-import org.gem.indo.dooit.views.main.fragments.target.callbacks.GoalEditCallback;
-import org.gem.indo.dooit.views.main.fragments.target.callbacks.GoalWithdrawCallback;
+import org.gem.indo.dooit.views.main.fragments.target.controllers.GoalAddController;
+import org.gem.indo.dooit.views.main.fragments.target.controllers.GoalDepositController;
+import org.gem.indo.dooit.views.main.fragments.target.controllers.GoalEditController;
+import org.gem.indo.dooit.views.main.fragments.target.controllers.GoalWithdrawController;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -87,9 +87,10 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
     TipManager tipManager;
 
     BotType type = BotType.DEFAULT;
-    BotCallback callback;
+    BotController controller;
     BotFeed feed;
     BaseBotModel currentModel;
+    boolean clearState = false;
 
     public BotFragment() {
         // Required empty public constructor
@@ -156,10 +157,24 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
     @Override
     public void onActive() {
         super.onActive();
+
+        // Choose which conversation to instantiate
+        if (persisted.isNewBotUser()) {
+            setBotType(BotType.DEFAULT);
+            persisted.setNewBotUser(false);
+        }
+
         createFeed();
     }
 
     private void createFeed() {
+        if (clearState) {
+            persisted.clearConversation();
+            getBotAdapter().clear();
+            // Don't clear Goals or Tips as they are the current argument passing mechanism
+            clearState = false;
+        }
+
         feed = new BotFeed<>(getContext());
         switch (type) {
             case DEFAULT:
@@ -294,8 +309,8 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
     }
 
     private void initializeBot() {
-        callback = createBotCallback(type);
-        getBotAdapter().setCallback(callback);
+        controller = createBotCallback(type);
+        getBotAdapter().setCallback(controller);
 
         // Load existing
         if (persisted.hasConversation(type)) {
@@ -347,29 +362,29 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
         this.type = type;
     }
 
-    private BotCallback createBotCallback(BotType botType) {
+    private BotController createBotCallback(BotType botType) {
         switch (botType) {
             case DEFAULT:
             case GOAL_ADD:
                 Goal g1 = persisted.loadConvoGoal(BotType.GOAL_ADD);
                 if (g1 == null)
                     g1 = new Goal();
-                return new GoalAddCallback(getActivity(), getBotAdapter(), g1);
+                return new GoalAddController(getActivity(), getBotAdapter(), g1);
             case GOAL_DEPOSIT:
                 Goal g2 = persisted.loadConvoGoal(BotType.GOAL_DEPOSIT);
                 if (g2 == null)
                     throw new RuntimeException("No Goal was persisted for Goal Deposit conversation.");
-                return new GoalDepositCallback(getActivity(), g2);
+                return new GoalDepositController(getActivity(), g2);
             case GOAL_WITHDRAW:
                 Goal g3 = persisted.loadConvoGoal(BotType.GOAL_WITHDRAW);
                 if (g3 == null)
                     throw new RuntimeException("No Goal was persisted for Goal Withdraw conversation.");
-                return new GoalWithdrawCallback(getActivity(), g3);
+                return new GoalWithdrawController(getActivity(), g3);
             case GOAL_EDIT:
                 Goal g4 = persisted.loadConvoGoal(BotType.GOAL_EDIT);
                 if (g4 == null)
                     throw new RuntimeException("No Goal was persisted for Goal Edit converstation");
-                return new GoalEditCallback(getActivity(), g4);
+                return new GoalEditController(getActivity(), g4);
             default:
                 return null;
         }
@@ -413,8 +428,6 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
         } else {
             answerView.setData(new ArrayList<>());
         }
-
-//        persisted.saveConversationState(type, getBotAdapter().getDataSet());
     }
 
     private Map<String, Answer> createAnswerLog(List<BaseBotModel> converstation) {
@@ -447,19 +460,19 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
             conversationRecyclerView.scrollToPosition(getBotAdapter().getItemCount() - 1);
             persisted.saveConversationState(type, getBotAdapter().getDataSet());
 
-            // Reached a callback Node
-            if (node.hasCallback() && callback != null)
-                callback.onCall(node.getCallback(), createAnswerLog(getBotAdapter().getDataSet()), node);
+            // Reached a controller Node
+            if (node.hasCallback() && controller != null)
+                controller.onCall(node.getCallback(), createAnswerLog(getBotAdapter().getDataSet()), node);
 
-            // Reached an async callback Node
-            if (node.hasAsyncCall() && callback != null) {
+            // Reached an async controller Node
+            if (node.hasAsyncCall() && controller != null) {
                 // Show loader
                 clearAnswerView();
-                callback.onAsyncCall(
+                controller.onAsyncCall(
                         node.getAsyncCall(),
                         createAnswerLog(getBotAdapter().getDataSet()),
                         node,
-                        new BotCallback.OnAsyncListener() {
+                        new BotController.OnAsyncListener() {
                             @Override
                             public void onDone() {
                                 checkEndOrAddAnswers(node);
@@ -485,6 +498,7 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
             finishConversation();
         } else {
             addAnswerOptions(node);
+            persisted.saveConversationState(type, getBotAdapter().getDataSet());
         }
     }
 
@@ -538,14 +552,14 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
     }
 
     private void finishConversation() {
-        if (callback != null)
-            callback.onDone(createAnswerLog(getBotAdapter().getDataSet()));
+        if (controller != null)
+            controller.onDone(createAnswerLog(getBotAdapter().getDataSet()));
         // Clear answers
         answerView.setData(new ArrayList<>());
         persisted.clearConversation();
         persisted.clearConvoGoals();
-        callback = null;
-        // FIXME: Clearing the callback happens after the data has been added and before the view holder is instantiated. Viewholder will get null callback.
+        controller = null;
+        // FIXME: Clearing the controller happens after the data has been added and before the view holder is instantiated. Viewholder will get null controller.
         // getBotAdapter().setCallback(null);
         setBotType(BotType.DEFAULT);
     }
@@ -563,6 +577,15 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
             default:
                 return true;
         }
+    }
+
+    protected boolean hasCallback() {
+        // Check both until bot is more robust
+        return controller != null && getBotAdapter().hasCallback();
+    }
+
+    public void setClearState(boolean value) {
+        clearState = value;
     }
 
     private void showProgressBar() {

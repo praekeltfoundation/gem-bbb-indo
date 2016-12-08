@@ -1,9 +1,11 @@
-package org.gem.indo.dooit.models;
+package org.gem.indo.dooit.models.goal;
 
 import android.text.TextUtils;
 
 import com.google.gson.annotations.SerializedName;
 
+import org.gem.indo.dooit.helpers.Utils;
+import org.gem.indo.dooit.models.Badge;
 import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 
@@ -200,6 +202,14 @@ public class Goal {
 
     public boolean isReached() {
         return value >= target;
+    }
+
+    public int getWeeksLeft(Utils.ROUNDWEEK rounding) {
+        return Utils.weekDiff(endDate.toDate().getTime(), rounding);
+    }
+
+    public int getRemainderDaysLeft() {
+        return Utils.dayDiff(endDate.toDate().getTime()) - getWeeksLeft(Utils.ROUNDWEEK.DOWN) * 7;
     }
 
     public List<Badge> getNewBadges() {

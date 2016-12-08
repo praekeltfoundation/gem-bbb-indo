@@ -7,9 +7,8 @@ import android.widget.TextView;
 import com.facebook.drawee.view.SimpleDraweeView;
 
 import org.gem.indo.dooit.R;
-import org.gem.indo.dooit.helpers.SquiggleBackgroundHelper;
 import org.gem.indo.dooit.models.Badge;
-import org.gem.indo.dooit.models.Goal;
+import org.gem.indo.dooit.models.goal.Goal;
 import org.gem.indo.dooit.models.bot.Node;
 import org.gem.indo.dooit.models.exceptions.BotCallbackRequired;
 import org.gem.indo.dooit.views.main.fragments.bot.adapters.BotAdapter;
@@ -61,5 +60,9 @@ public class BadgeViewHolder extends BaseBotViewHolder<Node> {
             Badge badge = goal.getNewBadges().get(0);
             image.setImageURI(badge.getImageUrl());
         }
+    }
+    @Override
+    protected void populateModel() {
+
     }
 }
