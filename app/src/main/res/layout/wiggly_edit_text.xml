@@ -12,11 +12,9 @@
         android:labelFor="@+id/edit_box"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:visibility="gone"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintLeft_toLeftOf="@+id/edit_box"
-        tools:text="Label text"
-        tools:visibility="visible"/>
+        tools:text="Label text"/>
 
     <ImageView
         android:id="@+id/edit_box_background"
@@ -44,23 +42,19 @@
         android:layout_height="0dp"
         android:gravity="start|center_vertical|clip_horizontal"
         android:padding="@dimen/challenge_inset_small"
-        android:visibility="gone"
         app:layout_constraintTop_toTopOf="@+id/edit_box"
         app:layout_constraintBottom_toBottomOf="@+id/edit_box"
         app:layout_constraintLeft_toLeftOf="@+id/edit_box"
         app:layout_constraintRight_toRightOf="@+id/edit_box"
-        tools:text="Placeholder text"
-        tools:visibility="visible"/>
+        tools:text="Placeholder text"/>
 
     <TextView
         android:id="@+id/message"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:visibility="gone"
         app:layout_constraintTop_toBottomOf="@+id/edit_box"
         app:layout_constraintLeft_toLeftOf="@+id/edit_box"
         app:layout_constraintRight_toRightOf="@+id/edit_box"
-        tools:text="Message text"
-        tools:visibility="visible"/>
+        tools:text="Message text"/>
 
 </merge>

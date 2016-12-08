@@ -2,6 +2,7 @@ package org.gem.indo.dooit.views.custom;
 
 import android.content.Context;
 import android.content.res.TypedArray;
+import android.icu.util.Measure;
 import android.support.annotation.StyleRes;
 import android.support.constraint.ConstraintLayout;
 import android.text.TextUtils;
@@ -17,6 +18,9 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnTextChanged;
 import butterknife.Unbinder;
+
+import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
+import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
 
 /**
  * Created by Rudolph Jacobs on 2016-12-08.
@@ -58,28 +62,30 @@ public class WigglyEditText extends ConstraintLayout {
     public WigglyEditText(Context context) {
         super(context);
         initViews(context);
+        checkVisibility();
     }
 
     public WigglyEditText(Context context, AttributeSet attrs) {
         super(context, attrs);
-        initViews(context);
-        initAttributes(context, attrs);
+        initViews(context, attrs);
+        checkVisibility();
     }
 
     public WigglyEditText(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        initViews(context);
-        initAttributes(context, attrs);
+        initViews(context, attrs);
+        checkVisibility();
     }
 
     private void initViews(Context context) {
-        View v = LayoutInflater.from(context).inflate(R.layout.wiggly_edit_text, this);
+        View v = View.inflate(context, R.layout.wiggly_edit_text, this);
         unbinder = ButterKnife.bind(this, v);
     }
 
-    private void initAttributes(Context context, AttributeSet attrs) {
-        TypedArray a = context.obtainStyledAttributes(attrs,
-                R.styleable.WigglyEditText);
+    private void initViews(Context context, AttributeSet attrs) {
+        initViews(context);
+
+        TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.WigglyEditText);
 
         final int N = a.getIndexCount();
         for (int i = 0; i < N; ++i)
@@ -144,20 +150,26 @@ public class WigglyEditText extends ConstraintLayout {
     }
 
     @Override
+    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+        super.onMeasure(widthMeasureSpec, MeasureSpec.makeMeasureSpec(0, MeasureSpec.UNSPECIFIED));
+    }
+
+    @Override
     protected void onFinishInflate() {
         super.onFinishInflate();
-        checkVisibility();
     }
 
     private void checkVisibility() {
         updateLabelVisibility();
         updateMessageVisibility();
         updatePlaceholderVisibility();
+        requestLayout();
     }
 
     @OnTextChanged(R.id.edit_box)
     protected void onEditChanged(CharSequence text) {
         updatePlaceholderVisibility();
+        requestLayout();
     }
 
 
