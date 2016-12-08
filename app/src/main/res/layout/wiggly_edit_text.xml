@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="@layout/simple_constraint_layout"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <TextView
+        android:id="@+id/label"
+        android:labelFor="@+id/edit_box"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="@+id/edit_box"
+        tools:text="Label text"
+        tools:visibility="visible"/>
+
+    <ImageView
+        android:id="@+id/edit_box_background"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:scaleType="fitXY"
+        app:layout_constraintTop_toTopOf="@+id/edit_box"
+        app:layout_constraintBottom_toBottomOf="@+id/edit_box"
+        app:layout_constraintLeft_toLeftOf="@+id/edit_box"
+        app:layout_constraintRight_toRightOf="@+id/edit_box"
+        app:srcCompat="@drawable/ic_d_edit_text" />
+
+    <EditText
+        android:id="@+id/edit_box"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/challenge_inset_small"
+        app:layout_constraintTop_toBottomOf="@+id/label"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent" />
+
+    <TextView
+        android:id="@+id/placeholder"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:gravity="start|center_vertical|clip_horizontal"
+        android:padding="@dimen/challenge_inset_small"
+        android:visibility="gone"
+        app:layout_constraintTop_toTopOf="@+id/edit_box"
+        app:layout_constraintBottom_toBottomOf="@+id/edit_box"
+        app:layout_constraintLeft_toLeftOf="@+id/edit_box"
+        app:layout_constraintRight_toRightOf="@+id/edit_box"
+        tools:text="Placeholder text"
+        tools:visibility="visible"/>
+
+    <TextView
+        android:id="@+id/message"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        app:layout_constraintTop_toBottomOf="@+id/edit_box"
+        app:layout_constraintLeft_toLeftOf="@+id/edit_box"
+        app:layout_constraintRight_toRightOf="@+id/edit_box"
+        tools:text="Message text"
+        tools:visibility="visible"/>
+
+</merge>
