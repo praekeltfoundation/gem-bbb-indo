@@ -71,8 +71,8 @@ public class TextViewHolder extends BaseBotViewHolder<Node> {
     @Override
     protected void populateModel() {
         ParamMatch args = ParamParser.parse(dataModel.getText(getContext()));
-        if (!args.isEmpty() && botAdapter.hasCallback()) {
-            BotController cb = botAdapter.getCallback();
+        if (!args.isEmpty() && botAdapter.hasController()) {
+            BotController cb = botAdapter.getController();
             for (ParamArg arg : args.getArgs())
                 cb.resolveParam(dataModel, BotParamType.byKey(arg.getKey()));
         }

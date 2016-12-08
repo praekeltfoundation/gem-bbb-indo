@@ -52,7 +52,7 @@ public class GoalInfoViewHolder extends BaseBotViewHolder<Node> {
         ButterKnife.bind(this, itemView);
         itemView.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.bkg_carousel_card));
 
-        if (!botAdapter.hasCallback())
+        if (!botAdapter.hasController())
             throw new BotCallbackRequired(String.format("%s requires adapter to have callback", TAG));
     }
 
@@ -82,7 +82,7 @@ public class GoalInfoViewHolder extends BaseBotViewHolder<Node> {
 
     @Override
     protected void populateModel() {
-        Goal goal = (Goal) botAdapter.getCallback().getObject();
+        Goal goal = (Goal) botAdapter.getController().getObject();
         dataModel.values.put(BotParamType.GOAL_NAME.getKey(), goal.getName());
         dataModel.values.put(BotParamType.GOAL_VALUE.getKey(), goal.getValue());
         dataModel.values.put(BotParamType.GOAL_TARGET.getKey(), goal.getTarget());

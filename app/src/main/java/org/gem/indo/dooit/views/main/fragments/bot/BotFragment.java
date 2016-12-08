@@ -309,8 +309,8 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
     }
 
     private void initializeBot() {
-        controller = createBotCallback(type);
-        getBotAdapter().setCallback(controller);
+        controller = createBotController(type);
+        getBotAdapter().setController(controller);
 
         // Load existing
         if (persisted.hasConversation(type)) {
@@ -362,7 +362,7 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
         this.type = type;
     }
 
-    private BotController createBotCallback(BotType botType) {
+    private BotController createBotController(BotType botType) {
         switch (botType) {
             case DEFAULT:
             case GOAL_ADD:
@@ -560,7 +560,7 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
         persisted.clearConvoGoals();
         controller = null;
         // FIXME: Clearing the controller happens after the data has been added and before the view holder is instantiated. Viewholder will get null controller.
-        // getBotAdapter().setCallback(null);
+        // getBotAdapter().setController(null);
         setBotType(BotType.DEFAULT);
     }
 
@@ -579,9 +579,9 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
         }
     }
 
-    protected boolean hasCallback() {
+    protected boolean hasController() {
         // Check both until bot is more robust
-        return controller != null && getBotAdapter().hasCallback();
+        return controller != null && getBotAdapter().hasController();
     }
 
     public void setClearState(boolean value) {

@@ -43,7 +43,7 @@ public class BadgeViewHolder extends BaseBotViewHolder<Node> {
         this.botAdapter = botAdapter;
         ButterKnife.bind(this, itemView);
 
-        if (!botAdapter.hasCallback())
+        if (!botAdapter.hasController())
             throw new BotCallbackRequired(String.format("%s requires adapter to have callback", TAG));
 
         // Must assign programmatically for Support Library to wrap before API 21
@@ -55,7 +55,7 @@ public class BadgeViewHolder extends BaseBotViewHolder<Node> {
     public void populate(Node model) {
         super.populate(model);
 
-        Goal goal = (Goal) botAdapter.getCallback().getObject();
+        Goal goal = (Goal) botAdapter.getController().getObject();
         if (goal.hasNewBadges()) {
             Badge badge = goal.getNewBadges().get(0);
             image.setImageURI(badge.getImageUrl());

@@ -20,9 +20,6 @@
     "name": "goal_withdraw_keep_saving",
     "type": "text",
     "text": "$(goal_withdraw_keep_saving)",
-    "textParams": [
-      "USERNAME"
-    ],
     "answers": [
       {
         "name": "goal_withdraw_keep_saving_end",
