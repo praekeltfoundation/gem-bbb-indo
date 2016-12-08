@@ -6,8 +6,6 @@ import android.text.TextUtils;
 import android.util.Log;
 
 import org.gem.indo.dooit.helpers.ValueMap;
-import org.gem.indo.dooit.helpers.bot.param.ParamMatch;
-import org.gem.indo.dooit.helpers.bot.param.ParamParser;
 import org.gem.indo.dooit.models.enums.BotMessageType;
 
 /**
@@ -47,8 +45,6 @@ public abstract class BaseBotModel {
         }
     }
 
-    //
-
     public String getText(Context context) {
         return getResourceString(context, text);
     }
@@ -64,6 +60,7 @@ public abstract class BaseBotModel {
     public void setProcessedText(String processedText) {
         this.processedText = processedText;
     }
+
 
     public String getName() {
         return name;

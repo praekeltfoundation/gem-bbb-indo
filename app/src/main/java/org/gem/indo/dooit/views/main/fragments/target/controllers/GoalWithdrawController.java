@@ -10,6 +10,7 @@ import org.gem.indo.dooit.api.responses.EmptyResponse;
 import org.gem.indo.dooit.controllers.BotParamType;
 import org.gem.indo.dooit.models.bot.Answer;
 import org.gem.indo.dooit.models.bot.BaseBotModel;
+import org.gem.indo.dooit.models.enums.BotType;
 import org.gem.indo.dooit.models.goal.Goal;
 import org.gem.indo.dooit.models.goal.GoalTransaction;
 import org.gem.indo.dooit.views.main.MainActivity;
@@ -30,7 +31,7 @@ public class GoalWithdrawController extends GoalBotController {
     transient GoalManager goalManager;
 
     public GoalWithdrawController(Activity activity, Goal goal) {
-        super(activity, goal);
+        super(activity, goal, BotType.GOAL_WITHDRAW);
         ((DooitApplication) activity.getApplication()).component.inject(this);
         this.goal = goal;
     }

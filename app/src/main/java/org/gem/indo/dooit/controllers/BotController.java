@@ -6,6 +6,7 @@ import android.os.Looper;
 
 import org.gem.indo.dooit.models.bot.Answer;
 import org.gem.indo.dooit.models.bot.BaseBotModel;
+import org.gem.indo.dooit.models.enums.BotType;
 
 import java.util.Map;
 
@@ -18,9 +19,11 @@ public abstract class BotController {
     protected Context context;
     protected OnAsyncListener listener;
     protected Handler handler;
+    final protected BotType botType;
 
-    protected BotController(Context context) {
+    protected BotController(Context context, BotType botType) {
         this.context = context;
+        this.botType = botType;
         handler = new Handler(Looper.getMainLooper());
     }
 
@@ -79,6 +82,8 @@ public abstract class BotController {
         // Override me
     }
 
+    // TODO: Currently unused. Input is retrieved by scanning conversation history. We need to
+    // decide how to store values while the "Accept" or "Cancel" is outstanding.
     public abstract void input(BotParamType inputType, Object value);
 
     /**
@@ -98,6 +103,10 @@ public abstract class BotController {
      */
     public Object getObject(BotObjectType objType) {
         return null;
+    }
+
+    public BotType getBotType() {
+        return botType;
     }
 
     public interface OnAsyncListener {

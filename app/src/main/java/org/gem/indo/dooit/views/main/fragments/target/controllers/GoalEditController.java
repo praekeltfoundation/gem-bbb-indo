@@ -14,6 +14,7 @@ import org.gem.indo.dooit.api.managers.GoalManager;
 import org.gem.indo.dooit.api.responses.EmptyResponse;
 import org.gem.indo.dooit.controllers.BotParamType;
 import org.gem.indo.dooit.helpers.MediaUriHelper;
+import org.gem.indo.dooit.models.enums.BotType;
 import org.gem.indo.dooit.models.goal.Goal;
 import org.gem.indo.dooit.models.bot.Answer;
 import org.gem.indo.dooit.models.bot.BaseBotModel;
@@ -33,7 +34,7 @@ import rx.functions.Action1;
  * Created by Wimpie Victor on 2016/12/01.
  */
 
-public class GoalEditController extends BotController {
+public class GoalEditController extends GoalBotController {
 
     @Inject
     transient GoalManager goalManager;
@@ -41,10 +42,8 @@ public class GoalEditController extends BotController {
     @Inject
     transient FileUploadManager fileUploadManager;
 
-    private Goal goal;
-
     public GoalEditController(Activity activity, Goal goal) {
-        super(activity);
+        super(activity, goal, BotType.GOAL_EDIT);
         ((DooitApplication) activity.getApplication()).component.inject(this);
         this.goal = goal;
     }
@@ -63,11 +62,6 @@ public class GoalEditController extends BotController {
 
     @Override
     public void onDone(Map<String, Answer> answerLog) {
-
-    }
-
-    @Override
-    public void input(BotParamType inputType, Object value) {
 
     }
 
@@ -93,7 +87,15 @@ public class GoalEditController extends BotController {
             public void onError(DooitAPIError error) {
 
             }
+        }).doOnCompleted(new Action0() {
+            @Override
+            public void call() {
+                if (context instanceof MainActivity)
+                    ((MainActivity) context).refreshGoals();
+            }
         }).subscribe();
+
+        persisted.saveConvoGoal(botType, goal);
     }
 
     private void handleImage(Map<String, Answer> answerLog) {

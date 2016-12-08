@@ -3,9 +3,6 @@
     "name": "goal_edit_intro",
     "type": "text",
     "text": "$(goal_edit_intro)",
-    "textParams": [
-      "USERNAME"
-    ],
     "autoNext": "goal_edit_ask_options"
   },
   {
@@ -48,6 +45,7 @@
         "name": "goal_end_date",
         "nextOnFinish": "goal_edit_do_update",
         "type": "inlineDate",
+        "input": "$(goal.end_date)",
         "inlineEditHint": "$(type_date_hint)"
       }
     ]

@@ -5,6 +5,7 @@ import android.content.Context;
 import org.gem.indo.dooit.DooitApplication;
 import org.gem.indo.dooit.helpers.Persisted;
 import org.gem.indo.dooit.models.bot.BaseBotModel;
+import org.gem.indo.dooit.models.enums.BotType;
 
 import javax.inject.Inject;
 
@@ -17,9 +18,10 @@ public abstract class DooitBotController extends BotController {
     @Inject
     protected Persisted persisted;
 
-    public DooitBotController(Context context) {
-        super(context);
+    public DooitBotController(Context context, BotType botType) {
+        super(context, botType);
         ((DooitApplication) context.getApplicationContext()).component.inject(this);
+
     }
 
     /**

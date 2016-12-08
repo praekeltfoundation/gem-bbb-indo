@@ -10,12 +10,12 @@ import org.gem.indo.dooit.api.managers.FileUploadManager;
 import org.gem.indo.dooit.api.managers.GoalManager;
 import org.gem.indo.dooit.helpers.MediaUriHelper;
 import org.gem.indo.dooit.helpers.Persisted;
-import org.gem.indo.dooit.models.goal.Goal;
 import org.gem.indo.dooit.models.bot.Answer;
 import org.gem.indo.dooit.models.bot.BaseBotModel;
 import org.gem.indo.dooit.models.bot.Node;
 import org.gem.indo.dooit.models.enums.BotMessageType;
 import org.gem.indo.dooit.models.enums.BotType;
+import org.gem.indo.dooit.models.goal.Goal;
 import org.gem.indo.dooit.views.main.MainActivity;
 import org.gem.indo.dooit.views.main.fragments.bot.adapters.BotAdapter;
 import org.joda.time.LocalDate;
@@ -50,7 +50,7 @@ public class GoalAddController extends GoalBotController {
     private BotAdapter botAdapter;
 
     public GoalAddController(Activity activity, BotAdapter botAdapter, Goal goal) {
-        super(activity, goal);
+        super(activity, goal, BotType.GOAL_ADD);
         ((DooitApplication) activity.getApplication()).component.inject(this);
         this.botAdapter = botAdapter;
         this.goal = goal;
@@ -137,7 +137,7 @@ public class GoalAddController extends GoalBotController {
 
         // Persist goal so that when user leaves conversation and returns, the view holders can
         // display their previous data properly.
-        persisted.saveConvoGoal(BotType.GOAL_ADD, goal);
+        persisted.saveConvoGoal(botType, goal);
     }
 
     private void uploadImage(Goal goal, String mimetype, File file) {
