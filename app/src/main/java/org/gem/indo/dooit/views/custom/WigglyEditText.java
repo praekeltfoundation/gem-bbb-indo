@@ -205,6 +205,10 @@ public class WigglyEditText extends ConstraintLayout {
         return placeholderView;
     }
 
+    public String getEditText() {
+        return editBox.getText().toString();
+    }
+
     public String getLabelText() {
         return (String) labelView.getText();
     }
@@ -251,6 +255,11 @@ public class WigglyEditText extends ConstraintLayout {
 
     public void setPlaceholderView(TextView placeholderView) {
         this.placeholderView = placeholderView;
+    }
+
+    public void setEditText(String text) {
+        editBox.setText(text);
+        updatePlaceholderVisibility();
     }
 
     public void setLabelText(String text) {
