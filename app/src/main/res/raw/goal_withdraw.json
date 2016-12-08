@@ -65,7 +65,7 @@
       {
         "name": "goal_withdraw_do_end",
         "text": "$(goal_withdraw_do_end)",
-        "next": "goal_withdraw_end"
+        "next": "goal_withdraw_end_message"
       }
     ]
   },
@@ -106,7 +106,7 @@
       {
         "name": "goal_withdraw_do_end",
         "text": "$(goal_withdraw_do_end)",
-        "next": "goal_withdraw_end"
+        "next": "goal_withdraw_end_message"
       }
     ]
   },
@@ -118,9 +118,6 @@
     "name": "goal_withdraw_tip_intro",
     "type": "text",
     "text": "$(bot_tip_intro)",
-    "textParams" : [
-      "TIP_INTRO"
-    ],
     "autoNext": "goal_withdraw_show_tip"
   },
   {

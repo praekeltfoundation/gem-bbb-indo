@@ -22,27 +22,31 @@ import org.gem.indo.dooit.api.DooitAPIError;
 import org.gem.indo.dooit.api.DooitErrorHandler;
 import org.gem.indo.dooit.api.managers.GoalManager;
 import org.gem.indo.dooit.api.managers.TipManager;
-import org.gem.indo.dooit.helpers.Persisted;
-import org.gem.indo.dooit.helpers.SquiggleBackgroundHelper;
-import org.gem.indo.dooit.helpers.Utils;
-import org.gem.indo.dooit.helpers.bot.BotFeed;
-import org.gem.indo.dooit.models.goal.Goal;
-import org.gem.indo.dooit.models.goal.GoalPrototype;
-import org.gem.indo.dooit.models.Tip;
-import org.gem.indo.dooit.models.bot.Answer;
-import org.gem.indo.dooit.models.bot.BaseBotModel;
 import org.gem.indo.dooit.controllers.BotController;
-import org.gem.indo.dooit.models.bot.Node;
-import org.gem.indo.dooit.models.enums.BotMessageType;
-import org.gem.indo.dooit.models.enums.BotType;
-import org.gem.indo.dooit.views.main.MainActivity;
-import org.gem.indo.dooit.views.main.MainViewPagerPositions;
-import org.gem.indo.dooit.views.main.fragments.MainFragment;
-import org.gem.indo.dooit.views.main.fragments.bot.adapters.BotAdapter;
 import org.gem.indo.dooit.controllers.goal.GoalAddController;
 import org.gem.indo.dooit.controllers.goal.GoalDepositController;
 import org.gem.indo.dooit.controllers.goal.GoalEditController;
 import org.gem.indo.dooit.controllers.goal.GoalWithdrawController;
+import org.gem.indo.dooit.helpers.Persisted;
+import org.gem.indo.dooit.helpers.SquiggleBackgroundHelper;
+import org.gem.indo.dooit.helpers.Utils;
+import org.gem.indo.dooit.helpers.bot.BotFeed;
+import org.gem.indo.dooit.helpers.bot.param.ParamArg;
+import org.gem.indo.dooit.helpers.bot.param.ParamMatch;
+import org.gem.indo.dooit.helpers.bot.param.ParamParser;
+import org.gem.indo.dooit.models.Tip;
+import org.gem.indo.dooit.models.bot.Answer;
+import org.gem.indo.dooit.models.bot.BaseBotModel;
+import org.gem.indo.dooit.models.bot.Node;
+import org.gem.indo.dooit.models.enums.BotMessageType;
+import org.gem.indo.dooit.models.enums.BotParamType;
+import org.gem.indo.dooit.models.enums.BotType;
+import org.gem.indo.dooit.models.goal.Goal;
+import org.gem.indo.dooit.models.goal.GoalPrototype;
+import org.gem.indo.dooit.views.main.MainActivity;
+import org.gem.indo.dooit.views.main.MainViewPagerPositions;
+import org.gem.indo.dooit.views.main.fragments.MainFragment;
+import org.gem.indo.dooit.views.main.fragments.bot.adapters.BotAdapter;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -341,7 +345,7 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
                 getAndAddNode(null);
                 break;
             case GOAL_ADD:
-                getAndAddNode("goal_add_ask_goal");
+                getAndAddNode("goal_add_q_ask_goal");
                 break;
             case GOAL_DEPOSIT:
                 getAndAddNode("goal_deposit_intro");
@@ -507,6 +511,7 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
         answerView.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
             @Override
             public void onGlobalLayout() {
+                // Scroll the recycler after the answer view is layed out
                 answerView.getViewTreeObserver().removeOnGlobalLayoutListener(this);
                 conversationRecyclerView.scrollToPosition(getBotAdapter().getItemCount() - 1);
             }
@@ -514,15 +519,18 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
 
         if (node.getAnswers().size() > 0) {
             if (TextUtils.isEmpty(node.getAutoAnswer())) {
+                for (Answer answer : node.getAnswers())
+                    processText(answer);
+
                 answerView.setData(node.getAnswers(), new HashtagView.DataStateTransform<Answer>() {
                     @Override
                     public CharSequence prepareSelected(Answer item) {
-                        return Utils.populateFromPersisted(persisted, getBotAdapter(), item.getText(getContext()), item.getTextParams());
+                        return item.getProcessedText();
                     }
 
                     @Override
                     public CharSequence prepare(Answer item) {
-                        return Utils.populateFromPersisted(persisted, getBotAdapter(), item.getText(getContext()), item.getTextParams());
+                        return item.getProcessedText();
                     }
                 });
             } else {
@@ -545,6 +553,16 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
                 getAndAddNode(node.getAutoNext(), true);
             }
         }
+    }
+
+    private void processText(Answer answer) {
+        ParamMatch args = ParamParser.parse(answer.getText(getContext()));
+        if (!args.isEmpty() && getBotAdapter().hasController()) {
+            BotController cb = getBotAdapter().getController();
+            for (ParamArg arg : args.getArgs())
+                cb.resolveParam(answer, BotParamType.byKey(arg.getKey()));
+        }
+        answer.setProcessedText(args.process(answer.values.getRawMap()));
     }
 
     private void clearAnswerView() {

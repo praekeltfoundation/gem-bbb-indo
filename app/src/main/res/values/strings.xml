@@ -134,16 +134,23 @@
     <string name="infoGoalAddedCongratulations">Great job! You\'ve set your first savings goal! </string>
 
     <!-- BOT: goal_add -->
-    <!-- Questions -->
-    <string name="goal_add_greeting">Hello $(user.username)!</string>
-    <string name="goal_add_intro">My Name is Dooit. I\'m gonna help  you save!</string>
-    <string name="goal_add_ask_goal">So what are you you saving for?</string>
+    <string name="goal_add_q_greeting">Hi, $(user.username)! My name is Dooit. I\'m your personal money coach and I\'m here to help you save. Let\'s go!</string>
+    <string name="goal_add_a_greeting_1">Hi, Dooit. Yay! Let\'s go!</string>
+    <string name="goal_add_a_greeting_2">Awesome! Let\'s get saving.</string>
 
-    <string name="goal_add_ask_amount">Do you know how much you need to save?</string>
+    <string name="goal_add_q_ask_goal">So what are you you saving for?</string>
+    <string name="goal_add_q_goal_prototype_selected">Fantastic!</string>
+    <string name="goal_add_a_goal_prototype_target">Add Amount</string>
+
+    <string name="goal_add_custom">Add own goal</string>
+    <string name="goal_add_a_camera">I want to upload my own picture.</string>
+    <string name="goal_add_a_gallery">I want to select a picture from the gallery.</string>
+
+    <string name="goal_add_q_ask_amount">How much will you need to save for $(goal.name)?</string>
+    <string name="goal_add_q_ask_date">By what date do you want to have saved for your goal?</string>
 
     <!-- Answers -->
     <string name="goal_add_greeting_response">Hola!</string>
-    <string name="goal_add_custom">Add own goal</string>
 
     <!-- BOT: goal_deposit -->
     <!-- User clicks on add savings (+ Deposit) on Goal saving page  -->
@@ -210,7 +217,7 @@
     <string name="goal_edit_image_cancel">@string/label_cancel</string>
     <string name="goal_edit_delete_reason_reached">I\'ve already achieved this goal.</string>
     <string name="goal_edit_delete_reason_difficult">It\'s too difficult to save!</string>
-    <string name="goal_edit_delete_reason_do_not_want">I don\'t want [goal_name] anymore.</string>
+    <string name="goal_edit_delete_reason_do_not_want">I don\'t want $(goal.name) anymore.</string>
     <string name="goal_edit_delete_reason_misc">No reason, I just want to delete it.</string>
     <string name="goal_edit_delete_reason_cancel">Never mind! I want to keep saving.</string>
     <string name="goal_edit_info_exit">Okay, I\'m done for now. Can we exit?</string>

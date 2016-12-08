@@ -161,7 +161,16 @@
     "type": "text",
     "text": "$(goal_edit_delete_difficult)",
     "answers": [
-      
+      {
+        "name": "goal_edit_delete_difficult_help",
+        "text": "$(goal_edit_delete_difficult_help)",
+        "next": "goal_edit_intro"
+      },
+      {
+        "name": "goal_edit_delete_difficult_do_delete",
+        "text": "$(goal_edit_delete_difficult_do_delete)",
+        "next": "goal_edit_end"
+      }
     ]
   },
   {
@@ -177,12 +186,12 @@
       {
         "name": "goal_edit_delete_tip",
         "text": "$(goal_edit_tip)",
-        "next": "goal_edit_end"
+        "next": "goal_edit_tip_intro"
       },
       {
         "name": "goal_edit_delete_challenge",
         "text": "$(goal_edit_challenge)",
-        "next": "goal_edit_end"
+        "next": "goal_edit_challenge_intro"
       },
       {
         "name": "goal_edit_delete_no_thanks",
@@ -234,6 +243,7 @@
       }
     ]
   },
+
 
 
   {

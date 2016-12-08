@@ -1,49 +1,64 @@
 [
   {
-    "name": "goal_add_greeting",
+    "name": "goal_add_q_greeting",
     "type": "text",
-    "text": "$(goal_add_greeting)",
-    "textParams": [
-      "USERNAME"
-    ],
-    "autoNext": "goal_add_intro"
-  },
-  {
-    "name": "goal_add_intro",
-    "type": "text",
-    "text": "$(goal_add_intro)",
+    "text": "$(goal_add_q_greeting)",
     "answers": [
       {
-        "name": "goal_add_greeting_response",
-        "next": "goal_add_ask_goal",
-        "text": "$(goal_add_greeting_response)"
+        "name": "goal_add_a_greeting_1",
+        "text": "$(goal_add_a_greeting_1)",
+        "next": "goal_add_q_ask_goal"
+      },
+      {
+        "name": "goal_add_a_greeting_2",
+        "text": "$(goal_add_a_greeting_2)",
+        "next": "goal_add_q_ask_goal"
       }
     ]
   },
+
+
   {
-    "name": "goal_add_ask_goal",
+    "name": "goal_add_q_ask_goal",
     "type": "text",
-    "text": "$(goal_add_ask_goal)",
+    "text": "$(goal_add_q_ask_goal)",
     "autoNext": "goal_add_ask_goal_gallery"
   },
   {
     "name": "goal_add_ask_goal_gallery",
     "type": "goalGallery",
     "text": "",
-    "next": "goalNameCongrats",
+    "next": "goal_add_q_ask_amount",
     "answers": [
       {
-        "name": "goalNameOption",
-        "next": "askGoalNameInput",
-        "text": "$(addOwnGoal)",
+        "name": "goal_add_custom",
+        "next": "goal_add_q_goal_name",
+        "text": "$(goal_add_custom)",
         "removeOnSelect": "goal_add_ask_goal_gallery"
       }
     ]
   },
+
+
+
   {
-    "name": "askGoalNameInput",
+    "name": "goal_add_q_goal_prototype_selected",
     "type": "text",
-    "text": "$(askGoalNameInput)",
+    "text": "$(goal_add_q_goal_prototype_selected)",
+    "answers": [
+      {
+        "name": "goal_add_a_goal_prototype_target",
+        "text": "$(goal_add_a_goal_prototype_target)",
+        "next": "goal_add_q_ask_amount"
+      }
+    ]
+  },
+
+
+
+  {
+    "name": "goal_add_q_goal_name",
+    "type": "blank",
     "autoAnswer": "goal_name",
     "answers": [
       {
@@ -66,18 +81,18 @@
     "text": "$(askGoalImage)",
     "answers": [
       {
-        "name": "Capture",
-        "text": "$(Capture)",
+        "name": "goal_add_a_camera",
+        "text": "$(goal_add_a_camera)",
         "type": "CameraUpload",
         "nextOnFinish": "askGoalImageConfirm",
-        "removeOnSelect": "Capture"
+        "removeOnSelect": "goal_add_a_camera"
       },
       {
-        "name": "Gallery",
-        "text": "$(Gallery)",
+        "name": "goal_add_a_gallery",
+        "text": "$(goal_add_a_gallery)",
         "type": "GalleryUpload",
         "nextOnFinish": "askGoalImageConfirm",
-        "removeOnSelect": "Gallery"
+        "removeOnSelect": "goal_add_a_gallery"
       }
     ]
   },
@@ -93,33 +108,37 @@
       {
         "name": "Accept",
         "text": "$(Accept)",
-        "next": "goal_add_ask_amount"
+        "next": "goal_add_q_ask_amount"
       }
     ]
   },
+
+
+
+
   {
-    "name": "goal_add_ask_amount",
+    "name": "goal_add_q_ask_amount",
     "type": "text",
-    "text": "$(goal_add_ask_amount)",
+    "text": "$(goal_add_q_ask_amount)",
     "autoAnswer": "goal_amount",
     "answers": [
       {
         "name": "goal_amount",
-        "nextOnFinish": "askGoalDate",
+        "nextOnFinish": "goal_add_q_ask_date",
         "type": "inlineCurrency",
         "typeOnFinish": "textCurrency",
         "inlineEditHint": "$(type_currency_hint)"
       }
     ]
   },
+
+
+
+
   {
-    "name": "askGoalDate",
+    "name": "goal_add_q_ask_date",
     "type": "text",
-    "text": "$(askGoalDate)",
-    "textParams": [
-      "LOCAL_CURRENCY",
-      "goal_amount"
-    ],
+    "text": "$(goal_add_q_ask_date)",
     "answers": [
       {
         "name": "knowDateY",
@@ -178,6 +197,10 @@
       }
     ]
   },
+
+
+
+
   {
     "name": "verifyGoalAmount",
     "type": "goalVerification",
@@ -201,10 +224,14 @@
       {
         "name": "startOver",
         "text": "$(startOver)",
-        "next": "goalGreeting"
+        "next": "goal_add_q_ask_goal"
       }
     ]
   },
+
+
+
+
   {
     "name": "askGoalWeeklySaveAmount",
     "type": "text",

@@ -88,6 +88,7 @@ public class GoalAddController extends GoalBotController {
             Answer answer = answerLog.get("goal_add_ask_goal_gallery");
             goal.setPrototype(Long.parseLong(answer.values.getString("prototype")));
             goal.setName(answer.values.getString("name"));
+            goal.setLocalImageUri(answer.values.getString("image_url"));
         } else {
             // Custom Goal branch
             goal.setName(answerLog.get("goal_name").getValue());
@@ -110,17 +111,17 @@ public class GoalAddController extends GoalBotController {
         }).doOnCompleted(new Action0() {
             @Override
             public void call() {
+                notifyDone(listener);
                 if (context instanceof MainActivity)
                     ((MainActivity) context).refreshGoals();
-                notifyDone(listener);
             }
         });
 
         // Find Image
-        if (answerLog.containsKey("Capture"))
-            goal.setLocalImageUri(answerLog.get("Capture").getValue());
-        else if (answerLog.containsKey("Gallery"))
-            goal.setLocalImageUri(answerLog.get("Gallery").getValue());
+        if (answerLog.containsKey("goal_add_a_camera"))
+            goal.setLocalImageUri(answerLog.get("goal_add_a_camera").getValue());
+        else if (answerLog.containsKey("goal_add_a_gallery"))
+            goal.setLocalImageUri(answerLog.get("goal_add_a_gallery").getValue());
 
         // Upload image if set
         if (goal.hasLocalImageUri()) {
