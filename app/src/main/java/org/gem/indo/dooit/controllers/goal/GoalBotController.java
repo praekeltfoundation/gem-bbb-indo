@@ -1,4 +1,4 @@
-package org.gem.indo.dooit.views.main.fragments.target.controllers;
+package org.gem.indo.dooit.controllers.goal;
 
 import android.content.Context;
 

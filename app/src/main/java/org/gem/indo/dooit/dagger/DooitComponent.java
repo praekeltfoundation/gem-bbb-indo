@@ -22,11 +22,11 @@ import org.gem.indo.dooit.views.main.fragments.challenge.fragments.ChallengePict
 import org.gem.indo.dooit.views.main.fragments.challenge.fragments.ChallengeQuizFragment;
 import org.gem.indo.dooit.views.main.fragments.challenge.fragments.ChallengeRegisterFragment;
 import org.gem.indo.dooit.views.main.fragments.target.TargetFragment;
-import org.gem.indo.dooit.views.main.fragments.target.controllers.GoalAddController;
-import org.gem.indo.dooit.views.main.fragments.target.controllers.GoalBotController;
-import org.gem.indo.dooit.views.main.fragments.target.controllers.GoalDepositController;
-import org.gem.indo.dooit.views.main.fragments.target.controllers.GoalEditController;
-import org.gem.indo.dooit.views.main.fragments.target.controllers.GoalWithdrawController;
+import org.gem.indo.dooit.controllers.goal.GoalAddController;
+import org.gem.indo.dooit.controllers.goal.GoalBotController;
+import org.gem.indo.dooit.controllers.goal.GoalDepositController;
+import org.gem.indo.dooit.controllers.goal.GoalEditController;
+import org.gem.indo.dooit.controllers.goal.GoalWithdrawController;
 import org.gem.indo.dooit.views.main.fragments.tip.TipsFragment;
 import org.gem.indo.dooit.views.main.fragments.tip.TipsListFragment;
 import org.gem.indo.dooit.views.main.fragments.tip.adapters.TipsListAdapter;

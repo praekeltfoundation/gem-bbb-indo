@@ -39,10 +39,10 @@ import org.gem.indo.dooit.views.main.MainActivity;
 import org.gem.indo.dooit.views.main.MainViewPagerPositions;
 import org.gem.indo.dooit.views.main.fragments.MainFragment;
 import org.gem.indo.dooit.views.main.fragments.bot.adapters.BotAdapter;
-import org.gem.indo.dooit.views.main.fragments.target.controllers.GoalAddController;
-import org.gem.indo.dooit.views.main.fragments.target.controllers.GoalDepositController;
-import org.gem.indo.dooit.views.main.fragments.target.controllers.GoalEditController;
-import org.gem.indo.dooit.views.main.fragments.target.controllers.GoalWithdrawController;
+import org.gem.indo.dooit.controllers.goal.GoalAddController;
+import org.gem.indo.dooit.controllers.goal.GoalDepositController;
+import org.gem.indo.dooit.controllers.goal.GoalEditController;
+import org.gem.indo.dooit.controllers.goal.GoalWithdrawController;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;

@@ -2,9 +2,6 @@ package org.gem.indo.dooit.models.enums;
 
 import com.google.gson.annotations.SerializedName;
 
-import java.util.HashMap;
-import java.util.Map;
-
 /**
  * Created by Wimpie Victor on 2016/12/08.
  */
