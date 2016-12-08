@@ -184,7 +184,7 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
                 break;
             case GOAL_DEPOSIT:
                 feed.parse(R.raw.goal_deposit, Node.class);
-                initializeBot();
+                getGoalWithdrawResources();
                 break;
             case GOAL_WITHDRAW:
                 feed.parse(R.raw.goal_withdraw, Node.class);
@@ -192,11 +192,11 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
                 break;
             case GOAL_EDIT:
                 feed.parse(R.raw.goal_edit, Node.class);
-                initializeBot();
+                getGoalWithdrawResources();
                 break;
             case TIP_INTRO:
                 feed.parse(R.raw.tip_intro, Node.class);
-                initializeBot();
+                getGoalWithdrawResources();
                 break;
         }
     }
@@ -369,22 +369,22 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
                 Goal g1 = persisted.loadConvoGoal(BotType.GOAL_ADD);
                 if (g1 == null)
                     g1 = new Goal();
-                return new GoalAddController(getActivity(), getBotAdapter(), g1);
+                return new GoalAddController(getActivity(), getBotAdapter(), g1, persisted.loadConvoTip());
             case GOAL_DEPOSIT:
                 Goal g2 = persisted.loadConvoGoal(BotType.GOAL_DEPOSIT);
                 if (g2 == null)
                     throw new RuntimeException("No Goal was persisted for Goal Deposit conversation.");
-                return new GoalDepositController(getActivity(), g2);
+                return new GoalDepositController(getActivity(), g2, persisted.loadConvoTip());
             case GOAL_WITHDRAW:
                 Goal g3 = persisted.loadConvoGoal(BotType.GOAL_WITHDRAW);
                 if (g3 == null)
                     throw new RuntimeException("No Goal was persisted for Goal Withdraw conversation.");
-                return new GoalWithdrawController(getActivity(), g3);
+                return new GoalWithdrawController(getActivity(), g3, persisted.loadConvoTip());
             case GOAL_EDIT:
                 Goal g4 = persisted.loadConvoGoal(BotType.GOAL_EDIT);
                 if (g4 == null)
                     throw new RuntimeException("No Goal was persisted for Goal Edit converstation");
-                return new GoalEditController(getActivity(), g4);
+                return new GoalEditController(getActivity(), g4, persisted.loadConvoTip());
             default:
                 return null;
         }

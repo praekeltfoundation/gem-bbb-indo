@@ -1,13 +1,13 @@
 package org.gem.indo.dooit.views.main.fragments.target.controllers;
 
 import android.app.Activity;
-import android.content.Context;
 
 import org.gem.indo.dooit.DooitApplication;
 import org.gem.indo.dooit.api.DooitAPIError;
 import org.gem.indo.dooit.api.DooitErrorHandler;
 import org.gem.indo.dooit.api.managers.GoalManager;
 import org.gem.indo.dooit.api.responses.EmptyResponse;
+import org.gem.indo.dooit.models.Tip;
 import org.gem.indo.dooit.models.enums.BotType;
 import org.gem.indo.dooit.models.goal.Goal;
 import org.gem.indo.dooit.models.goal.GoalTransaction;
@@ -30,8 +30,8 @@ public class GoalDepositController extends GoalBotController {
     @Inject
     transient GoalManager goalManager;
 
-    public GoalDepositController(Activity activity, Goal goal) {
-        super(activity, goal, BotType.GOAL_DEPOSIT);
+    public GoalDepositController(Activity activity, Goal goal, Tip tip) {
+        super(activity, BotType.GOAL_DEPOSIT, goal, tip);
         ((DooitApplication) activity.getApplication()).component.inject(this);
         this.goal = goal;
     }

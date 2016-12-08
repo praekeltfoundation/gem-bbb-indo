@@ -29,10 +29,11 @@ public abstract class GoalBotController extends DooitBotController {
     // The Tip to be shown at the end of the conversation
     protected Tip tip;
 
-    public GoalBotController(Context context, Goal goal, BotType botType) {
+    public GoalBotController(Context context, BotType botType, Goal goal, Tip tip) {
         super(context, botType);
         ((DooitApplication) context.getApplicationContext()).component.inject(this);
         this.goal = goal;
+        this.tip = tip;
     }
 
     @Override

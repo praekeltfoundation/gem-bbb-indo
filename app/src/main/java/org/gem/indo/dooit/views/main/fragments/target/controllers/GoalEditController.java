@@ -12,13 +12,12 @@ import org.gem.indo.dooit.api.DooitErrorHandler;
 import org.gem.indo.dooit.api.managers.FileUploadManager;
 import org.gem.indo.dooit.api.managers.GoalManager;
 import org.gem.indo.dooit.api.responses.EmptyResponse;
-import org.gem.indo.dooit.controllers.BotParamType;
 import org.gem.indo.dooit.helpers.MediaUriHelper;
-import org.gem.indo.dooit.models.enums.BotType;
-import org.gem.indo.dooit.models.goal.Goal;
+import org.gem.indo.dooit.models.Tip;
 import org.gem.indo.dooit.models.bot.Answer;
 import org.gem.indo.dooit.models.bot.BaseBotModel;
-import org.gem.indo.dooit.controllers.BotController;
+import org.gem.indo.dooit.models.enums.BotType;
+import org.gem.indo.dooit.models.goal.Goal;
 import org.gem.indo.dooit.views.main.MainActivity;
 import org.joda.time.format.DateTimeFormat;
 
@@ -42,8 +41,8 @@ public class GoalEditController extends GoalBotController {
     @Inject
     transient FileUploadManager fileUploadManager;
 
-    public GoalEditController(Activity activity, Goal goal) {
-        super(activity, goal, BotType.GOAL_EDIT);
+    public GoalEditController(Activity activity, Goal goal, Tip tip) {
+        super(activity, BotType.GOAL_EDIT, goal, tip);
         ((DooitApplication) activity.getApplication()).component.inject(this);
         this.goal = goal;
     }

@@ -10,6 +10,7 @@ import org.gem.indo.dooit.api.managers.FileUploadManager;
 import org.gem.indo.dooit.api.managers.GoalManager;
 import org.gem.indo.dooit.helpers.MediaUriHelper;
 import org.gem.indo.dooit.helpers.Persisted;
+import org.gem.indo.dooit.models.Tip;
 import org.gem.indo.dooit.models.bot.Answer;
 import org.gem.indo.dooit.models.bot.BaseBotModel;
 import org.gem.indo.dooit.models.bot.Node;
@@ -49,8 +50,8 @@ public class GoalAddController extends GoalBotController {
 
     private BotAdapter botAdapter;
 
-    public GoalAddController(Activity activity, BotAdapter botAdapter, Goal goal) {
-        super(activity, goal, BotType.GOAL_ADD);
+    public GoalAddController(Activity activity, BotAdapter botAdapter, Goal goal, Tip tip) {
+        super(activity, BotType.GOAL_ADD, goal, tip);
         ((DooitApplication) activity.getApplication()).component.inject(this);
         this.botAdapter = botAdapter;
         this.goal = goal;
