@@ -40,20 +40,6 @@
             android:textColor="@color/yellow"
             android:textStyle="bold" />
 
-        <EditText
-            android:id="@+id/activity_registration_name_text_edit"
-            style="@style/AppTheme.EditText.Grey"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
-            android:layout_below="@+id/activity_registration_name_text_view"
-            android:layout_marginTop="4dp"
-            android:inputType="textPersonName"
-            android:imeOptions="actionNext"
-            android:maxLines="1"
-            android:nextFocusDown="@+id/activity_registration_age_spinner"
-            tools:text="Aida" />
-
         <TextView
             android:id="@+id/activity_registration_name_example_text_edit"
             style="@style/AppTheme.TextView.Regular.Small"
@@ -79,18 +65,6 @@
             android:textColor="@color/yellow"
             android:textStyle="bold" />
 
-
-        <Spinner
-            android:id="@+id/activity_registration_age_spinner"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/activity_registration_age_text_view"
-            android:layout_marginTop="4dp"
-            android:background="@drawable/bkg_edit_view"
-            android:spinnerMode="dialog"
-            android:nextFocusDown="@+id/activity_registration_gender_radiogroup"
-            android:imeOptions="actionNext"
-            tools:listitem="@layout/item_spinner_age" />
 
         <TextView
             android:id="@+id/activity_registration_age_example_text_view"
@@ -169,20 +143,6 @@
             android:textAllCaps="true"
             android:textColor="@color/yellow"
             android:textStyle="bold" />
-
-        <EditText
-            android:id="@+id/activity_registration_number_text_edit"
-            style="@style/AppTheme.EditText.Grey"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
-            android:layout_below="@+id/activity_registration_number_text_view"
-            android:layout_marginTop="4dp"
-            android:imeOptions="actionNext"
-            android:nextFocusDown="@+id/activity_registration_password_edit_text"
-            android:maxLines="1"
-            android:inputType="phone"
-            tools:text="+110002223" />
 
         <TextView
             android:id="@+id/activity_registration_number_example_text_edit"
@@ -266,5 +226,43 @@
             android:layout_marginTop="16dp"
             android:text="@string/already_registered_log_in"
             android:textColor="@color/white" />
+
+        <Spinner
+            android:id="@+id/activity_registration_age_spinner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bkg_edit_view"
+            android:spinnerMode="dialog"
+            android:nextFocusDown="@+id/activity_registration_gender_radiogroup"
+            android:imeOptions="actionNext"
+            tools:listitem="@layout/item_spinner_age"
+            android:layout_below="@+id/activity_registration_age_text_view"
+            android:layout_alignParentStart="true" />
+
+        <EditText
+            android:id="@+id/activity_registration_name_text_edit"
+            style="@style/AppTheme.EditText.Grey"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textPersonName"
+            android:imeOptions="actionNext"
+            android:maxLines="1"
+            android:nextFocusDown="@+id/activity_registration_age_spinner"
+            tools:text="Aida"
+            android:layout_below="@+id/activity_registration_name_text_view"
+            android:layout_alignParentStart="true" />
+
+        <EditText
+            android:id="@+id/activity_registration_number_text_edit"
+            style="@style/AppTheme.EditText.Grey"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:imeOptions="actionNext"
+            android:nextFocusDown="@+id/activity_registration_password_edit_text"
+            android:maxLines="1"
+            android:inputType="phone"
+            tools:text="+110002223"
+            android:layout_below="@+id/activity_registration_number_text_view"
+            android:layout_alignParentStart="true" />
     </RelativeLayout>
 </ScrollView>

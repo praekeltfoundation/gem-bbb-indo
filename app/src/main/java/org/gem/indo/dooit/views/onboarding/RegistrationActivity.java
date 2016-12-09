@@ -62,7 +62,7 @@ public class RegistrationActivity extends DooitActivity {
 
     @BindView(R.id.activity_registration)
     View background;
-    
+
     @BindView(org.gem.indo.dooit.R.id.activity_registration_t_c_text_view)
     TextView textViewTC;
 
@@ -123,7 +123,7 @@ public class RegistrationActivity extends DooitActivity {
 
         // Default gender
         gender.check(R.id.activity_registration_gender_girl);
-        
+
         if (!getLocal().getCountry().equals("in")) {
             spanTc.setSpan(new ForegroundColorSpan(ResourcesCompat.getColor(getResources(), org.gem.indo.dooit.R.color.pink, getTheme())), spanTc.length() - 17, spanTc.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
             spanLogin.setSpan(new ForegroundColorSpan(ResourcesCompat.getColor(getResources(), org.gem.indo.dooit.R.color.pink, getTheme())), spanLogin.length() - 6, spanLogin.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
@@ -133,6 +133,27 @@ public class RegistrationActivity extends DooitActivity {
         SquiggleBackgroundHelper.setBackground(this, R.color.purple, R.color.purple_light, background);
         password.setImeActionLabel(getString(R.string.label_register), EditorInfo.IME_ACTION_DONE);
         age.setSelection(16 - MIN_AGE); // 16
+
+        name.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView textView, int actionId, KeyEvent event) {
+                if (actionId == EditorInfo.IME_ACTION_NEXT) {
+                    hideKeyboard();
+                    textView.clearFocus();
+                    age.requestFocus();
+                    age.performClick();
+                }
+                return true;
+            }
+        });
+
+        gender.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+                    @Override
+                    public void onCheckedChanged(RadioGroup group, int checkedId) {
+                        number.requestFocus();
+                        number.performClick();
+                    }
+                });
     }
 
 
