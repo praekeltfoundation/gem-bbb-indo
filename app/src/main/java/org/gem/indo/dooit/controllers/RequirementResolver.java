@@ -80,6 +80,7 @@ public class RequirementResolver {
 
         if (sync.size() > 0) {
             // Requirements outstanding
+            // TODO: Does an HTTP exception in flatmap cause it to stop processing?
             notifyStart(callback);
             Observable.from(sync).flatMap(new Func1<Observable, Observable<?>>() {
                 @Override

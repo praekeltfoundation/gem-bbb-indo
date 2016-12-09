@@ -8,12 +8,14 @@ import org.gem.indo.dooit.models.bot.Answer;
 import org.gem.indo.dooit.models.bot.BaseBotModel;
 import org.gem.indo.dooit.models.challenge.BaseChallenge;
 import org.gem.indo.dooit.models.enums.BotCallType;
+import org.gem.indo.dooit.models.enums.BotMessageType;
 import org.gem.indo.dooit.models.enums.BotObjectType;
 import org.gem.indo.dooit.models.enums.BotParamType;
 import org.gem.indo.dooit.models.enums.BotType;
 import org.gem.indo.dooit.models.goal.Goal;
 import org.gem.indo.dooit.views.main.fragments.bot.adapters.BotAdapter;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -28,10 +30,12 @@ public class ReturningUserController extends DooitBotController {
     private List<Goal> goals;
     private Tip tip;
 
-    public ReturningUserController(Context context, BotAdapter botAdapter, List<Goal> goals, Tip tip) {
+    public ReturningUserController(Context context, BotAdapter botAdapter,
+                                   List<Goal> goals, BaseChallenge challenge, Tip tip) {
         super(context, BotType.RETURNING_USER);
         this.botAdapter = botAdapter;
         this.goals = goals;
+        this.challenge = challenge;
         this.tip = tip;
     }
 
@@ -59,12 +63,28 @@ public class ReturningUserController extends DooitBotController {
     public void resolveParam(BaseBotModel model, BotParamType paramType) {
         String key = paramType.getKey();
         switch (paramType) {
+            case CHALLENGE_INTRO:
+                break;
+            case CHALLENGE_OUTRO:
+                break;
             case TIP_INTRO:
                 model.values.put(key, tip.getIntro());
                 break;
             default:
                 super.resolveParam(model, paramType);
                 break;
+        }
+    }
+
+    @Override
+    public boolean filter(Answer answer) {
+        switch (answer.getName()) {
+            case "convo_default_return_a_progress_intro_tip":
+                return tip != null;
+            case "convo_default_return_a_progress_intro_challenge":
+                return challenge != null;
+            default:
+                return true;
         }
     }
 

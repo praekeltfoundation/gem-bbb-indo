@@ -27,6 +27,10 @@ public enum BotParamType {
     GOAL_LOCAL_IMAGE_URI("goal.local_image_uri"),
     GOAL_HAS_LOCAL_IMAGE_URI("goal.has_local_image_uri"),
 
+    // Challenge
+    CHALLENGE_INTRO("challenge.intro"),
+    CHALLENGE_OUTRO("challenge.outro"),
+
     // Tips
     TIP_INTRO("tip.intro");
 

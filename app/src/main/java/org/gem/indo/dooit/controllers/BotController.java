@@ -7,10 +7,13 @@ import android.os.Looper;
 import org.gem.indo.dooit.models.bot.Answer;
 import org.gem.indo.dooit.models.bot.BaseBotModel;
 import org.gem.indo.dooit.models.enums.BotCallType;
+import org.gem.indo.dooit.models.enums.BotMessageType;
 import org.gem.indo.dooit.models.enums.BotObjectType;
 import org.gem.indo.dooit.models.enums.BotParamType;
 import org.gem.indo.dooit.models.enums.BotType;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -57,7 +60,8 @@ public abstract class BotController {
 
     /**
      * Called when the `asyncCall` field is set on a Node.
-     *  @param key       The value of the `callback` field
+     *
+     * @param key       The value of the `callback` field
      * @param answerLog The Answer Log up to the point of the calling Node
      * @param model     The calling Node or Answer
      * @param listener  Listener to be called when async operation is done
@@ -108,6 +112,25 @@ public abstract class BotController {
 
     public BotType getBotType() {
         return botType;
+    }
+
+    /**
+     * Allows the controller to filter out multiple choice answers that should not be shown to the
+     * user.
+     *
+     * @param models
+     * @return
+     */
+    public final List<Answer> filter(List<Answer> models) {
+        List<Answer> answers = new ArrayList<>();
+        for (Answer answer : models)
+            if (filter(answer))
+                answers.add(answer);
+        return answers;
+    }
+
+    public boolean filter(Answer answer) {
+        return true;
     }
 
     public interface OnAsyncListener {

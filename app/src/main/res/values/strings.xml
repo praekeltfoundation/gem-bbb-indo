@@ -104,6 +104,8 @@
     <!-- Bot -->
     <string name="bot_carousel_card_select">Select</string>
     <string name="bot_tip_intro">$(tip.intro)</string>
+    <string name="bot_challenge_intro">$(challenge.intro)</string>
+    <string name="bot_challenge_outro">$(challenge.outro)</string>
     <string name="of_target_amount">of %s</string>
 
     <!--JSON GOALS-->

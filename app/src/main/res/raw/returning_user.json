@@ -26,6 +26,10 @@
                 "name": "convo_default_return_a_progress_intro_tip",
                 "text": "$(convo_default_return_a_progress_intro_tip)",
                 "next": "convo_default_return_q_tip_intro"
+            },{
+                "name": "convo_default_return_a_progress_intro_challenge",
+                "text": "$(convo_default_return_a_progress_intro_challenge)",
+                "next": "convo_default_return_q_challenge_intro"
             }
         ]
     },
@@ -50,9 +54,10 @@
 
     {
         "name": "convo_default_return_q_challenge_intro",
-        "type": "blank",
-        "autoNextScreen": "CHALLENGE"
+        "type": "text",
+        "text": "$(bot_challenge_intro)"
     },
+    
 
 
 
