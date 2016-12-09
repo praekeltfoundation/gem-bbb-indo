@@ -31,7 +31,8 @@ public enum BotMessageType {
     END(18),
     GOALINFO(19),
     BADGE(20),
-    GOALLISTSUMMARY(21);
+    GOALLISTSUMMARY(21),
+    CHALLENGE(22);
 
     private static Map<Integer, BotMessageType> map = new HashMap<>();
 

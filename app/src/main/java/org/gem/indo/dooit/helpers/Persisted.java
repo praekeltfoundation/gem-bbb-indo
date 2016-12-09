@@ -178,6 +178,20 @@ public class Persisted {
         dooitSharedPreferences.remove(BOT_TIP);
     }
 
+    public void saveConvoChallenge(BotType botType, BaseChallenge challenge) {
+        dooitSharedPreferences.setComplex(BOT + "_" + CHALLENGE + "_" + botType.name(), challenge);
+    }
+
+    public BaseChallenge loadConvoChallenge(BotType botType) {
+        if (hasConvoChallenge(botType))
+            return dooitSharedPreferences.getComplex(BOT + "_" + CHALLENGE + "_" + botType.name(), BaseChallenge.class);
+        return null;
+    }
+
+    public boolean hasConvoChallenge(BotType botType) {
+        return dooitSharedPreferences.containsKey(BOT + "_" + CHALLENGE + "_" + botType.name());
+    }
+
     public boolean isNewBotUser() {
         return dooitSharedPreferences.getBoolean(NEW_BOT_USER, true);
     }

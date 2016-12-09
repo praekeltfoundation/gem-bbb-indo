@@ -8,5 +8,6 @@ public enum BotObjectType {
     CHALLENGE,
     GOAL,
     GOALS,
+    GOAL_PROTOTYPES,
     TIP
 }

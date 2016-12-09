@@ -20,9 +20,11 @@ import org.gem.indo.dooit.DooitApplication;
 import org.gem.indo.dooit.R;
 import org.gem.indo.dooit.api.DooitAPIError;
 import org.gem.indo.dooit.api.DooitErrorHandler;
+import org.gem.indo.dooit.api.managers.ChallengeManager;
 import org.gem.indo.dooit.api.managers.GoalManager;
 import org.gem.indo.dooit.api.managers.TipManager;
 import org.gem.indo.dooit.controllers.BotController;
+import org.gem.indo.dooit.controllers.RequirementResolver;
 import org.gem.indo.dooit.controllers.goal.GoalAddController;
 import org.gem.indo.dooit.controllers.goal.GoalDepositController;
 import org.gem.indo.dooit.controllers.goal.GoalEditController;
@@ -30,7 +32,6 @@ import org.gem.indo.dooit.controllers.goal.GoalWithdrawController;
 import org.gem.indo.dooit.controllers.misc.ReturningUserController;
 import org.gem.indo.dooit.helpers.Persisted;
 import org.gem.indo.dooit.helpers.SquiggleBackgroundHelper;
-import org.gem.indo.dooit.helpers.Utils;
 import org.gem.indo.dooit.helpers.bot.BotFeed;
 import org.gem.indo.dooit.helpers.bot.param.ParamArg;
 import org.gem.indo.dooit.helpers.bot.param.ParamMatch;
@@ -39,7 +40,9 @@ import org.gem.indo.dooit.models.Tip;
 import org.gem.indo.dooit.models.bot.Answer;
 import org.gem.indo.dooit.models.bot.BaseBotModel;
 import org.gem.indo.dooit.models.bot.Node;
+import org.gem.indo.dooit.models.challenge.BaseChallenge;
 import org.gem.indo.dooit.models.enums.BotMessageType;
+import org.gem.indo.dooit.models.enums.BotObjectType;
 import org.gem.indo.dooit.models.enums.BotParamType;
 import org.gem.indo.dooit.models.enums.BotType;
 import org.gem.indo.dooit.models.goal.Goal;
@@ -87,6 +90,9 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
 
     @Inject
     GoalManager goalManager;
+
+    @Inject
+    ChallengeManager challengeManager;
 
     @Inject
     TipManager tipManager;
@@ -182,7 +188,23 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
         switch (type) {
             case RETURNING_USER:
                 feed.parse(R.raw.returning_user, Node.class);
-                getReturningUserResources();
+                new RequirementResolver.Builder(getContext(), BotType.RETURNING_USER)
+                        .require(BotObjectType.GOALS)
+                        .require(BotObjectType.TIP)
+                        .require(BotObjectType.CHALLENGE)
+                        .build()
+                        .resolve(new RequirementResolver.Callback() {
+                            @Override
+                            public void onStart() {
+                                showProgressBar();
+                            }
+
+                            @Override
+                            public void onDone() {
+                                showConversation();
+                                initializeBot();
+                            }
+                        });
                 break;
             case DEFAULT:
             case GOAL_ADD:
@@ -315,80 +337,6 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
             initializeBot();
     }
 
-    private void getReturningUserResources() {
-        // TODO: Refactor into own class
-        ArrayList<Observable> reqSync = new ArrayList<>();
-
-        // Goals
-        Observable goals = goalManager.retrieveGoals(new DooitErrorHandler() {
-            @Override
-            public void onError(DooitAPIError error) {
-
-            }
-        });
-        if (persisted.hasConvoGoals(BotType.RETURNING_USER))
-            goals.subscribe(new Action1<List<Goal>>() {
-                @Override
-                public void call(List<Goal> retrievedGoals) {
-                    persisted.saveConvoGoals(BotType.RETURNING_USER, retrievedGoals);
-                }
-            });
-        else
-            reqSync.add(goals);
-
-        // Tips
-        Observable tips = tipManager.retrieveTips(new DooitErrorHandler() {
-            @Override
-            public void onError(DooitAPIError error) {
-
-            }
-        });
-        if (persisted.hasTips())
-            tips.subscribe(new Action1<List<Tip>>() {
-                @Override
-                public void call(List<Tip> o) {
-                    persisted.saveConvoTip(o.get(0));
-                }
-            });
-        else
-            reqSync.add(tips);
-
-        if (reqSync.size() > 0) {
-            showProgressBar();
-            Observable.from(reqSync).flatMap(new Func1<Observable, Observable<?>>() {
-                @Override
-                public Observable<?> call(Observable observable) {
-                    return observable;
-                }
-            }).doAfterTerminate(new Action0() {
-                @Override
-                public void call() {
-                    if (getContext() != null) {
-                        getActivity().runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                showConversation();
-                                initializeBot();
-                            }
-                        });
-                    }
-                }
-            }).subscribe(new Action1<Object>() {
-                @Override
-                public void call(Object o) {
-                    if (o instanceof List) {
-                        if (((List) o).size() == 0) return;
-                        if (((List) o).get(0) instanceof Goal)
-                            persisted.saveConvoGoals(BotType.RETURNING_USER, (List<Goal>) o);
-                        else if (((List) o).get(0) instanceof Tip)
-                            persisted.saveConvoTip((Tip) ((List) o).get(0));
-                    }
-                }
-            });
-        } else
-            initializeBot();
-    }
-
     private void initializeBot() {
         controller = createBotController(type);
         getBotAdapter().setController(controller);
@@ -447,7 +395,8 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
     private BotController createBotController(BotType botType) {
         switch (botType) {
             case RETURNING_USER:
-                return new ReturningUserController(getActivity(), getBotAdapter(), persisted.loadConvoGoals(BotType.RETURNING_USER), persisted.loadConvoTip());
+                return new ReturningUserController(getActivity(), getBotAdapter(),
+                        persisted.loadConvoGoals(BotType.RETURNING_USER), persisted.loadConvoTip());
             case DEFAULT:
             case GOAL_ADD:
                 Goal g1 = persisted.loadConvoGoal(BotType.GOAL_ADD);

@@ -21,6 +21,7 @@
         android:layout_below="@id/item_view_bot_tip_image"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="@dimen/bot_tip_card_vertical_margin"
+        android:textAlignment="center"
         tools:text="Tip Title"/>
 
     <View

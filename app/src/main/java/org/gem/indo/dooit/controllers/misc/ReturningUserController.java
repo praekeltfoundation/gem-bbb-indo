@@ -6,6 +6,7 @@ import org.gem.indo.dooit.controllers.DooitBotController;
 import org.gem.indo.dooit.models.Tip;
 import org.gem.indo.dooit.models.bot.Answer;
 import org.gem.indo.dooit.models.bot.BaseBotModel;
+import org.gem.indo.dooit.models.challenge.BaseChallenge;
 import org.gem.indo.dooit.models.enums.BotCallType;
 import org.gem.indo.dooit.models.enums.BotObjectType;
 import org.gem.indo.dooit.models.enums.BotParamType;
@@ -23,6 +24,7 @@ import java.util.Map;
 public class ReturningUserController extends DooitBotController {
 
     private BotAdapter botAdapter;
+    private BaseChallenge challenge;
     private List<Goal> goals;
     private Tip tip;
 
@@ -69,6 +71,8 @@ public class ReturningUserController extends DooitBotController {
     @Override
     public Object getObject(BotObjectType objType) {
         switch (objType) {
+            case CHALLENGE:
+                return null;
             case GOALS:
                 return goals;
             default:
