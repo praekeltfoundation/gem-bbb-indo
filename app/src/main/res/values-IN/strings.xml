@@ -133,6 +133,13 @@
     <string name="infoGoalEnd">Thank you. That concludes the goal-setting process.</string>
     <string name="infoGoalAddedCongratulations">Great job! You\'ve set your first savings goal! </string>
 
+    <!-- BOT: returning_user -->
+    <string name="convo_default_return_q_greeting_1">Halo, $(user.username)!</string>
+    <string name="convo_default_return_q_greeting_2">Senang bertemu denganmu lagi!</string>
+    <string name="convo_default_return_q_progress_intro">Mari kita lihat perkembangan tabunganmu&#8230;</string>
+    <string name="convo_default_return_a_progress_intro_tip">Tolong berikan aku tips.</string>
+    <string name="convo_default_return_a_progress_intro_challenge">Tunjukkan tantangan minggu ini.</string>
+
     <!-- BOT: goal_add -->
     <!-- Questions -->
     <string name="goal_add_q_greeting">Hai, $(user.username)! Namaku Dooit. Aku mentor keuangan pribadi kamu dan aku akan membantu kamu menabung. Mari kita mulai!</string>

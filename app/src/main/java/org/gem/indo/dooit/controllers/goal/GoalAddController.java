@@ -68,7 +68,8 @@ public class GoalAddController extends GoalBotController {
     }
 
     @Override
-    public void onAsyncCall(BotCallType key, Map<String, Answer> answerLog, BaseBotModel model, OnAsyncListener listener) {
+    public void onAsyncCall(BotCallType key, Map<String, Answer> answerLog, BaseBotModel model,
+                            OnAsyncListener listener) {
         switch (key) {
             case DO_CREATE:
                 doCreate(answerLog, model, listener);
@@ -81,7 +82,8 @@ public class GoalAddController extends GoalBotController {
 
     }
 
-    private void doCreate(Map<String, Answer> answerLog, final BaseBotModel model, final OnAsyncListener listener) {
+    private void doCreate(Map<String, Answer> answerLog, final BaseBotModel model,
+                          final OnAsyncListener listener) {
 
         if (answerLog.containsKey("goal_add_ask_goal_gallery")) {
             // Predefined Goal branch
@@ -108,10 +110,13 @@ public class GoalAddController extends GoalBotController {
             public void onError(DooitAPIError error) {
 
             }
-        }).doOnCompleted(new Action0() {
+        }).doAfterTerminate(new Action0() {
             @Override
             public void call() {
                 notifyDone(listener);
+                // After the user has created their first Goal, they should no longer receive the
+                // initial default conversation.
+                persisted.setNewBotUser(false);
                 if (context instanceof MainActivity)
                     ((MainActivity) context).refreshGoals();
             }

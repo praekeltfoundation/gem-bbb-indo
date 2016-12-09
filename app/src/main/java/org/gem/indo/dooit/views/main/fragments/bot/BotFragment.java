@@ -27,6 +27,7 @@ import org.gem.indo.dooit.controllers.goal.GoalAddController;
 import org.gem.indo.dooit.controllers.goal.GoalDepositController;
 import org.gem.indo.dooit.controllers.goal.GoalEditController;
 import org.gem.indo.dooit.controllers.goal.GoalWithdrawController;
+import org.gem.indo.dooit.controllers.misc.ReturningUserController;
 import org.gem.indo.dooit.helpers.Persisted;
 import org.gem.indo.dooit.helpers.SquiggleBackgroundHelper;
 import org.gem.indo.dooit.helpers.Utils;
@@ -162,11 +163,9 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
     public void onActive() {
         super.onActive();
 
-        // Choose which conversation to instantiate
-        if (persisted.isNewBotUser()) {
-            setBotType(BotType.DEFAULT);
-            persisted.setNewBotUser(false);
-        }
+        // Choose a default conversation for returning users
+        if (!persisted.isNewBotUser() && type == BotType.DEFAULT)
+            setBotType(BotType.RETURNING_USER);
 
         createFeed();
     }
@@ -181,6 +180,10 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
 
         feed = new BotFeed<>(getContext());
         switch (type) {
+            case RETURNING_USER:
+                feed.parse(R.raw.returning_user, Node.class);
+                getReturningUserResources();
+                break;
             case DEFAULT:
             case GOAL_ADD:
                 feed.parse(R.raw.goal_add, Node.class);
@@ -231,7 +234,7 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
                 public Observable<?> call(Observable observable) {
                     return observable;
                 }
-            }).doOnCompleted(new Action0() {
+            }).doAfterTerminate(new Action0() {
                 @Override
                 public void call() {
                     if (getContext() != null) {
@@ -285,7 +288,7 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
                 public Observable<?> call(Observable observable) {
                     return observable;
                 }
-            }).doOnCompleted(new Action0() {
+            }).doAfterTerminate(new Action0() {
                 @Override
                 public void call() {
                     if (getContext() != null) {
@@ -304,6 +307,80 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
                     if (o instanceof List) {
                         if (((List) o).size() == 0) return;
                         if (((List) o).get(0) instanceof Tip)
+                            persisted.saveConvoTip((Tip) ((List) o).get(0));
+                    }
+                }
+            });
+        } else
+            initializeBot();
+    }
+
+    private void getReturningUserResources() {
+        // TODO: Refactor into own class
+        ArrayList<Observable> reqSync = new ArrayList<>();
+
+        // Goals
+        Observable goals = goalManager.retrieveGoals(new DooitErrorHandler() {
+            @Override
+            public void onError(DooitAPIError error) {
+
+            }
+        });
+        if (persisted.hasConvoGoals(BotType.RETURNING_USER))
+            goals.subscribe(new Action1<List<Goal>>() {
+                @Override
+                public void call(List<Goal> retrievedGoals) {
+                    persisted.saveConvoGoals(BotType.RETURNING_USER, retrievedGoals);
+                }
+            });
+        else
+            reqSync.add(goals);
+
+        // Tips
+        Observable tips = tipManager.retrieveTips(new DooitErrorHandler() {
+            @Override
+            public void onError(DooitAPIError error) {
+
+            }
+        });
+        if (persisted.hasTips())
+            tips.subscribe(new Action1<List<Tip>>() {
+                @Override
+                public void call(List<Tip> o) {
+                    persisted.saveConvoTip(o.get(0));
+                }
+            });
+        else
+            reqSync.add(tips);
+
+        if (reqSync.size() > 0) {
+            showProgressBar();
+            Observable.from(reqSync).flatMap(new Func1<Observable, Observable<?>>() {
+                @Override
+                public Observable<?> call(Observable observable) {
+                    return observable;
+                }
+            }).doAfterTerminate(new Action0() {
+                @Override
+                public void call() {
+                    if (getContext() != null) {
+                        getActivity().runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                showConversation();
+                                initializeBot();
+                            }
+                        });
+                    }
+                }
+            }).subscribe(new Action1<Object>() {
+                @Override
+                public void call(Object o) {
+                    if (o instanceof List) {
+                        if (((List) o).size() == 0) return;
+                        if (((List) o).get(0) instanceof Goal)
+                            persisted.saveConvoGoals(BotType.RETURNING_USER, (List<Goal>) o);
+                        else if (((List) o).get(0) instanceof Tip)
                             persisted.saveConvoTip((Tip) ((List) o).get(0));
                     }
                 }
@@ -341,6 +418,7 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
 
         // Jump to first node
         switch (type) {
+            case RETURNING_USER:
             case DEFAULT:
                 getAndAddNode(null);
                 break;
@@ -368,6 +446,8 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
 
     private BotController createBotController(BotType botType) {
         switch (botType) {
+            case RETURNING_USER:
+                return new ReturningUserController(getActivity(), getBotAdapter(), persisted.loadConvoGoals(BotType.RETURNING_USER), persisted.loadConvoTip());
             case DEFAULT:
             case GOAL_ADD:
                 Goal g1 = persisted.loadConvoGoal(BotType.GOAL_ADD);

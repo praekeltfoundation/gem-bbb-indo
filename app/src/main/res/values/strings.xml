@@ -133,6 +133,14 @@
     <string name="infoGoalEnd">Thank you. That concludes the goal-setting process.</string>
     <string name="infoGoalAddedCongratulations">Great job! You\'ve set your first savings goal! </string>
 
+    <!-- BOT: returning_user -->
+    <string name="convo_default_return_q_greeting_1">Hello, $(user.username)!</string>
+    <string name="convo_default_return_q_greeting_2">Nice to see you again!</string>
+    <string name="convo_default_return_q_progress_intro">Let\'s have a look at your progress&#8230;</string>
+    <string name="convo_default_return_a_progress_intro_tip">Take me to the tips, please.</string>
+    <string name="convo_default_return_a_progress_intro_challenge">Take me to this week\'s challenge.</string>
+
+
     <!-- BOT: goal_add -->
     <string name="goal_add_q_greeting">Hi, $(user.username)! My name is Dooit. I\'m your personal money coach and I\'m here to help you save. Let\'s go!</string>
     <string name="goal_add_a_greeting_1">Hi, Dooit. Yay! Let\'s go!</string>
@@ -221,6 +229,8 @@
     <string name="goal_edit_delete_reason_misc">No reason, I just want to delete it.</string>
     <string name="goal_edit_delete_reason_cancel">Never mind! I want to keep saving.</string>
     <string name="goal_edit_info_exit">Okay, I\'m done for now. Can we exit?</string>
+    <string name="goal_edit_delete_difficult_help">Okay! Please help me create a new savings plan.</string>
+    <string name="goal_edit_delete_difficult_do_delete">No thanks. Just delete my goal.</string>
 
     <!-- BOT: tip_intro -->
     <string name="tip_intro_inline_link">TODO: Show Tip</string>

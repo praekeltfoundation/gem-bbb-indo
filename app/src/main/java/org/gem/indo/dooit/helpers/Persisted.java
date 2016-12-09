@@ -46,6 +46,7 @@ public class Persisted {
     private static final String NEW_BOT_USER = "new_user";
     private static final String BOT = "bot";
     private static final String GOAL = "goal";
+    private static final String GOALS = "goals";
     private static final String GOAL_PROTOTYPE = "goal_prototype";
     private static final String BOT_TIP = "bot_tip";
     private static final String TIPS = "tips";
@@ -113,6 +114,22 @@ public class Persisted {
 
     public boolean hasConvoGoal(BotType type) {
         return dooitSharedPreferences.containsKey(BOT + "_" + GOAL + "_" + type.name());
+    }
+
+    public void saveConvoGoals(BotType type, List<Goal> goals) {
+        dooitSharedPreferences.setComplex(BOT + "_" + GOALS + "_" + type.name(), goals);
+    }
+
+    public List<Goal> loadConvoGoals(BotType type) {
+        Goal[] goals = dooitSharedPreferences.getComplex(BOT + "_" + GOALS + "_" + type.name(), Goal[].class);
+        if (goals != null)
+            return new ArrayList<Goal>(Arrays.asList(goals));
+        else
+            return new ArrayList<Goal>();
+    }
+
+    public boolean hasConvoGoals(BotType type) {
+        return dooitSharedPreferences.containsKey(BOT + "_" + GOALS + "_" + type.name());
     }
 
     public void clearConvoGoals() {
