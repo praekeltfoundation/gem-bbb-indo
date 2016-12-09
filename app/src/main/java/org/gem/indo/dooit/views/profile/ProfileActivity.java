@@ -109,7 +109,7 @@ public class ProfileActivity extends DooitActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(org.gem.indo.dooit.R.layout.activity_profile);
+        setContentView(R.layout.activity_profile);
         ((DooitApplication) getApplication()).component.inject(this);
         ButterKnife.bind(this);
 
