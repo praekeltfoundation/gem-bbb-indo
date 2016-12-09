@@ -1,5 +1,6 @@
 package org.gem.indo.dooit.views.onboarding;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -152,17 +153,22 @@ public class RegistrationActivity extends DooitActivity {
 
     @OnClick(R.id.activity_registration_register_button)
     public void register() {
+        final ProgressDialog progress = new ProgressDialog(this);
+        progress.setMessage("Attempting to register");
+        progress.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        progress.setIndeterminate(true);
 
         if (!detailsValid())
             return;
 
         hideKeyboard();
-
+        progress.show();
         authenticationManager.onboard(getUser(), new DooitErrorHandler() {
             @Override
             public void onError(DooitAPIError error) {
                 for (String msg : error.getErrorMessages())
                     Snackbar.make(registerButton, msg, Snackbar.LENGTH_SHORT).show();
+                    progress.hide();
             }
         }).subscribe(new Action1<OnboardingResponse>() {
             @Override
@@ -172,6 +178,7 @@ public class RegistrationActivity extends DooitActivity {
                     public void onError(DooitAPIError error) {
                         for (String msg : error.getErrorMessages())
                             Snackbar.make(registerButton, msg, Snackbar.LENGTH_SHORT).show();
+                            progress.hide();
                     }
                 }).subscribe(new Action1<AuthenticationResponse>() {
                     @Override
