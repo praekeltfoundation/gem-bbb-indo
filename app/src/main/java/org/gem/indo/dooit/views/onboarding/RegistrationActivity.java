@@ -153,8 +153,10 @@ public class RegistrationActivity extends DooitActivity {
     @OnClick(R.id.activity_registration_register_button)
     public void register() {
 
-        if (!detailsValid())
+        if (!detailsValid()) {
+            hideKeyboard();
             return;
+        }
 
         hideKeyboard();
 
