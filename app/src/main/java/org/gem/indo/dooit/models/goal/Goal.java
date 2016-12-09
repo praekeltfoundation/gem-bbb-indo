@@ -6,6 +6,7 @@ import com.google.gson.annotations.SerializedName;
 
 import org.gem.indo.dooit.helpers.Utils;
 import org.gem.indo.dooit.models.Badge;
+import org.gem.indo.dooit.views.helpers.activity.CurrencyHelper;
 import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 
@@ -79,6 +80,10 @@ public class Goal {
         value = 0;
         for (GoalTransaction trans : transactions)
             value += trans.getValue();
+    }
+
+    public String getValueFormatted() {
+        return CurrencyHelper.format(value);
     }
 
     public double getTarget() {

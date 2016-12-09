@@ -15,6 +15,12 @@
         "name": "convo_default_return_q_progress_intro",
         "type": "text",
         "text": "$(convo_default_return_q_progress_intro)",
+        "autoNext": "convo_default_return_q_summary"
+        
+    },
+    {
+        "name": "convo_default_return_q_summary",
+        "type": "goalListSummary",
         "answers": [
             {
                 "name": "convo_default_return_a_progress_intro_tip",

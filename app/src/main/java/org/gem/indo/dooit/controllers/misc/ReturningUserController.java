@@ -7,6 +7,7 @@ import org.gem.indo.dooit.models.Tip;
 import org.gem.indo.dooit.models.bot.Answer;
 import org.gem.indo.dooit.models.bot.BaseBotModel;
 import org.gem.indo.dooit.models.enums.BotCallType;
+import org.gem.indo.dooit.models.enums.BotObjectType;
 import org.gem.indo.dooit.models.enums.BotParamType;
 import org.gem.indo.dooit.models.enums.BotType;
 import org.gem.indo.dooit.models.goal.Goal;
@@ -62,6 +63,16 @@ public class ReturningUserController extends DooitBotController {
             default:
                 super.resolveParam(model, paramType);
                 break;
+        }
+    }
+
+    @Override
+    public Object getObject(BotObjectType objType) {
+        switch (objType) {
+            case GOALS:
+                return goals;
+            default:
+                return super.getObject(objType);
         }
     }
 }
