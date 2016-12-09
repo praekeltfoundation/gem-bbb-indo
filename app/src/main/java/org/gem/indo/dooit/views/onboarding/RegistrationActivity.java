@@ -146,14 +146,12 @@ public class RegistrationActivity extends DooitActivity {
                 return true;
             }
         });
+    }
 
-        gender.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-                    @Override
-                    public void onCheckedChanged(RadioGroup group, int checkedId) {
-                        number.requestFocus();
-                        number.performClick();
-                    }
-                });
+    @OnClick({R.id.activity_registration_gender_girl, R.id.activity_registration_gender_boy,} )
+    public void genderClick() {
+        number.requestFocus();
+        number.performClick();
     }
 
 
