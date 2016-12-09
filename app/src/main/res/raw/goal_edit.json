@@ -3,9 +3,6 @@
     "name": "goal_edit_intro",
     "type": "text",
     "text": "$(goal_edit_intro)",
-    "textParams": [
-      "USERNAME"
-    ],
     "autoNext": "goal_edit_ask_options"
   },
   {
@@ -164,13 +161,22 @@
     "type": "text",
     "text": "$(goal_edit_delete_difficult)",
     "answers": [
-      
+      {
+        "name": "goal_edit_delete_difficult_help",
+        "text": "$(goal_edit_delete_difficult_help)",
+        "next": "goal_edit_intro"
+      },
+      {
+        "name": "goal_edit_delete_difficult_do_delete",
+        "text": "$(goal_edit_delete_difficult_do_delete)",
+        "next": "goal_edit_end"
+      }
     ]
   },
   {
     "name": "goal_edit_do_delete",
     "type": "blank",
-    "callback": "do_delete",
+    "asyncCall": "#do_delete",
     "autoNext": "goal_edit_delete_done"
   },
   {
@@ -180,12 +186,12 @@
       {
         "name": "goal_edit_delete_tip",
         "text": "$(goal_edit_tip)",
-        "next": "goal_edit_end"
+        "next": "goal_edit_tip_intro"
       },
       {
         "name": "goal_edit_delete_challenge",
         "text": "$(goal_edit_challenge)",
-        "next": "goal_edit_end"
+        "next": "goal_edit_challenge_intro"
       },
       {
         "name": "goal_edit_delete_no_thanks",
@@ -207,7 +213,7 @@
   {
     "name": "goal_edit_do_update",
     "type": "blank",
-    "callback": "do_update",
+    "asyncCall": "#do_update",
     "autoNext": "goal_edit_updated"
   },
   {
@@ -223,12 +229,12 @@
       {
         "name": "goal_edit_info_tip",
         "text": "$(goal_edit_tip)",
-        "next": "goal_edit_end"
+        "next": "goal_edit_tip_intro"
       },
       {
         "name": "goal_edit_info_challenge",
         "text": "$(goal_edit_challenge)",
-        "next": "goal_edit_end"
+        "next": "goal_edit_challenge_intro"
       },
       {
         "name": "goal_edit_info_exit",
@@ -237,6 +243,29 @@
       }
     ]
   },
+
+
+
+  {
+    "name": "goal_edit_tip_intro",
+    "type": "text",
+    "text": "$(bot_tip_intro)",
+    "autoNext": "goal_edit_show_tip"
+  },
+  {
+    "name": "goal_edit_show_tip",
+    "type": "tip",
+    "autoNext": "goal_edit_end"
+  },
+
+
+  {
+    "name": "goal_edit_challenge_intro",
+    "type": "end",
+    "autoNextScreen": "CHALLENGE"
+  },
+
+
   {
     "name": "goal_edit_end",
     "type": "end"

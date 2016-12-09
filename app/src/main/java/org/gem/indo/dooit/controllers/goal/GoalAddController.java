@@ -1,4 +1,4 @@
-package org.gem.indo.dooit.views.main.fragments.target.controllers;
+package org.gem.indo.dooit.controllers.goal;
 
 import android.app.Activity;
 import android.net.Uri;
@@ -8,14 +8,16 @@ import org.gem.indo.dooit.api.DooitAPIError;
 import org.gem.indo.dooit.api.DooitErrorHandler;
 import org.gem.indo.dooit.api.managers.FileUploadManager;
 import org.gem.indo.dooit.api.managers.GoalManager;
+import org.gem.indo.dooit.models.enums.BotCallType;
 import org.gem.indo.dooit.helpers.MediaUriHelper;
 import org.gem.indo.dooit.helpers.Persisted;
-import org.gem.indo.dooit.models.goal.Goal;
+import org.gem.indo.dooit.models.Tip;
 import org.gem.indo.dooit.models.bot.Answer;
 import org.gem.indo.dooit.models.bot.BaseBotModel;
 import org.gem.indo.dooit.models.bot.Node;
 import org.gem.indo.dooit.models.enums.BotMessageType;
 import org.gem.indo.dooit.models.enums.BotType;
+import org.gem.indo.dooit.models.goal.Goal;
 import org.gem.indo.dooit.views.main.MainActivity;
 import org.gem.indo.dooit.views.main.fragments.bot.adapters.BotAdapter;
 import org.joda.time.LocalDate;
@@ -49,26 +51,26 @@ public class GoalAddController extends GoalBotController {
 
     private BotAdapter botAdapter;
 
-    public GoalAddController(Activity activity, BotAdapter botAdapter, Goal goal) {
-        super(activity, goal);
+    public GoalAddController(Activity activity, BotAdapter botAdapter, Goal goal, Tip tip) {
+        super(activity, BotType.GOAL_ADD, goal, tip);
         ((DooitApplication) activity.getApplication()).component.inject(this);
         this.botAdapter = botAdapter;
         this.goal = goal;
     }
 
     @Override
-    public void onCall(String key, Map<String, Answer> answerLog, BaseBotModel model) {
+    public void onCall(BotCallType key, Map<String, Answer> answerLog, BaseBotModel model) {
         switch (key) {
-            case "add_badge":
+            case ADD_BADGE:
                 addBadge(model);
                 break;
         }
     }
 
     @Override
-    public void onAsyncCall(String key, Map<String, Answer> answerLog, BaseBotModel model, OnAsyncListener listener) {
+    public void onAsyncCall(BotCallType key, Map<String, Answer> answerLog, BaseBotModel model, OnAsyncListener listener) {
         switch (key) {
-            case "do_create":
+            case DO_CREATE:
                 doCreate(answerLog, model, listener);
                 break;
         }
@@ -86,6 +88,7 @@ public class GoalAddController extends GoalBotController {
             Answer answer = answerLog.get("goal_add_ask_goal_gallery");
             goal.setPrototype(Long.parseLong(answer.values.getString("prototype")));
             goal.setName(answer.values.getString("name"));
+            goal.setLocalImageUri(answer.values.getString("image_url"));
         } else {
             // Custom Goal branch
             goal.setName(answerLog.get("goal_name").getValue());
@@ -108,17 +111,17 @@ public class GoalAddController extends GoalBotController {
         }).doOnCompleted(new Action0() {
             @Override
             public void call() {
+                notifyDone(listener);
                 if (context instanceof MainActivity)
                     ((MainActivity) context).refreshGoals();
-                notifyDone(listener);
             }
         });
 
         // Find Image
-        if (answerLog.containsKey("Capture"))
-            goal.setLocalImageUri(answerLog.get("Capture").getValue());
-        else if (answerLog.containsKey("Gallery"))
-            goal.setLocalImageUri(answerLog.get("Gallery").getValue());
+        if (answerLog.containsKey("goal_add_a_camera"))
+            goal.setLocalImageUri(answerLog.get("goal_add_a_camera").getValue());
+        else if (answerLog.containsKey("goal_add_a_gallery"))
+            goal.setLocalImageUri(answerLog.get("goal_add_a_gallery").getValue());
 
         // Upload image if set
         if (goal.hasLocalImageUri()) {
@@ -137,7 +140,7 @@ public class GoalAddController extends GoalBotController {
 
         // Persist goal so that when user leaves conversation and returns, the view holders can
         // display their previous data properly.
-        persisted.saveConvoGoal(BotType.GOAL_ADD, goal);
+        persisted.saveConvoGoal(botType, goal);
     }
 
     private void uploadImage(Goal goal, String mimetype, File file) {

@@ -48,7 +48,7 @@
   {
     "name": "goal_deposit_end_congrats",
     "type": "text",
-    "callback": "do_deposit",
+    "asyncCall": "#do_deposit",
     "text": "$(goal_deposit_end_congrats)",
     "autoNext": "goal_deposit_info"
   },

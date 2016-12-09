@@ -36,7 +36,7 @@ import java.util.List;
 public class BotAdapter extends RecyclerView.Adapter<BaseBotViewHolder> {
 
     Context context;
-    BotController callback;
+    BotController controller;
     ArrayList<BaseBotModel> dataSet = new ArrayList<>();
     HashtagView.TagsClickListener tagsClickListener;
 
@@ -85,18 +85,18 @@ public class BotAdapter extends RecyclerView.Adapter<BaseBotViewHolder> {
     }
 
     /**
-     * Used for injecting callback into viewholders.
+     * Used for getting the controller to the view holders.
      */
-    public void setCallback(BotController callback) {
-        this.callback = callback;
+    public void setController(BotController controller) {
+        this.controller = controller;
     }
 
-    public BotController getCallback() {
-        return callback;
+    public BotController getController() {
+        return controller;
     }
 
-    public boolean hasCallback() {
-        return callback != null;
+    public boolean hasController() {
+        return controller != null;
     }
 
     @Override

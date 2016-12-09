@@ -5,9 +5,8 @@ import android.content.res.Resources;
 import android.text.TextUtils;
 import android.util.Log;
 
+import org.gem.indo.dooit.models.enums.BotCallType;
 import org.gem.indo.dooit.helpers.ValueMap;
-import org.gem.indo.dooit.helpers.bot.param.ParamMatch;
-import org.gem.indo.dooit.helpers.bot.param.ParamParser;
 import org.gem.indo.dooit.models.enums.BotMessageType;
 
 /**
@@ -24,8 +23,8 @@ public abstract class BaseBotModel {
     protected String name;
     protected String type;
     private String next;
-    protected String callback;
-    protected String asyncCall;
+    protected BotCallType call;
+    protected BotCallType asyncCall;
     protected String[] textParams = new String[0];
     protected boolean immutable = false;
 
@@ -47,8 +46,6 @@ public abstract class BaseBotModel {
         }
     }
 
-    //
-
     public String getText(Context context) {
         return getResourceString(context, text);
     }
@@ -64,6 +61,7 @@ public abstract class BaseBotModel {
     public void setProcessedText(String processedText) {
         this.processedText = processedText;
     }
+
 
     public String getName() {
         return name;
@@ -101,21 +99,25 @@ public abstract class BaseBotModel {
         this.next = next;
     }
 
-    public String getCallback() {
-        return callback;
+    // Call keys
+
+    public BotCallType getCall() {
+        return call;
     }
 
-    public boolean hasCallback() {
-        return callback != null && !TextUtils.isEmpty(callback);
+    public boolean hasCall() {
+        return call != null;
     }
 
-    public String getAsyncCall() {
+    public BotCallType getAsyncCall() {
         return asyncCall;
     }
 
     public boolean hasAsyncCall() {
-        return !TextUtils.isEmpty(asyncCall);
+        return asyncCall != null;
     }
+
+    // Mutability
 
     public void finish() {
         immutable = true;

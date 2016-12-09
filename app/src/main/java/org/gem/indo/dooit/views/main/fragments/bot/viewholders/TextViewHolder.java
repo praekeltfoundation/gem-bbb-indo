@@ -8,7 +8,7 @@ import android.widget.TextView;
 
 import org.gem.indo.dooit.DooitApplication;
 import org.gem.indo.dooit.R;
-import org.gem.indo.dooit.controllers.BotParamType;
+import org.gem.indo.dooit.models.enums.BotParamType;
 import org.gem.indo.dooit.helpers.Persisted;
 import org.gem.indo.dooit.helpers.bot.param.ParamArg;
 import org.gem.indo.dooit.helpers.bot.param.ParamMatch;
@@ -71,8 +71,8 @@ public class TextViewHolder extends BaseBotViewHolder<Node> {
     @Override
     protected void populateModel() {
         ParamMatch args = ParamParser.parse(dataModel.getText(getContext()));
-        if (!args.isEmpty() && botAdapter.hasCallback()) {
-            BotController cb = botAdapter.getCallback();
+        if (!args.isEmpty() && botAdapter.hasController()) {
+            BotController cb = botAdapter.getController();
             for (ParamArg arg : args.getArgs())
                 cb.resolveParam(dataModel, BotParamType.byKey(arg.getKey()));
         }

@@ -1,4 +1,4 @@
-package org.gem.indo.dooit.views.main.fragments.target.controllers;
+package org.gem.indo.dooit.controllers.goal;
 
 import android.app.Activity;
 import android.net.Uri;
@@ -12,12 +12,15 @@ import org.gem.indo.dooit.api.DooitErrorHandler;
 import org.gem.indo.dooit.api.managers.FileUploadManager;
 import org.gem.indo.dooit.api.managers.GoalManager;
 import org.gem.indo.dooit.api.responses.EmptyResponse;
-import org.gem.indo.dooit.controllers.BotParamType;
+import org.gem.indo.dooit.controllers.BotController;
+import org.gem.indo.dooit.controllers.goal.GoalBotController;
+import org.gem.indo.dooit.models.enums.BotCallType;
 import org.gem.indo.dooit.helpers.MediaUriHelper;
-import org.gem.indo.dooit.models.goal.Goal;
+import org.gem.indo.dooit.models.Tip;
 import org.gem.indo.dooit.models.bot.Answer;
 import org.gem.indo.dooit.models.bot.BaseBotModel;
-import org.gem.indo.dooit.controllers.BotController;
+import org.gem.indo.dooit.models.enums.BotType;
+import org.gem.indo.dooit.models.goal.Goal;
 import org.gem.indo.dooit.views.main.MainActivity;
 import org.joda.time.format.DateTimeFormat;
 
@@ -33,7 +36,7 @@ import rx.functions.Action1;
  * Created by Wimpie Victor on 2016/12/01.
  */
 
-public class GoalEditController extends BotController {
+public class GoalEditController extends GoalBotController {
 
     @Inject
     transient GoalManager goalManager;
@@ -41,22 +44,25 @@ public class GoalEditController extends BotController {
     @Inject
     transient FileUploadManager fileUploadManager;
 
-    private Goal goal;
-
-    public GoalEditController(Activity activity, Goal goal) {
-        super(activity);
+    public GoalEditController(Activity activity, Goal goal, Tip tip) {
+        super(activity, BotType.GOAL_EDIT, goal, tip);
         ((DooitApplication) activity.getApplication()).component.inject(this);
         this.goal = goal;
     }
 
     @Override
-    public void onCall(String key, Map<String, Answer> answerLog, BaseBotModel model) {
+    public void onCall(BotCallType key, Map<String, Answer> answerLog, BaseBotModel model) {
+
+    }
+
+    @Override
+    public void onAsyncCall(BotCallType key, Map<String, Answer> answerLog, BaseBotModel model, OnAsyncListener listener) {
         switch (key) {
-            case "do_update":
-                doUpdate(answerLog);
+            case DO_UPDATE:
+                doUpdate(answerLog, listener);
                 break;
-            case "do_delete":
-                doDelete(answerLog);
+            case DO_DELETE:
+                doDelete(answerLog, listener);
                 break;
         }
     }
@@ -66,24 +72,14 @@ public class GoalEditController extends BotController {
 
     }
 
-    @Override
-    public void input(BotParamType inputType, Object value) {
-
-    }
-
-    @Override
-    public Object getObject() {
-        return goal;
-    }
-
-    private void doUpdate(Map<String, Answer> answerLog) {
+    private void doUpdate(Map<String, Answer> answerLog, final OnAsyncListener listener) {
         if (answerLog.containsKey("goal_edit_choice_date"))
             goal.setEndDate(DateTimeFormat.forPattern("yyyy-MM-dd")
                     .parseLocalDate(answerLog.get("goal_end_date").getValue().substring(0, 10)));
         else if (answerLog.containsKey("goal_edit_target_accept"))
             goal.setTarget(Double.parseDouble(answerLog.get("goal_target").getValue()));
         else if (answerLog.containsKey("goal_edit_gallery") || answerLog.containsKey("goal_edit_camera")) {
-            handleImage(answerLog);
+            handleImage(answerLog, listener);
             // Don't upload Goal
             return;
         }
@@ -93,23 +89,33 @@ public class GoalEditController extends BotController {
             public void onError(DooitAPIError error) {
 
             }
+        }).doOnCompleted(new Action0() {
+            @Override
+            public void call() {
+                notifyDone(listener);
+                if (context instanceof MainActivity)
+                    ((MainActivity) context).refreshGoals();
+            }
         }).subscribe();
+
+        persisted.saveConvoGoal(botType, goal);
     }
 
-    private void handleImage(Map<String, Answer> answerLog) {
+    private void handleImage(Map<String, Answer> answerLog, OnAsyncListener listener) {
         // Find Image
-        Uri imageUri = null;
         if (answerLog.containsKey("goal_edit_gallery"))
-            imageUri = Uri.parse(answerLog.get("goal_edit_gallery").getValue());
+            goal.setLocalImageUri(answerLog.get("goal_edit_gallery").getValue());
         else if (answerLog.containsKey("goal_edit_camera"))
-            imageUri = Uri.parse(answerLog.get("goal_edit_camera").getValue());
+            goal.setLocalImageUri(answerLog.get("goal_edit_camera").getValue());
+
+        Uri imageUri = Uri.parse(goal.getLocalImageUri());
 
         final String mimetype = context.getContentResolver().getType(imageUri);
         final String path = MediaUriHelper.getPath(context, imageUri);
-        uploadImage(goal, mimetype, new File(path));
+        uploadImage(goal, mimetype, new File(path), listener);
     }
 
-    private void uploadImage(final Goal goal, String mimetype, File file) {
+    private void uploadImage(final Goal goal, String mimetype, File file, final OnAsyncListener listener) {
         fileUploadManager.uploadGoalImage(goal.getId(), mimetype, file, new DooitErrorHandler() {
             @Override
             public void onError(DooitAPIError error) {
@@ -118,6 +124,7 @@ public class GoalEditController extends BotController {
         }).doOnCompleted(new Action0() {
             @Override
             public void call() {
+                notifyDone(listener);
                 if (context instanceof MainActivity)
                     ((MainActivity) context).refreshGoals();
             }
@@ -133,7 +140,7 @@ public class GoalEditController extends BotController {
 
     }
 
-    private void doDelete(Map<String, Answer> answerLog) {
+    private void doDelete(Map<String, Answer> answerLog, final OnAsyncListener listener) {
         goalManager.deleteGoal(goal, new DooitErrorHandler() {
             @Override
             public void onError(DooitAPIError error) {
@@ -142,6 +149,7 @@ public class GoalEditController extends BotController {
         }).doOnCompleted(new Action0() {
             @Override
             public void call() {
+                notifyDone(listener);
                 if (context instanceof MainActivity)
                     ((MainActivity) context).refreshGoals();
             }

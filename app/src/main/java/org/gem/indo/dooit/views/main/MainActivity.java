@@ -65,6 +65,12 @@ public class MainActivity extends DooitActivity {
         setContentView(org.gem.indo.dooit.R.layout.activity_main);
         ((DooitApplication) getApplication()).component.inject(this);
         ButterKnife.bind(this);
+
+        // Clear bot state
+        persisted.clearConversation();
+        persisted.clearConvoGoals();
+        persisted.clearConvoTip();
+
         setSupportActionBar(toolbar);
         mainTabAdapter = new MainTabAdapter(getSupportFragmentManager(), this);
         viewPager.setAdapter(mainTabAdapter);

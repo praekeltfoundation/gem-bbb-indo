@@ -22,27 +22,31 @@ import org.gem.indo.dooit.api.DooitAPIError;
 import org.gem.indo.dooit.api.DooitErrorHandler;
 import org.gem.indo.dooit.api.managers.GoalManager;
 import org.gem.indo.dooit.api.managers.TipManager;
+import org.gem.indo.dooit.controllers.BotController;
+import org.gem.indo.dooit.controllers.goal.GoalAddController;
+import org.gem.indo.dooit.controllers.goal.GoalDepositController;
+import org.gem.indo.dooit.controllers.goal.GoalEditController;
+import org.gem.indo.dooit.controllers.goal.GoalWithdrawController;
 import org.gem.indo.dooit.helpers.Persisted;
 import org.gem.indo.dooit.helpers.SquiggleBackgroundHelper;
 import org.gem.indo.dooit.helpers.Utils;
 import org.gem.indo.dooit.helpers.bot.BotFeed;
-import org.gem.indo.dooit.models.goal.Goal;
-import org.gem.indo.dooit.models.goal.GoalPrototype;
+import org.gem.indo.dooit.helpers.bot.param.ParamArg;
+import org.gem.indo.dooit.helpers.bot.param.ParamMatch;
+import org.gem.indo.dooit.helpers.bot.param.ParamParser;
 import org.gem.indo.dooit.models.Tip;
 import org.gem.indo.dooit.models.bot.Answer;
 import org.gem.indo.dooit.models.bot.BaseBotModel;
-import org.gem.indo.dooit.controllers.BotController;
 import org.gem.indo.dooit.models.bot.Node;
 import org.gem.indo.dooit.models.enums.BotMessageType;
+import org.gem.indo.dooit.models.enums.BotParamType;
 import org.gem.indo.dooit.models.enums.BotType;
+import org.gem.indo.dooit.models.goal.Goal;
+import org.gem.indo.dooit.models.goal.GoalPrototype;
 import org.gem.indo.dooit.views.main.MainActivity;
 import org.gem.indo.dooit.views.main.MainViewPagerPositions;
 import org.gem.indo.dooit.views.main.fragments.MainFragment;
 import org.gem.indo.dooit.views.main.fragments.bot.adapters.BotAdapter;
-import org.gem.indo.dooit.views.main.fragments.target.controllers.GoalAddController;
-import org.gem.indo.dooit.views.main.fragments.target.controllers.GoalDepositController;
-import org.gem.indo.dooit.views.main.fragments.target.controllers.GoalEditController;
-import org.gem.indo.dooit.views.main.fragments.target.controllers.GoalWithdrawController;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -184,7 +188,7 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
                 break;
             case GOAL_DEPOSIT:
                 feed.parse(R.raw.goal_deposit, Node.class);
-                initializeBot();
+                getGoalWithdrawResources();
                 break;
             case GOAL_WITHDRAW:
                 feed.parse(R.raw.goal_withdraw, Node.class);
@@ -192,11 +196,11 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
                 break;
             case GOAL_EDIT:
                 feed.parse(R.raw.goal_edit, Node.class);
-                initializeBot();
+                getGoalWithdrawResources();
                 break;
             case TIP_INTRO:
                 feed.parse(R.raw.tip_intro, Node.class);
-                initializeBot();
+                getGoalWithdrawResources();
                 break;
         }
     }
@@ -309,8 +313,8 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
     }
 
     private void initializeBot() {
-        controller = createBotCallback(type);
-        getBotAdapter().setCallback(controller);
+        controller = createBotController(type);
+        getBotAdapter().setController(controller);
 
         // Load existing
         if (persisted.hasConversation(type)) {
@@ -341,7 +345,7 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
                 getAndAddNode(null);
                 break;
             case GOAL_ADD:
-                getAndAddNode("goal_add_ask_goal");
+                getAndAddNode("goal_add_q_ask_goal");
                 break;
             case GOAL_DEPOSIT:
                 getAndAddNode("goal_deposit_intro");
@@ -362,29 +366,29 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
         this.type = type;
     }
 
-    private BotController createBotCallback(BotType botType) {
+    private BotController createBotController(BotType botType) {
         switch (botType) {
             case DEFAULT:
             case GOAL_ADD:
                 Goal g1 = persisted.loadConvoGoal(BotType.GOAL_ADD);
                 if (g1 == null)
                     g1 = new Goal();
-                return new GoalAddController(getActivity(), getBotAdapter(), g1);
+                return new GoalAddController(getActivity(), getBotAdapter(), g1, persisted.loadConvoTip());
             case GOAL_DEPOSIT:
                 Goal g2 = persisted.loadConvoGoal(BotType.GOAL_DEPOSIT);
                 if (g2 == null)
                     throw new RuntimeException("No Goal was persisted for Goal Deposit conversation.");
-                return new GoalDepositController(getActivity(), g2);
+                return new GoalDepositController(getActivity(), g2, persisted.loadConvoTip());
             case GOAL_WITHDRAW:
                 Goal g3 = persisted.loadConvoGoal(BotType.GOAL_WITHDRAW);
                 if (g3 == null)
                     throw new RuntimeException("No Goal was persisted for Goal Withdraw conversation.");
-                return new GoalWithdrawController(getActivity(), g3);
+                return new GoalWithdrawController(getActivity(), g3, persisted.loadConvoTip());
             case GOAL_EDIT:
                 Goal g4 = persisted.loadConvoGoal(BotType.GOAL_EDIT);
                 if (g4 == null)
                     throw new RuntimeException("No Goal was persisted for Goal Edit converstation");
-                return new GoalEditController(getActivity(), g4);
+                return new GoalEditController(getActivity(), g4, persisted.loadConvoTip());
             default:
                 return null;
         }
@@ -461,8 +465,8 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
             persisted.saveConversationState(type, getBotAdapter().getDataSet());
 
             // Reached a controller Node
-            if (node.hasCallback() && controller != null)
-                controller.onCall(node.getCallback(), createAnswerLog(getBotAdapter().getDataSet()), node);
+            if (node.hasCall() && controller != null)
+                controller.onCall(node.getCall(), createAnswerLog(getBotAdapter().getDataSet()), node);
 
             // Reached an async controller Node
             if (node.hasAsyncCall() && controller != null) {
@@ -507,6 +511,7 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
         answerView.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
             @Override
             public void onGlobalLayout() {
+                // Scroll the recycler after the answer view is layed out
                 answerView.getViewTreeObserver().removeOnGlobalLayoutListener(this);
                 conversationRecyclerView.scrollToPosition(getBotAdapter().getItemCount() - 1);
             }
@@ -514,15 +519,18 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
 
         if (node.getAnswers().size() > 0) {
             if (TextUtils.isEmpty(node.getAutoAnswer())) {
+                for (Answer answer : node.getAnswers())
+                    processText(answer);
+
                 answerView.setData(node.getAnswers(), new HashtagView.DataStateTransform<Answer>() {
                     @Override
                     public CharSequence prepareSelected(Answer item) {
-                        return Utils.populateFromPersisted(persisted, getBotAdapter(), item.getText(getContext()), item.getTextParams());
+                        return item.getProcessedText();
                     }
 
                     @Override
                     public CharSequence prepare(Answer item) {
-                        return Utils.populateFromPersisted(persisted, getBotAdapter(), item.getText(getContext()), item.getTextParams());
+                        return item.getProcessedText();
                     }
                 });
             } else {
@@ -547,6 +555,16 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
         }
     }
 
+    private void processText(Answer answer) {
+        ParamMatch args = ParamParser.parse(answer.getText(getContext()));
+        if (!args.isEmpty() && getBotAdapter().hasController()) {
+            BotController cb = getBotAdapter().getController();
+            for (ParamArg arg : args.getArgs())
+                cb.resolveParam(answer, BotParamType.byKey(arg.getKey()));
+        }
+        answer.setProcessedText(args.process(answer.values.getRawMap()));
+    }
+
     private void clearAnswerView() {
         answerView.setData(new ArrayList<>());
     }
@@ -560,7 +578,7 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
         persisted.clearConvoGoals();
         controller = null;
         // FIXME: Clearing the controller happens after the data has been added and before the view holder is instantiated. Viewholder will get null controller.
-        // getBotAdapter().setCallback(null);
+        // getBotAdapter().setController(null);
         setBotType(BotType.DEFAULT);
     }
 
@@ -579,9 +597,9 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
         }
     }
 
-    protected boolean hasCallback() {
+    protected boolean hasController() {
         // Check both until bot is more robust
-        return controller != null && getBotAdapter().hasCallback();
+        return controller != null && getBotAdapter().hasController();
     }
 
     public void setClearState(boolean value) {
