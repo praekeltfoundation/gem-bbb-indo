@@ -14,7 +14,7 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/bot_badge_card_image_height"
         android:background="@color/purple"
-        app:scaleType="cropCenter"
+        android:scaleType="centerCrop"
         app:placeholderImage="@drawable/empty_image"/>
 
     <TextView

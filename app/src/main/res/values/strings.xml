@@ -159,6 +159,8 @@
     <string name="goal_add_q_ask_amount">How much will you need to save for $(goal.name)?</string>
     <string name="goal_add_q_ask_date">By what date do you want to have saved for your goal?</string>
 
+    <string name="goal_add_q_verify">If you save $(goal.weekly_target_currency) each week you will save enough to get your $(goal.name) in $(goal.weeks_left_up) weeks.</string>
+
     <!-- Answers -->
     <string name="goal_add_greeting_response">Hola!</string>
 
@@ -314,7 +316,7 @@
     <string name="target_savings_history">Savings History</string>
     <string name="target_weeks">Weeks</string>
     <string name="target_add_goal">ADD GOAL</string>
-    <string name="target_savings_message" formatted="false">Save %s %s each week to get your %s in %s weeks.</string>
+    <string name="target_savings_message" formatted="false">Save %s each week to get your %s in %s weeks.</string>
     <string name="target_edit_savings_plan">Edit Savings Plan</string>
     <string name="target_savings_plan">Savings Plan</string>
     <string name="target_date">Target Date</string>

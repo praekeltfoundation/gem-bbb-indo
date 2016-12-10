@@ -14,6 +14,7 @@ import com.facebook.imagepipeline.request.ImageRequestBuilder;
 import com.greenfrvr.hashtagview.HashtagView;
 
 import org.gem.indo.dooit.R;
+import org.gem.indo.dooit.models.enums.BotParamType;
 import org.gem.indo.dooit.models.goal.GoalPrototype;
 import org.gem.indo.dooit.models.bot.Answer;
 import org.gem.indo.dooit.models.bot.Node;
@@ -77,9 +78,9 @@ public class GoalGalleryItemViewHolder extends RecyclerView.ViewHolder {
                 answer.setName(dataModel.getAnswerName());
                 answer.setType(BotMessageType.IMAGE);
                 answer.setValue(prototype.getImageUrl());
-                answer.values.put("prototype", Long.toString(prototype.getId()));
-                answer.values.put("name", prototype.getName());
-                answer.values.put("image_url", prototype.getImageUrl());
+                answer.values.put(BotParamType.GOAL_PROTO_ID.getKey(), prototype.getId());
+                answer.values.put(BotParamType.GOAL_PROTO_NAME.getKey(), prototype.getName());
+                answer.values.put(BotParamType.GOAL_PROTO_IMAGE_URL.getKey(), prototype.getImageUrl());
                 answer.setNext(dataModel.getNext());
                 answer.setRemoveOnSelect(dataModel.getName());
                 answer.setText(null);

@@ -18,6 +18,8 @@
   },
 
 
+
+
   {
     "name": "goal_add_q_ask_goal",
     "type": "text",
@@ -144,11 +146,6 @@
         "name": "knowDateY",
         "text": "$(addDate)",
         "next": "askGoalDateCustom"
-      },
-      {
-        "name": "knowDateN",
-        "text": "$(unknownDate)",
-        "next": "askGoalWeeklySaveAmount"
       }
     ]
   },
@@ -178,7 +175,7 @@
       {
         "name": "hasSavedN",
         "text": "$(nope)",
-        "next": "verifyGoalAmount"
+        "next": "goal_add_q_verify"
       }
     ]
   },
@@ -190,7 +187,7 @@
     "answers": [
       {
         "name": "priorSaveAmount",
-        "nextOnFinish": "verifyGoalAmount",
+        "nextOnFinish": "goal_add_q_verify",
         "type": "inlineCurrency",
         "typeOnFinish": "textCurrency",
         "inlineEditHint": "$(type_currency_hint)"
@@ -202,9 +199,10 @@
 
 
   {
-    "name": "verifyGoalAmount",
-    "type": "goalVerification",
-    "text": "$(verifyGoalAmount)",
+    "name": "goal_add_q_verify",
+    "type": "text",
+    "call": "#populate_goal",
+    "text": "$(goal_add_q_verify)",
     "answers": [
       {
         "name": "acceptGoal",
@@ -338,7 +336,6 @@
     "name": "infoGoalEnd",
     "type": "text",
     "text": "$(infoGoalEnd)",
-    "call": "#add_badge",
     "autoNext": "goal_add_end"
   },
   {

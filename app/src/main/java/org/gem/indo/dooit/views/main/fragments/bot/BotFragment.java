@@ -150,6 +150,7 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
         if (item.getItemId() == R.id.menu_main_bot_clear) {
             persisted.clearConversation();
             persisted.clearConvoGoals();
+            persisted.clearConvoTip();
             type = BotType.DEFAULT;
             createFeed();
         }

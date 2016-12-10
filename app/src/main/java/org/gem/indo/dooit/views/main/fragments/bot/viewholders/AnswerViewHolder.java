@@ -32,7 +32,12 @@ public class AnswerViewHolder extends BaseBotViewHolder<Answer> {
     @Override
     public void populate(Answer model) {
         super.populate(model);
-        textView.setText(dataModel.getProcessedText());
+
+        if (dataModel.hasProcessedText())
+            textView.setText(dataModel.getProcessedText());
+        else
+            textView.setText(dataModel.getValue());
+
         itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

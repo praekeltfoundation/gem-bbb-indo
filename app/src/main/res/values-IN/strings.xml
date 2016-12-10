@@ -159,6 +159,8 @@
     <string name="goal_add_q_ask_amount">Berapa yang kamu harus tabung untuk $(goal.name)?</string>
     <string name="goal_add_q_ask_date">Pada tanggal berapa kamu sudah harus selesai menabung untuk targetmu?</string>
 
+    <string name="goal_add_q_verify">If you save $(goal.weekly_target_currency) each week you will save enough to get your $(goal.name) in $(goal.weeks_left_up) weeks.</string>
+
     <!-- Answers -->
     <string name="goal_add_greeting_response">Hola!</string>
 
@@ -307,7 +309,7 @@
     <string name="target_savings_history">Grafik Tabungan</string>
     <string name="target_weeks">Waktu</string>
     <string name="target_add_goal">TAMBAHKAN TUJUAN BARU</string>
-    <string name="target_savings_message" formatted="false">Tabung %s %s per minggu untuk dapat %s dalam waktu %s minggu.</string>
+    <string name="target_savings_message" formatted="false">Tabung %s per minggu untuk dapat %s dalam waktu %s minggu.</string>
     <string name="target_edit_savings_plan">Edit Rencana Tabungan</string>
     <string name="target_savings_plan">Rencana Tabungan</string>
     <string name="target_date">Deadline Menabung</string>

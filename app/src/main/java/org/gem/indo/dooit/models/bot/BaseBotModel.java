@@ -62,6 +62,9 @@ public abstract class BaseBotModel {
         this.processedText = processedText;
     }
 
+    public boolean hasProcessedText() {
+        return !TextUtils.isEmpty(processedText);
+    }
 
     public String getName() {
         return name;
