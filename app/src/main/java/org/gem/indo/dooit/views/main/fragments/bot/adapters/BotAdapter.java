@@ -83,7 +83,7 @@ public class BotAdapter extends RecyclerView.Adapter<BaseBotViewHolder> {
             case GOALLISTSUMMARY:
                 return new GoalListSummaryViewHolder(LayoutInflater.from(context).inflate(R.layout.item_view_bot_text, parent, false), this);
             case CHALLENGE:
-                return new ChallengeBotViewHolder(LayoutInflater.from(context).inflate(R.layout.item_view_bot_challenge, parent, false), this);
+                return new ChallengeBotViewHolder(LayoutInflater.from(context).inflate(R.layout.item_view_bot_challenge, parent, false), this, tagsClickListener);
             case UNDEFINED:
             default:
                 return new TextViewHolder(LayoutInflater.from(context).inflate(R.layout.item_view_bot_text, parent, false), this);
