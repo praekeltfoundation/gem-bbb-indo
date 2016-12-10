@@ -94,7 +94,9 @@ public class ReturningUserController extends DooitBotController {
     public Object getObject(BotObjectType objType) {
         switch (objType) {
             case CHALLENGE:
-                return null;
+                return challenge;
+            case TIP:
+                return tip;
             case GOALS:
                 return goals;
             default:

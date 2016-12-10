@@ -19,6 +19,7 @@ public abstract class BaseChallenge implements Parcelable, Serializable {
     /*** Variables ***/
     private long id;
     private String name;
+    private String subtitle;
     @SerializedName("image_url")
     private String imageURL;
     @SerializedName("activation_date")
@@ -71,6 +72,10 @@ public abstract class BaseChallenge implements Parcelable, Serializable {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getSubtitle() {
+        return subtitle;
     }
 
     public String getImageURL() {

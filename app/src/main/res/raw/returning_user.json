@@ -55,7 +55,8 @@
     {
         "name": "convo_default_return_q_challenge_intro",
         "type": "text",
-        "text": "$(bot_challenge_intro)"
+        "text": "$(bot_challenge_intro)",
+        "autoNext": "convo_default_return_q_challenge_show"
     },
     {
         "name": "convo_default_return_q_challenge_show",

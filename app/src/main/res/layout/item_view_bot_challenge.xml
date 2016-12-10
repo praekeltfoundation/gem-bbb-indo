@@ -32,8 +32,7 @@
 
     <TextView
         android:id="@+id/item_view_bot_challenge_image_title"
-        style="@style/AppTheme.TextView.Bold.Large"
-        android:layout_width="wrap_content"
+        style="@style/AppTheme.TextView.Regular.Large"        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/item_view_bot_challenge_image_sub_title"
         android:layout_centerHorizontal="true"
