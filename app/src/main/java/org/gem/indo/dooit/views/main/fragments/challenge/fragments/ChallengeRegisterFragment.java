@@ -164,6 +164,7 @@ public class ChallengeRegisterFragment extends Fragment implements HasChallengeF
         super.onStart();
         name.setText(challenge.getName());
         date.setText(challenge.getDeactivationDate().toLocalDateTime().toString("yyyy-MM-dd HH:mm"));
+        instruction.setText(challenge.getInstruction());
 
         ImageRequest request = ImageRequestBuilder.newBuilderWithSource(Uri.parse(challenge.getImageURL()))
                 .setProgressiveRenderingEnabled(true)

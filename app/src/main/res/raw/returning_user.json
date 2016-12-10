@@ -57,7 +57,11 @@
         "type": "text",
         "text": "$(bot_challenge_intro)"
     },
-    
+    {
+        "name": "convo_default_return_q_challenge_show",
+        "type": "challenge",
+        "autoNext": "convo_default_return_end"
+    },
 
 
 

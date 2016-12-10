@@ -12,6 +12,7 @@ import org.gem.indo.dooit.models.enums.BotParamType;
 import org.gem.indo.dooit.models.goal.Goal;
 import org.gem.indo.dooit.views.main.fragments.bot.adapters.BotAdapter;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -41,16 +42,15 @@ public class GoalListSummaryViewHolder extends BaseBotViewHolder<Node> {
     public void populate(Node model) {
         super.populate(model);
 
-        Object[] values = dataModel.values.getStringArray(BotParamType.USER_GOALS.getKey());
-        textView.setText(TextUtils.join("\n", values));
+        textView.setText(dataModel.values.getString(BotParamType.USER_GOALS.getKey()));
     }
 
     @Override
     protected void populateModel() {
         List<Goal> goals = (List<Goal>) botAdapter.getController().getObject(BotObjectType.GOALS);
-        String[] values = new String[goals.size()];
+        List<String> values = new ArrayList<>();
         for (int i = 0; i < goals.size(); i++)
-            values[i] = String.format("%s – %s", goals.get(i).getName(), goals.get(i).getValueFormatted());
-        dataModel.values.put(BotParamType.USER_GOALS.getKey(), values);
+            values.add(String.format("%s – %s", goals.get(i).getName(), goals.get(i).getValueFormatted()));
+        dataModel.values.put(BotParamType.USER_GOALS.getKey(), TextUtils.join("\n", values));
     }
 }

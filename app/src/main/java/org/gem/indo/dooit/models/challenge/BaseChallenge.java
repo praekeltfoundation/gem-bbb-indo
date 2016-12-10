@@ -26,6 +26,13 @@ public abstract class BaseChallenge implements Parcelable, Serializable {
     @SerializedName("deactivation_date")
     private DateTime deactivationDate;
 
+    private String instruction;
+    @SerializedName("call_to_action")
+    private String callToAction;
+    private String intro;
+    private String outro;
+
+
     /*** Constructors ***/
     BaseChallenge() {
         // Mandatory empty constructor
@@ -88,6 +95,18 @@ public abstract class BaseChallenge implements Parcelable, Serializable {
 
     public void setDeactivationDate(DateTime deactivationDate) {
         this.deactivationDate = deactivationDate;
+    }
+
+    public String getInstruction() {
+        return instruction;
+    }
+
+    public String getIntro() {
+        return intro;
+    }
+
+    public String getOutro() {
+        return outro;
     }
 
     @Override

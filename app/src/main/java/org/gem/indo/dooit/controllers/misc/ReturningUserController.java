@@ -64,8 +64,10 @@ public class ReturningUserController extends DooitBotController {
         String key = paramType.getKey();
         switch (paramType) {
             case CHALLENGE_INTRO:
+                model.values.put(key, challenge.getIntro());
                 break;
             case CHALLENGE_OUTRO:
+                model.values.put(key, challenge.getOutro());
                 break;
             case TIP_INTRO:
                 model.values.put(key, tip.getIntro());
