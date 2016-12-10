@@ -6,10 +6,13 @@ import org.gem.indo.dooit.DooitApplication;
 import org.gem.indo.dooit.api.managers.GoalManager;
 import org.gem.indo.dooit.controllers.DooitBotController;
 import org.gem.indo.dooit.helpers.Utils;
+import org.gem.indo.dooit.models.Badge;
 import org.gem.indo.dooit.models.Tip;
 import org.gem.indo.dooit.models.bot.Answer;
 import org.gem.indo.dooit.models.bot.BaseBotModel;
+import org.gem.indo.dooit.models.bot.Node;
 import org.gem.indo.dooit.models.challenge.BaseChallenge;
+import org.gem.indo.dooit.models.enums.BotMessageType;
 import org.gem.indo.dooit.models.enums.BotObjectType;
 import org.gem.indo.dooit.models.enums.BotParamType;
 import org.gem.indo.dooit.models.enums.BotType;
@@ -125,5 +128,17 @@ public abstract class GoalBotController extends DooitBotController {
             default:
                 return null;
         }
+    }
+
+    protected Node nodeFromBadge(Badge badge) {
+        Node node = new Node();
+        node.setName(botType.name().toLowerCase() + badge.getGraphName());
+        node.setType(BotMessageType.BADGE);
+        node.setText(null);
+
+        node.values.put(BotParamType.BADGE_NAME.getKey(), badge.getName());
+        node.values.put(BotParamType.BADGE_IMAGE_URL.getKey(), badge.getImageUrl());
+
+        return node;
     }
 }

@@ -36,7 +36,12 @@ public enum BotParamType {
     CHALLENGE_OUTRO("challenge.outro"),
 
     // Tips
-    TIP_INTRO("tip.intro");
+    TIP_INTRO("tip.intro"),
+
+    // Badge
+    BADGE_NAME("badge.name"),
+    BADGE_IMAGE_URL("badge.image_url"),
+    BADGE_EARNED_ON("badge.earned_on");
 
     private static Map<String, BotParamType> map = new HashMap<>();
 

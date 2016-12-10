@@ -7,6 +7,7 @@ import org.gem.indo.dooit.api.DooitAPIError;
 import org.gem.indo.dooit.api.DooitErrorHandler;
 import org.gem.indo.dooit.api.managers.GoalManager;
 import org.gem.indo.dooit.api.responses.EmptyResponse;
+import org.gem.indo.dooit.api.responses.TransactionResponse;
 import org.gem.indo.dooit.controllers.goal.GoalBotController;
 import org.gem.indo.dooit.models.challenge.BaseChallenge;
 import org.gem.indo.dooit.models.enums.BotCallType;
@@ -81,9 +82,9 @@ public class GoalWithdrawController extends GoalBotController {
                 public void onError(DooitAPIError error) {
 
                 }
-            }).subscribe(new Action1<EmptyResponse>() {
+            }).subscribe(new Action1<TransactionResponse>() {
                 @Override
-                public void call(EmptyResponse emptyResponse) {
+                public void call(TransactionResponse response) {
                     if (context instanceof MainActivity)
                         ((MainActivity) context).refreshGoals();
                 }

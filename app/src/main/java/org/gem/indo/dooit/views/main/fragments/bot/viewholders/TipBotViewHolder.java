@@ -1,5 +1,6 @@
 package org.gem.indo.dooit.views.main.fragments.bot.viewholders;
 
+import android.net.Uri;
 import android.support.v4.content.ContextCompat;
 import android.view.View;
 import android.widget.TextView;
@@ -68,7 +69,8 @@ public class TipBotViewHolder extends BaseBotViewHolder<Node> {
         // If no Tip is saved, the view will still display, but be empty
         if (persisted.hasConvoTip()) {
             final Tip tip = persisted.loadConvoTip();
-            image.setImageURI(tip.getCoverImageUrl());
+
+            setImageUri(image, Uri.parse(tip.getCoverImageUrl()));
 
             image.setOnClickListener(new View.OnClickListener() {
                 @Override

@@ -66,14 +66,7 @@ public class ChallengeBotViewHolder extends BaseBotViewHolder<Node> {
         String title = dataModel.values.getString(BotParamType.CHALLENGE_TITLE.getKey());
         String subtitle = dataModel.values.getString(BotParamType.CHALLENGE_SUBTITLE.getKey());
 
-        ImageRequest request = ImageRequestBuilder.newBuilderWithSource(imageUri)
-                .setProgressiveRenderingEnabled(true)
-                .build();
-        DraweeController controller = Fresco.newDraweeControllerBuilder()
-                .setImageRequest(request)
-                .setOldController(imageView.getController())
-                .build();
-        imageView.setController(controller);
+        setImageUri(imageView, imageUri);
 
         titleView.setText(title);
         if (TextUtils.isEmpty(subtitle))

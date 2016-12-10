@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/item_view_bot_badge"
     android:layout_width="@dimen/bot_badge_card_width"
     android:layout_height="wrap_content"
@@ -11,7 +12,21 @@
     <com.facebook.drawee.view.SimpleDraweeView
         android:id="@+id/item_view_bot_badge_image"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/bot_badge_card_image_height" />
+        android:layout_height="@dimen/bot_badge_card_image_height"
+        android:background="@color/purple"
+        app:scaleType="cropCenter"
+        app:placeholderImage="@drawable/empty_image"/>
+
+    <TextView
+        android:id="@+id/item_view_bot_badge_title"
+        style="@style/AppTheme.TextView.Regular.Large"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_alignBottom="@id/item_view_bot_badge_image"
+        android:layout_marginBottom="4dp"
+        android:textAlignment="center"
+        tools:text="Badge title"/>
 
     <View
         android:id="@+id/item_view_bot_badge_separator"
@@ -24,12 +39,14 @@
 
     <TextView
         android:id="@+id/item_view_bot_badge_share"
+        style="@style/AppTheme.TextView.Bold.Large"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/item_view_bot_badge_image"
         android:layout_marginTop="@dimen/bot_badge_card_vertical_margin"
         android:layout_centerHorizontal="true"
         android:textAlignment="center"
+        android:textColor="@color/light_blue"
         android:text="@string/label_share"/>
 
 </RelativeLayout>

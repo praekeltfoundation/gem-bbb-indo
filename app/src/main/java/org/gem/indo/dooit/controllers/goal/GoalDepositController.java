@@ -2,12 +2,16 @@ package org.gem.indo.dooit.controllers.goal;
 
 import android.app.Activity;
 
+import com.google.gson.Gson;
+
 import org.gem.indo.dooit.DooitApplication;
 import org.gem.indo.dooit.api.DooitAPIError;
 import org.gem.indo.dooit.api.DooitErrorHandler;
 import org.gem.indo.dooit.api.managers.GoalManager;
 import org.gem.indo.dooit.api.responses.EmptyResponse;
+import org.gem.indo.dooit.api.responses.TransactionResponse;
 import org.gem.indo.dooit.controllers.goal.GoalBotController;
+import org.gem.indo.dooit.models.Badge;
 import org.gem.indo.dooit.models.challenge.BaseChallenge;
 import org.gem.indo.dooit.models.enums.BotCallType;
 import org.gem.indo.dooit.models.Tip;
@@ -17,6 +21,9 @@ import org.gem.indo.dooit.models.goal.GoalTransaction;
 import org.gem.indo.dooit.models.bot.Answer;
 import org.gem.indo.dooit.models.bot.BaseBotModel;
 import org.gem.indo.dooit.views.main.MainActivity;
+import org.gem.indo.dooit.views.main.fragments.bot.adapters.BotAdapter;
+import org.joda.time.DateTime;
+import org.joda.time.LocalDate;
 
 import java.util.Map;
 
@@ -32,12 +39,14 @@ import rx.functions.Action1;
 public class GoalDepositController extends GoalBotController {
 
     @Inject
-    transient GoalManager goalManager;
+    GoalManager goalManager;
 
-    public GoalDepositController(Activity activity, Goal goal, BaseChallenge challenge, Tip tip) {
+    private BotAdapter adapter;
+
+    public GoalDepositController(Activity activity, BotAdapter botAdapter, Goal goal, BaseChallenge challenge, Tip tip) {
         super(activity, BotType.GOAL_DEPOSIT, goal, challenge, tip);
         ((DooitApplication) activity.getApplication()).component.inject(this);
-        this.goal = goal;
+        this.adapter = botAdapter;
     }
 
     @Override
@@ -79,14 +88,18 @@ public class GoalDepositController extends GoalBotController {
             public void onError(DooitAPIError error) {
 
             }
-        }).doOnCompleted(new Action0() {
+        }).doAfterTerminate(new Action0() {
             @Override
             public void call() {
                 notifyDone(listener);
             }
-        }).subscribe(new Action1<EmptyResponse>() {
+        }).subscribe(new Action1<TransactionResponse>() {
             @Override
-            public void call(EmptyResponse emptyResponse) {
+            public void call(TransactionResponse response) {
+                if (response.hasNewBadges())
+                    for (Badge badge : response.getNewBadges())
+                        adapter.addItem(nodeFromBadge(badge));
+
                 if (context instanceof MainActivity)
                     ((MainActivity) context).refreshGoals();
             }
