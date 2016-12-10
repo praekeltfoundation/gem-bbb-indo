@@ -22,6 +22,8 @@ public abstract class BaseChallenge implements Parcelable, Serializable {
     private String subtitle;
     @SerializedName("image_url")
     private String imageURL;
+    @SerializedName("terms_url")
+    private String termsUrl;
     @SerializedName("activation_date")
     private DateTime activationDate;
     @SerializedName("deactivation_date")
@@ -85,6 +87,10 @@ public abstract class BaseChallenge implements Parcelable, Serializable {
 
     public void setImageURL(String url) {
         this.imageURL = url;
+    }
+
+    public String getTermsUrl() {
+        return termsUrl;
     }
 
     public ChallengeType getType() {

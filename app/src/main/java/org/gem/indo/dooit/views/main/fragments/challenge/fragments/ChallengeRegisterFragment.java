@@ -132,18 +132,6 @@ public class ChallengeRegisterFragment extends Fragment implements HasChallengeF
             register.setText(getText(R.string.label_continue));
         }
 
-        if (TextUtils.isEmpty(instruction.getText())) {
-            instruction.setVisibility(View.GONE);
-        } else {
-            instruction.setVisibility(View.VISIBLE);
-        }
-
-        if (TextUtils.isEmpty(title.getText())) {
-            title.setVisibility(View.GONE);
-        } else {
-            title.setVisibility(View.VISIBLE);
-        }
-
         String tcString = getResources().getString(R.string.challenge_t_c);
         TextSpannableHelper spanHelper = new TextSpannableHelper();
         tc.setText(spanHelper.styleText(getContext(), R.style.AppTheme_TextView_Bold_Small_Accented, tcString));
@@ -165,6 +153,18 @@ public class ChallengeRegisterFragment extends Fragment implements HasChallengeF
         name.setText(challenge.getName());
         date.setText(challenge.getDeactivationDate().toLocalDateTime().toString("yyyy-MM-dd HH:mm"));
         instruction.setText(challenge.getInstruction());
+
+        if (TextUtils.isEmpty(instruction.getText())) {
+            instruction.setVisibility(View.GONE);
+        } else {
+            instruction.setVisibility(View.VISIBLE);
+        }
+
+        if (TextUtils.isEmpty(title.getText())) {
+            title.setVisibility(View.GONE);
+        } else {
+            title.setVisibility(View.VISIBLE);
+        }
 
         ImageRequest request = ImageRequestBuilder.newBuilderWithSource(Uri.parse(challenge.getImageURL()))
                 .setProgressiveRenderingEnabled(true)
@@ -228,7 +228,7 @@ public class ChallengeRegisterFragment extends Fragment implements HasChallengeF
     void termsClick(View view) {
         MinimalWebViewActivity.Builder.create(getContext())
             //.setTitle(getString(org.gem.indo.dooit.R.string.title_activity_privacy_policy))
-            .setUrl(Constants.TERMS_URL)
+            .setUrl(challenge.getTermsUrl())
             .startActivity();
     }
 
