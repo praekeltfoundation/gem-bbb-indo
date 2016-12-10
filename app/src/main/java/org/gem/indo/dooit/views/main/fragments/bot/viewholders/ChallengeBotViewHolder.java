@@ -93,7 +93,7 @@ public class ChallengeBotViewHolder extends BaseBotViewHolder<Node> {
                 answer.setText(null);
                 listener.onItemClicked(answer);
 
-                MainActivity activity = (MainActivity) itemView.getContext();
+                MainActivity activity = (MainActivity) getContext();
                 if (activity != null)
                     activity.startPage(MainViewPagerPositions.CHALLENGE);
             }

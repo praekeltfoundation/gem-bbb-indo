@@ -15,6 +15,8 @@ import org.gem.indo.dooit.models.Tip;
 import org.gem.indo.dooit.models.bot.Answer;
 import org.gem.indo.dooit.models.bot.Node;
 import org.gem.indo.dooit.models.enums.BotMessageType;
+import org.gem.indo.dooit.views.main.MainActivity;
+import org.gem.indo.dooit.views.main.MainViewPagerPositions;
 import org.gem.indo.dooit.views.tip.TipArticleActivity;
 import org.gem.indo.dooit.views.web.MinimalWebViewActivity;
 
@@ -77,6 +79,10 @@ public class TipBotViewHolder extends BaseBotViewHolder<Node> {
                     answer.setValue(tip.getArticleUrl());
                     answer.setText(null);
                     listener.onItemClicked(answer);
+
+                    MainActivity activity = (MainActivity) getContext();
+                    if (activity != null)
+                        activity.startPage(MainViewPagerPositions.TIPS);
 
                     Toast.makeText(getContext(), String.format(openingText, tip.getTitle()), Toast.LENGTH_LONG).show();
                     MinimalWebViewActivity.Builder.create(getContext())
