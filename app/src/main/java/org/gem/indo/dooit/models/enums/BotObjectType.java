@@ -7,5 +7,7 @@ package org.gem.indo.dooit.models.enums;
 public enum BotObjectType {
     CHALLENGE,
     GOAL,
+    GOALS,
+    GOAL_PROTOTYPES,
     TIP
 }

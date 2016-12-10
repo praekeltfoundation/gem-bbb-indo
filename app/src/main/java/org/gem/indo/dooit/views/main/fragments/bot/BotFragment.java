@@ -18,31 +18,30 @@ import com.greenfrvr.hashtagview.HashtagView;
 
 import org.gem.indo.dooit.DooitApplication;
 import org.gem.indo.dooit.R;
-import org.gem.indo.dooit.api.DooitAPIError;
-import org.gem.indo.dooit.api.DooitErrorHandler;
+import org.gem.indo.dooit.api.managers.ChallengeManager;
 import org.gem.indo.dooit.api.managers.GoalManager;
 import org.gem.indo.dooit.api.managers.TipManager;
 import org.gem.indo.dooit.controllers.BotController;
+import org.gem.indo.dooit.controllers.RequirementResolver;
 import org.gem.indo.dooit.controllers.goal.GoalAddController;
 import org.gem.indo.dooit.controllers.goal.GoalDepositController;
 import org.gem.indo.dooit.controllers.goal.GoalEditController;
 import org.gem.indo.dooit.controllers.goal.GoalWithdrawController;
+import org.gem.indo.dooit.controllers.misc.ReturningUserController;
 import org.gem.indo.dooit.helpers.Persisted;
 import org.gem.indo.dooit.helpers.SquiggleBackgroundHelper;
-import org.gem.indo.dooit.helpers.Utils;
 import org.gem.indo.dooit.helpers.bot.BotFeed;
 import org.gem.indo.dooit.helpers.bot.param.ParamArg;
 import org.gem.indo.dooit.helpers.bot.param.ParamMatch;
 import org.gem.indo.dooit.helpers.bot.param.ParamParser;
-import org.gem.indo.dooit.models.Tip;
 import org.gem.indo.dooit.models.bot.Answer;
 import org.gem.indo.dooit.models.bot.BaseBotModel;
 import org.gem.indo.dooit.models.bot.Node;
 import org.gem.indo.dooit.models.enums.BotMessageType;
+import org.gem.indo.dooit.models.enums.BotObjectType;
 import org.gem.indo.dooit.models.enums.BotParamType;
 import org.gem.indo.dooit.models.enums.BotType;
 import org.gem.indo.dooit.models.goal.Goal;
-import org.gem.indo.dooit.models.goal.GoalPrototype;
 import org.gem.indo.dooit.views.main.MainActivity;
 import org.gem.indo.dooit.views.main.MainViewPagerPositions;
 import org.gem.indo.dooit.views.main.fragments.MainFragment;
@@ -57,10 +56,6 @@ import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import rx.Observable;
-import rx.functions.Action0;
-import rx.functions.Action1;
-import rx.functions.Func1;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -86,6 +81,9 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
 
     @Inject
     GoalManager goalManager;
+
+    @Inject
+    ChallengeManager challengeManager;
 
     @Inject
     TipManager tipManager;
@@ -152,6 +150,7 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
         if (item.getItemId() == R.id.menu_main_bot_clear) {
             persisted.clearConversation();
             persisted.clearConvoGoals();
+            persisted.clearConvoTip();
             type = BotType.DEFAULT;
             createFeed();
         }
@@ -162,11 +161,9 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
     public void onActive() {
         super.onActive();
 
-        // Choose which conversation to instantiate
-        if (persisted.isNewBotUser()) {
-            setBotType(BotType.DEFAULT);
-            persisted.setNewBotUser(false);
-        }
+        // Choose a default conversation for returning users
+        if (!persisted.isNewBotUser() && type == BotType.DEFAULT)
+            setBotType(BotType.RETURNING_USER);
 
         createFeed();
     }
@@ -179,137 +176,69 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
             clearState = false;
         }
 
+        RequirementResolver.Callback reqCallback = new RequirementResolver.Callback() {
+            @Override
+            public void onStart() {
+                showProgressBar();
+            }
+
+            @Override
+            public void onDone() {
+                showConversation();
+                initializeBot();
+            }
+        };
+
         feed = new BotFeed<>(getContext());
         switch (type) {
+            case RETURNING_USER:
+                feed.parse(R.raw.returning_user, Node.class);
+                new RequirementResolver.Builder(getContext(), BotType.RETURNING_USER)
+                        .require(BotObjectType.GOALS)
+                        .require(BotObjectType.CHALLENGE)
+                        .require(BotObjectType.TIP)
+                        .build()
+                        .resolve(reqCallback);
+                break;
             case DEFAULT:
             case GOAL_ADD:
                 feed.parse(R.raw.goal_add, Node.class);
-                getGoalAddResources();
+                new RequirementResolver.Builder(getContext(), BotType.GOAL_ADD)
+                        .require(BotObjectType.GOAL_PROTOTYPES)
+                        .require(BotObjectType.CHALLENGE)
+                        .require(BotObjectType.TIP)
+                        .build()
+                        .resolve(reqCallback);
                 break;
             case GOAL_DEPOSIT:
                 feed.parse(R.raw.goal_deposit, Node.class);
-                getGoalWithdrawResources();
+                new RequirementResolver.Builder(getContext(), BotType.GOAL_DEPOSIT)
+                        .require(BotObjectType.CHALLENGE)
+                        .require(BotObjectType.TIP)
+                        .build()
+                        .resolve(reqCallback);
                 break;
             case GOAL_WITHDRAW:
                 feed.parse(R.raw.goal_withdraw, Node.class);
-                getGoalWithdrawResources();
+                new RequirementResolver.Builder(getContext(), BotType.GOAL_WITHDRAW)
+                        .require(BotObjectType.CHALLENGE)
+                        .require(BotObjectType.TIP)
+                        .build()
+                        .resolve(reqCallback);
                 break;
             case GOAL_EDIT:
                 feed.parse(R.raw.goal_edit, Node.class);
-                getGoalWithdrawResources();
+                new RequirementResolver.Builder(getContext(), BotType.GOAL_EDIT)
+                        .require(BotObjectType.CHALLENGE)
+                        .require(BotObjectType.TIP)
+                        .build()
+                        .resolve(reqCallback);
                 break;
             case TIP_INTRO:
                 feed.parse(R.raw.tip_intro, Node.class);
-                getGoalWithdrawResources();
+                initializeBot();
                 break;
         }
-    }
-
-    private void getGoalAddResources() {
-        // TODO: Refactor into own class
-        ArrayList<Observable> reqSync = new ArrayList<>();
-        Observable goalProtos = goalManager.retrieveGoalPrototypes(new DooitErrorHandler() {
-            @Override
-            public void onError(DooitAPIError error) {
-
-            }
-        });
-        if (persisted.hasGoalProtos())
-            goalProtos.subscribe(new Action1<List<GoalPrototype>>() {
-                @Override
-                public void call(List<GoalPrototype> goalPrototypes) {
-                    persisted.saveGoalProtos(goalPrototypes);
-                }
-            });
-        else
-            reqSync.add(goalProtos);
-
-        if (reqSync.size() > 0) {
-            showProgressBar();
-            Observable.from(reqSync).flatMap(new Func1<Observable, Observable<?>>() {
-                @Override
-                public Observable<?> call(Observable observable) {
-                    return observable;
-                }
-            }).doOnCompleted(new Action0() {
-                @Override
-                public void call() {
-                    if (getContext() != null) {
-                        getActivity().runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                showConversation();
-                                initializeBot();
-                            }
-                        });
-                    }
-                }
-            }).subscribe(new Action1<Object>() {
-                @Override
-                public void call(Object o) {
-                    if (o instanceof List) {
-                        if (((List) o).size() == 0) return;
-                        if (((List) o).get(0) instanceof GoalPrototype)
-                            persisted.saveGoalProtos((List<GoalPrototype>) o);
-                    }
-                }
-            });
-        } else
-            initializeBot();
-    }
-
-    private void getGoalWithdrawResources() {
-        // TODO: Refactor into own class
-        ArrayList<Observable> reqSync = new ArrayList<>();
-        Observable tips = tipManager.retrieveTips(new DooitErrorHandler() {
-            @Override
-            public void onError(DooitAPIError error) {
-
-            }
-        });
-        if (persisted.hasConvoTip())
-            tips.subscribe(new Action1<List<Tip>>() {
-                @Override
-                public void call(List<Tip> newTips) {
-                    if (!newTips.isEmpty())
-                        persisted.saveConvoTip(newTips.get(0));
-                }
-            });
-        else
-            reqSync.add(tips);
-
-        if (reqSync.size() > 0) {
-            showProgressBar();
-            Observable.from(reqSync).flatMap(new Func1<Observable, Observable<?>>() {
-                @Override
-                public Observable<?> call(Observable observable) {
-                    return observable;
-                }
-            }).doOnCompleted(new Action0() {
-                @Override
-                public void call() {
-                    if (getContext() != null) {
-                        getActivity().runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                showConversation();
-                                initializeBot();
-                            }
-                        });
-                    }
-                }
-            }).subscribe(new Action1<Object>() {
-                @Override
-                public void call(Object o) {
-                    if (o instanceof List) {
-                        if (((List) o).size() == 0) return;
-                        if (((List) o).get(0) instanceof Tip)
-                            persisted.saveConvoTip((Tip) ((List) o).get(0));
-                    }
-                }
-            });
-        } else
-            initializeBot();
     }
 
     private void initializeBot() {
@@ -341,6 +270,7 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
 
         // Jump to first node
         switch (type) {
+            case RETURNING_USER:
             case DEFAULT:
                 getAndAddNode(null);
                 break;
@@ -368,27 +298,33 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
 
     private BotController createBotController(BotType botType) {
         switch (botType) {
+            case RETURNING_USER:
+                return new ReturningUserController(getActivity(), getBotAdapter(),
+                        persisted.loadConvoGoals(botType),
+                        persisted.loadConvoChallenge(botType),
+                        persisted.loadConvoTip());
             case DEFAULT:
             case GOAL_ADD:
-                Goal g1 = persisted.loadConvoGoal(BotType.GOAL_ADD);
-                if (g1 == null)
-                    g1 = new Goal();
-                return new GoalAddController(getActivity(), getBotAdapter(), g1, persisted.loadConvoTip());
+                return new GoalAddController(getActivity(), getBotAdapter(),
+                        persisted.loadConvoGoal(botType),
+                        persisted.loadConvoChallenge(botType),
+                        persisted.loadConvoTip());
             case GOAL_DEPOSIT:
-                Goal g2 = persisted.loadConvoGoal(BotType.GOAL_DEPOSIT);
-                if (g2 == null)
-                    throw new RuntimeException("No Goal was persisted for Goal Deposit conversation.");
-                return new GoalDepositController(getActivity(), g2, persisted.loadConvoTip());
+                return new GoalDepositController(getActivity(),
+                        getBotAdapter(),
+                        persisted.loadConvoGoal(botType),
+                        persisted.loadConvoChallenge(botType),
+                        persisted.loadConvoTip());
             case GOAL_WITHDRAW:
-                Goal g3 = persisted.loadConvoGoal(BotType.GOAL_WITHDRAW);
-                if (g3 == null)
-                    throw new RuntimeException("No Goal was persisted for Goal Withdraw conversation.");
-                return new GoalWithdrawController(getActivity(), g3, persisted.loadConvoTip());
+                return new GoalWithdrawController(getActivity(),
+                        persisted.loadConvoGoal(botType),
+                        persisted.loadConvoChallenge(botType),
+                        persisted.loadConvoTip());
             case GOAL_EDIT:
-                Goal g4 = persisted.loadConvoGoal(BotType.GOAL_EDIT);
-                if (g4 == null)
-                    throw new RuntimeException("No Goal was persisted for Goal Edit converstation");
-                return new GoalEditController(getActivity(), g4, persisted.loadConvoTip());
+                return new GoalEditController(getActivity(),
+                        persisted.loadConvoGoal(botType),
+                        persisted.loadConvoChallenge(botType),
+                        persisted.loadConvoTip());
             default:
                 return null;
         }
@@ -519,10 +455,14 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
 
         if (node.getAnswers().size() > 0) {
             if (TextUtils.isEmpty(node.getAutoAnswer())) {
-                for (Answer answer : node.getAnswers())
+                List<Answer> answers = node.getAnswers();
+                if (hasController())
+                    answers = controller.filter(answers);
+
+                for (Answer answer : answers)
                     processText(answer);
 
-                answerView.setData(node.getAnswers(), new HashtagView.DataStateTransform<Answer>() {
+                answerView.setData(answers, new HashtagView.DataStateTransform<Answer>() {
                     @Override
                     public CharSequence prepareSelected(Answer item) {
                         return item.getProcessedText();

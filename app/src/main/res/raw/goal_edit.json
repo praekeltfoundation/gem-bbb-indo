@@ -45,6 +45,7 @@
         "name": "goal_end_date",
         "nextOnFinish": "goal_edit_do_update",
         "type": "inlineDate",
+        "typeOnFinish": "text",
         "inlineEditHint": "$(type_date_hint)"
       }
     ]
@@ -259,10 +260,18 @@
   },
 
 
+
+
   {
     "name": "goal_edit_challenge_intro",
-    "type": "end",
-    "autoNextScreen": "CHALLENGE"
+    "type": "text",
+    "text": "$(bot_challenge_intro)",
+    "autoNext": "goal_edit_challenge_show"
+  },
+  {
+    "name": "goal_edit_challenge_show",
+    "type": "challenge",
+    "autoNext": "goal_edit_end"
   },
 
 

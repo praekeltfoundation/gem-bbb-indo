@@ -93,6 +93,18 @@ public class ValueMap {
         return (Double) map.get(key);
     }
 
+    /****************
+     * String array *
+     ****************/
+
+    public void put(String key, String[] value) {
+        map.put(key, value);
+    }
+
+    public String[] getStringArray(String key) {
+        return (String[]) map.get(key);
+    }
+
     /******************
      * Map management *
      ******************/

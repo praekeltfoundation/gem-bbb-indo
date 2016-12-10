@@ -14,6 +14,7 @@ import org.gem.indo.dooit.api.managers.GoalManager;
 import org.gem.indo.dooit.api.responses.EmptyResponse;
 import org.gem.indo.dooit.controllers.BotController;
 import org.gem.indo.dooit.controllers.goal.GoalBotController;
+import org.gem.indo.dooit.models.challenge.BaseChallenge;
 import org.gem.indo.dooit.models.enums.BotCallType;
 import org.gem.indo.dooit.helpers.MediaUriHelper;
 import org.gem.indo.dooit.models.Tip;
@@ -44,8 +45,8 @@ public class GoalEditController extends GoalBotController {
     @Inject
     transient FileUploadManager fileUploadManager;
 
-    public GoalEditController(Activity activity, Goal goal, Tip tip) {
-        super(activity, BotType.GOAL_EDIT, goal, tip);
+    public GoalEditController(Activity activity, Goal goal, BaseChallenge challenge, Tip tip) {
+        super(activity, BotType.GOAL_EDIT, goal, challenge, tip);
         ((DooitApplication) activity.getApplication()).component.inject(this);
         this.goal = goal;
     }
@@ -70,6 +71,20 @@ public class GoalEditController extends GoalBotController {
     @Override
     public void onDone(Map<String, Answer> answerLog) {
 
+    }
+
+    @Override
+    public boolean filter(Answer answer) {
+        switch (answer.getName()) {
+            case "goal_edit_delete_tip":
+            case "goal_edit_info_tip":
+                return tip != null;
+            case "goal_edit_delete_challenge":
+            case "goal_edit_info_challenge":
+                return challenge != null && challenge.isActive();
+            default:
+                return true;
+        }
     }
 
     private void doUpdate(Map<String, Answer> answerLog, final OnAsyncListener listener) {

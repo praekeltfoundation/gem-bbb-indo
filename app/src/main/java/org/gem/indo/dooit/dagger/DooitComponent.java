@@ -4,6 +4,7 @@ import org.gem.indo.dooit.DooitApplication;
 import org.gem.indo.dooit.api.managers.DooitManager;
 import org.gem.indo.dooit.api.managers.FeedbackManager;
 import org.gem.indo.dooit.controllers.DooitBotController;
+import org.gem.indo.dooit.controllers.RequirementResolver;
 import org.gem.indo.dooit.helpers.Persisted;
 import org.gem.indo.dooit.services.NotificationService;
 import org.gem.indo.dooit.views.DooitActivity;
@@ -113,6 +114,8 @@ public interface DooitComponent {
     void inject(ProfileImageActivity o);
 
     void inject(RegistrationActivity o);
+
+    void inject(RequirementResolver o);
 
     void inject(RootActivity o);
 

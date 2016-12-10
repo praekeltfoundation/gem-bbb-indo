@@ -24,6 +24,15 @@ public class Badge {
         this.name = name;
     }
 
+    /**
+     * Helper to create name consistent with other dialogue graph names.
+     *
+     * @return
+     */
+    public String getGraphName() {
+        return getName().toLowerCase().replace(' ', '_');
+    }
+
     public String getImageUrl() {
         return imageUrl;
     }

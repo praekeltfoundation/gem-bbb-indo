@@ -104,6 +104,8 @@
     <!-- Bot -->
     <string name="bot_carousel_card_select">Select</string>
     <string name="bot_tip_intro">$(tip.intro)</string>
+    <string name="bot_challenge_intro">$(challenge.intro)</string>
+    <string name="bot_challenge_outro">$(challenge.outro)</string>
     <string name="of_target_amount">of %s</string>
 
     <!--JSON GOALS-->
@@ -133,6 +135,13 @@
     <string name="infoGoalEnd">Thank you. That concludes the goal-setting process.</string>
     <string name="infoGoalAddedCongratulations">Great job! You\'ve set your first savings goal! </string>
 
+    <!-- BOT: returning_user -->
+    <string name="convo_default_return_q_greeting_1">Halo, $(user.username)!</string>
+    <string name="convo_default_return_q_greeting_2">Senang bertemu denganmu lagi!</string>
+    <string name="convo_default_return_q_progress_intro">Mari kita lihat perkembangan tabunganmu&#8230;</string>
+    <string name="convo_default_return_a_progress_intro_tip">Tolong berikan aku tips.</string>
+    <string name="convo_default_return_a_progress_intro_challenge">Tunjukkan tantangan minggu ini.</string>
+
     <!-- BOT: goal_add -->
     <!-- Questions -->
     <string name="goal_add_q_greeting">Hai, $(user.username)! Namaku Dooit. Aku mentor keuangan pribadi kamu dan aku akan membantu kamu menabung. Mari kita mulai!</string>
@@ -149,6 +158,8 @@
 
     <string name="goal_add_q_ask_amount">Berapa yang kamu harus tabung untuk $(goal.name)?</string>
     <string name="goal_add_q_ask_date">Pada tanggal berapa kamu sudah harus selesai menabung untuk targetmu?</string>
+
+    <string name="goal_add_q_verify">If you save $(goal.weekly_target_currency) each week you will save enough to get your $(goal.name) in $(goal.weeks_left_up) weeks.</string>
 
     <!-- Answers -->
     <string name="goal_add_greeting_response">Hola!</string>
@@ -298,7 +309,7 @@
     <string name="target_savings_history">Grafik Tabungan</string>
     <string name="target_weeks">Waktu</string>
     <string name="target_add_goal">TAMBAHKAN TUJUAN BARU</string>
-    <string name="target_savings_message" formatted="false">Tabung %s %s per minggu untuk dapat %s dalam waktu %s minggu.</string>
+    <string name="target_savings_message" formatted="false">Tabung %s per minggu untuk dapat %s dalam waktu %s minggu.</string>
     <string name="target_edit_savings_plan">Edit Rencana Tabungan</string>
     <string name="target_savings_plan">Rencana Tabungan</string>
     <string name="target_date">Deadline Menabung</string>

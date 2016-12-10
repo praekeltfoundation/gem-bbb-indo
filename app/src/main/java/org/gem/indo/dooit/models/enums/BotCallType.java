@@ -24,5 +24,8 @@ public enum BotCallType {
     DO_WITHDRAW,
 
     @SerializedName("#add_badge")
-    ADD_BADGE
+    ADD_BADGE,
+
+    @SerializedName("#populate_goal")
+    POPULATE_GOAL
 }

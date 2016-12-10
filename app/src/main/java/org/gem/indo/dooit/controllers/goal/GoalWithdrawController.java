@@ -7,7 +7,9 @@ import org.gem.indo.dooit.api.DooitAPIError;
 import org.gem.indo.dooit.api.DooitErrorHandler;
 import org.gem.indo.dooit.api.managers.GoalManager;
 import org.gem.indo.dooit.api.responses.EmptyResponse;
+import org.gem.indo.dooit.api.responses.TransactionResponse;
 import org.gem.indo.dooit.controllers.goal.GoalBotController;
+import org.gem.indo.dooit.models.challenge.BaseChallenge;
 import org.gem.indo.dooit.models.enums.BotCallType;
 import org.gem.indo.dooit.models.enums.BotParamType;
 import org.gem.indo.dooit.models.Tip;
@@ -33,8 +35,8 @@ public class GoalWithdrawController extends GoalBotController {
     @Inject
     transient GoalManager goalManager;
 
-    public GoalWithdrawController(Activity activity, Goal goal, Tip tip) {
-        super(activity, BotType.GOAL_WITHDRAW, goal, tip);
+    public GoalWithdrawController(Activity activity, Goal goal, BaseChallenge challenge, Tip tip) {
+        super(activity, BotType.GOAL_WITHDRAW, goal, challenge, tip);
         ((DooitApplication) activity.getApplication()).component.inject(this);
         this.goal = goal;
     }
@@ -58,6 +60,18 @@ public class GoalWithdrawController extends GoalBotController {
 
     }
 
+    @Override
+    public boolean filter(Answer answer) {
+        switch (answer.getName()) {
+            case "goal_withdraw_tip":
+                return tip != null;
+            case "goal_withdraw_challenge":
+                return challenge != null && challenge.isActive();
+            default:
+                return true;
+        }
+    }
+
     private void doWithdraw(Map<String, Answer> answerLog) {
         if (answerLog.containsKey("withdraw_amount")) {
             // Withdraw subtracts from the goal
@@ -68,9 +82,9 @@ public class GoalWithdrawController extends GoalBotController {
                 public void onError(DooitAPIError error) {
 
                 }
-            }).subscribe(new Action1<EmptyResponse>() {
+            }).subscribe(new Action1<TransactionResponse>() {
                 @Override
-                public void call(EmptyResponse emptyResponse) {
+                public void call(TransactionResponse response) {
                     if (context instanceof MainActivity)
                         ((MainActivity) context).refreshGoals();
                 }

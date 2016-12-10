@@ -8,11 +8,9 @@ import android.view.ViewGroup;
 import com.greenfrvr.hashtagview.HashtagView;
 
 import org.gem.indo.dooit.R;
-import org.gem.indo.dooit.models.bot.BaseBotModel;
 import org.gem.indo.dooit.controllers.BotController;
+import org.gem.indo.dooit.models.bot.BaseBotModel;
 import org.gem.indo.dooit.models.enums.BotMessageType;
-import org.gem.indo.dooit.views.main.fragments.bot.viewholders.BadgeViewHolder;
-import org.gem.indo.dooit.views.main.fragments.bot.viewholders.GoalGalleryViewHolder;
 import org.gem.indo.dooit.views.main.fragments.bot.viewholders.AnswerImageSelectViewHolder;
 import org.gem.indo.dooit.views.main.fragments.bot.viewholders.AnswerImageViewHolder;
 import org.gem.indo.dooit.views.main.fragments.bot.viewholders.AnswerInlineDateEditViewHolder;
@@ -20,8 +18,12 @@ import org.gem.indo.dooit.views.main.fragments.bot.viewholders.AnswerInlineNumbe
 import org.gem.indo.dooit.views.main.fragments.bot.viewholders.AnswerInlineTextEditViewHolder;
 import org.gem.indo.dooit.views.main.fragments.bot.viewholders.AnswerTextCurrencyViewHolder;
 import org.gem.indo.dooit.views.main.fragments.bot.viewholders.AnswerViewHolder;
+import org.gem.indo.dooit.views.main.fragments.bot.viewholders.BadgeViewHolder;
 import org.gem.indo.dooit.views.main.fragments.bot.viewholders.BaseBotViewHolder;
+import org.gem.indo.dooit.views.main.fragments.bot.viewholders.ChallengeBotViewHolder;
+import org.gem.indo.dooit.views.main.fragments.bot.viewholders.GoalGalleryViewHolder;
 import org.gem.indo.dooit.views.main.fragments.bot.viewholders.GoalInfoViewHolder;
+import org.gem.indo.dooit.views.main.fragments.bot.viewholders.GoalListSummaryViewHolder;
 import org.gem.indo.dooit.views.main.fragments.bot.viewholders.GoalVerificationViewHolder;
 import org.gem.indo.dooit.views.main.fragments.bot.viewholders.TextViewHolder;
 import org.gem.indo.dooit.views.main.fragments.bot.viewholders.TipBotViewHolder;
@@ -50,37 +52,41 @@ public class BotAdapter extends RecyclerView.Adapter<BaseBotViewHolder> {
         switch (BotMessageType.getValueOf(viewType)) {
             case TEXT:
             case GOALSELECTION:
-                return new TextViewHolder(LayoutInflater.from(context).inflate(org.gem.indo.dooit.R.layout.item_view_bot_text, parent, false), this);
+                return new TextViewHolder(LayoutInflater.from(context).inflate(R.layout.item_view_bot_text, parent, false), this);
             case ANSWER:
-                return new AnswerViewHolder(LayoutInflater.from(context).inflate(org.gem.indo.dooit.R.layout.item_view_bot_answer, parent, false));
+                return new AnswerViewHolder(LayoutInflater.from(context).inflate(R.layout.item_view_bot_answer, parent, false));
             case INLINETEXT:
-                return new AnswerInlineTextEditViewHolder(LayoutInflater.from(context).inflate(org.gem.indo.dooit.R.layout.item_view_bot_inline_edit, parent, false), this, tagsClickListener);
+                return new AnswerInlineTextEditViewHolder(LayoutInflater.from(context).inflate(R.layout.item_view_bot_inline_edit, parent, false), this, tagsClickListener);
             case CAMERAUPLOAD:
             case GALLERYUPLOAD:
-                return new AnswerImageSelectViewHolder(LayoutInflater.from(context).inflate(org.gem.indo.dooit.R.layout.item_view_bot_select_image, parent, false), this, tagsClickListener);
+                return new AnswerImageSelectViewHolder(LayoutInflater.from(context).inflate(R.layout.item_view_bot_select_image, parent, false), this, tagsClickListener);
             case IMAGE:
-                return new AnswerImageViewHolder(LayoutInflater.from(context).inflate(org.gem.indo.dooit.R.layout.item_view_bot_image, parent, false), this, tagsClickListener);
+                return new AnswerImageViewHolder(LayoutInflater.from(context).inflate(R.layout.item_view_bot_image, parent, false), this, tagsClickListener);
             case INLINENUMBER:
-                return new AnswerInlineNumberEditViewHolder(LayoutInflater.from(context).inflate(org.gem.indo.dooit.R.layout.item_view_bot_inline_edit, parent, false), this, tagsClickListener);
+                return new AnswerInlineNumberEditViewHolder(LayoutInflater.from(context).inflate(R.layout.item_view_bot_inline_edit, parent, false), this, tagsClickListener);
             case INLINECURRENCY:
-                return new AnswerInlineNumberEditViewHolder(LayoutInflater.from(context).inflate(org.gem.indo.dooit.R.layout.item_view_bot_inline_edit_currency, parent, false), this, tagsClickListener);
+                return new AnswerInlineNumberEditViewHolder(LayoutInflater.from(context).inflate(R.layout.item_view_bot_inline_edit_currency, parent, false), this, tagsClickListener);
             case INLINEDATE:
-                return new AnswerInlineDateEditViewHolder(LayoutInflater.from(context).inflate(org.gem.indo.dooit.R.layout.item_view_bot_inline_edit, parent, false), this, tagsClickListener);
+                return new AnswerInlineDateEditViewHolder(LayoutInflater.from(context).inflate(R.layout.item_view_bot_inline_edit, parent, false), this, tagsClickListener);
             case TEXTCURRENCY:
-                return new AnswerTextCurrencyViewHolder(LayoutInflater.from(context).inflate(org.gem.indo.dooit.R.layout.item_view_bot_answer, parent, false), this);
+                return new AnswerTextCurrencyViewHolder(LayoutInflater.from(context).inflate(R.layout.item_view_bot_answer, parent, false), this);
             case GOALGALLERY:
                 return new GoalGalleryViewHolder(LayoutInflater.from(context).inflate(R.layout.item_view_bot_carousel, parent, false), this, tagsClickListener);
             case GOALVERIFICATION:
-                return new GoalVerificationViewHolder(LayoutInflater.from(context).inflate(org.gem.indo.dooit.R.layout.item_view_bot_text, parent, false), this);
+                return new GoalVerificationViewHolder(LayoutInflater.from(context).inflate(R.layout.item_view_bot_text, parent, false), this);
             case TIP:
                 return new TipBotViewHolder(LayoutInflater.from(context).inflate(R.layout.item_view_bot_tip, parent, false), tagsClickListener);
             case GOALINFO:
                 return new GoalInfoViewHolder(LayoutInflater.from(context).inflate(R.layout.item_view_bot_goal_info, parent, false), this);
             case BADGE:
                 return new BadgeViewHolder(LayoutInflater.from(context).inflate(R.layout.item_view_bot_badge, parent, false), this);
+            case GOALLISTSUMMARY:
+                return new GoalListSummaryViewHolder(LayoutInflater.from(context).inflate(R.layout.item_view_bot_text, parent, false), this);
+            case CHALLENGE:
+                return new ChallengeBotViewHolder(LayoutInflater.from(context).inflate(R.layout.item_view_bot_challenge, parent, false), this, tagsClickListener);
             case UNDEFINED:
             default:
-                return new TextViewHolder(LayoutInflater.from(context).inflate(org.gem.indo.dooit.R.layout.item_view_bot_text, parent, false), this);
+                return new TextViewHolder(LayoutInflater.from(context).inflate(R.layout.item_view_bot_text, parent, false), this);
         }
     }
 

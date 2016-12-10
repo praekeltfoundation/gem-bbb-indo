@@ -41,7 +41,7 @@ public abstract class BaseBotModel {
             String resourceString = jsonResourceName.replace("$(", "").replace(")", "").replaceAll(" +", "");
             return context.getString(context.getResources().getIdentifier(resourceString, "string", context.getPackageName()));
         } catch (Resources.NotFoundException ex) {
-            Log.d(TAG, jsonResourceName);
+            Log.d(TAG, "Model had an unknown resource as its 'text' attribute: " + jsonResourceName);
             throw ex;
         }
     }
@@ -62,6 +62,9 @@ public abstract class BaseBotModel {
         this.processedText = processedText;
     }
 
+    public boolean hasProcessedText() {
+        return !TextUtils.isEmpty(processedText);
+    }
 
     public String getName() {
         return name;
