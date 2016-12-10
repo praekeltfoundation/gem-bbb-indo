@@ -8,6 +8,7 @@ import org.gem.indo.dooit.api.DooitErrorHandler;
 import org.gem.indo.dooit.api.managers.GoalManager;
 import org.gem.indo.dooit.api.responses.EmptyResponse;
 import org.gem.indo.dooit.controllers.goal.GoalBotController;
+import org.gem.indo.dooit.models.challenge.BaseChallenge;
 import org.gem.indo.dooit.models.enums.BotCallType;
 import org.gem.indo.dooit.models.Tip;
 import org.gem.indo.dooit.models.enums.BotType;
@@ -33,8 +34,8 @@ public class GoalDepositController extends GoalBotController {
     @Inject
     transient GoalManager goalManager;
 
-    public GoalDepositController(Activity activity, Goal goal, Tip tip) {
-        super(activity, BotType.GOAL_DEPOSIT, goal, tip);
+    public GoalDepositController(Activity activity, Goal goal, BaseChallenge challenge, Tip tip) {
+        super(activity, BotType.GOAL_DEPOSIT, goal, challenge, tip);
         ((DooitApplication) activity.getApplication()).component.inject(this);
         this.goal = goal;
     }
@@ -56,6 +57,18 @@ public class GoalDepositController extends GoalBotController {
     @Override
     public void onDone(Map<String, Answer> answerLog) {
 
+    }
+
+    @Override
+    public boolean filter(Answer answer) {
+        switch (answer.getName()) {
+            case "goal_deposit_tip":
+                return tip != null;
+            case "goal_deposit_challenge":
+                return challenge != null && challenge.isActive();
+            default:
+                return true;
+        }
     }
 
     private void doDeposit(Map<String, Answer> answerLog, final OnAsyncListener listener) {

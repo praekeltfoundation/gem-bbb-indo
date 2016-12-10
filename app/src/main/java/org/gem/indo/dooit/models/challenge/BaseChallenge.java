@@ -26,7 +26,8 @@ public abstract class BaseChallenge implements Parcelable, Serializable {
     private DateTime activationDate;
     @SerializedName("deactivation_date")
     private DateTime deactivationDate;
-
+    @SerializedName("is_active")
+    private boolean isActive;
     private String instruction;
     @SerializedName("call_to_action")
     private String callToAction;
@@ -100,6 +101,10 @@ public abstract class BaseChallenge implements Parcelable, Serializable {
 
     public void setDeactivationDate(DateTime deactivationDate) {
         this.deactivationDate = deactivationDate;
+    }
+
+    public boolean isActive() {
+        return isActive;
     }
 
     public String getInstruction() {

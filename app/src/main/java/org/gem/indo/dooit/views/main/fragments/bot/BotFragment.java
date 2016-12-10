@@ -211,7 +211,7 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
                 break;
             case GOAL_DEPOSIT:
                 feed.parse(R.raw.goal_deposit, Node.class);
-                new RequirementResolver.Builder(getContext(), BotType.GOAL_ADD)
+                new RequirementResolver.Builder(getContext(), BotType.GOAL_DEPOSIT)
                         .require(BotObjectType.CHALLENGE)
                         .require(BotObjectType.TIP)
                         .build()
@@ -219,7 +219,7 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
                 break;
             case GOAL_WITHDRAW:
                 feed.parse(R.raw.goal_withdraw, Node.class);
-                new RequirementResolver.Builder(getContext(), BotType.GOAL_ADD)
+                new RequirementResolver.Builder(getContext(), BotType.GOAL_WITHDRAW)
                         .require(BotObjectType.CHALLENGE)
                         .require(BotObjectType.TIP)
                         .build()
@@ -227,7 +227,7 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
                 break;
             case GOAL_EDIT:
                 feed.parse(R.raw.goal_edit, Node.class);
-                new RequirementResolver.Builder(getContext(), BotType.GOAL_ADD)
+                new RequirementResolver.Builder(getContext(), BotType.GOAL_EDIT)
                         .require(BotObjectType.CHALLENGE)
                         .require(BotObjectType.TIP)
                         .build()
@@ -305,19 +305,23 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
             case DEFAULT:
             case GOAL_ADD:
                 return new GoalAddController(getActivity(), getBotAdapter(),
-                        persisted.loadConvoGoal(BotType.GOAL_ADD),
+                        persisted.loadConvoGoal(botType),
+                        persisted.loadConvoChallenge(botType),
                         persisted.loadConvoTip());
             case GOAL_DEPOSIT:
                 return new GoalDepositController(getActivity(),
-                        persisted.loadConvoGoal(BotType.GOAL_DEPOSIT),
+                        persisted.loadConvoGoal(botType),
+                        persisted.loadConvoChallenge(botType),
                         persisted.loadConvoTip());
             case GOAL_WITHDRAW:
                 return new GoalWithdrawController(getActivity(),
-                        persisted.loadConvoGoal(BotType.GOAL_WITHDRAW),
+                        persisted.loadConvoGoal(botType),
+                        persisted.loadConvoChallenge(botType),
                         persisted.loadConvoTip());
             case GOAL_EDIT:
                 return new GoalEditController(getActivity(),
-                        persisted.loadConvoGoal(BotType.GOAL_EDIT),
+                        persisted.loadConvoGoal(botType),
+                        persisted.loadConvoChallenge(botType),
                         persisted.loadConvoTip());
             default:
                 return null;

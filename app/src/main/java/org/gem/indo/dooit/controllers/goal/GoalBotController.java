@@ -4,12 +4,14 @@ import android.content.Context;
 
 import org.gem.indo.dooit.DooitApplication;
 import org.gem.indo.dooit.api.managers.GoalManager;
-import org.gem.indo.dooit.models.enums.BotObjectType;
-import org.gem.indo.dooit.models.enums.BotParamType;
 import org.gem.indo.dooit.controllers.DooitBotController;
 import org.gem.indo.dooit.helpers.Utils;
 import org.gem.indo.dooit.models.Tip;
+import org.gem.indo.dooit.models.bot.Answer;
 import org.gem.indo.dooit.models.bot.BaseBotModel;
+import org.gem.indo.dooit.models.challenge.BaseChallenge;
+import org.gem.indo.dooit.models.enums.BotObjectType;
+import org.gem.indo.dooit.models.enums.BotParamType;
 import org.gem.indo.dooit.models.enums.BotType;
 import org.gem.indo.dooit.models.goal.Goal;
 import org.gem.indo.dooit.views.helpers.activity.CurrencyHelper;
@@ -26,13 +28,15 @@ public abstract class GoalBotController extends DooitBotController {
     protected GoalManager goalManager;
 
     protected Goal goal;
+    protected BaseChallenge challenge;
     // The Tip to be shown at the end of the conversation
     protected Tip tip;
 
-    public GoalBotController(Context context, BotType botType, Goal goal, Tip tip) {
+    public GoalBotController(Context context, BotType botType, Goal goal, BaseChallenge challenge, Tip tip) {
         super(context, botType);
         ((DooitApplication) context.getApplicationContext()).component.inject(this);
         this.goal = goal;
+        this.challenge = challenge;
         this.tip = tip;
     }
 
@@ -80,8 +84,11 @@ public abstract class GoalBotController extends DooitBotController {
             case GOAL_HAS_LOCAL_IMAGE_URI:
                 model.values.put(key, goal.hasLocalImageUri());
                 break;
+            case CHALLENGE_INTRO:
+                model.values.put(key, challenge.getIntro());
+                break;
             case TIP_INTRO:
-                model.values.put(key, persisted.loadConvoTip().getIntro());
+                model.values.put(key, tip.getIntro());
                 break;
             default:
                 super.resolveParam(model, paramType);
@@ -111,8 +118,10 @@ public abstract class GoalBotController extends DooitBotController {
         switch (objType) {
             case GOAL:
                 return goal;
+            case CHALLENGE:
+                return challenge;
             case TIP:
-                return persisted.loadConvoTip();
+                return tip;
             default:
                 return null;
         }

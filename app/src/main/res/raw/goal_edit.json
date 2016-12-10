@@ -259,10 +259,18 @@
   },
 
 
+
+
   {
     "name": "goal_edit_challenge_intro",
-    "type": "end",
-    "autoNextScreen": "CHALLENGE"
+    "type": "text",
+    "text": "$(bot_challenge_intro)",
+    "autoNext": "goal_edit_challenge_show"
+  },
+  {
+    "name": "goal_edit_challenge_show",
+    "type": "challenge",
+    "autoNext": "goal_edit_end"
   },
 
 

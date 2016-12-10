@@ -131,8 +131,14 @@
 
   {
     "name": "goal_withdraw_challenge_intro",
-    "type": "end",
-    "autoNextScreen": "CHALLENGE"
+    "type": "text",
+    "text": "$(bot_challenge_intro)",
+    "autoNext": "goal_withdraw_challenge_shown"
+  },
+  {
+    "name": "goal_withdraw_challenge_shown",
+    "type": "challenge",
+    "autoNext": "goal_withdraw_end"
   },
 
 

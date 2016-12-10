@@ -84,7 +84,7 @@ public class ReturningUserController extends DooitBotController {
             case "convo_default_return_a_progress_intro_tip":
                 return tip != null;
             case "convo_default_return_a_progress_intro_challenge":
-                return challenge != null;
+                return challenge != null && challenge.isActive();
             default:
                 return true;
         }
