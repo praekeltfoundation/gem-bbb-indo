@@ -45,7 +45,6 @@
         "name": "goal_end_date",
         "nextOnFinish": "goal_edit_do_update",
         "type": "inlineDate",
-        "typeOnFinish": "text",
         "inlineEditHint": "$(type_date_hint)"
       }
     ]
