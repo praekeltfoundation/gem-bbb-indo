@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/item_view_bot_carousel_card"
     android:layout_width="@dimen/bot_carousel_card_width"
     android:layout_height="wrap_content"
@@ -12,7 +13,9 @@
         android:id="@+id/item_view_bot_carousel_card_image"
         android:layout_width="match_parent"
         android:layout_height="@dimen/bot_carousel_card_image_height"
-        android:scaleType="centerCrop"/>
+        android:scaleType="centerCrop"
+        android:background="@color/purple"
+        app:placeholderImage="@drawable/empty_image"/>
 
     <TextView
         android:id="@+id/item_view_bot_carousel_card_title"
