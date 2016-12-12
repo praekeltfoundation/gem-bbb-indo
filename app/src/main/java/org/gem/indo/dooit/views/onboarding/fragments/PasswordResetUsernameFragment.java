@@ -3,6 +3,7 @@ package org.gem.indo.dooit.views.onboarding.fragments;
 import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.text.TextUtils;
@@ -118,7 +119,7 @@ public class PasswordResetUsernameFragment extends Fragment {
         final String username = usernameBox.getEditText();
 
         if (TextUtils.isEmpty(username)) {
-            usernameBox.setMessageText("Must enter a username.");
+            usernameBox.setMessageText(getString(R.string.activity_password_reset_username_required));
             return;
         }
 
@@ -130,14 +131,18 @@ public class PasswordResetUsernameFragment extends Fragment {
         dataSubscription = userManager.getSecurityQuestion(usernameBox.getEditText(), new DooitErrorHandler() {
             @Override
             public void onError(final DooitAPIError error) {
-                getActivity().runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        Map<String, List<String>> errorMap = error.getErrorResponse().getFieldErrors();
-                        List<String> msgs = errorMap.get("username");
-                        usernameBox.setMessageText(TextUtils.join("\n", msgs));
-                    }
-                });
+                if (error == null || error.getErrorResponse() == null) {
+                    Snackbar.make(usernameBox, R.string.fragment_reset_could_not_fetch_security_q, Snackbar.LENGTH_SHORT).show();
+                } else {
+                    usernameBox.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            Map<String, List<String>> errorMap = error.getErrorResponse().getFieldErrors();
+                            List<String> msgs = errorMap.get("username");
+                            usernameBox.setMessageText(TextUtils.join("\n", msgs));
+                        }
+                    });
+                }
             }
         }).doAfterTerminate(new Action0() {
             @Override

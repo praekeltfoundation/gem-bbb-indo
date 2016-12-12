@@ -146,14 +146,14 @@ public class PasswordResetPasswordFragment extends Fragment {
         String password = passwordBox.getEditText();
 
         if (TextUtils.isEmpty(answer)) {
-            answerBox.setMessageText("Required.");
+            answerBox.setMessageText(getString(R.string.label_required));
             valid = false;
         } else {
             answerBox.setMessageText("");
         }
 
         if (TextUtils.isEmpty(password)) {
-            passwordBox.setMessageText("Required.");
+            passwordBox.setMessageText(getString(R.string.label_required));
             valid = false;
         } else {
             passwordBox.setMessageText("");
@@ -171,7 +171,7 @@ public class PasswordResetPasswordFragment extends Fragment {
         userManager.submitSecurityQuestionResponse(username, answer, password, new DooitErrorHandler() {
             @Override
             public void onError(final DooitAPIError error) {
-                getActivity().runOnUiThread(new Runnable() {
+                answerBox.post(new Runnable() {
                     @Override
                     public void run() {
                         Map<String, List<String>> errorMap = error.getErrorResponse().getFieldErrors();
@@ -180,14 +180,21 @@ public class PasswordResetPasswordFragment extends Fragment {
                         } else {
                             answerBox.setMessageText("");
                         }
+                    }
+                });
 
+                passwordBox.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        Map<String, List<String>> errorMap = error.getErrorResponse().getFieldErrors();
                         if (errorMap.containsKey("new_password")) {
                             passwordBox.setMessageText(TextUtils.join("\n", errorMap.get("new_password")));
                         } else {
                             passwordBox.setMessageText("");
                         }
                     }
-                });            }
+                });
+            }
         }).doAfterTerminate(new Action0() {
             @Override
             public void call() {
