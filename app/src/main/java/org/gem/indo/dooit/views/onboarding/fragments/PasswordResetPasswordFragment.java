@@ -1,5 +1,6 @@
 package org.gem.indo.dooit.views.onboarding.fragments;
 
+import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -20,6 +21,9 @@ import org.gem.indo.dooit.api.managers.UserManager;
 import org.gem.indo.dooit.api.responses.EmptyResponse;
 import org.gem.indo.dooit.views.custom.WigglyEditText;
 
+import java.util.List;
+import java.util.Map;
+
 import javax.inject.Inject;
 
 import butterknife.BindView;
@@ -27,6 +31,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
 import rx.Subscription;
+import rx.functions.Action0;
 import rx.functions.Action1;
 
 public class PasswordResetPasswordFragment extends Fragment {
@@ -141,39 +146,56 @@ public class PasswordResetPasswordFragment extends Fragment {
         String password = passwordBox.getEditText();
 
         if (TextUtils.isEmpty(answer)) {
-            Toast.makeText(getContext(), "Must enter a username.", Toast.LENGTH_SHORT).show();
+            answerBox.setMessageText("Required.");
             valid = false;
+        } else {
+            answerBox.setMessageText("");
         }
 
         if (TextUtils.isEmpty(password)) {
-            Toast.makeText(getContext(), "Must enter new password.", Toast.LENGTH_SHORT).show();
+            passwordBox.setMessageText("Required.");
             valid = false;
+        } else {
+            passwordBox.setMessageText("");
         }
 
         if (!valid) {
             return;
         }
 
+        final ProgressDialog dialog = new ProgressDialog(getContext());
+        dialog.setIndeterminate(true);
+        dialog.setMessage(getString(R.string.label_loading));
+        dialog.show();
+
         userManager.submitSecurityQuestionResponse(username, answer, password, new DooitErrorHandler() {
             @Override
-            public void onError(DooitAPIError error) {
+            public void onError(final DooitAPIError error) {
                 getActivity().runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        Toast.makeText(getContext(), "Invalid details.", Toast.LENGTH_SHORT).show();
+                        Map<String, List<String>> errorMap = error.getErrorResponse().getFieldErrors();
+                        if (errorMap.containsKey("answer")) {
+                            answerBox.setMessageText(TextUtils.join("\n", errorMap.get("answer")));
+                        } else {
+                            answerBox.setMessageText("");
+                        }
+
+                        if (errorMap.containsKey("new_password")) {
+                            passwordBox.setMessageText(TextUtils.join("\n", errorMap.get("new_password")));
+                        } else {
+                            passwordBox.setMessageText("");
+                        }
                     }
-                });
+                });            }
+        }).doAfterTerminate(new Action0() {
+            @Override
+            public void call() {
+                dialog.dismiss();
             }
         }).subscribe(new Action1<EmptyResponse>() {
             @Override
             public void call(EmptyResponse response) {
-                getActivity().runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        Toast.makeText(getContext(), "Success!", Toast.LENGTH_SHORT).show();
-                    }
-                });
-
                 getActivity().finish();
             }
         });

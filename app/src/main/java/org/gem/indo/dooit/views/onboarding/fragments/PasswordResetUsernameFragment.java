@@ -1,5 +1,6 @@
 package org.gem.indo.dooit.views.onboarding.fragments;
 
+import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -18,6 +19,9 @@ import org.gem.indo.dooit.api.DooitErrorHandler;
 import org.gem.indo.dooit.api.managers.UserManager;
 import org.gem.indo.dooit.views.custom.WigglyEditText;
 
+import java.util.List;
+import java.util.Map;
+
 import javax.inject.Inject;
 
 import butterknife.BindView;
@@ -25,6 +29,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
 import rx.Subscription;
+import rx.functions.Action0;
 import rx.functions.Action1;
 
 public class PasswordResetUsernameFragment extends Fragment {
@@ -113,36 +118,39 @@ public class PasswordResetUsernameFragment extends Fragment {
         final String username = usernameBox.getEditText();
 
         if (TextUtils.isEmpty(username)) {
-            Toast.makeText(getContext(), "Must enter a username.", Toast.LENGTH_SHORT).show();
+            usernameBox.setMessageText("Must enter a username.");
             return;
         }
 
-        userManager.getSecurityQuestion(usernameBox.getEditText(), new DooitErrorHandler() {
+        final ProgressDialog dialog = new ProgressDialog(getContext());
+        dialog.setIndeterminate(true);
+        dialog.setMessage(getString(R.string.label_loading));
+        dialog.show();
+
+        dataSubscription = userManager.getSecurityQuestion(usernameBox.getEditText(), new DooitErrorHandler() {
             @Override
-            public void onError(DooitAPIError error) {
+            public void onError(final DooitAPIError error) {
                 getActivity().runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        Toast.makeText(getContext(), "No such username exists.", Toast.LENGTH_SHORT).show();
+                        Map<String, List<String>> errorMap = error.getErrorResponse().getFieldErrors();
+                        List<String> msgs = errorMap.get("username");
+                        usernameBox.setMessageText(TextUtils.join("\n", msgs));
                     }
                 });
+            }
+        }).doAfterTerminate(new Action0() {
+            @Override
+            public void call() {
+                dialog.dismiss();
             }
         }).subscribe(new Action1<String>() {
             @Override
             public void call(String s) {
-                if (TextUtils.isEmpty(s)) {
-                    getActivity().runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            Toast.makeText(getContext(), "No security question.", Toast.LENGTH_SHORT).show();
-                        }
-                    });
-                } else {
-                    FragmentTransaction ft = getFragmentManager().beginTransaction();
-                    Fragment f = PasswordResetPasswordFragment.newInstance(username, s);
-                    ft.replace(R.id.activity_container, f, "password_reset_fragment");
-                    ft.commit();
-                }
+                FragmentTransaction ft = getFragmentManager().beginTransaction();
+                Fragment f = PasswordResetPasswordFragment.newInstance(username, s);
+                ft.replace(R.id.activity_container, f, "password_reset_fragment");
+                ft.commit();
             }
         });
     }

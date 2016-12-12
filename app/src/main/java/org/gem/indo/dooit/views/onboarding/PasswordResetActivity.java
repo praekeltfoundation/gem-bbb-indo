@@ -17,6 +17,7 @@ import org.gem.indo.dooit.DooitApplication;
 import org.gem.indo.dooit.R;
 import org.gem.indo.dooit.api.managers.UserManager;
 import org.gem.indo.dooit.helpers.SquiggleBackgroundHelper;
+import org.gem.indo.dooit.views.DooitActivity;
 import org.gem.indo.dooit.views.custom.WigglyEditText;
 import org.gem.indo.dooit.views.helpers.activity.DooitActivityBuilder;
 import org.gem.indo.dooit.views.onboarding.fragments.PasswordResetUsernameFragment;
@@ -33,7 +34,7 @@ import rx.Subscription;
  * Created by Rudolph Jacobs on 2016-12-08.
  */
 
-public class PasswordResetActivity extends AppCompatActivity {
+public class PasswordResetActivity extends DooitActivity {
     /*************
      * Constants *
      *************/

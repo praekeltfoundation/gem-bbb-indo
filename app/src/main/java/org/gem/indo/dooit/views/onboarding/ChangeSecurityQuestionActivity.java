@@ -17,6 +17,7 @@ import org.gem.indo.dooit.api.DooitErrorHandler;
 import org.gem.indo.dooit.api.managers.UserManager;
 import org.gem.indo.dooit.api.responses.EmptyResponse;
 import org.gem.indo.dooit.helpers.SquiggleBackgroundHelper;
+import org.gem.indo.dooit.views.DooitActivity;
 import org.gem.indo.dooit.views.helpers.activity.DooitActivityBuilder;
 
 import javax.inject.Inject;
@@ -28,7 +29,7 @@ import butterknife.Unbinder;
 import rx.Subscription;
 import rx.functions.Action1;
 
-public class ChangeSecurityQuestionActivity extends AppCompatActivity {
+public class ChangeSecurityQuestionActivity extends DooitActivity {
     /*************
      * Constants *
      *************/
