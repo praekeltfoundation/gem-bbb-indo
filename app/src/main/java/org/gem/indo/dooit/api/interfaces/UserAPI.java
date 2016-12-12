@@ -1,7 +1,9 @@
 package org.gem.indo.dooit.api.interfaces;
 
 import org.gem.indo.dooit.api.requests.ChangePassword;
+import org.gem.indo.dooit.api.requests.ChangeSecurityQuestion;
 import org.gem.indo.dooit.api.requests.ChangeUser;
+import org.gem.indo.dooit.api.requests.ResetPassword;
 import org.gem.indo.dooit.api.responses.EmptyResponse;
 import org.gem.indo.dooit.models.User;
 
@@ -38,24 +40,15 @@ public interface UserAPI {
         @Body ChangePassword pw
     );
 
-    @Multipart
     @POST("/api/users/change_security_question/")
-    Observable<EmptyResponse> alterSecurityQuestion(
-        @Part("new_question") String question,
-        @Part("new_answer") String answer
-    );
+    Observable<EmptyResponse> alterSecurityQuestion(@Body ChangeSecurityQuestion changeQuestion);
 
     @GET("/api/security_question/")
     Observable<String> getSecurityQuestion(
         @Query("username") String username
     );
 
-    @Multipart
     @POST("/api/security_question/")
-    Observable<EmptyResponse> submitSecurityQuestionResponse(
-        @Query("username") String username,
-        @Part("answer") String answer,
-        @Part("new_password") String password
-    );
+    Observable<EmptyResponse> submitSecurityQuestionResponse(@Body ResetPassword resetPassword);
 
 }

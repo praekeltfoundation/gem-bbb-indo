@@ -6,7 +6,9 @@ import android.support.annotation.NonNull;
 import org.gem.indo.dooit.api.DooitErrorHandler;
 import org.gem.indo.dooit.api.interfaces.UserAPI;
 import org.gem.indo.dooit.api.requests.ChangePassword;
+import org.gem.indo.dooit.api.requests.ChangeSecurityQuestion;
 import org.gem.indo.dooit.api.requests.ChangeUser;
+import org.gem.indo.dooit.api.requests.ResetPassword;
 import org.gem.indo.dooit.api.responses.EmptyResponse;
 import org.gem.indo.dooit.models.User;
 
@@ -46,7 +48,7 @@ public class UserManager extends DooitManager {
     }
 
     public Observable<EmptyResponse> alterSecurityQuestion(String question, String answer, DooitErrorHandler errorHandler) {
-        return useNetwork(userAPI.alterSecurityQuestion(question, answer), errorHandler);
+        return useNetwork(userAPI.alterSecurityQuestion(new ChangeSecurityQuestion(question, answer)), errorHandler);
     }
 
     public Observable<String> getSecurityQuestion(String username, DooitErrorHandler errorHandler) {
@@ -54,6 +56,6 @@ public class UserManager extends DooitManager {
     }
 
     public Observable<EmptyResponse> submitSecurityQuestionResponse(String username, String answer, String password, DooitErrorHandler errorHandler) {
-        return useNetwork(userAPI.submitSecurityQuestionResponse(username, answer, password), errorHandler);
+        return useNetwork(userAPI.submitSecurityQuestionResponse(new ResetPassword(username, answer, password)), errorHandler);
     }
 }
