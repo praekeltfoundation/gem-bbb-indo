@@ -73,21 +73,17 @@ public class LoginActivity extends DooitActivity {
 
     @OnClick(R.id.activity_login_login_button)
     public void login() {
-        final ProgressDialog progress = new ProgressDialog(this);
-        progress.setMessage("Attempting to log in) ");
-        progress.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-        progress.setIndeterminate(true);
         if (!detailsValid())
             return;
 
         hideKeyboard();
-        progress.show();
+        showProgressDialog(R.string.login_progress_dialog_message);
         authenticationManager.login(name.getText().toString(), password.getText().toString(), new DooitErrorHandler() {
             @Override
             public void onError(DooitAPIError error) {
                 for (String msg : error.getErrorResponse().getErrors())
                     Snackbar.make(buttonLogin, msg, Snackbar.LENGTH_SHORT).show();
-                progress.hide();
+                dismissDialog();
             }
         }).subscribe(new Action1<AuthenticationResponse>() {
             @Override
