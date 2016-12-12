@@ -6,7 +6,14 @@ import android.os.Looper;
 
 import org.gem.indo.dooit.models.bot.Answer;
 import org.gem.indo.dooit.models.bot.BaseBotModel;
+import org.gem.indo.dooit.models.enums.BotCallType;
+import org.gem.indo.dooit.models.enums.BotMessageType;
+import org.gem.indo.dooit.models.enums.BotObjectType;
+import org.gem.indo.dooit.models.enums.BotParamType;
+import org.gem.indo.dooit.models.enums.BotType;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -16,11 +23,12 @@ import java.util.Map;
 public abstract class BotController {
 
     protected Context context;
-    protected OnAsyncListener listener;
     protected Handler handler;
+    final protected BotType botType;
 
-    protected BotController(Context context) {
+    protected BotController(Context context, BotType botType) {
         this.context = context;
+        this.botType = botType;
         handler = new Handler(Looper.getMainLooper());
     }
 
@@ -38,7 +46,7 @@ public abstract class BotController {
      * @param answerLog The Answer Log up to the point of the calling Node
      * @param model     The calling Node or Answer
      */
-    public abstract void onCall(String key, Map<String, Answer> answerLog, BaseBotModel model);
+    public abstract void onCall(BotCallType key, Map<String, Answer> answerLog, BaseBotModel model);
 
     /**
      * Called by viewholders trigger behaviour in the controller.
@@ -58,7 +66,7 @@ public abstract class BotController {
      * @param model     The calling Node or Answer
      * @param listener  Listener to be called when async operation is done
      */
-    public void onAsyncCall(String key, Map<String, Answer> answerLog, BaseBotModel model, OnAsyncListener listener) {
+    public void onAsyncCall(BotCallType key, Map<String, Answer> answerLog, BaseBotModel model, OnAsyncListener listener) {
         // Override me
     }
 
@@ -79,6 +87,8 @@ public abstract class BotController {
         // Override me
     }
 
+    // TODO: Currently unused. Input is retrieved by scanning conversation history. We need to
+    // decide how to store values while the "Accept" or "Cancel" is outstanding.
     public abstract void input(BotParamType inputType, Object value);
 
     /**
@@ -98,6 +108,29 @@ public abstract class BotController {
      */
     public Object getObject(BotObjectType objType) {
         return null;
+    }
+
+    public BotType getBotType() {
+        return botType;
+    }
+
+    /**
+     * Allows the controller to filter out multiple choice answers that should not be shown to the
+     * user.
+     *
+     * @param models
+     * @return
+     */
+    public final List<Answer> filter(List<Answer> models) {
+        List<Answer> answers = new ArrayList<>();
+        for (Answer answer : models)
+            if (filter(answer))
+                answers.add(answer);
+        return answers;
+    }
+
+    public boolean filter(Answer answer) {
+        return true;
     }
 
     public interface OnAsyncListener {

@@ -106,6 +106,9 @@
     <!-- Bot -->
     <string name="bot_carousel_card_select">Select</string>
     <string name="bot_tip_intro">$(tip.intro)</string>
+    <string name="bot_challenge_intro">$(challenge.intro)</string>
+    <string name="bot_challenge_outro">$(challenge.outro)</string>
+    <string name="of_target_amount">of %s</string>
 
     <!--JSON GOALS-->
     <string name="greeting">Hola!</string>
@@ -134,17 +137,34 @@
     <string name="infoGoalEnd">Thank you. That concludes the goal-setting process.</string>
     <string name="infoGoalAddedCongratulations">Great job! You\'ve set your first savings goal! </string>
 
-    <!-- BOT: goal_add -->
-    <!-- Questions -->
-    <string name="goal_add_greeting">Hello $(user.username)!</string>
-    <string name="goal_add_intro">My Name is Dooit. I\'m gonna help  you save!</string>
-    <string name="goal_add_ask_goal">So what are you you saving for?</string>
+    <!-- BOT: returning_user -->
+    <string name="convo_default_return_q_greeting_1">Hello, $(user.username)!</string>
+    <string name="convo_default_return_q_greeting_2">Nice to see you again!</string>
+    <string name="convo_default_return_q_progress_intro">Let\'s have a look at your progress&#8230;</string>
+    <string name="convo_default_return_a_progress_intro_tip">Take me to the tips, please.</string>
+    <string name="convo_default_return_a_progress_intro_challenge">Take me to this week\'s challenge.</string>
 
-    <string name="goal_add_ask_amount">Do you know how much you need to save?</string>
+
+    <!-- BOT: goal_add -->
+    <string name="goal_add_q_greeting">Hi, $(user.username)! My name is Dooit. I\'m your personal money coach and I\'m here to help you save. Let\'s go!</string>
+    <string name="goal_add_a_greeting_1">Hi, Dooit. Yay! Let\'s go!</string>
+    <string name="goal_add_a_greeting_2">Awesome! Let\'s get saving.</string>
+
+    <string name="goal_add_q_ask_goal">So what are you you saving for?</string>
+    <string name="goal_add_q_goal_prototype_selected">Fantastic!</string>
+    <string name="goal_add_a_goal_prototype_target">Add Amount</string>
+
+    <string name="goal_add_custom">Add own goal</string>
+    <string name="goal_add_a_camera">I want to upload my own picture.</string>
+    <string name="goal_add_a_gallery">I want to select a picture from the gallery.</string>
+
+    <string name="goal_add_q_ask_amount">How much will you need to save for $(goal.name)?</string>
+    <string name="goal_add_q_ask_date">By what date do you want to have saved for your goal?</string>
+
+    <string name="goal_add_q_verify">If you save $(goal.weekly_target_currency) each week you will save enough to get your $(goal.name) in $(goal.weeks_left_up) weeks.</string>
 
     <!-- Answers -->
     <string name="goal_add_greeting_response">Hola!</string>
-    <string name="goal_add_custom">Add own goal</string>
 
     <!-- BOT: goal_deposit -->
     <!-- User clicks on add savings (+ Deposit) on Goal saving page  -->
@@ -211,10 +231,12 @@
     <string name="goal_edit_image_cancel">@string/label_cancel</string>
     <string name="goal_edit_delete_reason_reached">I\'ve already achieved this goal.</string>
     <string name="goal_edit_delete_reason_difficult">It\'s too difficult to save!</string>
-    <string name="goal_edit_delete_reason_do_not_want">I don\'t want [goal_name] anymore.</string>
+    <string name="goal_edit_delete_reason_do_not_want">I don\'t want $(goal.name) anymore.</string>
     <string name="goal_edit_delete_reason_misc">No reason, I just want to delete it.</string>
     <string name="goal_edit_delete_reason_cancel">Never mind! I want to keep saving.</string>
     <string name="goal_edit_info_exit">Okay, I\'m done for now. Can we exit?</string>
+    <string name="goal_edit_delete_difficult_help">Okay! Please help me create a new savings plan.</string>
+    <string name="goal_edit_delete_difficult_do_delete">No thanks. Just delete my goal.</string>
 
     <!-- BOT: tip_intro -->
     <string name="tip_intro_inline_link">TODO: Show Tip</string>
@@ -296,7 +318,7 @@
     <string name="target_savings_history">Savings History</string>
     <string name="target_weeks">Weeks</string>
     <string name="target_add_goal">ADD GOAL</string>
-    <string name="target_savings_message" formatted="false">Save %s %s each week to get your %s in %s weeks.</string>
+    <string name="target_savings_message" formatted="false">Save %s each week to get your %s in %s weeks.</string>
     <string name="target_edit_savings_plan">Edit Savings Plan</string>
     <string name="target_savings_plan">Savings Plan</string>
     <string name="target_date">Target Date</string>
@@ -369,7 +391,6 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="challenge_completed">Challenge complete</string>
     <string name="saved">saved</string>
-    <string name="of_target_amount">of %1$s %2$.2f</string>
     <string name="label_select_picture">Select picture</string>
     <string name="title_activity_feedback">Contact Dooit</string>
 
