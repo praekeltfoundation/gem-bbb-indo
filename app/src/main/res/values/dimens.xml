@@ -19,8 +19,8 @@
     <dimen name="spinner_item_padding">10dp</dimen>
 
     <!-- Common -->
-    <dimen name="wiggly_edit_box_padding_h">16dp</dimen>
-    <dimen name="wiggly_edit_box_padding_v">8dp</dimen>
+    <dimen name="wiggly_edit_box_padding_h">12dp</dimen>
+    <dimen name="wiggly_edit_box_padding_v">12dp</dimen>
 
     <!-- Registration -->
     <dimen name="registration_activity_padding">24dp</dimen>
