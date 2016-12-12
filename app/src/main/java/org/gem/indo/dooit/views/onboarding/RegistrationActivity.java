@@ -51,6 +51,8 @@ import rx.functions.Action1;
 
 public class RegistrationActivity extends DooitActivity {
 
+    private static final int DEFAULT_AGE = 16;
+
     private static final int MIN_AGE = 12;
     private static final int MAX_AGE = 80;
     private static final String NAME_PATTERN = "[a-zA-Z0-9@\\.\\=\\-\\_]+";
@@ -132,7 +134,7 @@ public class RegistrationActivity extends DooitActivity {
         textViewLogin.setText(spanLogin);
         SquiggleBackgroundHelper.setBackground(this, R.color.purple, R.color.purple_light, background);
         password.setImeActionLabel(getString(R.string.label_register), EditorInfo.IME_ACTION_DONE);
-        age.setSelection(16 - MIN_AGE); // 16
+        age.setSelection(DEFAULT_AGE - MIN_AGE); // 16
 
         name.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
