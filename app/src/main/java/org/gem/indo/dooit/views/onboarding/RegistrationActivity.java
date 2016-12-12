@@ -1,5 +1,6 @@
 package org.gem.indo.dooit.views.onboarding;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -50,6 +51,8 @@ import rx.functions.Action1;
 
 public class RegistrationActivity extends DooitActivity {
 
+    private static final int DEFAULT_AGE = 16;
+
     private static final int MIN_AGE = 12;
     private static final int MAX_AGE = 80;
     private static final String NAME_PATTERN = "[a-zA-Z0-9@\\.\\=\\-\\_]+";
@@ -61,7 +64,7 @@ public class RegistrationActivity extends DooitActivity {
 
     @BindView(R.id.activity_registration)
     View background;
-    
+
     @BindView(org.gem.indo.dooit.R.id.activity_registration_t_c_text_view)
     TextView textViewTC;
 
@@ -122,7 +125,7 @@ public class RegistrationActivity extends DooitActivity {
 
         // Default gender
         gender.check(R.id.activity_registration_gender_girl);
-        
+
         if (!getLocal().getCountry().equals("in")) {
             spanTc.setSpan(new ForegroundColorSpan(ResourcesCompat.getColor(getResources(), org.gem.indo.dooit.R.color.pink, getTheme())), spanTc.length() - 17, spanTc.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
             spanLogin.setSpan(new ForegroundColorSpan(ResourcesCompat.getColor(getResources(), org.gem.indo.dooit.R.color.pink, getTheme())), spanLogin.length() - 6, spanLogin.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
@@ -131,7 +134,26 @@ public class RegistrationActivity extends DooitActivity {
         textViewLogin.setText(spanLogin);
         SquiggleBackgroundHelper.setBackground(this, R.color.purple, R.color.purple_light, background);
         password.setImeActionLabel(getString(R.string.label_register), EditorInfo.IME_ACTION_DONE);
-        age.setSelection(16 - MIN_AGE); // 16
+        age.setSelection(DEFAULT_AGE - MIN_AGE); // 16
+
+        name.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView textView, int actionId, KeyEvent event) {
+                if (actionId == EditorInfo.IME_ACTION_NEXT) {
+                    hideKeyboard();
+                    textView.clearFocus();
+                    age.requestFocus();
+                    age.performClick();
+                }
+                return true;
+            }
+        });
+    }
+
+    @OnClick({R.id.activity_registration_gender_girl, R.id.activity_registration_gender_boy,} )
+    public void genderClick() {
+        number.requestFocus();
+        number.performClick();
     }
 
 
@@ -152,19 +174,19 @@ public class RegistrationActivity extends DooitActivity {
 
     @OnClick(R.id.activity_registration_register_button)
     public void register() {
-
         if (!detailsValid()) {
             hideKeyboard();
             return;
         }
 
         hideKeyboard();
-
+        showProgressDialog(R.string.reg_progress_dialog_message);
         authenticationManager.onboard(getUser(), new DooitErrorHandler() {
             @Override
             public void onError(DooitAPIError error) {
                 for (String msg : error.getErrorMessages())
                     Snackbar.make(registerButton, msg, Snackbar.LENGTH_SHORT).show();
+                    dismissDialog();
             }
         }).subscribe(new Action1<OnboardingResponse>() {
             @Override
@@ -174,6 +196,7 @@ public class RegistrationActivity extends DooitActivity {
                     public void onError(DooitAPIError error) {
                         for (String msg : error.getErrorMessages())
                             Snackbar.make(registerButton, msg, Snackbar.LENGTH_SHORT).show();
+                            dismissDialog();
                     }
                 }).subscribe(new Action1<AuthenticationResponse>() {
                     @Override
