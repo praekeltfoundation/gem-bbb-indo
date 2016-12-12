@@ -1,5 +1,2 @@
-Added Feedback form
-Added Challenge Push Notification
-Added Challenge Intro Bot Card
-Added Challenge Instructional Text
-Fixed keyboard obscuring Tips list
+
+Inserted latest Translations
