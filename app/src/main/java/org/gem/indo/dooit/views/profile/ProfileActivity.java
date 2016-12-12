@@ -10,6 +10,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.design.widget.AppBarLayout;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
@@ -208,6 +209,10 @@ public class ProfileActivity extends DooitActivity {
     protected void onResume() {
         super.onResume();
         user = persisted.getCurrentUser();
+        if (user == null) {
+            Snackbar.make(toolbar, R.string.prompt_relogin, Snackbar.LENGTH_SHORT);
+            return;
+        }
         setTitle(user.getUsername());
     }
 
@@ -345,6 +350,10 @@ public class ProfileActivity extends DooitActivity {
 
     protected void uploadImage(String mimetype, String filepath) {
         User user = persisted.getCurrentUser();
+        if (user == null) {
+            Snackbar.make(toolbar, R.string.prompt_relogin, Snackbar.LENGTH_SHORT);
+            return;
+        }
         showProgressDialog(R.string.profile_image_progress);
         fileUploadManager.upload(user.getId(), mimetype, new File(filepath), new DooitErrorHandler() {
             @Override
