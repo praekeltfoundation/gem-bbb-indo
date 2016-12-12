@@ -111,12 +111,10 @@ public class RegistrationActivity extends DooitActivity {
         setContentView(org.gem.indo.dooit.R.layout.activity_registration);
         ((DooitApplication) getApplication()).component.inject(this);
         ButterKnife.bind(this);
-
-//        Spannable spanTc = new SpannableString(getString(org.gem.indo.dooit.R.string.reg_t_c));
+        
         String stringTc = getResources().getString(org.gem.indo.dooit.R.string.reg_t_c);
         TextSpannableHelper spanTcHelper = new TextSpannableHelper();
 
-//        Spannable spanLogin = new SpannableString(getString(org.gem.indo.dooit.R.string.already_registered_log_in));
         String stringLogin = getResources().getString(org.gem.indo.dooit.R.string.already_registered_log_in);
         TextSpannableHelper spanLoginHelper = new TextSpannableHelper();
 
@@ -128,13 +126,6 @@ public class RegistrationActivity extends DooitActivity {
 
         // Default gender
         gender.check(R.id.activity_registration_gender_girl);
-
-        //Not necessary anymore due to TextSpannableHelper
-        /*if (!getLocal().getCountry().equals("in")) {
-            spanTc.setSpan(new ForegroundColorSpan(ResourcesCompat.getColor(getResources(), org.gem.indo.dooit.R.color.pink, getTheme())), spanTc.length() - 17, spanTc.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-            spanLogin.setSpan(new ForegroundColorSpan(ResourcesCompat.getColor(getResources(), org.gem.indo.dooit.R.color.pink, getTheme())), spanLogin.length() - 6, spanLogin.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-        }*/
-
 
         textViewTC.setText(spanTcHelper.styleText(this, R.style.AppTheme_TextView_Bold_Small_Accented, stringTc));
         textViewLogin.setText(spanLoginHelper.styleText(this, R.style.AppTheme_TextView_Bold_Small_Accented, stringLogin));
