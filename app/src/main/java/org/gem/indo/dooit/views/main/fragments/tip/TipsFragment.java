@@ -1,6 +1,7 @@
 package org.gem.indo.dooit.views.main.fragments.tip;
 
 import android.app.Activity;
+import android.content.Context;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
@@ -148,6 +149,7 @@ public class TipsFragment extends Fragment implements OnTipsAvailableListener {
                 showFiltering(constraint);
 
                 tipsTabAdapter.getPrimaryItem().onSearch(constraint);
+                hideKeyBoard();
             }
 
             return true;
@@ -156,7 +158,8 @@ public class TipsFragment extends Fragment implements OnTipsAvailableListener {
     }
 
     void hideKeyBoard() {
-        InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Activity.INPUT_METHOD_SERVICE);
+        InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(getActivity().getCurrentFocus().getWindowToken(),InputMethodManager.HIDE_NOT_ALWAYS);
 
         //imm.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0);
 

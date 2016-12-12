@@ -21,6 +21,7 @@ import org.gem.indo.dooit.api.managers.AuthenticationManager;
 import org.gem.indo.dooit.api.responses.AuthenticationResponse;
 import org.gem.indo.dooit.helpers.Persisted;
 import org.gem.indo.dooit.helpers.SquiggleBackgroundHelper;
+import org.gem.indo.dooit.services.NotificationAlarm;
 import org.gem.indo.dooit.views.DooitActivity;
 import org.gem.indo.dooit.views.helpers.activity.DooitActivityBuilder;
 import org.gem.indo.dooit.views.main.MainActivity;
@@ -88,6 +89,8 @@ public class LoginActivity extends DooitActivity {
             public void call(AuthenticationResponse authenticationResponse) {
                 persisted.setCurrentUser(authenticationResponse.getUser());
                 persisted.saveToken(authenticationResponse.getToken());
+                persisted.setNewBotUser(false);
+                NotificationAlarm.setAlarm(LoginActivity.this);
                 MainActivity.Builder.create(LoginActivity.this).startActivityClearTop();
             }
         });

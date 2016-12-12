@@ -1,4 +1,4 @@
-package org.gem.indo.dooit.models;
+package org.gem.indo.dooit.models.goal;
 
 import com.google.gson.annotations.SerializedName;
 

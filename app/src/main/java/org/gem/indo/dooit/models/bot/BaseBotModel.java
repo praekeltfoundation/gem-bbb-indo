@@ -5,12 +5,9 @@ import android.content.res.Resources;
 import android.text.TextUtils;
 import android.util.Log;
 
+import org.gem.indo.dooit.models.enums.BotCallType;
+import org.gem.indo.dooit.helpers.ValueMap;
 import org.gem.indo.dooit.models.enums.BotMessageType;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 /**
  * Created by Bernhard Müller on 11/7/2016.
@@ -22,12 +19,16 @@ public abstract class BaseBotModel {
 
     protected final String classType;
     protected String text;
+    protected String processedText; // After param parsing
     protected String name;
     protected String type;
     private String next;
-    protected String callback;
-    protected String asyncCall;
+    protected BotCallType call;
+    protected BotCallType asyncCall;
     protected String[] textParams = new String[0];
+    protected boolean immutable = false;
+
+    public final ValueMap values = new ValueMap();
 
     public BaseBotModel(String classType) {
         this.classType = classType;
@@ -40,13 +41,29 @@ public abstract class BaseBotModel {
             String resourceString = jsonResourceName.replace("$(", "").replace(")", "").replaceAll(" +", "");
             return context.getString(context.getResources().getIdentifier(resourceString, "string", context.getPackageName()));
         } catch (Resources.NotFoundException ex) {
-            Log.d(TAG, jsonResourceName);
+            Log.d(TAG, "Model had an unknown resource as its 'text' attribute: " + jsonResourceName);
             throw ex;
         }
     }
 
     public String getText(Context context) {
         return getResourceString(context, text);
+    }
+
+    public boolean hasText() {
+        return !TextUtils.isEmpty(text);
+    }
+
+    public String getProcessedText() {
+        return processedText;
+    }
+
+    public void setProcessedText(String processedText) {
+        this.processedText = processedText;
+    }
+
+    public boolean hasProcessedText() {
+        return !TextUtils.isEmpty(processedText);
     }
 
     public String getName() {
@@ -85,19 +102,31 @@ public abstract class BaseBotModel {
         this.next = next;
     }
 
-    public String getCallback() {
-        return callback;
+    // Call keys
+
+    public BotCallType getCall() {
+        return call;
     }
 
-    public boolean hasCallback() {
-        return callback != null && !TextUtils.isEmpty(callback);
+    public boolean hasCall() {
+        return call != null;
     }
 
-    public String getAsyncCall() {
+    public BotCallType getAsyncCall() {
         return asyncCall;
     }
 
     public boolean hasAsyncCall() {
-        return !TextUtils.isEmpty(asyncCall);
+        return asyncCall != null;
+    }
+
+    // Mutability
+
+    public void finish() {
+        immutable = true;
+    }
+
+    public boolean isImmutable() {
+        return immutable;
     }
 }

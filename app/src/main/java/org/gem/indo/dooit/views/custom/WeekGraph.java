@@ -14,7 +14,7 @@ import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import org.gem.indo.dooit.models.Goal;
+import org.gem.indo.dooit.models.goal.Goal;
 
 import java.util.LinkedHashMap;
 import java.util.Locale;

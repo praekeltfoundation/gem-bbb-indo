@@ -20,9 +20,6 @@
     "name": "goal_withdraw_keep_saving",
     "type": "text",
     "text": "$(goal_withdraw_keep_saving)",
-    "textParams": [
-      "USERNAME"
-    ],
     "answers": [
       {
         "name": "goal_withdraw_keep_saving_end",
@@ -68,7 +65,7 @@
       {
         "name": "goal_withdraw_do_end",
         "text": "$(goal_withdraw_do_end)",
-        "next": "goal_withdraw_end"
+        "next": "goal_withdraw_end_message"
       }
     ]
   },
@@ -79,7 +76,7 @@
   {
     "name": "goal_withdraw_do_withdraw",
     "type": "blank",
-    "callback": "do_withdraw",
+    "call": "#do_withdraw",
     "autoNext": "goal_withdraw_info"
   },
   {
@@ -109,7 +106,7 @@
       {
         "name": "goal_withdraw_do_end",
         "text": "$(goal_withdraw_do_end)",
-        "next": "goal_withdraw_end"
+        "next": "goal_withdraw_end_message"
       }
     ]
   },
@@ -121,9 +118,6 @@
     "name": "goal_withdraw_tip_intro",
     "type": "text",
     "text": "$(bot_tip_intro)",
-    "textParams" : [
-      "TIP_INTRO"
-    ],
     "autoNext": "goal_withdraw_show_tip"
   },
   {
@@ -137,8 +131,14 @@
 
   {
     "name": "goal_withdraw_challenge_intro",
-    "type": "end",
-    "autoNextScreen": "CHALLENGE"
+    "type": "text",
+    "text": "$(bot_challenge_intro)",
+    "autoNext": "goal_withdraw_challenge_shown"
+  },
+  {
+    "name": "goal_withdraw_challenge_shown",
+    "type": "challenge",
+    "autoNext": "goal_withdraw_end"
   },
 
 

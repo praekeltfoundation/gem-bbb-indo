@@ -8,7 +8,7 @@ import android.view.ViewGroup;
 import com.facebook.drawee.view.SimpleDraweeView;
 
 import org.gem.indo.dooit.R;
-import org.gem.indo.dooit.models.Goal;
+import org.gem.indo.dooit.models.goal.Goal;
 import org.gem.indo.dooit.views.custom.ArcProgressBar;
 
 import java.util.List;
@@ -30,7 +30,9 @@ public class TargetPagerAdapter extends PagerAdapter {
         LayoutInflater inflater = LayoutInflater.from(container.getContext());
         ViewGroup layout = (ViewGroup) inflater.inflate(R.layout.fragment_target_arc_progress, container, false);
 
-        ((ArcProgressBar) layout.findViewById(R.id.progress_arc)).setProgress((int) ((goals.get(position).getValue() / goals.get(position).getTarget()) * 100));
+        int progress = (int) ((goals.get(position).getValue() / goals.get(position).getTarget()) * 100);
+        // Progress is clamped to 0 <= progress <= 100
+        ((ArcProgressBar) layout.findViewById(R.id.progress_arc)).setProgress(Math.min(Math.max(0, progress), 100));
         ((SimpleDraweeView) layout.findViewById(R.id.progress_image)).setImageURI(goals.get(position).getImageUrl());
         container.addView(layout);
         return layout;

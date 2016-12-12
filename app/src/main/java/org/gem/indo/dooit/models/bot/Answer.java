@@ -4,23 +4,26 @@ import android.content.Context;
 import android.text.TextUtils;
 import android.util.Pair;
 
-import org.gem.indo.dooit.models.enums.BotMessageType;
+import com.google.gson.annotations.SerializedName;
 
-import java.util.LinkedHashMap;
-import java.util.Map;
+import org.gem.indo.dooit.models.enums.BotParamType;
+import org.gem.indo.dooit.models.enums.BotMessageType;
 
 /**
  * Created by Bernhard Müller on 11/7/2016.
  */
 
 public class Answer extends BaseBotModel {
-    protected String inlineEditHint;
+
+    private String inlineEditHint;
     private String value;
+    // Input is currently unused
+    @SerializedName("input")
+    private String inputKey;
     private String nextOnFinish;
     private String removeOnSelect;
     private String[] changeOnSelect;
     private String typeOnFinish;
-    private Map<String, String> valueMap = new LinkedHashMap<>();
 
     public Answer() {
         super(Answer.class.toString());
@@ -41,6 +44,17 @@ public class Answer extends BaseBotModel {
 
     public void setValue(String value) {
         this.value = value;
+    }
+
+    public BotParamType getInputKey() {
+        inputKey = inputKey.replace("$(", "").replace(")", "");
+        if (hasInputKey())
+            return BotParamType.byKey(inputKey);
+        return null;
+    }
+
+    public boolean hasInputKey() {
+        return !TextUtils.isEmpty(inputKey);
     }
 
     public String getRemoveOnSelect() {
@@ -75,18 +89,6 @@ public class Answer extends BaseBotModel {
 
     public void setTypeOnFinish(String typeOnFinish) {
         this.typeOnFinish = typeOnFinish;
-    }
-
-    public void put(String key, String value) {
-        valueMap.put(key, value);
-    }
-
-    public String get(String key) {
-        return valueMap.get(key);
-    }
-
-    public boolean contains(String key) {
-        return valueMap.containsKey(key);
     }
 
     @Override

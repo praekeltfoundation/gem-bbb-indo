@@ -34,11 +34,12 @@ public class AnswerTextCurrencyViewHolder extends BaseBotViewHolder<Answer> {
 
     @Override
     public void populate(Answer model) {
-        this.dataModel = model;
+        super.populate(model);
         textView.setText(CurrencyHelper.format(dataModel.getValue()));
     }
 
-    public Context getContext() {
-        return itemView.getContext();
+    @Override
+    protected void populateModel() {
+
     }
 }

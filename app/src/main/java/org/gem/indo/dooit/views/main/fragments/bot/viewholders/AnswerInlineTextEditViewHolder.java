@@ -70,7 +70,8 @@ public class AnswerInlineTextEditViewHolder extends BaseBotViewHolder<Answer> {
         });
     }
 
-    public Context getContext() {
-        return itemView.getContext();
+    @Override
+    protected void populateModel() {
+
     }
 }

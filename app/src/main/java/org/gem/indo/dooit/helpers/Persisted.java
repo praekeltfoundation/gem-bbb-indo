@@ -14,8 +14,8 @@ import com.google.gson.internal.LinkedTreeMap;
 import org.gem.indo.dooit.DooitApplication;
 import org.gem.indo.dooit.helpers.bot.ListParameterizedType;
 import org.gem.indo.dooit.helpers.notifications.NotificationType;
-import org.gem.indo.dooit.models.Goal;
-import org.gem.indo.dooit.models.GoalPrototype;
+import org.gem.indo.dooit.models.goal.Goal;
+import org.gem.indo.dooit.models.goal.GoalPrototype;
 import org.gem.indo.dooit.models.Tip;
 import org.gem.indo.dooit.models.Token;
 import org.gem.indo.dooit.models.User;
@@ -43,8 +43,10 @@ public class Persisted {
     private static final String QUIZ_INDEX = "quiz_index";
     private static final String QUIZ_STATE = "quiz_state";
     private static final String QUIZ_ANSWERS = "quiz_answers";
+    private static final String NEW_BOT_USER = "new_user";
     private static final String BOT = "bot";
     private static final String GOAL = "goal";
+    private static final String GOALS = "goals";
     private static final String GOAL_PROTOTYPE = "goal_prototype";
     private static final String BOT_TIP = "bot_tip";
     private static final String TIPS = "tips";
@@ -114,6 +116,22 @@ public class Persisted {
         return dooitSharedPreferences.containsKey(BOT + "_" + GOAL + "_" + type.name());
     }
 
+    public void saveConvoGoals(BotType type, List<Goal> goals) {
+        dooitSharedPreferences.setComplex(BOT + "_" + GOALS + "_" + type.name(), goals);
+    }
+
+    public List<Goal> loadConvoGoals(BotType type) {
+        Goal[] goals = dooitSharedPreferences.getComplex(BOT + "_" + GOALS + "_" + type.name(), Goal[].class);
+        if (goals != null)
+            return new ArrayList<Goal>(Arrays.asList(goals));
+        else
+            return new ArrayList<Goal>();
+    }
+
+    public boolean hasConvoGoals(BotType type) {
+        return dooitSharedPreferences.containsKey(BOT + "_" + GOALS + "_" + type.name());
+    }
+
     public void clearConvoGoals() {
         for (BotType botType : BotType.values())
             dooitSharedPreferences.remove(BOT + "_" + GOAL + "_" + botType.name());
@@ -158,6 +176,28 @@ public class Persisted {
 
     public void clearConvoTip() {
         dooitSharedPreferences.remove(BOT_TIP);
+    }
+
+    public void saveConvoChallenge(BotType botType, BaseChallenge challenge) {
+        dooitSharedPreferences.setComplex(BOT + "_" + CHALLENGE + "_" + botType.name(), challenge);
+    }
+
+    public BaseChallenge loadConvoChallenge(BotType botType) {
+        if (hasConvoChallenge(botType))
+            return dooitSharedPreferences.getComplex(BOT + "_" + CHALLENGE + "_" + botType.name(), BaseChallenge.class);
+        return null;
+    }
+
+    public boolean hasConvoChallenge(BotType botType) {
+        return dooitSharedPreferences.containsKey(BOT + "_" + CHALLENGE + "_" + botType.name());
+    }
+
+    public boolean isNewBotUser() {
+        return dooitSharedPreferences.getBoolean(NEW_BOT_USER, true);
+    }
+
+    public void setNewBotUser(boolean value) {
+        dooitSharedPreferences.setBoolean(NEW_BOT_USER, value);
     }
 
     /********

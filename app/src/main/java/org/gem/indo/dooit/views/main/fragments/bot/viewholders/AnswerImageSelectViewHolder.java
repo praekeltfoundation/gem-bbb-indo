@@ -106,6 +106,11 @@ public class AnswerImageSelectViewHolder extends BaseBotViewHolder<Answer> {
         }
     }
 
+    @Override
+    protected void populateModel() {
+
+    }
+
     private void uploadImage(Intent data) {
         imageUri = data.getData();
         if (imageUri == null) {

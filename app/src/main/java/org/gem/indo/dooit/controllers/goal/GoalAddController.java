@@ -1,4 +1,4 @@
-package org.gem.indo.dooit.views.main.fragments.target.callbacks;
+package org.gem.indo.dooit.controllers.goal;
 
 import android.app.Activity;
 import android.net.Uri;
@@ -8,16 +8,20 @@ import org.gem.indo.dooit.api.DooitAPIError;
 import org.gem.indo.dooit.api.DooitErrorHandler;
 import org.gem.indo.dooit.api.managers.FileUploadManager;
 import org.gem.indo.dooit.api.managers.GoalManager;
+import org.gem.indo.dooit.api.responses.EmptyResponse;
+import org.gem.indo.dooit.models.Badge;
+import org.gem.indo.dooit.models.challenge.BaseChallenge;
+import org.gem.indo.dooit.models.enums.BotCallType;
 import org.gem.indo.dooit.helpers.MediaUriHelper;
 import org.gem.indo.dooit.helpers.Persisted;
-import org.gem.indo.dooit.models.Badge;
-import org.gem.indo.dooit.models.Goal;
+import org.gem.indo.dooit.models.Tip;
 import org.gem.indo.dooit.models.bot.Answer;
 import org.gem.indo.dooit.models.bot.BaseBotModel;
-import org.gem.indo.dooit.models.bot.BotCallback;
 import org.gem.indo.dooit.models.bot.Node;
 import org.gem.indo.dooit.models.enums.BotMessageType;
+import org.gem.indo.dooit.models.enums.BotParamType;
 import org.gem.indo.dooit.models.enums.BotType;
+import org.gem.indo.dooit.models.goal.Goal;
 import org.gem.indo.dooit.views.main.MainActivity;
 import org.gem.indo.dooit.views.main.fragments.bot.adapters.BotAdapter;
 import org.joda.time.LocalDate;
@@ -36,9 +40,9 @@ import rx.functions.Action1;
  * Created by Wimpie Victor on 2016/11/20.
  */
 
-public class GoalAddCallback extends BotCallback {
+public class GoalAddController extends GoalBotController {
 
-    private static final String TAG = GoalAddCallback.class.getName();
+    private static final String TAG = GoalAddController.class.getName();
 
     @Inject
     GoalManager goalManager;
@@ -50,28 +54,29 @@ public class GoalAddCallback extends BotCallback {
     Persisted persisted;
 
     private BotAdapter botAdapter;
-    private Goal goal;
 
-    public GoalAddCallback(Activity activity, BotAdapter botAdapter, Goal goal) {
-        super(activity);
+    public GoalAddController(Activity activity, BotAdapter botAdapter, Goal goal, BaseChallenge challenge, Tip tip) {
+        super(activity, BotType.GOAL_ADD, goal, challenge, tip);
         ((DooitApplication) activity.getApplication()).component.inject(this);
         this.botAdapter = botAdapter;
-        this.goal = goal;
+        if (this.goal == null)
+            this.goal = new Goal();
     }
 
     @Override
-    public void onCall(String key, Map<String, Answer> answerLog, BaseBotModel model) {
+    public void onCall(BotCallType key, Map<String, Answer> answerLog, BaseBotModel model) {
         switch (key) {
-            case "add_badge":
-                addBadge(model);
+            case POPULATE_GOAL:
+                doPopulate(answerLog);
                 break;
         }
     }
 
     @Override
-    public void onAsyncCall(String key, Map<String, Answer> answerLog, BaseBotModel model, OnAsyncListener listener) {
+    public void onAsyncCall(BotCallType key, Map<String, Answer> answerLog, BaseBotModel model,
+                            OnAsyncListener listener) {
         switch (key) {
-            case "do_create":
+            case DO_CREATE:
                 doCreate(answerLog, model, listener);
                 break;
         }
@@ -82,18 +87,15 @@ public class GoalAddCallback extends BotCallback {
 
     }
 
-    @Override
-    public Object getObject() {
-        return goal;
-    }
-
-    private void doCreate(Map<String, Answer> answerLog, final BaseBotModel model, final OnAsyncListener listener) {
-
+    private void doPopulate(Map<String, Answer> answerLog) {
         if (answerLog.containsKey("goal_add_ask_goal_gallery")) {
             // Predefined Goal branch
             Answer answer = answerLog.get("goal_add_ask_goal_gallery");
-            goal.setPrototype(Long.parseLong(answer.get("prototype")));
-            goal.setName(answer.get("name"));
+
+            goal.setPrototype(answer.values.getLong(BotParamType.GOAL_PROTO_ID.getKey()));
+            goal.setName(answer.values.getString(BotParamType.GOAL_PROTO_NAME.getKey()));
+            goal.setLocalImageUri(answer.values.getString(BotParamType.GOAL_PROTO_IMAGE_URL.getKey()));
+            goal.setImageFromProto(true);
         } else {
             // Custom Goal branch
             goal.setName(answerLog.get("goal_name").getValue());
@@ -107,45 +109,68 @@ public class GoalAddCallback extends BotCallback {
         if (answerLog.containsKey("hasSavedY"))
             goal.createTransaction(Double.parseDouble(answerLog.get("priorSaveAmount").getValue()));
 
+        // Find Image
+        if (answerLog.containsKey("goal_add_a_camera")) {
+            goal.setLocalImageUri(answerLog.get("goal_add_a_camera").getValue());
+            goal.setImageFromProto(false);
+        } else if (answerLog.containsKey("goal_add_a_gallery")) {
+            goal.setLocalImageUri(answerLog.get("goal_add_a_gallery").getValue());
+            goal.setImageFromProto(false);
+        }
+
+        goal.calculateFields();
+
+        persisted.saveConvoGoal(botType, goal);
+    }
+
+    private void doCreate(Map<String, Answer> answerLog, final BaseBotModel model,
+                          final OnAsyncListener listener) {
         // Ready Goal request
         Observable<Goal> observe = goalManager.createGoal(goal, new DooitErrorHandler() {
             @Override
             public void onError(DooitAPIError error) {
 
             }
-        }).doOnCompleted(new Action0() {
+        }).doAfterTerminate(new Action0() {
             @Override
             public void call() {
+                notifyDone(listener);
+                // After the user has created their first Goal, they should no longer receive the
+                // initial default conversation.
+                persisted.setNewBotUser(false);
                 if (context instanceof MainActivity)
                     ((MainActivity) context).refreshGoals();
-                notifyDone(listener);
             }
         });
 
-        // Find Image
-        if (answerLog.containsKey("Capture"))
-            goal.setLocalImageUri(answerLog.get("Capture").getValue());
-        else if (answerLog.containsKey("Gallery"))
-            goal.setLocalImageUri(answerLog.get("Gallery").getValue());
-
         // Upload image if set
-        if (goal.hasLocalImageUri()) {
+        if (goal.hasLocalImageUri() && !goal.imageFromProto()) {
             Uri uri = Uri.parse(goal.getLocalImageUri());
             final String mimetype = context.getContentResolver().getType(uri);
             final String path = MediaUriHelper.getPath(context, uri);
             observe.subscribe(new Action1<Goal>() {
                 @Override
                 public void call(final Goal newGoal) {
+                    if (newGoal.hasNewBadges())
+                        for (Badge badge : newGoal.getNewBadges())
+                            botAdapter.addItem(nodeFromBadge(badge));
                     uploadImage(newGoal, mimetype, new File(path));
                 }
             });
         } else {
-            observe.subscribe();
+            observe.subscribe(new Action1<Goal>() {
+                @Override
+                public void call(Goal newGoal) {
+                    if (newGoal.hasNewBadges())
+                        for (Badge badge : newGoal.getNewBadges())
+                            botAdapter.addItem(nodeFromBadge(badge));
+                }
+            });
         }
 
         // Persist goal so that when user leaves conversation and returns, the view holders can
         // display their previous data properly.
-        persisted.saveConvoGoal(BotType.GOAL_ADD, goal);
+        persisted.saveConvoGoal(botType, goal);
     }
 
     private void uploadImage(Goal goal, String mimetype, File file) {
@@ -154,16 +179,12 @@ public class GoalAddCallback extends BotCallback {
             public void onError(DooitAPIError error) {
 
             }
-        }).subscribe();
-    }
-
-    private void addBadge(BaseBotModel model) {
-        if (goal.hasNewBadges()) {
-            //Badge badge = goal.getNewBadges().get(0);
-            Node node = new Node();
-            node.setName(model.getName() + "_badge");
-            node.setType(BotMessageType.BADGE);
-            botAdapter.addItem(node);
-        }
+        }).subscribe(new Action1<EmptyResponse>() {
+            @Override
+            public void call(EmptyResponse emptyResponse) {
+                if (context instanceof MainActivity)
+                    ((MainActivity) context).refreshGoals();
+            }
+        });
     }
 }

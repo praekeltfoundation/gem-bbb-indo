@@ -16,6 +16,8 @@ import org.gem.indo.dooit.DooitApplication;
 import org.gem.indo.dooit.R;
 import org.gem.indo.dooit.helpers.Persisted;
 import org.gem.indo.dooit.helpers.activity.result.ActivityForResultHelper;
+import org.gem.indo.dooit.helpers.bot.param.ParamMatch;
+import org.gem.indo.dooit.helpers.bot.param.ParamParser;
 import org.gem.indo.dooit.helpers.notifications.NotificationType;
 import org.gem.indo.dooit.services.NotificationAlarm;
 import org.gem.indo.dooit.views.DooitActivity;
@@ -24,6 +26,9 @@ import org.gem.indo.dooit.views.main.adapters.MainTabAdapter;
 import org.gem.indo.dooit.views.main.fragments.MainFragment;
 import org.gem.indo.dooit.views.main.fragments.target.TargetFragment;
 import org.gem.indo.dooit.views.profile.ProfileActivity;
+
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.inject.Inject;
 
@@ -60,6 +65,12 @@ public class MainActivity extends DooitActivity {
         setContentView(org.gem.indo.dooit.R.layout.activity_main);
         ((DooitApplication) getApplication()).component.inject(this);
         ButterKnife.bind(this);
+
+        // Clear bot state
+        persisted.clearConversation();
+        persisted.clearConvoGoals();
+        persisted.clearConvoTip();
+
         setSupportActionBar(toolbar);
         mainTabAdapter = new MainTabAdapter(getSupportFragmentManager(), this);
         viewPager.setAdapter(mainTabAdapter);
@@ -77,8 +88,6 @@ public class MainActivity extends DooitActivity {
             }
         }
 
-        NotificationAlarm.setAlarm(this);
-
         // App opened from notification. Direct to appropriate screen.
         Bundle extras = getIntent().getExtras();
         if (extras != null)
@@ -88,7 +97,8 @@ public class MainActivity extends DooitActivity {
                         startPage(MainViewPagerPositions.CHALLENGE);
                 }
 
-//        new Notifier(this).notify(NotificationType.CHALLENGE_AVAILABLE, MainActivity.class, "Challenge title");
+        // Set alarm for when the app opens without going through registration or login
+        NotificationAlarm.setAlarm(this);
     }
 
     @OnPageChange(value = R.id.content_main_view_pager, callback = OnPageChange.Callback.PAGE_SELECTED)

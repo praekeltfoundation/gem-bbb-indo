@@ -1,7 +1,5 @@
-Fixed Profile Image issues
-Creating, Editing and Deleting Goals via Coach
-Depositing and Withdrawing savings via Coach
-Uploading Goal image on create and edit
-Fixed issues with various Challenge screens
-Fixed Picture Challenge submission
-Styling on various screens
+Added Feedback form
+Added Challenge Push Notification
+Added Challenge Intro Bot Card
+Added Challenge Instructional Text
+Fixed keyboard obscuring Tips list

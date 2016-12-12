@@ -98,7 +98,7 @@ public class Utils {
             String param = params[i];
 
             switch (param) {
-                case "USERNAME":
+                case "USER_USERNAME":
                     params[i] = persisted.getCurrentUser().getUsername();
                     break;
                 case "FIRSTNAME":

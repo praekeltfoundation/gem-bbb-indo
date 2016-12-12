@@ -30,7 +30,9 @@ public enum BotMessageType {
     BLANKANSWER(17), // Answer that displays nothing
     END(18),
     GOALINFO(19),
-    BADGE(20);
+    BADGE(20),
+    GOALLISTSUMMARY(21),
+    CHALLENGE(22);
 
     private static Map<Integer, BotMessageType> map = new HashMap<>();
 
@@ -69,5 +71,18 @@ public enum BotMessageType {
 
     public boolean equalsTo(int value) {
         return this.value == value;
+    }
+
+    /**
+     * @param msgType
+     * @return Does the node contain text that may require parameters?
+     */
+    public boolean isTextType(BotMessageType msgType) {
+        switch (msgType) {
+            case TEXT:
+                return true;
+            default:
+                return false;
+        }
     }
 }

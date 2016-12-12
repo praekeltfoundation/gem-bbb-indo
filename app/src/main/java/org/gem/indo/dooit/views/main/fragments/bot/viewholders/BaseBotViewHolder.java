@@ -14,6 +14,12 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 
+import com.facebook.drawee.backends.pipeline.Fresco;
+import com.facebook.drawee.interfaces.DraweeController;
+import com.facebook.drawee.view.SimpleDraweeView;
+import com.facebook.imagepipeline.request.ImageRequest;
+import com.facebook.imagepipeline.request.ImageRequestBuilder;
+
 import org.gem.indo.dooit.models.bot.BaseBotModel;
 import org.gem.indo.dooit.views.DooitActivity;
 
@@ -27,13 +33,22 @@ public abstract class BaseBotViewHolder<T extends BaseBotModel> extends Recycler
     public BaseBotViewHolder(View itemView) {
         super(itemView);
     }
-
-
+    
     @CallSuper
     public void populate(T model) {
         dataModel = model;
         reset();
+        if (!dataModel.isImmutable()) {
+            populateModel();
+            // FIXME: Viewholder is populated after conversation is persisted. Immutable flag not persisted.
+            dataModel.finish();
+        }
     }
+
+    /**
+     * Called when the bot model is mutable, used to process model with data from controller.
+     */
+    protected abstract void populateModel();
 
     public void reset() {}
 
@@ -97,5 +112,16 @@ public abstract class BaseBotViewHolder<T extends BaseBotModel> extends Recycler
      */
     public final void runOnUiThread(Runnable action) {
         ((Activity) getContext()).runOnUiThread(action);
+    }
+
+    protected void setImageUri(SimpleDraweeView imageView, Uri uri) {
+        ImageRequest request = ImageRequestBuilder.newBuilderWithSource(uri)
+                .setProgressiveRenderingEnabled(true)
+                .build();
+        DraweeController controller = Fresco.newDraweeControllerBuilder()
+                .setImageRequest(request)
+                .setOldController(imageView.getController())
+                .build();
+        imageView.setController(controller);
     }
 }

@@ -17,6 +17,7 @@ import butterknife.ButterKnife;
  */
 
 public class AnswerViewHolder extends BaseBotViewHolder<Answer> {
+
     @BindView(R.id.item_view_bot_answer_text)
     TextView textView;
 
@@ -31,7 +32,12 @@ public class AnswerViewHolder extends BaseBotViewHolder<Answer> {
     @Override
     public void populate(Answer model) {
         super.populate(model);
-        textView.setText(dataModel.getText(getContext()));
+
+        if (dataModel.hasProcessedText())
+            textView.setText(dataModel.getProcessedText());
+        else
+            textView.setText(dataModel.getValue());
+
         itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -40,7 +46,8 @@ public class AnswerViewHolder extends BaseBotViewHolder<Answer> {
         });
     }
 
-    public Context getContext() {
-        return itemView.getContext();
+    @Override
+    protected void populateModel() {
+
     }
 }

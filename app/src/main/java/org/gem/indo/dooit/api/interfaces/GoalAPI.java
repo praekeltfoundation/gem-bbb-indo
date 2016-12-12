@@ -1,9 +1,10 @@
 package org.gem.indo.dooit.api.interfaces;
 
 import org.gem.indo.dooit.api.responses.EmptyResponse;
-import org.gem.indo.dooit.models.Goal;
-import org.gem.indo.dooit.models.GoalPrototype;
-import org.gem.indo.dooit.models.GoalTransaction;
+import org.gem.indo.dooit.api.responses.TransactionResponse;
+import org.gem.indo.dooit.models.goal.Goal;
+import org.gem.indo.dooit.models.goal.GoalPrototype;
+import org.gem.indo.dooit.models.goal.GoalTransaction;
 
 import java.util.List;
 
@@ -28,8 +29,8 @@ public interface GoalAPI {
     Observable<Goal> createGoal(@Body Goal goal);
 
     @POST("/api/goals/{id}/transactions/")
-    Observable<EmptyResponse> createGoalTransactions(@Path("id") long id,
-                                                     @Body List<GoalTransaction> transactions);
+    Observable<TransactionResponse> createGoalTransactions(@Path("id") long id,
+                                                           @Body List<GoalTransaction> transactions);
 
     @GET("/api/goal-prototypes/")
     Observable<List<GoalPrototype>> getGoalPrototypes();

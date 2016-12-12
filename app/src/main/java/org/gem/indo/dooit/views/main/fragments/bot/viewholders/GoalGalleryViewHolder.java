@@ -65,4 +65,9 @@ public class GoalGalleryViewHolder extends BaseBotViewHolder<Node> {
         super.populate(model);
         galleryAdapter.setDataModel(model);
     }
+
+    @Override
+    protected void populateModel() {
+
+    }
 }

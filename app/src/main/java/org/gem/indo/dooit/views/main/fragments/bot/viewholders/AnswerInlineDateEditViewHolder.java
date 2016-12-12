@@ -28,8 +28,10 @@ import butterknife.ButterKnife;
  */
 
 public class AnswerInlineDateEditViewHolder extends BaseBotViewHolder<Answer> {
+
     @BindView(R.id.item_view_bot_inline_edit_view)
     EditText editText;
+
     BotAdapter botAdapter;
     HashtagView.TagsClickListener tagsClickListener;
 
@@ -42,7 +44,7 @@ public class AnswerInlineDateEditViewHolder extends BaseBotViewHolder<Answer> {
 
     @Override
     public void populate(Answer model) {
-        this.dataModel = model;
+        super.populate(model);
         editText.setHint(dataModel.getInlineEditHint(getContext()));
         editText.setImeActionLabel("Done", KeyEvent.KEYCODE_ENTER);
         editText.setInputType(InputType.TYPE_DATETIME_VARIATION_DATE);
@@ -59,6 +61,7 @@ public class AnswerInlineDateEditViewHolder extends BaseBotViewHolder<Answer> {
                         Calendar cal = Calendar.getInstance(Locale.getDefault());
                         cal.set(year, month, day);
                         inputAnswer.setValue(Utils.formatDate(cal.getTime()) + " - " + Utils.weekDiff(cal.getTime().getTime(), Utils.ROUNDWEEK.UP) + " weeks");
+                        inputAnswer.setText(null);
                         inputAnswer.setName(dataModel.getName());
                         inputAnswer.setRemoveOnSelect(dataModel.getName());
                         inputAnswer.setNext(dataModel.getNextOnFinish());
@@ -83,7 +86,8 @@ public class AnswerInlineDateEditViewHolder extends BaseBotViewHolder<Answer> {
 //        });
     }
 
-    public Context getContext() {
-        return itemView.getContext();
+    @Override
+    protected void populateModel() {
+
     }
 }
