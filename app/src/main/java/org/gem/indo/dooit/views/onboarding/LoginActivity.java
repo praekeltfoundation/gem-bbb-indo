@@ -1,5 +1,6 @@
 package org.gem.indo.dooit.views.onboarding;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -11,6 +12,7 @@ import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import org.gem.indo.dooit.DooitApplication;
@@ -71,15 +73,17 @@ public class LoginActivity extends DooitActivity {
 
     @OnClick(R.id.activity_login_login_button)
     public void login() {
-
         if (!detailsValid())
             return;
+
         hideKeyboard();
+        showProgressDialog(R.string.login_progress_dialog_message);
         authenticationManager.login(name.getText().toString(), password.getText().toString(), new DooitErrorHandler() {
             @Override
             public void onError(DooitAPIError error) {
                 for (String msg : error.getErrorResponse().getErrors())
                     Snackbar.make(buttonLogin, msg, Snackbar.LENGTH_SHORT).show();
+                dismissDialog();
             }
         }).subscribe(new Action1<AuthenticationResponse>() {
             @Override

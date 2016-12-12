@@ -90,6 +90,7 @@
 
     <string name="already_registered_log_in">Sudah daftar? *Log in disini*!</string>
     <string name="forgot_password">Ups! Lupa kata sandimu?</string>
+    <string name="reg_progress_dialog_message">Attempting to register</string>
 
     <!--LOGIN-->
     <string name="login_title">Log In</string>
@@ -100,6 +101,7 @@
     <string name="login_example_name_error_1">Maaf, kolom nama harus terisi.</string>
     <string name="login_example_password">Kata sandi harus terdiri dari 6 karakter.</string>
     <string name="login_example_password_error_1">Maaf, kolom kata sandi harus terisi.</string>
+    <string name="login_progress_dialog_message">Attempting to log in</string>
 
     <!-- Bot -->
     <string name="bot_carousel_card_select">Select</string>

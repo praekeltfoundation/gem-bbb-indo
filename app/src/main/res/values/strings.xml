@@ -90,6 +90,7 @@
 
     <string name="already_registered_log_in">Already registered? *Log in*</string>
     <string name="forgot_password">Forgot password?</string>
+    <string name="reg_progress_dialog_message">Attempting to register</string>
 
     <!--LOGIN-->
     <string name="login_title">@string/label_log_in</string>
@@ -100,6 +101,7 @@
     <string name="login_example_name_error_1">Name can\'t be blank</string>
     <string name="login_example_password">Must have at least 6 characters</string>
     <string name="login_example_password_error_1">Password can\'t be blank</string>
+    <string name="login_progress_dialog_message">Attempting to log in</string>
 
     <!-- Bot -->
     <string name="bot_carousel_card_select">Select</string>
