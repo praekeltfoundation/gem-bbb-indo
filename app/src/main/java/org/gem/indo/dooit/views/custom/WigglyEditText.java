@@ -2,12 +2,11 @@ package org.gem.indo.dooit.views.custom;
 
 import android.content.Context;
 import android.content.res.TypedArray;
-import android.icu.util.Measure;
 import android.support.annotation.StyleRes;
 import android.support.constraint.ConstraintLayout;
+import android.support.v4.widget.TextViewCompat;
 import android.text.TextUtils;
 import android.util.AttributeSet;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -18,9 +17,6 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnTextChanged;
 import butterknife.Unbinder;
-
-import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
-import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
 
 /**
  * Created by Rudolph Jacobs on 2016-12-08.
@@ -95,7 +91,7 @@ public class WigglyEditText extends ConstraintLayout {
             {
                 case R.styleable.WigglyEditText_label_style:
                     @StyleRes int labelStyle = a.getResourceId(attr, R.style.AppTheme_TextView_Form_Label_Yellow);
-                    labelView.setTextAppearance(context, labelStyle);
+                    TextViewCompat.setTextAppearance(labelView, labelStyle);
                     break;
                 case R.styleable.WigglyEditText_label_text:
                     String labelText = a.getString(attr);
@@ -105,7 +101,7 @@ public class WigglyEditText extends ConstraintLayout {
                     break;
                 case R.styleable.WigglyEditText_edit_style:
                     @StyleRes int editStyle = a.getResourceId(attr, R.style.AppTheme_TextView_Regular);
-                    editBox.setTextAppearance(context, editStyle);
+                    TextViewCompat.setTextAppearance(editBox, editStyle);
                     break;
                 case R.styleable.WigglyEditText_edit_text:
                     String editText = a.getString(attr);
@@ -115,7 +111,7 @@ public class WigglyEditText extends ConstraintLayout {
                     break;
                 case R.styleable.WigglyEditText_placeholder_style:
                     @StyleRes int placeholderStyle = a.getResourceId(attr, R.style.AppTheme_TextView_Regular);
-                    placeholderView.setTextAppearance(context, placeholderStyle);
+                    TextViewCompat.setTextAppearance(placeholderView, placeholderStyle);
                     break;
                 case R.styleable.WigglyEditText_placeholder_text:
                     String placeholderText = a.getString(attr);
@@ -125,7 +121,7 @@ public class WigglyEditText extends ConstraintLayout {
                     break;
                 case R.styleable.WigglyEditText_message_style:
                     @StyleRes int messageStyle = a.getResourceId(attr, R.style.AppTheme_TextView_Regular);
-                    messageView.setTextAppearance(context, messageStyle);
+                    TextViewCompat.setTextAppearance(messageView, messageStyle);
                     break;
                 case R.styleable.WigglyEditText_message_text:
                     String messageText = a.getString(attr);
@@ -169,7 +165,6 @@ public class WigglyEditText extends ConstraintLayout {
     @OnTextChanged(R.id.edit_box)
     protected void onEditChanged(CharSequence text) {
         updatePlaceholderVisibility();
-        requestLayout();
     }
 
 
@@ -210,15 +205,15 @@ public class WigglyEditText extends ConstraintLayout {
     }
 
     public String getLabelText() {
-        return (String) labelView.getText();
+        return labelView.getText().toString();
     }
 
     public String getMessageText() {
-        return (String) messageView.getText();
+        return messageView.getText().toString();
     }
 
     public String getPlaceholderText() {
-        return (String) placeholderView.getText();
+        return placeholderView.getText().toString();
     }
 
 
@@ -282,33 +277,36 @@ public class WigglyEditText extends ConstraintLayout {
      * Update methods *
      ******************/
 
-
-    @OnTextChanged(R.id.label)
     protected void updateLabelVisibility() {
         if (labelShown && !TextUtils.isEmpty(labelView.getText())) {
             labelView.setVisibility(VISIBLE);
         } else {
-            labelView.setVisibility(GONE);
+            labelView.setVisibility(INVISIBLE);
         }
+
+        labelView.invalidate();
     }
 
-
-    @OnTextChanged(R.id.message)
     protected void updateMessageVisibility() {
+        boolean isVisibile = messageView.getVisibility() == VISIBLE;
+
         if (messageShown && !TextUtils.isEmpty(messageView.getText())) {
             messageView.setVisibility(VISIBLE);
         } else {
-            messageView.setVisibility(GONE);
+            messageView.setVisibility(INVISIBLE);
         }
+
+        messageView.invalidate();
     }
 
-    @OnTextChanged({R.id.edit_box, R.id.placeholder})
     protected void updatePlaceholderVisibility() {
         if (placeholderShown && !TextUtils.isEmpty(placeholderView.getText()) &&
                 TextUtils.isEmpty(editBox.getText())) {
             placeholderView.setVisibility(VISIBLE);
         } else {
-            placeholderView.setVisibility(GONE);
+            placeholderView.setVisibility(INVISIBLE);
         }
+
+        placeholderView.invalidate();
     }
 }
