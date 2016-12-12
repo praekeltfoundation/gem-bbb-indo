@@ -31,6 +31,7 @@ import org.gem.indo.dooit.api.responses.AuthenticationResponse;
 import org.gem.indo.dooit.api.responses.OnboardingResponse;
 import org.gem.indo.dooit.helpers.Persisted;
 import org.gem.indo.dooit.helpers.SquiggleBackgroundHelper;
+import org.gem.indo.dooit.helpers.TextSpannableHelper;
 import org.gem.indo.dooit.models.Profile;
 import org.gem.indo.dooit.models.User;
 import org.gem.indo.dooit.services.NotificationAlarm;
@@ -111,8 +112,13 @@ public class RegistrationActivity extends DooitActivity {
         ((DooitApplication) getApplication()).component.inject(this);
         ButterKnife.bind(this);
 
-        Spannable spanTc = new SpannableString(getString(org.gem.indo.dooit.R.string.reg_t_c));
-        Spannable spanLogin = new SpannableString(getString(org.gem.indo.dooit.R.string.already_registered_log_in));
+//        Spannable spanTc = new SpannableString(getString(org.gem.indo.dooit.R.string.reg_t_c));
+        String stringTc = getResources().getString(org.gem.indo.dooit.R.string.reg_t_c);
+        TextSpannableHelper spanTcHelper = new TextSpannableHelper();
+
+//        Spannable spanLogin = new SpannableString(getString(org.gem.indo.dooit.R.string.already_registered_log_in));
+        String stringLogin = getResources().getString(org.gem.indo.dooit.R.string.already_registered_log_in);
+        TextSpannableHelper spanLoginHelper = new TextSpannableHelper();
 
         // Age
         ArrayAdapter<Integer> ageAdapter = new ArrayAdapter(this, org.gem.indo.dooit.R.layout.item_spinner_age);
@@ -122,13 +128,16 @@ public class RegistrationActivity extends DooitActivity {
 
         // Default gender
         gender.check(R.id.activity_registration_gender_girl);
-        
-        if (!getLocal().getCountry().equals("in")) {
+
+        //Not necessary anymore due to TextSpannableHelper
+        /*if (!getLocal().getCountry().equals("in")) {
             spanTc.setSpan(new ForegroundColorSpan(ResourcesCompat.getColor(getResources(), org.gem.indo.dooit.R.color.pink, getTheme())), spanTc.length() - 17, spanTc.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
             spanLogin.setSpan(new ForegroundColorSpan(ResourcesCompat.getColor(getResources(), org.gem.indo.dooit.R.color.pink, getTheme())), spanLogin.length() - 6, spanLogin.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-        }
-        textViewTC.setText(spanTc);
-        textViewLogin.setText(spanLogin);
+        }*/
+
+
+        textViewTC.setText(spanTcHelper.styleText(this, R.style.AppTheme_TextView_Bold_Small_Accented, stringTc));
+        textViewLogin.setText(spanLoginHelper.styleText(this, R.style.AppTheme_TextView_Bold_Small_Accented, stringLogin));
         SquiggleBackgroundHelper.setBackground(this, R.color.purple, R.color.purple_light, background);
         password.setImeActionLabel(getString(R.string.label_register), EditorInfo.IME_ACTION_DONE);
         age.setSelection(16 - MIN_AGE); // 16
