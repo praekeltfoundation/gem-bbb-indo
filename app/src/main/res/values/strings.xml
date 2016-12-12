@@ -58,7 +58,7 @@
     <!-- Tips -->
     <string name="tips_tab_favourites">Favourite</string>
     <string name="tips_tab_all">All</string>
-    <string name="tips_card_read_more">Read more</string>
+    <string name="tips_card_read_more">Read more...</string>
     <string name="tips_search_hint">Search for: Topics, titles, tags, etc…</string>
     <string name="tips_search_placeholder_fav">Search favourite tips</string>
     <string name="tips_search_placeholder_all">Search all tips</string>
@@ -68,7 +68,7 @@
     <string name="tips_list_filter">Filtering \'%s\'</string>
 
     <!-- Registration -->
-    <string name="reg_t_c">By clicking register, you are agreeing\n to our Terms &amp; Condition</string>
+    <string name="reg_t_c">By clicking register, you are agreeing\n to our *Terms &amp; Condition*</string>
     <string name="reg_example_name">Example: Aulia Dharmaningtyas</string>
     <string name="reg_example_name_error_1">Name can\'t be blank</string>
     <string name="reg_example_name_error_2">Name can\'t contain spaces</string>
@@ -88,7 +88,7 @@
     <string name="reg_example_password_error_1">Password can\'t be blank</string>
     <string name="reg_example_password_error_2">Password must be longer than 6 characters</string>
 
-    <string name="already_registered_log_in">Already registered? Log in</string>
+    <string name="already_registered_log_in">Already registered? *Log in*</string>
     <string name="forgot_password">Forgot password?</string>
     <string name="reg_progress_dialog_message">Attempting to register</string>
 
