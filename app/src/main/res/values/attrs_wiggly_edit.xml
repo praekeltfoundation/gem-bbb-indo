@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <declare-styleable name="WigglyEditText">
+        <attr name="label_shown" format="boolean" />
+        <attr name="label_style" format="reference" />
+        <attr name="label_text" format="string" />
+        <attr name="edit_style" format="reference"/>
+        <attr name="edit_text" format="string" />
+        <attr name="placeholder_shown" format="boolean" />
+        <attr name="placeholder_style" format="reference"/>
+        <attr name="placeholder_text" format="string" />
+        <attr name="message_shown" format="boolean" />
+        <attr name="message_style" format="reference"/>
+        <attr name="message_text" format="string" />
+    </declare-styleable>
+
+</resources>

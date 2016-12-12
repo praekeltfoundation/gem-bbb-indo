@@ -127,6 +127,35 @@
         <item name="android:textColor">@color/purple</item>
     </style>
 
+    <!-- Forms -->
+
+    <style name="AppTheme.TextView.Form.Label" parent="AppTheme.TextView.Bold.Medium">
+        <item name="android:textAllCaps">true</item>
+    </style>
+
+    <style name="AppTheme.TextView.Form.Label.Yellow" parent="AppTheme.TextView.Form.Label">
+        <item name="android:textColor">@color/yellow</item>
+    </style>
+
+    <style name="AppTheme.TextView.Form.Label.White" parent="AppTheme.TextView.Form.Label">
+        <item name="android:textColor">@color/white</item>
+    </style>
+
+    <style name="AppTheme.TextView.Form.Message" parent="AppTheme.TextView.Regular.Medium">
+    </style>
+
+    <style name="AppTheme.TextView.Form.Message.Yellow" parent="AppTheme.TextView.Form.Message">
+        <item name="android:textColor">@color/yellow</item>
+    </style>
+
+    <style name="AppTheme.TextView.Form.Message.White" parent="AppTheme.TextView.Form.Message">
+        <item name="android:textColor">@color/white</item>
+    </style>
+
+    <style name="AppTheme.TextView.Form.Message.Red" parent="AppTheme.TextView.Form.Message">
+        <item name="android:textColor">@android:color/holo_red_light</item>
+    </style>
+
     <!-- Challenge -->
 
     <style name="AppTheme.TextView.Quiz.Title" parent="AppTheme.TextView.Regular.ExtraLarge">

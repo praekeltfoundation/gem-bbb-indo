@@ -331,6 +331,7 @@
     <string name="profile_section_account">Your account</string>
     <string name="profile_account_change_name">Change name</string>
     <string name="profile_account_change_password">Change password</string>
+    <string name="profile_account_change_security_question">Change security question</string>
     <string name="profile_account_sign_out">Sign out</string>
     <string name="profile_section_notifications">Notifications</string>
     <string name="profile_section_help"><![CDATA[About & Help]]></string>
@@ -393,5 +394,16 @@
     <string name="saved">saved</string>
     <string name="label_select_picture">Select picture</string>
     <string name="title_activity_feedback">Contact Dooit</string>
+    <string name="title_activity_change_security_question">ChangeSecurityQuestionActivity</string>
+    <string name="label_required">Required</string>
+    <string name="fragment_reset_could_not_fetch_security_q">Could not fetch security question.</string>
+    <string name="activity_password_reset_username_required">Must enter a username.</string>
+    <string name="title_change_security_question">Change Security Question</string>
+    <string name="security_question_label">Question</string>
+    <string name="security_question_answer_label">Answer</string>
+    <string name="security_question_could_not_send">Could not send new question.</string>
+    <string name="security_question_change_successful">Security question changed.</string>
+    <string name="msg_fix_indicated_fields">Please fix indicated fields.</string>
+    <string name="msg_security_question_too_short">Question must be at least %1$d letters long.</string>
 
 </resources>
