@@ -151,7 +151,7 @@ public class TipsListFragment extends Fragment implements VariableChangeListener
     public void clearFilter(View v) {
         hideFiltering();
         adapter.resetFiltered();
-        if(snackbar != null){
+        if(snackbar != null) {
             snackbar.dismiss();
         }
     }
@@ -169,8 +169,9 @@ public class TipsListFragment extends Fragment implements VariableChangeListener
     }
 
     private void notifyTipsLoaded(List<Tip> tips) {
-        if (listener != null)
+        if (listener != null) {
             listener.onTipsAvailable(tips);
+        }
     }
 
     private void retrieveTips() {
@@ -179,25 +180,21 @@ public class TipsListFragment extends Fragment implements VariableChangeListener
             public void onError(DooitAPIError error) {
                 Toast.makeText(getContext(), "Error retrieving tips.", Toast.LENGTH_SHORT);
             }
-        })
-                .subscribe(new Action1<List<Tip>>() {
-                    @Override
-                    public void call(final List<Tip> tips) {
-
-                        if (getActivity() != null) {
-                            getActivity().runOnUiThread(new Runnable() {
-                                @Override
-                                public void run() {
-
-                                    adapter.updateAllTips(tips);
-                                    adapter.resetFiltered();
-                                    notifyTipsLoaded(tips);
-
-                                }
-                            });
+        }).subscribe(new Action1<List<Tip>>() {
+            @Override
+            public void call(final List<Tip> tips) {
+                if (getActivity() != null) {
+                    getActivity().runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            adapter.updateAllTips(tips);
+                            adapter.resetFiltered();
+                            notifyTipsLoaded(tips);
                         }
-                    }
-                });
+                    });
+                }
+            }
+        });
     }
 
     protected void hideFiltering() {
@@ -210,11 +207,14 @@ public class TipsListFragment extends Fragment implements VariableChangeListener
     @Override
     public void onVariableChanged(Object variableThatHasChanged) {
         Log.d("onVariableChanged", "onVariableChanged function called!!!!!!!!!");
+
         if (recyclerView != null) {
             int numFilteredTips = (int) variableThatHasChanged;
+
             if (snackbar == null) {
                 snackbar = Snackbar.make(recyclerView, R.string.tips_no_tips_on_filter, Snackbar.LENGTH_INDEFINITE);
             }
+
             if (numFilteredTips == 0) {
                 snackbar.show();
             } else {
