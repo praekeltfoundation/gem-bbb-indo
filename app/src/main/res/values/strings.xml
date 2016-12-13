@@ -69,7 +69,7 @@
 
     <!-- Registration -->
     <string name="reg_t_c">By clicking register, you are agreeing\n to our *Terms &amp; Condition*</string>
-    <string name="reg_example_name">Example: Aulia Dharmaningtyas</string>
+    <string name="reg_example_name">@string/login_example_name</string>
     <string name="reg_example_name_error_1">Name can\'t be blank</string>
     <string name="reg_example_name_error_2">Name can\'t contain spaces</string>
     <string name="reg_example_name_error_3">Name can only contain letters and numbers</string>
@@ -97,7 +97,7 @@
     <string name="invalid_credentials">Unable to log in with provided credentials.</string>
     <string name="login_name">@string/label_name</string>
     <string name="login_password">@string/label_password</string>
-    <string name="login_example_name">Example: Aulia Dharmaningtyas</string>
+    <string name="login_example_name">Example: AuliaDharmaningtyas</string>
     <string name="login_example_name_error_1">Name can\'t be blank</string>
     <string name="login_example_password">Must have at least 6 characters</string>
     <string name="login_example_password_error_1">Password can\'t be blank</string>

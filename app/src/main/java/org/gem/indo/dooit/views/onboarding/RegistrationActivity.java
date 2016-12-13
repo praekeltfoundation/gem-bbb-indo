@@ -13,8 +13,6 @@ import android.text.style.ForegroundColorSpan;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
-import android.view.inputmethod.InputMethodManager;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -323,7 +321,6 @@ public class RegistrationActivity extends DooitActivity {
         }
         return valid;
     }
-
 
     public static class Builder extends DooitActivityBuilder<Builder> {
         protected Builder(Context context) {

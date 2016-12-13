@@ -69,7 +69,7 @@
 
     <!-- Registration -->
     <string name="reg_t_c">Dengan meng-klik \'Daftar\', kamu telah menyetujui *Syarat &amp; Ketentuan* yang berlaku.</string>
-    <string name="reg_example_name">Contoh: Aulia Dharmaningtyas</string>
+    <string name="reg_example_name">@string/login_example_name</string>
     <string name="reg_example_name_error_1">Maaf, kolom nama harus terisi.</string>
     <string name="reg_example_name_error_2">Nama tidak boleh ada spasi</string>
     <string name="reg_example_name_error_3">Nama hanya boleh ada huruf dan angka</string>
