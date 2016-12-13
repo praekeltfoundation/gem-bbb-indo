@@ -1,12 +1,10 @@
 package org.gem.indo.dooit.views.main.fragments.challenge.fragments;
 
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
-import android.os.Parcel;
-import android.os.Parcelable;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v4.util.LongSparseArray;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
@@ -40,10 +38,8 @@ import org.joda.time.DateTime;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 
 import javax.inject.Inject;
@@ -53,6 +49,8 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.OnPageChange;
 import butterknife.Unbinder;
+import rx.Subscription;
+import rx.functions.Action0;
 import rx.functions.Action1;
 
 /**
@@ -95,6 +93,7 @@ public class ChallengeQuizFragment extends Fragment implements OnOptionChangeLis
     private Set<OnOptionChangeListener> optionChangeListeners = new HashSet<>();
     private Set<OnQuestionCompletedListener> questionCompletedListeners = new HashSet<>();
     private Unbinder unbinder = null;
+    private Subscription entrySubscription = null;
 
 
     public ChallengeQuizFragment() {
@@ -197,11 +196,22 @@ public class ChallengeQuizFragment extends Fragment implements OnOptionChangeLis
         entry.setParticipant(participant.getId());
         entry.setDateCompleted(new DateTime());
         entry.setAnswers(answers);
-        challengeManager.createEntry(entry, new DooitErrorHandler() {
+
+        final ProgressDialog dialog = new ProgressDialog(getContext());
+        dialog.setIndeterminate(true);
+        dialog.setMessage(getString(R.string.label_loading));
+        dialog.show();
+
+        entrySubscription = challengeManager.createEntry(entry, new DooitErrorHandler() {
             @Override
             public void onError(DooitAPIError error) {
                 Log.d(TAG, "Could not submit challenge entry");
                 returnToParent();
+            }
+        }).doAfterTerminate(new Action0() {
+            @Override
+            public void call() {
+                dialog.dismiss();
             }
         }).subscribe(new Action1<QuizChallengeEntry>() {
             @Override
@@ -335,6 +345,9 @@ public class ChallengeQuizFragment extends Fragment implements OnOptionChangeLis
     public void onStop() {
         if (!challengeCompleted) {
             saveState();
+        }
+        if (entrySubscription != null) {
+            entrySubscription.unsubscribe();
         }
         super.onStop();
     }
