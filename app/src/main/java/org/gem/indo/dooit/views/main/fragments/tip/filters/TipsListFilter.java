@@ -2,6 +2,7 @@ package org.gem.indo.dooit.views.main.fragments.tip.filters;
 
 import android.widget.Filter;
 
+import org.gem.indo.dooit.helpers.interfaces.VariableChangeListener;
 import org.gem.indo.dooit.models.Tip;
 import org.gem.indo.dooit.views.main.fragments.tip.adapters.TipsListAdapter;
 
@@ -15,6 +16,7 @@ import java.util.List;
 public class TipsListFilter extends Filter {
 
     private TipsListAdapter adapter;
+    private VariableChangeListener variableChangeListener;
 
     public TipsListFilter(TipsListAdapter adapter) {
         this.adapter = adapter;
@@ -65,5 +67,10 @@ public class TipsListFilter extends Filter {
             adapter.clearFiltered();
         }
         adapter.notifyDataSetChanged();
+        variableChangeListener.onVariableChanged(adapter.getItemCount());
+    }
+
+    public void setVariableChangeListener(VariableChangeListener variableChangeListener) {
+        this.variableChangeListener = variableChangeListener;
     }
 }

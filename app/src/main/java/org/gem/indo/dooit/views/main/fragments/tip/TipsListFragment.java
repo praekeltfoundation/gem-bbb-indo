@@ -1,6 +1,7 @@
 package org.gem.indo.dooit.views.main.fragments.tip;
 
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
@@ -17,8 +18,10 @@ import org.gem.indo.dooit.DooitApplication;
 import org.gem.indo.dooit.R;
 import org.gem.indo.dooit.api.DooitAPIError;
 import org.gem.indo.dooit.api.DooitErrorHandler;
+import org.gem.indo.dooit.helpers.interfaces.VariableChangeListener;
 import org.gem.indo.dooit.models.Tip;
 import org.gem.indo.dooit.views.main.fragments.tip.adapters.TipsListAdapter;
+import org.gem.indo.dooit.views.main.fragments.tip.filters.TipsListFilter;
 import org.gem.indo.dooit.views.main.fragments.tip.providers.TipProvider;
 
 import java.util.List;
@@ -28,7 +31,7 @@ import butterknife.ButterKnife;
 import rx.functions.Action1;
 
 
-public class TipsListFragment extends Fragment {
+public class TipsListFragment extends Fragment implements VariableChangeListener {
 
     private static final String TAG = TipsListFragment.class.getName();
     private static final String POS = "pos";
@@ -42,6 +45,7 @@ public class TipsListFragment extends Fragment {
     OnTipsAvailableListener listener;
     GridLayoutManager gridManager;
     View listView;
+    Snackbar snackbar;
 
     public TipsListFragment() {
         // Required empty public constructor
@@ -132,6 +136,8 @@ public class TipsListFragment extends Fragment {
 
         adapter = new TipsListAdapter((DooitApplication) getActivity().getApplication());
         recyclerView.setAdapter(adapter);
+        TipsListFilter temp = (TipsListFilter) adapter.getFilter();
+        temp.setVariableChangeListener(this);
 
         retrieveTips();
 
@@ -145,6 +151,9 @@ public class TipsListFragment extends Fragment {
     public void clearFilter(View v) {
         hideFiltering();
         adapter.resetFiltered();
+        if(snackbar != null){
+            snackbar.dismiss();
+        }
     }
 
     public void onPageSelected() {
@@ -180,9 +189,9 @@ public class TipsListFragment extends Fragment {
                                 @Override
                                 public void run() {
 
-                                adapter.updateAllTips(tips);
-                                adapter.resetFiltered();
-                                notifyTipsLoaded(tips);
+                                    adapter.updateAllTips(tips);
+                                    adapter.resetFiltered();
+                                    notifyTipsLoaded(tips);
 
                                 }
                             });
@@ -191,10 +200,26 @@ public class TipsListFragment extends Fragment {
                 });
     }
 
-    protected void hideFiltering(){
-        if(listener!=null)
+    protected void hideFiltering() {
+        if (listener != null)
             listener.hideFiltering();
         else
             System.out.println("filtering not set");
+    }
+
+    @Override
+    public void onVariableChanged(Object variableThatHasChanged) {
+        Log.d("onVariableChanged", "onVariableChanged function called!!!!!!!!!");
+        if (recyclerView != null) {
+            int numFilteredTips = (int) variableThatHasChanged;
+            if (snackbar == null) {
+                snackbar = Snackbar.make(recyclerView, R.string.tips_no_tips_on_filter, Snackbar.LENGTH_INDEFINITE);
+            }
+            if (numFilteredTips == 0) {
+                snackbar.show();
+            } else {
+                snackbar.dismiss();
+            }
+        }
     }
 }

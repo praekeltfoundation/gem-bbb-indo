@@ -68,6 +68,7 @@
     <string name="tips_article_add_fav">Adding \'%s\' to favourites</string>
     <string name="tips_article_remove_fav">Removing \'%s\' from favourites</string>
     <string name="tips_list_filter">Filtering \'%s\'</string>
+    <string name="tips_no_tips_on_filter">No tips were found for the current search</string>
 
     <!-- Registration -->
     <string name="reg_t_c">By clicking register, you are agreeing\n to our Terms &amp; Condition</string>
