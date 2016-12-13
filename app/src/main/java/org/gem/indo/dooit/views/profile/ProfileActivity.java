@@ -5,13 +5,9 @@ import android.content.ContentResolver;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.database.Cursor;
 import android.graphics.Bitmap;
-import android.media.Image;
 import android.net.Uri;
-import android.nfc.Tag;
 import android.os.Bundle;
-import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.design.widget.AppBarLayout;
 import android.support.v7.app.AlertDialog;
@@ -23,7 +19,6 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -52,7 +47,6 @@ import org.gem.indo.dooit.views.profile.adapters.BadgeAdapter;
 import org.gem.indo.dooit.views.settings.SettingsActivity;
 
 import java.io.File;
-import java.io.IOException;
 
 import javax.inject.Inject;
 
@@ -332,7 +326,7 @@ public class ProfileActivity extends DooitActivity {
             try {
                 ContentResolver cR = this.getContentResolver();
                 Bitmap bm = (Bitmap) data.getExtras().get("data");
-                Log.v("IMAGE_TESTS", "Bitmap size : " + bm.getByteCount());
+                Log.d("IMAGE_TESTS", "Bitmap size : " + bm.getByteCount());
                 imageUri = Uri.parse(MediaStore.Images.Media.insertImage(cR, bm, "", ""));
 
             } catch (Throwable ex) {
