@@ -8,6 +8,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
@@ -17,6 +18,9 @@ import android.widget.ProgressBar;
 import org.gem.indo.dooit.R;
 import org.gem.indo.dooit.views.DooitActivity;
 import org.gem.indo.dooit.views.helpers.activity.DooitActivityBuilder;
+
+import java.util.HashMap;
+import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -92,8 +96,10 @@ public class MinimalWebViewActivity extends DooitActivity {
                 }
             }
         });
-
-        webView.loadUrl(getIntent().getStringExtra(INTENT_URL));
+        Map<String, String> headers = new HashMap<String,String>();
+        headers.put("Accept-Language","id");
+        webView.loadUrl(getIntent().getStringExtra(INTENT_URL),headers);
+        Log.v("Web-Headers",headers.toString());
     }
 
     protected boolean hasInternetConnection() {
