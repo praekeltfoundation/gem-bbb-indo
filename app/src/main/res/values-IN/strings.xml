@@ -13,7 +13,7 @@
     <string name="action_settings">Pengaturan</string>
 
     <!-- Bottom Navigation -->
-    <string name="main_tab_text_0">COACH</string>
+    <string name="main_tab_text_0">BINA</string>
     <string name="main_tab_text_1">TARGET</string>
     <string name="main_tab_text_2">TANTAGAN</string>
     <string name="main_tab_text_3">TIPS</string>
@@ -110,7 +110,7 @@
 
     <!--JSON GOALS-->
     <string name="greeting">Hola!</string>
-    <string name="goalIntroduction">My Name is Dooit. I\'m gonna help  you save!</string>
+    <string name="goalIntroduction">My Name is Bina. I\'m gonna help  you save!</string>
     <string name="goalGreeting">Hello %s!</string>
     <string name="goalNameCongrats">Itu target yang bagus!</string>
     <string name="askGoalName">Select the goal you want to save for, please.</string>
@@ -144,8 +144,8 @@
 
     <!-- BOT: goal_add -->
     <!-- Questions -->
-    <string name="goal_add_q_greeting">Hai, $(user.username)! Namaku Dooit. Aku mentor keuangan pribadi kamu dan aku akan membantu kamu menabung. Mari kita mulai!</string>
-    <string name="goal_add_a_greeting_1">Hai, Dooit. Hore! Yuk!</string>
+    <string name="goal_add_q_greeting">Hai, $(user.username)! Namaku Bina. Aku mentor keuangan pribadi kamu dan aku akan membantu kamu menabung. Mari kita mulai!</string>
+    <string name="goal_add_a_greeting_1">Hai, Bina. Hore! Yuk!</string>
     <string name="goal_add_a_greeting_2">Keren! Yuk kita menabung.</string>
 
     <string name="goal_add_q_ask_goal">Jadi, kamu ingin menabung buat apa?</string>
