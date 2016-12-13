@@ -303,6 +303,7 @@
     <string name="challenge_quiz_counter_fmt">Pertanyaan %1$d/%2$d</string>
     <string name="challenge_hint_template">Petunjuk: %1$s</string>
     <string name="challenge_hint_none">Maaf, Aku tidak punya petunjuk untuk kamu</string>
+    <string name="challenge_could_not_connect_to_server">Could not make a connect to the server</string>
 
     <!--JSON CHALLENGES-->
     <string name="toes">Can you touch your toes?</string>

@@ -3,6 +3,7 @@ package org.gem.indo.dooit.views.main.fragments.challenge;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
@@ -12,7 +13,6 @@ import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
-import android.widget.Toast;
 
 import org.gem.indo.dooit.DooitApplication;
 import org.gem.indo.dooit.R;
@@ -34,8 +34,7 @@ import javax.inject.Inject;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
-import rx.Observable;
-import rx.functions.Action0;
+import rx.Subscription;
 import rx.functions.Action1;
 
 public class ChallengeFragment extends MainFragment {
@@ -61,7 +60,7 @@ public class ChallengeFragment extends MainFragment {
     BaseChallenge challenge;
 
     Unbinder unbinder;
-    private Observable<BaseChallenge> challengeSubscription;
+    private Subscription challengeSubscription;
 
 
     /****************
@@ -134,29 +133,25 @@ public class ChallengeFragment extends MainFragment {
     }
 
     public void loadChallenge() {
-        if (persisted.hasCurrentChallenge()) {
-            try {
-                challenge = persisted.getCurrentChallenge();
-                if (challenge.getDeactivationDate().isBeforeNow()) {
-                    persisted.clearCurrentChallenge();
-                } else {
-                    loadTypeFragment(challenge, true);
-                    return;
-                }
-            } catch (Exception e) {
-                Log.d(TAG, "Could not load persisted challenge");
-                persisted.clearCurrentChallenge();
-            }
-        }
-
         challengeSubscription = challengeManager.retrieveCurrentChallenge(false, new DooitErrorHandler() {
             @Override
             public void onError(DooitAPIError error) {
-                Toast.makeText(getContext(), "Could not retrieve challenge", Toast.LENGTH_SHORT).show();
+                Snackbar.make(getView(), R.string.challenge_could_not_connect_to_server, Snackbar.LENGTH_LONG).show();
+                if (persisted.hasCurrentChallenge()) {
+                    try {
+                        challenge = persisted.getCurrentChallenge();
+                        if (challenge.getDeactivationDate().isBeforeNow()) {
+                            persisted.clearCurrentChallenge();
+                        } else {
+                            loadTypeFragment(challenge, true);
+                        }
+                    } catch (Exception e) {
+                        Log.d(TAG, "Could not load persisted challenge");
+                        persisted.clearCurrentChallenge();
+                    }
+                }
             }
-        });
-
-        challengeSubscription.subscribe(new Action1<BaseChallenge>() {
+        }).subscribe(new Action1<BaseChallenge>() {
             @Override
             public void call(BaseChallenge challenge) {
                 loadTypeFragment(challenge, false);
@@ -197,11 +192,7 @@ public class ChallengeFragment extends MainFragment {
     public void onStop() {
         super.onStop();
         if (challengeSubscription != null)
-            challengeSubscription.doOnUnsubscribe(new Action0() {
-                @Override
-                public void call() {
-                }
-            });
+            challengeSubscription.unsubscribe();
     }
 
     @Override
