@@ -3,6 +3,7 @@ package org.gem.indo.dooit.views.main;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
@@ -19,6 +20,7 @@ import org.gem.indo.dooit.helpers.activity.result.ActivityForResultHelper;
 import org.gem.indo.dooit.helpers.bot.param.ParamMatch;
 import org.gem.indo.dooit.helpers.bot.param.ParamParser;
 import org.gem.indo.dooit.helpers.notifications.NotificationType;
+import org.gem.indo.dooit.models.User;
 import org.gem.indo.dooit.services.NotificationAlarm;
 import org.gem.indo.dooit.views.DooitActivity;
 import org.gem.indo.dooit.views.helpers.activity.DooitActivityBuilder;
@@ -90,12 +92,12 @@ public class MainActivity extends DooitActivity {
 
         // App opened from notification. Direct to appropriate screen.
         Bundle extras = getIntent().getExtras();
-        if (extras != null)
-            if (extras.containsKey(NotificationType.NOTIFICATION_TYPE))
-                switch (NotificationType.getValueOf(extras.getInt(NotificationType.NOTIFICATION_TYPE))) {
-                    case CHALLENGE_AVAILABLE:
-                        startPage(MainViewPagerPositions.CHALLENGE);
-                }
+        if (extras != null && extras.containsKey(NotificationType.NOTIFICATION_TYPE)) {
+            switch (NotificationType.getValueOf(extras.getInt(NotificationType.NOTIFICATION_TYPE))) {
+                case CHALLENGE_AVAILABLE:
+                    startPage(MainViewPagerPositions.CHALLENGE);
+            }
+        }
 
         // Set alarm for when the app opens without going through registration or login
         NotificationAlarm.setAlarm(this);
@@ -109,12 +111,9 @@ public class MainActivity extends DooitActivity {
 
             if (position == i) {
                 MainViewPagerPositions.setActiveState(tabView);
-
             } else {
                 MainViewPagerPositions.setInActiveState(tabView);
-
             }
-
         }
     }
 
@@ -130,7 +129,12 @@ public class MainActivity extends DooitActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        simpleDraweeViewProfile.setImageURI(persisted.getCurrentUser().getProfile().getProfileImageUrl());
+        User user = persisted.getCurrentUser();
+        if (user == null) {
+            Snackbar.make(viewPager, R.string.prompt_relogin, Snackbar.LENGTH_LONG);
+        } else {
+            simpleDraweeViewProfile.setImageURI(user.getProfile().getProfileImageUrl());
+        }
     }
 
     @Override
@@ -173,8 +177,5 @@ public class MainActivity extends DooitActivity {
         protected Intent createIntent(Context context) {
             return new Intent(context, MainActivity.class);
         }
-
     }
-
-
 }
