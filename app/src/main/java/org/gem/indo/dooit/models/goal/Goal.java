@@ -6,12 +6,14 @@ import com.google.gson.annotations.SerializedName;
 
 import org.gem.indo.dooit.helpers.Utils;
 import org.gem.indo.dooit.models.Badge;
+import org.gem.indo.dooit.views.helpers.activity.CurrencyHelper;
 import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Created by herman on 2016/11/05.
@@ -50,6 +52,7 @@ public class Goal {
 
     // Local Properties
     private String localImageUri;
+    private boolean imageFromProto = false;
 
     public long getId() {
         return id;
@@ -79,6 +82,10 @@ public class Goal {
         value = 0;
         for (GoalTransaction trans : transactions)
             value += trans.getValue();
+    }
+
+    public String getValueFormatted() {
+        return CurrencyHelper.format(value);
     }
 
     public double getTarget() {
@@ -230,5 +237,18 @@ public class Goal {
 
     public boolean hasLocalImageUri() {
         return !TextUtils.isEmpty(localImageUri);
+    }
+
+    public void setImageFromProto(boolean setImageFromProto) {
+        this.imageFromProto = setImageFromProto;
+    }
+
+    public boolean imageFromProto() {
+        return imageFromProto;
+    }
+
+    public void calculateFields() {
+        weekCount = (int) (TimeUnit.MILLISECONDS.toDays((long) Math.ceil(endDate.toDate().getTime() - startDate.toDate().getTime()) / 7));
+        weeklyTarget = target / weekCount;
     }
 }

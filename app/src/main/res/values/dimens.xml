@@ -18,6 +18,10 @@
     <dimen name="edit_text_padding">10dp</dimen>
     <dimen name="spinner_item_padding">10dp</dimen>
 
+    <!-- Common -->
+    <dimen name="wiggly_edit_box_padding_h">12dp</dimen>
+    <dimen name="wiggly_edit_box_padding_v">12dp</dimen>
+
     <!-- Registration -->
     <dimen name="registration_activity_padding">24dp</dimen>
     <dimen name="registration_margin_vertical">36dp</dimen>
@@ -44,11 +48,15 @@
 
     <dimen name="bot_tip_card_width">250dp</dimen>
     <dimen name="bot_tip_card_image_height">150dp</dimen>
-    <dimen name="bot_tip_card_vertical_margin">4dp</dimen>
+    <dimen name="bot_tip_card_vertical_margin">6dp</dimen>
+
+    <dimen name="bot_challenge_card_width">250dp</dimen>
+    <dimen name="bot_challenge_card_image_height">150dp</dimen>
+    <dimen name="bot_challenge_card_vertical_margin">6dp</dimen>
 
     <dimen name="bot_badge_card_width">250dp</dimen>
     <dimen name="bot_badge_card_image_height">150dp</dimen>
-    <dimen name="bot_badge_card_vertical_margin">4dp</dimen>
+    <dimen name="bot_badge_card_vertical_margin">6dp</dimen>
 
     <!-- Challenges -->
     <dimen name="challenge_inset_small">16dp</dimen>

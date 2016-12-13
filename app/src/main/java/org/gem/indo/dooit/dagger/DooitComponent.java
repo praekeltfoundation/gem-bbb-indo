@@ -4,6 +4,7 @@ import org.gem.indo.dooit.DooitApplication;
 import org.gem.indo.dooit.api.managers.DooitManager;
 import org.gem.indo.dooit.api.managers.FeedbackManager;
 import org.gem.indo.dooit.controllers.DooitBotController;
+import org.gem.indo.dooit.controllers.RequirementResolver;
 import org.gem.indo.dooit.helpers.Persisted;
 import org.gem.indo.dooit.services.NotificationService;
 import org.gem.indo.dooit.views.DooitActivity;
@@ -22,11 +23,11 @@ import org.gem.indo.dooit.views.main.fragments.challenge.fragments.ChallengePict
 import org.gem.indo.dooit.views.main.fragments.challenge.fragments.ChallengeQuizFragment;
 import org.gem.indo.dooit.views.main.fragments.challenge.fragments.ChallengeRegisterFragment;
 import org.gem.indo.dooit.views.main.fragments.target.TargetFragment;
-import org.gem.indo.dooit.views.main.fragments.target.controllers.GoalAddController;
-import org.gem.indo.dooit.views.main.fragments.target.controllers.GoalBotController;
-import org.gem.indo.dooit.views.main.fragments.target.controllers.GoalDepositController;
-import org.gem.indo.dooit.views.main.fragments.target.controllers.GoalEditController;
-import org.gem.indo.dooit.views.main.fragments.target.controllers.GoalWithdrawController;
+import org.gem.indo.dooit.controllers.goal.GoalAddController;
+import org.gem.indo.dooit.controllers.goal.GoalBotController;
+import org.gem.indo.dooit.controllers.goal.GoalDepositController;
+import org.gem.indo.dooit.controllers.goal.GoalEditController;
+import org.gem.indo.dooit.controllers.goal.GoalWithdrawController;
 import org.gem.indo.dooit.views.main.fragments.tip.TipsFragment;
 import org.gem.indo.dooit.views.main.fragments.tip.TipsListFragment;
 import org.gem.indo.dooit.views.main.fragments.tip.adapters.TipsListAdapter;
@@ -34,9 +35,13 @@ import org.gem.indo.dooit.views.main.fragments.tip.providers.TipProvider;
 import org.gem.indo.dooit.views.main.fragments.tip.viewholders.TipViewHolder;
 import org.gem.indo.dooit.views.onboarding.ChangeNameActivity;
 import org.gem.indo.dooit.views.onboarding.ChangePasswordActivity;
+import org.gem.indo.dooit.views.onboarding.ChangeSecurityQuestionActivity;
 import org.gem.indo.dooit.views.onboarding.LoginActivity;
+import org.gem.indo.dooit.views.onboarding.PasswordResetActivity;
 import org.gem.indo.dooit.views.onboarding.ProfileImageActivity;
 import org.gem.indo.dooit.views.onboarding.RegistrationActivity;
+import org.gem.indo.dooit.views.onboarding.fragments.PasswordResetPasswordFragment;
+import org.gem.indo.dooit.views.onboarding.fragments.PasswordResetUsernameFragment;
 import org.gem.indo.dooit.views.profile.ProfileActivity;
 import org.gem.indo.dooit.views.settings.FeedbackActivity;
 import org.gem.indo.dooit.views.settings.SettingsActivity;
@@ -74,6 +79,8 @@ public interface DooitComponent {
 
     void inject(ChangePasswordActivity o);
 
+    void inject(ChangeSecurityQuestionActivity o);
+
     void inject(DooitActivity o);
 
     void inject(DooitApplication o);
@@ -106,6 +113,12 @@ public interface DooitComponent {
 
     void inject(NotificationService o);
 
+    void inject(PasswordResetActivity o);
+
+    void inject(PasswordResetPasswordFragment o);
+
+    void inject(PasswordResetUsernameFragment o);
+
     void inject(Persisted o);
 
     void inject(ProfileActivity o);
@@ -113,6 +126,8 @@ public interface DooitComponent {
     void inject(ProfileImageActivity o);
 
     void inject(RegistrationActivity o);
+
+    void inject(RequirementResolver o);
 
     void inject(RootActivity o);
 

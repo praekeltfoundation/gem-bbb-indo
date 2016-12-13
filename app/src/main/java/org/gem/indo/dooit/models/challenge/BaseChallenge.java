@@ -19,12 +19,23 @@ public abstract class BaseChallenge implements Parcelable, Serializable {
     /*** Variables ***/
     private long id;
     private String name;
+    private String subtitle;
     @SerializedName("image_url")
     private String imageURL;
+    @SerializedName("terms_url")
+    private String termsUrl;
     @SerializedName("activation_date")
     private DateTime activationDate;
     @SerializedName("deactivation_date")
     private DateTime deactivationDate;
+    @SerializedName("is_active")
+    private boolean isActive;
+    private String instruction;
+    @SerializedName("call_to_action")
+    private String callToAction;
+    private String intro;
+    private String outro;
+
 
     /*** Constructors ***/
     BaseChallenge() {
@@ -66,12 +77,20 @@ public abstract class BaseChallenge implements Parcelable, Serializable {
         this.name = name;
     }
 
+    public String getSubtitle() {
+        return subtitle;
+    }
+
     public String getImageURL() {
         return this.imageURL;
     }
 
     public void setImageURL(String url) {
         this.imageURL = url;
+    }
+
+    public String getTermsUrl() {
+        return termsUrl;
     }
 
     public ChallengeType getType() {
@@ -88,6 +107,22 @@ public abstract class BaseChallenge implements Parcelable, Serializable {
 
     public void setDeactivationDate(DateTime deactivationDate) {
         this.deactivationDate = deactivationDate;
+    }
+
+    public boolean isActive() {
+        return isActive;
+    }
+
+    public String getInstruction() {
+        return instruction;
+    }
+
+    public String getIntro() {
+        return intro;
+    }
+
+    public String getOutro() {
+        return outro;
     }
 
     @Override

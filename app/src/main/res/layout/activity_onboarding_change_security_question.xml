@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v4.widget.NestedScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_onboarding_change_secq_background"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true"
+    android:paddingTop="@dimen/login_activity_padding"
+    android:paddingBottom="@dimen/login_activity_padding"
+    android:paddingStart="@dimen/login_activity_padding"
+    android:paddingEnd="@dimen/login_activity_padding"
+    tools:background="@drawable/pattern_01_purple">
+
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scrollbars="vertical"
+        tools:background="@drawable/pattern_01_purple"
+        tools:context="org.gem.indo.dooit.views.onboarding.ChangeSecurityQuestionActivity">
+
+            <TextView
+                android:id="@+id/activity_onboarding_change_secq_title"
+                android:text="@string/title_change_security_question"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                style="@style/AppTheme.TextView.Regular.XXXLargeHeading"
+                fontPath="fonts/LondrinaSolid-Regular.ttf"
+                android:textColor="@color/white"
+                android:layout_marginTop="@dimen/activity_vertical_margin"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toTopOf="@+id/activity_onboarding_change_secq_question_textbox"
+                app:layout_constraintVertical_chainStyle="spread_inside"
+                android:textAlignment="center" />
+
+            <org.gem.indo.dooit.views.custom.WigglyEditText
+                android:id="@+id/activity_onboarding_change_secq_question_textbox"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/challenge_inset_small"
+                android:layout_marginBottom="@dimen/challenge_inset_small"
+                app:label_style="@style/AppTheme.TextView.Form.Message.Yellow"
+                app:label_text="@string/security_question_label"
+                app:layout_constraintTop_toBottomOf="@+id/activity_onboarding_change_secq_title"
+                app:layout_constraintBottom_toTopOf="@+id/activity_onboarding_change_secq_answer_textbox"
+                app:layout_constraintLeft_toLeftOf="@+id/activity_onboarding_change_secq_title"
+                app:layout_constraintRight_toRightOf="@+id/activity_onboarding_change_secq_title"
+                app:message_style="@style/AppTheme.TextView.Form.Message.Red"
+                tools:text="What is your favourite colour?" />
+
+            <org.gem.indo.dooit.views.custom.WigglyEditText
+                android:id="@+id/activity_onboarding_change_secq_answer_textbox"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/challenge_inset_small"
+                android:layout_marginBottom="@dimen/challenge_inset_small"
+                app:label_style="@style/AppTheme.TextView.Form.Message.Yellow"
+                app:label_text="@string/security_question_answer_label"
+                app:layout_constraintTop_toBottomOf="@+id/activity_onboarding_change_secq_question_textbox"
+                app:layout_constraintBottom_toTopOf="@+id/activity_onboarding_change_secq_button"
+                app:layout_constraintLeft_toLeftOf="@+id/activity_onboarding_change_secq_title"
+                app:layout_constraintRight_toRightOf="@+id/activity_onboarding_change_secq_title"
+                app:message_style="@style/AppTheme.TextView.Form.Message.Red"
+                tools:text="Blue" />
+
+            <Button
+                android:id="@+id/activity_onboarding_change_secq_button"
+                android:text="@string/label_submit"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@+id/activity_onboarding_change_secq_answer_textbox"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toLeftOf="@+id/activity_onboarding_change_secq_title"
+                app:layout_constraintRight_toRightOf="@+id/activity_onboarding_change_secq_title"
+                style="@style/AppTheme.Button.Big.Yellow" />
+
+    </android.support.constraint.ConstraintLayout>
+
+</android.support.v4.widget.NestedScrollView>

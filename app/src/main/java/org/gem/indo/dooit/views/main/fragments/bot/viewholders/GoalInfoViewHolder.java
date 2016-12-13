@@ -8,7 +8,7 @@ import com.facebook.drawee.view.SimpleDraweeView;
 
 import org.gem.indo.dooit.DooitApplication;
 import org.gem.indo.dooit.R;
-import org.gem.indo.dooit.controllers.BotParamType;
+import org.gem.indo.dooit.models.enums.BotParamType;
 import org.gem.indo.dooit.helpers.Persisted;
 import org.gem.indo.dooit.models.goal.Goal;
 import org.gem.indo.dooit.models.bot.Node;
@@ -52,7 +52,7 @@ public class GoalInfoViewHolder extends BaseBotViewHolder<Node> {
         ButterKnife.bind(this, itemView);
         itemView.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.bkg_carousel_card));
 
-        if (!botAdapter.hasCallback())
+        if (!botAdapter.hasController())
             throw new BotCallbackRequired(String.format("%s requires adapter to have callback", TAG));
     }
 
@@ -67,10 +67,14 @@ public class GoalInfoViewHolder extends BaseBotViewHolder<Node> {
         String localImageUri = dataModel.values.getString(BotParamType.GOAL_LOCAL_IMAGE_URI.getKey());
         boolean hasLocalUri = dataModel.values.getBoolean(BotParamType.GOAL_HAS_LOCAL_IMAGE_URI.getKey());
 
+        // Clamp progress to 0 <= progress <= 100
+        int progress = (int) ((value / target) * 100);
+        progress = Math.min(Math.max(0, progress), 100);
+
         titleTextView.setText(name);
-        arcProgressBar.setProgress((int) ((value / target) * 100));
-        currentTextView.setText(String.format("%s %.2f", CurrencyHelper.getCurrencySymbol(), value));
-        totalTextView.setText(getContext().getString(R.string.of_target_amount, CurrencyHelper.getCurrencySymbol(), target));
+        arcProgressBar.setProgress(progress);
+        currentTextView.setText(CurrencyHelper.format(value));
+        totalTextView.setText(getContext().getString(R.string.of_target_amount, CurrencyHelper.format(target)));
 
         // Prefer a local image. Some conversations set the image from phone storage, and others
         // rely on the remote image.
@@ -82,7 +86,7 @@ public class GoalInfoViewHolder extends BaseBotViewHolder<Node> {
 
     @Override
     protected void populateModel() {
-        Goal goal = (Goal) botAdapter.getCallback().getObject();
+        Goal goal = (Goal) botAdapter.getController().getObject();
         dataModel.values.put(BotParamType.GOAL_NAME.getKey(), goal.getName());
         dataModel.values.put(BotParamType.GOAL_VALUE.getKey(), goal.getValue());
         dataModel.values.put(BotParamType.GOAL_TARGET.getKey(), goal.getTarget());

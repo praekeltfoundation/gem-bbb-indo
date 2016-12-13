@@ -1,5 +1,6 @@
 package org.gem.indo.dooit.views.onboarding;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -11,6 +12,7 @@ import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import org.gem.indo.dooit.DooitApplication;
@@ -54,6 +56,9 @@ public class LoginActivity extends DooitActivity {
     @BindView(R.id.activity_login_password_example_text_view)
     TextView passwordHint;
 
+    @BindView(R.id.activity_login_forgot_text_view)
+    TextView forgotLink;
+
     @Inject
     AuthenticationManager authenticationManager;
 
@@ -71,21 +76,24 @@ public class LoginActivity extends DooitActivity {
 
     @OnClick(R.id.activity_login_login_button)
     public void login() {
-
         if (!detailsValid())
             return;
+
         hideKeyboard();
+        showProgressDialog(R.string.login_progress_dialog_message);
         authenticationManager.login(name.getText().toString(), password.getText().toString(), new DooitErrorHandler() {
             @Override
             public void onError(DooitAPIError error) {
                 for (String msg : error.getErrorResponse().getErrors())
                     Snackbar.make(buttonLogin, msg, Snackbar.LENGTH_SHORT).show();
+                dismissDialog();
             }
         }).subscribe(new Action1<AuthenticationResponse>() {
             @Override
             public void call(AuthenticationResponse authenticationResponse) {
                 persisted.setCurrentUser(authenticationResponse.getUser());
                 persisted.saveToken(authenticationResponse.getToken());
+                persisted.setNewBotUser(false);
                 NotificationAlarm.setAlarm(LoginActivity.this);
                 MainActivity.Builder.create(LoginActivity.this).startActivityClearTop();
             }
@@ -98,6 +106,11 @@ public class LoginActivity extends DooitActivity {
             login();
         }
         return true;
+    }
+
+    @OnClick(R.id.activity_login_forgot_text_view)
+    protected void forgot() {
+        PasswordResetActivity.Builder.create(this).startActivity();
     }
 
     private boolean detailsValid() {

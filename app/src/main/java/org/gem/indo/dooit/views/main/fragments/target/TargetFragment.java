@@ -148,7 +148,6 @@ public class TargetFragment extends MainFragment {
             leftTarget.setVisibility(View.GONE);
         }
 
-        showLoadingProgress();
         retrieveGoals();
     }
 
@@ -229,7 +228,7 @@ public class TargetFragment extends MainFragment {
         double toSavePerWeek = goal.getTarget() / weeks;
         bars.setGoal(goal);
         bars.requestLayout();
-        goalMessage.setText(String.format(savingsMessage, CurrencyHelper.getCurrencySymbol(), (int) toSavePerWeek, goal.getTarget(), weeks));
+        goalMessage.setText(String.format(savingsMessage, CurrencyHelper.format(goal.getWeeklyTarget()), goal.getTarget(), weeks));
         endDate.setText(Utils.formatDate(goal.getEndDate().toDate()));
 
         depositButton.setEnabled(goal.canDeposit());
@@ -237,6 +236,7 @@ public class TargetFragment extends MainFragment {
     }
 
     private void retrieveGoals() {
+        showLoadingProgress();
         goalManager.retrieveGoals(new DooitErrorHandler() {
             @Override
             public void onError(DooitAPIError error) {
@@ -258,6 +258,7 @@ public class TargetFragment extends MainFragment {
                         public void run() {
                             adapter.updateGoals(goals);
                             if (goals.size() > 0) {
+                                viewPager.setCurrentItem(0);
                                 populateGoal(goals.get(0));
                                 rightTarget.setVisibility(View.VISIBLE);
                                 showGoals();
@@ -289,6 +290,11 @@ public class TargetFragment extends MainFragment {
     }
 
     public void refreshGoals() {
-        retrieveGoals();
+        getActivity().runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                retrieveGoals();
+            }
+        });
     }
 }

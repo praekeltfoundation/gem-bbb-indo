@@ -1,5 +1,6 @@
 package org.gem.indo.dooit.views.main.fragments.bot.viewholders;
 
+import android.net.Uri;
 import android.support.v4.content.ContextCompat;
 import android.view.View;
 import android.widget.TextView;
@@ -8,6 +9,7 @@ import com.facebook.drawee.view.SimpleDraweeView;
 
 import org.gem.indo.dooit.R;
 import org.gem.indo.dooit.models.Badge;
+import org.gem.indo.dooit.models.enums.BotParamType;
 import org.gem.indo.dooit.models.goal.Goal;
 import org.gem.indo.dooit.models.bot.Node;
 import org.gem.indo.dooit.models.exceptions.BotCallbackRequired;
@@ -43,7 +45,7 @@ public class BadgeViewHolder extends BaseBotViewHolder<Node> {
         this.botAdapter = botAdapter;
         ButterKnife.bind(this, itemView);
 
-        if (!botAdapter.hasCallback())
+        if (!botAdapter.hasController())
             throw new BotCallbackRequired(String.format("%s requires adapter to have callback", TAG));
 
         // Must assign programmatically for Support Library to wrap before API 21
@@ -55,14 +57,13 @@ public class BadgeViewHolder extends BaseBotViewHolder<Node> {
     public void populate(Node model) {
         super.populate(model);
 
-        Goal goal = (Goal) botAdapter.getCallback().getObject();
-        if (goal.hasNewBadges()) {
-            Badge badge = goal.getNewBadges().get(0);
-            image.setImageURI(badge.getImageUrl());
-        }
+        String title = dataModel.values.getString(BotParamType.BADGE_NAME.getKey());
+        Uri imageUri = Uri.parse(dataModel.values.getString(BotParamType.BADGE_IMAGE_URL.getKey()));
+
+        setImageUri(image, imageUri);
     }
     @Override
     protected void populateModel() {
-
+        // Done in controller
     }
 }
