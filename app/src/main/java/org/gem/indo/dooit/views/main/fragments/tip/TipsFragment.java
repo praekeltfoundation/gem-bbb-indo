@@ -159,7 +159,10 @@ public class TipsFragment extends Fragment implements OnTipsAvailableListener {
 
     void hideKeyBoard() {
         InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
-        imm.hideSoftInputFromWindow(getActivity().getCurrentFocus().getWindowToken(),InputMethodManager.HIDE_NOT_ALWAYS);
+        View focus = getActivity().getCurrentFocus();
+        if (focus != null) {
+            imm.hideSoftInputFromWindow(focus.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+        }
 
         //imm.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0);
 

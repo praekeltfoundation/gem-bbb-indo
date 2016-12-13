@@ -2,6 +2,8 @@
 
     <!-- General -->
     <string name="app_name">Dooit</string>
+    <string name="connection_timed_out">The connection timed out, please try again later</string>
+    <string name="general_error">An error occurred</string>
 
     <!-- Activity Titles  -->
     <string name="title_activity_main"></string>
@@ -66,6 +68,7 @@
     <string name="tips_article_add_fav">Adding \'%s\' to favourites</string>
     <string name="tips_article_remove_fav">Removing \'%s\' from favourites</string>
     <string name="tips_list_filter">Filtering \'%s\'</string>
+    <string name="tips_no_tips_on_filter">No tips were found for the current search</string>
 
     <!-- Registration -->
     <string name="reg_t_c">By clicking register, you are agreeing\n to our *Terms &amp; Condition*</string>
@@ -90,7 +93,8 @@
 
     <string name="already_registered_log_in">Already registered? *Log in*</string>
     <string name="forgot_password">Forgot password?</string>
-    <string name="reg_progress_dialog_message">Attempting to register</string>
+    <string name="reg_progress_dialog_message">Registering</string>
+    <string name="reg_duplicate_username_error">A user with the username already exists</string>
 
     <!--LOGIN-->
     <string name="login_title">@string/label_log_in</string>
@@ -101,7 +105,7 @@
     <string name="login_example_name_error_1">Name can\'t be blank</string>
     <string name="login_example_password">Must have at least 6 characters</string>
     <string name="login_example_password_error_1">Password can\'t be blank</string>
-    <string name="login_progress_dialog_message">Attempting to log in</string>
+    <string name="login_progress_dialog_message">Logging in</string>
 
     <!-- Bot -->
     <string name="bot_carousel_card_select">Select</string>

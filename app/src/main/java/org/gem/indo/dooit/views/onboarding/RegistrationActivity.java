@@ -1,6 +1,5 @@
 package org.gem.indo.dooit.views.onboarding;
 
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -38,6 +37,7 @@ import org.gem.indo.dooit.views.DooitActivity;
 import org.gem.indo.dooit.views.helpers.activity.DooitActivityBuilder;
 import org.gem.indo.dooit.views.web.MinimalWebViewActivity;
 
+import java.net.SocketTimeoutException;
 import java.util.regex.Pattern;
 
 import javax.inject.Inject;
@@ -46,6 +46,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.OnEditorAction;
+import rx.functions.Action0;
 import rx.functions.Action1;
 
 public class RegistrationActivity extends DooitActivity {
@@ -148,7 +149,7 @@ public class RegistrationActivity extends DooitActivity {
         });
     }
 
-    @OnClick({R.id.activity_registration_gender_girl, R.id.activity_registration_gender_boy,} )
+    @OnClick({R.id.activity_registration_gender_girl, R.id.activity_registration_gender_boy,})
     public void genderClick() {
         number.requestFocus();
         number.performClick();
@@ -162,6 +163,7 @@ public class RegistrationActivity extends DooitActivity {
                 .setUrl(Constants.TERMS_URL)
                 .startActivity();
     }
+
     @OnEditorAction(R.id.activity_registration_password_edit_text)
     boolean imeLogin(TextView v, int actionId, KeyEvent event) {
         if (EditorInfo.IME_ACTION_DONE == actionId) {
@@ -181,10 +183,24 @@ public class RegistrationActivity extends DooitActivity {
         showProgressDialog(R.string.reg_progress_dialog_message);
         authenticationManager.onboard(getUser(), new DooitErrorHandler() {
             @Override
-            public void onError(DooitAPIError error) {
-                for (String msg : error.getErrorMessages())
-                    Snackbar.make(registerButton, msg, Snackbar.LENGTH_SHORT).show();
-                    dismissDialog();
+            public void onError(final DooitAPIError error) {
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        if (error != null && error.getErrorResponse() != null) {
+                            if (error.getErrorResponse().getFieldErrors().containsKey("username")) {
+                                Snackbar.make(registerButton, R.string.reg_duplicate_username_error, Snackbar.LENGTH_LONG).show();
+                                nameHint.setText(R.string.reg_duplicate_username_error);
+                                nameHint.setTextColor(ResourcesCompat.getColor(getResources(), android.R.color.holo_red_light, getTheme()));
+                            } else {
+                                Snackbar.make(registerButton, R.string.general_error, Snackbar.LENGTH_LONG).show();
+                            }
+                        } else if (error.getCause() instanceof SocketTimeoutException) {
+                            Snackbar.make(registerButton, R.string.connection_timed_out, Snackbar.LENGTH_LONG).show();
+                        }
+                        dismissDialog();
+                    }
+                });
             }
         }).subscribe(new Action1<OnboardingResponse>() {
             @Override
@@ -193,8 +209,13 @@ public class RegistrationActivity extends DooitActivity {
                     @Override
                     public void onError(DooitAPIError error) {
                         for (String msg : error.getErrorMessages())
-                            Snackbar.make(registerButton, msg, Snackbar.LENGTH_SHORT).show();
-                            dismissDialog();
+                            Snackbar.make(registerButton, msg, Snackbar.LENGTH_LONG).show();
+                        dismissDialog();
+                    }
+                }).doAfterTerminate(new Action0() {
+                    @Override
+                    public void call() {
+                        dismissDialog();
                     }
                 }).subscribe(new Action1<AuthenticationResponse>() {
                     @Override
