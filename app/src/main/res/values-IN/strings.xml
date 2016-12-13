@@ -210,7 +210,8 @@
     <string name="goal_edit_ask_options">Apa yang ingin kamu ubah?</string>
     <string name="goal_edit_updated">Target kamu telah diperbarui!</string>
     <string name="goal_edit_target">Menurut kamu berapa uang yang bisa ditabung per minggu?</string>
-    <string name="goal_edit_target_confirm">If you save $(goal.weekly_target_currency) per week, you\’ll have enough money to get your $(goal.name) in only $(goal.weeks_left_up) weeks.</string>
+    <string name="goal_edit_target_confirm">Bila kamu menabung Rp. $(goal.weekly_target_currency) per minggu, kamu akan mencapai $(goal.name) dalam $(goal.weeks_left_up) minggu.</string>
+    <!--<string name="goal_edit_target_confirm">If you save $(goal.weekly_target_currency) per week, you\’ll have enough money to get your $(goal.name) in only $(goal.weeks_left_up) weeks.</string>-->
     <string name="goal_edit_come_back">Jangan lupa untuk kembali setiap minggunya untuk memantau tabungan kamu dan lihat target kamu menjadi kenyataan!</string>
     <string name="goal_edit_delete_confirm">Oh? Kenapa kamu ingin menghapus target ini?</string>
     <string name="goal_edit_delete_reached">Selamat! Itu berita baik. Aku akan perbarui sekarang.</string>
