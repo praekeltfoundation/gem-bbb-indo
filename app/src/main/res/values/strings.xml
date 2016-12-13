@@ -60,7 +60,7 @@
     <!-- Tips -->
     <string name="tips_tab_favourites">Favourite</string>
     <string name="tips_tab_all">All</string>
-    <string name="tips_card_read_more">Read more</string>
+    <string name="tips_card_read_more">Read more...</string>
     <string name="tips_search_hint">Search for: Topics, titles, tags, etc…</string>
     <string name="tips_search_placeholder_fav">Search favourite tips</string>
     <string name="tips_search_placeholder_all">Search all tips</string>
@@ -71,7 +71,7 @@
     <string name="tips_no_tips_on_filter">No tips were found for the current search</string>
 
     <!-- Registration -->
-    <string name="reg_t_c">By clicking register, you are agreeing\n to our Terms &amp; Condition</string>
+    <string name="reg_t_c">By clicking register, you are agreeing\n to our *Terms &amp; Condition*</string>
     <string name="reg_example_name">Example: Aulia Dharmaningtyas</string>
     <string name="reg_example_name_error_1">Name can\'t be blank</string>
     <string name="reg_example_name_error_2">Name can\'t contain spaces</string>
@@ -91,7 +91,7 @@
     <string name="reg_example_password_error_1">Password can\'t be blank</string>
     <string name="reg_example_password_error_2">Password must be longer than 6 characters</string>
 
-    <string name="already_registered_log_in">Already registered? Log in</string>
+    <string name="already_registered_log_in">Already registered? *Log in*</string>
     <string name="forgot_password">Forgot password?</string>
     <string name="reg_progress_dialog_message">Registering</string>
     <string name="reg_duplicate_username_error">A user with the username already exists</string>
@@ -335,6 +335,7 @@
     <string name="profile_section_account">Your account</string>
     <string name="profile_account_change_name">Change name</string>
     <string name="profile_account_change_password">Change password</string>
+    <string name="profile_account_change_security_question">Change security question</string>
     <string name="profile_account_sign_out">Sign out</string>
     <string name="profile_section_notifications">Notifications</string>
     <string name="profile_section_help"><![CDATA[About & Help]]></string>
@@ -397,5 +398,17 @@
     <string name="saved">saved</string>
     <string name="label_select_picture">Select picture</string>
     <string name="title_activity_feedback">Contact Dooit</string>
+    <string name="title_activity_change_security_question">ChangeSecurityQuestionActivity</string>
+    <string name="label_required">Required</string>
+    <string name="fragment_reset_could_not_fetch_security_q">Could not fetch security question.</string>
+    <string name="activity_password_reset_username_required">Must enter a username.</string>
+    <string name="title_change_security_question">Change Security Question</string>
+    <string name="security_question_label">Question</string>
+    <string name="security_question_answer_label">Answer</string>
+    <string name="security_question_could_not_send">Could not send new question.</string>
+    <string name="security_question_change_successful">Security question changed.</string>
+    <string name="msg_fix_indicated_fields">Please fix indicated fields.</string>
+    <string name="msg_security_question_too_short">Question must be at least %1$d letters long.</string>
+    <string name="prompt_relogin">Could not authenticate. Please log out and back in.</string>
 
 </resources>

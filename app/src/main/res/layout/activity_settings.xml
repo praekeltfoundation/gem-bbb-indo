@@ -127,11 +127,32 @@
                 android:background="@color/divider" />
 
             <TextView
-                android:id="@+id/settings_account_sign_out"
+                android:id="@+id/settings_account_change_security_question"
                 style="@style/AppTheme.TextView.Settings.Item"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/settings_account_change_password_separator"
+                android:background="?attr/selectableItemBackground"
+                android:maxLines="1"
+                android:paddingBottom="8dp"
+                android:paddingTop="8dp"
+                android:text="@string/profile_account_change_security_question"
+                android:textColor="@color/purple"
+                android:textStyle="bold" />
+
+            <View
+                android:id="@+id/settings_account_change_security_question_separator"
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:layout_below="@+id/settings_account_change_security_question"
+                android:background="@color/divider" />
+
+            <TextView
+                android:id="@+id/settings_account_sign_out"
+                style="@style/AppTheme.TextView.Settings.Item"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/settings_account_change_security_question_separator"
                 android:background="?attr/selectableItemBackground"
                 android:maxLines="1"
                 android:paddingBottom="8dp"

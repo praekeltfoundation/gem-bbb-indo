@@ -70,7 +70,7 @@
     <string name="tips_no_tips_on_filter">No tips were found for the current search</string>
 
     <!-- Registration -->
-    <string name="reg_t_c">Dengan meng-klik \'Daftar\', kamu telah menyetujui Syarat &amp; Ketentuan yang berlaku.</string>
+    <string name="reg_t_c">Dengan meng-klik \'Daftar\', kamu telah menyetujui *Syarat &amp; Ketentuan* yang berlaku.</string>
     <string name="reg_example_name">Contoh: Aulia Dharmaningtyas</string>
     <string name="reg_example_name_error_1">Maaf, kolom nama harus terisi.</string>
     <string name="reg_example_name_error_2">Nama tidak boleh ada spasi</string>
@@ -90,7 +90,7 @@
     <string name="reg_example_password_error_1">Maaf, kolom kata sandi harus terisi.</string>
     <string name="reg_example_password_error_2">Kata sandi harus lebih panjang dari 6 karakter.</string>
 
-    <string name="already_registered_log_in">Sudah daftar? Log in disini!</string>
+    <string name="already_registered_log_in">Sudah daftar? *Log in disini*!</string>
     <string name="forgot_password">Ups! Lupa kata sandimu?</string>
     <string name="reg_progress_dialog_message">Registering</string>
     <string name="reg_duplicate_username_error">A user with the username already exists</string>
@@ -395,5 +395,6 @@
     <string name="feedback_option_general"><![CDATA[Saran & Komentar]]></string>
     <string name="feedback_option_report">Laporkan Keluhan</string>
     <string name="feedback_option_partner">Penawaran Kerjasama</string>
+    <string name="profile_account_change_security_question">Change security question</string>
 
 </resources>
