@@ -133,30 +133,69 @@ public class ChallengeFragment extends MainFragment {
     }
 
     public void loadChallenge() {
-        challengeSubscription = challengeManager.retrieveCurrentChallenge(false, new DooitErrorHandler() {
-            @Override
-            public void onError(DooitAPIError error) {
-                Snackbar.make(getView(), R.string.challenge_could_not_connect_to_server, Snackbar.LENGTH_LONG).show();
-                if (persisted.hasCurrentChallenge()) {
-                    try {
-                        challenge = persisted.getCurrentChallenge();
-                        if (challenge.getDeactivationDate().isBeforeNow()) {
-                            persisted.clearCurrentChallenge();
-                        } else {
-                            loadTypeFragment(challenge, true);
+        if (persisted.hasCurrentChallenge()) {
+            try {
+                challenge = persisted.getCurrentChallenge();
+                if (challenge.getDeactivationDate().isBeforeNow()) {
+                    //persisted challenge has expired
+                    persisted.clearCurrentChallenge();
+                    challengeSubscription = challengeManager.retrieveCurrentChallenge(false, new DooitErrorHandler() {
+                        @Override
+                        public void onError(DooitAPIError error) {
+                            getActivity().runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    Snackbar.make(getView(), R.string.challenge_could_not_connect_to_server, Snackbar.LENGTH_LONG).show();
+                                }
+                            });
                         }
-                    } catch (Exception e) {
-                        Log.d(TAG, "Could not load persisted challenge");
-                        persisted.clearCurrentChallenge();
-                    }
+                    }).subscribe(new Action1<BaseChallenge>() {
+                        @Override
+                        public void call(BaseChallenge challenge) {
+                            loadTypeFragment(challenge, false);
+                        }
+                    });
+                } else {
+                    loadTypeFragment(challenge, true);
                 }
+            } catch (Exception e) {
+                Log.d(TAG, "Could not load persisted challenge");
+                persisted.clearCurrentChallenge();
+                challengeSubscription = challengeManager.retrieveCurrentChallenge(false, new DooitErrorHandler() {
+                    @Override
+                    public void onError(DooitAPIError error) {
+                        getActivity().runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                Snackbar.make(getView(), R.string.challenge_could_not_connect_to_server, Snackbar.LENGTH_LONG).show();
+                            }
+                        });
+                    }
+                }).subscribe(new Action1<BaseChallenge>() {
+                    @Override
+                    public void call(BaseChallenge challenge) {
+                        loadTypeFragment(challenge, false);
+                    }
+                });
             }
-        }).subscribe(new Action1<BaseChallenge>() {
-            @Override
-            public void call(BaseChallenge challenge) {
-                loadTypeFragment(challenge, false);
-            }
-        });
+        }else{
+            challengeSubscription = challengeManager.retrieveCurrentChallenge(false, new DooitErrorHandler() {
+                @Override
+                public void onError(DooitAPIError error) {
+                    getActivity().runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            Snackbar.make(getView(), R.string.challenge_could_not_connect_to_server, Snackbar.LENGTH_LONG).show();
+                        }
+                    });
+                }
+            }).subscribe(new Action1<BaseChallenge>() {
+                @Override
+                public void call(BaseChallenge challenge) {
+                    loadTypeFragment(challenge, false);
+                }
+            });
+        }
     }
 
 

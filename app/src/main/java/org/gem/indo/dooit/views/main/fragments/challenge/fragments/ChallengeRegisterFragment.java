@@ -3,9 +3,11 @@ package org.gem.indo.dooit.views.main.fragments.challenge.fragments;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -47,6 +49,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
 import rx.Observable;
+import rx.Subscription;
 import rx.functions.Action1;
 
 /**
@@ -88,7 +91,7 @@ public class ChallengeRegisterFragment extends Fragment implements HasChallengeF
 
     private boolean hasActive = false;
     private BaseChallenge challenge;
-    private Observable<Participant> participantSubscription = null;
+    private Subscription participantSubscription = null;
     private Unbinder unbinder = null;
 
     public ChallengeRegisterFragment() {
@@ -237,23 +240,69 @@ public class ChallengeRegisterFragment extends Fragment implements HasChallengeF
         Participant participant = new Participant();
         participant.setChallenge(challenge.getId());
 
-        participantSubscription = challengeManager.registerParticipant(
-                participant,
-                new DooitErrorHandler() {
-                    @Override
-                    public void onError(DooitAPIError error) {
-                        Toast.makeText(getContext(), "Could not confirm registration", Toast.LENGTH_SHORT).show();
-                    }
+        if(persist.hasCurrentChallenge()){
+            try {
+                challenge = persist.getCurrentChallenge();
+                if (challenge.getDeactivationDate().isAfterNow()) {
+                    persist.setActiveChallenge(challenge);
+                    startChallenge(participant);
+                } else {
+                    //this means the persisted challenge has expired
+                    //make call to server
+                    participantSubscription = challengeManager.registerParticipant(
+                            participant,
+                            new DooitErrorHandler() {
+                                @Override
+                                public void onError(DooitAPIError error) {
+                                    Snackbar.make(getView(), "Could not confirm registration", Snackbar.LENGTH_LONG).show();
+                                }
+                            }
+                    ).subscribe(new Action1<Participant>() {
+                        @Override
+                        public void call(Participant participant1) {
+                            persist.setActiveChallenge(challenge);
+                            startChallenge(participant1);
+                        }
+                    });
                 }
-        );
-
-        participantSubscription.subscribe(new Action1<Participant>() {
-            @Override
-            public void call(Participant participant1) {
-                persist.setActiveChallenge(challenge);
-                startChallenge(participant1);
+            } catch (Exception e) {
+                Log.d(TAG, "Could not load persisted challenge");
+                persist.clearCurrentChallenge();
+                //make call to server
+                participantSubscription = challengeManager.registerParticipant(
+                        participant,
+                        new DooitErrorHandler() {
+                            @Override
+                            public void onError(DooitAPIError error) {
+                                Snackbar.make(getView(), "Could not confirm registration", Snackbar.LENGTH_LONG).show();
+                            }
+                        }
+                ).subscribe(new Action1<Participant>() {
+                    @Override
+                    public void call(Participant participant1) {
+                        persist.setActiveChallenge(challenge);
+                        startChallenge(participant1);
+                    }
+                });
             }
-        });
+        }else{
+            //make call to server
+            participantSubscription = challengeManager.registerParticipant(
+                    participant,
+                    new DooitErrorHandler() {
+                        @Override
+                        public void onError(DooitAPIError error) {
+                            Snackbar.make(getView(), "Could not confirm registration", Snackbar.LENGTH_LONG).show();
+                        }
+                    }
+            ).subscribe(new Action1<Participant>() {
+                @Override
+                public void call(Participant participant1) {
+                    persist.setActiveChallenge(challenge);
+                    startChallenge(participant1);
+                }
+            });
+        }
     }
 
     void startChallenge(Participant participant) {
