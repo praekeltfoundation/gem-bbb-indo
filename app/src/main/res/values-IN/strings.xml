@@ -14,7 +14,7 @@
     <string name="action_settings">Pengaturan</string>
 
     <!-- Bottom Navigation -->
-    <string name="main_tab_text_0">COACH</string>
+    <string name="main_tab_text_0">BINA</string>
     <string name="main_tab_text_1">TARGET</string>
     <string name="main_tab_text_2">TANTAGAN</string>
     <string name="main_tab_text_3">TIPS</string>
@@ -115,7 +115,7 @@
 
     <!--JSON GOALS-->
     <string name="greeting">Hola!</string>
-    <string name="goalIntroduction">My Name is Dooit. I\'m gonna help  you save!</string>
+    <string name="goalIntroduction">My Name is Bina. I\'m gonna help  you save!</string>
     <string name="goalGreeting">Hello %s!</string>
     <string name="goalNameCongrats">Itu target yang bagus!</string>
     <string name="askGoalName">Select the goal you want to save for, please.</string>
@@ -149,8 +149,8 @@
 
     <!-- BOT: goal_add -->
     <!-- Questions -->
-    <string name="goal_add_q_greeting">Hai, $(user.username)! Namaku Dooit. Aku mentor keuangan pribadi kamu dan aku akan membantu kamu menabung. Mari kita mulai!</string>
-    <string name="goal_add_a_greeting_1">Hai, Dooit. Hore! Yuk!</string>
+    <string name="goal_add_q_greeting">Hai, $(user.username)! Namaku Bina. Aku mentor keuangan pribadi kamu dan aku akan membantu kamu menabung. Mari kita mulai!</string>
+    <string name="goal_add_a_greeting_1">Hai, Bina. Hore! Yuk!</string>
     <string name="goal_add_a_greeting_2">Keren! Yuk kita menabung.</string>
 
     <string name="goal_add_q_ask_goal">Jadi, kamu ingin menabung buat apa?</string>
@@ -215,7 +215,8 @@
     <string name="goal_edit_ask_options">Apa yang ingin kamu ubah?</string>
     <string name="goal_edit_updated">Target kamu telah diperbarui!</string>
     <string name="goal_edit_target">Menurut kamu berapa uang yang bisa ditabung per minggu?</string>
-    <string name="goal_edit_target_confirm">If you save $(goal.weekly_target_currency) per week, you\’ll have enough money to get your $(goal.name) in only $(goal.weeks_left_up) weeks.</string>
+    <string name="goal_edit_target_confirm">Bila kamu menabung Rp. $(goal.weekly_target_currency) per minggu, kamu akan mencapai $(goal.name) dalam $(goal.weeks_left_up) minggu.</string>
+    <!--<string name="goal_edit_target_confirm">If you save $(goal.weekly_target_currency) per week, you\’ll have enough money to get your $(goal.name) in only $(goal.weeks_left_up) weeks.</string>-->
     <string name="goal_edit_come_back">Jangan lupa untuk kembali setiap minggunya untuk memantau tabungan kamu dan lihat target kamu menjadi kenyataan!</string>
     <string name="goal_edit_delete_confirm">Oh? Kenapa kamu ingin menghapus target ini?</string>
     <string name="goal_edit_delete_reached">Selamat! Itu berita baik. Aku akan perbarui sekarang.</string>
@@ -318,7 +319,7 @@
     <string name="target_withdraw">- Tarik</string>
     <string name="target_savings_history">Grafik Tabungan</string>
     <string name="target_weeks">Waktu</string>
-    <string name="target_add_goal">TAMBAHKAN TUJUAN BARU</string>
+    <string name="target_add_goal">TUJUAN BARU</string>
     <string name="target_savings_message" formatted="false">Tabung %s per minggu untuk dapat %s dalam waktu %s minggu.</string>
     <string name="target_edit_savings_plan">Edit Rencana Tabungan</string>
     <string name="target_savings_plan">Rencana Tabungan</string>

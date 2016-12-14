@@ -13,12 +13,12 @@ import org.gem.indo.dooit.api.serializers.ChallengeSerializer;
 import org.gem.indo.dooit.api.serializers.DateTimeSerializer;
 import org.gem.indo.dooit.api.serializers.LocalDateSerializer;
 import org.gem.indo.dooit.helpers.DooitSharedPreferences;
+import org.gem.indo.dooit.helpers.LanguageCodeHelper;
 import org.gem.indo.dooit.helpers.Persisted;
 import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 
 import java.io.IOException;
-import java.util.Locale;
 
 import javax.inject.Inject;
 
@@ -69,15 +69,10 @@ public class DooitManager {
             public Response intercept(Chain chain) throws IOException {
                 Request original = chain.request();
 
-                // Backend framework uses "id" for Indonesian
-                String langCode = Locale.getDefault().getLanguage();
-                if (langCode.toLowerCase().equals("in"))
-                    langCode = "id";
-
                 Request.Builder requestBuilder = original.newBuilder()
                         .url(original.url())
                         .addHeader("Accept", "application/json")
-                        .addHeader("Accept-Language", langCode)
+                        .addHeader("Accept-Language", LanguageCodeHelper.getLanguage())
                         .method(original.method(), original.body());
 
                 requestBuilder = addTokenToRequest(requestBuilder);

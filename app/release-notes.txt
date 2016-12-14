@@ -1,2 +1,11 @@
 
-Inserted latest Translations
+Fixed missing translation
+Renamed Coach to "Bina"
+Fixed Add Goal text colour on Target toolbar
+Fixed Profile Image upload crash
+Fixed Free text Challenge crashing when no image is set
+Fixed crash when user is not logged in
+Added progress bars to Challenge Registration and Submit
+Added progress bars to Registration and Login
+Colouring Terms & Conditions for Indonesian text correctly
+Fixed Free text Challenge question not being retrieved from server

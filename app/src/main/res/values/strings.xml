@@ -15,7 +15,7 @@
     <string name="action_settings">Settings</string>
 
     <!-- Bottom Navigation -->
-    <string name="main_tab_text_0">COACH</string>
+    <string name="main_tab_text_0">BINA</string>
     <string name="main_tab_text_1">TARGET</string>
     <string name="main_tab_text_2">CHALLENGE</string>
     <string name="main_tab_text_3">TIPS</string>
@@ -116,7 +116,7 @@
 
     <!--JSON GOALS-->
     <string name="greeting">Hola!</string>
-    <string name="goalIntroduction">My Name is Dooit. I\'m gonna help  you save!</string>
+    <string name="goalIntroduction">My Name is Bina. I\'m gonna help  you save!</string>
     <string name="goalGreeting">Hello %s!</string>
     <string name="goalNameCongrats">That\'s a great goal!</string>
     <string name="askGoalName">Select the goal you want to save for, please.</string>
@@ -150,8 +150,8 @@
 
 
     <!-- BOT: goal_add -->
-    <string name="goal_add_q_greeting">Hi, $(user.username)! My name is Dooit. I\'m your personal money coach and I\'m here to help you save. Let\'s go!</string>
-    <string name="goal_add_a_greeting_1">Hi, Dooit. Yay! Let\'s go!</string>
+    <string name="goal_add_q_greeting">Hi, $(user.username)! My name is Bina. I\'m your personal money coach and I\'m here to help you save. Let\'s go!</string>
+    <string name="goal_add_a_greeting_1">Hi, Bina. Yay! Let\'s go!</string>
     <string name="goal_add_a_greeting_2">Awesome! Let\'s get saving.</string>
 
     <string name="goal_add_q_ask_goal">So what are you you saving for?</string>

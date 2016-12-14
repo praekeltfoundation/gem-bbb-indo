@@ -16,6 +16,7 @@ import android.webkit.WebView;
 import android.widget.ProgressBar;
 
 import org.gem.indo.dooit.R;
+import org.gem.indo.dooit.helpers.LanguageCodeHelper;
 import org.gem.indo.dooit.views.DooitActivity;
 import org.gem.indo.dooit.views.helpers.activity.DooitActivityBuilder;
 
@@ -97,7 +98,7 @@ public class MinimalWebViewActivity extends DooitActivity {
             }
         });
         Map<String, String> headers = new HashMap<String,String>();
-        headers.put("Accept-Language","id");
+        headers.put("Accept-Language", LanguageCodeHelper.getLanguage());
         webView.loadUrl(getIntent().getStringExtra(INTENT_URL),headers);
         Log.d("Web-Headers",headers.toString());
     }
