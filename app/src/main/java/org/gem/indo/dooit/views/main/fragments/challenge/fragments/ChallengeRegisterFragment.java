@@ -1,5 +1,6 @@
 package org.gem.indo.dooit.views.main.fragments.challenge.fragments;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -47,6 +48,8 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
 import rx.Observable;
+import rx.Subscription;
+import rx.functions.Action0;
 import rx.functions.Action1;
 
 /**
@@ -88,7 +91,7 @@ public class ChallengeRegisterFragment extends Fragment implements HasChallengeF
 
     private boolean hasActive = false;
     private BaseChallenge challenge;
-    private Observable<Participant> participantSubscription = null;
+    private Subscription participantSubscription = null;
     private Unbinder unbinder = null;
 
     public ChallengeRegisterFragment() {
@@ -176,6 +179,14 @@ public class ChallengeRegisterFragment extends Fragment implements HasChallengeF
         topImage.setController(controller);
     }
 
+    @Override
+    public void onStop() {
+        if (participantSubscription != null) {
+            participantSubscription.unsubscribe();
+        }
+        super.onStop();
+    }
+
     private Fragment startQuizChallenge(Participant participant, QuizChallenge quizChallenge) {
         if (quizChallenge.getQuestions() == null || quizChallenge.getQuestions().size() <= 0) {
             return ChallengeNoneFragment.newInstance(getString(org.gem.indo.dooit.R.string.challenge_quiz_no_questions));
@@ -237,6 +248,11 @@ public class ChallengeRegisterFragment extends Fragment implements HasChallengeF
         Participant participant = new Participant();
         participant.setChallenge(challenge.getId());
 
+        final ProgressDialog dialog = new ProgressDialog(getContext());
+        dialog.setIndeterminate(true);
+        dialog.setMessage(getString(R.string.label_loading));
+        dialog.show();
+
         participantSubscription = challengeManager.registerParticipant(
                 participant,
                 new DooitErrorHandler() {
@@ -245,9 +261,12 @@ public class ChallengeRegisterFragment extends Fragment implements HasChallengeF
                         Toast.makeText(getContext(), "Could not confirm registration", Toast.LENGTH_SHORT).show();
                     }
                 }
-        );
-
-        participantSubscription.subscribe(new Action1<Participant>() {
+        ).doAfterTerminate(new Action0() {
+            @Override
+            public void call() {
+                dialog.dismiss();
+            }
+        }).subscribe(new Action1<Participant>() {
             @Override
             public void call(Participant participant1) {
                 persist.setActiveChallenge(challenge);
