@@ -169,14 +169,17 @@ public class ChallengeRegisterFragment extends Fragment implements HasChallengeF
             title.setVisibility(View.VISIBLE);
         }
 
-        ImageRequest request = ImageRequestBuilder.newBuilderWithSource(Uri.parse(challenge.getImageURL()))
-                .setProgressiveRenderingEnabled(true)
-                .build();
-        DraweeController controller = Fresco.newDraweeControllerBuilder()
-                .setImageRequest(request)
-                .setOldController(topImage.getController())
-                .build();
-        topImage.setController(controller);
+        String imgUrl = challenge.getImageURL();
+        if (!TextUtils.isEmpty(imgUrl)) {
+            ImageRequest request = ImageRequestBuilder.newBuilderWithSource(Uri.parse(challenge.getImageURL()))
+                    .setProgressiveRenderingEnabled(true)
+                    .build();
+            DraweeController controller = Fresco.newDraweeControllerBuilder()
+                    .setImageRequest(request)
+                    .setOldController(topImage.getController())
+                    .build();
+            topImage.setController(controller);
+        }
     }
 
     @Override
