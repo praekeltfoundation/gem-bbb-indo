@@ -89,7 +89,7 @@ public class ProfileImageActivity extends DooitActivity {
                 getString(R.string.profile_image_cancel)
         };
 
-        AlertDialog.Builder builder = new AlertDialog.Builder(ProfileImageActivity.this);
+        AlertDialog.Builder builder = new AlertDialog.Builder(getApplicationContext());
         builder.setTitle("Add Profile Photo!");
         builder.setItems(items, new DialogInterface.OnClickListener() {
             @Override

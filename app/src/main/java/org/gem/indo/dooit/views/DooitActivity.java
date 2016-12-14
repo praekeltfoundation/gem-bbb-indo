@@ -78,7 +78,8 @@ public class DooitActivity extends AppCompatActivity {
         if (dialog != null && dialog.isShowing()) {
             dialog.dismiss();
         }
-        dialog = new ProgressDialog(this);
+        // Use Application context to avoid window leak
+        dialog = new ProgressDialog(getApplicationContext());
         dialog.setMessage(message);
         dialog.setCancelable(false);
         dialog.setInverseBackgroundForced(false);
