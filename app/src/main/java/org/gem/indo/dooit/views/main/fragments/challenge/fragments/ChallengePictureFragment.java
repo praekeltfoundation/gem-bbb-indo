@@ -1,5 +1,6 @@
 package org.gem.indo.dooit.views.main.fragments.challenge.fragments;
 
+import android.app.ProgressDialog;
 import android.content.ContentResolver;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -48,6 +49,8 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
+import rx.Subscription;
+import rx.functions.Action0;
 import rx.functions.Action1;
 
 import static android.app.Activity.RESULT_OK;
@@ -93,6 +96,7 @@ public class ChallengePictureFragment extends Fragment {
     private String imagePath = null;
     private Uri imageUri = null;
     private Unbinder unbinder = null;
+    private Subscription uploadSubscription = null;
 
 
     /****************
@@ -149,6 +153,14 @@ public class ChallengePictureFragment extends Fragment {
             }
         }
         return view;
+    }
+
+    @Override
+    public void onStop() {
+        if (uploadSubscription != null) {
+            uploadSubscription.unsubscribe();
+        }
+        super.onStop();
     }
 
     @Override
@@ -248,12 +260,22 @@ public class ChallengePictureFragment extends Fragment {
             return;
         }
 
+        final ProgressDialog dialog = new ProgressDialog(getContext());
+        dialog.setIndeterminate(true);
+        dialog.setMessage(getString(R.string.label_loading));
+        dialog.show();
+
         Log.d(TAG, "Uploading image");
         ContentResolver cR = getActivity().getContentResolver();
-        fileUploadManager.uploadParticipantPicture(participant.getId(), cR.getType(imageUri), new File(imagePath), new DooitErrorHandler() {
+        uploadSubscription = fileUploadManager.uploadParticipantPicture(participant.getId(), cR.getType(imageUri), new File(imagePath), new DooitErrorHandler() {
             @Override
             public void onError(DooitAPIError error) {
                 Log.d(TAG, "Could not upload image");
+            }
+        }).doAfterTerminate(new Action0() {
+            @Override
+            public void call() {
+                dialog.dismiss();
             }
         }).subscribe(new Action1<EmptyResponse>() {
             @Override

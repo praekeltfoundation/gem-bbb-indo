@@ -79,7 +79,7 @@ public class TipsListAdapter extends RecyclerView.Adapter<TipViewHolder> impleme
         SpannableString st = new SpannableString(tip.getTitle() + " " + readMore);
         RelativeSizeSpan sizeSpan = new RelativeSizeSpan(0.8f);
         ForegroundColorSpan colorSpan = new ForegroundColorSpan(ResourcesCompat.getColor(
-                context.getResources(), org.gem.indo.dooit.R.color.grey, context.getTheme()));
+                context.getResources(), org.gem.indo.dooit.R.color.pink, context.getTheme()));
         int start = tip.getTitle().length();
         int end = start + 1 + readMore.length(); // Add 1 for space
 

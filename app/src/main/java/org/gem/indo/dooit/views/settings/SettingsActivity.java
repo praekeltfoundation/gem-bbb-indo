@@ -3,6 +3,7 @@ package org.gem.indo.dooit.views.settings;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.content.IntentCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
@@ -23,6 +24,7 @@ import org.gem.indo.dooit.views.RootActivity;
 import org.gem.indo.dooit.views.helpers.activity.DooitActivityBuilder;
 import org.gem.indo.dooit.views.onboarding.ChangeNameActivity;
 import org.gem.indo.dooit.views.onboarding.ChangePasswordActivity;
+import org.gem.indo.dooit.views.onboarding.ChangeSecurityQuestionActivity;
 import org.gem.indo.dooit.views.web.MinimalWebViewActivity;
 
 import javax.inject.Inject;
@@ -96,13 +98,20 @@ public class SettingsActivity extends DooitActivity {
         ChangePasswordActivity.Builder.create(this).startActivity();
     }
 
+    @OnClick(R.id.settings_account_change_security_question)
+    public void changeSecurityQuestion(View view) {
+        ChangeSecurityQuestionActivity.Builder.create(this).startActivity();
+    }
+
     @OnClick({R.id.settings_account_sign_out})
     public void signOut(View view) {
         NotificationAlarm.cancelAlarm(this);
         dooitSharedPreferences.clear();
         persisted.setNewBotUser(false); // Keep for next log in
         Intent intent = new Intent(this, RootActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK |
+                        Intent.FLAG_ACTIVITY_CLEAR_TOP |
+                        Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
     }
 

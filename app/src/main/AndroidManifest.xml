@@ -10,14 +10,14 @@
     <uses-permission android:name="android.permission.WAKE_LOCK" />
 
     <application
-        android:name="org.gem.indo.dooit.DooitApplication"
+        android:name=".DooitApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme.NoActionBar">
         <activity
-            android:name="org.gem.indo.dooit.views.RootActivity"
+            android:name=".views.RootActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.FullscreenTheme">
             <intent-filter>
@@ -26,79 +26,76 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity
-            android:name="org.gem.indo.dooit.views.welcome.WelcomeActivity"
+            android:name=".views.welcome.WelcomeActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.FullscreenTheme" />
-
         <activity
-            android:name="org.gem.indo.dooit.views.onboarding.RegistrationActivity"
+            android:name=".views.onboarding.RegistrationActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.FullscreenTheme" />
-
         <activity
-            android:name="org.gem.indo.dooit.views.onboarding.LoginActivity"
+            android:name=".views.onboarding.LoginActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.FullscreenTheme" />
-
         <activity
-            android:name="org.gem.indo.dooit.views.onboarding.ChangeNameActivity"
+            android:name=".views.onboarding.ChangeNameActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.FullscreenTheme" />
-
         <activity
-            android:name="org.gem.indo.dooit.views.onboarding.ChangePasswordActivity"
+            android:name=".views.onboarding.ChangePasswordActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.FullscreenTheme" />
-
         <activity
-            android:name="org.gem.indo.dooit.views.main.MainActivity"
+            android:name=".views.main.MainActivity"
             android:label="@string/title_activity_main"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
-
         <activity
-            android:name="org.gem.indo.dooit.views.profile.ProfileActivity"
+            android:name=".views.profile.ProfileActivity"
             android:label="@string/title_activity_profile"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
-
         <activity
-            android:name="org.gem.indo.dooit.views.settings.SettingsActivity"
+            android:name=".views.settings.SettingsActivity"
             android:label="@string/title_activity_settings"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
-
         <activity
-            android:name="org.gem.indo.dooit.views.settings.FeedbackActivity"
+            android:name=".views.settings.FeedbackActivity"
             android:label="@string/title_activity_feedback"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
-
         <activity
-            android:name="org.gem.indo.dooit.views.web.MinimalWebViewActivity"
+            android:name=".views.web.MinimalWebViewActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
-
         <activity
-            android:name="org.gem.indo.dooit.views.onboarding.ProfileImageActivity"
+            android:name=".views.onboarding.PasswordResetActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.FullscreenTheme" />
-
         <activity
-            android:name="org.gem.indo.dooit.views.tip.TipArticleActivity"
+            android:name=".views.onboarding.ProfileImageActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.FullscreenTheme" />
+        <activity
+            android:name=".views.tip.TipArticleActivity"
             android:screenOrientation="portrait" />
 
         <service
             android:name=".services.NotificationService"
             android:enabled="true" />
 
-        <receiver android:name=".services.NotificationAlarm"/>
+        <receiver android:name=".services.NotificationAlarm" />
 
         <meta-data
             android:name="io.fabric.ApiKey"
             android:value="21c49b39f896991f9c499d71d1371cd26cd8e499" />
+
+        <activity
+            android:name=".views.onboarding.ChangeSecurityQuestionActivity"
+            android:label="@string/title_activity_change_security_question"
+            android:theme="@style/AppTheme.NoActionBar" />
     </application>
 
 </manifest>

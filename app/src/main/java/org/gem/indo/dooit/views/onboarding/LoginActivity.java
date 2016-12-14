@@ -26,12 +26,15 @@ import org.gem.indo.dooit.views.DooitActivity;
 import org.gem.indo.dooit.views.helpers.activity.DooitActivityBuilder;
 import org.gem.indo.dooit.views.main.MainActivity;
 
+import java.net.SocketTimeoutException;
+
 import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.OnEditorAction;
+import rx.functions.Action0;
 import rx.functions.Action1;
 
 public class LoginActivity extends DooitActivity {
@@ -54,6 +57,9 @@ public class LoginActivity extends DooitActivity {
     @BindView(R.id.activity_login_password_example_text_view)
     TextView passwordHint;
 
+    @BindView(R.id.activity_login_forgot_text_view)
+    TextView forgotLink;
+
     @Inject
     AuthenticationManager authenticationManager;
 
@@ -71,15 +77,32 @@ public class LoginActivity extends DooitActivity {
 
     @OnClick(R.id.activity_login_login_button)
     public void login() {
-
         if (!detailsValid())
             return;
+
         hideKeyboard();
+        showProgressDialog(R.string.login_progress_dialog_message);
         authenticationManager.login(name.getText().toString(), password.getText().toString(), new DooitErrorHandler() {
             @Override
-            public void onError(DooitAPIError error) {
-                for (String msg : error.getErrorResponse().getErrors())
-                    Snackbar.make(buttonLogin, msg, Snackbar.LENGTH_SHORT).show();
+            public void onError(final DooitAPIError error) {
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        if (error != null && error.getErrorResponse() != null) {
+                            for (String msg : error.getErrorResponse().getErrors()) {
+                                Snackbar.make(buttonLogin, msg, Snackbar.LENGTH_LONG).show();
+                            }
+                        }else if(error.getCause() instanceof SocketTimeoutException){
+                            Snackbar.make(buttonLogin, R.string.connection_timed_out, Snackbar.LENGTH_LONG).show();
+                        }
+                        dismissDialog();
+                    }
+                });
+            }
+        }).doAfterTerminate(new Action0() {
+            @Override
+            public void call() {
+                dismissDialog();
             }
         }).subscribe(new Action1<AuthenticationResponse>() {
             @Override
@@ -99,6 +122,11 @@ public class LoginActivity extends DooitActivity {
             login();
         }
         return true;
+    }
+
+    @OnClick(R.id.activity_login_forgot_text_view)
+    protected void forgot() {
+        PasswordResetActivity.Builder.create(this).startActivity();
     }
 
     private boolean detailsValid() {

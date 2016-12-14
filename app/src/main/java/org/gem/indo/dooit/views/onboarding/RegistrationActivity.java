@@ -12,8 +12,6 @@ import android.text.style.ForegroundColorSpan;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
-import android.view.inputmethod.InputMethodManager;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -31,6 +29,7 @@ import org.gem.indo.dooit.api.responses.AuthenticationResponse;
 import org.gem.indo.dooit.api.responses.OnboardingResponse;
 import org.gem.indo.dooit.helpers.Persisted;
 import org.gem.indo.dooit.helpers.SquiggleBackgroundHelper;
+import org.gem.indo.dooit.helpers.TextSpannableHelper;
 import org.gem.indo.dooit.models.Profile;
 import org.gem.indo.dooit.models.User;
 import org.gem.indo.dooit.services.NotificationAlarm;
@@ -38,6 +37,7 @@ import org.gem.indo.dooit.views.DooitActivity;
 import org.gem.indo.dooit.views.helpers.activity.DooitActivityBuilder;
 import org.gem.indo.dooit.views.web.MinimalWebViewActivity;
 
+import java.net.SocketTimeoutException;
 import java.util.regex.Pattern;
 
 import javax.inject.Inject;
@@ -46,9 +46,12 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.OnEditorAction;
+import rx.functions.Action0;
 import rx.functions.Action1;
 
 public class RegistrationActivity extends DooitActivity {
+
+    private static final int DEFAULT_AGE = 16;
 
     private static final int MIN_AGE = 12;
     private static final int MAX_AGE = 80;
@@ -61,7 +64,7 @@ public class RegistrationActivity extends DooitActivity {
 
     @BindView(R.id.activity_registration)
     View background;
-    
+
     @BindView(org.gem.indo.dooit.R.id.activity_registration_t_c_text_view)
     TextView textViewTC;
 
@@ -110,9 +113,12 @@ public class RegistrationActivity extends DooitActivity {
         setContentView(org.gem.indo.dooit.R.layout.activity_registration);
         ((DooitApplication) getApplication()).component.inject(this);
         ButterKnife.bind(this);
+        
+        String stringTc = getResources().getString(org.gem.indo.dooit.R.string.reg_t_c);
+        TextSpannableHelper spanTcHelper = new TextSpannableHelper();
 
-        Spannable spanTc = new SpannableString(getString(org.gem.indo.dooit.R.string.reg_t_c));
-        Spannable spanLogin = new SpannableString(getString(org.gem.indo.dooit.R.string.already_registered_log_in));
+        String stringLogin = getResources().getString(org.gem.indo.dooit.R.string.already_registered_log_in);
+        TextSpannableHelper spanLoginHelper = new TextSpannableHelper();
 
         // Age
         ArrayAdapter<Integer> ageAdapter = new ArrayAdapter(this, org.gem.indo.dooit.R.layout.item_spinner_age);
@@ -123,15 +129,30 @@ public class RegistrationActivity extends DooitActivity {
         // Default gender
         gender.check(R.id.activity_registration_gender_girl);
         
-        if (!getLocal().getCountry().equals("in")) {
-            spanTc.setSpan(new ForegroundColorSpan(ResourcesCompat.getColor(getResources(), org.gem.indo.dooit.R.color.pink, getTheme())), spanTc.length() - 17, spanTc.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-            spanLogin.setSpan(new ForegroundColorSpan(ResourcesCompat.getColor(getResources(), org.gem.indo.dooit.R.color.pink, getTheme())), spanLogin.length() - 6, spanLogin.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-        }
-        textViewTC.setText(spanTc);
-        textViewLogin.setText(spanLogin);
+        textViewTC.setText(spanTcHelper.styleText(this, R.style.AppTheme_TextView_Bold_Small_Accented, stringTc));
+        textViewLogin.setText(spanLoginHelper.styleText(this, R.style.AppTheme_TextView_Bold_Small_Accented, stringLogin));
         SquiggleBackgroundHelper.setBackground(this, R.color.purple, R.color.purple_light, background);
         password.setImeActionLabel(getString(R.string.label_register), EditorInfo.IME_ACTION_DONE);
-        age.setSelection(16 - MIN_AGE); // 16
+        age.setSelection(DEFAULT_AGE - MIN_AGE); // 16
+
+        name.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView textView, int actionId, KeyEvent event) {
+                if (actionId == EditorInfo.IME_ACTION_NEXT) {
+                    hideKeyboard();
+                    textView.clearFocus();
+                    age.requestFocus();
+                    age.performClick();
+                }
+                return true;
+            }
+        });
+    }
+
+    @OnClick({R.id.activity_registration_gender_girl, R.id.activity_registration_gender_boy,})
+    public void genderClick() {
+        number.requestFocus();
+        number.performClick();
     }
 
 
@@ -142,6 +163,7 @@ public class RegistrationActivity extends DooitActivity {
                 .setUrl(Constants.TERMS_URL)
                 .startActivity();
     }
+
     @OnEditorAction(R.id.activity_registration_password_edit_text)
     boolean imeLogin(TextView v, int actionId, KeyEvent event) {
         if (EditorInfo.IME_ACTION_DONE == actionId) {
@@ -152,19 +174,33 @@ public class RegistrationActivity extends DooitActivity {
 
     @OnClick(R.id.activity_registration_register_button)
     public void register() {
-
         if (!detailsValid()) {
             hideKeyboard();
             return;
         }
 
         hideKeyboard();
-
+        showProgressDialog(R.string.reg_progress_dialog_message);
         authenticationManager.onboard(getUser(), new DooitErrorHandler() {
             @Override
-            public void onError(DooitAPIError error) {
-                for (String msg : error.getErrorMessages())
-                    Snackbar.make(registerButton, msg, Snackbar.LENGTH_SHORT).show();
+            public void onError(final DooitAPIError error) {
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        if (error != null && error.getErrorResponse() != null) {
+                            if (error.getErrorResponse().getFieldErrors().containsKey("username")) {
+                                Snackbar.make(registerButton, R.string.reg_duplicate_username_error, Snackbar.LENGTH_LONG).show();
+                                nameHint.setText(R.string.reg_duplicate_username_error);
+                                nameHint.setTextColor(ResourcesCompat.getColor(getResources(), android.R.color.holo_red_light, getTheme()));
+                            } else {
+                                Snackbar.make(registerButton, R.string.general_error, Snackbar.LENGTH_LONG).show();
+                            }
+                        } else if (error.getCause() instanceof SocketTimeoutException) {
+                            Snackbar.make(registerButton, R.string.connection_timed_out, Snackbar.LENGTH_LONG).show();
+                        }
+                        dismissDialog();
+                    }
+                });
             }
         }).subscribe(new Action1<OnboardingResponse>() {
             @Override
@@ -173,7 +209,13 @@ public class RegistrationActivity extends DooitActivity {
                     @Override
                     public void onError(DooitAPIError error) {
                         for (String msg : error.getErrorMessages())
-                            Snackbar.make(registerButton, msg, Snackbar.LENGTH_SHORT).show();
+                            Snackbar.make(registerButton, msg, Snackbar.LENGTH_LONG).show();
+                        dismissDialog();
+                    }
+                }).doAfterTerminate(new Action0() {
+                    @Override
+                    public void call() {
+                        dismissDialog();
                     }
                 }).subscribe(new Action1<AuthenticationResponse>() {
                     @Override
@@ -300,7 +342,6 @@ public class RegistrationActivity extends DooitActivity {
         }
         return valid;
     }
-
 
     public static class Builder extends DooitActivityBuilder<Builder> {
         protected Builder(Context context) {

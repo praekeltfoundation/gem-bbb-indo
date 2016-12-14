@@ -52,10 +52,10 @@ public class PermissionsHelper {
     public static boolean needPermission(Activity activity, String[] permissions) {
         for (String permission : permissions) {
             if (needPermission(activity, permission)) {
-                return false;
+                return true;
             }
         }
-        return true;
+        return false;
     }
 
     public void askForPermission(Activity activity, String permission) {
@@ -80,7 +80,7 @@ public class PermissionsHelper {
         if (permissionCallback == null) {
             return;
         }
-        if (needPermission(activity, permissions)) {
+        if (!needPermission(activity, permissions)) {
             permissionCallback.permissionGranted();
             return;
         }

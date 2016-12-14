@@ -2,6 +2,7 @@
 
     <!-- General -->
     <string name="app_name">Dooit</string>
+    <string name="connection_timed_out">The connection timed out, please try again later</string>
 
     <!-- Activity Titles  -->
     <string name="title_activity_main"></string>
@@ -66,10 +67,11 @@
     <string name="tips_article_add_fav">Menambahkan \'%s\' ke favorit</string>
     <string name="tips_article_remove_fav">Menghapus \'%s\' dari favorit</string>
     <string name="tips_list_filter">Menyaring \'%s\'</string>
+    <string name="tips_no_tips_on_filter">No tips were found for the current search</string>
 
     <!-- Registration -->
-    <string name="reg_t_c">Dengan meng-klik \'Daftar\', kamu telah menyetujui Syarat &amp; Ketentuan yang berlaku.</string>
-    <string name="reg_example_name">Contoh: Aulia Dharmaningtyas</string>
+    <string name="reg_t_c">Dengan meng-klik \'Daftar\', kamu telah menyetujui *Syarat &amp; Ketentuan* yang berlaku.</string>
+    <string name="reg_example_name">@string/login_example_name</string>
     <string name="reg_example_name_error_1">Maaf, kolom nama harus terisi.</string>
     <string name="reg_example_name_error_2">Nama tidak boleh ada spasi</string>
     <string name="reg_example_name_error_3">Nama hanya boleh ada huruf dan angka</string>
@@ -88,8 +90,10 @@
     <string name="reg_example_password_error_1">Maaf, kolom kata sandi harus terisi.</string>
     <string name="reg_example_password_error_2">Kata sandi harus lebih panjang dari 6 karakter.</string>
 
-    <string name="already_registered_log_in">Sudah daftar? Log in disini!</string>
+    <string name="already_registered_log_in">Sudah daftar? *Log in disini*!</string>
     <string name="forgot_password">Ups! Lupa kata sandimu?</string>
+    <string name="reg_progress_dialog_message">Registering</string>
+    <string name="reg_duplicate_username_error">A user with the username already exists</string>
 
     <!--LOGIN-->
     <string name="login_title">Log In</string>
@@ -100,6 +104,7 @@
     <string name="login_example_name_error_1">Maaf, kolom nama harus terisi.</string>
     <string name="login_example_password">Kata sandi harus terdiri dari 6 karakter.</string>
     <string name="login_example_password_error_1">Maaf, kolom kata sandi harus terisi.</string>
+    <string name="login_progress_dialog_message">Logging in</string>
 
     <!-- Bot -->
     <string name="bot_carousel_card_select">Select</string>
@@ -396,5 +401,6 @@
     <string name="feedback_option_general"><![CDATA[Saran & Komentar]]></string>
     <string name="feedback_option_report">Laporkan Keluhan</string>
     <string name="feedback_option_partner">Penawaran Kerjasama</string>
+    <string name="profile_account_change_security_question">Change security question</string>
 
 </resources>

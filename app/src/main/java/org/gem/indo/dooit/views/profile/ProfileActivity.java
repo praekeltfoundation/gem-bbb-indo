@@ -10,11 +10,13 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.design.widget.AppBarLayout;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -208,6 +210,10 @@ public class ProfileActivity extends DooitActivity {
     protected void onResume() {
         super.onResume();
         user = persisted.getCurrentUser();
+        if (user == null) {
+            Snackbar.make(toolbar, R.string.prompt_relogin, Snackbar.LENGTH_SHORT);
+            return;
+        }
         setTitle(user.getUsername());
     }
 
@@ -271,28 +277,19 @@ public class ProfileActivity extends DooitActivity {
     }
 
     protected void startCamera() {
-        permissionsHelper.askForPermission(this, PermissionsHelper.D_WRITE_EXTERNAL_STORAGE, new PermissionCallback() {
+        permissionsHelper.askForPermission(this, new String[]{PermissionsHelper.D_WRITE_EXTERNAL_STORAGE, PermissionsHelper.D_CAMERA}, new PermissionCallback() {
             @Override
             public void permissionGranted() {
-                permissionsHelper.askForPermission(ProfileActivity.this, PermissionsHelper.D_CAMERA, new PermissionCallback() {
-                    @Override
-                    public void permissionGranted() {
-                        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                        if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
-                            startActivityForResult(takePictureIntent, RequestCodes.RESPONSE_CAMERA_REQUEST_PROFILE_IMAGE);
-                        }
+                Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                    takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
+                    if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
+                        startActivityForResult(takePictureIntent, RequestCodes.RESPONSE_CAMERA_REQUEST_PROFILE_IMAGE);
                     }
-
-                    @Override
-                    public void permissionRefused() {
-                        Toast.makeText(ProfileActivity.this, "Can't take ic_d_profile image without camera permission", Toast.LENGTH_SHORT).show();
-                    }
-                });
             }
 
             @Override
             public void permissionRefused() {
-                Toast.makeText(ProfileActivity.this, "Can't take ic_d_profile image without storage permission", Toast.LENGTH_SHORT).show();
+                Toast.makeText(ProfileActivity.this, "Can't take ic_d_profile image without storage and camera permission", Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -312,7 +309,6 @@ public class ProfileActivity extends DooitActivity {
                 Toast.makeText(ProfileActivity.this, "Can't take ic_d_profile image without storage permission", Toast.LENGTH_SHORT).show();
             }
         });
-
     }
 
     @Override
@@ -334,7 +330,11 @@ public class ProfileActivity extends DooitActivity {
         imageUri = data.getData();
         if (imageUri == null) {
             try {
-                imageUri = Uri.parse(MediaStore.Images.Media.insertImage(getContentResolver(), (Bitmap) data.getExtras().get("data"), "", ""));
+                ContentResolver cR = this.getContentResolver();
+                Bitmap bm = (Bitmap) data.getExtras().get("data");
+                Log.d("IMAGE_TESTS", "Bitmap size : " + bm.getByteCount());
+                imageUri = Uri.parse(MediaStore.Images.Media.insertImage(cR, bm, "", ""));
+
             } catch (Throwable ex) {
 
             }
@@ -346,6 +346,10 @@ public class ProfileActivity extends DooitActivity {
 
     protected void uploadImage(String mimetype, String filepath) {
         User user = persisted.getCurrentUser();
+        if (user == null) {
+            Snackbar.make(toolbar, R.string.prompt_relogin, Snackbar.LENGTH_SHORT);
+            return;
+        }
         showProgressDialog(R.string.profile_image_progress);
         fileUploadManager.upload(user.getId(), mimetype, new File(filepath), new DooitErrorHandler() {
             @Override
