@@ -36,6 +36,7 @@ import org.gem.indo.dooit.api.managers.AchievementManager;
 import org.gem.indo.dooit.api.managers.FileUploadManager;
 import org.gem.indo.dooit.api.responses.AchievementResponse;
 import org.gem.indo.dooit.api.responses.EmptyResponse;
+import org.gem.indo.dooit.helpers.DraweeHelper;
 import org.gem.indo.dooit.helpers.MediaUriHelper;
 import org.gem.indo.dooit.helpers.Persisted;
 import org.gem.indo.dooit.helpers.RequestCodes;
@@ -135,7 +136,8 @@ public class ProfileActivity extends DooitActivity {
         setTitle(user.getUsername());
 
         // Profile image collapse
-        profileImage.setImageURI(user.getProfile().getProfileImageUrl());
+        if (user.hasProfileImage())
+            DraweeHelper.setProgressiveUri(profileImage, Uri.parse(user.getProfile().getProfileImageUrl()));
         appBarLayout.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
             boolean isShow = false;
             int scrollRange = -1;

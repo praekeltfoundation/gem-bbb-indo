@@ -2,6 +2,7 @@ package org.gem.indo.dooit.views.main;
 
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
@@ -15,6 +16,7 @@ import com.facebook.drawee.view.SimpleDraweeView;
 
 import org.gem.indo.dooit.DooitApplication;
 import org.gem.indo.dooit.R;
+import org.gem.indo.dooit.helpers.DraweeHelper;
 import org.gem.indo.dooit.helpers.Persisted;
 import org.gem.indo.dooit.helpers.activity.result.ActivityForResultHelper;
 import org.gem.indo.dooit.helpers.notifications.NotificationType;
@@ -128,7 +130,11 @@ public class MainActivity extends DooitActivity {
         if (user == null)
             Snackbar.make(viewPager, R.string.prompt_relogin, Snackbar.LENGTH_LONG);
         else
-            simpleDraweeViewProfile.setImageURI(user.getProfile().getProfileImageUrl());
+            if (user.hasProfileImage())
+                DraweeHelper.setProgressiveUri(
+                        simpleDraweeViewProfile,
+                        Uri.parse(user.getProfile().getProfileImageUrl())
+                );
     }
 
     @Override
