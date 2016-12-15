@@ -42,6 +42,7 @@ import javax.inject.Inject;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import retrofit2.Response;
 import rx.functions.Action1;
 
 public class ProfileImageActivity extends DooitActivity {
@@ -163,16 +164,16 @@ public class ProfileImageActivity extends DooitActivity {
             return;
         }
         User user = persisted.getCurrentUser();
-        fileUploadManager.upload(user.getId(), getIntent().getStringExtra(INTENT_MIME_TYPE),
+        fileUploadManager.uploadProfileImage(user.getId(), getIntent().getStringExtra(INTENT_MIME_TYPE),
                 new File(getIntent().getExtras().getString(INTENT_IMAGE_URI)), new DooitErrorHandler() {
                     @Override
                     public void onError(DooitAPIError error) {
                         for (String msg : error.getErrorMessages())
                             Snackbar.make(nextButton, msg, Snackbar.LENGTH_SHORT).show();
                     }
-                }).subscribe(new Action1<EmptyResponse>() {
+                }).subscribe(new Action1<Response<EmptyResponse>>() {
             @Override
-            public void call(EmptyResponse emptyResponse) {
+            public void call(Response<EmptyResponse> response) {
                 User user = persisted.getCurrentUser();
                 user.getProfile().setProfileImageUrl(imageUri.toString());
                 persisted.setCurrentUser(user);

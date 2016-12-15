@@ -3,11 +3,11 @@ package org.gem.indo.dooit.api.interfaces;
 import org.gem.indo.dooit.api.responses.EmptyResponse;
 
 import okhttp3.RequestBody;
+import retrofit2.Response;
 import retrofit2.http.Body;
 import retrofit2.http.Header;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
-import retrofit2.http.Query;
 import rx.Observable;
 
 /**
@@ -16,11 +16,11 @@ import rx.Observable;
 public interface FileUploadAPI {
 
     @POST("/api/profile-image/{id}/")
-    Observable<EmptyResponse> upload(@Path("id") long id, @Body RequestBody requestBody, @Header("Content-Disposition") String contentDisposition);
+    Observable<Response<EmptyResponse>> uploadProfileImage(@Path("id") long id, @Body RequestBody requestBody, @Header("Content-Disposition") String contentDisposition);
 
     @POST("/api/participant-image/{id}/")
     Observable<EmptyResponse> uploadParticipantPicture(@Path("id") long id, @Body RequestBody requestBody, @Header("Content-Disposition") String contentDisposition);
-    
+
     @POST("/api/goal-image/{id}/")
     Observable<EmptyResponse> uploadGoalImage(@Path("id") long goalId, @Body RequestBody requestBody, @Header("Content-Disposition") String contentDisposition);
 }

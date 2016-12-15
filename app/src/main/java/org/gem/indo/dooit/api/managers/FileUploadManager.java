@@ -12,6 +12,7 @@ import javax.inject.Inject;
 
 import okhttp3.MediaType;
 import okhttp3.RequestBody;
+import retrofit2.Response;
 import rx.Observable;
 
 /**
@@ -30,10 +31,10 @@ public class FileUploadManager extends DooitManager {
         return String.format("attachment;filename=\"%s\"", filename);
     }
 
-    public Observable<EmptyResponse> upload(long userId, String mediaType, File file, DooitErrorHandler errorHandler) {
+    public Observable<Response<EmptyResponse>> uploadProfileImage(long userId, String mediaType, File file, DooitErrorHandler errorHandler) {
         MediaType mediaTypeHeader = MediaType.parse(mediaType);
         String filename = file.getName();
-        return useNetwork(fileUploadAPI.upload(userId, RequestBody.create(mediaTypeHeader, file), "attachment;filename=\"" + filename + "\""), errorHandler);
+        return useNetwork(fileUploadAPI.uploadProfileImage(userId, RequestBody.create(mediaTypeHeader, file), "attachment;filename=\"" + filename + "\""), errorHandler);
     }
 
     public Observable<EmptyResponse> uploadParticipantPicture(long participantId, String mediaType, File file, DooitErrorHandler errorHandler) {

@@ -125,11 +125,10 @@ public class MainActivity extends DooitActivity {
     protected void onResume() {
         super.onResume();
         User user = persisted.getCurrentUser();
-        if (user == null) {
+        if (user == null)
             Snackbar.make(viewPager, R.string.prompt_relogin, Snackbar.LENGTH_LONG);
-        } else {
+        else
             simpleDraweeViewProfile.setImageURI(user.getProfile().getProfileImageUrl());
-        }
     }
 
     @Override

@@ -16,6 +16,7 @@ import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -55,6 +56,7 @@ import butterknife.BindString;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import retrofit2.Response;
 import rx.functions.Action0;
 import rx.functions.Action1;
 
@@ -349,7 +351,7 @@ public class ProfileActivity extends DooitActivity {
             return;
         }
         showProgressDialog(R.string.profile_image_progress);
-        fileUploadManager.upload(user.getId(), mimetype, new File(filepath), new DooitErrorHandler() {
+        fileUploadManager.uploadProfileImage(user.getId(), mimetype, new File(filepath), new DooitErrorHandler() {
             @Override
             public void onError(DooitAPIError error) {
                 Toast.makeText(ProfileActivity.this, "Unable to uploadProfileImage Image", Toast.LENGTH_SHORT).show();
@@ -359,9 +361,9 @@ public class ProfileActivity extends DooitActivity {
             public void call() {
                 dismissDialog();
             }
-        }).subscribe(new Action1<EmptyResponse>() {
+        }).subscribe(new Action1<Response<EmptyResponse>>() {
             @Override
-            public void call(EmptyResponse emptyResponse) {
+            public void call(Response<EmptyResponse> response) {
                 User user = persisted.getCurrentUser();
 
                 if (user.hasProfileImage()) {
@@ -372,6 +374,12 @@ public class ProfileActivity extends DooitActivity {
                         pipeline.evictFromCache(currentUri);
                     }
                 }
+
+                String location = response.headers().get("Location");
+                if (!TextUtils.isEmpty(location))
+                    user.getProfile().setProfileImageUrl(location);
+
+                persisted.setCurrentUser(user);
             }
         });
     }
