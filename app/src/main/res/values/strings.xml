@@ -304,6 +304,7 @@
     <string name="challenge_hint_template">Hint: %1$s</string>
     <string name="challenge_hint_none">Sorry, I don\'t have a hint for you</string>
     <string name="challenge_could_not_connect_to_server">Could not make a connect to the server</string>
+    <string name="challenge_could_not_confirm_registraiton">Could not confirm registration</string>
 
     <!--JSON CHALLENGES-->
     <string name="toes">Can you touch your toes?</string>

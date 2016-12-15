@@ -254,7 +254,7 @@ public class ChallengeRegisterFragment extends Fragment implements HasChallengeF
                             new DooitErrorHandler() {
                                 @Override
                                 public void onError(DooitAPIError error) {
-                                    Snackbar.make(getView(), "Could not confirm registration", Snackbar.LENGTH_LONG).show();
+                                    Snackbar.make(getView(), R.string.challenge_could_not_confirm_registraiton, Snackbar.LENGTH_LONG).show();
                                 }
                             }
                     ).subscribe(new Action1<Participant>() {
@@ -274,7 +274,7 @@ public class ChallengeRegisterFragment extends Fragment implements HasChallengeF
                         new DooitErrorHandler() {
                             @Override
                             public void onError(DooitAPIError error) {
-                                Snackbar.make(getView(), "Could not confirm registration", Snackbar.LENGTH_LONG).show();
+                                Snackbar.make(getView(), R.string.challenge_could_not_confirm_registraiton, Snackbar.LENGTH_LONG).show();
                             }
                         }
                 ).subscribe(new Action1<Participant>() {
@@ -292,7 +292,7 @@ public class ChallengeRegisterFragment extends Fragment implements HasChallengeF
                     new DooitErrorHandler() {
                         @Override
                         public void onError(DooitAPIError error) {
-                            Snackbar.make(getView(), "Could not confirm registration", Snackbar.LENGTH_LONG).show();
+                            Snackbar.make(getView(), R.string.challenge_could_not_confirm_registraiton, Snackbar.LENGTH_LONG).show();
                         }
                     }
             ).subscribe(new Action1<Participant>() {
