@@ -281,10 +281,10 @@ public class ProfileActivity extends DooitActivity {
             @Override
             public void permissionGranted() {
                 Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                    takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
-                    if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
-                        startActivityForResult(takePictureIntent, RequestCodes.RESPONSE_CAMERA_REQUEST_PROFILE_IMAGE);
-                    }
+                takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
+                if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
+                    startActivityForResult(takePictureIntent, RequestCodes.RESPONSE_CAMERA_REQUEST_PROFILE_IMAGE);
+                }
             }
 
             @Override
@@ -318,8 +318,6 @@ public class ProfileActivity extends DooitActivity {
 
         switch (requestCode) {
             case RequestCodes.RESPONSE_CAMERA_REQUEST_PROFILE_IMAGE:
-                onActivityImageResult(data);
-                break;
             case RequestCodes.RESPONSE_GALLERY_REQUEST_PROFILE_IMAGE:
                 onActivityImageResult(data);
                 break;
@@ -366,11 +364,13 @@ public class ProfileActivity extends DooitActivity {
             public void call(EmptyResponse emptyResponse) {
                 User user = persisted.getCurrentUser();
 
-                // Clear remote image from Fresco cache
-                Uri currentUri = Uri.parse(user.getProfile().getProfileImageUrl());
-                if (currentUri.getScheme().equals("http") || currentUri.getScheme().equals("https")) {
-                    ImagePipeline pipeline = Fresco.getImagePipeline();
-                    pipeline.evictFromCache(currentUri);
+                if (user.hasProfileImage()) {
+                    // Clear existing remote image from Fresco cache
+                    Uri currentUri = Uri.parse(user.getProfile().getProfileImageUrl());
+                    if (currentUri.getScheme().equals("http") || currentUri.getScheme().equals("https")) {
+                        ImagePipeline pipeline = Fresco.getImagePipeline();
+                        pipeline.evictFromCache(currentUri);
+                    }
                 }
             }
         });

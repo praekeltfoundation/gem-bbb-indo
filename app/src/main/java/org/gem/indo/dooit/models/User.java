@@ -1,5 +1,7 @@
 package org.gem.indo.dooit.models;
 
+import android.text.TextUtils;
+
 import com.google.gson.annotations.SerializedName;
 
 /**
@@ -68,6 +70,10 @@ public class User {
 
     public void setProfile(Profile profile) {
         this.profile = profile;
+    }
+
+    public boolean hasProfileImage() {
+        return profile != null && !TextUtils.isEmpty(profile.getProfileImageUrl());
     }
 }
 
