@@ -264,12 +264,14 @@ public class ChallengeRegisterFragment extends Fragment implements HasChallengeF
                 } else {
                     //this means the persisted challenge has expired
                     //make call to server
+                    persist.clearCurrentChallenge();
+                    Snackbar.make(getView(), R.string.challenge_persisted_challenge_thrown_out, Snackbar.LENGTH_LONG);
                     participantSubscription = challengeManager.registerParticipant(
                             participant,
                             new DooitErrorHandler() {
                                 @Override
                                 public void onError(DooitAPIError error) {
-                                    Snackbar.make(getView(), R.string.challenge_could_not_confirm_registraiton, Snackbar.LENGTH_LONG).show();
+                                    Snackbar.make(getView(), R.string.challenge_could_not_confirm_registration, Snackbar.LENGTH_LONG).show();
                                 }
                             }
                     ).doAfterTerminate(new Action0() {
@@ -288,13 +290,14 @@ public class ChallengeRegisterFragment extends Fragment implements HasChallengeF
             } catch (Exception e) {
                 Log.d(TAG, "Could not load persisted challenge");
                 persist.clearCurrentChallenge();
+                Snackbar.make(getView(), R.string.challenge_persisted_challenge_thrown_out, Snackbar.LENGTH_LONG);
                 //make call to server
                 participantSubscription = challengeManager.registerParticipant(
                         participant,
                         new DooitErrorHandler() {
                             @Override
                             public void onError(DooitAPIError error) {
-                                Snackbar.make(getView(), R.string.challenge_could_not_confirm_registraiton, Snackbar.LENGTH_LONG).show();
+                                Snackbar.make(getView(), R.string.challenge_could_not_confirm_registration, Snackbar.LENGTH_LONG).show();
                             }
                         }
                 ).doAfterTerminate(new Action0() {
@@ -317,7 +320,7 @@ public class ChallengeRegisterFragment extends Fragment implements HasChallengeF
                     new DooitErrorHandler() {
                         @Override
                         public void onError(DooitAPIError error) {
-                            Snackbar.make(getView(), R.string.challenge_could_not_confirm_registraiton, Snackbar.LENGTH_LONG).show();
+                            Snackbar.make(getView(), R.string.challenge_could_not_confirm_registration, Snackbar.LENGTH_LONG).show();
                         }
                     }
             ).doAfterTerminate(new Action0() {
