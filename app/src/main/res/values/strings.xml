@@ -15,7 +15,7 @@
     <string name="action_settings">Settings</string>
 
     <!-- Bottom Navigation -->
-    <string name="main_tab_text_0">COACH</string>
+    <string name="main_tab_text_0">BINA</string>
     <string name="main_tab_text_1">TARGET</string>
     <string name="main_tab_text_2">CHALLENGE</string>
     <string name="main_tab_text_3">TIPS</string>
@@ -116,12 +116,12 @@
 
     <!--JSON GOALS-->
     <string name="greeting">Hola!</string>
-    <string name="goalIntroduction">My Name is Dooit. I\'m gonna help  you save!</string>
+    <string name="goalIntroduction">My Name is Bina. I\'m gonna help  you save!</string>
     <string name="goalGreeting">Hello %s!</string>
-    <string name="goalNameCongrats">Great choice!</string>
+    <string name="goalNameCongrats">That\'s a great goal!</string>
     <string name="askGoalName">Select the goal you want to save for, please.</string>
     <string name="askGoalNameInput">What do you want to save for?</string>
-    <string name="askGoalImage">Add an image for your savings goal to help keep you motivated,or press skip:</string>
+    <string name="askGoalImage">Add an image for your savings goal to help keep you motivated</string>
     <string name="askGoalImageTake">Tap on the blue square…</string>
     <string name="askGoalImageConfirm">Add an image for your savings goal to help keep you motivated</string>
     <string name="askKnowGoalAmount">Do you know how much you need to save? </string>
@@ -131,14 +131,14 @@
     <string name="askGoalDate">When would you like to have saved this much?</string>
     <string name="askGoalWeeklySaveAmount">No problem, I can help. How much can money can you afford to save each week??</string>
     <string name="askGoalSaveAmountOther">How much can you save?</string>
-    <string name="askGoalPriorSave">Have you saved anything towards this goal yet?</string>
+    <string name="askGoalPriorSave">Have you started saving money towards this goal?</string>
     <string name="askPriorSavedAmount">How much have you already saved?</string>
     <string name="verifyGoalAmount">If you save %4$s %1$s each week you will save enough to get your %2$s in %3$s weeks.</string>
     <string name="validationFail">Sorry, I do not understand that and have not been taught how to handle it yet.</string>
     <string name="validationFailDate">Sorry, I do not understand that and have not  been taught how to handle it yet.</string>
     <string name="validationFailSaveAmountOther">Sorry, I do not understand that and have not t been taught how to handle it yet.</string>
     <string name="validationFailPriorSavedAmount">Sorry, I do not understand that and have not  been taught how to handle it yet.</string>
-    <string name="infoGoalEnd">Thank you. That concludes the goal-setting process.</string>
+    <string name="infoGoalEnd">See you later! Don\'t forget to come back every week to track your savings.</string>
     <string name="infoGoalAddedCongratulations">Great job! You\'ve set your first savings goal! </string>
 
     <!-- BOT: returning_user -->
@@ -150,8 +150,8 @@
 
 
     <!-- BOT: goal_add -->
-    <string name="goal_add_q_greeting">Hi, $(user.username)! My name is Dooit. I\'m your personal money coach and I\'m here to help you save. Let\'s go!</string>
-    <string name="goal_add_a_greeting_1">Hi, Dooit. Yay! Let\'s go!</string>
+    <string name="goal_add_q_greeting">Hi, $(user.username)! My name is Bina. I\'m your personal money coach and I\'m here to help you save. Let\'s go!</string>
+    <string name="goal_add_a_greeting_1">Hi, Bina. Yay! Let\'s go!</string>
     <string name="goal_add_a_greeting_2">Awesome! Let\'s get saving.</string>
 
     <string name="goal_add_q_ask_goal">So what are you you saving for?</string>
@@ -166,6 +166,11 @@
     <string name="goal_add_q_ask_date">By what date do you want to have saved for your goal?</string>
 
     <string name="goal_add_q_verify">If you save $(goal.weekly_target_currency) each week you will save enough to get your $(goal.name) in $(goal.weeks_left_up) weeks.</string>
+
+    <string name="goal_add_a_has_saved_y">Yes! I already have this much money saved:</string>
+    <string name="goal_add_a_has_saved_n">Not yet.</string>
+
+    <string name="goal_add_a_done_exit">Thanks! I\'m done for now.</string>
 
     <!-- Answers -->
     <string name="goal_add_greeting_response">Hola!</string>
@@ -206,7 +211,7 @@
 
     <!-- BOT: goal_edit -->
     <!-- Questions -->
-    <string name="goal_edit_intro">Hey $(user.username)!</string>
+    <string name="goal_edit_intro">Hey, $(user.username)!</string>
     <string name="goal_edit_ask_options">What do you want to edit?</string>
     <string name="goal_edit_updated">Your goal has been updated!</string>
     <string name="goal_edit_target">How much money do you think can you save each week?</string>
@@ -215,9 +220,9 @@
     <string name="goal_edit_delete_confirm">Oh? Why do you want to delete this goal?</string>
     <string name="goal_edit_delete_reached">Congratulations! That is great news. I\'ll update this now.</string>
     <string name="goal_edit_delete_difficult">I can help you work out another savings plan that will be easier to afford.</string>
-    <string name="goal_edit_delete_cancel">Don\'t worry, we can get you back on track with your savings in no time. Have a look at our tips or take this week\'s challenge!</string>
-    <string name="goal_edit_delete_done">Goal deleted</string>
+    <string name="goal_edit_delete_done">Sure, no problem. You can get back on track with your savings at any time. Take a look at our tips or take this week\'s challenge.</string>
     <string name="goal_edit_end_come_back">Come back to track your savings weekly and watch as your goal becomes a reality!</string>
+    <string name="goal_edit_delete_cancel">@string/goal_edit_delete_done</string>
 
     <!-- Answers -->
     <string name="goal_edit_choice_date">Date</string>
@@ -248,10 +253,10 @@
     <!--Buttons-->
     <string name="Skip">Skip</string>
     <string name="Capture">Add photo</string>
-    <string name="Change">Change photo</string>
-    <string name="Accept">I\'m good</string>
+    <string name="Change">I want to change my picture.</string>
+    <string name="Accept">I\'m happy with this picture!</string>
     <string name="Gallery">Select from gallery</string>
-    <string name="addDate">Add date</string>
+    <string name="addDate">Enter Date</string>
     <string name="unknownDate">I don\'t know</string>
     <string name="addAmount">Add amount</string>
     <string name="nope">Nope</string>
@@ -267,10 +272,10 @@
     <string name="WithdrawButton">Withdraw</string>
     <string name="addOwnGoal">Add own goal</string>
 
-    <string name="acceptGoal">Accept goal</string>
-    <string name="changeDate">Change date</string>
-    <string name="changeAmount">Change amount</string>
-    <string name="startOver">Start over</string>
+    <string name="acceptGoal">This seems great! I accept the challenge.</string>
+    <string name="changeDate">I want to change the date.</string>
+    <string name="changeAmount">I want to change the amount that I save each week.</string>
+    <string name="startOver">I want to start over.</string>
     <string name="type_name_hint">Type name…</string>
     <string name="type_number_hint">Type number…</string>
     <string name="type_currency_hint">Type amount…</string>
@@ -386,8 +391,8 @@
     <string name="hasSavedN">No</string>
 
     <string name="heading_registration">Registration</string>
-    <string name="heading_change_name">Change name</string>
-    <string name="heading_change_password">Change password</string>
+    <string name="heading_change_name">@string/label_change_name</string>
+    <string name="heading_change_password">@string/label_change_password</string>
 
     <string name="target_prefix_saved">saved</string>
     <string name="heading_current_saving_streak">Current Saving Streak</string>

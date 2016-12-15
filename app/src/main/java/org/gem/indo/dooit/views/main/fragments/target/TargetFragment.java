@@ -23,8 +23,8 @@ import org.gem.indo.dooit.api.DooitErrorHandler;
 import org.gem.indo.dooit.api.managers.GoalManager;
 import org.gem.indo.dooit.helpers.Persisted;
 import org.gem.indo.dooit.helpers.Utils;
-import org.gem.indo.dooit.models.goal.Goal;
 import org.gem.indo.dooit.models.enums.BotType;
+import org.gem.indo.dooit.models.goal.Goal;
 import org.gem.indo.dooit.views.custom.WeekGraph;
 import org.gem.indo.dooit.views.helpers.activity.CurrencyHelper;
 import org.gem.indo.dooit.views.main.fragments.MainFragment;
@@ -129,6 +129,7 @@ public class TargetFragment extends MainFragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_target, container, false);
         ButterKnife.bind(this, view);
+
 
         return view;
     }

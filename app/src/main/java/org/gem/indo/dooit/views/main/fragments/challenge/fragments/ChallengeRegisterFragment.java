@@ -1,5 +1,6 @@
 package org.gem.indo.dooit.views.main.fragments.challenge.fragments;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -13,7 +14,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.facebook.drawee.backends.pipeline.Fresco;
 import com.facebook.drawee.interfaces.DraweeController;
@@ -21,7 +21,6 @@ import com.facebook.drawee.view.SimpleDraweeView;
 import com.facebook.imagepipeline.request.ImageRequest;
 import com.facebook.imagepipeline.request.ImageRequestBuilder;
 
-import org.gem.indo.dooit.Constants;
 import org.gem.indo.dooit.DooitApplication;
 import org.gem.indo.dooit.R;
 import org.gem.indo.dooit.api.DooitAPIError;
@@ -48,8 +47,8 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
-import rx.Observable;
 import rx.Subscription;
+import rx.functions.Action0;
 import rx.functions.Action1;
 
 /**
@@ -169,14 +168,25 @@ public class ChallengeRegisterFragment extends Fragment implements HasChallengeF
             title.setVisibility(View.VISIBLE);
         }
 
-        ImageRequest request = ImageRequestBuilder.newBuilderWithSource(Uri.parse(challenge.getImageURL()))
-                .setProgressiveRenderingEnabled(true)
-                .build();
-        DraweeController controller = Fresco.newDraweeControllerBuilder()
-                .setImageRequest(request)
-                .setOldController(topImage.getController())
-                .build();
-        topImage.setController(controller);
+        String imgUrl = challenge.getImageURL();
+        if (!TextUtils.isEmpty(imgUrl)) {
+            ImageRequest request = ImageRequestBuilder.newBuilderWithSource(Uri.parse(challenge.getImageURL()))
+                    .setProgressiveRenderingEnabled(true)
+                    .build();
+            DraweeController controller = Fresco.newDraweeControllerBuilder()
+                    .setImageRequest(request)
+                    .setOldController(topImage.getController())
+                    .build();
+            topImage.setController(controller);
+        }
+    }
+
+    @Override
+    public void onStop() {
+        if (participantSubscription != null) {
+            participantSubscription.unsubscribe();
+        }
+        super.onStop();
     }
 
     private Fragment startQuizChallenge(Participant participant, QuizChallenge quizChallenge) {
@@ -230,22 +240,27 @@ public class ChallengeRegisterFragment extends Fragment implements HasChallengeF
     @OnClick(R.id.fragment_challenge_t_c_text_view)
     void termsClick(View view) {
         MinimalWebViewActivity.Builder.create(getContext())
-            //.setTitle(getString(org.gem.indo.dooit.R.string.title_activity_privacy_policy))
-            .setUrl(challenge.getTermsUrl())
-            .startActivity();
+                //.setTitle(getString(org.gem.indo.dooit.R.string.title_activity_privacy_policy))
+                .setUrl(challenge.getTermsUrl())
+                .startActivity();
     }
 
     @OnClick(R.id.fragment_challenge_register_button)
     void registerClick() {
         Participant participant = new Participant();
         participant.setChallenge(challenge.getId());
+        final ProgressDialog dialog = new ProgressDialog(getContext());
+        dialog.setIndeterminate(true);
+        dialog.setMessage(getString(R.string.label_loading));
+        dialog.show();
 
-        if(persist.hasCurrentChallenge()){
+        if (persist.hasCurrentChallenge()) {
             try {
                 challenge = persist.getCurrentChallenge();
                 if (challenge.getDeactivationDate().isAfterNow()) {
                     persist.setActiveChallenge(challenge);
                     startChallenge(participant);
+                    dialog.dismiss();
                 } else {
                     //this means the persisted challenge has expired
                     //make call to server
@@ -257,7 +272,12 @@ public class ChallengeRegisterFragment extends Fragment implements HasChallengeF
                                     Snackbar.make(getView(), R.string.challenge_could_not_confirm_registraiton, Snackbar.LENGTH_LONG).show();
                                 }
                             }
-                    ).subscribe(new Action1<Participant>() {
+                    ).doAfterTerminate(new Action0() {
+                        @Override
+                        public void call() {
+                            dialog.dismiss();
+                        }
+                    }).subscribe(new Action1<Participant>() {
                         @Override
                         public void call(Participant participant1) {
                             persist.setActiveChallenge(challenge);
@@ -277,7 +297,12 @@ public class ChallengeRegisterFragment extends Fragment implements HasChallengeF
                                 Snackbar.make(getView(), R.string.challenge_could_not_confirm_registraiton, Snackbar.LENGTH_LONG).show();
                             }
                         }
-                ).subscribe(new Action1<Participant>() {
+                ).doAfterTerminate(new Action0() {
+                    @Override
+                    public void call() {
+                        dialog.dismiss();
+                    }
+                }).subscribe(new Action1<Participant>() {
                     @Override
                     public void call(Participant participant1) {
                         persist.setActiveChallenge(challenge);
@@ -285,7 +310,7 @@ public class ChallengeRegisterFragment extends Fragment implements HasChallengeF
                     }
                 });
             }
-        }else{
+        } else {
             //make call to server
             participantSubscription = challengeManager.registerParticipant(
                     participant,
@@ -295,7 +320,12 @@ public class ChallengeRegisterFragment extends Fragment implements HasChallengeF
                             Snackbar.make(getView(), R.string.challenge_could_not_confirm_registraiton, Snackbar.LENGTH_LONG).show();
                         }
                     }
-            ).subscribe(new Action1<Participant>() {
+            ).doAfterTerminate(new Action0() {
+                @Override
+                public void call() {
+                    dialog.dismiss();
+                }
+            }).subscribe(new Action1<Participant>() {
                 @Override
                 public void call(Participant participant1) {
                     persist.setActiveChallenge(challenge);

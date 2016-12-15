@@ -43,6 +43,14 @@ public class DooitActivity extends AppCompatActivity {
             logUser();
     }
 
+    @Override
+    protected void onDestroy() {
+        // Ensure dialog is dismissed before activity is cleared
+        if (dialog != null)
+            dialog.dismiss();
+        super.onDestroy();
+    }
+
     public Locale getLocal() {
         return Locale.getDefault();
     }
@@ -78,7 +86,8 @@ public class DooitActivity extends AppCompatActivity {
         if (dialog != null && dialog.isShowing()) {
             dialog.dismiss();
         }
-        dialog = new ProgressDialog(this);
+
+        dialog = new ProgressDialog(DooitActivity.this);
         dialog.setMessage(message);
         dialog.setCancelable(false);
         dialog.setInverseBackgroundForced(false);

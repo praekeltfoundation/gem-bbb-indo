@@ -1,5 +1,6 @@
 package org.gem.indo.dooit.views.main.fragments.challenge.fragments;
 
+import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -32,6 +33,8 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
+import rx.Subscription;
+import rx.functions.Action0;
 import rx.functions.Action1;
 
 /**
@@ -62,6 +65,8 @@ public class ChallengeFreeformFragment extends Fragment {
     private Participant participant;
 
     private Unbinder unbinder = null;
+
+    private Subscription submissionSubscription = null;
 
     @BindView(R.id.fragment_challenge_freeform_title)
     TextView title;
@@ -123,6 +128,14 @@ public class ChallengeFreeformFragment extends Fragment {
     }
 
     @Override
+    public void onStop() {
+        if (submissionSubscription != null) {
+            submissionSubscription.unsubscribe();
+        }
+        super.onStop();
+    }
+
+    @Override
     public void onDestroyView() {
         if (unbinder != null) {
             unbinder.unbind();
@@ -136,6 +149,7 @@ public class ChallengeFreeformFragment extends Fragment {
      ****************/
 
     public void fetchAnswer() {
+
         challengeManager.fetchParticipantFreeformAnswer(challenge.getId(), new DooitErrorHandler() {
             @Override
             public void onError(DooitAPIError error) {
@@ -170,10 +184,21 @@ public class ChallengeFreeformFragment extends Fragment {
         answer.setParticipant(participant.getId());
         answer.setQuestion(question.getId());
         answer.setText(text);
-        challengeManager.createParticipantFreeformAnswer(answer, new DooitErrorHandler() {
+
+        final ProgressDialog dialog = new ProgressDialog(getContext());
+        dialog.setIndeterminate(true);
+        dialog.setMessage(getString(R.string.label_loading));
+        dialog.show();
+
+        submissionSubscription = challengeManager.createParticipantFreeformAnswer(answer, new DooitErrorHandler() {
             @Override
             public void onError(DooitAPIError error) {
                 Log.d(TAG, "Could not submit challenge entry");
+            }
+        }).doAfterTerminate(new Action0() {
+            @Override
+            public void call() {
+                dialog.dismiss();
             }
         }).subscribe(new Action1<ParticipantFreeformAnswer>() {
             @Override

@@ -95,6 +95,11 @@
         "type": "GalleryUpload",
         "nextOnFinish": "askGoalImageConfirm",
         "removeOnSelect": "goal_add_a_gallery"
+      },
+      {
+        "name": "goal_add_a_skip",
+        "text": "$(label_skip)",
+        "next": "goal_add_q_ask_amount"
       }
     ]
   },
@@ -169,20 +174,19 @@
     "answers": [
       {
         "name": "hasSavedY",
-        "text": "$(addAmount)",
+        "text": "$(goal_add_a_has_saved_y)",
         "next": "askPriorSavedAmount"
       },
       {
         "name": "hasSavedN",
-        "text": "$(nope)",
+        "text": "$(goal_add_a_has_saved_n)",
         "next": "goal_add_q_verify"
       }
     ]
   },
   {
     "name": "askPriorSavedAmount",
-    "type": "text",
-    "text": "$(askPriorSavedAmount)",
+    "type": "blank",
     "autoAnswer": "priorSaveAmount",
     "answers": [
       {
@@ -325,7 +329,7 @@
       {
         "name": "weeklySaveAmount",
         "next": "infoGoalEnd",
-        "text": "$(yay_me)"
+        "text": "$(goal_add_a_done_exit)"
       }
     ]
   },

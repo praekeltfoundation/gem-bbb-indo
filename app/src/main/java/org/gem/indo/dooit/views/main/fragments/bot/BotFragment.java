@@ -242,6 +242,10 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
     }
 
     private void initializeBot() {
+        if (getActivity() == null)
+            // Activity destroyed, fragment still in memory. Requirement resolver is async.
+            return;
+
         controller = createBotController(type);
         getBotAdapter().setController(controller);
 
