@@ -17,8 +17,6 @@ import org.gem.indo.dooit.DooitApplication;
 import org.gem.indo.dooit.R;
 import org.gem.indo.dooit.helpers.Persisted;
 import org.gem.indo.dooit.helpers.activity.result.ActivityForResultHelper;
-import org.gem.indo.dooit.helpers.bot.param.ParamMatch;
-import org.gem.indo.dooit.helpers.bot.param.ParamParser;
 import org.gem.indo.dooit.helpers.notifications.NotificationType;
 import org.gem.indo.dooit.models.User;
 import org.gem.indo.dooit.services.NotificationAlarm;
@@ -28,9 +26,6 @@ import org.gem.indo.dooit.views.main.adapters.MainTabAdapter;
 import org.gem.indo.dooit.views.main.fragments.MainFragment;
 import org.gem.indo.dooit.views.main.fragments.target.TargetFragment;
 import org.gem.indo.dooit.views.profile.ProfileActivity;
-
-import java.util.HashMap;
-import java.util.Map;
 
 import javax.inject.Inject;
 
