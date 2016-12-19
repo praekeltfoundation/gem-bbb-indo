@@ -23,6 +23,7 @@
     <!-- Common labels -->
     <string name="label_accept">Accept</string>
     <string name="label_cancel">Cancel</string>
+    <string name="label_image_chooser_title">Add Profile Photo!</string>
     <string name="label_take_picture">Take photo using camera</string>
     <string name="label_select_gallery">Select gallery</string>
     <string name="label_check_result">Check</string>

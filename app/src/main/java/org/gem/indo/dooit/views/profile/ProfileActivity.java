@@ -257,7 +257,6 @@ public class ProfileActivity extends DooitActivity {
                 getString(R.string.profile_image_cancel)
         };
 
-        // Use application context to avoid leaking activity
         AlertDialog.Builder builder = new AlertDialog.Builder(ProfileActivity.this);
         builder.setTitle("Add Profile Photo!");
         builder.setItems(items, new DialogInterface.OnClickListener() {
