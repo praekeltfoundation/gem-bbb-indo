@@ -51,6 +51,9 @@
     <string name="label_try_again">Try again</string>
     <string name="label_uploading">Uploading</string>
 
+    <string name="label_camera_permission_denied">Permission required to take camera using camera</string>
+    <string name="label_gallery_permission_denied">Permission required to access phone storage</string>
+
     <!-- Welcome -->
     <string name="welcome_page_empty">Welcome Page</string>
     <string name="welcome_page_1">Use Dooit to help you save money!</string>

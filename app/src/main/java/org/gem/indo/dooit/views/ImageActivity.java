@@ -9,11 +9,15 @@ import android.net.Uri;
 import android.provider.MediaStore;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
+import android.widget.Toast;
 
 import org.gem.indo.dooit.R;
 import org.gem.indo.dooit.helpers.ImageChooserOptions;
 import org.gem.indo.dooit.helpers.MediaUriHelper;
 import org.gem.indo.dooit.helpers.RequestCodes;
+import org.gem.indo.dooit.helpers.permissions.PermissionCallback;
+import org.gem.indo.dooit.helpers.permissions.PermissionsHelper;
+import org.gem.indo.dooit.views.profile.ProfileActivity;
 
 /**
  * Created by Wimpie Victor on 2016/12/19.
@@ -51,11 +55,38 @@ public abstract class ImageActivity extends DooitActivity {
     }
 
     private void startCamera() {
+        permissionsHelper.askForPermission(this, new String[]{PermissionsHelper.D_WRITE_EXTERNAL_STORAGE, PermissionsHelper.D_CAMERA}, new PermissionCallback() {
+            @Override
+            public void permissionGranted() {
+                Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
+                if (cameraIntent.resolveActivity(getPackageManager()) != null) {
+                    startActivityForResult(cameraIntent, RequestCodes.RESPONSE_CAMERA_REQUEST_PROFILE_IMAGE);
+                }
+            }
 
+            @Override
+            public void permissionRefused() {
+                Toast.makeText(ImageActivity.this, getString(R.string.label_camera_permission_denied), Toast.LENGTH_LONG).show();
+            }
+        });
     }
 
     private void startGallery() {
+        permissionsHelper.askForPermission(this, PermissionsHelper.D_WRITE_EXTERNAL_STORAGE, new PermissionCallback() {
+            @Override
+            public void permissionGranted() {
+                Intent intent = new Intent();
+                intent.setType("image/*");
+                intent.setAction(Intent.ACTION_GET_CONTENT);
+                startActivityForResult(Intent.createChooser(intent, "Select File"), RequestCodes.RESPONSE_GALLERY_REQUEST_PROFILE_IMAGE);
+            }
 
+            @Override
+            public void permissionRefused() {
+                Toast.makeText(ImageActivity.this, getString(R.string.label_gallery_permission_denied), Toast.LENGTH_LONG).show();
+            }
+        });
     }
 
     @Override
