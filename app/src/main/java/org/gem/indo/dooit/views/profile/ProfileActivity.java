@@ -257,9 +257,6 @@ public class ProfileActivity extends ImageActivity {
 
     @Override
     protected void onImageResult(String mediaType, Uri imageUri, String imagePath) {
-        // Display image in view from content uri
-        profileImage.setImageURI(imageUri);
-
         // Upload image to server
         User user = persisted.getCurrentUser();
         if (user == null) {
@@ -296,6 +293,9 @@ public class ProfileActivity extends ImageActivity {
                     user.getProfile().setProfileImageUrl(location);
 
                 persisted.setCurrentUser(user);
+
+                // Display image in view from content uri so we don't have to redownload it just yet
+                profileImage.setImageURI(getImageUri());
             }
         });
     }

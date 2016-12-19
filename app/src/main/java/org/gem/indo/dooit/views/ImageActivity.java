@@ -6,7 +6,9 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
+import android.os.Environment;
 import android.provider.MediaStore;
+import android.support.v4.content.FileProvider;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.widget.Toast;
@@ -19,16 +21,30 @@ import org.gem.indo.dooit.helpers.permissions.PermissionCallback;
 import org.gem.indo.dooit.helpers.permissions.PermissionsHelper;
 import org.gem.indo.dooit.views.profile.ProfileActivity;
 
+import java.io.File;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 /**
  * Created by Wimpie Victor on 2016/12/19.
  */
 
 public abstract class ImageActivity extends DooitActivity {
 
+    private static final String TAG = ImageActivity.class.getName();
+
     private AlertDialog imageChooser;
     private Uri imageUri;
+    private String imagePath;
+
+    private void resetImageState() {
+        imageUri = null;
+        imagePath = null;
+    }
 
     protected void showImageChooser() {
+        resetImageState();
         final CharSequence[] items = ImageChooserOptions.createMenuItems(this);
 
         AlertDialog.Builder builder = new AlertDialog.Builder(ImageActivity.this);
@@ -59,9 +75,26 @@ public abstract class ImageActivity extends DooitActivity {
             @Override
             public void permissionGranted() {
                 Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
-                if (cameraIntent.resolveActivity(getPackageManager()) != null) {
-                    startActivityForResult(cameraIntent, RequestCodes.RESPONSE_CAMERA_REQUEST_PROFILE_IMAGE);
+
+                // The file where the full sized photo will be temporarily stored. When this is not
+                // done, we would get the thumbnail back instead. See documentation:
+                // https://developer.android.com/training/camera/photobasics.html#TaskPath
+                File imageFile = null;
+
+                try {
+                    imageFile = createImageFile();
+                } catch (IOException e) {
+                    Toast.makeText(ImageActivity.this, "Failed to create image file on phone storage", Toast.LENGTH_LONG).show();
+                    Log.e(TAG, "Failed to create image file on phone storage", e);
+                }
+
+                if (imageFile != null) {
+                    imageUri = FileProvider.getUriForFile(ImageActivity.this, "org.gem.indo.dooit.fileprovider", imageFile);
+
+                    cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
+                    if (cameraIntent.resolveActivity(getPackageManager()) != null) {
+                        startActivityForResult(cameraIntent, RequestCodes.RESPONSE_CAMERA_REQUEST_PROFILE_IMAGE);
+                    }
                 }
             }
 
@@ -106,20 +139,36 @@ public abstract class ImageActivity extends DooitActivity {
     }
 
     private void handleImageResult(Intent data) {
-        imageUri = data.getData();
-        if (imageUri == null) {
-            try {
-                ContentResolver cR = this.getContentResolver();
-                Bitmap bm = (Bitmap) data.getExtras().get("data");
-                Log.d("IMAGE_TESTS", "Bitmap size : " + bm.getByteCount());
-                imageUri = Uri.parse(MediaStore.Images.Media.insertImage(cR, bm, "", ""));
+        // When the camera is provided with an existing file beforehand, the intent is null. The
+        // pre-created image can be found via imageUri.
+        if (data != null) {
+            // No predefined image file was created
+            imageUri = data.getData();
+            if (imageUri == null) {
+                try {
+                    ContentResolver cR = this.getContentResolver();
+                    Bitmap bm = (Bitmap) data.getExtras().get("data");
+//                    Log.d("IMAGE_TESTS", "Bitmap size : " + bm.getByteCount());
+                    imageUri = Uri.parse(MediaStore.Images.Media.insertImage(cR, bm, "", ""));
+                    imagePath = MediaUriHelper.getPath(this, imageUri);
+                } catch (Throwable ex) {
 
-            } catch (Throwable ex) {
-
+                }
             }
         }
+
         ContentResolver cR = this.getContentResolver();
-        onImageResult(cR.getType(imageUri), imageUri, MediaUriHelper.getPath(this, imageUri));
+        onImageResult(cR.getType(imageUri), imageUri, imagePath);
+    }
+
+    private File createImageFile() throws IOException {
+        String timestamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+        String filename = "JPEG_" + timestamp + "_";
+        File storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
+        File image = File.createTempFile(filename, ".jpg", storageDir);
+
+        imagePath = image.getAbsolutePath();
+        return image;
     }
 
     @Override
@@ -129,6 +178,10 @@ public abstract class ImageActivity extends DooitActivity {
         if (imageChooser != null && imageChooser.isShowing())
             imageChooser.dismiss();
         super.onDestroy();
+    }
+
+    protected Uri getImageUri() {
+        return imageUri;
     }
 
     /**
