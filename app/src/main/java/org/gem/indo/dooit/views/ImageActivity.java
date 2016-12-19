@@ -91,9 +91,10 @@ public abstract class ImageActivity extends DooitActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        switch (resultCode) {
-            case Activity.RESULT_CANCELED:
-                return;
+        if (resultCode == Activity.RESULT_CANCELED)
+            return;
+
+        switch (requestCode) {
             case RequestCodes.RESPONSE_CAMERA_REQUEST_PROFILE_IMAGE:
             case RequestCodes.RESPONSE_GALLERY_REQUEST_PROFILE_IMAGE:
                 handleImageResult(data);

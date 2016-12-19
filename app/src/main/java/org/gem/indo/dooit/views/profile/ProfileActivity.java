@@ -45,6 +45,7 @@ import org.gem.indo.dooit.helpers.permissions.PermissionCallback;
 import org.gem.indo.dooit.helpers.permissions.PermissionsHelper;
 import org.gem.indo.dooit.models.User;
 import org.gem.indo.dooit.views.DooitActivity;
+import org.gem.indo.dooit.views.ImageActivity;
 import org.gem.indo.dooit.views.helpers.activity.DooitActivityBuilder;
 import org.gem.indo.dooit.views.profile.adapters.BadgeAdapter;
 import org.gem.indo.dooit.views.settings.SettingsActivity;
@@ -64,7 +65,7 @@ import rx.functions.Action1;
 /**
  * Created by Bernhard Müller on 2016/07/22.
  */
-public class ProfileActivity extends DooitActivity {
+public class ProfileActivity extends ImageActivity {
 
     private static final String INTENT_MIME_TYPE = "mime_type";
     private static final String INTENT_IMAGE_URI = "image_uri";
@@ -251,108 +252,22 @@ public class ProfileActivity extends DooitActivity {
 
     @OnClick(R.id.activity_profile_image)
     public void selectImage() {
-        final CharSequence[] items = {
-                getString(R.string.profile_image_camera),
-                getString(R.string.profile_image_gallery),
-                getString(R.string.profile_image_cancel)
-        };
-
-        AlertDialog.Builder builder = new AlertDialog.Builder(ProfileActivity.this);
-        builder.setTitle("Add Profile Photo!");
-        builder.setItems(items, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int item) {
-                // TODO: Use Enums or Constants
-                switch (item) {
-                    case 0:
-                        startCamera();
-                        break;
-                    case 1:
-                        startGallery();
-                        break;
-                    case 2:
-                        dialog.dismiss();
-                        break;
-                }
-            }
-        });
-        builder.show();
-    }
-
-    protected void startCamera() {
-        permissionsHelper.askForPermission(this, new String[]{PermissionsHelper.D_WRITE_EXTERNAL_STORAGE, PermissionsHelper.D_CAMERA}, new PermissionCallback() {
-            @Override
-            public void permissionGranted() {
-                Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
-                if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
-                    startActivityForResult(takePictureIntent, RequestCodes.RESPONSE_CAMERA_REQUEST_PROFILE_IMAGE);
-                }
-            }
-
-            @Override
-            public void permissionRefused() {
-                Toast.makeText(ProfileActivity.this, "Can't take ic_d_profile image without storage and camera permission", Toast.LENGTH_SHORT).show();
-            }
-        });
-    }
-
-    protected void startGallery() {
-        permissionsHelper.askForPermission(this, PermissionsHelper.D_WRITE_EXTERNAL_STORAGE, new PermissionCallback() {
-            @Override
-            public void permissionGranted() {
-                Intent intent = new Intent();
-                intent.setType("image/*");
-                intent.setAction(Intent.ACTION_GET_CONTENT);//
-                startActivityForResult(Intent.createChooser(intent, "Select File"), RequestCodes.RESPONSE_GALLERY_REQUEST_PROFILE_IMAGE);
-            }
-
-            @Override
-            public void permissionRefused() {
-                Toast.makeText(ProfileActivity.this, "Can't take ic_d_profile image without storage permission", Toast.LENGTH_SHORT).show();
-            }
-        });
+        showImageChooser();
     }
 
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (resultCode == Activity.RESULT_CANCELED)
-            return;
-
-        switch (requestCode) {
-            case RequestCodes.RESPONSE_CAMERA_REQUEST_PROFILE_IMAGE:
-            case RequestCodes.RESPONSE_GALLERY_REQUEST_PROFILE_IMAGE:
-                onActivityImageResult(data);
-                break;
-        }
-    }
-
-    protected void onActivityImageResult(Intent data) {
-        imageUri = data.getData();
-        if (imageUri == null) {
-            try {
-                ContentResolver cR = this.getContentResolver();
-                Bitmap bm = (Bitmap) data.getExtras().get("data");
-                Log.d("IMAGE_TESTS", "Bitmap size : " + bm.getByteCount());
-                imageUri = Uri.parse(MediaStore.Images.Media.insertImage(cR, bm, "", ""));
-
-            } catch (Throwable ex) {
-
-            }
-        }
+    protected void onImageResult(String mediaType, Uri imageUri, String imagePath) {
+        // Display image in view from content uri
         profileImage.setImageURI(imageUri);
-        ContentResolver cR = this.getContentResolver();
-        uploadImage(cR.getType(imageUri), MediaUriHelper.getPath(this, imageUri));
-    }
 
-    protected void uploadImage(String mimetype, String filepath) {
+        // Upload image to server
         User user = persisted.getCurrentUser();
         if (user == null) {
             Snackbar.make(toolbar, R.string.prompt_relogin, Snackbar.LENGTH_SHORT);
             return;
         }
         showProgressDialog(R.string.profile_image_progress);
-        fileUploadManager.uploadProfileImage(user.getId(), mimetype, new File(filepath), new DooitErrorHandler() {
+        fileUploadManager.uploadProfileImage(user.getId(), mediaType, new File(imagePath), new DooitErrorHandler() {
             @Override
             public void onError(DooitAPIError error) {
                 Toast.makeText(ProfileActivity.this, "Unable to uploadProfileImage Image", Toast.LENGTH_SHORT).show();
@@ -413,6 +328,5 @@ public class ProfileActivity extends DooitActivity {
         protected Intent createIntent(Context context) {
             return new Intent(context, ProfileActivity.class);
         }
-
     }
 }
