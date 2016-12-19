@@ -140,22 +140,24 @@ public abstract class ImageActivity extends DooitActivity {
 
     private void handleImageResult(Intent data) {
         // When the camera is provided with an existing file beforehand, the intent is null. The
-        // pre-created image can be found via imageUri.
+        // pre-created image can be found via `imageUri`.
         if (data != null) {
             // No predefined image file was created
             imageUri = data.getData();
             if (imageUri == null) {
                 try {
+                    // This is the case where the camera only returns a thumbnail
                     ContentResolver cR = this.getContentResolver();
                     Bitmap bm = (Bitmap) data.getExtras().get("data");
-//                    Log.d("IMAGE_TESTS", "Bitmap size : " + bm.getByteCount());
+                    Log.d("IMAGE_TESTS", "Bitmap size : " + bm.getByteCount());
                     imageUri = Uri.parse(MediaStore.Images.Media.insertImage(cR, bm, "", ""));
-                    imagePath = MediaUriHelper.getPath(this, imageUri);
                 } catch (Throwable ex) {
 
                 }
             }
         }
+
+        imagePath = MediaUriHelper.getPath(this, imageUri);
 
         ContentResolver cR = this.getContentResolver();
         onImageResult(cR.getType(imageUri), imageUri, imagePath);

@@ -269,7 +269,7 @@ public class ProfileActivity extends ImageActivity {
             public void onError(DooitAPIError error) {
                 Toast.makeText(ProfileActivity.this, "Unable to uploadProfileImage Image", Toast.LENGTH_SHORT).show();
             }
-        }).doOnCompleted(new Action0() {
+        }).doAfterTerminate(new Action0() {
             @Override
             public void call() {
                 dismissDialog();
@@ -295,7 +295,12 @@ public class ProfileActivity extends ImageActivity {
                 persisted.setCurrentUser(user);
 
                 // Display image in view from content uri so we don't have to redownload it just yet
-                profileImage.setImageURI(getImageUri());
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        profileImage.setImageURI(getImageUri());
+                    }
+                });
             }
         });
     }
