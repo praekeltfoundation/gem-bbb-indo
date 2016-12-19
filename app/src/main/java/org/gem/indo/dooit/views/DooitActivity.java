@@ -25,7 +25,7 @@ import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
  * Created by wsche on 2016/11/05.
  */
 
-public class DooitActivity extends AppCompatActivity {
+public abstract class DooitActivity extends AppCompatActivity {
 
     static {
         AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
