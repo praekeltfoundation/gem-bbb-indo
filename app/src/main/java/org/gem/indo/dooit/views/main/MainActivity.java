@@ -129,12 +129,11 @@ public class MainActivity extends DooitActivity {
         User user = persisted.getCurrentUser();
         if (user == null)
             Snackbar.make(viewPager, R.string.prompt_relogin, Snackbar.LENGTH_LONG);
-        else
-            if (user.hasProfileImage())
-                DraweeHelper.setProgressiveUri(
-                        simpleDraweeViewProfile,
-                        Uri.parse(user.getProfile().getProfileImageUrl())
-                );
+        else if (user.hasProfileImage())
+            DraweeHelper.setProgressiveUri(
+                    simpleDraweeViewProfile,
+                    Uri.parse(user.getProfile().getProfileImageUrl())
+            );
     }
 
     @Override
