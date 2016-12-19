@@ -5,6 +5,7 @@ import android.content.ContentResolver;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Environment;
 import android.provider.MediaStore;
@@ -16,13 +17,14 @@ import android.widget.Toast;
 
 import org.gem.indo.dooit.R;
 import org.gem.indo.dooit.helpers.ImageChooserOptions;
+import org.gem.indo.dooit.helpers.ImageScaler;
 import org.gem.indo.dooit.helpers.MediaUriHelper;
 import org.gem.indo.dooit.helpers.RequestCodes;
 import org.gem.indo.dooit.helpers.permissions.PermissionCallback;
 import org.gem.indo.dooit.helpers.permissions.PermissionsHelper;
-import org.gem.indo.dooit.views.profile.ProfileActivity;
 
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -34,6 +36,7 @@ import java.util.Date;
 public abstract class ImageActivity extends DooitActivity {
 
     private static final String TAG = ImageActivity.class.getName();
+    private static final String FILE_PROVIDER_AUTH = "org.gem.indo.dooit.fileprovider";
     private static final int maxImageWidth = 1024;
     private static final int maxImageHeight = 1024;
 
@@ -86,13 +89,14 @@ public abstract class ImageActivity extends DooitActivity {
 
                 try {
                     imageFile = createImageFile();
+                    imagePath = imageFile.getAbsolutePath();
                 } catch (IOException e) {
                     Toast.makeText(ImageActivity.this, "Failed to create image file on phone storage", Toast.LENGTH_LONG).show();
                     Log.e(TAG, "Failed to create image file on phone storage", e);
                 }
 
                 if (imageFile != null) {
-                    imageUri = FileProvider.getUriForFile(ImageActivity.this, "org.gem.indo.dooit.fileprovider", imageFile);
+                    imageUri = FileProvider.getUriForFile(ImageActivity.this, FILE_PROVIDER_AUTH, imageFile);
 
                     cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
                     if (cameraIntent.resolveActivity(getPackageManager()) != null) {
@@ -164,12 +168,55 @@ public abstract class ImageActivity extends DooitActivity {
             // MediaUriHelper does not work when uri points to temp image file
             imagePath = MediaUriHelper.getPath(this, imageUri);
 
+        downscaleImage();
+
         ContentResolver cR = this.getContentResolver();
         onImageResult(cR.getType(imageUri), imageUri, imagePath);
     }
 
+    /**
+     * Loads the image file stored in imagePath, saves a new downscaled version, and resets imageUri
+     * and imagePath.
+     */
     private void downscaleImage() {
+        FileOutputStream outstream = null;
+        BitmapFactory.Options options = new BitmapFactory.Options();
+        options.inPreferredConfig = Bitmap.Config.ARGB_8888;
 
+        try {
+            File downscaledFile = createImageFile();
+            outstream = new FileOutputStream(downscaledFile);
+            Bitmap downscaledBitmap = null;
+            Bitmap existingBitmap = BitmapFactory.decodeFile(imagePath, options);
+
+            if (existingBitmap == null) {
+                Log.e(TAG, "Failed to load existing bitmap during downscale");
+                return;
+            }
+
+            Log.d(TAG, String.format("Existing image dimensions: (%d, %d) %dKB",
+                    existingBitmap.getWidth(), existingBitmap.getHeight(), existingBitmap.getByteCount() / 1024));
+
+            downscaledBitmap = ImageScaler.scale(existingBitmap, maxImageWidth, maxImageHeight);
+            downscaledBitmap.compress(Bitmap.CompressFormat.JPEG, 80, outstream);
+
+            Log.d(TAG, String.format("Downscaled image dimensions: (%d, %d) %dKB",
+                    downscaledBitmap.getWidth(), downscaledBitmap.getHeight(), downscaledBitmap.getByteCount() / 1024));
+
+            // Set uri and filepath to new downscaled image
+            imagePath = downscaledFile.getAbsolutePath();
+            imageUri = FileProvider.getUriForFile(this, FILE_PROVIDER_AUTH, downscaledFile);
+        } catch (IOException e) {
+            Toast.makeText(this, "Unable to create temporary downscaled image file", Toast.LENGTH_LONG).show();
+            Log.e(TAG, "Unable to create temporary downscaled image file", e);
+        } finally {
+            try {
+                if (outstream != null)
+                    outstream.close();
+            } catch (IOException e) {
+                Log.e(TAG, "Failed to close outstream", e);
+            }
+        }
     }
 
     private File createImageFile() throws IOException {
@@ -178,7 +225,6 @@ public abstract class ImageActivity extends DooitActivity {
         File storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
         File image = File.createTempFile(filename, ".jpg", storageDir);
 
-        imagePath = image.getAbsolutePath();
         return image;
     }
 

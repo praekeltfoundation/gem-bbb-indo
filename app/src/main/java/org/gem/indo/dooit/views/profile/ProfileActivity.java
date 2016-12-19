@@ -263,7 +263,9 @@ public class ProfileActivity extends ImageActivity {
             Snackbar.make(toolbar, R.string.prompt_relogin, Snackbar.LENGTH_SHORT);
             return;
         }
+
         showProgressDialog(R.string.profile_image_progress);
+
         fileUploadManager.uploadProfileImage(user.getId(), mediaType, new File(imagePath), new DooitErrorHandler() {
             @Override
             public void onError(DooitAPIError error) {
