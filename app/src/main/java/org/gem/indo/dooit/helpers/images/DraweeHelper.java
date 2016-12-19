@@ -1,4 +1,4 @@
-package org.gem.indo.dooit.helpers;
+package org.gem.indo.dooit.helpers.images;
 
 import android.net.Uri;
 

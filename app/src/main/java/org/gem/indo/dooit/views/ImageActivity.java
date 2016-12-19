@@ -16,9 +16,9 @@ import android.util.Log;
 import android.widget.Toast;
 
 import org.gem.indo.dooit.R;
-import org.gem.indo.dooit.helpers.ImageChooserOptions;
-import org.gem.indo.dooit.helpers.ImageScaler;
-import org.gem.indo.dooit.helpers.MediaUriHelper;
+import org.gem.indo.dooit.helpers.images.ImageChooserOptions;
+import org.gem.indo.dooit.helpers.images.ImageScaler;
+import org.gem.indo.dooit.helpers.images.MediaUriHelper;
 import org.gem.indo.dooit.helpers.RequestCodes;
 import org.gem.indo.dooit.helpers.permissions.PermissionCallback;
 import org.gem.indo.dooit.helpers.permissions.PermissionsHelper;
