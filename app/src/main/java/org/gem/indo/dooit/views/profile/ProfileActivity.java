@@ -16,6 +16,7 @@ import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -35,6 +36,7 @@ import org.gem.indo.dooit.api.managers.AchievementManager;
 import org.gem.indo.dooit.api.managers.FileUploadManager;
 import org.gem.indo.dooit.api.responses.AchievementResponse;
 import org.gem.indo.dooit.api.responses.EmptyResponse;
+import org.gem.indo.dooit.helpers.DraweeHelper;
 import org.gem.indo.dooit.helpers.MediaUriHelper;
 import org.gem.indo.dooit.helpers.Persisted;
 import org.gem.indo.dooit.helpers.RequestCodes;
@@ -55,6 +57,7 @@ import butterknife.BindString;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import retrofit2.Response;
 import rx.functions.Action0;
 import rx.functions.Action1;
 
@@ -133,7 +136,8 @@ public class ProfileActivity extends DooitActivity {
         setTitle(user.getUsername());
 
         // Profile image collapse
-        profileImage.setImageURI(user.getProfile().getProfileImageUrl());
+        if (user.hasProfileImage())
+            DraweeHelper.setProgressiveUri(profileImage, Uri.parse(user.getProfile().getProfileImageUrl()));
         appBarLayout.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
             boolean isShow = false;
             int scrollRange = -1;
@@ -281,10 +285,10 @@ public class ProfileActivity extends DooitActivity {
             @Override
             public void permissionGranted() {
                 Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                    takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
-                    if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
-                        startActivityForResult(takePictureIntent, RequestCodes.RESPONSE_CAMERA_REQUEST_PROFILE_IMAGE);
-                    }
+                takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
+                if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
+                    startActivityForResult(takePictureIntent, RequestCodes.RESPONSE_CAMERA_REQUEST_PROFILE_IMAGE);
+                }
             }
 
             @Override
@@ -318,8 +322,6 @@ public class ProfileActivity extends DooitActivity {
 
         switch (requestCode) {
             case RequestCodes.RESPONSE_CAMERA_REQUEST_PROFILE_IMAGE:
-                onActivityImageResult(data);
-                break;
             case RequestCodes.RESPONSE_GALLERY_REQUEST_PROFILE_IMAGE:
                 onActivityImageResult(data);
                 break;
@@ -351,7 +353,7 @@ public class ProfileActivity extends DooitActivity {
             return;
         }
         showProgressDialog(R.string.profile_image_progress);
-        fileUploadManager.upload(user.getId(), mimetype, new File(filepath), new DooitErrorHandler() {
+        fileUploadManager.uploadProfileImage(user.getId(), mimetype, new File(filepath), new DooitErrorHandler() {
             @Override
             public void onError(DooitAPIError error) {
                 Toast.makeText(ProfileActivity.this, "Unable to uploadProfileImage Image", Toast.LENGTH_SHORT).show();
@@ -361,17 +363,25 @@ public class ProfileActivity extends DooitActivity {
             public void call() {
                 dismissDialog();
             }
-        }).subscribe(new Action1<EmptyResponse>() {
+        }).subscribe(new Action1<Response<EmptyResponse>>() {
             @Override
-            public void call(EmptyResponse emptyResponse) {
+            public void call(Response<EmptyResponse> response) {
                 User user = persisted.getCurrentUser();
 
-                // Clear remote image from Fresco cache
-                Uri currentUri = Uri.parse(user.getProfile().getProfileImageUrl());
-                if (currentUri.getScheme().equals("http") || currentUri.getScheme().equals("https")) {
-                    ImagePipeline pipeline = Fresco.getImagePipeline();
-                    pipeline.evictFromCache(currentUri);
+                if (user.hasProfileImage()) {
+                    // Clear existing remote image from Fresco cache
+                    Uri currentUri = Uri.parse(user.getProfile().getProfileImageUrl());
+                    if (currentUri.getScheme().equals("http") || currentUri.getScheme().equals("https")) {
+                        ImagePipeline pipeline = Fresco.getImagePipeline();
+                        pipeline.evictFromCache(currentUri);
+                    }
                 }
+
+                String location = response.headers().get("Location");
+                if (!TextUtils.isEmpty(location))
+                    user.getProfile().setProfileImageUrl(location);
+
+                persisted.setCurrentUser(user);
             }
         });
     }

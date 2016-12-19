@@ -2,6 +2,7 @@ package org.gem.indo.dooit.views.main;
 
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
@@ -15,10 +16,9 @@ import com.facebook.drawee.view.SimpleDraweeView;
 
 import org.gem.indo.dooit.DooitApplication;
 import org.gem.indo.dooit.R;
+import org.gem.indo.dooit.helpers.DraweeHelper;
 import org.gem.indo.dooit.helpers.Persisted;
 import org.gem.indo.dooit.helpers.activity.result.ActivityForResultHelper;
-import org.gem.indo.dooit.helpers.bot.param.ParamMatch;
-import org.gem.indo.dooit.helpers.bot.param.ParamParser;
 import org.gem.indo.dooit.helpers.notifications.NotificationType;
 import org.gem.indo.dooit.models.User;
 import org.gem.indo.dooit.services.NotificationAlarm;
@@ -28,9 +28,6 @@ import org.gem.indo.dooit.views.main.adapters.MainTabAdapter;
 import org.gem.indo.dooit.views.main.fragments.MainFragment;
 import org.gem.indo.dooit.views.main.fragments.target.TargetFragment;
 import org.gem.indo.dooit.views.profile.ProfileActivity;
-
-import java.util.HashMap;
-import java.util.Map;
 
 import javax.inject.Inject;
 
@@ -130,11 +127,13 @@ public class MainActivity extends DooitActivity {
     protected void onResume() {
         super.onResume();
         User user = persisted.getCurrentUser();
-        if (user == null) {
+        if (user == null)
             Snackbar.make(viewPager, R.string.prompt_relogin, Snackbar.LENGTH_LONG);
-        } else {
-            simpleDraweeViewProfile.setImageURI(user.getProfile().getProfileImageUrl());
-        }
+        else if (user.hasProfileImage())
+            DraweeHelper.setProgressiveUri(
+                    simpleDraweeViewProfile,
+                    Uri.parse(user.getProfile().getProfileImageUrl())
+            );
     }
 
     @Override

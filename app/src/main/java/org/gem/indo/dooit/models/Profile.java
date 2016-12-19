@@ -15,7 +15,8 @@ public class Profile
     private Integer age;
     private Integer gender;
     private String mobile;
-    @SerializedName("profile_image_url") private String profileImageUrl;
+    @SerializedName("profile_image_url")
+    private String profileImageUrl;
 
     public String getMobile ()
     {
