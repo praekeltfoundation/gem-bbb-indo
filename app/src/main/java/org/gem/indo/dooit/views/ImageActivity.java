@@ -10,6 +10,7 @@ import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.v4.content.FileProvider;
 import android.support.v7.app.AlertDialog;
+import android.text.TextUtils;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -33,6 +34,8 @@ import java.util.Date;
 public abstract class ImageActivity extends DooitActivity {
 
     private static final String TAG = ImageActivity.class.getName();
+    private static final int maxImageWidth = 1024;
+    private static final int maxImageHeight = 1024;
 
     private AlertDialog imageChooser;
     private Uri imageUri;
@@ -157,10 +160,16 @@ public abstract class ImageActivity extends DooitActivity {
             }
         }
 
-        imagePath = MediaUriHelper.getPath(this, imageUri);
+        if (TextUtils.isEmpty(imagePath))
+            // MediaUriHelper does not work when uri points to temp image file
+            imagePath = MediaUriHelper.getPath(this, imageUri);
 
         ContentResolver cR = this.getContentResolver();
         onImageResult(cR.getType(imageUri), imageUri, imagePath);
+    }
+
+    private void downscaleImage() {
+
     }
 
     private File createImageFile() throws IOException {
