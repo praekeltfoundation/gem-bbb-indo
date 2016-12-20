@@ -246,13 +246,14 @@ public abstract class ImageActivity extends DooitActivity {
     /**
      * Brute force grant permission to access the URI to every Activity that can respond to
      * ACTION_IMAGE_CAPTURE. Fixes `SecurityException` on API 17, 18 and 19.
-     * 
-     * Since API 21 permissions to the app's external storage work differently.
+     *
+     * Since API 19 special permissions are not required and the uri is accessible to any app with
+     * the READ_EXTERNAL_STORAGE or WRITE_EXTERNAL_STORAGE permission.
      *
      * @param intent
      */
     private void grantCameraPermissions(Intent intent) {
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
+        if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.KITKAT) {
             List<ResolveInfo> resolvedIntentActivities = getPackageManager()
                     .queryIntentActivities(intent, PackageManager.MATCH_DEFAULT_ONLY);
 
@@ -266,7 +267,7 @@ public abstract class ImageActivity extends DooitActivity {
      * URI Permissions must be revoked, or they will persisted until the device is restarted.
      */
     private void revokeCameraPermissions() {
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP)
+        if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.KITKAT)
             revokeUriPermission(imageUri,
                     Intent.FLAG_GRANT_WRITE_URI_PERMISSION | Intent.FLAG_GRANT_READ_URI_PERMISSION);
     }
