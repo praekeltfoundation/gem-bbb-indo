@@ -24,7 +24,6 @@
             android:layout_marginTop="@dimen/registration_margin_vertical"
             android:text="@string/heading_registration"
             android:textColor="@color/white"
-
             android:textStyle="bold" />
 
         <TextView
@@ -33,12 +32,25 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
-            android:layout_below="@+id/activity_change_name_title"
+            android:layout_below="@id/activity_change_name_title"
             android:layout_marginTop="@dimen/registration_margin_vertical"
             android:text="@string/label_name"
             android:textAllCaps="true"
             android:textColor="@color/yellow"
             android:textStyle="bold" />
+
+        <EditText
+            android:id="@+id/activity_registration_name_text_edit"
+            style="@style/AppTheme.EditText.Grey"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textPersonName"
+            android:imeOptions="actionNext"
+            android:maxLines="1"
+            android:nextFocusDown="@+id/activity_registration_age_spinner"
+            tools:text="Aida"
+            android:layout_below="@id/activity_registration_name_text_view"
+            android:layout_alignParentStart="true" />
 
         <TextView
             android:id="@+id/activity_registration_name_example_text_edit"
@@ -47,7 +59,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
-            android:layout_below="@+id/activity_registration_name_text_edit"
+            android:layout_below="@id/activity_registration_name_text_edit"
             android:layout_marginTop="4dp"
             android:text="@string/reg_example_name"
             android:textColor="@color/white" />
@@ -58,13 +70,24 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
-            android:layout_below="@+id/activity_registration_name_example_text_edit"
+            android:layout_below="@id/activity_registration_name_example_text_edit"
             android:layout_marginTop="@dimen/registration_field_margin_vertical"
             android:text="@string/reg_age"
             android:textAllCaps="true"
             android:textColor="@color/yellow"
             android:textStyle="bold" />
 
+        <Spinner
+            android:id="@id/activity_registration_age_spinner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bkg_edit_view"
+            android:spinnerMode="dialog"
+            android:nextFocusDown="@+id/activity_registration_gender_radiogroup"
+            android:imeOptions="actionNext"
+            tools:listitem="@layout/item_spinner_age"
+            android:layout_below="@id/activity_registration_age_text_view"
+            android:layout_alignParentStart="true" />
 
         <TextView
             android:id="@+id/activity_registration_age_example_text_view"
@@ -72,13 +95,26 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
-            android:layout_below="@+id/activity_registration_age_spinner"
+            android:layout_below="@id/activity_registration_age_spinner"
             android:layout_marginTop="4dp"
             android:text="@string/reg_example_age"
             android:textColor="@color/white" />
 
+        <TextView
+            android:id="@+id/activity_registration_gender_text_view"
+            style="@style/AppTheme.TextView.Bold.Medium"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="@string/reg_gender"
+            android:textAllCaps="true"
+            android:textColor="@color/yellow"
+            android:textStyle="bold"
+            android:layout_below="@id/activity_registration_age_example_text_view"
+            android:layout_alignParentStart="true" />
+
         <RadioGroup
-            android:id="@+id/activity_registration_gender_radiogroup"
+            android:id="@id/activity_registration_gender_radiogroup"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_below="@+id/activity_registration_gender_text_view"
@@ -113,10 +149,22 @@
                 android:text="@string/reg_gender_boy"
                 android:textAppearance="@style/AppTheme.TextView.Regular.ExtraLarge"
                 android:imeOptions="actionNext"
-                android:nextFocusDown="@+id/activity_registration_number_text_edit"
+                android:nextFocusDown="@id/activity_registration_number_text_edit"
                 android:textColor="@color/white" />
 
         </RadioGroup>
+
+        <TextView
+            android:id="@+id/activity_registration_options"
+            style="@style/AppTheme.TextView.Regular.Small"
+            fontPath="fonts/Lato-Regular.ttf"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_below="@id/activity_registration_gender_radiogroup"
+            android:layout_marginTop="@dimen/registration_field_margin_vertical"
+            android:text="@string/reg_options"
+            android:textColor="@color/white" />
 
         <TextView
             android:id="@+id/activity_registration_number_text_view"
@@ -124,12 +172,25 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
-            android:layout_below="@id/activity_registration_gender_radiogroup"
+            android:layout_below="@id/activity_registration_options"
             android:layout_marginTop="@dimen/registration_field_margin_vertical"
             android:text="@string/label_mobile_number"
             android:textAllCaps="true"
             android:textColor="@color/yellow"
             android:textStyle="bold" />
+
+        <EditText
+            android:id="@+id/activity_registration_number_text_edit"
+            style="@style/AppTheme.EditText.Grey"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:imeOptions="actionNext"
+            android:nextFocusDown="@+id/activity_registration_email_text_edit"
+            android:maxLines="1"
+            android:inputType="phone"
+            tools:text="+110002223"
+            android:layout_below="@id/activity_registration_number_text_view"
+            android:layout_alignParentStart="true" />
 
         <TextView
             android:id="@+id/activity_registration_number_example_text_edit"
@@ -137,9 +198,48 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
-            android:layout_below="@+id/activity_registration_number_text_edit"
+            android:layout_below="@id/activity_registration_number_text_edit"
+            android:nextFocusDown="@id/activity_registration_email_text_edit"
             android:layout_marginTop="4dp"
             android:text="@string/reg_example_number"
+            android:textColor="@color/white" />
+
+        <TextView
+            android:id="@+id/activity_registration_email_text_view"
+            style="@style/AppTheme.TextView.Bold.Medium"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_below="@id/activity_registration_number_example_text_edit"
+            android:layout_marginTop="@dimen/registration_field_margin_vertical"
+            android:text="@string/label_email"
+            android:textAllCaps="true"
+            android:textColor="@color/yellow"
+            android:textStyle="bold" />
+
+        <EditText
+            android:id="@+id/activity_registration_email_text_edit"
+            style="@style/AppTheme.EditText.Grey"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textEmailAddress"
+            android:imeOptions="actionNext"
+            android:maxLines="1"
+            android:nextFocusDown="@+id/activity_registration_password_edit_text"
+            tools:text="email"
+            android:layout_below="@id/activity_registration_email_text_view"
+            android:layout_alignParentStart="true" />
+
+        <TextView
+            android:id="@+id/activity_registration_email_example_text_edit"
+            style="@style/AppTheme.TextView.Regular.Small"
+            fontPath="fonts/Lato-Regular.ttf"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/activity_registration_email_text_edit"
+            android:layout_marginTop="4dp"
+            android:text="@string/reg_example_email"
             android:textColor="@color/white" />
 
         <TextView
@@ -148,7 +248,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
-            android:layout_below="@+id/activity_registration_number_example_text_edit"
+            android:layout_below="@+id/activity_registration_email_example_text_edit"
             android:layout_marginTop="@dimen/registration_field_margin_vertical"
             android:text="@string/label_password"
             android:textAllCaps="true"
@@ -156,18 +256,18 @@
             android:textStyle="bold" />
 
         <EditText
-            android:id="@+id/activity_registration_password_edit_text"
+            android:id="@id/activity_registration_password_edit_text"
             style="@style/AppTheme.EditText.Grey"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
-            android:layout_below="@+id/activity_registration_password_text_view"
+            android:layout_below="@id/activity_registration_password_text_view"
             android:nextFocusDown="@+id/activity_registration_register_button"
             android:imeOptions="actionNext"
             android:layout_marginTop="4dp"
             android:maxLines="1"
             android:inputType="textPassword"
-            tools:text="qwertyuiop" />
+        tools:text="qwertyuiop" />
 
         <TextView
             android:id="@+id/activity_registration_password_example_text_edit"
@@ -175,18 +275,29 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
-            android:layout_below="@+id/activity_registration_password_edit_text"
+            android:layout_below="@id/activity_registration_password_edit_text"
             android:layout_marginTop="4dp"
             android:text="@string/reg_example_password"
             android:textColor="@color/white" />
 
+        <TextView
+            android:id="@+id/activity_registration_t_c_text_view"
+            style="@style/AppTheme.TextView.Bold.Medium"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:gravity="center_horizontal"
+            android:text="@string/reg_t_c"
+            android:textColor="@color/white"
+            android:layout_below="@id/activity_registration_password_example_text_edit"
+            android:layout_centerHorizontal="true" />
 
         <Button
             android:id="@+id/activity_registration_register_button"
             style="@style/AppTheme.Button.Big.Yellow"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/activity_registration_t_c_text_view"
+            android:layout_below="@id/activity_registration_t_c_text_view"
             android:layout_marginTop="16dp"
             android:text="@string/label_register"
             android:textAllCaps="true" />
@@ -201,69 +312,6 @@
             android:layout_marginTop="16dp"
             android:text="@string/already_registered_log_in"
             android:textColor="@color/white" />
-
-        <TextView
-            android:id="@+id/activity_registration_t_c_text_view"
-            style="@style/AppTheme.TextView.Bold.Medium"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="32dp"
-            android:gravity="center_horizontal"
-            android:text="@string/reg_t_c"
-            android:textColor="@color/white"
-            android:layout_below="@+id/activity_registration_password_example_text_edit"
-            android:layout_centerHorizontal="true" />
-
-        <Spinner
-            android:id="@+id/activity_registration_age_spinner"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/bkg_edit_view"
-            android:spinnerMode="dialog"
-            android:nextFocusDown="@+id/activity_registration_gender_radiogroup"
-            android:imeOptions="actionNext"
-            tools:listitem="@layout/item_spinner_age"
-            android:layout_below="@+id/activity_registration_age_text_view"
-            android:layout_alignParentStart="true" />
-
-        <EditText
-            android:id="@+id/activity_registration_name_text_edit"
-            style="@style/AppTheme.EditText.Grey"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:inputType="textPersonName"
-            android:imeOptions="actionNext"
-            android:maxLines="1"
-            android:nextFocusDown="@+id/activity_registration_age_spinner"
-            tools:text="Aida"
-            android:layout_below="@+id/activity_registration_name_text_view"
-            android:layout_alignParentStart="true" />
-
-        <EditText
-            android:id="@+id/activity_registration_number_text_edit"
-            style="@style/AppTheme.EditText.Grey"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:imeOptions="actionNext"
-            android:nextFocusDown="@+id/activity_registration_password_edit_text"
-            android:maxLines="1"
-            android:inputType="phone"
-            tools:text="+110002223"
-            android:layout_below="@+id/activity_registration_number_text_view"
-            android:layout_alignParentStart="true" />
-
-        <TextView
-            android:id="@+id/activity_registration_gender_text_view"
-            style="@style/AppTheme.TextView.Bold.Medium"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:text="@string/reg_gender"
-            android:textAllCaps="true"
-            android:textColor="@color/yellow"
-            android:textStyle="bold"
-            android:layout_below="@+id/activity_registration_age_example_text_view"
-            android:layout_alignParentStart="true" />
 
     </RelativeLayout>
 
