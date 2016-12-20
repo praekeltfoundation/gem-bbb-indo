@@ -151,6 +151,12 @@ public class SettingsActivity extends DooitActivity {
                 .startActivity();
     }
 
+    @OnClick({R.id.settings_about_build_info})
+    public void buildInfo(View view) {
+        BuildInfoActivity.Builder.create(this)
+                .startActivity();
+    }
+
     public static class Builder extends DooitActivityBuilder<Builder> {
         protected Builder(Context context) {
             super(context);
@@ -163,7 +169,8 @@ public class SettingsActivity extends DooitActivity {
 
         @Override
         protected Intent createIntent(Context context) {
-            return new Intent(context, SettingsActivity.class);
+            intent = new Intent(context, SettingsActivity.class);
+            return intent;
         }
 
     }

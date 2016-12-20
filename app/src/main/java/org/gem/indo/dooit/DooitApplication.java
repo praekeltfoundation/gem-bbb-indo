@@ -44,8 +44,9 @@ public class DooitApplication extends Application {
     public void onCreate() {
         super.onCreate();
         if (!BuildConfig.DEBUG) {
-            Fabric.with(this, new Crashlytics());
+//            Fabric.with(this, new Crashlytics());
         }
+        Fabric.with(this, new Crashlytics());
 
         component = DaggerDooitComponent.builder()
                 .dooitModule(new DooitModule(this))

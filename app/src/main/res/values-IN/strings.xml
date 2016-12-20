@@ -9,6 +9,7 @@
     <string name="title_activity_profile">Profil</string>
     <string name="title_activity_profile_image">Upload Foto</string>
     <string name="title_activity_settings">Pengaturan</string>
+    <string name="title_activity_build_info">Build Info</string>
     <string name="title_activity_terms_and_conditions">Syarat &amp; Ketentuan</string>
     <string name="title_activity_privacy_policy">Kebijakan</string>
     <string name="action_settings">Pengaturan</string>
@@ -43,6 +44,7 @@
     <string name="label_change_name">Ubah Nama</string>
     <string name="label_change_password">Ubah Kata Sandi</string>
     <string name="label_settings">Pengaturan</string>
+    <string name="label_build_info">@string/title_activity_build_info</string>
     <string name="label_share">Bagikan</string>
     <string name="label_skip">Lewati</string>
     <string name="label_start">Start</string>

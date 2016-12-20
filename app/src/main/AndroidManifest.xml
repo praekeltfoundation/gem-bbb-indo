@@ -96,6 +96,7 @@
             android:name=".views.onboarding.ChangeSecurityQuestionActivity"
             android:label="@string/title_activity_change_security_question"
             android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".views.settings.BuildInfoActivity"></activity>
     </application>
 
 </manifest>
