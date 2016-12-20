@@ -81,13 +81,16 @@ public class BuildInfoActivity extends DooitActivity {
         versionTextView.setText(BuildConfig.VERSION_NAME);
 
         // Build Datetime
-        dateTextView.setText(new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(new Date(BuildConfig.TIMESTAMP)));
+        dateTextView.setText(new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
+                .format(new Date(BuildConfig.TIMESTAMP)));
 
         // Variant
         variantTextView.setText(BuildConfig.FLAVOR);
 
         // Server
-        serverTextView.setText(Constants.BASE_URL);
+        serverTextView.setText(Constants.BASE_URL
+                .replace("http://", "")
+                .replace("https://", ""));
 
         // Language
         languageTextView.setText(LanguageCodeHelper.getLanguage());
