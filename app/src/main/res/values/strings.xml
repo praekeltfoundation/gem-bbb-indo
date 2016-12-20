@@ -371,6 +371,14 @@
     <string name="profile_change_password_success">Your password has been changed</string>
     <string name="profile_change_password_error_1">Passwords can\'t be the same</string>
 
+    <!-- Profile: Build Info -->
+    <string name="profile_build_info_app_id">App ID</string>
+    <string name="profile_build_info_version">Version</string>
+    <string name="profile_build_info_date">Built on</string>
+    <string name="profile_build_info_variant">Variant</string>
+    <string name="profile_build_info_server">Server Domain</string>
+    <string name="profile_build_info_language">Phone Language</string>
+
     <!-- Legends -->
     <string name="legend_label_average">Average</string>
     <string name="legend_label_goals">Goals</string>

@@ -95,7 +95,7 @@
                     android:layout_centerVertical="true"
                     android:ellipsize="end"
                     android:maxLines="1"
-                    android:text="App Id"
+                    android:text="@string/profile_build_info_app_id"
                     android:textColor="@color/divider"
                     android:textStyle="bold" />
 
@@ -141,7 +141,7 @@
                     android:layout_centerVertical="true"
                     android:ellipsize="end"
                     android:maxLines="1"
-                    android:text="Version"
+                    android:text="@string/profile_build_info_version"
                     android:textColor="@color/divider"
                     android:textStyle="bold" />
 
@@ -187,7 +187,7 @@
                     android:layout_centerVertical="true"
                     android:ellipsize="end"
                     android:maxLines="1"
-                    android:text="Built on"
+                    android:text="@string/profile_build_info_date"
                     android:textColor="@color/divider"
                     android:textStyle="bold" />
 
@@ -233,7 +233,7 @@
                     android:layout_centerVertical="true"
                     android:ellipsize="end"
                     android:maxLines="1"
-                    android:text="Variant"
+                    android:text="@string/profile_build_info_variant"
                     android:textColor="@color/divider"
                     android:textStyle="bold" />
 
@@ -279,7 +279,7 @@
                     android:layout_centerVertical="true"
                     android:ellipsize="end"
                     android:maxLines="1"
-                    android:text="Server Domain"
+                    android:text="@string/profile_build_info_server"
                     android:textColor="@color/divider"
                     android:textStyle="bold" />
 
@@ -318,13 +318,13 @@
                 <TextView
                     android:id="@+id/activity_build_info_language_heading"
                     style="@style/AppTheme.TextView.BuildInfo.Item"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentStart="true"
                     android:layout_centerVertical="true"
                     android:ellipsize="end"
                     android:maxLines="1"
-                    android:text="Phone Language"
+                    android:text="@string/profile_build_info_language"
                     android:textColor="@color/divider"
                     android:textStyle="bold" />
 
