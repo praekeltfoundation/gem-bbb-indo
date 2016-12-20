@@ -4,9 +4,12 @@ import android.app.Activity;
 import android.content.ContentResolver;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.content.pm.ResolveInfo;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.v4.content.FileProvider;
@@ -16,10 +19,10 @@ import android.util.Log;
 import android.widget.Toast;
 
 import org.gem.indo.dooit.R;
+import org.gem.indo.dooit.helpers.RequestCodes;
 import org.gem.indo.dooit.helpers.images.ImageChooserOptions;
 import org.gem.indo.dooit.helpers.images.ImageScaler;
 import org.gem.indo.dooit.helpers.images.MediaUriHelper;
-import org.gem.indo.dooit.helpers.RequestCodes;
 import org.gem.indo.dooit.helpers.permissions.PermissionCallback;
 import org.gem.indo.dooit.helpers.permissions.PermissionsHelper;
 
@@ -28,6 +31,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
 /**
  * Created by Wimpie Victor on 2016/12/19.
@@ -97,6 +101,7 @@ public abstract class ImageActivity extends DooitActivity {
 
                 if (imageFile != null) {
                     imageUri = FileProvider.getUriForFile(ImageActivity.this, FILE_PROVIDER_AUTH, imageFile);
+                    grantCameraPermissions(cameraIntent);
 
                     cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
                     if (cameraIntent.resolveActivity(getPackageManager()) != null) {
@@ -136,6 +141,7 @@ public abstract class ImageActivity extends DooitActivity {
 
         switch (requestCode) {
             case RequestCodes.RESPONSE_CAMERA_REQUEST_PROFILE_IMAGE:
+                revokeCameraPermissions();
             case RequestCodes.RESPONSE_GALLERY_REQUEST_PROFILE_IMAGE:
                 handleImageResult(data);
                 break;
@@ -235,6 +241,34 @@ public abstract class ImageActivity extends DooitActivity {
         if (imageChooser != null && imageChooser.isShowing())
             imageChooser.dismiss();
         super.onDestroy();
+    }
+
+    /**
+     * Brute force grant permission to access the URI to every Activity that can respond to
+     * ACTION_IMAGE_CAPTURE. Fixes `SecurityException` on API 17, 18 and 19.
+     * 
+     * Since API 21 permissions to the app's external storage work differently.
+     *
+     * @param intent
+     */
+    private void grantCameraPermissions(Intent intent) {
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
+            List<ResolveInfo> resolvedIntentActivities = getPackageManager()
+                    .queryIntentActivities(intent, PackageManager.MATCH_DEFAULT_ONLY);
+
+            for (ResolveInfo resolvedIntentInfo : resolvedIntentActivities)
+                grantUriPermission(resolvedIntentInfo.activityInfo.packageName, imageUri,
+                        Intent.FLAG_GRANT_WRITE_URI_PERMISSION | Intent.FLAG_GRANT_READ_URI_PERMISSION);
+        }
+    }
+
+    /**
+     * URI Permissions must be revoked, or they will persisted until the device is restarted.
+     */
+    private void revokeCameraPermissions() {
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP)
+            revokeUriPermission(imageUri,
+                    Intent.FLAG_GRANT_WRITE_URI_PERMISSION | Intent.FLAG_GRANT_READ_URI_PERMISSION);
     }
 
     protected Uri getImageUri() {
