@@ -33,7 +33,7 @@
     <string name="label_loading">Loading</string>
     <string name="label_log_in">Log in</string>
     <string name="label_mobile_number">Mobile number</string>
-    <string name="label_name">Name</string>
+    <string name="label_name">Username</string>
     <string name="label_next">Next</string>
     <string name="label_new_password">New Password</string>
     <string name="label_old_password">Old Password</string>
