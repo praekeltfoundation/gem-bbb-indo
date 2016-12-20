@@ -16,6 +16,10 @@ import org.gem.indo.dooit.helpers.SquiggleBackgroundHelper;
 import org.gem.indo.dooit.views.DooitActivity;
 import org.gem.indo.dooit.views.helpers.activity.DooitActivityBuilder;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -32,6 +36,9 @@ public class BuildInfoActivity extends DooitActivity {
 
     @BindView(R.id.activity_build_info_version)
     TextView versionTextView;
+
+    @BindView(R.id.activity_build_info_date)
+    TextView dateTextView;
 
     @BindView(R.id.activity_build_info_variant)
     TextView variantTextView;
@@ -72,6 +79,9 @@ public class BuildInfoActivity extends DooitActivity {
 
         // Version
         versionTextView.setText(BuildConfig.VERSION_NAME);
+
+        // Build Datetime
+        dateTextView.setText(new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(new Date(BuildConfig.TIMESTAMP)));
 
         // Variant
         variantTextView.setText(BuildConfig.FLAVOR);
