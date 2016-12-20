@@ -64,6 +64,9 @@ public class SettingsActivity extends DooitActivity {
         ((DooitApplication) getApplication()).component.inject(this);
         ButterKnife.bind(this);
 
+        // Animation
+        overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
+
         setSupportActionBar(toolbar);
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
@@ -74,12 +77,19 @@ public class SettingsActivity extends DooitActivity {
                 @Override
                 public void onClick(View v) {
                     finish();
+                    overridePendingTransition(R.anim.slide_enter, R.anim.slide_exit);
                 }
             });
         }
 
         // Background
         SquiggleBackgroundHelper.setBackground(this, R.color.grey_back, R.color.grey_fore, background);
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        overridePendingTransition(R.anim.slide_enter, R.anim.slide_exit);
     }
 
     @Override
