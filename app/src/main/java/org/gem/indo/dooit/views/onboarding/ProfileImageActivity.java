@@ -36,9 +36,6 @@ import rx.functions.Action1;
 
 public class ProfileImageActivity extends ImageActivity {
 
-    private static final String INTENT_MIME_TYPE = "mime_type";
-    private static final String INTENT_IMAGE_URI = "image_uri";
-
     @BindView(R.id.activity_profile_image)
     View background;
 
