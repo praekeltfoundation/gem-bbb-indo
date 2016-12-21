@@ -353,6 +353,7 @@
     <string name="profile_image_gallery">Pilih dari Galeri</string>
     <string name="profile_image_cancel">Batalkan</string>
     <string name="profile_image_progress">Kami sedang meng-upload foto profilmu&#8230;</string>
+    <string name="profile_image_empty_error">You must set a profile image, or tap skip</string>
 
     <!-- Profile: Change Username -->
     <string name="profile_change_username_progress">Kami mengubah username-mu&#8230;</string>

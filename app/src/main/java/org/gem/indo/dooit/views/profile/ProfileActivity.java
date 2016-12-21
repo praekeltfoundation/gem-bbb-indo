@@ -1,23 +1,16 @@
 package org.gem.indo.dooit.views.profile;
 
-import android.app.Activity;
-import android.content.ContentResolver;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.Snackbar;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -36,15 +29,10 @@ import org.gem.indo.dooit.api.managers.AchievementManager;
 import org.gem.indo.dooit.api.managers.FileUploadManager;
 import org.gem.indo.dooit.api.responses.AchievementResponse;
 import org.gem.indo.dooit.api.responses.EmptyResponse;
-import org.gem.indo.dooit.helpers.DraweeHelper;
-import org.gem.indo.dooit.helpers.MediaUriHelper;
+import org.gem.indo.dooit.helpers.images.DraweeHelper;
 import org.gem.indo.dooit.helpers.Persisted;
-import org.gem.indo.dooit.helpers.RequestCodes;
 import org.gem.indo.dooit.helpers.SquiggleBackgroundHelper;
-import org.gem.indo.dooit.helpers.permissions.PermissionCallback;
-import org.gem.indo.dooit.helpers.permissions.PermissionsHelper;
 import org.gem.indo.dooit.models.User;
-import org.gem.indo.dooit.views.DooitActivity;
 import org.gem.indo.dooit.views.ImageActivity;
 import org.gem.indo.dooit.views.helpers.activity.DooitActivityBuilder;
 import org.gem.indo.dooit.views.profile.adapters.BadgeAdapter;
@@ -257,22 +245,21 @@ public class ProfileActivity extends ImageActivity {
 
     @Override
     protected void onImageResult(String mediaType, Uri imageUri, String imagePath) {
-        // Display image in view from content uri
-        profileImage.setImageURI(imageUri);
-
         // Upload image to server
         User user = persisted.getCurrentUser();
         if (user == null) {
             Snackbar.make(toolbar, R.string.prompt_relogin, Snackbar.LENGTH_SHORT);
             return;
         }
+
         showProgressDialog(R.string.profile_image_progress);
+
         fileUploadManager.uploadProfileImage(user.getId(), mediaType, new File(imagePath), new DooitErrorHandler() {
             @Override
             public void onError(DooitAPIError error) {
                 Toast.makeText(ProfileActivity.this, "Unable to uploadProfileImage Image", Toast.LENGTH_SHORT).show();
             }
-        }).doOnCompleted(new Action0() {
+        }).doAfterTerminate(new Action0() {
             @Override
             public void call() {
                 dismissDialog();
@@ -296,6 +283,14 @@ public class ProfileActivity extends ImageActivity {
                     user.getProfile().setProfileImageUrl(location);
 
                 persisted.setCurrentUser(user);
+
+                // Display image in view from content uri so we don't have to redownload it just yet
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        profileImage.setImageURI(getImageUri());
+                    }
+                });
             }
         });
     }

@@ -361,6 +361,7 @@
     <string name="profile_image_gallery">Choose from Gallery</string>
     <string name="profile_image_cancel">Cancel</string>
     <string name="profile_image_progress">We\'re uploading your profile image&#8230;</string>
+    <string name="profile_image_empty_error">You must set a profile image, or tap skip</string>
 
     <!-- Profile: Change Username -->
     <string name="profile_change_username_progress">We\'re changing your username&#8230;</string>
