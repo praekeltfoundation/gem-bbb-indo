@@ -7,7 +7,6 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
-import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AlertDialog;
@@ -28,18 +27,16 @@ import org.gem.indo.dooit.api.DooitAPIError;
 import org.gem.indo.dooit.api.DooitErrorHandler;
 import org.gem.indo.dooit.api.managers.FileUploadManager;
 import org.gem.indo.dooit.api.responses.EmptyResponse;
-import org.gem.indo.dooit.helpers.MediaUriHelper;
+import org.gem.indo.dooit.helpers.images.MediaUriHelper;
 import org.gem.indo.dooit.helpers.Persisted;
 import org.gem.indo.dooit.helpers.RequestCodes;
 import org.gem.indo.dooit.helpers.permissions.PermissionCallback;
 import org.gem.indo.dooit.helpers.permissions.PermissionsHelper;
-import org.gem.indo.dooit.models.User;
 import org.gem.indo.dooit.models.challenge.Participant;
 import org.gem.indo.dooit.models.challenge.PictureChallenge;
 import org.gem.indo.dooit.models.challenge.PictureChallengeQuestion;
 import org.gem.indo.dooit.views.main.fragments.challenge.ChallengeFragment;
 import org.gem.indo.dooit.views.main.fragments.challenge.ChallengeFragmentState;
-import org.gem.indo.dooit.views.main.fragments.challenge.interfaces.HasChallengeFragmentState;
 
 import java.io.File;
 
