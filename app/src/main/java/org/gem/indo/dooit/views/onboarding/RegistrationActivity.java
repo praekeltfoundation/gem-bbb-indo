@@ -269,13 +269,13 @@ public class RegistrationActivity extends DooitActivity {
 
         if ((number.getText().toString() != "") && (email.getText().toString() != "")){
             profile.setMobile(number.getText().toString());
-            profile.setEmail(email.getText().toString());
+            user.setEmail(email.getText().toString());
         }
         else if(number.getText().toString() != ""){
             profile.setMobile(number.getText().toString());
         }
         else if (email.getText().toString() != ""){
-            profile.setEmail(email.getText().toString());
+            user.setEmail(email.getText().toString());
         }
 
         profile.setAge((Integer) age.getSelectedItem());
