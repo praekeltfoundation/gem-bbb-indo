@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 
@@ -86,6 +87,12 @@ public class ProfileImageActivity extends ImageActivity {
 
     @OnClick(R.id.activity_profile_image_next_button)
     public void uploadProfileImage() {
+        // Image must be set
+        if (TextUtils.isEmpty(mediaType) || TextUtils.isEmpty(imagePath)) {
+            Snackbar.make(nextButton, getString(R.string.profile_image_empty_error), Snackbar.LENGTH_LONG).show();
+            return;
+        }
+
         User user = persisted.getCurrentUser();
 
         fileUploadManager.uploadProfileImage(user.getId(), mediaType,
