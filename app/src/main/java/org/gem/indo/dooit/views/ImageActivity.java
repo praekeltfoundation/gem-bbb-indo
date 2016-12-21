@@ -250,6 +250,9 @@ public abstract class ImageActivity extends DooitActivity {
      * Since API 19 special permissions are not required and the uri is accessible to any app with
      * the READ_EXTERNAL_STORAGE or WRITE_EXTERNAL_STORAGE permission.
      *
+     * Use this when the camera needs access to a file on the external storage. Paths associated by
+     * `external-files-path` and `getExternalFilesDir`.
+     *
      * @param intent
      */
     private void grantCameraPermissions(Intent intent) {
