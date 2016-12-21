@@ -15,6 +15,7 @@ public class Profile
     private Integer age;
     private Integer gender;
     private String mobile;
+    private String email;
     @SerializedName("profile_image_url")
     private String profileImageUrl;
 
@@ -52,5 +53,13 @@ public class Profile
     public void setProfileImageUrl(String profileImageUrl)
     {
         this.profileImageUrl = profileImageUrl;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 }

@@ -266,7 +266,18 @@ public class RegistrationActivity extends DooitActivity {
         user.setPassword(password.getText().toString());
 
         Profile profile = new Profile();
-        profile.setMobile(number.getText().toString());
+
+        if ((number.getText().toString() != "") && (email.getText().toString() != "")){
+            profile.setMobile(number.getText().toString());
+            profile.setEmail(email.getText().toString());
+        }
+        else if(number.getText().toString() != ""){
+            profile.setMobile(number.getText().toString());
+        }
+        else if (email.getText().toString() != ""){
+            profile.setEmail(email.getText().toString());
+        }
+
         profile.setAge((Integer) age.getSelectedItem());
 
         switch (gender.getCheckedRadioButtonId()) {
@@ -279,7 +290,6 @@ public class RegistrationActivity extends DooitActivity {
         }
 
         user.setProfile(profile);
-
         return user;
     }
 
