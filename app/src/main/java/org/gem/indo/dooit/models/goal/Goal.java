@@ -32,6 +32,7 @@ public class Goal {
     private LocalDate startDate;
     @SerializedName("end_date")
     private LocalDate endDate;
+    private boolean timeIsUp;
     private List<GoalTransaction> transactions = new ArrayList<>();
     @SerializedName("weekly_totals")
     private LinkedHashMap<String, Float> weeklyTotals;
@@ -251,4 +252,9 @@ public class Goal {
         weekCount = (int) (TimeUnit.MILLISECONDS.toDays((long) Math.ceil(endDate.toDate().getTime() - startDate.toDate().getTime()) / 7));
         weeklyTarget = target / weekCount;
     }
+
+    public void setTimeIsUp(boolean missed){ timeIsUp = missed;}
+
+    public boolean getTimeIsUp(){return timeIsUp;}
+
 }
