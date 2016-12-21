@@ -9,6 +9,7 @@
     <string name="title_activity_profile">Profil</string>
     <string name="title_activity_profile_image">Upload Foto</string>
     <string name="title_activity_settings">Pengaturan</string>
+    <string name="title_activity_build_info">Build Info</string>
     <string name="title_activity_terms_and_conditions">Syarat &amp; Ketentuan</string>
     <string name="title_activity_privacy_policy">Kebijakan</string>
     <string name="action_settings">Pengaturan</string>
@@ -43,6 +44,7 @@
     <string name="label_change_name">Ubah Nama</string>
     <string name="label_change_password">Ubah Kata Sandi</string>
     <string name="label_settings">Pengaturan</string>
+    <string name="label_build_info">@string/title_activity_build_info</string>
     <string name="label_share">Bagikan</string>
     <string name="label_skip">Lewati</string>
     <string name="label_start">Start</string>
@@ -361,6 +363,14 @@
     <string name="profile_change_password_progress">Kami mengubah kata sandimu&#8230;</string>
     <string name="profile_change_password_success">Kata sandi sudah diubah</string>
     <string name="profile_change_password_error_1">Kata sandi tidak boleh sama</string>
+
+    <!-- Profile: Build Info -->
+    <string name="profile_build_info_app_id">App ID</string>
+    <string name="profile_build_info_version">Version</string>
+    <string name="profile_build_info_date">Built on</string>
+    <string name="profile_build_info_variant">Variant</string>
+    <string name="profile_build_info_server">Server Domain</string>
+    <string name="profile_build_info_language">Phone Language</string>
 
     <!-- Legends -->
     <string name="legend_label_average">Rata-rata</string>

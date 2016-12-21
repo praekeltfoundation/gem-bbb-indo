@@ -127,6 +127,12 @@
         <item name="android:textColor">@color/purple</item>
     </style>
 
+    <!-- Build Info -->
+
+    <style name="AppTheme.TextView.BuildInfo.Item" parent="AppTheme.TextView.Settings.Item">
+        <item name="android:textColor">@color/grey</item>
+    </style>
+
     <!-- Forms -->
 
     <style name="AppTheme.TextView.Form.Label" parent="AppTheme.TextView.Bold.Medium">

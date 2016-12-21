@@ -81,6 +81,10 @@
         <activity
             android:name=".views.tip.TipArticleActivity"
             android:screenOrientation="portrait" />
+        <activity
+            android:name=".views.settings.BuildInfoActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar" />
 
         <service
             android:name=".services.NotificationService"
@@ -96,15 +100,15 @@
             android:name=".views.onboarding.ChangeSecurityQuestionActivity"
             android:label="@string/title_activity_change_security_question"
             android:theme="@style/AppTheme.NoActionBar" />
-        
+
         <provider
-            android:authorities="org.gem.indo.dooit.fileprovider"
             android:name="android.support.v4.content.FileProvider"
+            android:authorities="org.gem.indo.dooit.fileprovider"
             android:exported="false"
             android:grantUriPermissions="true">
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"
-                android:resource="@xml/file_paths"/>
+                android:resource="@xml/file_paths" />
         </provider>
 
     </application>
