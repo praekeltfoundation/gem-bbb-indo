@@ -40,6 +40,7 @@ import java.util.List;
 public abstract class ImageActivity extends DooitActivity {
 
     private static final String TAG = ImageActivity.class.getName();
+    // Same as `authorities` attribute in manifest
     private static final String FILE_PROVIDER_AUTH = "org.gem.indo.dooit.fileprovider";
     private static final int maxImageWidth = 1024;
     private static final int maxImageHeight = 1024;
