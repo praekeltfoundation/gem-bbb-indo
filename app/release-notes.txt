@@ -1,2 +1,4 @@
 
 Added Build Info to Settings
+Fixed #268 - Profile Image upload crash
+Fixed #199 - Profile picture pixelating
