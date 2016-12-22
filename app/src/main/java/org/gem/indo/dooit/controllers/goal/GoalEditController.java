@@ -102,7 +102,7 @@ public class GoalEditController extends GoalBotController {
             public void onError(DooitAPIError error) {
 
             }
-        }).doOnCompleted(new Action0() {
+        }).doAfterTerminate(new Action0() {
             @Override
             public void call() {
                 notifyDone(listener);
@@ -134,7 +134,7 @@ public class GoalEditController extends GoalBotController {
             public void onError(DooitAPIError error) {
 
             }
-        }).doOnCompleted(new Action0() {
+        }).doAfterTerminate(new Action0() {
             @Override
             public void call() {
                 notifyDone(listener);
@@ -159,7 +159,7 @@ public class GoalEditController extends GoalBotController {
             public void onError(DooitAPIError error) {
 
             }
-        }).doOnCompleted(new Action0() {
+        }).doAfterTerminate(new Action0() {
             @Override
             public void call() {
                 notifyDone(listener);

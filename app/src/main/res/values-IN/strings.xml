@@ -172,7 +172,7 @@
 
     <string name="goal_add_q_verify">"Jika kamu tabung $(goal.weekly_target_currency) per minggu, kamu akan mencapai targetmu $(goal.name) dalam $(goal.weeks_left_up) minggu. Jika kamu ikuti rencana ini, targetmu akan tercapai pada tanggal $(goal.end_date).</string>
 
-    <string name="goal_add_a_has_saved_y">Ya! Aku sudah punya tabungan sebesar:</string>
+    <string name="goal_add_a_has_saved_y">Ya! Aku sudah nabung sebanyak</string>
     <string name="goal_add_a_has_saved_n">Belum</string>
 
     <string name="goal_add_a_done_exit">Terima Kasih! Aku sudah selesai.</string>
@@ -246,13 +246,13 @@
     <string name="goal_edit_gallery">Aku ingin memilih foto dari galeri.</string>
     <string name="goal_edit_image_cancel">@string/label_cancel</string>
     <string name="goal_edit_delete_reason_reached">Aku sudah mencapai target ini.</string>
-    <string name="goal_edit_delete_reason_difficult">Terlalu sulit menabung untuk target ini!</string>
+    <string name="goal_edit_delete_reason_difficult">Susah nabung untuk target ini!</string>
     <string name="goal_edit_delete_reason_do_not_want">Aku tidak mau $(goal.name) lagi.</string>
-    <string name="goal_edit_delete_reason_misc">Gak apa-apa, hanya ingin menghapusnya.</string>
+    <string name="goal_edit_delete_reason_misc">Gak apa, hanya ingin hapus saja.</string>
     <string name="goal_edit_delete_reason_cancel">Baiklah! Aku ingin terus menabung.</string>
     <string name="goal_edit_info_exit">Ok, aku sudah selesai. Bisa diakhiri?</string>
-    <string name="goal_edit_delete_difficult_help">Ok! Bantu aku membuat rencana menabung baru.</string>
-    <string name="goal_edit_delete_difficult_do_delete">Tidak, terima kasih. Hapus saja targetku.</string>
+    <string name="goal_edit_delete_difficult_help">Ok! Bantu buat rencana nabung baru.</string>
+    <string name="goal_edit_delete_difficult_do_delete">Oke, sudah beres. Bisa diakhiri?</string>
 
     <!-- BOT: tip_intro -->
     <string name="tip_intro_inline_link">TODO: Show Tip</string>
@@ -279,9 +279,9 @@
     <string name="WithdrawButton">Withdraw</string>
     <string name="addOwnGoal">Add own goal</string>
 
-    <string name="acceptGoal">Keren sekali! Aku terima tantangannya.</string>
+    <string name="acceptGoal">Keren! Aku terima tantangannya</string>
     <string name="changeDate">Aku ingin ganti tanggal.</string>
-    <string name="changeAmount">Aku ingin ganti jumlah yang aku tabung per minggu.</string>
+    <string name="changeAmount">Aku ingin ganti jumlahnya</string>
     <string name="startOver">Aku ingin mulai dari awal.</string>
     <string name="type_name_hint">Ketik nama…</string>
     <string name="type_number_hint">Type number…</string>
