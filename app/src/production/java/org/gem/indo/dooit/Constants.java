@@ -11,4 +11,6 @@ public class Constants {
 
     public static final String TERMS_URL = BASE_URL + "/terms-conditions/";
     public static final String PRIVACY_URL = BASE_URL + "/privacy/";
+
+    public static final String FILE_PROVIDER = BuildConfig.APPLICATION_ID + ".fileprovider";
 }
