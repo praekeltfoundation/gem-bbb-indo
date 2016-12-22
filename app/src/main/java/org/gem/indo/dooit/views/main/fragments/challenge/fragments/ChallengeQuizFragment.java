@@ -339,6 +339,7 @@ public class ChallengeQuizFragment extends Fragment implements OnOptionChangeLis
     public void onStart() {
         super.onStart();
         loadState();
+        updateProgressBar();
     }
 
     @Override
