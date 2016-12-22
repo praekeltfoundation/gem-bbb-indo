@@ -84,7 +84,7 @@
     <string name="reg_example_name_error_2">Name can\'t contain spaces</string>
     <string name="reg_example_name_error_3">Name can only contain letters and numbers</string>
     <string name="reg_example_name_error_4">Name can\'t be longer than 150 characters</string>
-    <string name="reg_options">You can use your email or mobile number or both to register</string>
+    <string name="reg_options">Please provide us with either your phone number or email address, or both</string>
     <string name="reg_example_email">@string/login_example_email</string>
     <string name="reg_example_email_error_1">Email can\'t be blank</string>
     <string name="reg_example_email_error_2">Email can\'t contain spaces</string>

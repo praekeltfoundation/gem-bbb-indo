@@ -164,7 +164,8 @@
             android:layout_below="@id/activity_registration_gender_radiogroup"
             android:layout_marginTop="@dimen/registration_field_margin_vertical"
             android:text="@string/reg_options"
-            android:textColor="@color/white" />
+            android:textStyle="bold"
+            android:textColor="@color/yellow" />
 
         <TextView
             android:id="@+id/activity_registration_number_text_view"
