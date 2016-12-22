@@ -3,6 +3,7 @@ package org.gem.indo.dooit.api.interfaces;
 import org.gem.indo.dooit.api.requests.ChangePassword;
 import org.gem.indo.dooit.api.requests.ChangeSecurityQuestion;
 import org.gem.indo.dooit.api.requests.ChangeUser;
+import org.gem.indo.dooit.api.requests.ChangeUserEmail;
 import org.gem.indo.dooit.api.requests.ResetPassword;
 import org.gem.indo.dooit.api.responses.EmptyResponse;
 import org.gem.indo.dooit.models.User;
@@ -32,6 +33,12 @@ public interface UserAPI {
     Observable<EmptyResponse> renameUser(
         @Path("id") long id,
         @Body ChangeUser name
+    );
+
+    @POST("/api/users/{id}/email")
+    Observable<EmptyResponse> changeUserEmail(
+            @Path("id") long id,
+            @Body ChangeUserEmail email
     );
 
     @POST("/api/users/{id}/password/")

@@ -45,6 +45,7 @@
 
     <string name="label_change_name">Change Name</string>
     <string name="label_change_password">Change Password</string>
+    <string name="label_change_email">Change Email</string>
     <string name="label_settings">Settings</string>
     <string name="label_build_info">@string/title_activity_build_info</string>
     <string name="label_share">Share</string>
@@ -359,6 +360,7 @@
     <string name="profile_section_account">Your account</string>
     <string name="profile_account_change_name">Change name</string>
     <string name="profile_account_change_password">Change password</string>
+    <string name="profile_account_change_email">Change email</string>
     <string name="profile_account_change_security_question">Change security question</string>
     <string name="profile_account_sign_out">Sign out</string>
     <string name="profile_section_notifications">Notifications</string>
@@ -384,6 +386,10 @@
     <string name="profile_change_password_progress">We\'re changing your password&#8230;</string>
     <string name="profile_change_password_success">Your password has been changed</string>
     <string name="profile_change_password_error_1">Passwords can\'t be the same</string>
+
+    <!-- Profile: Change Email Address -->
+    <string name="profile_change_email_progress">We\'re changing your email address&#8230;</string>
+    <string name="profile_change_email_success">Your email address has been changed to \'%s\'</string>
 
     <!-- Profile: Build Info -->
     <string name="profile_build_info_app_id">App ID</string>
@@ -419,6 +425,7 @@
     <string name="heading_registration">Registration</string>
     <string name="heading_change_name">@string/label_change_name</string>
     <string name="heading_change_password">@string/label_change_password</string>
+    <string name="heading_change_email">@string/label_change_email</string>
 
     <string name="target_prefix_saved">saved</string>
     <string name="heading_current_saving_streak">Current Saving Streak</string>

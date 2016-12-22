@@ -343,7 +343,6 @@ public class RegistrationActivity extends DooitActivity {
             emailHint.setTextColor(ResourcesCompat.getColor(getResources(), org.gem.indo.dooit.R.color.white, getTheme()));
         }
         return valid;
-
     }
 
     public boolean isAgeValid() {
