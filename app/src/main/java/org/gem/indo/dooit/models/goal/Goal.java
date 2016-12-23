@@ -33,7 +33,6 @@ public class Goal {
     private LocalDate startDate;
     @SerializedName("end_date")
     private LocalDate endDate;
-    private boolean timeIsUp;
     private List<GoalTransaction> transactions = new ArrayList<>();
     @SerializedName("weekly_totals")
     private LinkedHashMap<String, Float> weeklyTotals;
