@@ -31,7 +31,9 @@ import org.gem.indo.dooit.views.main.fragments.MainFragment;
 import org.gem.indo.dooit.views.main.fragments.target.adapters.TargetPagerAdapter;
 import org.joda.time.Weeks;
 
+import java.text.DateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -93,6 +95,9 @@ public class TargetFragment extends MainFragment {
     @BindView(R.id.fragment_target_withdraw_button)
     Button withdrawButton;
 
+    @BindView(R.id.fragment_target_history_date_missed)
+    TextView missedMessage;
+
     @BindString(R.string.target_savings_message)
     String savingsMessage;
 
@@ -104,6 +109,7 @@ public class TargetFragment extends MainFragment {
 
     private List<Goal> goals;
     private TargetPagerAdapter adapter;
+    private Date endOfGoalDate;
 
     public TargetFragment() {
         // Required empty public constructor
@@ -231,6 +237,12 @@ public class TargetFragment extends MainFragment {
         bars.requestLayout();
         goalMessage.setText(String.format(savingsMessage, CurrencyHelper.format(goal.getWeeklyTarget()), goal.getTarget(), weeks));
         endDate.setText(Utils.formatDate(goal.getEndDate().toDate()));
+        endOfGoalDate = goal.getEndDate().toDate();
+
+        if(goal.isMissed())
+            missedMessage.setVisibility(View.VISIBLE);
+        else
+            missedMessage.setVisibility(View.INVISIBLE);
 
         depositButton.setEnabled(goal.canDeposit());
         withdrawButton.setEnabled(goal.canWithdraw() && !goal.isReached());

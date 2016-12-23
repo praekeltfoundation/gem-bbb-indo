@@ -34,7 +34,8 @@
     <string name="label_loading">Loading</string>
     <string name="label_log_in">Log in</string>
     <string name="label_mobile_number">Mobile number</string>
-    <string name="label_name">Name</string>
+    <string name="label_name">Username</string>
+    <string name="label_email">Email address</string>
     <string name="label_next">Next</string>
     <string name="label_new_password">New Password</string>
     <string name="label_old_password">Old Password</string>
@@ -83,6 +84,12 @@
     <string name="reg_example_name_error_2">Name can\'t contain spaces</string>
     <string name="reg_example_name_error_3">Name can only contain letters and numbers</string>
     <string name="reg_example_name_error_4">Name can\'t be longer than 150 characters</string>
+    <string name="reg_options">Please provide us with either your phone number or email address, or both</string>
+    <string name="reg_example_email">@string/login_example_email</string>
+    <string name="reg_example_email_error_1">Email can\'t be blank</string>
+    <string name="reg_example_email_error_2">Email can\'t contain spaces</string>
+    <string name="reg_example_email_error_3">Not a valid email address</string>
+    <string name="reg_example_email_error_4">Email can\'t be longer than 150 characters</string>
     <string name="reg_age">How old are you?</string>
     <string name="reg_example_age">Example: 16</string>
     <string name="reg_example_age_error_1">Age can\'t be blank</string>
@@ -107,7 +114,8 @@
     <string name="invalid_credentials">Unable to log in with provided credentials.</string>
     <string name="login_name">@string/label_name</string>
     <string name="login_password">@string/label_password</string>
-    <string name="login_example_name">Example: AuliaDharmaningtyas</string>
+    <string name="login_example_name">Example: Bina124</string>
+    <string name="login_example_email">Example: aulia@gmail.com</string>
     <string name="login_example_name_error_1">Name can\'t be blank</string>
     <string name="login_example_password">Must have at least 6 characters</string>
     <string name="login_example_password_error_1">Password can\'t be blank</string>
@@ -341,6 +349,7 @@
     <string name="target_edit_savings_plan">Edit Savings Plan</string>
     <string name="target_savings_plan">Savings Plan</string>
     <string name="target_date">Target Date</string>
+    <string name="target_date_missed">Missed</string>
     <string name="target_no_goal">No goal added</string>
 
     <!-- Profile -->

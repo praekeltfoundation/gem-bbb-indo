@@ -11,6 +11,7 @@ import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -250,5 +251,9 @@ public class Goal {
     public void calculateFields() {
         weekCount = (int) (TimeUnit.MILLISECONDS.toDays((long) Math.ceil(endDate.toDate().getTime() - startDate.toDate().getTime()) / 7));
         weeklyTarget = target / weekCount;
+    }
+
+    public boolean isMissed() {
+        return new Date().after(endDate.toDate());
     }
 }
