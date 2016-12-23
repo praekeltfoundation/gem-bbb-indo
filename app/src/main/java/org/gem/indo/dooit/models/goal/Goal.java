@@ -11,6 +11,7 @@ import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -253,8 +254,7 @@ public class Goal {
         weeklyTarget = target / weekCount;
     }
 
-    public void setTimeIsUp(boolean missed){ timeIsUp = missed;}
-
-    public boolean getTimeIsUp(){return timeIsUp;}
-
+    public boolean isMissed() {
+        return new Date().after(endDate.toDate());
+    }
 }

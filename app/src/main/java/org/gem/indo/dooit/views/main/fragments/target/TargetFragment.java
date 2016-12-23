@@ -238,13 +238,11 @@ public class TargetFragment extends MainFragment {
         goalMessage.setText(String.format(savingsMessage, CurrencyHelper.format(goal.getWeeklyTarget()), goal.getTarget(), weeks));
         endDate.setText(Utils.formatDate(goal.getEndDate().toDate()));
         endOfGoalDate = goal.getEndDate().toDate();
-        Date today = new Date();
 
-        if(today.after(endOfGoalDate))
-            goal.setTimeIsUp(true);
+        if(goal.isMissed())
+            missedMessage.setVisibility(View.VISIBLE);
         else
-            goal.setTimeIsUp(false);
-
+            missedMessage.setVisibility(View.INVISIBLE);
 
         depositButton.setEnabled(goal.canDeposit());
         withdrawButton.setEnabled(goal.canWithdraw() && !goal.isReached());
@@ -276,7 +274,7 @@ public class TargetFragment extends MainFragment {
                                 viewPager.setCurrentItem(0);
                                 populateGoal(goals.get(0));
                                 rightTarget.setVisibility(View.VISIBLE);
-                                showGoals(goals.get(0).getTimeIsUp());
+                                showGoals();
                             } else {
                                 showNoGoals();
                             }
@@ -292,14 +290,10 @@ public class TargetFragment extends MainFragment {
         loadingProgress.setVisibility(View.VISIBLE);
     }
 
-    private void showGoals(boolean pastDue) {
+    private void showGoals() {
         nestedScrollView.setVisibility(View.VISIBLE);
         noGoalView.setVisibility(View.GONE);
         loadingProgress.setVisibility(View.GONE);
-        if(pastDue)
-            missedMessage.setVisibility(View.VISIBLE);
-        else
-            missedMessage.setVisibility(View.INVISIBLE);
     }
 
     private void showNoGoals() {
