@@ -18,6 +18,7 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.widget.Toast;
 
+import org.gem.indo.dooit.Constants;
 import org.gem.indo.dooit.R;
 import org.gem.indo.dooit.helpers.RequestCodes;
 import org.gem.indo.dooit.helpers.images.ImageChooserOptions;
@@ -41,7 +42,6 @@ public abstract class ImageActivity extends DooitActivity {
 
     private static final String TAG = ImageActivity.class.getName();
     // Same as `authorities` attribute in manifest
-    private static final String FILE_PROVIDER_AUTH = "org.gem.indo.dooit.fileprovider";
     private static final int maxImageWidth = 1024;
     private static final int maxImageHeight = 1024;
 
@@ -101,7 +101,7 @@ public abstract class ImageActivity extends DooitActivity {
                 }
 
                 if (imageFile != null) {
-                    imageUri = FileProvider.getUriForFile(ImageActivity.this, FILE_PROVIDER_AUTH, imageFile);
+                    imageUri = FileProvider.getUriForFile(ImageActivity.this, Constants.FILE_PROVIDER, imageFile);
                     grantCameraPermissions(cameraIntent);
 
                     cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
@@ -212,7 +212,7 @@ public abstract class ImageActivity extends DooitActivity {
 
             // Set uri and filepath to new downscaled image
             imagePath = downscaledFile.getAbsolutePath();
-            imageUri = FileProvider.getUriForFile(this, FILE_PROVIDER_AUTH, downscaledFile);
+            imageUri = FileProvider.getUriForFile(this, Constants.FILE_PROVIDER, downscaledFile);
         } catch (IOException e) {
             Toast.makeText(this, "Unable to create temporary downscaled image file", Toast.LENGTH_LONG).show();
             Log.e(TAG, "Unable to create temporary downscaled image file", e);

@@ -13,4 +13,5 @@ public class Constants {
     public static final String TERMS_URL = "http://gem-bbb.seed.p16n.org/terms.html";
     public static final String PRIVACY_URL = "http://gem-bbb.seed.p16n.org/privacy.html";
 
+    public static final String FILE_PROVIDER = BuildConfig.APPLICATION_ID + ".fileprovider";
 }

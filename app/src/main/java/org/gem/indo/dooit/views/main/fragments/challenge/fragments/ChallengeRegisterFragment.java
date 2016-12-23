@@ -4,15 +4,16 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.facebook.drawee.backends.pipeline.Fresco;
 import com.facebook.drawee.interfaces.DraweeController;
@@ -20,7 +21,6 @@ import com.facebook.drawee.view.SimpleDraweeView;
 import com.facebook.imagepipeline.request.ImageRequest;
 import com.facebook.imagepipeline.request.ImageRequestBuilder;
 
-import org.gem.indo.dooit.Constants;
 import org.gem.indo.dooit.DooitApplication;
 import org.gem.indo.dooit.R;
 import org.gem.indo.dooit.api.DooitAPIError;
@@ -47,7 +47,6 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
-import rx.Observable;
 import rx.Subscription;
 import rx.functions.Action0;
 import rx.functions.Action1;
@@ -241,41 +240,102 @@ public class ChallengeRegisterFragment extends Fragment implements HasChallengeF
     @OnClick(R.id.fragment_challenge_t_c_text_view)
     void termsClick(View view) {
         MinimalWebViewActivity.Builder.create(getContext())
-            //.setTitle(getString(org.gem.indo.dooit.R.string.title_activity_privacy_policy))
-            .setUrl(challenge.getTermsUrl())
-            .startActivity();
+                //.setTitle(getString(org.gem.indo.dooit.R.string.title_activity_privacy_policy))
+                .setUrl(challenge.getTermsUrl())
+                .startActivity();
     }
 
     @OnClick(R.id.fragment_challenge_register_button)
     void registerClick() {
         Participant participant = new Participant();
         participant.setChallenge(challenge.getId());
-
         final ProgressDialog dialog = new ProgressDialog(getContext());
         dialog.setIndeterminate(true);
         dialog.setMessage(getString(R.string.label_loading));
         dialog.show();
 
-        participantSubscription = challengeManager.registerParticipant(
-                participant,
-                new DooitErrorHandler() {
-                    @Override
-                    public void onError(DooitAPIError error) {
-                        Toast.makeText(getContext(), "Could not confirm registration", Toast.LENGTH_SHORT).show();
-                    }
+        if (persist.hasCurrentChallenge()) {
+            try {
+                challenge = persist.getCurrentChallenge();
+                if (challenge.getDeactivationDate().isAfterNow()) {
+                    persist.setActiveChallenge(challenge);
+                    startChallenge(participant);
+                    dialog.dismiss();
+                } else {
+                    //this means the persisted challenge has expired
+                    //make call to server
+                    persist.clearCurrentChallenge();
+                    Snackbar.make(getView(), R.string.challenge_persisted_challenge_thrown_out, Snackbar.LENGTH_LONG);
+                    participantSubscription = challengeManager.registerParticipant(
+                            participant,
+                            new DooitErrorHandler() {
+                                @Override
+                                public void onError(DooitAPIError error) {
+                                    Snackbar.make(getView(), R.string.challenge_could_not_confirm_registration, Snackbar.LENGTH_LONG).show();
+                                }
+                            }
+                    ).doAfterTerminate(new Action0() {
+                        @Override
+                        public void call() {
+                            dialog.dismiss();
+                        }
+                    }).subscribe(new Action1<Participant>() {
+                        @Override
+                        public void call(Participant participant1) {
+                            persist.setActiveChallenge(challenge);
+                            startChallenge(participant1);
+                        }
+                    });
                 }
-        ).doAfterTerminate(new Action0() {
-            @Override
-            public void call() {
-                dialog.dismiss();
+            } catch (Exception e) {
+                Log.d(TAG, "Could not load persisted challenge");
+                persist.clearCurrentChallenge();
+                Snackbar.make(getView(), R.string.challenge_persisted_challenge_thrown_out, Snackbar.LENGTH_LONG);
+                //make call to server
+                participantSubscription = challengeManager.registerParticipant(
+                        participant,
+                        new DooitErrorHandler() {
+                            @Override
+                            public void onError(DooitAPIError error) {
+                                Snackbar.make(getView(), R.string.challenge_could_not_confirm_registration, Snackbar.LENGTH_LONG).show();
+                            }
+                        }
+                ).doAfterTerminate(new Action0() {
+                    @Override
+                    public void call() {
+                        dialog.dismiss();
+                    }
+                }).subscribe(new Action1<Participant>() {
+                    @Override
+                    public void call(Participant participant1) {
+                        persist.setActiveChallenge(challenge);
+                        startChallenge(participant1);
+                    }
+                });
             }
-        }).subscribe(new Action1<Participant>() {
-            @Override
-            public void call(Participant participant1) {
-                persist.setActiveChallenge(challenge);
-                startChallenge(participant1);
-            }
-        });
+        } else {
+            //make call to server
+            participantSubscription = challengeManager.registerParticipant(
+                    participant,
+                    new DooitErrorHandler() {
+                        @Override
+                        public void onError(DooitAPIError error) {
+                            Snackbar.make(getView(), R.string.challenge_could_not_confirm_registration, Snackbar.LENGTH_LONG).show();
+                        }
+                    }
+            ).doAfterTerminate(new Action0() {
+                @Override
+                public void call() {
+                    dialog.dismiss();
+                }
+            }).subscribe(new Action1<Participant>() {
+                @Override
+                public void call(Participant participant1) {
+                    persist.setActiveChallenge(challenge);
+                    startChallenge(participant1);
+                }
+            });
+        }
     }
 
     void startChallenge(Participant participant) {
