@@ -83,7 +83,12 @@ public class ChangeEmailAddressActivity extends DooitActivity {
         }).subscribe(new Action1<EmptyResponse>() {
             @Override
             public void call(EmptyResponse emptyResponse) {
-                Snackbar.make(changeEmailButton, String.format(successText, email), Snackbar.LENGTH_LONG).show();
+                changeEmailButton.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        Snackbar.make(changeEmailButton, String.format(successText, email), Snackbar.LENGTH_LONG).show();
+                    }
+                });
                 user.setEmail(email);
                 ChangeEmailAddressActivity.this.persisted.setCurrentUser(user);
                 handler.postDelayed(new Runnable() {

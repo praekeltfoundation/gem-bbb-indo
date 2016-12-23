@@ -35,7 +35,7 @@ public interface UserAPI {
         @Body ChangeUser name
     );
 
-    @POST("/api/users/{id}/email")
+    @POST("/api/users/{id}/email/")
     Observable<EmptyResponse> changeUserEmail(
             @Path("id") long id,
             @Body ChangeUserEmail email
