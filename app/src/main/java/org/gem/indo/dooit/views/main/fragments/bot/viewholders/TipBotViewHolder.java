@@ -18,7 +18,6 @@ import org.gem.indo.dooit.models.bot.Node;
 import org.gem.indo.dooit.models.enums.BotMessageType;
 import org.gem.indo.dooit.views.main.MainActivity;
 import org.gem.indo.dooit.views.main.MainViewPagerPositions;
-import org.gem.indo.dooit.views.tip.TipArticleActivity;
 import org.gem.indo.dooit.views.web.MinimalWebViewActivity;
 
 import javax.inject.Inject;
@@ -45,6 +44,9 @@ public class TipBotViewHolder extends BaseBotViewHolder<Node> {
     @BindView(R.id.item_view_bot_tip_title)
     TextView title;
 
+    @BindView(R.id.item_view_bot_tip_separator)
+    View separator;
+
     @BindView(R.id.item_view_bot_tip_share)
     TextView share;
 
@@ -60,6 +62,7 @@ public class TipBotViewHolder extends BaseBotViewHolder<Node> {
         this.listener = listener;
 
         background.setBackground(ContextCompat.getDrawable(itemView.getContext(), R.drawable.bkg_carousel_card));
+        separator.setBackground(ContextCompat.getDrawable(itemView.getContext(), R.drawable.bkg_carousel_separator));
     }
 
     @Override
@@ -67,6 +70,7 @@ public class TipBotViewHolder extends BaseBotViewHolder<Node> {
         super.populate(model);
 
         // If no Tip is saved, the view will still display, but be empty
+        // TODO: The viewholder must be populated using the Tip from the Controller
         if (persisted.hasConvoTip()) {
             final Tip tip = persisted.loadConvoTip();
 
