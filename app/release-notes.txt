@@ -5,3 +5,6 @@ Fixed #199 - Profile picture pixelating
 Fixed #311 - Shorten names of Goal Prototypes (Changed names on CMS)
 Fixed #310 - Coach answers too long (Indonesian)
 Fixed #313 - FileProvider authority shared between variants
+Fixed #276 - Add Email to Registration
+Fixed #275 - Change Name to Username on Registration and Login
+Fixed #135 - Missed Deadline text on Goal view
