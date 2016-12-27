@@ -12,6 +12,7 @@ import com.greenfrvr.hashtagview.HashtagView;
 import org.gem.indo.dooit.DooitApplication;
 import org.gem.indo.dooit.R;
 import org.gem.indo.dooit.helpers.Persisted;
+import org.gem.indo.dooit.helpers.social.SocialSharer;
 import org.gem.indo.dooit.models.Tip;
 import org.gem.indo.dooit.models.bot.Answer;
 import org.gem.indo.dooit.models.bot.Node;
@@ -102,7 +103,10 @@ public class TipBotViewHolder extends BaseBotViewHolder<Node> {
             share.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    // TODO: Share tip on social media
+                    new SocialSharer(getContext()).share(
+                            getContext().getText(R.string.share_chooser_tip_title),
+                            Uri.parse(tip.getArticleUrl())
+                    );
                 }
             });
         }

@@ -5,6 +5,7 @@ import android.net.Uri;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.text.SpannableString;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
@@ -25,6 +26,7 @@ import org.gem.indo.dooit.api.DooitErrorHandler;
 import org.gem.indo.dooit.api.managers.TipManager;
 import org.gem.indo.dooit.api.responses.EmptyResponse;
 import org.gem.indo.dooit.helpers.Persisted;
+import org.gem.indo.dooit.helpers.social.SocialSharer;
 import org.gem.indo.dooit.views.web.MinimalWebViewActivity;
 
 import java.util.List;
@@ -96,10 +98,6 @@ public class TipViewHolder extends RecyclerView.ViewHolder {
                 .setUrl(articleUrl)
                 .setNoCaret()
                 .startActivity();
-
-        //TipArticleActivity.Builder.create(getContext())
-        //        .putArticleUrl(articleUrl)
-        //        .startActivity();
     }
 
     @OnClick(R.id.card_tip_fav)
@@ -108,7 +106,7 @@ public class TipViewHolder extends RecyclerView.ViewHolder {
             tipManager.unfavourite(id, new DooitErrorHandler() {
                 @Override
                 public void onError(DooitAPIError error) {
-                    Log.d("TIPS", "Tip favourite status could not be set " + error.getMessage());
+                    Log.d(TAG, "Tip favourite status could not be set " + error.getMessage());
                 }
             }).subscribe(new Action1<EmptyResponse>() {
                 @Override
@@ -149,7 +147,11 @@ public class TipViewHolder extends RecyclerView.ViewHolder {
 
     @OnClick(R.id.card_tip_share)
     public void shareTip(View view) {
-
+        if (!TextUtils.isEmpty(articleUrl))
+            new SocialSharer(getContext()).share(
+                    getContext().getText(R.string.share_chooser_tip_title),
+                    Uri.parse(articleUrl)
+            );
     }
 
     public void setImageUri(Uri uri) {

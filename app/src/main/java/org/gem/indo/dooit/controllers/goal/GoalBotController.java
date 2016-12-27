@@ -138,6 +138,7 @@ public abstract class GoalBotController extends DooitBotController {
 
         node.values.put(BotParamType.BADGE_NAME.getKey(), badge.getName());
         node.values.put(BotParamType.BADGE_IMAGE_URL.getKey(), badge.getImageUrl());
+        node.values.put(BotParamType.BADGE_SOCIAL_URL.getKey(), badge.getSocialUrl());
 
         return node;
     }
