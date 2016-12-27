@@ -1,5 +1,7 @@
 package org.gem.indo.dooit.models;
 
+import android.text.TextUtils;
+
 import com.google.gson.annotations.SerializedName;
 
 import org.joda.time.DateTime;
@@ -15,6 +17,8 @@ public class Badge {
     private String imageUrl;
     @SerializedName("earned_on")
     private DateTime earnedOn;
+    @SerializedName("social_url")
+    private String socialUrl;
 
     public String getName() {
         return name;
@@ -37,15 +41,15 @@ public class Badge {
         return imageUrl;
     }
 
-    public void setImageUrl(String imageUrl) {
-        this.imageUrl = imageUrl;
-    }
-
     public DateTime getEarnedOn() {
         return earnedOn;
     }
 
-    public void setEarnedOn(DateTime earnedOn) {
-        this.earnedOn = earnedOn;
+    public String getSocialUrl() {
+        return socialUrl;
+    }
+
+    public boolean hasSocialUrl() {
+        return !TextUtils.isEmpty(socialUrl);
     }
 }

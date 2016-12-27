@@ -1,6 +1,7 @@
 package org.gem.indo.dooit.views.profile.viewholders;
 
 import android.content.Context;
+import android.net.Uri;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
@@ -30,13 +31,28 @@ public class BadgeViewHolder extends RecyclerView.ViewHolder {
         ButterKnife.bind(this, itemView);
     }
 
-    public void populate(Badge badge) {
+    public void populate(final Badge badge) {
+        reset();
+
         // Text
         textView.setText(badge.getName());
 
         // Share
-        /*new SocialSharer(itemView.getContext())
-                .share(getContext().getText(R.string.share_chooser_badge_title), "");*/
+        if (badge.hasSocialUrl()) {
+            shareView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    new SocialSharer(itemView.getContext()).share(
+                            getContext().getText(R.string.share_chooser_badge_title),
+                            Uri.parse(badge.getSocialUrl())
+                    );
+                }
+            });
+        }
+    }
+
+    private void reset() {
+        shareView.setOnClickListener(null);
     }
 
     private Context getContext() {
