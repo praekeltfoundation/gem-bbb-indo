@@ -106,7 +106,7 @@ public class TipViewHolder extends RecyclerView.ViewHolder {
             tipManager.unfavourite(id, new DooitErrorHandler() {
                 @Override
                 public void onError(DooitAPIError error) {
-                    Log.d("TIPS", "Tip favourite status could not be set " + error.getMessage());
+                    Log.d(TAG, "Tip favourite status could not be set " + error.getMessage());
                 }
             }).subscribe(new Action1<EmptyResponse>() {
                 @Override
@@ -148,8 +148,10 @@ public class TipViewHolder extends RecyclerView.ViewHolder {
     @OnClick(R.id.card_tip_share)
     public void shareTip(View view) {
         if (!TextUtils.isEmpty(articleUrl))
-            new SocialSharer(getContext())
-                    .share(getContext().getText(R.string.share_chooser_badge_title), Uri.parse(articleUrl));
+            new SocialSharer(getContext()).share(
+                    getContext().getText(R.string.share_chooser_tip_title),
+                    Uri.parse(articleUrl)
+            );
     }
 
     public void setImageUri(Uri uri) {

@@ -103,8 +103,10 @@ public class TipBotViewHolder extends BaseBotViewHolder<Node> {
             share.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    new SocialSharer(getContext())
-                            .share(getContext().getText(R.string.share_chooser_badge_title), Uri.parse(tip.getArticleUrl()));
+                    new SocialSharer(getContext()).share(
+                            getContext().getText(R.string.share_chooser_tip_title),
+                            Uri.parse(tip.getArticleUrl())
+                    );
                 }
             });
         }
