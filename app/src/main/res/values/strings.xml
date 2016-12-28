@@ -101,6 +101,7 @@
     <string name="reg_example_number_error_1">Mobile Number can\'t be blank</string>
     <string name="reg_example_number_error_2">Mobile Number must be longer than 9 digits</string>
     <string name="reg_example_number_error_3">Mobile Number must be shorter than 15 digits</string>
+    <string name="reg_example_number_error_4">Mobile Number contains illegal characters</string>
     <string name="reg_example_password">Must have at least 6 characters</string>
     <string name="reg_example_password_error_1">Password can\'t be blank</string>
     <string name="reg_example_password_error_2">Password must be longer than 6 characters</string>
