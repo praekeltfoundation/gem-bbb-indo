@@ -239,30 +239,40 @@ public class RegistrationActivity extends DooitActivity {
             nameHint.setText(UserValidator.getResponseText());
             nameHint.setTextColor(ResourcesCompat.getColor(getResources(), android.R.color.holo_red_light, getTheme()));
             detailsValid = false;
+        } else {
+            nameHint.setTextColor(ResourcesCompat.getColor(getResources(), android.R.color.white, getTheme()));
         }
 
         if ((!UserValidator.isEmailValid(email.getText().toString())) && (!TextUtils.isEmpty(email.getText()))) {
             emailHint.setText(UserValidator.getResponseText());
             emailHint.setTextColor(ResourcesCompat.getColor(getResources(), android.R.color.holo_red_light, getTheme()));
             detailsValid = false;
+        } else {
+            emailHint.setTextColor(ResourcesCompat.getColor(getResources(), android.R.color.white, getTheme()));
         }
 
         if (!UserValidator.isPasswordValid(password.getText().toString())) {
             passwordHint.setText(UserValidator.getResponseText());
             passwordHint.setTextColor(ResourcesCompat.getColor(getResources(), android.R.color.holo_red_light, getTheme()));
             detailsValid = false;
+        } else {
+            passwordHint.setTextColor(ResourcesCompat.getColor(getResources(), android.R.color.white, getTheme()));
         }
 
         if (!ProfileValidator.isAgeValid()) {
             ageHint.setText(ProfileValidator.getResponseText());
             ageHint.setTextColor(ResourcesCompat.getColor(getResources(), android.R.color.holo_red_light, getTheme()));
             detailsValid = false;
+        } else {
+            ageHint.setTextColor(ResourcesCompat.getColor(getResources(), android.R.color.white, getTheme()));
         }
 
         if (!ProfileValidator.isMobileNumberValid(number.getText().toString())) {
             numberHint.setText(ProfileValidator.getResponseText());
             numberHint.setTextColor(ResourcesCompat.getColor(getResources(), android.R.color.holo_red_light, getTheme()));
             detailsValid = false;
+        } else {
+            numberHint.setTextColor(ResourcesCompat.getColor(getResources(), android.R.color.white, getTheme()));
         }
 
         if((TextUtils.isEmpty(email.getText())) && (TextUtils.isEmpty(number.getText()))){
