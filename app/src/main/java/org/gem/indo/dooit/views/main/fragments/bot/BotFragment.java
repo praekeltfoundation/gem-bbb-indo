@@ -412,11 +412,11 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
         conversationRecyclerView.scrollToPosition(getBotAdapter().getItemCount() - 1);
         persisted.saveConversationState(type, getBotAdapter().getDataSet());
 
-        // Reached a controller Node
+        // Reached a Node with a call attribute
         if (node.hasCall() && controller != null)
             controller.onCall(node.getCall(), createAnswerLog(getBotAdapter().getDataSet()), node);
 
-        // Reached an async controller Node
+        // Reached a Node with an async attribute
         if (node.hasAsyncCall() && controller != null) {
             // Show loader
             clearAnswerView();
