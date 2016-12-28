@@ -20,11 +20,12 @@ public class Node extends BaseBotModel {
 //        ]
 //    },
     private String autoNext;
-    private List<Answer> answers;
+    // Multiple choice answers
+    private List<Answer> answers = new ArrayList<>();
     private boolean iconHidden;
     private String answerName;
     private String autoAnswer;
-    // Allows a converstation to open a different screen
+    // Allows a conversation to open a different screen
     private String autoNextScreen;
 
     public Node() {
@@ -35,6 +36,10 @@ public class Node extends BaseBotModel {
         if (answers == null)
             return new ArrayList<>();
         return new ArrayList<>(answers);
+    }
+
+    public void addAnswer(Answer answer) {
+        answers.add(answer);
     }
 
     public String getAutoNext() {

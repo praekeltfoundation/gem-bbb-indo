@@ -3,6 +3,7 @@ package org.gem.indo.dooit.controllers.goal;
 import android.content.Context;
 
 import org.gem.indo.dooit.DooitApplication;
+import org.gem.indo.dooit.R;
 import org.gem.indo.dooit.api.managers.GoalManager;
 import org.gem.indo.dooit.controllers.DooitBotController;
 import org.gem.indo.dooit.helpers.Utils;
@@ -131,15 +132,23 @@ public abstract class GoalBotController extends DooitBotController {
     }
 
     protected Node nodeFromBadge(Badge badge) {
-        // TODO: Think of a unified way to construct Nodes programmatically. Should it be done in the view holders?
+        // TODO: Think of a unified way to construct Nodes programmatically. Should it be done in the view holders? Factories?
         Node node = new Node();
-        node.setName(botType.name().toLowerCase() + badge.getGraphName());
+        node.setName(botType.name().toLowerCase() + "_" + badge.getGraphName());
         node.setType(BotMessageType.BADGE);
         node.setText(null);
 
         node.values.put(BotParamType.BADGE_NAME.getKey(), badge.getName());
         node.values.put(BotParamType.BADGE_IMAGE_URL.getKey(), badge.getImageUrl());
         node.values.put(BotParamType.BADGE_SOCIAL_URL.getKey(), badge.getSocialUrl());
+
+        // Add a default answer to the Badge Node so the user can take in the Badge, and not be
+        // bombarded by multiple badges all at once
+        Answer answer = new Answer();
+        answer.setName(botType.name().toLowerCase() + "_" + badge.getGraphName() + "_continue");
+        answer.setText(context.getString(R.string.yay_me));
+
+        node.addAnswer(answer);
 
         return node;
     }
