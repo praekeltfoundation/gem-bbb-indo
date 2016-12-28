@@ -100,10 +100,8 @@
 
             <View
                 android:id="@+id/settings_account_change_name_separator"
-                android:layout_width="match_parent"
-                android:layout_height="0.5dp"
-                android:layout_below="@id/settings_account_change_name"
-                android:background="@color/divider" />
+                style="@style/Divider"
+                android:layout_below="@id/settings_account_change_name" />
 
             <TextView
                 android:id="@+id/settings_account_change_password"
@@ -121,10 +119,8 @@
 
             <View
                 android:id="@+id/settings_account_change_password_separator"
-                android:layout_width="match_parent"
-                android:layout_height="0.5dp"
-                android:layout_below="@id/settings_account_change_password"
-                android:background="@color/divider" />
+                style="@style/Divider"
+                android:layout_below="@id/settings_account_change_password" />
 
             <TextView
                 android:id="@+id/settings_account_change_email"
@@ -142,10 +138,9 @@
 
             <View
                 android:id="@+id/settings_account_change_email_separator"
-                android:layout_width="match_parent"
-                android:layout_height="0.5dp"
+                style="@style/Divider"
                 android:layout_below="@id/settings_account_change_email"
-                android:background="@color/divider" />
+                />
 
             <TextView
                 android:id="@+id/settings_account_change_security_question"
@@ -163,10 +158,8 @@
 
             <View
                 android:id="@+id/settings_account_change_security_question_separator"
-                android:layout_width="match_parent"
-                android:layout_height="0.5dp"
-                android:layout_below="@id/settings_account_change_security_question"
-                android:background="@color/divider" />
+                style="@style/Divider"
+                android:layout_below="@id/settings_account_change_security_question"/>
 
             <TextView
                 android:id="@+id/settings_account_sign_out"
@@ -213,10 +206,8 @@
 
             <View
                 android:id="@+id/settings_notifications_a_separator"
-                android:layout_width="match_parent"
-                android:layout_height="0.5dp"
+                style="@style/Divider"
                 android:layout_below="@id/settings_notifications_challenge_available"
-                android:background="@color/divider"
                 android:visibility="gone" />
 
             <android.support.v7.widget.SwitchCompat
@@ -237,10 +228,8 @@
 
             <View
                 android:id="@+id/settings_notifications_b_separator"
-                android:layout_width="match_parent"
-                android:layout_height="0.5dp"
+                style="@style/Divider"
                 android:layout_below="@id/settings_notifications_b"
-                android:background="@color/divider"
                 android:visibility="gone" />
 
             <android.support.v7.widget.SwitchCompat
@@ -260,10 +249,8 @@
 
             <View
                 android:id="@+id/settings_notifications_c_separator"
-                android:layout_width="match_parent"
-                android:layout_height="0.5dp"
+                style="@style/Divider"
                 android:layout_below="@id/settings_notifications_c"
-                android:background="@color/divider"
                 android:visibility="gone"/>
 
             <android.support.v7.widget.SwitchCompat
@@ -297,10 +284,8 @@
 
             <View
                 android:id="@+id/settings_about_help_separator"
-                android:layout_width="match_parent"
-                android:layout_height="0.5dp"
-                android:layout_below="@+id/settings_about_help"
-                android:background="@color/divider" />
+                style="@style/Divider"
+                android:layout_below="@+id/settings_about_help" />
 
             <TextView
                 android:id="@+id/settings_about_report"
@@ -319,10 +304,8 @@
 
             <View
                 android:id="@+id/settings_about_report_separator"
-                android:layout_width="match_parent"
-                android:layout_height="0.5dp"
-                android:layout_below="@+id/settings_about_report"
-                android:background="@color/divider" />
+                style="@style/Divider"
+                android:layout_below="@+id/settings_about_report"/>
 
             <TextView
                 android:id="@+id/settings_about_feedback"
@@ -341,10 +324,8 @@
 
             <View
                 android:id="@+id/settings_about_feedback_separator"
-                android:layout_width="match_parent"
-                android:layout_height="0.5dp"
-                android:layout_below="@+id/settings_about_feedback"
-                android:background="@color/divider" />
+                style="@style/Divider"
+                android:layout_below="@+id/settings_about_feedback"/>
 
             <TextView
                 android:id="@+id/settings_about_terms"
@@ -363,10 +344,8 @@
 
             <View
                 android:id="@+id/settings_about_terms_separator"
-                android:layout_width="match_parent"
-                android:layout_height="0.5dp"
-                android:layout_below="@+id/settings_about_terms"
-                android:background="@color/divider" />
+                style="@style/Divider"
+                android:layout_below="@+id/settings_about_terms" />
 
             <TextView
                 android:id="@+id/settings_about_privacy"
@@ -401,10 +380,8 @@
 
             <View
                 android:id="@+id/settings_about_privacy_separator"
-                android:layout_width="match_parent"
-                android:layout_height="0.5dp"
-                android:layout_below="@+id/settings_about_privacy"
-                android:background="@color/divider" />
+                style="@style/Divider"
+                android:layout_below="@+id/settings_about_privacy" />
 
             <TextView
                 android:id="@+id/settings_about_build_info"
