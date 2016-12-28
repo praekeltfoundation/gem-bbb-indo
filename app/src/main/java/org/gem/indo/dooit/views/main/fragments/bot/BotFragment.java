@@ -31,6 +31,7 @@ import org.gem.indo.dooit.controllers.misc.ReturningUserController;
 import org.gem.indo.dooit.helpers.Persisted;
 import org.gem.indo.dooit.helpers.SquiggleBackgroundHelper;
 import org.gem.indo.dooit.helpers.bot.BotFeed;
+import org.gem.indo.dooit.helpers.bot.BotRunner;
 import org.gem.indo.dooit.helpers.bot.param.ParamArg;
 import org.gem.indo.dooit.helpers.bot.param.ParamMatch;
 import org.gem.indo.dooit.helpers.bot.param.ParamParser;
@@ -62,7 +63,7 @@ import butterknife.ButterKnife;
  * Use the {@link BotFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class BotFragment extends MainFragment implements HashtagView.TagsClickListener {
+public class BotFragment extends MainFragment implements HashtagView.TagsClickListener, BotRunner {
 
     @BindView(R.id.fragment_bot)
     View background;
@@ -303,29 +304,28 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
     private BotController createBotController(BotType botType) {
         switch (botType) {
             case RETURNING_USER:
-                return new ReturningUserController(getActivity(), getBotAdapter(),
+                return new ReturningUserController(getActivity(), this,
                         persisted.loadConvoGoals(botType),
                         persisted.loadConvoChallenge(botType),
                         persisted.loadConvoTip());
             case DEFAULT:
             case GOAL_ADD:
-                return new GoalAddController(getActivity(), getBotAdapter(),
+                return new GoalAddController(getActivity(), this,
                         persisted.loadConvoGoal(botType),
                         persisted.loadConvoChallenge(botType),
                         persisted.loadConvoTip());
             case GOAL_DEPOSIT:
-                return new GoalDepositController(getActivity(),
-                        getBotAdapter(),
+                return new GoalDepositController(getActivity(), this,
                         persisted.loadConvoGoal(botType),
                         persisted.loadConvoChallenge(botType),
                         persisted.loadConvoTip());
             case GOAL_WITHDRAW:
-                return new GoalWithdrawController(getActivity(),
+                return new GoalWithdrawController(getActivity(), this,
                         persisted.loadConvoGoal(botType),
                         persisted.loadConvoChallenge(botType),
                         persisted.loadConvoTip());
             case GOAL_EDIT:
-                return new GoalEditController(getActivity(),
+                return new GoalEditController(getActivity(), this,
                         persisted.loadConvoGoal(botType),
                         persisted.loadConvoChallenge(botType),
                         persisted.loadConvoTip());
@@ -394,39 +394,46 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
             currentModel = feed.getItem(name);
 
         final Node node = (Node) currentModel;
+        if (node != null)
+            addNode(node, iconHidden);
+    }
 
-        if (node != null) {
-            node.setIconHidden(iconHidden);
+    @Override
+    public void addNode(Node node) {
+        addNode(node, false);
+    }
 
-            if (shouldAdd(currentModel))
-                getBotAdapter().addItem(currentModel);
+    public void addNode(final Node node, boolean iconHidden) {
+        node.setIconHidden(iconHidden);
 
-            conversationRecyclerView.scrollToPosition(getBotAdapter().getItemCount() - 1);
-            persisted.saveConversationState(type, getBotAdapter().getDataSet());
+        if (shouldAdd(node))
+            getBotAdapter().addItem(node);
 
-            // Reached a controller Node
-            if (node.hasCall() && controller != null)
-                controller.onCall(node.getCall(), createAnswerLog(getBotAdapter().getDataSet()), node);
+        conversationRecyclerView.scrollToPosition(getBotAdapter().getItemCount() - 1);
+        persisted.saveConversationState(type, getBotAdapter().getDataSet());
 
-            // Reached an async controller Node
-            if (node.hasAsyncCall() && controller != null) {
-                // Show loader
-                clearAnswerView();
-                controller.onAsyncCall(
-                        node.getAsyncCall(),
-                        createAnswerLog(getBotAdapter().getDataSet()),
-                        node,
-                        new BotController.OnAsyncListener() {
-                            @Override
-                            public void onDone() {
-                                checkEndOrAddAnswers(node);
-                            }
+        // Reached a controller Node
+        if (node.hasCall() && controller != null)
+            controller.onCall(node.getCall(), createAnswerLog(getBotAdapter().getDataSet()), node);
+
+        // Reached an async controller Node
+        if (node.hasAsyncCall() && controller != null) {
+            // Show loader
+            clearAnswerView();
+            controller.onAsyncCall(
+                    node.getAsyncCall(),
+                    createAnswerLog(getBotAdapter().getDataSet()),
+                    node,
+                    new BotController.OnAsyncListener() {
+                        @Override
+                        public void onDone() {
+                            checkEndOrAddAnswers(node);
                         }
-                );
-            } else {
-                // Continue synchronously
-                checkEndOrAddAnswers(node);
-            }
+                    }
+            );
+        } else {
+            // Continue synchronously
+            checkEndOrAddAnswers(node);
         }
     }
 

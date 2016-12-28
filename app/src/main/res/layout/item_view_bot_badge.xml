@@ -14,8 +14,9 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/bot_badge_card_image_height"
         android:background="@color/purple"
-        android:scaleType="centerCrop"
-        app:placeholderImage="@drawable/empty_image"/>
+        app:actualImageScaleType="centerInside"
+        app:placeholderImage="@drawable/empty_image"
+        app:placeholderImageScaleType="centerInside"/>
 
     <TextView
         android:id="@+id/item_view_bot_badge_title"

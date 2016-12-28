@@ -2,6 +2,8 @@ package org.gem.indo.dooit.controllers.goal;
 
 import android.app.Activity;
 import android.net.Uri;
+import android.os.Handler;
+import android.os.Looper;
 
 import org.gem.indo.dooit.DooitApplication;
 import org.gem.indo.dooit.api.DooitAPIError;
@@ -9,6 +11,7 @@ import org.gem.indo.dooit.api.DooitErrorHandler;
 import org.gem.indo.dooit.api.managers.FileUploadManager;
 import org.gem.indo.dooit.api.managers.GoalManager;
 import org.gem.indo.dooit.api.responses.EmptyResponse;
+import org.gem.indo.dooit.helpers.bot.BotRunner;
 import org.gem.indo.dooit.models.Badge;
 import org.gem.indo.dooit.models.challenge.BaseChallenge;
 import org.gem.indo.dooit.models.enums.BotCallType;
@@ -51,12 +54,9 @@ public class GoalAddController extends GoalBotController {
     @Inject
     Persisted persisted;
 
-    private BotAdapter botAdapter;
-
-    public GoalAddController(Activity activity, BotAdapter botAdapter, Goal goal, BaseChallenge challenge, Tip tip) {
-        super(activity, BotType.GOAL_ADD, goal, challenge, tip);
+    public GoalAddController(Activity activity, BotRunner botRunner, Goal goal, BaseChallenge challenge, Tip tip) {
+        super(activity, botRunner, BotType.GOAL_ADD, goal, challenge, tip);
         ((DooitApplication) activity.getApplication()).component.inject(this);
-        this.botAdapter = botAdapter;
         if (this.goal == null)
             this.goal = new Goal();
     }
@@ -150,18 +150,28 @@ public class GoalAddController extends GoalBotController {
                 @Override
                 public void call(final Goal newGoal) {
                     if (newGoal.hasNewBadges())
-                        for (Badge badge : newGoal.getNewBadges())
-                            botAdapter.addItem(nodeFromBadge(badge));
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                for (Badge badge : newGoal.getNewBadges())
+                                    botRunner.addNode(nodeFromBadge(badge));
+                            }
+                        });
                     uploadImage(newGoal, mimetype, new File(path));
                 }
             });
         } else {
             observe.subscribe(new Action1<Goal>() {
                 @Override
-                public void call(Goal newGoal) {
+                public void call(final Goal newGoal) {
                     if (newGoal.hasNewBadges())
-                        for (Badge badge : newGoal.getNewBadges())
-                            botAdapter.addItem(nodeFromBadge(badge));
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                for (Badge badge : newGoal.getNewBadges())
+                                    botRunner.addNode(nodeFromBadge(badge));
+                            }
+                        });
                 }
             });
         }

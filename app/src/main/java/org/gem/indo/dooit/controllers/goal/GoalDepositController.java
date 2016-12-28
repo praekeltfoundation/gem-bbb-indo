@@ -11,6 +11,7 @@ import org.gem.indo.dooit.api.managers.GoalManager;
 import org.gem.indo.dooit.api.responses.EmptyResponse;
 import org.gem.indo.dooit.api.responses.TransactionResponse;
 import org.gem.indo.dooit.controllers.goal.GoalBotController;
+import org.gem.indo.dooit.helpers.bot.BotRunner;
 import org.gem.indo.dooit.models.Badge;
 import org.gem.indo.dooit.models.challenge.BaseChallenge;
 import org.gem.indo.dooit.models.enums.BotCallType;
@@ -41,12 +42,9 @@ public class GoalDepositController extends GoalBotController {
     @Inject
     GoalManager goalManager;
 
-    private BotAdapter adapter;
-
-    public GoalDepositController(Activity activity, BotAdapter botAdapter, Goal goal, BaseChallenge challenge, Tip tip) {
-        super(activity, BotType.GOAL_DEPOSIT, goal, challenge, tip);
+    public GoalDepositController(Activity activity, BotRunner botRunner, Goal goal, BaseChallenge challenge, Tip tip) {
+        super(activity, botRunner, BotType.GOAL_DEPOSIT, goal, challenge, tip);
         ((DooitApplication) activity.getApplication()).component.inject(this);
-        this.adapter = botAdapter;
     }
 
     @Override
@@ -95,10 +93,15 @@ public class GoalDepositController extends GoalBotController {
             }
         }).subscribe(new Action1<TransactionResponse>() {
             @Override
-            public void call(TransactionResponse response) {
+            public void call(final TransactionResponse response) {
                 if (response.hasNewBadges())
-                    for (Badge badge : response.getNewBadges())
-                        adapter.addItem(nodeFromBadge(badge));
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            for (Badge badge : response.getNewBadges())
+                                botRunner.addNode(nodeFromBadge(badge));
+                        }
+                    });
 
                 if (context instanceof MainActivity)
                     ((MainActivity) context).refreshGoals();

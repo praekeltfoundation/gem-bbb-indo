@@ -1,12 +1,15 @@
 package org.gem.indo.dooit.controllers.goal;
 
 import android.content.Context;
+import android.os.Handler;
+import android.os.Looper;
 
 import org.gem.indo.dooit.DooitApplication;
 import org.gem.indo.dooit.R;
 import org.gem.indo.dooit.api.managers.GoalManager;
 import org.gem.indo.dooit.controllers.DooitBotController;
 import org.gem.indo.dooit.helpers.Utils;
+import org.gem.indo.dooit.helpers.bot.BotRunner;
 import org.gem.indo.dooit.models.Badge;
 import org.gem.indo.dooit.models.Tip;
 import org.gem.indo.dooit.models.bot.Answer;
@@ -31,14 +34,18 @@ public abstract class GoalBotController extends DooitBotController {
     @Inject
     protected GoalManager goalManager;
 
+    protected BotRunner botRunner;
     protected Goal goal;
     protected BaseChallenge challenge;
     // The Tip to be shown at the end of the conversation
     protected Tip tip;
 
-    public GoalBotController(Context context, BotType botType, Goal goal, BaseChallenge challenge, Tip tip) {
+    private Handler handler = new Handler(Looper.getMainLooper());
+
+    public GoalBotController(Context context, BotRunner botRunner, BotType botType, Goal goal, BaseChallenge challenge, Tip tip) {
         super(context, botType);
         ((DooitApplication) context.getApplicationContext()).component.inject(this);
+        this.botRunner = botRunner;
         this.goal = goal;
         this.challenge = challenge;
         this.tip = tip;
@@ -146,10 +153,14 @@ public abstract class GoalBotController extends DooitBotController {
         // bombarded by multiple badges all at once
         Answer answer = new Answer();
         answer.setName(botType.name().toLowerCase() + "_" + badge.getGraphName() + "_continue");
-        answer.setText(context.getString(R.string.yay_me));
+        answer.setText("$(yay_me)");
 
         node.addAnswer(answer);
 
         return node;
+    }
+
+    protected void runOnUiThread(Runnable runnable) {
+        handler.post(runnable);
     }
 }
