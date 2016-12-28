@@ -1,3 +1,4 @@
 
 - Notification icon updated to display on API 17 - 25
 - Snackbar on Tips, gets dismissed when switching tabs
+- Navigation bar updated to include text at all times
