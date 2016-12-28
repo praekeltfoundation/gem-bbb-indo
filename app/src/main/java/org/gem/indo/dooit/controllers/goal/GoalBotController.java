@@ -131,6 +131,7 @@ public abstract class GoalBotController extends DooitBotController {
     }
 
     protected Node nodeFromBadge(Badge badge) {
+        // TODO: Think of a unified way to construct Nodes programmatically. Should it be done in the view holders?
         Node node = new Node();
         node.setName(botType.name().toLowerCase() + badge.getGraphName());
         node.setType(BotMessageType.BADGE);
