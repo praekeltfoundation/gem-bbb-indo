@@ -4,3 +4,4 @@
 - Share Tip from Tip Archive screen
 - Share Tip from Coach
 - Format shares for Facebook
+- Fixed Feedback Form Spinner selected item not displaying
