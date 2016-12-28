@@ -39,6 +39,7 @@ import org.gem.indo.dooit.views.helpers.activity.DooitActivityBuilder;
 import org.gem.indo.dooit.views.web.MinimalWebViewActivity;
 
 import java.net.SocketTimeoutException;
+import java.net.UnknownHostException;
 import java.util.regex.Pattern;
 
 import javax.inject.Inject;
@@ -204,6 +205,8 @@ public class RegistrationActivity extends DooitActivity {
                             }
                         } else if (error.getCause() instanceof SocketTimeoutException) {
                             Snackbar.make(registerButton, R.string.connection_timed_out, Snackbar.LENGTH_LONG).show();
+                        }else if(error.getCause() instanceof UnknownHostException){
+                            Snackbar.make(registerButton, R.string.connection_error, Snackbar.LENGTH_LONG).show();
                         }
                         dismissDialog();
                     }

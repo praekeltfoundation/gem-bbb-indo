@@ -3,6 +3,7 @@
     <!-- General -->
     <string name="app_name">Dooit</string>
     <string name="connection_timed_out">The connection timed out, please try again later</string>
+    <string name="connection_error">A connection error occured, please try again later</string>
     <string name="general_error">An error occurred</string>
 
     <!-- Activity Titles  -->
