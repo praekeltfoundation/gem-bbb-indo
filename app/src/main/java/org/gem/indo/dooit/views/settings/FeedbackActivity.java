@@ -112,8 +112,9 @@ public class FeedbackActivity extends DooitActivity {
         // Populate feedback types
         FeedbackTypeAdapter feedbackTypeArrayAdapter = new FeedbackTypeAdapter(
                 this,
-                android.R.layout.simple_spinner_dropdown_item,
-                Arrays.asList(FeedbackType.values())
+                R.layout.spinner_item,
+                R.layout.spinner_dropdown_item,
+                FeedbackType.values()
         );
         subject.setAdapter(feedbackTypeArrayAdapter);
         Intent intent = getIntent();

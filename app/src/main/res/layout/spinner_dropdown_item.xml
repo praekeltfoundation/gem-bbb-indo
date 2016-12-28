@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/item_text"
     tools:text="TextView"
-    android:padding="@dimen/spinner_item_padding"
+    android:padding="@dimen/spinner_dropdown_item_padding"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:textAppearance="@style/AppTheme.TextView.Regular" />
