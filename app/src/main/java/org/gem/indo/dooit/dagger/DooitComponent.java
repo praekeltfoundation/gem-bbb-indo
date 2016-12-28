@@ -140,8 +140,6 @@ public interface DooitComponent {
 
     void inject(TextViewHolder o);
 
-    void inject(TipArticleActivity o);
-
     void inject(TipBotViewHolder o);
 
     void inject(TipProvider o);

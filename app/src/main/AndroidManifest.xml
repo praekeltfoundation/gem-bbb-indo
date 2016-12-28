@@ -83,9 +83,6 @@
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.FullscreenTheme" />
         <activity
-            android:name=".views.tip.TipArticleActivity"
-            android:screenOrientation="portrait" />
-        <activity
             android:name=".views.settings.BuildInfoActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />

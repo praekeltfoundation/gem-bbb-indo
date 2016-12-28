@@ -96,10 +96,6 @@ public class TipViewHolder extends RecyclerView.ViewHolder {
                 .setUrl(articleUrl)
                 .setNoCaret()
                 .startActivity();
-
-        //TipArticleActivity.Builder.create(getContext())
-        //        .putArticleUrl(articleUrl)
-        //        .startActivity();
     }
 
     @OnClick(R.id.card_tip_fav)
