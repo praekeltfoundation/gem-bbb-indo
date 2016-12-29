@@ -11,7 +11,7 @@ import java.util.regex.Pattern;
 public class ProfileValidator extends Validator {
     private static final int MIN_MOBILE_LENGTH = 9;
     private static final int MAX_MOBILE_LENGTH = 16;
-    private final String MOBILE_PATTERN = "^\\+?1?\\d{9,15}$";
+    private static final String MOBILE_PATTERN = "^\\+?1?\\d{9,15}$";
 
     public ProfileValidator(){}
 
