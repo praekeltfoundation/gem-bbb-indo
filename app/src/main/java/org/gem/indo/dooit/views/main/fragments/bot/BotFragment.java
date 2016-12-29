@@ -42,7 +42,6 @@ import org.gem.indo.dooit.models.enums.BotMessageType;
 import org.gem.indo.dooit.models.enums.BotObjectType;
 import org.gem.indo.dooit.models.enums.BotParamType;
 import org.gem.indo.dooit.models.enums.BotType;
-import org.gem.indo.dooit.models.goal.Goal;
 import org.gem.indo.dooit.views.main.MainActivity;
 import org.gem.indo.dooit.views.main.MainViewPagerPositions;
 import org.gem.indo.dooit.views.main.fragments.MainFragment;
@@ -405,6 +404,14 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
 
     public void addNode(final Node node, boolean iconHidden) {
         node.setIconHidden(iconHidden);
+
+        // Nodes can be skipped completely. They will not be added to the adapter, and thus not
+        // persisted. The `shouldSkip` method on the controller will not be called again when the
+        // conversation is loaded.
+        if (hasController() && controller.shouldSkip(node) && node.hasNext()) {
+            getAndAddNode(node.getNext());
+            return;
+        }
 
         if (shouldAdd(node))
             getBotAdapter().addItem(node);

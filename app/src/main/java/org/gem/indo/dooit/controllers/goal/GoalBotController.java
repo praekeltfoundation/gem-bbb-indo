@@ -5,17 +5,16 @@ import android.os.Handler;
 import android.os.Looper;
 
 import org.gem.indo.dooit.DooitApplication;
-import org.gem.indo.dooit.R;
 import org.gem.indo.dooit.api.managers.GoalManager;
 import org.gem.indo.dooit.controllers.DooitBotController;
 import org.gem.indo.dooit.helpers.Utils;
 import org.gem.indo.dooit.helpers.bot.BotRunner;
 import org.gem.indo.dooit.models.Badge;
 import org.gem.indo.dooit.models.Tip;
-import org.gem.indo.dooit.models.bot.Answer;
 import org.gem.indo.dooit.models.bot.BaseBotModel;
 import org.gem.indo.dooit.models.bot.Node;
 import org.gem.indo.dooit.models.challenge.BaseChallenge;
+import org.gem.indo.dooit.models.enums.BotCallType;
 import org.gem.indo.dooit.models.enums.BotMessageType;
 import org.gem.indo.dooit.models.enums.BotObjectType;
 import org.gem.indo.dooit.models.enums.BotParamType;
@@ -117,6 +116,14 @@ public abstract class GoalBotController extends DooitBotController {
                 goal.setTarget((Double) value);
                 break;
         }
+    }
+
+    @Override
+    public boolean shouldSkip(BaseBotModel model) {
+        if (model.getCall() == BotCallType.ADD_BADGE && !goal.hasNewBadges())
+            return true;
+        else
+            return super.shouldSkip(model);
     }
 
     @Override

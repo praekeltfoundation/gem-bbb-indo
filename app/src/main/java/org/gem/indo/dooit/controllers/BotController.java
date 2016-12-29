@@ -6,8 +6,8 @@ import android.os.Looper;
 
 import org.gem.indo.dooit.models.bot.Answer;
 import org.gem.indo.dooit.models.bot.BaseBotModel;
+import org.gem.indo.dooit.models.bot.Node;
 import org.gem.indo.dooit.models.enums.BotCallType;
-import org.gem.indo.dooit.models.enums.BotMessageType;
 import org.gem.indo.dooit.models.enums.BotObjectType;
 import org.gem.indo.dooit.models.enums.BotParamType;
 import org.gem.indo.dooit.models.enums.BotType;
@@ -131,6 +131,17 @@ public abstract class BotController {
 
     public boolean filter(Answer answer) {
         return true;
+    }
+
+    /**
+     * Allows the controller to decide whether a Node should be added. When `true` is returned, the
+     * `next` Node will be added instead.
+     *
+     * @param model
+     * @return Instructs the bot runner whether the Node should be skipped.
+     */
+    public boolean shouldSkip(BaseBotModel model) {
+        return false;
     }
 
     public interface OnAsyncListener {
