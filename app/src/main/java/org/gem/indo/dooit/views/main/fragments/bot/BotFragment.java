@@ -492,7 +492,7 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
                     }
                 }
             }
-        } else if (!TextUtils.isEmpty(node.getAutoNext())) {
+        } else if (node.hasAutoNext()) {
             if (BotMessageType.getValueOf(node.getType()) == BotMessageType.STARTCONVO) {
                 // Auto load next conversation
                 finishConversation();

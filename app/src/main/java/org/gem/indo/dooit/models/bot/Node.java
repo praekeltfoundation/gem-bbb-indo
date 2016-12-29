@@ -50,6 +50,10 @@ public class Node extends BaseBotModel {
         this.autoNext = autoNext;
     }
 
+    public boolean hasAutoNext() {
+        return !TextUtils.isEmpty(autoNext);
+    }
+
     public boolean isIconHidden() {
         return iconHidden;
     }
