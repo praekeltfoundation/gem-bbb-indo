@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import org.gem.indo.dooit.DooitApplication;
@@ -123,6 +124,10 @@ public class FeedbackActivity extends DooitActivity {
             if (type != null) {
                 int i = feedbackTypeArrayAdapter.getPosition(type);
                 subject.setSelection(i >= 0 && i < feedbackTypeArrayAdapter.getCount() ? i : 0);
+                if(type.getValue() == FeedbackType.REPORT.getValue()){
+                    TextView mTextView = (TextView) findViewById(R.id.activity_feedback_heading);
+                    mTextView.setText(getString(R.string.profile_help_report_problem));
+                }
             }
         }
 
