@@ -11,9 +11,11 @@ import java.util.Map;
 
 public enum NotificationType {
     CHALLENGE_AVAILABLE(100, R.string.notification_title_challenge_available),
-    // TODO: Two days after a Challenge has been published, if the user has not participated, they should be reminded
-    CHALLENGE_REMINDER(101, R.string.notification_title_challenge_reminder),
-    SAVING_REMINDER(200, R.string.notification_title_saving_reminder);
+    CHALLENGE_REMINDER(101, R.string.notification_title_challenge_reminder), // TODO: Two days after a Challenge has been published, if the user has not participated, they should be reminded
+    GOAL_DEADLINE_MISSED(200, R.string.notification_title_goal_deadline_missed), // TODO: Notify user that they missed one of their Goals
+    SAVING_REMINDER(300, R.string.notification_title_saving_reminder),
+    SURVEY_AVAILABLE(400, R.string.notification_title_survey_available), // TODO: Notify user of feedback
+    AD_HOC(500, R.string.notification_title_ad_hoc); // TODO: Ad Hoc Notifications from CMS
 
     // Argument key used in Intent extra for directing the MainFragment's viewpager
     public static final String NOTIFICATION_TYPE = "notification_type";
