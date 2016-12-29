@@ -149,14 +149,6 @@ public abstract class GoalBotController extends DooitBotController {
         node.values.put(BotParamType.BADGE_IMAGE_URL.getKey(), badge.getImageUrl());
         node.values.put(BotParamType.BADGE_SOCIAL_URL.getKey(), badge.getSocialUrl());
 
-        // Add a default answer to the Badge Node so the user can take in the Badge, and not be
-        // bombarded by multiple badges all at once
-        Answer answer = new Answer();
-        answer.setName(botType.name().toLowerCase() + "_" + badge.getGraphName() + "_continue");
-        answer.setText("$(yay_me)");
-
-        node.addAnswer(answer);
-
         return node;
     }
 
