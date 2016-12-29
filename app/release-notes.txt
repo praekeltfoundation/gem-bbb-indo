@@ -1,6 +1,2 @@
 
-- Share Badge from Profile screen
-- Share Badge from Coach
-- Share Tip from Tip Archive screen
-- Share Tip from Coach
-- Format shares for Facebook
+- Increased margin between favourite and share on tip cards
