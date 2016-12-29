@@ -8,6 +8,7 @@ import android.text.SpannableString;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -68,6 +69,9 @@ public class TipViewHolder extends RecyclerView.ViewHolder {
     @BindView(R.id.card_tip_share)
     ImageView shareView;
 
+    @BindView(R.id.card_tip_button_overlay)
+    Button btnCover;
+
     @Inject
     TipManager tipManager;
 
@@ -90,7 +94,16 @@ public class TipViewHolder extends RecyclerView.ViewHolder {
     }
 
     @OnClick(R.id.card_tip_title)
-    public void startArticle(View view) {
+    public void clickOnTitle(View view) {
+        startArticle(view);
+    }
+
+    @OnClick(R.id.card_tip_button_overlay)
+    public void clickOnButton(View view){
+        startArticle(view);
+    }
+
+    public void startArticle(View view){
         Toast.makeText(view.getContext(),
                 String.format(openingArticleText, titleView.getText().toString()),
                 Toast.LENGTH_SHORT).show();
@@ -99,6 +112,8 @@ public class TipViewHolder extends RecyclerView.ViewHolder {
                 .setNoCaret()
                 .startActivity();
     }
+
+
 
     @OnClick(R.id.card_tip_fav)
     public void favouriteTip(final View view) {
