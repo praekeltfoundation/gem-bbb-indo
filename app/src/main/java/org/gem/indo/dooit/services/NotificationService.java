@@ -4,6 +4,7 @@ import android.app.IntentService;
 import android.content.Intent;
 
 import org.gem.indo.dooit.DooitApplication;
+import org.gem.indo.dooit.R;
 import org.gem.indo.dooit.api.DooitAPIError;
 import org.gem.indo.dooit.api.DooitErrorHandler;
 import org.gem.indo.dooit.api.managers.AchievementManager;
@@ -104,12 +105,22 @@ public class NotificationService extends IntentService {
     }
 
     protected void currentChallengeRetrieved(BaseChallenge challenge) {
-        new Notifier(getApplicationContext())
-                .notify(NotificationType.CHALLENGE_AVAILABLE, MainActivity.class, challenge.getName());
+        // TODO: Logic to distinguish between a new Challenge available, and reminding the user to take a Challenge
+        if (persisted.shouldNotify(NotificationType.CHALLENGE_AVAILABLE))
+            new Notifier(getApplicationContext())
+                    .notify(NotificationType.CHALLENGE_AVAILABLE, MainActivity.class, challenge.getName());
     }
 
     protected void achievementsRetrieved(AchievementResponse response) {
-
+        if (persisted.shouldNotify(NotificationType.SAVING_REMINDER) && response.shouldRemindSavings())
+            new Notifier(getApplicationContext()).notify(
+                    NotificationType.SAVING_REMINDER,
+                    MainActivity.class,
+                    String.format(
+                            getApplicationContext().getString(R.string.notification_content_saving_reminder),
+                            response.getWeeksSinceSaved()
+                    )
+            );
     }
 
     protected void complete(Intent intent) {
