@@ -374,9 +374,9 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
         }
     }
 
-    private Map<String, Answer> createAnswerLog(List<BaseBotModel> converstation) {
+    private Map<String, Answer> createAnswerLog(List<BaseBotModel> conversation) {
         Map<String, Answer> answerLog = new LinkedHashMap<>();
-        for (BaseBotModel model : converstation)
+        for (BaseBotModel model : conversation)
             if (model instanceof Answer)
                 answerLog.put(model.getName(), (Answer) model);
         return answerLog;
