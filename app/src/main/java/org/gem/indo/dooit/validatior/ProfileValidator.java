@@ -11,15 +11,11 @@ import java.util.regex.Pattern;
 public class ProfileValidator extends Validator {
     private static final int MIN_MOBILE_LENGTH = 9;
     private static final int MAX_MOBILE_LENGTH = 16;
-    private static final String MOBILE_PATTERN = "^\\+?1?\\d{9,15}$";
-    private static int responseText;
+    private final String MOBILE_PATTERN = "^\\+?1?\\d{9,15}$";
 
-    protected ProfileValidator(){
+    public ProfileValidator(){}
 
-    }
-
-    public static boolean isAgeValid() {
-        boolean valid;
+    public boolean isAgeValid() {
         valid = true;
         if (!valid) {
             responseText = org.gem.indo.dooit.R.string.reg_example_age_error_1;
@@ -29,8 +25,7 @@ public class ProfileValidator extends Validator {
         return valid;
     }
 
-    public static boolean isMobileNumberValid(String numberText) {
-        boolean valid = true;
+    public boolean isMobileNumberValid(String numberText) {
         if (TextUtils.isEmpty(numberText)) {
             valid = false;
             responseText = org.gem.indo.dooit.R.string.reg_example_number_error_1;
@@ -49,7 +44,7 @@ public class ProfileValidator extends Validator {
         return valid;
     }
 
-    public static int getResponseText() {
+    public int getResponseText() {
         return responseText;
     }
 }

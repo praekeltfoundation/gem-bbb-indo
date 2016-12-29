@@ -14,14 +14,10 @@ public class UserValidator extends Validator{
     private static final String NAME_PATTERN = "[a-zA-Z0-9@\\.\\=\\-\\_]+";
     private static final int MAX_NAME_LENGTH = 150;
     private static final int MAX_PASSWORD = 6;
-    private static int responseText;
-    private static boolean valid;
 
-    protected UserValidator(){
+    public UserValidator(){}
 
-    }
-
-    public static boolean isNameValid(String name) {
+    public boolean isNameValid(String name) {
         valid = true;
 
         if (TextUtils.isEmpty(name)) {
@@ -42,8 +38,8 @@ public class UserValidator extends Validator{
         return valid;
     }
 
-    public static boolean isEmailValid(String emailText){
-        boolean valid = true;
+    public boolean isEmailValid(String emailText){
+        valid = true;
         if (TextUtils.isEmpty(emailText)) {
             valid = false;
             responseText = org.gem.indo.dooit.R.string.reg_example_email_error_1;
@@ -62,8 +58,8 @@ public class UserValidator extends Validator{
         return valid;
     }
 
-    public static boolean isPasswordValid(String password) {
-        boolean valid = true;
+    public boolean isPasswordValid(String password) {
+        valid = true;
         if (TextUtils.isEmpty(password)){
             valid = false;
             responseText = org.gem.indo.dooit.R.string.reg_example_password_error_1;
@@ -76,7 +72,7 @@ public class UserValidator extends Validator{
         return valid;
     }
 
-    public static int getResponseText() {
+    public int getResponseText() {
         return responseText;
     }
 }

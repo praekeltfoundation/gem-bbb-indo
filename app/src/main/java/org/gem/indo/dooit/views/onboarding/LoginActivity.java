@@ -132,20 +132,23 @@ public class LoginActivity extends DooitActivity {
 
     private boolean detailsValid() {
         boolean valid = true;
+        UserValidator uValidator = new UserValidator();
 
-        if(!UserValidator.isNameValid(name.getText().toString())){
+        if(!uValidator.isNameValid(name.getText().toString())){
             valid = false;
-            nameHint.setText(UserValidator.getResponseText());
+            nameHint.setText(uValidator.getResponseText());
             nameHint.setTextColor(ResourcesCompat.getColor(getResources(), android.R.color.holo_red_light, getTheme()));
         } else {
+            nameHint.setText(R.string.reg_example_name);
             nameHint.setTextColor(ResourcesCompat.getColor(getResources(), android.R.color.white, getTheme()));
         }
 
-        if(!UserValidator.isPasswordValid(password.getText().toString())){
+        if(!uValidator.isPasswordValid(password.getText().toString())){
             valid = true;
-            passwordHint.setText(UserValidator.getResponseText());
+            passwordHint.setText(uValidator.getResponseText());
             passwordHint.setTextColor(ResourcesCompat.getColor(getResources(), android.R.color.holo_red_light, getTheme()));
         } else {
+            passwordHint.setText(R.string.reg_example_password);
             passwordHint.setTextColor(ResourcesCompat.getColor(getResources(), android.R.color.white, getTheme()));
         }
 
