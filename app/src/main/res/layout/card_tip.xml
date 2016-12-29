@@ -63,9 +63,10 @@
                     android:id="@+id/card_tip_fav"
                     android:layout_width="20dp"
                     android:layout_height="14dp"
-                    android:layout_marginEnd="@dimen/tip_card_icon_margin"
-                    android:layout_toLeftOf="@id/card_tip_share"
-                    app:srcCompat="@drawable/ic_d_heart_inverted" />
+                    android:layout_marginRight="@dimen/tip_card_icon_margin_right"
+                    app:srcCompat="@drawable/ic_d_heart_inverted"
+                    android:layout_toStartOf="@+id/card_tip_share"
+                    android:layout_alignParentTop="true" />
             </RelativeLayout>
 
         </LinearLayout>
