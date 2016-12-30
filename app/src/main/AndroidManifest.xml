@@ -47,6 +47,10 @@
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.FullscreenTheme" />
         <activity
+            android:name=".views.onboarding.ChangeEmailAddressActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.FullscreenTheme" />
+        <activity
             android:name=".views.main.MainActivity"
             android:label="@string/title_activity_main"
             android:screenOrientation="portrait"
@@ -78,9 +82,6 @@
             android:name=".views.onboarding.ProfileImageActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.FullscreenTheme" />
-        <activity
-            android:name=".views.tip.TipArticleActivity"
-            android:screenOrientation="portrait" />
         <activity
             android:name=".views.settings.BuildInfoActivity"
             android:screenOrientation="portrait"

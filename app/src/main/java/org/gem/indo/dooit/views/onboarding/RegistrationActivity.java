@@ -5,11 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v4.content.res.ResourcesCompat;
-import android.text.Spannable;
-import android.text.SpannableString;
 import android.text.TextUtils;
-import android.text.style.ForegroundColorSpan;
-import android.util.Patterns;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
@@ -34,13 +30,14 @@ import org.gem.indo.dooit.helpers.TextSpannableHelper;
 import org.gem.indo.dooit.models.Profile;
 import org.gem.indo.dooit.models.User;
 import org.gem.indo.dooit.services.NotificationAlarm;
+import org.gem.indo.dooit.validatior.ProfileValidator;
+import org.gem.indo.dooit.validatior.UserValidator;
 import org.gem.indo.dooit.views.DooitActivity;
 import org.gem.indo.dooit.views.helpers.activity.DooitActivityBuilder;
 import org.gem.indo.dooit.views.web.MinimalWebViewActivity;
 
 import java.net.SocketTimeoutException;
 import java.net.UnknownHostException;
-import java.util.regex.Pattern;
 
 import javax.inject.Inject;
 
@@ -54,15 +51,8 @@ import rx.functions.Action1;
 public class RegistrationActivity extends DooitActivity {
 
     private static final int DEFAULT_AGE = 16;
-
     private static final int MIN_AGE = 12;
     private static final int MAX_AGE = 80;
-    private static final String NAME_PATTERN = "[a-zA-Z0-9@\\.\\=\\-\\_]+";
-    private static final String MOBILE_PATTERN = "^\\+?1?\\d{9,15}$";
-    private static final int MAX_NAME_LENGTH = 150;
-    private static final int MIN_MOBILE_LENGTH = 9;
-    private static final int MAX_MOBILE_LENGTH = 16;
-    private static final int MAX_PASSWORD = 6;
 
     @BindView(R.id.activity_registration)
     View background;
@@ -109,6 +99,9 @@ public class RegistrationActivity extends DooitActivity {
     @BindView(R.id.activity_registration_register_button)
     Button registerButton;
 
+    @BindView(R.id.activity_registration_options)
+    TextView registrationOptionsLabel;
+
     @Inject
     AuthenticationManager authenticationManager;
 
@@ -121,7 +114,7 @@ public class RegistrationActivity extends DooitActivity {
         setContentView(org.gem.indo.dooit.R.layout.activity_registration);
         ((DooitApplication) getApplication()).component.inject(this);
         ButterKnife.bind(this);
-        
+
         String stringTc = getResources().getString(org.gem.indo.dooit.R.string.reg_t_c);
         TextSpannableHelper spanTcHelper = new TextSpannableHelper();
 
@@ -136,7 +129,7 @@ public class RegistrationActivity extends DooitActivity {
 
         // Default gender
         gender.check(R.id.activity_registration_gender_girl);
-        
+
         textViewTC.setText(spanTcHelper.styleText(this, R.style.AppTheme_TextView_Bold_Small_Accented, stringTc));
         textViewLogin.setText(spanLoginHelper.styleText(this, R.style.AppTheme_TextView_Bold_Small_Accented, stringLogin));
         SquiggleBackgroundHelper.setBackground(this, R.color.purple, R.color.purple_light, background);
@@ -205,7 +198,7 @@ public class RegistrationActivity extends DooitActivity {
                             }
                         } else if (error.getCause() instanceof SocketTimeoutException) {
                             Snackbar.make(registerButton, R.string.connection_timed_out, Snackbar.LENGTH_LONG).show();
-                        }else if(error.getCause() instanceof UnknownHostException){
+                        } else if (error.getCause() instanceof UnknownHostException) {
                             Snackbar.make(registerButton, R.string.connection_error, Snackbar.LENGTH_LONG).show();
                         }
                         dismissDialog();
@@ -243,20 +236,65 @@ public class RegistrationActivity extends DooitActivity {
     }
 
     private boolean detailsValid() {
-        int checkOptions = choseEmailOnly();
+        boolean detailsValid = true;
+        ProfileValidator pValidator = new ProfileValidator();
+        UserValidator uValidator = new UserValidator();
 
-        switch (checkOptions){
-            case 1: // Both was used
-                return isNameValid() & isEmailValid() & isAgeValid() & isNumberValid() & isPasswordValid();
-            case 2: // Only number
-                return isNameValid() & isAgeValid() & isNumberValid() & isPasswordValid();
-            case 3: // Only email
-                return isNameValid() & isEmailValid() & isAgeValid() & isPasswordValid();
-            default:
-                return false;
+        if (!uValidator.isNameValid(name.getText().toString())) {
+            nameHint.setText(uValidator.getResponseText());
+            nameHint.setTextColor(ResourcesCompat.getColor(getResources(), android.R.color.holo_red_light, getTheme()));
+            detailsValid = false;
+        } else {
+            nameHint.setText(R.string.reg_example_name);
+            nameHint.setTextColor(ResourcesCompat.getColor(getResources(), android.R.color.white, getTheme()));
         }
-    }
 
+        if ((!uValidator.isEmailValid(email.getText().toString())) && (!TextUtils.isEmpty(email.getText()))) {
+            emailHint.setText(uValidator.getResponseText());
+            emailHint.setTextColor(ResourcesCompat.getColor(getResources(), android.R.color.holo_red_light, getTheme()));
+            detailsValid = false;
+        } else {
+            emailHint.setText(R.string.reg_example_email);
+            emailHint.setTextColor(ResourcesCompat.getColor(getResources(), android.R.color.white, getTheme()));
+        }
+
+        if (!uValidator.isPasswordValid(password.getText().toString())) {
+            passwordHint.setText(uValidator.getResponseText());
+            passwordHint.setTextColor(ResourcesCompat.getColor(getResources(), android.R.color.holo_red_light, getTheme()));
+            detailsValid = false;
+        } else {
+            passwordHint.setText(R.string.reg_example_password);
+            passwordHint.setTextColor(ResourcesCompat.getColor(getResources(), android.R.color.white, getTheme()));
+        }
+
+        if (!pValidator.isAgeValid()) {
+            ageHint.setText(pValidator.getResponseText());
+            ageHint.setTextColor(ResourcesCompat.getColor(getResources(), android.R.color.holo_red_light, getTheme()));
+            detailsValid = false;
+        } else {
+            ageHint.setTextColor(ResourcesCompat.getColor(getResources(), android.R.color.white, getTheme()));
+        }
+
+        if (!pValidator.isMobileNumberValid(number.getText().toString())) {
+            numberHint.setText(pValidator.getResponseText());
+            numberHint.setTextColor(ResourcesCompat.getColor(getResources(), android.R.color.holo_red_light, getTheme()));
+            detailsValid = false;
+        } else {
+            numberHint.setText(R.string.reg_example_number);
+            numberHint.setTextColor(ResourcesCompat.getColor(getResources(), android.R.color.white, getTheme()));
+        }
+
+        if ((TextUtils.isEmpty(email.getText())) && (TextUtils.isEmpty(number.getText()))) {
+            detailsValid = false;
+            numberHint.setText(" ");
+            emailHint.setText(" ");
+            registrationOptionsLabel.setTextColor(ResourcesCompat.getColor(getResources(), android.R.color.holo_red_light, getTheme()));
+        } else {
+            registrationOptionsLabel.setTextColor(ResourcesCompat.getColor(getResources(), android.R.color.white, getTheme()));
+        }
+
+        return detailsValid;
+    }
 
     @OnClick(R.id.activity_registration_login_text_view)
     public void openLogin() {
@@ -270,14 +308,12 @@ public class RegistrationActivity extends DooitActivity {
 
         Profile profile = new Profile();
 
-        if ((number.getText().toString() != "") && (email.getText().toString() != "")){
+        if ((number.getText().toString() != "") && (email.getText().toString() != "")) {
             profile.setMobile(number.getText().toString());
             user.setEmail(email.getText().toString());
-        }
-        else if(number.getText().toString() != ""){
+        } else if (number.getText().toString() != "") {
             profile.setMobile(number.getText().toString());
-        }
-        else if (email.getText().toString() != ""){
+        } else if (email.getText().toString() != "") {
             user.setEmail(email.getText().toString());
         }
 
@@ -294,125 +330,6 @@ public class RegistrationActivity extends DooitActivity {
 
         user.setProfile(profile);
         return user;
-    }
-
-    public boolean isNameValid() {
-        boolean valid = true;
-        String nameText = name.getText().toString();
-        if (TextUtils.isEmpty(nameText)) {
-            valid = false;
-            nameHint.setText(org.gem.indo.dooit.R.string.reg_example_name_error_1);
-            nameHint.setTextColor(ResourcesCompat.getColor(getResources(), android.R.color.holo_red_light, getTheme()));
-        } else if (nameText.contains(" ")) {
-            valid = false;
-            nameHint.setText(org.gem.indo.dooit.R.string.reg_example_name_error_2);
-            nameHint.setTextColor(ResourcesCompat.getColor(getResources(), android.R.color.holo_red_light, getTheme()));
-        } else if (!Pattern.compile(NAME_PATTERN).matcher(nameText).matches()) {
-            valid = false;
-            nameHint.setText(org.gem.indo.dooit.R.string.reg_example_name_error_3);
-            nameHint.setTextColor(ResourcesCompat.getColor(getResources(), android.R.color.holo_red_light, getTheme()));
-        } else if (nameText.length() > MAX_NAME_LENGTH) {
-            valid = false;
-            nameHint.setText(org.gem.indo.dooit.R.string.reg_example_name_error_4);
-            nameHint.setTextColor(ResourcesCompat.getColor(getResources(), android.R.color.holo_red_light, getTheme()));
-        } else {
-            nameHint.setText(org.gem.indo.dooit.R.string.reg_example_name);
-            nameHint.setTextColor(ResourcesCompat.getColor(getResources(), org.gem.indo.dooit.R.color.white, getTheme()));
-        }
-        return valid;
-    }
-
-    public boolean isEmailValid(){
-        boolean valid = true;
-        String emailText = email.getText().toString();
-        if (TextUtils.isEmpty(emailText)) {
-            valid = false;
-            emailHint.setText(org.gem.indo.dooit.R.string.reg_example_email_error_1);
-            emailHint.setTextColor(ResourcesCompat.getColor(getResources(), android.R.color.holo_red_light, getTheme()));
-        } else if (emailText.contains(" ")) {
-            valid = false;
-            emailHint.setText(org.gem.indo.dooit.R.string.reg_example_email_error_2);
-            emailHint.setTextColor(ResourcesCompat.getColor(getResources(), android.R.color.holo_red_light, getTheme()));
-        } else if (!Patterns.EMAIL_ADDRESS.matcher(emailText).matches()) {
-            valid = false;
-            emailHint.setText(org.gem.indo.dooit.R.string.reg_example_email_error_3);
-            emailHint.setTextColor(ResourcesCompat.getColor(getResources(), android.R.color.holo_red_light, getTheme()));
-        } else if (emailText.length() > MAX_NAME_LENGTH) {
-            valid = false;
-            emailHint.setText(org.gem.indo.dooit.R.string.reg_example_email_error_4);
-            emailHint.setTextColor(ResourcesCompat.getColor(getResources(), android.R.color.holo_red_light, getTheme()));
-        } else {
-            emailHint.setText(org.gem.indo.dooit.R.string.reg_example_email);
-            emailHint.setTextColor(ResourcesCompat.getColor(getResources(), org.gem.indo.dooit.R.color.white, getTheme()));
-        }
-        return valid;
-
-    }
-
-    public boolean isAgeValid() {
-        boolean valid;
-        valid = true;
-        if (!valid) {
-            ageHint.setText(org.gem.indo.dooit.R.string.reg_example_age_error_1);
-            ageHint.setTextColor(ResourcesCompat.getColor(getResources(), android.R.color.holo_red_light, getTheme()));
-        } else {
-            ageHint.setText(org.gem.indo.dooit.R.string.reg_example_age);
-            ageHint.setTextColor(ResourcesCompat.getColor(getResources(), org.gem.indo.dooit.R.color.white, getTheme()));
-        }
-        return valid;
-    }
-
-    public boolean isNumberValid() {
-        boolean valid = true;
-        String numberText = number.getText().toString();
-        if (TextUtils.isEmpty(numberText)) {
-            valid = false;
-            numberHint.setText(org.gem.indo.dooit.R.string.reg_example_number_error_1);
-            numberHint.setTextColor(ResourcesCompat.getColor(getResources(), android.R.color.holo_red_light, getTheme()));
-        } else if (numberText.length() < MIN_MOBILE_LENGTH) {
-            valid = false;
-            numberHint.setText(org.gem.indo.dooit.R.string.reg_example_number_error_2);
-            numberHint.setTextColor(ResourcesCompat.getColor(getResources(), android.R.color.holo_red_light, getTheme()));
-        } else if (numberText.length() > MAX_MOBILE_LENGTH) {
-            valid = false;
-            numberHint.setText(org.gem.indo.dooit.R.string.reg_example_number_error_3);
-            numberHint.setTextColor(ResourcesCompat.getColor(getResources(), android.R.color.holo_red_light, getTheme()));
-        } else {
-            numberHint.setText(org.gem.indo.dooit.R.string.reg_example_number);
-            numberHint.setTextColor(ResourcesCompat.getColor(getResources(), org.gem.indo.dooit.R.color.white, getTheme()));
-        }
-        return valid;
-    }
-
-    public boolean isPasswordValid() {
-        boolean valid = true;
-        if (TextUtils.isEmpty(password.getText())) {
-            valid = false;
-            passwordHint.setText(org.gem.indo.dooit.R.string.reg_example_password_error_1);
-            passwordHint.setTextColor(ResourcesCompat.getColor(getResources(), android.R.color.holo_red_light, getTheme()));
-        } else if (password.getText().length() < MAX_PASSWORD) {
-            valid = false;
-            passwordHint.setText(org.gem.indo.dooit.R.string.reg_example_password_error_2);
-            passwordHint.setTextColor(ResourcesCompat.getColor(getResources(), android.R.color.holo_red_light, getTheme()));
-        } else {
-            passwordHint.setText(org.gem.indo.dooit.R.string.reg_example_password);
-            passwordHint.setTextColor(ResourcesCompat.getColor(getResources(), org.gem.indo.dooit.R.color.white, getTheme()));
-        }
-        return valid;
-    }
-
-    public int choseEmailOnly(){
-        if((number.length()!= 0) && (email.length() != 0)){
-            return 1; // Both were chosen
-        }
-        else if (email.length()==0){
-            return 2; // They only used their number
-        }
-        else if (number.length()==0){
-            return 3; // They only used their email address
-        }
-        else
-            return 4;
     }
 
     public static class Builder extends DooitActivityBuilder<Builder> {
