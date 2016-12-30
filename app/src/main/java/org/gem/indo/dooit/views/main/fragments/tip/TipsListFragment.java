@@ -157,10 +157,16 @@ public class TipsListFragment extends Fragment implements VariableChangeListener
     }
 
     public void onPageSelected() {
+        if(snackbar != null) {
+            snackbar.dismiss();
+        }
         Log.d(TAG, "onPageSelected");
     }
 
     public void onPageDeselected() {
+        if(snackbar != null) {
+            snackbar.dismiss();
+        }
         Log.d(TAG, "onPageDeselected");
     }
 

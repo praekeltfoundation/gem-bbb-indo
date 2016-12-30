@@ -22,6 +22,7 @@ import org.gem.indo.dooit.api.responses.AuthenticationResponse;
 import org.gem.indo.dooit.helpers.Persisted;
 import org.gem.indo.dooit.helpers.SquiggleBackgroundHelper;
 import org.gem.indo.dooit.services.NotificationAlarm;
+import org.gem.indo.dooit.validatior.UserValidator;
 import org.gem.indo.dooit.views.DooitActivity;
 import org.gem.indo.dooit.views.helpers.activity.DooitActivityBuilder;
 import org.gem.indo.dooit.views.main.MainActivity;
@@ -130,32 +131,27 @@ public class LoginActivity extends DooitActivity {
     }
 
     private boolean detailsValid() {
-        return isNameValid() & isPasswordValid();
-    }
+        boolean valid = true;
+        UserValidator uValidator = new UserValidator();
 
-    public boolean isNameValid() {
-        boolean valid;
-        valid = !TextUtils.isEmpty(name.getText());
-        if (!valid) {
-            nameHint.setText(org.gem.indo.dooit.R.string.login_example_name_error_1);
+        if(!uValidator.isNameValid(name.getText().toString())){
+            valid = false;
+            nameHint.setText(uValidator.getResponseText());
             nameHint.setTextColor(ResourcesCompat.getColor(getResources(), android.R.color.holo_red_light, getTheme()));
         } else {
-            nameHint.setText(org.gem.indo.dooit.R.string.login_example_name);
-            nameHint.setTextColor(ResourcesCompat.getColor(getResources(), org.gem.indo.dooit.R.color.white, getTheme()));
+            nameHint.setText(R.string.reg_example_name);
+            nameHint.setTextColor(ResourcesCompat.getColor(getResources(), android.R.color.white, getTheme()));
         }
-        return valid;
-    }
 
-    public boolean isPasswordValid() {
-        boolean valid;
-        valid = !TextUtils.isEmpty(password.getText());
-        if (!valid) {
-            passwordHint.setText(org.gem.indo.dooit.R.string.login_example_password_error_1);
+        if(!uValidator.isPasswordValid(password.getText().toString())){
+            valid = true;
+            passwordHint.setText(uValidator.getResponseText());
             passwordHint.setTextColor(ResourcesCompat.getColor(getResources(), android.R.color.holo_red_light, getTheme()));
         } else {
-            passwordHint.setText(org.gem.indo.dooit.R.string.login_example_password);
-            passwordHint.setTextColor(ResourcesCompat.getColor(getResources(), org.gem.indo.dooit.R.color.white, getTheme()));
+            passwordHint.setText(R.string.reg_example_password);
+            passwordHint.setTextColor(ResourcesCompat.getColor(getResources(), android.R.color.white, getTheme()));
         }
+
         return valid;
     }
 

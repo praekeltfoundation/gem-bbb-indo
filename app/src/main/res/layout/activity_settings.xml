@@ -100,17 +100,15 @@
 
             <View
                 android:id="@+id/settings_account_change_name_separator"
-                android:layout_width="match_parent"
-                android:layout_height="0.5dp"
-                android:layout_below="@+id/settings_account_change_name"
-                android:background="@color/divider" />
+                style="@style/Divider"
+                android:layout_below="@id/settings_account_change_name" />
 
             <TextView
                 android:id="@+id/settings_account_change_password"
                 style="@style/AppTheme.TextView.Settings.Item"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/settings_account_change_name_separator"
+                android:layout_below="@id/settings_account_change_name_separator"
                 android:background="?attr/selectableItemBackground"
                 android:maxLines="1"
                 android:paddingBottom="8dp"
@@ -121,17 +119,35 @@
 
             <View
                 android:id="@+id/settings_account_change_password_separator"
+                style="@style/Divider"
+                android:layout_below="@id/settings_account_change_password" />
+
+            <TextView
+                android:id="@+id/settings_account_change_email"
+                style="@style/AppTheme.TextView.Settings.Item"
                 android:layout_width="match_parent"
-                android:layout_height="0.5dp"
-                android:layout_below="@+id/settings_account_change_password"
-                android:background="@color/divider" />
+                android:layout_height="wrap_content"
+                android:layout_below="@id/settings_account_change_password_separator"
+                android:background="?attr/selectableItemBackground"
+                android:maxLines="1"
+                android:paddingBottom="8dp"
+                android:paddingTop="8dp"
+                android:text="@string/profile_account_change_email"
+                android:textColor="@color/purple"
+                android:textStyle="bold" />
+
+            <View
+                android:id="@+id/settings_account_change_email_separator"
+                style="@style/Divider"
+                android:layout_below="@id/settings_account_change_email"
+                />
 
             <TextView
                 android:id="@+id/settings_account_change_security_question"
                 style="@style/AppTheme.TextView.Settings.Item"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/settings_account_change_password_separator"
+                android:layout_below="@id/settings_account_change_email_separator"
                 android:background="?attr/selectableItemBackground"
                 android:maxLines="1"
                 android:paddingBottom="8dp"
@@ -142,17 +158,15 @@
 
             <View
                 android:id="@+id/settings_account_change_security_question_separator"
-                android:layout_width="match_parent"
-                android:layout_height="0.5dp"
-                android:layout_below="@+id/settings_account_change_security_question"
-                android:background="@color/divider" />
+                style="@style/Divider"
+                android:layout_below="@id/settings_account_change_security_question"/>
 
             <TextView
                 android:id="@+id/settings_account_sign_out"
                 style="@style/AppTheme.TextView.Settings.Item"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/settings_account_change_security_question_separator"
+                android:layout_below="@id/settings_account_change_security_question_separator"
                 android:background="?attr/selectableItemBackground"
                 android:maxLines="1"
                 android:paddingBottom="8dp"
@@ -167,7 +181,7 @@
                 style="@style/AppTheme.TextView.Bold.Medium"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/settings_account_sign_out"
+                android:layout_below="@id/settings_account_sign_out"
                 android:layout_marginTop="16dp"
                 android:ellipsize="end"
                 android:maxLines="1"
@@ -180,7 +194,7 @@
                 android:id="@+id/settings_notifications_challenge_available"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/settings_notifications"
+                android:layout_below="@id/settings_notifications"
                 android:background="?attr/selectableItemBackground"
                 android:maxLines="1"
                 android:paddingBottom="8dp"
@@ -192,17 +206,15 @@
 
             <View
                 android:id="@+id/settings_notifications_a_separator"
-                android:layout_width="match_parent"
-                android:layout_height="0.5dp"
-                android:layout_below="@+id/settings_notifications_challenge_available"
-                android:background="@color/divider"
+                style="@style/Divider"
+                android:layout_below="@id/settings_notifications_challenge_available"
                 android:visibility="gone" />
 
             <android.support.v7.widget.SwitchCompat
                 android:id="@+id/settings_notifications_b"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/settings_notifications_a_separator"
+                android:layout_below="@id/settings_notifications_a_separator"
                 android:background="?attr/selectableItemBackground"
                 android:maxLines="1"
                 android:paddingBottom="8dp"
@@ -216,17 +228,15 @@
 
             <View
                 android:id="@+id/settings_notifications_b_separator"
-                android:layout_width="match_parent"
-                android:layout_height="0.5dp"
-                android:layout_below="@+id/settings_notifications_b"
-                android:background="@color/divider"
+                style="@style/Divider"
+                android:layout_below="@id/settings_notifications_b"
                 android:visibility="gone" />
 
             <android.support.v7.widget.SwitchCompat
                 android:id="@+id/settings_notifications_c"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/settings_notifications_b_separator"
+                android:layout_below="@id/settings_notifications_b_separator"
                 android:background="?attr/selectableItemBackground"
                 android:maxLines="1"
                 android:paddingBottom="8dp"
@@ -239,17 +249,15 @@
 
             <View
                 android:id="@+id/settings_notifications_c_separator"
-                android:layout_width="match_parent"
-                android:layout_height="0.5dp"
-                android:layout_below="@+id/settings_notifications_c"
-                android:background="@color/divider"
+                style="@style/Divider"
+                android:layout_below="@id/settings_notifications_c"
                 android:visibility="gone"/>
 
             <android.support.v7.widget.SwitchCompat
                 android:id="@+id/settings_notifications_d"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/settings_notifications_c_separator"
+                android:layout_below="@id/settings_notifications_c_separator"
                 android:background="?attr/selectableItemBackground"
                 android:maxLines="1"
                 android:paddingBottom="8dp"
@@ -265,7 +273,7 @@
                 style="@style/AppTheme.TextView.Bold.Medium"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/settings_notifications_d"
+                android:layout_below="@id/settings_notifications_d"
                 android:layout_marginTop="16dp"
                 android:ellipsize="end"
                 android:maxLines="1"
@@ -276,10 +284,8 @@
 
             <View
                 android:id="@+id/settings_about_help_separator"
-                android:layout_width="match_parent"
-                android:layout_height="0.5dp"
-                android:layout_below="@+id/settings_about_help"
-                android:background="@color/divider" />
+                style="@style/Divider"
+                android:layout_below="@+id/settings_about_help" />
 
             <TextView
                 android:id="@+id/settings_about_report"
@@ -298,10 +304,8 @@
 
             <View
                 android:id="@+id/settings_about_report_separator"
-                android:layout_width="match_parent"
-                android:layout_height="0.5dp"
-                android:layout_below="@+id/settings_about_report"
-                android:background="@color/divider" />
+                style="@style/Divider"
+                android:layout_below="@+id/settings_about_report"/>
 
             <TextView
                 android:id="@+id/settings_about_feedback"
@@ -320,10 +324,8 @@
 
             <View
                 android:id="@+id/settings_about_feedback_separator"
-                android:layout_width="match_parent"
-                android:layout_height="0.5dp"
-                android:layout_below="@+id/settings_about_feedback"
-                android:background="@color/divider" />
+                style="@style/Divider"
+                android:layout_below="@+id/settings_about_feedback"/>
 
             <TextView
                 android:id="@+id/settings_about_terms"
@@ -342,10 +344,8 @@
 
             <View
                 android:id="@+id/settings_about_terms_separator"
-                android:layout_width="match_parent"
-                android:layout_height="0.5dp"
-                android:layout_below="@+id/settings_about_terms"
-                android:background="@color/divider" />
+                style="@style/Divider"
+                android:layout_below="@+id/settings_about_terms" />
 
             <TextView
                 android:id="@+id/settings_about_privacy"
@@ -380,10 +380,8 @@
 
             <View
                 android:id="@+id/settings_about_privacy_separator"
-                android:layout_width="match_parent"
-                android:layout_height="0.5dp"
-                android:layout_below="@+id/settings_about_privacy"
-                android:background="@color/divider" />
+                style="@style/Divider"
+                android:layout_below="@+id/settings_about_privacy" />
 
             <TextView
                 android:id="@+id/settings_about_build_info"
