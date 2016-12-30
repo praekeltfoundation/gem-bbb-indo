@@ -22,6 +22,7 @@ import org.gem.indo.dooit.services.NotificationAlarm;
 import org.gem.indo.dooit.views.DooitActivity;
 import org.gem.indo.dooit.views.RootActivity;
 import org.gem.indo.dooit.views.helpers.activity.DooitActivityBuilder;
+import org.gem.indo.dooit.views.onboarding.ChangeEmailAddressActivity;
 import org.gem.indo.dooit.views.onboarding.ChangeNameActivity;
 import org.gem.indo.dooit.views.onboarding.ChangePasswordActivity;
 import org.gem.indo.dooit.views.onboarding.ChangeSecurityQuestionActivity;
@@ -110,6 +111,11 @@ public class SettingsActivity extends DooitActivity {
     @OnClick(R.id.settings_account_change_password)
     public void changePassword(View view) {
         ChangePasswordActivity.Builder.create(this).startActivity();
+    }
+
+    @OnClick(R.id.settings_account_change_email)
+    public void changeEmail(View view) {
+        ChangeEmailAddressActivity.Builder.create(this).startActivity();
     }
 
     @OnClick(R.id.settings_account_change_security_question)

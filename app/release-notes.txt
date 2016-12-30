@@ -1,7 +1,15 @@
 
+- Notification icon updated to display on API 17 - 25
+- Snackbar on Tips gets dismissed when switching tabs
+- Navigation bar updated to include text at all times
+- Username validation on Registration and Login now consistent
 - Share Badge from Profile screen
 - Share Badge from Coach
 - Share Tip from Tip Archive screen
 - Share Tip from Coach
 - Format shares for Facebook
 - Implemented Savings Reminder Push Notification
+- Fixed Feedback Form Spinner selected item not displaying
+- Removed pink indicator on Feedback text field
+- Fixed Feedback title style
+- Changed title of Report a Problem screen

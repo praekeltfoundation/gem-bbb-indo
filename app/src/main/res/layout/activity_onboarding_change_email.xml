@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_change_email"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/pattern_01_purple"
+    tools:context="org.gem.indo.dooit.views.onboarding.ChangeEmailAddressActivity">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:focusableInTouchMode="true"
+        android:padding="@dimen/registration_activity_padding">
+
+        <TextView
+            android:id="@+id/activity_change_email_title"
+            style="@style/AppTheme.TextView.Regular.XXXLargeHeading"
+            fontPath="fonts/LondrinaSolid-Regular.ttf"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="@dimen/registration_margin_vertical"
+            android:text="@string/heading_change_email"
+            android:textColor="@color/white"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/activity_change_email_text_view"
+            style="@style/AppTheme.TextView.Bold.Medium"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_below="@id/activity_change_email_title"
+            android:layout_marginTop="@dimen/registration_margin_vertical"
+            android:text="@string/label_email"
+            android:textAllCaps="true"
+            android:textColor="@color/yellow"
+            android:textStyle="bold" />
+
+        <EditText
+            android:id="@+id/activity_change_email_text_edit"
+            style="@style/AppTheme.EditText.Grey"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_below="@id/activity_change_email_text_view"
+            android:layout_marginTop="4dp"
+            android:inputType="textEmailAddress" />
+
+        <TextView
+            android:id="@+id/activity_change_email_example_text_edit"
+            style="@style/AppTheme.TextView.Regular.Medium"
+            fontPath="fonts/Lato-Regular.ttf"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_below="@id/activity_change_email_text_edit"
+            android:layout_marginTop="4dp"
+            android:text="@string/reg_example_email"
+            android:textColor="@color/white" />
+
+        <Button
+            android:id="@+id/activity_change_email_button"
+            style="@style/AppTheme.Button.Big.Yellow"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_below="@id/activity_change_email_example_text_edit"
+            android:layout_marginTop="100dp"
+            android:text="@string/label_change_email"
+            android:textAllCaps="true"
+            android:textSize="@dimen/k_font_xx_large" />
+
+    </RelativeLayout>
+</ScrollView>

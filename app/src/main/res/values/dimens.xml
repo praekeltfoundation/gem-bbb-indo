@@ -16,6 +16,9 @@
 
     <dimen name="button_big_padding">11dp</dimen>
     <dimen name="edit_text_padding">10dp</dimen>
+
+    <!-- General Spinner -->
+    <dimen name="spinner_dropdown_item_padding">16dp</dimen>
     <dimen name="spinner_item_padding">10dp</dimen>
 
     <!-- Common -->
@@ -79,4 +82,5 @@
     <dimen name="tip_search_suggestion_padding">3dp</dimen>
     <dimen name="nav_icon_size_small">20dp</dimen>
     <dimen name="nav_icon_size_large">24dp</dimen>
+
 </resources>
