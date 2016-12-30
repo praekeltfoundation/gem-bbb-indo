@@ -110,6 +110,7 @@ public class TipViewHolder extends RecyclerView.ViewHolder {
         MinimalWebViewActivity.Builder.create(getContext())
                 .setUrl(articleUrl)
                 .setNoCaret()
+                .setWebTipShare()
                 .startActivity();
     }
 

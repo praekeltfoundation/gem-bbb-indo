@@ -4,11 +4,14 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
@@ -17,8 +20,10 @@ import android.widget.ProgressBar;
 
 import org.gem.indo.dooit.R;
 import org.gem.indo.dooit.helpers.LanguageCodeHelper;
+import org.gem.indo.dooit.helpers.social.SocialSharer;
 import org.gem.indo.dooit.views.DooitActivity;
 import org.gem.indo.dooit.views.helpers.activity.DooitActivityBuilder;
+import org.gem.indo.dooit.views.settings.SettingsActivity;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -34,6 +39,7 @@ public class MinimalWebViewActivity extends DooitActivity {
     private static final String INTENT_URL = "intent_webView_url";
     private static final String INTENT_TITLE = "intent_webView_title";
     private static final String INTENT_NO_CARET = "intent_noCaret_title";
+    private static final String INTENT_WEBTIPS_SHARE = "intent_webtips_share";
 
     @BindView(R.id.toolbar)
     Toolbar toolbar;
@@ -65,6 +71,9 @@ public class MinimalWebViewActivity extends DooitActivity {
                 actionBar.setTitle(getIntent().getStringExtra(INTENT_TITLE));
             else
                 actionBar.setTitle("");
+
+           /* if (getIntent().hasExtra(INTENT_WEBTIPS_SHARE))
+                actionBar.setWeb*/
             toolbar.setNavigationOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -112,6 +121,30 @@ public class MinimalWebViewActivity extends DooitActivity {
                 activeNetwork.isConnectedOrConnecting();
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_webtips_share, menu);
+        return super.onCreateOptionsMenu(menu);
+
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.menu_webtips_share:
+                new SocialSharer(this).share(
+                        this.getText(R.string.share_chooser_tip_title),
+                        Uri.parse(getIntent().getStringExtra(INTENT_URL))
+                );
+                break;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+
+
+        return super.onOptionsItemSelected(item);
+    }
+
     public static class Builder extends DooitActivityBuilder<Builder> {
 
         protected Builder(Context context) {
@@ -143,6 +176,11 @@ public class MinimalWebViewActivity extends DooitActivity {
         }
         public Builder setNoCaret() {
             intent.putExtra(INTENT_NO_CARET, "caret");
+            return this;
+        }
+
+        public Builder setWebTipShare() {
+            intent.putExtra(INTENT_WEBTIPS_SHARE, "web_tip_share");
             return this;
         }
     }
