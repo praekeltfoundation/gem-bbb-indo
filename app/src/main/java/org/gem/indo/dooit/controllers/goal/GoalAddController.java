@@ -64,9 +64,8 @@ public class GoalAddController extends GoalBotController {
             case POPULATE_GOAL:
                 doPopulate(answerLog);
                 break;
-            case ADD_BADGE:
-                doAddBadge();
-                break;
+            default:
+                super.onCall(key, answerLog, model);
         }
     }
 
@@ -119,11 +118,6 @@ public class GoalAddController extends GoalBotController {
         goal.calculateFields();
 
         persisted.saveConvoGoal(botType, goal);
-    }
-
-    private void doAddBadge() {
-        for (Badge badge : goal.getNewBadges())
-            botRunner.addNode(nodeFromBadge(badge));
     }
 
     private void doCreate(Map<String, Answer> answerLog, final BaseBotModel model,

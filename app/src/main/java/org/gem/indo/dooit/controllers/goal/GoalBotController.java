@@ -14,6 +14,7 @@ import org.gem.indo.dooit.helpers.bot.param.ParamMatch;
 import org.gem.indo.dooit.helpers.bot.param.ParamParser;
 import org.gem.indo.dooit.models.Badge;
 import org.gem.indo.dooit.models.Tip;
+import org.gem.indo.dooit.models.bot.Answer;
 import org.gem.indo.dooit.models.bot.BaseBotModel;
 import org.gem.indo.dooit.models.bot.Node;
 import org.gem.indo.dooit.models.challenge.BaseChallenge;
@@ -24,6 +25,8 @@ import org.gem.indo.dooit.models.enums.BotParamType;
 import org.gem.indo.dooit.models.enums.BotType;
 import org.gem.indo.dooit.models.goal.Goal;
 import org.gem.indo.dooit.views.helpers.activity.CurrencyHelper;
+
+import java.util.Map;
 
 import javax.inject.Inject;
 
@@ -51,6 +54,15 @@ public abstract class GoalBotController extends DooitBotController {
         this.goal = goal;
         this.challenge = challenge;
         this.tip = tip;
+    }
+
+    @Override
+    public void onCall(BotCallType key, Map<String, Answer> answerLog, BaseBotModel model) {
+        switch (key) {
+            case ADD_BADGE:
+                doAddBadge();
+                break;
+        }
     }
 
     @Override
@@ -148,7 +160,12 @@ public abstract class GoalBotController extends DooitBotController {
         }
     }
 
-    protected Node nodeFromBadge(Badge badge) {
+    private void doAddBadge() {
+        for (Badge badge : goal.getNewBadges())
+            botRunner.addNode(nodeFromBadge(badge));
+    }
+
+    private Node nodeFromBadge(Badge badge) {
         // TODO: Think of a unified way to construct Nodes programmatically. Should it be done in the view holders? Factories?
 
         String badgeName = botType.name().toLowerCase() + "_" + badge.getGraphName();
