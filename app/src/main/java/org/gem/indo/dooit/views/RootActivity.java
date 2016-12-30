@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatDelegate;
 import org.gem.indo.dooit.DooitApplication;
 import org.gem.indo.dooit.helpers.Persisted;
 import org.gem.indo.dooit.views.main.MainActivity;
+import org.gem.indo.dooit.views.onboarding.LoginActivity;
 import org.gem.indo.dooit.views.welcome.WelcomeActivity;
 
 import javax.inject.Inject;
@@ -28,7 +29,10 @@ public class RootActivity extends AppCompatActivity {
         //If the user has logged in
         if (persisted.hasToken()) {
             MainActivity.Builder.create(this).startActivityClearTop();
-        } else {
+        } else if (!persisted.isNewBotUser()){
+            LoginActivity.Builder.create(this).startActivityClearTop();
+        }
+        else{
             WelcomeActivity.Builder.create(this).startActivityClearTop();
         }
     }
