@@ -1,2 +1,3 @@
 
-- Tips webview now has a share button
+- Tips webview now has a share button.
+- Share button updated to the standard 3 dots.
