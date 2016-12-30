@@ -37,6 +37,7 @@ import org.gem.indo.dooit.views.helpers.activity.DooitActivityBuilder;
 import org.gem.indo.dooit.views.web.MinimalWebViewActivity;
 
 import java.net.SocketTimeoutException;
+import java.net.UnknownHostException;
 
 import javax.inject.Inject;
 
@@ -113,7 +114,7 @@ public class RegistrationActivity extends DooitActivity {
         setContentView(org.gem.indo.dooit.R.layout.activity_registration);
         ((DooitApplication) getApplication()).component.inject(this);
         ButterKnife.bind(this);
-        
+
         String stringTc = getResources().getString(org.gem.indo.dooit.R.string.reg_t_c);
         TextSpannableHelper spanTcHelper = new TextSpannableHelper();
 
@@ -128,7 +129,7 @@ public class RegistrationActivity extends DooitActivity {
 
         // Default gender
         gender.check(R.id.activity_registration_gender_girl);
-        
+
         textViewTC.setText(spanTcHelper.styleText(this, R.style.AppTheme_TextView_Bold_Small_Accented, stringTc));
         textViewLogin.setText(spanLoginHelper.styleText(this, R.style.AppTheme_TextView_Bold_Small_Accented, stringLogin));
         SquiggleBackgroundHelper.setBackground(this, R.color.purple, R.color.purple_light, background);
@@ -197,6 +198,8 @@ public class RegistrationActivity extends DooitActivity {
                             }
                         } else if (error.getCause() instanceof SocketTimeoutException) {
                             Snackbar.make(registerButton, R.string.connection_timed_out, Snackbar.LENGTH_LONG).show();
+                        } else if (error.getCause() instanceof UnknownHostException) {
+                            Snackbar.make(registerButton, R.string.connection_error, Snackbar.LENGTH_LONG).show();
                         }
                         dismissDialog();
                     }
@@ -281,14 +284,13 @@ public class RegistrationActivity extends DooitActivity {
             numberHint.setTextColor(ResourcesCompat.getColor(getResources(), android.R.color.white, getTheme()));
         }
 
-        if((TextUtils.isEmpty(email.getText())) && (TextUtils.isEmpty(number.getText()))){
+        if ((TextUtils.isEmpty(email.getText())) && (TextUtils.isEmpty(number.getText()))) {
             detailsValid = false;
             numberHint.setText(" ");
             emailHint.setText(" ");
             registrationOptionsLabel.setTextColor(ResourcesCompat.getColor(getResources(), android.R.color.holo_red_light, getTheme()));
-        }
-        else{
-            registrationOptionsLabel.setTextColor(ResourcesCompat.getColor(getResources(),android.R.color.white,getTheme()));
+        } else {
+            registrationOptionsLabel.setTextColor(ResourcesCompat.getColor(getResources(), android.R.color.white, getTheme()));
         }
 
         return detailsValid;
@@ -306,14 +308,12 @@ public class RegistrationActivity extends DooitActivity {
 
         Profile profile = new Profile();
 
-        if ((number.getText().toString() != "") && (email.getText().toString() != "")){
+        if ((number.getText().toString() != "") && (email.getText().toString() != "")) {
             profile.setMobile(number.getText().toString());
             user.setEmail(email.getText().toString());
-        }
-        else if(number.getText().toString() != ""){
+        } else if (number.getText().toString() != "") {
             profile.setMobile(number.getText().toString());
-        }
-        else if (email.getText().toString() != ""){
+        } else if (email.getText().toString() != "") {
             user.setEmail(email.getText().toString());
         }
 

@@ -28,6 +28,7 @@ import org.gem.indo.dooit.views.helpers.activity.DooitActivityBuilder;
 import org.gem.indo.dooit.views.main.MainActivity;
 
 import java.net.SocketTimeoutException;
+import java.net.UnknownHostException;
 
 import javax.inject.Inject;
 
@@ -95,6 +96,8 @@ public class LoginActivity extends DooitActivity {
                             }
                         }else if(error.getCause() instanceof SocketTimeoutException){
                             Snackbar.make(buttonLogin, R.string.connection_timed_out, Snackbar.LENGTH_LONG).show();
+                        }else if(error.getCause() instanceof UnknownHostException){
+                            Snackbar.make(buttonLogin, R.string.connection_error, Snackbar.LENGTH_LONG).show();
                         }
                         dismissDialog();
                     }
