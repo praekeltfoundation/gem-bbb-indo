@@ -6,6 +6,7 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.media.MediaBrowserCompat;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -13,6 +14,7 @@ import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
+import android.widget.Toast;
 
 import org.gem.indo.dooit.DooitApplication;
 import org.gem.indo.dooit.R;
@@ -29,11 +31,15 @@ import org.gem.indo.dooit.views.main.fragments.challenge.fragments.ChallengePict
 import org.gem.indo.dooit.views.main.fragments.challenge.fragments.ChallengeQuizFragment;
 import org.gem.indo.dooit.views.main.fragments.challenge.fragments.ChallengeRegisterFragment;
 
+import java.net.ConnectException;
+import java.net.UnknownHostException;
+
 import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
+import retrofit2.adapter.rxjava.HttpException;
 import rx.Subscription;
 import rx.functions.Action1;
 
@@ -142,11 +148,17 @@ public class ChallengeFragment extends MainFragment {
                     Snackbar.make(getView(), R.string.challenge_persisted_challenge_thrown_out, Snackbar.LENGTH_LONG);
                     challengeSubscription = challengeManager.retrieveCurrentChallenge(false, new DooitErrorHandler() {
                         @Override
-                        public void onError(DooitAPIError error) {
+                        public void onError(final DooitAPIError error) {
                             getActivity().runOnUiThread(new Runnable() {
                                 @Override
                                 public void run() {
-                                    Snackbar.make(getView(), R.string.challenge_could_not_connect_to_server, Snackbar.LENGTH_LONG).show();
+                                    if(error.getCause() instanceof ConnectException ||
+                                            error.getCause() instanceof UnknownHostException){
+                                        //Snackbar.make(getView(), R.string.challenge_could_not_connect_to_server, Snackbar.LENGTH_LONG).show();
+                                        Toast.makeText(context, R.string.challenge_could_not_connect_to_server, Toast.LENGTH_SHORT).show();
+                                    }else if(error.getCause() instanceof HttpException && (((HttpException) error.getCause()).code()) == 404){
+                                        //This means no challenge could be found on the server, for now just do nothing
+                                    }
                                 }
                             });
                         }
@@ -165,11 +177,17 @@ public class ChallengeFragment extends MainFragment {
                 Snackbar.make(getView(), R.string.challenge_persisted_challenge_thrown_out, Snackbar.LENGTH_LONG);
                 challengeSubscription = challengeManager.retrieveCurrentChallenge(false, new DooitErrorHandler() {
                     @Override
-                    public void onError(DooitAPIError error) {
+                    public void onError(final DooitAPIError error) {
                         getActivity().runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
-                                Snackbar.make(getView(), R.string.challenge_could_not_connect_to_server, Snackbar.LENGTH_LONG).show();
+                                if(error.getCause() instanceof ConnectException ||
+                                        error.getCause() instanceof UnknownHostException){
+                                    //Snackbar.make(getView(), R.string.challenge_could_not_connect_to_server, Snackbar.LENGTH_LONG).show();
+                                    Toast.makeText(context, R.string.challenge_could_not_connect_to_server, Toast.LENGTH_SHORT).show();
+                                }else if(error.getCause() instanceof HttpException && (((HttpException) error.getCause()).code()) == 404){
+                                    //This means no challenge could be found on the server, for now just do nothing
+                                }
                             }
                         });
                     }
@@ -183,11 +201,17 @@ public class ChallengeFragment extends MainFragment {
         }else{
             challengeSubscription = challengeManager.retrieveCurrentChallenge(false, new DooitErrorHandler() {
                 @Override
-                public void onError(DooitAPIError error) {
+                public void onError(final DooitAPIError error) {
                     getActivity().runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            Snackbar.make(getView(), R.string.challenge_could_not_connect_to_server, Snackbar.LENGTH_LONG).show();
+                            if(error.getCause() instanceof ConnectException ||
+                                    error.getCause() instanceof UnknownHostException){
+                                //Snackbar.make(getView(), R.string.challenge_could_not_connect_to_server, Snackbar.LENGTH_LONG).show();
+                                Toast.makeText(context, R.string.challenge_could_not_connect_to_server, Toast.LENGTH_SHORT).show();
+                            }else if(error.getCause() instanceof HttpException && (((HttpException) error.getCause()).code()) == 404){
+                                //This means no challenge could be found on the server, for now just do nothing
+                            }
                         }
                     });
                 }
