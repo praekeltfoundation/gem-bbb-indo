@@ -5,12 +5,7 @@ import android.text.TextUtils;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by Bernhard Müller on 11/7/2016.
- */
-
-public class Node extends BaseBotModel {
-    //    {
+//    {
 //        "name": "askGoalImage",
 //            "type": "choice",
 //            "text": "$(askGoalImage)",
@@ -19,6 +14,13 @@ public class Node extends BaseBotModel {
 //        { "name": "Skip", "value": "Skip", "text":"$(Skip)", "next": "askKnowGoalAmount"}
 //        ]
 //    },
+
+/**
+ * Created by Bernhard Müller on 11/7/2016.
+ */
+
+public class Node extends BaseBotModel {
+
     private String autoNext;
     // Multiple choice answers
     private List<Answer> answers = new ArrayList<>();
@@ -27,6 +29,12 @@ public class Node extends BaseBotModel {
     private String autoAnswer;
     // Allows a conversation to open a different screen
     private String autoNextScreen;
+
+    /**
+     * Explicit reference to the next model in the conversation. Used when programmatically building
+     * Nodes that are not in the feed.
+     */
+    private Node autoNextNode;
 
     public Node() {
         super(Node.class.toString());
@@ -46,12 +54,24 @@ public class Node extends BaseBotModel {
         return autoNext;
     }
 
+    public Node getAutoNextNode() {
+        return autoNextNode;
+    }
+
     public void setAutoNext(String autoNext) {
         this.autoNext = autoNext;
     }
 
+    public void setAutoNext(Node autoNextModel) {
+        this.autoNextNode = autoNextModel;
+    }
+
     public boolean hasAutoNext() {
         return !TextUtils.isEmpty(autoNext);
+    }
+
+    public boolean hasAutoNextNode() {
+        return autoNextNode != null;
     }
 
     public boolean isIconHidden() {

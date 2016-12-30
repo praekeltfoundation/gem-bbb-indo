@@ -168,7 +168,7 @@ public abstract class GoalBotController extends DooitBotController {
             Node introNode = new Node();
             introNode.setName(badgeName + "_intro");
             introNode.setType(BotMessageType.TEXT);
-            introNode.setAutoNext(badgeName);
+            introNode.setAutoNext(node);
 
             // TODO: Refactor Param parsing and populating into DooitBotController
             // TODO: Text is processed here because Nodes currently don't support having text sourced from somewhere that's not the strings.xml files

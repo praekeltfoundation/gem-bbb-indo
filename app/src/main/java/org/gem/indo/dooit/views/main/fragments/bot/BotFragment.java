@@ -500,6 +500,7 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
                 }
             }
         } else if (node.hasAutoNext()) {
+            // Auto next set from JSON
             if (BotMessageType.getValueOf(node.getType()) == BotMessageType.STARTCONVO) {
                 // Auto load next conversation
                 finishConversation();
@@ -510,6 +511,9 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
                 // Auto load next node in current conversation
                 getAndAddNode(node.getAutoNext(), true);
             }
+        } else if (node.hasAutoNextNode()) {
+            // Auto next set from Java code
+            addNode(node.getAutoNextNode());
         }
     }
 
