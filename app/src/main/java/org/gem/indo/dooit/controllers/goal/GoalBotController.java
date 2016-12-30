@@ -9,6 +9,9 @@ import org.gem.indo.dooit.api.managers.GoalManager;
 import org.gem.indo.dooit.controllers.DooitBotController;
 import org.gem.indo.dooit.helpers.Utils;
 import org.gem.indo.dooit.helpers.bot.BotRunner;
+import org.gem.indo.dooit.helpers.bot.param.ParamArg;
+import org.gem.indo.dooit.helpers.bot.param.ParamMatch;
+import org.gem.indo.dooit.helpers.bot.param.ParamParser;
 import org.gem.indo.dooit.models.Badge;
 import org.gem.indo.dooit.models.Tip;
 import org.gem.indo.dooit.models.bot.BaseBotModel;
@@ -147,8 +150,12 @@ public abstract class GoalBotController extends DooitBotController {
 
     protected Node nodeFromBadge(Badge badge) {
         // TODO: Think of a unified way to construct Nodes programmatically. Should it be done in the view holders? Factories?
+
+        String badgeName = botType.name().toLowerCase() + "_" + badge.getGraphName();
+
+        // Badge Graphic Display
         Node node = new Node();
-        node.setName(botType.name().toLowerCase() + "_" + badge.getGraphName());
+        node.setName(badgeName);
         node.setType(BotMessageType.BADGE);
         node.setText(null);
 
@@ -156,7 +163,24 @@ public abstract class GoalBotController extends DooitBotController {
         node.values.put(BotParamType.BADGE_IMAGE_URL.getKey(), badge.getImageUrl());
         node.values.put(BotParamType.BADGE_SOCIAL_URL.getKey(), badge.getSocialUrl());
 
-        return node;
+        if (badge.hasIntro()) {
+            // Badge Intro Text
+            Node introNode = new Node();
+            introNode.setName(badgeName + "_intro");
+            introNode.setType(BotMessageType.TEXT);
+            introNode.setAutoNext(badgeName);
+
+            // TODO: Refactor Param parsing and populating into DooitBotController
+            // TODO: Text is processed here because Nodes currently don't support having text sourced from somewhere that's not the strings.xml files
+            ParamMatch args = ParamParser.parse(badge.getIntro());
+            if (!args.isEmpty())
+                for (ParamArg arg : args.getArgs())
+                    resolveParam(introNode, BotParamType.byKey(arg.getKey()));
+            introNode.setProcessedText(args.process(introNode.values.getRawMap()));
+
+            return introNode;
+        } else
+            return node;
     }
 
     protected void runOnUiThread(Runnable runnable) {
