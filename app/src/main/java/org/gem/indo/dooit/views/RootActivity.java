@@ -26,12 +26,13 @@ public class RootActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         ((DooitApplication) getApplication()).component.inject(this);
 
-        //If the user has logged in
+        //If the user was logged in
         if (persisted.hasToken()) {
             MainActivity.Builder.create(this).startActivityClearTop();
-        } else if (!persisted.isNewBotUser()){
+        } // If the user logged out
+        else if (!persisted.isNewBotUser()){
             LoginActivity.Builder.create(this).startActivityClearTop();
-        }
+        } //User was never active in the app before
         else{
             WelcomeActivity.Builder.create(this).startActivityClearTop();
         }
