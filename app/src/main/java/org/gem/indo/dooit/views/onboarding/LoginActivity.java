@@ -144,7 +144,7 @@ public class LoginActivity extends DooitActivity {
         }
 
         if(!uValidator.isPasswordValid(password.getText().toString())){
-            valid = true;
+            valid = false;
             passwordHint.setText(uValidator.getResponseText());
             passwordHint.setTextColor(ResourcesCompat.getColor(getResources(), android.R.color.holo_red_light, getTheme()));
         } else {
