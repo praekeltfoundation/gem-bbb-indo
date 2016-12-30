@@ -1,2 +1,2 @@
 
-- Increased margin between favourite and share on tip cards
+- Tips webview now has a share button
