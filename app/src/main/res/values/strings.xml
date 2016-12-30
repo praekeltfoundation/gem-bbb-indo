@@ -117,8 +117,8 @@
     <string name="login_name">@string/label_name</string>
     <string name="login_password">@string/label_password</string>
     <string name="login_example_name">Example: Bina124</string>
-    <string name="login_example_email">Example: aulia@gmail.com</string>
     <string name="login_example_name_error_1">Name can\'t be blank</string>
+    <string name="login_example_email">Example: aulia@gmail.com</string>
     <string name="login_example_password">Must have at least 6 characters</string>
     <string name="login_example_password_error_1">Password can\'t be blank</string>
     <string name="login_progress_dialog_message">Logging in</string>
@@ -408,6 +408,10 @@
 
     <!-- Push Notifications -->
     <string name="notification_title_challenge_available">Challenge Available</string>
+
+    <!-- Sharing -->
+    <string name="share_chooser_tip_title">Share Tip on&#8230;</string>
+    <string name="share_chooser_badge_title">Share Badge on&#8230;</string>
 
     <!-- Dev only -->
     <string name="placeholder_label_short">Placeholder</string>

@@ -2,16 +2,16 @@ package org.gem.indo.dooit.views.main.fragments.bot.viewholders;
 
 import android.net.Uri;
 import android.support.v4.content.ContextCompat;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.TextView;
 
 import com.facebook.drawee.view.SimpleDraweeView;
 
 import org.gem.indo.dooit.R;
-import org.gem.indo.dooit.models.Badge;
-import org.gem.indo.dooit.models.enums.BotParamType;
-import org.gem.indo.dooit.models.goal.Goal;
+import org.gem.indo.dooit.helpers.social.SocialSharer;
 import org.gem.indo.dooit.models.bot.Node;
+import org.gem.indo.dooit.models.enums.BotParamType;
 import org.gem.indo.dooit.models.exceptions.BotCallbackRequired;
 import org.gem.indo.dooit.views.main.fragments.bot.adapters.BotAdapter;
 
@@ -36,7 +36,7 @@ public class BadgeViewHolder extends BaseBotViewHolder<Node> {
     View separator;
 
     @BindView(R.id.item_view_bot_badge_share)
-    TextView share;
+    TextView shareView;
 
     private BotAdapter botAdapter;
 
@@ -59,9 +59,23 @@ public class BadgeViewHolder extends BaseBotViewHolder<Node> {
 
         String title = dataModel.values.getString(BotParamType.BADGE_NAME.getKey());
         Uri imageUri = Uri.parse(dataModel.values.getString(BotParamType.BADGE_IMAGE_URL.getKey()));
+        String socialUrl = dataModel.values.getString(BotParamType.BADGE_SOCIAL_URL.getKey());
 
         setImageUri(image, imageUri);
+        if (!TextUtils.isEmpty(socialUrl)) {
+            final Uri socialUri = Uri.parse(socialUrl);
+            shareView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    new SocialSharer(getContext()).share(
+                            getContext().getText(R.string.share_chooser_badge_title),
+                            socialUri
+                    );
+                }
+            });
+        }
     }
+
     @Override
     protected void populateModel() {
         // Done in controller

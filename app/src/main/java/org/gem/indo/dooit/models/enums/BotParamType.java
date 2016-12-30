@@ -46,6 +46,7 @@ public enum BotParamType {
     // Badge
     BADGE_NAME("badge.name"),
     BADGE_IMAGE_URL("badge.image_url"),
+    BADGE_SOCIAL_URL("badge.social_url"),
     BADGE_EARNED_ON("badge.earned_on");
 
     private static Map<String, BotParamType> map = new HashMap<>();

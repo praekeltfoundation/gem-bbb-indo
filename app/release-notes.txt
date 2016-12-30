@@ -1,5 +1,10 @@
 
 - Notification icon updated to display on API 17 - 25
-- Snackbar on Tips, gets dismissed when switching tabs
+- Snackbar on Tips gets dismissed when switching tabs
 - Navigation bar updated to include text at all times
-- Validation is now a package and all validation is done using this package
+- Username validation on Registration and Login now consistent
+- Share Badge from Profile screen
+- Share Badge from Coach
+- Share Tip from Tip Archive screen
+- Share Tip from Coach
+- Format shares for Facebook
