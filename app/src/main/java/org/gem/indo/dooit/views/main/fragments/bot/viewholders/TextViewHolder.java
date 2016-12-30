@@ -52,10 +52,6 @@ public class TextViewHolder extends BaseBotViewHolder<Node> {
 
         textView.setText(dataModel.getProcessedText());
 
-//        String text = dataModel.getText(getContext());
-//        textView.setText(Utils.populateFromPersisted(persisted, botAdapter, text, model.getTextParams()));
-
-
         // Bot icon
         RelativeLayout.LayoutParams lp = ((RelativeLayout.LayoutParams) textView.getLayoutParams());
         if (dataModel.isIconHidden()) {
@@ -70,21 +66,20 @@ public class TextViewHolder extends BaseBotViewHolder<Node> {
 
     @Override
     protected void populateModel() {
-        ParamMatch args = ParamParser.parse(dataModel.getText(getContext()));
-        if (!args.isEmpty() && botAdapter.hasController()) {
-            BotController cb = botAdapter.getController();
-            for (ParamArg arg : args.getArgs())
-                cb.resolveParam(dataModel, BotParamType.byKey(arg.getKey()));
+        // Text may have been processed when creating a Node in Java code
+        if (!dataModel.hasProcessedText() && dataModel.hasText()) {
+            ParamMatch args = ParamParser.parse(dataModel.getText(getContext()));
+            if (!args.isEmpty() && botAdapter.hasController()) {
+                BotController cb = botAdapter.getController();
+                for (ParamArg arg : args.getArgs())
+                    cb.resolveParam(dataModel, BotParamType.byKey(arg.getKey()));
+            }
+            dataModel.setProcessedText(args.process(dataModel.values.getRawMap()));
         }
-        dataModel.setProcessedText(args.process(dataModel.values.getRawMap()));
     }
 
     @Override
     public void reset() {
         botIcon.setVisibility(View.VISIBLE);
     }
-
-    /*public Context getContext() {
-        return itemView.getContext();
-    }*/
 }

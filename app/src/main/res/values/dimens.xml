@@ -57,8 +57,8 @@
     <dimen name="bot_challenge_card_image_height">150dp</dimen>
     <dimen name="bot_challenge_card_vertical_margin">6dp</dimen>
 
-    <dimen name="bot_badge_card_width">250dp</dimen>
-    <dimen name="bot_badge_card_image_height">150dp</dimen>
+    <dimen name="bot_badge_card_width">200dp</dimen>
+    <dimen name="bot_badge_card_image_height">200dp</dimen>
     <dimen name="bot_badge_card_vertical_margin">6dp</dimen>
 
     <!-- Challenges -->

@@ -1,17 +1,23 @@
 package org.gem.indo.dooit.controllers.goal;
 
 import android.content.Context;
+import android.os.Handler;
+import android.os.Looper;
 
 import org.gem.indo.dooit.DooitApplication;
 import org.gem.indo.dooit.api.managers.GoalManager;
 import org.gem.indo.dooit.controllers.DooitBotController;
 import org.gem.indo.dooit.helpers.Utils;
+import org.gem.indo.dooit.helpers.bot.BotRunner;
+import org.gem.indo.dooit.helpers.bot.param.ParamArg;
+import org.gem.indo.dooit.helpers.bot.param.ParamMatch;
+import org.gem.indo.dooit.helpers.bot.param.ParamParser;
 import org.gem.indo.dooit.models.Badge;
 import org.gem.indo.dooit.models.Tip;
-import org.gem.indo.dooit.models.bot.Answer;
 import org.gem.indo.dooit.models.bot.BaseBotModel;
 import org.gem.indo.dooit.models.bot.Node;
 import org.gem.indo.dooit.models.challenge.BaseChallenge;
+import org.gem.indo.dooit.models.enums.BotCallType;
 import org.gem.indo.dooit.models.enums.BotMessageType;
 import org.gem.indo.dooit.models.enums.BotObjectType;
 import org.gem.indo.dooit.models.enums.BotParamType;
@@ -30,14 +36,18 @@ public abstract class GoalBotController extends DooitBotController {
     @Inject
     protected GoalManager goalManager;
 
+    protected BotRunner botRunner;
     protected Goal goal;
     protected BaseChallenge challenge;
     // The Tip to be shown at the end of the conversation
     protected Tip tip;
 
-    public GoalBotController(Context context, BotType botType, Goal goal, BaseChallenge challenge, Tip tip) {
+    private Handler handler = new Handler(Looper.getMainLooper());
+
+    public GoalBotController(Context context, BotRunner botRunner, BotType botType, Goal goal, BaseChallenge challenge, Tip tip) {
         super(context, botType);
         ((DooitApplication) context.getApplicationContext()).component.inject(this);
+        this.botRunner = botRunner;
         this.goal = goal;
         this.challenge = challenge;
         this.tip = tip;
@@ -112,6 +122,14 @@ public abstract class GoalBotController extends DooitBotController {
     }
 
     @Override
+    public boolean shouldSkip(BaseBotModel model) {
+        if (model.getCall() == BotCallType.ADD_BADGE && !goal.hasNewBadges())
+            return true;
+        else
+            return super.shouldSkip(model);
+    }
+
+    @Override
     public Object getObject() {
         return goal;
     }
@@ -131,8 +149,13 @@ public abstract class GoalBotController extends DooitBotController {
     }
 
     protected Node nodeFromBadge(Badge badge) {
+        // TODO: Think of a unified way to construct Nodes programmatically. Should it be done in the view holders? Factories?
+
+        String badgeName = botType.name().toLowerCase() + "_" + badge.getGraphName();
+
+        // Badge Graphic Display
         Node node = new Node();
-        node.setName(botType.name().toLowerCase() + badge.getGraphName());
+        node.setName(badgeName);
         node.setType(BotMessageType.BADGE);
         node.setText(null);
 
@@ -140,6 +163,27 @@ public abstract class GoalBotController extends DooitBotController {
         node.values.put(BotParamType.BADGE_IMAGE_URL.getKey(), badge.getImageUrl());
         node.values.put(BotParamType.BADGE_SOCIAL_URL.getKey(), badge.getSocialUrl());
 
-        return node;
+        if (badge.hasIntro()) {
+            // Badge Intro Text
+            Node introNode = new Node();
+            introNode.setName(badgeName + "_intro");
+            introNode.setType(BotMessageType.TEXT);
+            introNode.setAutoNext(node);
+
+            // TODO: Refactor Param parsing and populating into DooitBotController
+            // TODO: Text is processed here because Nodes currently don't support having text sourced from somewhere that's not the strings.xml files
+            ParamMatch args = ParamParser.parse(badge.getIntro());
+            if (!args.isEmpty())
+                for (ParamArg arg : args.getArgs())
+                    resolveParam(introNode, BotParamType.byKey(arg.getKey()));
+            introNode.setProcessedText(args.process(introNode.values.getRawMap()));
+
+            return introNode;
+        } else
+            return node;
+    }
+
+    protected void runOnUiThread(Runnable runnable) {
+        handler.post(runnable);
     }
 }

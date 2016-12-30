@@ -102,6 +102,10 @@ public abstract class BaseBotModel {
         this.next = next;
     }
 
+    public boolean hasNext() {
+        return !TextUtils.isEmpty(next);
+    }
+
     // Call keys
 
     public BotCallType getCall() {

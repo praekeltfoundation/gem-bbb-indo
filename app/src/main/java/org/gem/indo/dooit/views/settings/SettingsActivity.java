@@ -52,6 +52,9 @@ public class SettingsActivity extends DooitActivity {
     @BindView(R.id.settings_notifications_challenge_available)
     CompoundButton challengeAvailableSwitch;
 
+    @BindView(R.id.settings_notifications_saving_reminder)
+    CompoundButton savingReminderSwitch;
+
     @Inject
     DooitSharedPreferences dooitSharedPreferences;
 
@@ -97,6 +100,7 @@ public class SettingsActivity extends DooitActivity {
     protected void onResume() {
         super.onResume();
         challengeAvailableSwitch.setChecked(persisted.shouldNotify(NotificationType.CHALLENGE_AVAILABLE));
+        savingReminderSwitch.setChecked(persisted.shouldNotify(NotificationType.SAVING_REMINDER));
     }
 
     @OnClick(R.id.settings_account_change_name)
@@ -134,6 +138,11 @@ public class SettingsActivity extends DooitActivity {
     @OnCheckedChanged({R.id.settings_notifications_challenge_available})
     public void checkChallengeAvailable(CompoundButton button, boolean checked) {
         persisted.setNotify(NotificationType.CHALLENGE_AVAILABLE, checked);
+    }
+
+    @OnCheckedChanged({R.id.settings_notifications_saving_reminder})
+    public void checkSavingReminder(CompoundButton button, boolean checked) {
+        persisted.setNotify(NotificationType.SAVING_REMINDER, checked);
     }
 
     @OnClick({R.id.settings_about_terms})

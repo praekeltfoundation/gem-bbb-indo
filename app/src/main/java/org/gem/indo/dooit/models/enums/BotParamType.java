@@ -42,6 +42,9 @@ public enum BotParamType {
 
     // Tips
     TIP_INTRO("tip.intro"),
+    TIP_TITLE("tip.title"),
+    TIP_IMAGE_URL("tip.image_url"),
+    TIP_ARTICLE_URL("tip.article_url"),
 
     // Badge
     BADGE_NAME("badge.name"),

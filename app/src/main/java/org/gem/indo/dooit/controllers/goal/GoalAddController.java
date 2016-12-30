@@ -9,19 +9,19 @@ import org.gem.indo.dooit.api.DooitErrorHandler;
 import org.gem.indo.dooit.api.managers.FileUploadManager;
 import org.gem.indo.dooit.api.managers.GoalManager;
 import org.gem.indo.dooit.api.responses.EmptyResponse;
-import org.gem.indo.dooit.models.Badge;
-import org.gem.indo.dooit.models.challenge.BaseChallenge;
-import org.gem.indo.dooit.models.enums.BotCallType;
-import org.gem.indo.dooit.helpers.images.MediaUriHelper;
 import org.gem.indo.dooit.helpers.Persisted;
+import org.gem.indo.dooit.helpers.bot.BotRunner;
+import org.gem.indo.dooit.helpers.images.MediaUriHelper;
+import org.gem.indo.dooit.models.Badge;
 import org.gem.indo.dooit.models.Tip;
 import org.gem.indo.dooit.models.bot.Answer;
 import org.gem.indo.dooit.models.bot.BaseBotModel;
+import org.gem.indo.dooit.models.challenge.BaseChallenge;
+import org.gem.indo.dooit.models.enums.BotCallType;
 import org.gem.indo.dooit.models.enums.BotParamType;
 import org.gem.indo.dooit.models.enums.BotType;
 import org.gem.indo.dooit.models.goal.Goal;
 import org.gem.indo.dooit.views.main.MainActivity;
-import org.gem.indo.dooit.views.main.fragments.bot.adapters.BotAdapter;
 import org.joda.time.LocalDate;
 import org.joda.time.format.DateTimeFormat;
 
@@ -51,12 +51,9 @@ public class GoalAddController extends GoalBotController {
     @Inject
     Persisted persisted;
 
-    private BotAdapter botAdapter;
-
-    public GoalAddController(Activity activity, BotAdapter botAdapter, Goal goal, BaseChallenge challenge, Tip tip) {
-        super(activity, BotType.GOAL_ADD, goal, challenge, tip);
+    public GoalAddController(Activity activity, BotRunner botRunner, Goal goal, BaseChallenge challenge, Tip tip) {
+        super(activity, botRunner, BotType.GOAL_ADD, goal, challenge, tip);
         ((DooitApplication) activity.getApplication()).component.inject(this);
-        this.botAdapter = botAdapter;
         if (this.goal == null)
             this.goal = new Goal();
     }
@@ -66,6 +63,9 @@ public class GoalAddController extends GoalBotController {
         switch (key) {
             case POPULATE_GOAL:
                 doPopulate(answerLog);
+                break;
+            case ADD_BADGE:
+                doAddBadge();
                 break;
         }
     }
@@ -121,6 +121,11 @@ public class GoalAddController extends GoalBotController {
         persisted.saveConvoGoal(botType, goal);
     }
 
+    private void doAddBadge() {
+        for (Badge badge : goal.getNewBadges())
+            botRunner.addNode(nodeFromBadge(badge));
+    }
+
     private void doCreate(Map<String, Answer> answerLog, final BaseBotModel model,
                           final OnAsyncListener listener) {
         // Ready Goal request
@@ -149,9 +154,9 @@ public class GoalAddController extends GoalBotController {
             observe.subscribe(new Action1<Goal>() {
                 @Override
                 public void call(final Goal newGoal) {
-                    if (newGoal.hasNewBadges())
-                        for (Badge badge : newGoal.getNewBadges())
-                            botAdapter.addItem(nodeFromBadge(badge));
+                    // New Achievements is what we care about
+                    goal.addNewBadges(newGoal.getNewBadges());
+                    saveGoal();
                     uploadImage(newGoal, mimetype, new File(path));
                 }
             });
@@ -159,16 +164,15 @@ public class GoalAddController extends GoalBotController {
             observe.subscribe(new Action1<Goal>() {
                 @Override
                 public void call(Goal newGoal) {
-                    if (newGoal.hasNewBadges())
-                        for (Badge badge : newGoal.getNewBadges())
-                            botAdapter.addItem(nodeFromBadge(badge));
+                    goal.addNewBadges(newGoal.getNewBadges());
+                    saveGoal();
                 }
             });
         }
 
         // Persist goal so that when user leaves conversation and returns, the view holders can
         // display their previous data properly.
-        persisted.saveConvoGoal(botType, goal);
+        saveGoal();
     }
 
     private void uploadImage(Goal goal, String mimetype, File file) {
@@ -184,5 +188,9 @@ public class GoalAddController extends GoalBotController {
                     ((MainActivity) context).refreshGoals();
             }
         });
+    }
+
+    private void saveGoal() {
+        persisted.saveConvoGoal(botType, goal);
     }
 }

@@ -76,8 +76,8 @@ public class GoalInfoViewHolder extends BaseBotViewHolder<Node> {
         currentTextView.setText(CurrencyHelper.format(value));
         totalTextView.setText(getContext().getString(R.string.of_target_amount, CurrencyHelper.format(target)));
 
-        // Prefer a local image. Some conversations set the image from phone storage, and others
-        // rely on the remote image.
+        // Prefer a local imageView. Some conversations set the imageView from phone storage, and others
+        // rely on the remote imageView.
         if (hasLocalUri)
             image.setImageURI(localImageUri);
         else

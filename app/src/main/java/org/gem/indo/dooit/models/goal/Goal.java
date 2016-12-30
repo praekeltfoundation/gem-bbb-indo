@@ -11,6 +11,7 @@ import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -49,7 +50,7 @@ public class Goal {
     private Long prototype;
     // New badges are awarded on responses
     @SerializedName("new_badges")
-    private List<Badge> newBadges;
+    private List<Badge> newBadges = new ArrayList<>();
 
     // Local Properties
     private String localImageUri;
@@ -226,6 +227,10 @@ public class Goal {
 
     public boolean hasNewBadges() {
         return newBadges != null && !newBadges.isEmpty();
+    }
+
+    public void addNewBadges(Collection<Badge> badges) {
+        newBadges.addAll(badges);
     }
 
     public String getLocalImageUri() {

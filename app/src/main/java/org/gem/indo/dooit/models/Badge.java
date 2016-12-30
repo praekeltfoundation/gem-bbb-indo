@@ -19,6 +19,7 @@ public class Badge {
     private DateTime earnedOn;
     @SerializedName("social_url")
     private String socialUrl;
+    private String intro;
 
     public String getName() {
         return name;
@@ -51,5 +52,13 @@ public class Badge {
 
     public boolean hasSocialUrl() {
         return !TextUtils.isEmpty(socialUrl);
+    }
+
+    public String getIntro() {
+        return intro;
+    }
+
+    public boolean hasIntro() {
+        return !TextUtils.isEmpty(intro);
     }
 }

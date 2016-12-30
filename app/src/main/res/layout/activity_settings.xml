@@ -206,12 +206,12 @@
 
             <View
                 android:id="@+id/settings_notifications_a_separator"
-                style="@style/Divider"
-                android:layout_below="@id/settings_notifications_challenge_available"
-                android:visibility="gone" />
+                android:layout_width="match_parent"
+                android:layout_below="@+id/settings_notifications_challenge_available"
+                style="@style/Divider"/>
 
             <android.support.v7.widget.SwitchCompat
-                android:id="@+id/settings_notifications_b"
+                android:id="@+id/settings_notifications_saving_reminder"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/settings_notifications_a_separator"
@@ -219,18 +219,18 @@
                 android:maxLines="1"
                 android:paddingBottom="8dp"
                 android:paddingTop="8dp"
-                android:text="@string/placeholder_label_short"
+                android:text="@string/notification_title_saving_reminder"
                 android:textColor="@color/purple"
                 android:textStyle="bold"
                 android:textAppearance="@style/AppTheme.TextView.Settings.Item"
-                android:visibility="gone"
                 />
 
             <View
                 android:id="@+id/settings_notifications_b_separator"
+                android:layout_width="match_parent"
+                android:layout_below="@+id/settings_notifications_saving_reminder"
                 style="@style/Divider"
-                android:layout_below="@id/settings_notifications_b"
-                android:visibility="gone" />
+                android:visibility="gone"/>
 
             <android.support.v7.widget.SwitchCompat
                 android:id="@+id/settings_notifications_c"

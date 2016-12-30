@@ -8,8 +8,8 @@
 - Share Tip from Tip Archive screen
 - Share Tip from Coach
 - Format shares for Facebook
+- Implemented Savings Reminder Push Notification
 - Fixed Feedback Form Spinner selected item not displaying
 - Removed pink indicator on Feedback text field
 - Fixed Feedback title style
 - Changed title of Report a Problem screen
-
