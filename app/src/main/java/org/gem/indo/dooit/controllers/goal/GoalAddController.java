@@ -20,11 +20,13 @@ import org.gem.indo.dooit.models.enums.BotCallType;
 import org.gem.indo.dooit.models.enums.BotParamType;
 import org.gem.indo.dooit.models.enums.BotType;
 import org.gem.indo.dooit.models.goal.Goal;
+import org.gem.indo.dooit.models.goal.GoalPrototype;
 import org.gem.indo.dooit.views.main.MainActivity;
 import org.joda.time.LocalDate;
 import org.joda.time.format.DateTimeFormat;
 
 import java.io.File;
+import java.util.List;
 import java.util.Map;
 
 import javax.inject.Inject;
@@ -50,8 +52,9 @@ public class GoalAddController extends GoalBotController {
     @Inject
     Persisted persisted;
 
-    public GoalAddController(Activity activity, BotRunner botRunner, Goal goal, BaseChallenge challenge, Tip tip) {
-        super(activity, botRunner, BotType.GOAL_ADD, goal, challenge, tip);
+    public GoalAddController(Activity activity, BotRunner botRunner, List<GoalPrototype> prototypes,
+                             Goal goal, BaseChallenge challenge, Tip tip) {
+        super(activity, botRunner, BotType.GOAL_ADD, prototypes, goal, challenge, tip);
         ((DooitApplication) activity.getApplication()).component.inject(this);
         if (this.goal == null)
             this.goal = new Goal();

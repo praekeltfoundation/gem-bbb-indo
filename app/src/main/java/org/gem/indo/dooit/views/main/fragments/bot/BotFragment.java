@@ -310,6 +310,7 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
             case DEFAULT:
             case GOAL_ADD:
                 return new GoalAddController(getActivity(), this,
+                        persisted.loadGoalProtos(),
                         persisted.loadConvoGoal(botType),
                         persisted.loadConvoChallenge(botType),
                         persisted.loadConvoTip());

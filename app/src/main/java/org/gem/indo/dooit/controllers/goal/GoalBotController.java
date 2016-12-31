@@ -27,6 +27,8 @@ import org.gem.indo.dooit.models.goal.Goal;
 import org.gem.indo.dooit.models.goal.GoalPrototype;
 import org.gem.indo.dooit.views.helpers.activity.CurrencyHelper;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 import javax.inject.Inject;
@@ -41,6 +43,7 @@ public abstract class GoalBotController extends DooitBotController {
     protected GoalManager goalManager;
 
     protected BotRunner botRunner;
+    protected List<GoalPrototype> prototypes = new ArrayList<>();
     protected Goal goal;
     protected BaseChallenge challenge;
     // The Tip to be shown at the end of the conversation
@@ -48,13 +51,20 @@ public abstract class GoalBotController extends DooitBotController {
 
     private Handler handler = new Handler(Looper.getMainLooper());
 
-    public GoalBotController(Context context, BotRunner botRunner, BotType botType, Goal goal, BaseChallenge challenge, Tip tip) {
+    public GoalBotController(Context context, BotRunner botRunner, BotType botType, Goal goal,
+                             BaseChallenge challenge, Tip tip) {
         super(context, botType);
         ((DooitApplication) context.getApplicationContext()).component.inject(this);
         this.botRunner = botRunner;
         this.goal = goal;
         this.challenge = challenge;
         this.tip = tip;
+    }
+
+    public GoalBotController(Context context, BotRunner botRunner, BotType botType,
+                             List<GoalPrototype> prototypes, Goal goal, BaseChallenge challenge, Tip tip) {
+        this(context, botRunner, botType, goal, challenge, tip);
+        this.prototypes.addAll(prototypes);
     }
 
     @Override
@@ -159,6 +169,8 @@ public abstract class GoalBotController extends DooitBotController {
     @Override
     public Object getObject(BotObjectType objType) {
         switch (objType) {
+            case GOAL_PROTOTYPES:
+                return prototypes;
             case GOAL:
                 return goal;
             case CHALLENGE:
