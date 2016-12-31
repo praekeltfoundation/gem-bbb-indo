@@ -47,7 +47,8 @@ public class Goal {
     private double weeklyAverage;
     private long user;
     // The id of the predefined Goal. null means custom.
-    private Long prototype;
+    @SerializedName("prototype_id")
+    private Long prototypeId;
     // New badges are awarded on responses
     @SerializedName("new_badges")
     private List<Badge> newBadges = new ArrayList<>();
@@ -55,6 +56,7 @@ public class Goal {
     // Local Properties
     private String localImageUri;
     private boolean imageFromProto = false;
+    private GoalPrototype prototype;
 
     public long getId() {
         return id;
@@ -70,6 +72,10 @@ public class Goal {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public boolean hasName() {
+        return !TextUtils.isEmpty(name);
     }
 
     public double getValue() {
@@ -174,16 +180,16 @@ public class Goal {
         this.user = user;
     }
 
-    public Long getPrototype() {
-        return prototype;
+    public Long getPrototypeId() {
+        return prototypeId;
     }
 
-    public void setPrototype(Long prototype) {
-        this.prototype = prototype;
+    public void setPrototypeId(Long prototypeId) {
+        this.prototypeId = prototypeId;
     }
 
     public boolean isCustom() {
-        return prototype == null;
+        return prototypeId == null;
     }
 
     public void setTransactions(List<GoalTransaction> transactions) {
@@ -260,5 +266,17 @@ public class Goal {
 
     public boolean isMissed() {
         return new Date().after(endDate.toDate());
+    }
+
+    public GoalPrototype getPrototype() {
+        return prototype;
+    }
+
+    public void setPrototype(GoalPrototype prototype) {
+        this.prototype = prototype;
+    }
+
+    public boolean hasPrototype() {
+        return prototype != null;
     }
 }

@@ -363,14 +363,17 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
 
         if (shouldAdd(answer))
             getBotAdapter().addItem(answer);
+
+        if (answer.hasInputKey() && hasController())
+            controller.input(answer.getInputKey(), answer);
+
         conversationRecyclerView.scrollToPosition(getBotAdapter().getItemCount() - 1);
         persisted.saveConversationState(type, getBotAdapter().getDataSet());
 
-        if (!TextUtils.isEmpty(answer.getNext())) {
+        if (answer.hasNext())
             getAndAddNode(answer.getNext());
-        } else {
+        else
             answerView.setData(new ArrayList<>());
-        }
     }
 
     private Map<String, Answer> createAnswerLog(List<BaseBotModel> conversation) {

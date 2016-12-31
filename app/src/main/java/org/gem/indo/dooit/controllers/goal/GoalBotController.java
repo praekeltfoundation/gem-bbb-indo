@@ -24,6 +24,7 @@ import org.gem.indo.dooit.models.enums.BotObjectType;
 import org.gem.indo.dooit.models.enums.BotParamType;
 import org.gem.indo.dooit.models.enums.BotType;
 import org.gem.indo.dooit.models.goal.Goal;
+import org.gem.indo.dooit.models.goal.GoalPrototype;
 import org.gem.indo.dooit.views.helpers.activity.CurrencyHelper;
 
 import java.util.Map;
@@ -71,7 +72,10 @@ public abstract class GoalBotController extends DooitBotController {
 
         switch (paramType) {
             case GOAL_NAME:
-                model.values.put(key, goal.getName());
+                if (goal.hasName())
+                    model.values.put(key, goal.getName());
+                else if (goal.hasPrototype())
+                    model.values.put(key, goal.getPrototype().getName());
                 break;
             case GOAL_VALUE:
                 model.values.put(key, goal.getValue());
@@ -121,14 +125,20 @@ public abstract class GoalBotController extends DooitBotController {
     }
 
     @Override
-    public void input(BotParamType inputType, Object value) {
-        // TODO: Currently unused
+    public void input(BotParamType inputType, Answer answer) {
         switch (inputType) {
+            case GOAL_PROTO:
+                goal.setPrototype(new GoalPrototype(
+                        answer.values.getLong(BotParamType.GOAL_PROTO_ID.getKey()),
+                        answer.values.getString(BotParamType.GOAL_PROTO_NAME.getKey()),
+                        answer.values.getString(BotParamType.GOAL_PROTO_IMAGE_URL.getKey())
+                ));
+                break;
             case GOAL_NAME:
-                goal.setName((String) value);
+                goal.setName(answer.getValue());
                 break;
             case GOAL_TARGET:
-                goal.setTarget((Double) value);
+                goal.setTarget(Double.parseDouble(answer.getValue()));
                 break;
         }
     }

@@ -9,14 +9,11 @@ import org.gem.indo.dooit.models.bot.Answer;
 import org.gem.indo.dooit.models.bot.BaseBotModel;
 import org.gem.indo.dooit.models.challenge.BaseChallenge;
 import org.gem.indo.dooit.models.enums.BotCallType;
-import org.gem.indo.dooit.models.enums.BotMessageType;
 import org.gem.indo.dooit.models.enums.BotObjectType;
 import org.gem.indo.dooit.models.enums.BotParamType;
 import org.gem.indo.dooit.models.enums.BotType;
 import org.gem.indo.dooit.models.goal.Goal;
-import org.gem.indo.dooit.views.main.fragments.bot.adapters.BotAdapter;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -41,7 +38,7 @@ public class ReturningUserController extends DooitBotController {
     }
 
     @Override
-    public void input(BotParamType inputType, Object value) {
+    public void input(BotParamType inputType, Answer answer) {
 
     }
 

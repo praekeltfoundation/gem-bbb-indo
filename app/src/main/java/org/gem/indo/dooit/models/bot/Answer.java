@@ -53,6 +53,10 @@ public class Answer extends BaseBotModel {
         return null;
     }
 
+    public void setInputKey(BotParamType key) {
+        inputKey = key.getKey();
+    }
+
     public boolean hasInputKey() {
         return !TextUtils.isEmpty(inputKey);
     }

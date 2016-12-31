@@ -12,7 +12,6 @@ import org.gem.indo.dooit.api.responses.EmptyResponse;
 import org.gem.indo.dooit.helpers.Persisted;
 import org.gem.indo.dooit.helpers.bot.BotRunner;
 import org.gem.indo.dooit.helpers.images.MediaUriHelper;
-import org.gem.indo.dooit.models.Badge;
 import org.gem.indo.dooit.models.Tip;
 import org.gem.indo.dooit.models.bot.Answer;
 import org.gem.indo.dooit.models.bot.BaseBotModel;
@@ -89,7 +88,7 @@ public class GoalAddController extends GoalBotController {
             // Predefined Goal branch
             Answer answer = answerLog.get("goal_add_ask_goal_gallery");
 
-            goal.setPrototype(answer.values.getLong(BotParamType.GOAL_PROTO_ID.getKey()));
+            goal.setPrototypeId(answer.values.getLong(BotParamType.GOAL_PROTO_ID.getKey()));
             goal.setName(answer.values.getString(BotParamType.GOAL_PROTO_NAME.getKey()));
             goal.setLocalImageUri(answer.values.getString(BotParamType.GOAL_PROTO_IMAGE_URL.getKey()));
             goal.setImageFromProto(true);

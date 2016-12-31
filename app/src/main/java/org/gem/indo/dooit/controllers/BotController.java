@@ -89,7 +89,7 @@ public abstract class BotController {
 
     // TODO: Currently unused. Input is retrieved by scanning conversation history. We need to
     // decide how to store values while the "Accept" or "Cancel" is outstanding.
-    public abstract void input(BotParamType inputType, Object value);
+    public abstract void input(BotParamType inputType, Answer answer);
 
     /**
      * Provide a conversation level model object that a Node may require.
