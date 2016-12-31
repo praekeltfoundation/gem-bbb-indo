@@ -18,7 +18,7 @@ public class Answer extends BaseBotModel {
     private String inlineEditHint;
     private String value;
     // Input is currently unused
-    @SerializedName("input")
+    @SerializedName("onAnswerInput")
     private String inputKey;
     private String nextOnFinish;
     private String removeOnSelect;

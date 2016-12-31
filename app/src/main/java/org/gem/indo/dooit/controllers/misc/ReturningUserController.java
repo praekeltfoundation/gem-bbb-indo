@@ -38,7 +38,7 @@ public class ReturningUserController extends DooitBotController {
     }
 
     @Override
-    public void input(BotParamType inputType, Answer answer) {
+    public void onAnswerInput(BotParamType inputType, Answer answer) {
 
     }
 

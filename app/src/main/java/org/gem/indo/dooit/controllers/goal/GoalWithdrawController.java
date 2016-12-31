@@ -55,7 +55,7 @@ public class GoalWithdrawController extends GoalBotController {
     }
 
     @Override
-    public void input(BotParamType inputType, Answer answer) {
+    public void onAnswerInput(BotParamType inputType, Answer answer) {
 
     }
 
