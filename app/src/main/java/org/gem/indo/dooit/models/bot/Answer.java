@@ -47,9 +47,11 @@ public class Answer extends BaseBotModel {
     }
 
     public BotParamType getInputKey() {
-        inputKey = inputKey.replace("$(", "").replace(")", "");
-        if (hasInputKey())
-            return BotParamType.byKey(inputKey);
+        if (!TextUtils.isEmpty(inputKey)) {
+            inputKey = inputKey.replace("$(", "").replace(")", "");
+            if (hasInputKey())
+                return BotParamType.byKey(inputKey);
+        }
         return null;
     }
 
