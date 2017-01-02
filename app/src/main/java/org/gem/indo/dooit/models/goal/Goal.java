@@ -47,7 +47,7 @@ public class Goal {
     private double weeklyAverage;
     private long user;
     // The id of the predefined Goal. null means custom.
-    @SerializedName("prototype_id")
+    @SerializedName("prototype")
     private Long prototypeId;
     // New badges are awarded on responses
     @SerializedName("new_badges")
@@ -56,7 +56,8 @@ public class Goal {
     // Local Properties
     private String localImageUri;
     private boolean imageFromProto = false;
-    private GoalPrototype prototype;
+    // Server does not allow prototype object in Goal
+    transient private GoalPrototype prototype;
 
     public long getId() {
         return id;
