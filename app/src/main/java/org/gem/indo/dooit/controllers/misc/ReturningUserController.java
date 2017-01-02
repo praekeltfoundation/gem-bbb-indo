@@ -89,6 +89,14 @@ public class ReturningUserController extends DooitBotController {
     }
 
     @Override
+    public boolean shouldSkip(BaseBotModel model) {
+        if (model.getName().equals("convo_default_return_q_summary"))
+            return goals.isEmpty();
+        else
+            return super.shouldSkip(model);
+    }
+
+    @Override
     public Object getObject(BotObjectType objType) {
         switch (objType) {
             case CHALLENGE:

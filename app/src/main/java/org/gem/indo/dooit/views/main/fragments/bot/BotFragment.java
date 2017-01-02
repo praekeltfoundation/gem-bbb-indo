@@ -412,8 +412,13 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
         // Nodes can be skipped completely. They will not be added to the adapter, and thus not
         // persisted. The `shouldSkip` method on the controller will not be called again when the
         // conversation is loaded.
-        if (hasController() && controller.shouldSkip(node) && node.hasNext()) {
-            getAndAddNode(node.getNext());
+        if (hasController() && controller.shouldSkip(node) && node.hasAnyNext()) {
+            if (node.hasNext())
+                getAndAddNode(node.getNext());
+            else if (node.hasAutoNext())
+                getAndAddNode(node.getAutoNext());
+            else if (node.hasAutoNextNode())
+                addNode(node.getAutoNextNode());
             return;
         }
 
