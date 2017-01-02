@@ -202,10 +202,23 @@ public class Goal {
         calculateValue();
     }
 
-    public GoalTransaction createTransaction(double value) {
+    /**
+     * @param value The monetary value of the transaction
+     * @param clamp When true, and the transaction withdraws enough to put the Goal in the negative,
+     *              the value of the transaction will be clamped so the Goal value will be 0.
+     * @return The created transaction.
+     */
+    public GoalTransaction createTransaction(double value, boolean clamp) {
+        if (clamp && this.value + value < 0)
+            value = -this.value;
+
         GoalTransaction trans = new GoalTransaction(DateTime.now(), value);
         addTransaction(trans);
         return trans;
+    }
+
+    public GoalTransaction createTransaction(double value) {
+        return createTransaction(value, true);
     }
 
     public boolean canDeposit() {
