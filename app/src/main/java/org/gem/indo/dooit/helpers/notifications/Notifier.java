@@ -42,7 +42,7 @@ public class Notifier {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
             builder.setSmallIcon(R.drawable.ic_d_notification_icon_small);
         else
-            builder.setSmallIcon(R.mipmap.ic_launcher);
+            builder.setSmallIcon(R.drawable.ic_notification);
 
         // Setting up an artificial activity stack allows the notification to be clicked, open the
         // provided Activity class, and close the app when user clicks back.

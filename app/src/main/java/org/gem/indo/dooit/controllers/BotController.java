@@ -6,8 +6,8 @@ import android.os.Looper;
 
 import org.gem.indo.dooit.models.bot.Answer;
 import org.gem.indo.dooit.models.bot.BaseBotModel;
+import org.gem.indo.dooit.models.bot.Node;
 import org.gem.indo.dooit.models.enums.BotCallType;
-import org.gem.indo.dooit.models.enums.BotMessageType;
 import org.gem.indo.dooit.models.enums.BotObjectType;
 import org.gem.indo.dooit.models.enums.BotParamType;
 import org.gem.indo.dooit.models.enums.BotType;
@@ -89,7 +89,7 @@ public abstract class BotController {
 
     // TODO: Currently unused. Input is retrieved by scanning conversation history. We need to
     // decide how to store values while the "Accept" or "Cancel" is outstanding.
-    public abstract void input(BotParamType inputType, Object value);
+    public abstract void onAnswerInput(BotParamType inputType, Answer answer);
 
     /**
      * Provide a conversation level model object that a Node may require.
@@ -131,6 +131,17 @@ public abstract class BotController {
 
     public boolean filter(Answer answer) {
         return true;
+    }
+
+    /**
+     * Allows the controller to decide whether a Node should be added. When `true` is returned, the
+     * `next` Node will be added instead.
+     *
+     * @param model
+     * @return Instructs the bot runner whether the Node should be skipped.
+     */
+    public boolean shouldSkip(BaseBotModel model) {
+        return false;
     }
 
     public interface OnAsyncListener {

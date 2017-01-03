@@ -72,7 +72,7 @@ public enum MainViewPagerPositions {
 
         TextView text = (TextView) view.findViewById(R.id.tab_custom_title);
         text.setVisibility(View.VISIBLE);
-
+        text.setTextColor(ContextCompat.getColor(view.getContext(),R.color.purple));
     }
 
     public static void setInActiveState(View view) {
@@ -80,10 +80,11 @@ public enum MainViewPagerPositions {
         icon.setColorFilter(ContextCompat.getColor(view.getContext(), R.color.light_grey), PorterDuff.Mode.MULTIPLY);
 
         RelativeLayout.LayoutParams lp = (RelativeLayout.LayoutParams) icon.getLayoutParams();
-        lp.width = view.getContext().getResources().getDimensionPixelSize(R.dimen.nav_icon_size_large);
-        lp.height = view.getContext().getResources().getDimensionPixelSize(R.dimen.nav_icon_size_large);
+        lp.width = view.getContext().getResources().getDimensionPixelSize(R.dimen.nav_icon_size_small);
+        lp.height = view.getContext().getResources().getDimensionPixelSize(R.dimen.nav_icon_size_small);
 
         TextView text = (TextView) view.findViewById(R.id.tab_custom_title);
-        text.setVisibility(View.GONE);
+        text.setVisibility(View.VISIBLE);
+        text.setTextColor(ContextCompat.getColor(view.getContext(),R.color.grey));
     }
 }

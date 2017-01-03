@@ -8,6 +8,7 @@ import org.gem.indo.dooit.api.interfaces.UserAPI;
 import org.gem.indo.dooit.api.requests.ChangePassword;
 import org.gem.indo.dooit.api.requests.ChangeSecurityQuestion;
 import org.gem.indo.dooit.api.requests.ChangeUser;
+import org.gem.indo.dooit.api.requests.ChangeUserEmail;
 import org.gem.indo.dooit.api.requests.ResetPassword;
 import org.gem.indo.dooit.api.responses.EmptyResponse;
 import org.gem.indo.dooit.models.User;
@@ -41,6 +42,10 @@ public class UserManager extends DooitManager {
 
     public Observable<EmptyResponse> updateUser(long userId, String name, DooitErrorHandler errorHandler) {
         return useNetwork(userAPI.renameUser(userId,new ChangeUser(name)), errorHandler);
+    }
+
+    public Observable<EmptyResponse> updateUserEmail(long userId, String email, DooitErrorHandler errorHandler) {
+        return useNetwork(userAPI.changeUserEmail(userId,new ChangeUserEmail(email)), errorHandler);
     }
 
     public Observable<EmptyResponse> changePassword(long userId, String oldPassword,String newPassword,  DooitErrorHandler errorHandler) {

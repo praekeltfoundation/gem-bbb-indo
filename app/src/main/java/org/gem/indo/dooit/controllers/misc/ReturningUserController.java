@@ -3,19 +3,17 @@ package org.gem.indo.dooit.controllers.misc;
 import android.content.Context;
 
 import org.gem.indo.dooit.controllers.DooitBotController;
+import org.gem.indo.dooit.helpers.bot.BotRunner;
 import org.gem.indo.dooit.models.Tip;
 import org.gem.indo.dooit.models.bot.Answer;
 import org.gem.indo.dooit.models.bot.BaseBotModel;
 import org.gem.indo.dooit.models.challenge.BaseChallenge;
 import org.gem.indo.dooit.models.enums.BotCallType;
-import org.gem.indo.dooit.models.enums.BotMessageType;
 import org.gem.indo.dooit.models.enums.BotObjectType;
 import org.gem.indo.dooit.models.enums.BotParamType;
 import org.gem.indo.dooit.models.enums.BotType;
 import org.gem.indo.dooit.models.goal.Goal;
-import org.gem.indo.dooit.views.main.fragments.bot.adapters.BotAdapter;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -25,22 +23,22 @@ import java.util.Map;
 
 public class ReturningUserController extends DooitBotController {
 
-    private BotAdapter botAdapter;
+    private BotRunner botRunner;
     private BaseChallenge challenge;
     private List<Goal> goals;
     private Tip tip;
 
-    public ReturningUserController(Context context, BotAdapter botAdapter,
+    public ReturningUserController(Context context, BotRunner botRunner,
                                    List<Goal> goals, BaseChallenge challenge, Tip tip) {
         super(context, BotType.RETURNING_USER);
-        this.botAdapter = botAdapter;
+        this.botRunner = botRunner;
         this.goals = goals;
         this.challenge = challenge;
         this.tip = tip;
     }
 
     @Override
-    public void input(BotParamType inputType, Object value) {
+    public void onAnswerInput(BotParamType inputType, Answer answer) {
 
     }
 
@@ -88,6 +86,14 @@ public class ReturningUserController extends DooitBotController {
             default:
                 return true;
         }
+    }
+
+    @Override
+    public boolean shouldSkip(BaseBotModel model) {
+        if (model.getName().equals("convo_default_return_q_summary"))
+            return goals.isEmpty();
+        else
+            return super.shouldSkip(model);
     }
 
     @Override
