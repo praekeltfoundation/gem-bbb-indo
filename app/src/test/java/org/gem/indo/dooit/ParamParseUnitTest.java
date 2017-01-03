@@ -3,6 +3,7 @@ package org.gem.indo.dooit;
 import org.gem.indo.dooit.helpers.bot.param.ParamMatch;
 import org.gem.indo.dooit.helpers.bot.param.ParamParser;
 import org.gem.indo.dooit.helpers.bot.param.exceptions.InvalidArgCountError;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import java.util.HashMap;
@@ -58,5 +59,18 @@ public class ParamParseUnitTest {
         map.put("three", 3);
 
         assertEquals("1 null 3", match.process(map));
+    }
+
+    /**
+     * Test to verify that a String which contains `%s` doesn't break processing
+     * @throws Exception
+     */
+    @Test
+    @Ignore("TODO: Known issue")
+    public void process_stringFormatSymbols() throws Exception {
+        ParamMatch match = ParamParser.parse("$(one) $(two) $(three) %s");
+        Object[] objects = new Object[] {1, 2, 3};
+
+//        assertEquals("1 2 3 %s", match.process(objects));
     }
 }
