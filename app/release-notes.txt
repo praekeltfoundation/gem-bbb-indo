@@ -7,6 +7,8 @@
 - Share Badge from Coach
 - Share Tip from Tip Archive screen
 - Share Tip from Coach
+- Share button updated to the standard 3 dots
+- Tips webview now has a share button
 - Format shares for Facebook
 - Implemented Savings Reminder Push Notification
 - Fixed Feedback Form Spinner selected item not displaying
