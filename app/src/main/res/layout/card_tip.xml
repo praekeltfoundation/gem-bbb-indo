@@ -26,7 +26,7 @@
         <Button
             android:id="@+id/card_tip_button_overlay"
             android:layout_width="match_parent"
-            android:layout_height="150dp"
+            android:layout_height="@dimen/tip_card_button_overlay_height"
             android:background="#00000000"
             tools:background="#33CC0000"/>
 
@@ -42,7 +42,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="bottom|start"
                 android:layout_marginStart="5dp"
-                android:layout_weight="1"
+                android:layout_weight="2"
                 app:rowGravity="left"
                 app:tagBackground="@drawable/ic_d_tag"
                 app:tagPaddingBottom="4dp"
@@ -55,8 +55,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="end|bottom"
-                android:layout_marginBottom="3dp"
-                android:layout_weight="2">
+                android:paddingBottom="4dp"
+                android:layout_weight="3">
 
                 <ImageView
                     android:id="@+id/card_tip_share"
