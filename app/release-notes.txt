@@ -13,3 +13,4 @@
 - Removed pink indicator on Feedback text field
 - Fixed Feedback title style
 - Changed title of Report a Problem screen
+- Returning users are taken to login screen
