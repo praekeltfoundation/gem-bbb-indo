@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v4.content.res.ResourcesCompat;
-import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
@@ -21,6 +20,7 @@ import org.gem.indo.dooit.api.managers.AuthenticationManager;
 import org.gem.indo.dooit.api.responses.AuthenticationResponse;
 import org.gem.indo.dooit.helpers.Persisted;
 import org.gem.indo.dooit.helpers.SquiggleBackgroundHelper;
+import org.gem.indo.dooit.helpers.TextSpannableHelper;
 import org.gem.indo.dooit.services.NotificationAlarm;
 import org.gem.indo.dooit.validatior.UserValidator;
 import org.gem.indo.dooit.views.DooitActivity;
@@ -62,6 +62,9 @@ public class LoginActivity extends DooitActivity {
     @BindView(R.id.activity_login_forgot_text_view)
     TextView forgotLink;
 
+    @BindView(R.id.activity_login_not_registered)
+    TextView notRegister;
+
     @Inject
     AuthenticationManager authenticationManager;
 
@@ -74,6 +77,12 @@ public class LoginActivity extends DooitActivity {
         ((DooitApplication) getApplication()).component.inject(this);
         setContentView(org.gem.indo.dooit.R.layout.activity_login);
         ButterKnife.bind(this);
+
+        String stringRegister = getResources().getString(R.string.not_registered);
+        TextSpannableHelper spanRegistrationHelper = new TextSpannableHelper();
+
+        notRegister.setText(spanRegistrationHelper.styleText(this, R.style.AppTheme_TextView_Bold_Small_Accented, stringRegister));
+
         SquiggleBackgroundHelper.setBackground(this, R.color.purple, R.color.purple_light, background);
     }
 
@@ -132,6 +141,9 @@ public class LoginActivity extends DooitActivity {
     protected void forgot() {
         PasswordResetActivity.Builder.create(this).startActivity();
     }
+
+    @OnClick(R.id.activity_login_not_registered)
+    protected void register(){RegistrationActivity.Builder.create(this).startActivity();}
 
     private boolean detailsValid() {
         boolean valid = true;

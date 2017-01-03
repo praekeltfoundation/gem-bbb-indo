@@ -109,6 +109,7 @@
 
     <string name="already_registered_log_in">Already registered? *Log in*</string>
     <string name="forgot_password">Forgot password?</string>
+    <string name="not_registered">Not registered? *Register*</string>
     <string name="reg_progress_dialog_message">Registering</string>
     <string name="reg_duplicate_username_error">A user with the username already exists</string>
 
