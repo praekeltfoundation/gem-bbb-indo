@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.support.design.widget.Snackbar;
-import android.support.v4.content.res.ResourcesCompat;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -20,8 +19,8 @@ import org.gem.indo.dooit.api.managers.UserManager;
 import org.gem.indo.dooit.api.responses.AuthenticationResponse;
 import org.gem.indo.dooit.api.responses.EmptyResponse;
 import org.gem.indo.dooit.helpers.Persisted;
-import org.gem.indo.dooit.helpers.ViewValidation;
 import org.gem.indo.dooit.models.User;
+import org.gem.indo.dooit.validatior.UserValidator;
 import org.gem.indo.dooit.views.DooitActivity;
 import org.gem.indo.dooit.views.helpers.activity.DooitActivityBuilder;
 
@@ -71,27 +70,12 @@ public class ChangePasswordActivity extends DooitActivity {
         handler = new Handler(Looper.getMainLooper());
     }
 
-    public boolean isPasswordValid() {
-        boolean valid = true;
-        ViewValidation.Result result = ViewValidation.isPasswordValid(password.getText().toString());
-        if (passwordOld.getText().toString().equals(password.getText().toString())) {
-            valid = false;
-            passwordHint.setText(R.string.profile_change_password_error_1);
-            passwordHint.setTextColor(ResourcesCompat.getColor(getResources(), android.R.color.holo_red_light, getTheme()));
-        } else if (result.valid) {
-            passwordHint.setText(R.string.reg_example_password);
-            passwordHint.setTextColor(ResourcesCompat.getColor(getResources(), org.gem.indo.dooit.R.color.white, getTheme()));
-        } else {
-            passwordHint.setText(result.message);
-            passwordHint.setTextColor(ResourcesCompat.getColor(getResources(), android.R.color.holo_red_light, getTheme()));
-        }
-        return valid;
-    }
-
     @OnClick(R.id.activity_change_password_button)
     public void changePassword() {
-        if (!isPasswordValid())
+        UserValidator uValidator = new UserValidator();
+        if (!uValidator.isPasswordValid(this.password.getText().toString()))
             return;
+
         final User user = persisted.getCurrentUser();
         final String newPassword = this.password.getText().toString();
         final String oldPassword = this.passwordOld.getText().toString();

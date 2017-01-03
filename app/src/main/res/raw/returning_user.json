@@ -16,11 +16,19 @@
         "type": "text",
         "text": "$(convo_default_return_q_progress_intro)",
         "autoNext": "convo_default_return_q_summary"
-        
     },
+
+
+
+
     {
         "name": "convo_default_return_q_summary",
         "type": "goalListSummary",
+        "autoNext": "convo_default_return_q_options"
+    },
+    {
+        "name": "convo_default_return_q_options",
+        "type": "blank",
         "answers": [
             {
                 "name": "convo_default_return_a_progress_intro_tip",
