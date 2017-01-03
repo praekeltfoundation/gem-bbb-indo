@@ -12,7 +12,6 @@ import org.gem.indo.dooit.api.responses.EmptyResponse;
 import org.gem.indo.dooit.helpers.Persisted;
 import org.gem.indo.dooit.helpers.bot.BotRunner;
 import org.gem.indo.dooit.helpers.images.MediaUriHelper;
-import org.gem.indo.dooit.models.Badge;
 import org.gem.indo.dooit.models.Tip;
 import org.gem.indo.dooit.models.bot.Answer;
 import org.gem.indo.dooit.models.bot.BaseBotModel;
@@ -21,11 +20,13 @@ import org.gem.indo.dooit.models.enums.BotCallType;
 import org.gem.indo.dooit.models.enums.BotParamType;
 import org.gem.indo.dooit.models.enums.BotType;
 import org.gem.indo.dooit.models.goal.Goal;
+import org.gem.indo.dooit.models.goal.GoalPrototype;
 import org.gem.indo.dooit.views.main.MainActivity;
 import org.joda.time.LocalDate;
 import org.joda.time.format.DateTimeFormat;
 
 import java.io.File;
+import java.util.List;
 import java.util.Map;
 
 import javax.inject.Inject;
@@ -51,8 +52,9 @@ public class GoalAddController extends GoalBotController {
     @Inject
     Persisted persisted;
 
-    public GoalAddController(Activity activity, BotRunner botRunner, Goal goal, BaseChallenge challenge, Tip tip) {
-        super(activity, botRunner, BotType.GOAL_ADD, goal, challenge, tip);
+    public GoalAddController(Activity activity, BotRunner botRunner, List<GoalPrototype> prototypes,
+                             Goal goal, BaseChallenge challenge, Tip tip) {
+        super(activity, botRunner, BotType.GOAL_ADD, prototypes, goal, challenge, tip);
         ((DooitApplication) activity.getApplication()).component.inject(this);
         if (this.goal == null)
             this.goal = new Goal();
@@ -64,9 +66,8 @@ public class GoalAddController extends GoalBotController {
             case POPULATE_GOAL:
                 doPopulate(answerLog);
                 break;
-            case ADD_BADGE:
-                doAddBadge();
-                break;
+            default:
+                super.onCall(key, answerLog, model);
         }
     }
 
@@ -90,7 +91,7 @@ public class GoalAddController extends GoalBotController {
             // Predefined Goal branch
             Answer answer = answerLog.get("goal_add_ask_goal_gallery");
 
-            goal.setPrototype(answer.values.getLong(BotParamType.GOAL_PROTO_ID.getKey()));
+            goal.setPrototypeId(answer.values.getLong(BotParamType.GOAL_PROTO_ID.getKey()));
             goal.setName(answer.values.getString(BotParamType.GOAL_PROTO_NAME.getKey()));
             goal.setLocalImageUri(answer.values.getString(BotParamType.GOAL_PROTO_IMAGE_URL.getKey()));
             goal.setImageFromProto(true);
@@ -119,11 +120,6 @@ public class GoalAddController extends GoalBotController {
         goal.calculateFields();
 
         persisted.saveConvoGoal(botType, goal);
-    }
-
-    private void doAddBadge() {
-        for (Badge badge : goal.getNewBadges())
-            botRunner.addNode(nodeFromBadge(badge));
     }
 
     private void doCreate(Map<String, Answer> answerLog, final BaseBotModel model,

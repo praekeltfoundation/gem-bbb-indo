@@ -1,8 +1,8 @@
 package org.gem.indo.dooit.views.main.fragments.bot.viewholders;
 
-import android.content.Context;
 import android.support.v4.content.ContextCompat;
 import android.text.InputType;
+import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
@@ -26,15 +26,16 @@ import butterknife.ButterKnife;
 
 public class AnswerInlineNumberEditViewHolder extends BaseBotViewHolder<Answer> {
 
+    private static final String DEFAULT = "0";
+
     @BindView(R.id.item_view_bot_inline_edit_currency_container)
     View background;
-
 
     @BindView(R.id.item_view_bot_inline_edit_view)
     EditText editText;
 
     @BindView(R.id.item_view_bot_inline_edit_currency_view)
-    TextView textViewCurrency;
+    TextView currencySymbol;
 
     BotAdapter botAdapter;
     HashtagView.TagsClickListener tagsClickListener;
@@ -51,7 +52,7 @@ public class AnswerInlineNumberEditViewHolder extends BaseBotViewHolder<Answer> 
     @Override
     public void populate(Answer model) {
         super.populate(model);
-        textViewCurrency.setText(CurrencyHelper.getCurrencySymbol());
+        currencySymbol.setText(CurrencyHelper.getCurrencySymbol());
         editText.setText("");
         editText.setHint(dataModel.getInlineEditHint(getContext()));
         editText.setImeActionLabel("Done", EditorInfo.IME_ACTION_DONE);
@@ -64,8 +65,11 @@ public class AnswerInlineNumberEditViewHolder extends BaseBotViewHolder<Answer> 
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                 if (EditorInfo.IME_ACTION_DONE == actionId) {
                     dismissKeyboard(editText);
+
+                    String input = v.getText().toString();
+
                     Answer inputAnswer = new Answer();
-                    inputAnswer.setValue(v.getText().toString());
+                    inputAnswer.setValue(!TextUtils.isEmpty(input) ? input : DEFAULT);
                     inputAnswer.setName(dataModel.getName());
                     inputAnswer.setRemoveOnSelect(dataModel.getName());
                     inputAnswer.setNext(dataModel.getNextOnFinish());

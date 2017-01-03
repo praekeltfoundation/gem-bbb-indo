@@ -8,8 +8,8 @@ import android.view.ViewGroup;
 import com.greenfrvr.hashtagview.HashtagView;
 
 import org.gem.indo.dooit.R;
-import org.gem.indo.dooit.models.goal.GoalPrototype;
 import org.gem.indo.dooit.models.bot.Node;
+import org.gem.indo.dooit.models.goal.GoalPrototype;
 import org.gem.indo.dooit.views.main.fragments.bot.viewholders.GoalGalleryItemViewHolder;
 
 import java.util.List;
@@ -38,12 +38,12 @@ public class GoalGalleryAdapter extends RecyclerView.Adapter<GoalGalleryItemView
     public GoalGalleryItemViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.item_view_bot_carousel_card, parent, false);
-        return new GoalGalleryItemViewHolder(view, listener);
+        return new GoalGalleryItemViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(GoalGalleryItemViewHolder holder, int position) {
-        holder.populate(prototypes.get(position), dataModel);
+        holder.populate(prototypes.get(position), dataModel, listener);
     }
 
     public void setDataModel(Node dataModel) {

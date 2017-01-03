@@ -2,7 +2,6 @@ package org.gem.indo.dooit.views.main.fragments.tip.filters;
 
 import android.widget.Filter;
 
-import org.gem.indo.dooit.helpers.interfaces.VariableChangeListener;
 import org.gem.indo.dooit.models.Tip;
 import org.gem.indo.dooit.views.main.fragments.tip.adapters.TipsListAdapter;
 
@@ -16,7 +15,7 @@ import java.util.List;
 public class TipsListFilter extends Filter {
 
     private TipsListAdapter adapter;
-    private VariableChangeListener variableChangeListener;
+    private OnFilterDoneListener listener;
 
     public TipsListFilter(TipsListAdapter adapter) {
         this.adapter = adapter;
@@ -62,15 +61,24 @@ public class TipsListFilter extends Filter {
                     adapter.addFiltered((Tip) obj);
                 }
             }
-        } else if (constraint == null) {
+        } else if (constraint == null)
             // No filter
             adapter.clearFiltered();
-        }
+
         adapter.notifyDataSetChanged();
-        variableChangeListener.onVariableChanged(adapter.getItemCount());
+        notifyFilterDone(results);
     }
 
-    public void setVariableChangeListener(VariableChangeListener variableChangeListener) {
-        this.variableChangeListener = variableChangeListener;
+    public void setOnFilterDoneListener(OnFilterDoneListener listener) {
+        this.listener = listener;
+    }
+
+    private void notifyFilterDone(FilterResults results) {
+        if (listener != null && results != null)
+            listener.onFilterDone(results.count);
+    }
+
+    public interface OnFilterDoneListener {
+        void onFilterDone(int filterCount);
     }
 }
