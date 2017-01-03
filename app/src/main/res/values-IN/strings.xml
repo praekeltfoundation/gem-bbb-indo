@@ -7,6 +7,7 @@
 
     <!-- Activity Titles  -->
     <string name="title_activity_main"></string>
+    <string name="title_activity_registration">Registrasi</string>
     <string name="title_activity_profile">Profil</string>
     <string name="title_activity_profile_image">Upload Foto</string>
     <string name="title_activity_settings">Pengaturan</string>
