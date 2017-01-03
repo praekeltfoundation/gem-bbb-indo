@@ -1,5 +1,8 @@
 package org.gem.indo.dooit.helpers.bot.param;
 
+import org.gem.indo.dooit.helpers.bot.param.exceptions.AlreadyProcessedError;
+import org.gem.indo.dooit.helpers.bot.param.exceptions.InvalidArgCountError;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -52,10 +55,10 @@ public class ParamMatch {
      */
     public String process(Object[] objects) {
         if (isProcessed())
-            throw new RuntimeException(TAG + " is already processed.");
+            throw new AlreadyProcessedError(TAG + " is already processed.");
 
         if (args.length != objects.length)
-            throw new RuntimeException(
+            throw new InvalidArgCountError(
                     String.format("%s received an unexpected number of objects. Expected %d, received %d",
                     TAG, args.length, objects.length));
 
