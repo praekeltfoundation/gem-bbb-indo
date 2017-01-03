@@ -18,3 +18,4 @@
 - Fixed Bot displaying Goal name as `null`
 - Fixed crash on empty currency input
 - Fixed negative Goal value
+- Option to return to register page from login
