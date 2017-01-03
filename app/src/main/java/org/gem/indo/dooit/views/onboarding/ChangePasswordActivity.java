@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.support.design.widget.Snackbar;
+import android.support.v4.content.res.ResourcesCompat;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -72,9 +73,18 @@ public class ChangePasswordActivity extends DooitActivity {
 
     @OnClick(R.id.activity_change_password_button)
     public void changePassword() {
+        hideKeyboard();
         UserValidator uValidator = new UserValidator();
-        if (!uValidator.isPasswordValid(this.password.getText().toString()))
+        if (!uValidator.isPasswordValid(this.password.getText().toString())){
+            passwordHint.setText(uValidator.getResponseText());
+            passwordHint.setTextColor(ResourcesCompat.getColor(getResources(), android.R.color.holo_red_light, getTheme()));
             return;
+        }
+        else{
+            passwordHint.setText(R.string.reg_example_password);
+            passwordHint.setTextColor(ResourcesCompat.getColor(getResources(), android.R.color.white, getTheme()));
+        }
+
 
         final User user = persisted.getCurrentUser();
         final String newPassword = this.password.getText().toString();
