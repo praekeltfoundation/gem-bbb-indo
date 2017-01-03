@@ -51,4 +51,4 @@ before_script:
   - sudo ./createPassfile -pwd $KEYSTORE_PASS;
 
 script:
-    - if [ $TRAVIS_BRANCH == "release_candidate" ]; then ./gradlew assembleStagingRelease crashlyticsUploadDistributionStagingRelease; else ./gradlew assembleStagingDebug --stacktrace --debug; fi
+    - if [ $TRAVIS_BRANCH == "release_candidate" ]; then ./gradlew assembleStagingRelease crashlyticsUploadDistributionStagingRelease; else ./gradlew assembleStagingDebug; fi
