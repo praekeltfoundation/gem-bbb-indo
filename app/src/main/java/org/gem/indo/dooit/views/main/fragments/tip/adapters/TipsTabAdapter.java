@@ -76,7 +76,7 @@ public class TipsTabAdapter extends FragmentStatePagerAdapter {
     }
 
     public View getTabView(int position) {
-        View view = LayoutInflater.from(context).inflate(org.gem.indo.dooit.R.layout.tab_tips, null);
+        View view = LayoutInflater.from(context).inflate(org.gem.indo.dooit.R.layout.item_view_tip_tab, null);
 
         TipsViewPagerPositions pos = TipsViewPagerPositions.getValueOf(position);
         TextView textView = (TextView) view.findViewById(R.id.tab_tip_textview);

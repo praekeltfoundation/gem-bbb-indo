@@ -3,7 +3,6 @@ package org.gem.indo.dooit.views.settings.adapters;
 import android.content.Context;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,7 +14,6 @@ import org.gem.indo.dooit.R;
 import org.gem.indo.dooit.models.enums.FeedbackType;
 
 import java.util.Collection;
-import java.util.List;
 
 /**
  * Created by Rudolph Jacobs on 2016-12-05.
@@ -63,7 +61,7 @@ public class FeedbackTypeAdapter extends ArrayAdapter<FeedbackType> {
     private View getCustomView(int position, View convertView, @NonNull ViewGroup parent) {
         View v;
         if (convertView == null) {
-            v = LayoutInflater.from(context).inflate(R.layout.spinner_item, parent, false);
+            v = LayoutInflater.from(context).inflate(R.layout.item_view_spinner, parent, false);
         } else {
             v = convertView;
         }
