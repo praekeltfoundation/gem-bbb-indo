@@ -3,7 +3,6 @@ package org.gem.indo.dooit;
 import org.gem.indo.dooit.helpers.bot.param.ParamMatch;
 import org.gem.indo.dooit.helpers.bot.param.ParamParser;
 import org.gem.indo.dooit.helpers.bot.param.exceptions.InvalidArgCountError;
-import org.junit.Ignore;
 import org.junit.Test;
 
 import java.util.HashMap;
@@ -27,7 +26,7 @@ public class ParamParseUnitTest {
     @Test
     public void process_objectArray() throws Exception {
         ParamMatch match = ParamParser.parse("$(one) $(two) $(three)");
-        Object[] objects = new Object[] {1, "2", 3};
+        Object[] objects = new Object[]{1, "2", 3};
 
         assertEquals("1 2 3", match.process(objects));
     }
@@ -35,7 +34,7 @@ public class ParamParseUnitTest {
     @Test(expected = InvalidArgCountError.class)
     public void process_objectArray_missingArgs() throws Exception {
         ParamMatch match = ParamParser.parse("$(one) $(two) $(three)");
-        Object[] objects = new Object[] {1, 2};
+        Object[] objects = new Object[]{1, 2};
 
         match.process(objects);
     }
@@ -63,14 +62,14 @@ public class ParamParseUnitTest {
 
     /**
      * Test to verify that a String which contains `%s` doesn't break processing
+     *
      * @throws Exception
      */
     @Test
-    @Ignore("TODO: Known issue")
     public void process_stringFormatSymbols() throws Exception {
-        ParamMatch match = ParamParser.parse("$(one) $(two) $(three) %s");
-        Object[] objects = new Object[] {1, 2, 3};
+        ParamMatch match = ParamParser.parse("$(one) $(two) $(three) %s %d");
+        Object[] objects = new Object[]{1, 2, 3};
 
-//        assertEquals("1 2 3 %s", match.process(objects));
+        assertEquals("1 2 3 %s %d", match.process(objects));
     }
 }
