@@ -15,6 +15,7 @@
 - Removed pink indicator on Feedback text field
 - Fixed Feedback title style
 - Changed title of Report a Problem screen
+- Returning users are taken to login screen
 - Fixed Bot displaying Goal name as `null`
 - Fixed crash on empty currency input
 - Fixed negative Goal value
