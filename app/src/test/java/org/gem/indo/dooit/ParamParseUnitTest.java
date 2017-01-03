@@ -2,6 +2,7 @@ package org.gem.indo.dooit;
 
 import org.gem.indo.dooit.helpers.bot.param.ParamMatch;
 import org.gem.indo.dooit.helpers.bot.param.ParamParser;
+import org.gem.indo.dooit.helpers.bot.param.exceptions.AlreadyProcessedError;
 import org.gem.indo.dooit.helpers.bot.param.exceptions.InvalidArgCountError;
 import org.junit.Test;
 
@@ -58,6 +59,14 @@ public class ParamParseUnitTest {
         map.put("three", 3);
 
         assertEquals("1 null 3", match.process(map));
+    }
+
+    @Test(expected = AlreadyProcessedError.class)
+    public void process_alreadyProcessed() throws Exception {
+        ParamMatch match = ParamParser.parse("$(one) $(two) $(three)");
+        Object[] objects = new Object[]{1, 2, 3};
+        match.process(objects);
+        match.process(objects);
     }
 
     /**
