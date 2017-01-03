@@ -26,15 +26,14 @@ public class RootActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         ((DooitApplication) getApplication()).component.inject(this);
 
-        //If the user hsa logged in
-        if (persisted.hasToken()) {
+        if (persisted.hasToken())
+            // Logged in
             MainActivity.Builder.create(this).startActivityClearTop();
-        } // If the user logged out
-        else if (!persisted.isNewBotUser()){
+        else if (!persisted.isNewBotUser())
+            // Logged out returning user
             LoginActivity.Builder.create(this).startActivityClearTop();
-        } //User was never active in the app before
-        else{
+        else
+            //User was never active in the app before
             WelcomeActivity.Builder.create(this).startActivityClearTop();
-        }
     }
 }
