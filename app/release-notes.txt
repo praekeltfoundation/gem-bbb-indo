@@ -13,3 +13,4 @@
 - Removed pink indicator on Feedback text field
 - Fixed Feedback title style
 - Changed title of Report a Problem screen
+- Validation feedback on information changes in settings
