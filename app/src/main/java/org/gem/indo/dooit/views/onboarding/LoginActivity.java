@@ -103,9 +103,9 @@ public class LoginActivity extends DooitActivity {
                             for (String msg : error.getErrorResponse().getErrors()) {
                                 Snackbar.make(buttonLogin, msg, Snackbar.LENGTH_LONG).show();
                             }
-                        }else if(error.getCause() instanceof SocketTimeoutException){
+                        } else if (error.getCause() instanceof SocketTimeoutException) {
                             Snackbar.make(buttonLogin, R.string.connection_timed_out, Snackbar.LENGTH_LONG).show();
-                        }else if(error.getCause() instanceof UnknownHostException){
+                        } else if (error.getCause() instanceof UnknownHostException) {
                             Snackbar.make(buttonLogin, R.string.connection_error, Snackbar.LENGTH_LONG).show();
                         }
                         dismissDialog();
@@ -143,13 +143,15 @@ public class LoginActivity extends DooitActivity {
     }
 
     @OnClick(R.id.activity_login_not_registered)
-    protected void register(){RegistrationActivity.Builder.create(this).startActivity();}
+    protected void register() {
+        RegistrationActivity.Builder.create(this).startActivityClearTop();
+    }
 
     private boolean detailsValid() {
         boolean valid = true;
         UserValidator uValidator = new UserValidator();
 
-        if(!uValidator.isNameValid(name.getText().toString())){
+        if (!uValidator.isNameValid(name.getText().toString())) {
             valid = false;
             nameHint.setText(uValidator.getResponseText());
             nameHint.setTextColor(ResourcesCompat.getColor(getResources(), android.R.color.holo_red_light, getTheme()));
@@ -158,7 +160,7 @@ public class LoginActivity extends DooitActivity {
             nameHint.setTextColor(ResourcesCompat.getColor(getResources(), android.R.color.white, getTheme()));
         }
 
-        if(!uValidator.isPasswordValid(password.getText().toString())){
+        if (!uValidator.isPasswordValid(password.getText().toString())) {
             valid = false;
             passwordHint.setText(uValidator.getResponseText());
             passwordHint.setTextColor(ResourcesCompat.getColor(getResources(), android.R.color.holo_red_light, getTheme()));
