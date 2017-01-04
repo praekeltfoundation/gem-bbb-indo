@@ -7,6 +7,7 @@
 
     <!-- Activity Titles  -->
     <string name="title_activity_main"></string>
+    <string name="title_activity_registration">Registrasi</string>
     <string name="title_activity_profile">Profil</string>
     <string name="title_activity_profile_image">Upload Foto</string>
     <string name="title_activity_settings">Pengaturan</string>
@@ -45,6 +46,7 @@
 
     <string name="label_change_name">Ubah Nama</string>
     <string name="label_change_password">Ubah Kata Sandi</string>
+    <string name="label_change_email">Change Email</string>
     <string name="label_settings">Pengaturan</string>
     <string name="label_build_info">@string/title_activity_build_info</string>
     <string name="label_share">Bagikan</string>
@@ -100,6 +102,7 @@
     <string name="reg_example_number_error_1">Maaf, kolom nomor HP harus terisi.</string>
     <string name="reg_example_number_error_2">Nomor HP harus lebih panjang dari 9 angka</string>
     <string name="reg_example_number_error_3">Nomor HP harus lebih pendek dari 15 angka</string>
+    <string name="reg_example_number_error_4">Mobile Number contains illegal characters</string>
     <string name="reg_example_password">Kata sandi harus terdiri dari 6 karakter.</string>
     <string name="reg_example_password_error_1">Maaf, kolom kata sandi harus terisi.</string>
     <string name="reg_example_password_error_2">Kata sandi harus lebih panjang dari 6 karakter.</string>
@@ -353,6 +356,7 @@
     <string name="profile_section_account">Akunmu</string>
     <string name="profile_account_change_name">Ubah nama</string>
     <string name="profile_account_change_password">Ubah kata sandi</string>
+    <string name="profile_account_change_email">Change email</string>
     <string name="profile_account_sign_out">Keluar</string>
     <string name="profile_section_notifications">Notifikasi</string>
     <string name="profile_section_help">Tentang Dooit</string>
@@ -377,6 +381,10 @@
     <string name="profile_change_password_progress">Kami mengubah kata sandimu&#8230;</string>
     <string name="profile_change_password_success">Kata sandi sudah diubah</string>
     <string name="profile_change_password_error_1">Kata sandi tidak boleh sama</string>
+
+    <!-- Profile: Change Email Address -->
+    <string name="profile_change_email_progress">We\'re changing your email address&#8230;</string>
+    <string name="profile_change_email_success">Your email address has been changed to \'%s\'</string>
 
     <!-- Profile: Build Info -->
     <string name="profile_build_info_app_id">App ID</string>
@@ -423,6 +431,7 @@
     <string name="heading_registration">Registration</string>
     <string name="heading_change_name">@string/label_change_name</string>
     <string name="heading_change_password">@string/label_change_password</string>
+    <string name="heading_change_email">@string/label_change_email</string>
 
     <string name="target_prefix_saved">sudah tersimpan</string>
     <string name="heading_current_saving_streak">Rekor menabung sekarang</string>
