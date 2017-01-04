@@ -21,6 +21,7 @@ import org.gem.indo.dooit.api.managers.UserManager;
 import org.gem.indo.dooit.api.responses.EmptyResponse;
 import org.gem.indo.dooit.helpers.Persisted;
 import org.gem.indo.dooit.models.User;
+import org.gem.indo.dooit.validatior.UserValidator;
 import org.gem.indo.dooit.views.DooitActivity;
 import org.gem.indo.dooit.views.helpers.activity.DooitActivityBuilder;
 
@@ -70,7 +71,8 @@ public class ChangeEmailAddressActivity extends DooitActivity {
 
     @OnClick(R.id.activity_change_email_button)
     public void changeEmail() {
-        if(!isEmailValid())
+        UserValidator uValidator = new UserValidator();
+        if(!uValidator.isEmailValid(this.email.getText().toString()))
             return;
         final User user = persisted.getCurrentUser();
         final String email = this.email.getText().toString();

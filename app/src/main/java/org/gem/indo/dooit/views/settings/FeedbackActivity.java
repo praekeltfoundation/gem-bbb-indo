@@ -110,7 +110,7 @@ public class FeedbackActivity extends DooitActivity {
         // Populate feedback types
         FeedbackTypeAdapter feedbackTypeArrayAdapter = new FeedbackTypeAdapter(
                 this,
-                R.layout.spinner_item,
+                R.layout.item_view_spinner,
                 R.layout.spinner_dropdown_item,
                 FeedbackType.values()
         );

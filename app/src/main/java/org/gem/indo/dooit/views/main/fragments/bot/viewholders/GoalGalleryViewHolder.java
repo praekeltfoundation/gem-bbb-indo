@@ -12,10 +12,14 @@ import org.gem.indo.dooit.DooitApplication;
 import org.gem.indo.dooit.R;
 import org.gem.indo.dooit.api.managers.GoalManager;
 import org.gem.indo.dooit.helpers.Persisted;
-import org.gem.indo.dooit.models.bot.Answer;
 import org.gem.indo.dooit.models.bot.Node;
+import org.gem.indo.dooit.models.enums.BotObjectType;
+import org.gem.indo.dooit.models.exceptions.BotCallbackRequired;
+import org.gem.indo.dooit.models.goal.GoalPrototype;
 import org.gem.indo.dooit.views.main.fragments.bot.adapters.BotAdapter;
 import org.gem.indo.dooit.views.main.fragments.bot.adapters.GoalGalleryAdapter;
+
+import java.util.List;
 
 import javax.inject.Inject;
 
@@ -36,9 +40,6 @@ public class GoalGalleryViewHolder extends BaseBotViewHolder<Node> {
     RecyclerView recyclerView;
 
     @Inject
-    Persisted persisted;
-
-    @Inject
     GoalManager goalManager;
 
     private Handler handler;
@@ -54,9 +55,14 @@ public class GoalGalleryViewHolder extends BaseBotViewHolder<Node> {
         this.botAdapter = botAdapter;
         this.listener = tagsClickListener;
 
+        if (!this.botAdapter.hasController())
+            throw new BotCallbackRequired(String.format("%s requires adapter to have callback", TAG));
+
+        List<GoalPrototype> prototypes = (List<GoalPrototype>) this.botAdapter.getController().getObject(BotObjectType.GOAL_PROTOTYPES);
+
         LinearLayoutManager manager = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
         recyclerView.setLayoutManager(manager);
-        galleryAdapter = new GoalGalleryAdapter(persisted.loadGoalProtos(), listener);
+        galleryAdapter = new GoalGalleryAdapter(prototypes, listener);
         recyclerView.setAdapter(galleryAdapter);
     }
 

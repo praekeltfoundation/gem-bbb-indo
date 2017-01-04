@@ -2,29 +2,22 @@ package org.gem.indo.dooit.controllers.goal;
 
 import android.app.Activity;
 
-import com.google.gson.Gson;
-
 import org.gem.indo.dooit.DooitApplication;
 import org.gem.indo.dooit.api.DooitAPIError;
 import org.gem.indo.dooit.api.DooitErrorHandler;
 import org.gem.indo.dooit.api.managers.GoalManager;
-import org.gem.indo.dooit.api.responses.EmptyResponse;
 import org.gem.indo.dooit.api.responses.TransactionResponse;
-import org.gem.indo.dooit.controllers.goal.GoalBotController;
 import org.gem.indo.dooit.helpers.bot.BotRunner;
 import org.gem.indo.dooit.models.Badge;
+import org.gem.indo.dooit.models.Tip;
+import org.gem.indo.dooit.models.bot.Answer;
+import org.gem.indo.dooit.models.bot.BaseBotModel;
 import org.gem.indo.dooit.models.challenge.BaseChallenge;
 import org.gem.indo.dooit.models.enums.BotCallType;
-import org.gem.indo.dooit.models.Tip;
 import org.gem.indo.dooit.models.enums.BotType;
 import org.gem.indo.dooit.models.goal.Goal;
 import org.gem.indo.dooit.models.goal.GoalTransaction;
-import org.gem.indo.dooit.models.bot.Answer;
-import org.gem.indo.dooit.models.bot.BaseBotModel;
 import org.gem.indo.dooit.views.main.MainActivity;
-import org.gem.indo.dooit.views.main.fragments.bot.adapters.BotAdapter;
-import org.joda.time.DateTime;
-import org.joda.time.LocalDate;
 
 import java.util.Map;
 
@@ -45,11 +38,6 @@ public class GoalDepositController extends GoalBotController {
     public GoalDepositController(Activity activity, BotRunner botRunner, Goal goal, BaseChallenge challenge, Tip tip) {
         super(activity, botRunner, BotType.GOAL_DEPOSIT, goal, challenge, tip);
         ((DooitApplication) activity.getApplication()).component.inject(this);
-    }
-
-    @Override
-    public void onCall(BotCallType key, Map<String, Answer> answerLog, BaseBotModel model) {
-
     }
 
     @Override
@@ -94,15 +82,7 @@ public class GoalDepositController extends GoalBotController {
         }).subscribe(new Action1<TransactionResponse>() {
             @Override
             public void call(final TransactionResponse response) {
-                if (response.hasNewBadges())
-                    runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            for (Badge badge : response.getNewBadges())
-                                botRunner.addNode(nodeFromBadge(badge));
-                        }
-                    });
-
+                goal.addNewBadges(response.getNewBadges());
                 if (context instanceof MainActivity)
                     ((MainActivity) context).refreshGoals();
             }

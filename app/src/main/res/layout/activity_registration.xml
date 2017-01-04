@@ -22,7 +22,7 @@
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="@dimen/registration_margin_vertical"
-            android:text="@string/heading_registration"
+            android:text="@string/title_activity_registration"
             android:textColor="@color/white"
             android:textStyle="bold" />
 

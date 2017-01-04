@@ -4,6 +4,7 @@ import com.google.gson.annotations.SerializedName;
 
 import org.gem.indo.dooit.models.Badge;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -13,7 +14,7 @@ import java.util.List;
 public class TransactionResponse {
 
     @SerializedName("new_badges")
-    List<Badge> newBadges;
+    List<Badge> newBadges = new ArrayList<>();
 
     public List<Badge> getNewBadges() {
         return newBadges;

@@ -35,4 +35,12 @@ public class GoalTransaction {
     public void setValue(double value) {
         this.value = value;
     }
+
+    public boolean isDeposit() {
+        return value > 0;
+    }
+
+    public boolean isWithdraw() {
+        return value <= 0;
+    }
 }
