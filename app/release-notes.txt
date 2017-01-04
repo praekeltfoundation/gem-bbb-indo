@@ -1,4 +1,6 @@
 
+## 0.0.12
+
 - Notification icon updated to display on API 17 - 25
 - Snackbar on Tips gets dismissed when switching tabs
 - Navigation bar updated to include text at all times
@@ -19,3 +21,6 @@
 - Fixed Bot displaying Goal name as `null`
 - Fixed crash on empty currency input
 - Fixed negative Goal value
+
+## 0.0.13
+- Main page swiping navigation was disabled
