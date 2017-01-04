@@ -126,11 +126,13 @@ public class TipsFragment extends Fragment implements OnTipsAvailableListener {
             tab.setCustomView(tipsTabAdapter.getTabView(i));
         }
 
+        // Default Tab
+        viewPager.setCurrentItem(TipsViewPagerPositions.ALL.getValue());
+
         // Set initial search hint
         String hint = getString(TipsViewPagerPositions.getValueOf(
                 viewPager.getCurrentItem()).getSearchRes());
         searchView.setHint(hint);
-
     }
 
     @OnClick(R.id.fragment_tips_list_filter_image_button)
