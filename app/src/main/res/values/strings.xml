@@ -124,6 +124,7 @@
     <string name="login_example_password">Must have at least 6 characters</string>
     <string name="login_example_password_error_1">Password can\'t be blank</string>
     <string name="login_progress_dialog_message">Logging in</string>
+    <string name="login_not_registered">Not registered? *Register*</string>
 
     <!-- Bot -->
     <string name="bot_carousel_card_select">Select</string>

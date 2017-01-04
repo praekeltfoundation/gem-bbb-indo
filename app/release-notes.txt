@@ -23,4 +23,6 @@
 - Fixed negative Goal value
 
 ## 0.0.13
+
 - Main page swiping navigation was disabled
+- Option to return to register page from login
