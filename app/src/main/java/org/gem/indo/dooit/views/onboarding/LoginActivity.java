@@ -78,7 +78,7 @@ public class LoginActivity extends DooitActivity {
         setContentView(org.gem.indo.dooit.R.layout.activity_login);
         ButterKnife.bind(this);
 
-        String stringRegister = getResources().getString(R.string.not_registered);
+        String stringRegister = getResources().getString(R.string.login_not_registered);
         TextSpannableHelper spanRegistrationHelper = new TextSpannableHelper();
 
         notRegister.setText(spanRegistrationHelper.styleText(this, R.style.AppTheme_TextView_Bold_Small_Accented, stringRegister));
