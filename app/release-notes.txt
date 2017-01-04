@@ -26,3 +26,5 @@
 
 - Main page swiping navigation was disabled
 - Option to return to register page from login
+- Validation feedback on information changes in settings
+
