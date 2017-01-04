@@ -18,7 +18,6 @@ import org.gem.indo.dooit.DooitApplication;
 import org.gem.indo.dooit.R;
 import org.gem.indo.dooit.api.DooitAPIError;
 import org.gem.indo.dooit.api.DooitErrorHandler;
-import org.gem.indo.dooit.helpers.interfaces.VariableChangeListener;
 import org.gem.indo.dooit.models.Tip;
 import org.gem.indo.dooit.views.main.fragments.tip.adapters.TipsListAdapter;
 import org.gem.indo.dooit.views.main.fragments.tip.filters.TipsListFilter;
@@ -31,7 +30,7 @@ import butterknife.ButterKnife;
 import rx.functions.Action1;
 
 
-public class TipsListFragment extends Fragment implements VariableChangeListener {
+public class TipsListFragment extends Fragment implements TipsListFilter.OnFilterDoneListener {
 
     private static final String TAG = TipsListFragment.class.getName();
     private static final String POS = "pos";
@@ -137,7 +136,7 @@ public class TipsListFragment extends Fragment implements VariableChangeListener
         adapter = new TipsListAdapter((DooitApplication) getActivity().getApplication());
         recyclerView.setAdapter(adapter);
         TipsListFilter temp = (TipsListFilter) adapter.getFilter();
-        temp.setVariableChangeListener(this);
+        temp.setOnFilterDoneListener(this);
 
         retrieveTips();
 
@@ -151,20 +150,20 @@ public class TipsListFragment extends Fragment implements VariableChangeListener
     public void clearFilter(View v) {
         hideFiltering();
         adapter.resetFiltered();
-        if(snackbar != null) {
+        if (snackbar != null) {
             snackbar.dismiss();
         }
     }
 
     public void onPageSelected() {
-        if(snackbar != null) {
+        if (snackbar != null) {
             snackbar.dismiss();
         }
         Log.d(TAG, "onPageSelected");
     }
 
     public void onPageDeselected() {
-        if(snackbar != null) {
+        if (snackbar != null) {
             snackbar.dismiss();
         }
         Log.d(TAG, "onPageDeselected");
@@ -211,21 +210,17 @@ public class TipsListFragment extends Fragment implements VariableChangeListener
     }
 
     @Override
-    public void onVariableChanged(Object variableThatHasChanged) {
-        Log.d("onVariableChanged", "onVariableChanged function called!!!!!!!!!");
+    public void onFilterDone(int filterCount) {
+        Log.d(TAG, "onVariableChanged function called!!!!!!!!!");
 
         if (recyclerView != null) {
-            int numFilteredTips = (int) variableThatHasChanged;
-
-            if (snackbar == null) {
+            if (snackbar == null)
                 snackbar = Snackbar.make(recyclerView, R.string.tips_no_tips_on_filter, Snackbar.LENGTH_INDEFINITE);
-            }
 
-            if (numFilteredTips == 0) {
+            if (filterCount == 0)
                 snackbar.show();
-            } else {
+            else
                 snackbar.dismiss();
-            }
         }
     }
 }
