@@ -42,7 +42,7 @@ public class TipsListFragment extends Fragment implements VariableChangeListener
     @BindView(R.id.fragment_tips_list_recyclerview)
     RecyclerView recyclerView;
 
-    @BindView(R.id.fragment_tip_progress_container)
+    @BindView(R.id.fragment_tip_list_progress_container)
     RelativeLayout progressContainer;
 
     TipsViewPagerPositions pos;
@@ -214,6 +214,7 @@ public class TipsListFragment extends Fragment implements VariableChangeListener
 
     private void hideLoadingProgress() {
         progressContainer.setVisibility(View.GONE);
+        recyclerView.setVisibility(View.VISIBLE);
     }
 
     protected void hideFiltering() {
