@@ -211,10 +211,10 @@ public class TipsFragment extends Fragment implements OnTipsAvailableListener {
         if (this.getActivity() == null)
             return;
 
-        View view = this.getActivity().findViewById(R.id.fragment_tip_progress_container);
+       /* View view = this.getActivity().findViewById(R.id.fragment_tip_progress_container);
         if (view != null) {
             view.setVisibility(View.GONE);
-        }
+        }*/
         Log.d(TAG, "Updating Tips");
         searchAdapter.updateAllTips(tips);
 
