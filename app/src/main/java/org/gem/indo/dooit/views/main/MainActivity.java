@@ -60,7 +60,7 @@ public class MainActivity extends DooitActivity {
     Persisted persisted;
 
     private Stack<MainViewPagerPositions> pageHistory;
-    private int currentPos = 0;
+    private int currentPos;
     private boolean saveToHistory;
 
 
@@ -106,30 +106,17 @@ public class MainActivity extends DooitActivity {
         NotificationAlarm.setAlarm(this);
 
         pageHistory = new Stack<>();
-        viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-            @Override
-            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-
-            }
-
-            @Override
-            public void onPageSelected(int position) {
-                if(saveToHistory)
-                    pageHistory.push(MainViewPagerPositions.getValueOf(currentPos));
-
-                currentPos = position;
-            }
-
-            @Override
-            public void onPageScrollStateChanged(int state) {
-
-            }
-        });
+        currentPos = 0;
         saveToHistory = true;
     }
 
     @OnPageChange(value = R.id.content_main_view_pager, callback = OnPageChange.Callback.PAGE_SELECTED)
     public void onMainPagerPageSelected(int position) {
+
+        if(saveToHistory)
+            pageHistory.push(MainViewPagerPositions.getValueOf(currentPos));
+
+        currentPos = position;
 
         for (int i = 0; i < tabLayout.getTabCount(); i++) {
             TabLayout.Tab tab = tabLayout.getTabAt(i);
