@@ -16,9 +16,9 @@ import com.facebook.drawee.view.SimpleDraweeView;
 
 import org.gem.indo.dooit.DooitApplication;
 import org.gem.indo.dooit.R;
-import org.gem.indo.dooit.helpers.images.DraweeHelper;
 import org.gem.indo.dooit.helpers.Persisted;
 import org.gem.indo.dooit.helpers.activity.result.ActivityForResultHelper;
+import org.gem.indo.dooit.helpers.images.DraweeHelper;
 import org.gem.indo.dooit.helpers.notifications.NotificationType;
 import org.gem.indo.dooit.models.User;
 import org.gem.indo.dooit.services.NotificationAlarm;
@@ -28,6 +28,8 @@ import org.gem.indo.dooit.views.main.adapters.MainTabAdapter;
 import org.gem.indo.dooit.views.main.fragments.MainFragment;
 import org.gem.indo.dooit.views.main.fragments.target.TargetFragment;
 import org.gem.indo.dooit.views.profile.ProfileActivity;
+
+import java.util.Stack;
 
 import javax.inject.Inject;
 
@@ -56,6 +58,10 @@ public class MainActivity extends DooitActivity {
 
     @Inject
     Persisted persisted;
+
+    private Stack<MainViewPagerPositions> pageHistory;
+    private int currentPos = 0;
+    private boolean saveToHistory;
 
 
     @Override
@@ -98,10 +104,33 @@ public class MainActivity extends DooitActivity {
 
         // Set alarm for when the app opens without going through registration or login
         NotificationAlarm.setAlarm(this);
+
+        pageHistory = new Stack<>();
+        viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                if(saveToHistory)
+                    pageHistory.push(MainViewPagerPositions.getValueOf(currentPos));
+
+                currentPos = position;
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
+        saveToHistory = true;
     }
 
     @OnPageChange(value = R.id.content_main_view_pager, callback = OnPageChange.Callback.PAGE_SELECTED)
     public void onMainPagerPageSelected(int position) {
+
         for (int i = 0; i < tabLayout.getTabCount(); i++) {
             TabLayout.Tab tab = tabLayout.getTabAt(i);
             View tabView = tab.getCustomView();
@@ -112,6 +141,16 @@ public class MainActivity extends DooitActivity {
                 MainViewPagerPositions.setInActiveState(tabView);
             }
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (!pageHistory.isEmpty()) {
+            saveToHistory = false;
+            viewPager.setCurrentItem((pageHistory.pop()).getValue(), true);
+            saveToHistory = true;
+        } else
+            super.onBackPressed(); // This will pop the Activity from the stack.
     }
 
     public void startPage(MainViewPagerPositions pos) {
