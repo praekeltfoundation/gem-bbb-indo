@@ -15,7 +15,8 @@
         android:id="@+id/fragment_tip_list_progress_container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:visibility="visible">
+        android:visibility="visible"
+        android:background="#CC000000">
 
         <ProgressBar
             android:id="@+id/fragment_tip_list_loadingprogress"
@@ -31,7 +32,8 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/fragment_tip_list_loadingprogress"
             android:layout_centerHorizontal="true"
-            android:text="@string/label_loading" />
+            android:text="@string/label_loading"
+            android:textColor="@color/white"/>
     </RelativeLayout>
 </RelativeLayout>
 

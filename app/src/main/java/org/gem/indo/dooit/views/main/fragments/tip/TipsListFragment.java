@@ -186,6 +186,7 @@ public class TipsListFragment extends Fragment implements TipsListFilter.OnFilte
     }
 
     private void retrieveTips() {
+        progressContainer.setVisibility(View.VISIBLE);
         tipProvider.retrieveTips(new DooitErrorHandler() {
 
             @Override
@@ -195,10 +196,16 @@ public class TipsListFragment extends Fragment implements TipsListFilter.OnFilte
         }).doAfterTerminate(new Action0() {
             @Override
             public void call() {
-                View view = progressContainer;
-                if (view != null) {
-                    hideLoadingProgress();
-                }
+                if (getActivity() != null)
+                    getActivity().runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            View view = progressContainer;
+                            if (view != null) {
+                                hideLoadingProgress();
+                            }
+                        }
+                    });
             }
         }).subscribe(new Action1<List<Tip>>() {
             @Override
