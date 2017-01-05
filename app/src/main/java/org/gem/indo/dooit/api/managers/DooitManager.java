@@ -13,6 +13,7 @@ import org.gem.indo.dooit.api.serializers.ChallengeSerializer;
 import org.gem.indo.dooit.api.serializers.DateTimeSerializer;
 import org.gem.indo.dooit.api.serializers.LocalDateSerializer;
 import org.gem.indo.dooit.helpers.DooitSharedPreferences;
+import org.gem.indo.dooit.helpers.InvalidTokenHandler.InvalidTokenHandler;
 import org.gem.indo.dooit.helpers.LanguageCodeHelper;
 import org.gem.indo.dooit.helpers.Persisted;
 import org.joda.time.DateTime;
@@ -47,6 +48,8 @@ public class DooitManager {
     DooitSharedPreferences sharedPreferences;
     @Inject
     Persisted persisted;
+    @Inject
+    InvalidTokenHandler invalidTokenHandler;
     private Context context;
 
     public DooitManager(Application application) {
@@ -78,7 +81,11 @@ public class DooitManager {
                 requestBuilder = addTokenToRequest(requestBuilder);
 
                 Request request = requestBuilder.build();
-                return chain.proceed(request);
+                Response response = chain.proceed(request);
+                if(response != null && response.code() == 403){
+                    invalidTokenHandler.handle(context);
+                }
+                return response;
             }
         });
         httpClient.addInterceptor(logging);

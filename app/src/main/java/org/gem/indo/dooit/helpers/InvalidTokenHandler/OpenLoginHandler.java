@@ -1,0 +1,21 @@
+package org.gem.indo.dooit.helpers.InvalidTokenHandler;
+
+import android.content.Context;
+import android.content.Intent;
+import org.gem.indo.dooit.views.onboarding.LoginActivity;
+
+/**
+ * Created by Reinhardt on 2017/01/05.
+ */
+
+public class OpenLoginHandler implements InvalidTokenHandler {
+
+
+    @Override
+    public void handle(final Context context) {
+        //LoginActivity.Builder.create(context).startActivityClearTop();
+        Intent intent=new Intent(context,LoginActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        context.startActivity(intent);
+    }
+}

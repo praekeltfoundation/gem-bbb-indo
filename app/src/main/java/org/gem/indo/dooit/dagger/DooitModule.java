@@ -13,6 +13,8 @@ import org.gem.indo.dooit.api.managers.GoalManager;
 import org.gem.indo.dooit.api.managers.TipManager;
 import org.gem.indo.dooit.api.managers.UserManager;
 import org.gem.indo.dooit.helpers.DooitSharedPreferences;
+import org.gem.indo.dooit.helpers.InvalidTokenHandler.InvalidTokenHandler;
+import org.gem.indo.dooit.helpers.InvalidTokenHandler.OpenLoginHandler;
 import org.gem.indo.dooit.helpers.Persisted;
 import org.gem.indo.dooit.helpers.activity.result.ActivityForResultHelper;
 import org.gem.indo.dooit.helpers.bot.BotFeed;
@@ -119,5 +121,11 @@ public class DooitModule {
     @Singleton
     UserManager provideUserManager() {
         return new UserManager(application);
+    }
+
+    @Provides
+    @Singleton
+    InvalidTokenHandler provideInvalidTokenHandler() {
+        return new OpenLoginHandler();
     }
 }
