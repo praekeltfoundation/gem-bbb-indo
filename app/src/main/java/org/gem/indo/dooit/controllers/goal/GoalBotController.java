@@ -1,23 +1,35 @@
 package org.gem.indo.dooit.controllers.goal;
 
 import android.content.Context;
+import android.os.Handler;
+import android.os.Looper;
 
 import org.gem.indo.dooit.DooitApplication;
 import org.gem.indo.dooit.api.managers.GoalManager;
 import org.gem.indo.dooit.controllers.DooitBotController;
 import org.gem.indo.dooit.helpers.Utils;
+import org.gem.indo.dooit.helpers.bot.BotRunner;
+import org.gem.indo.dooit.helpers.bot.param.ParamArg;
+import org.gem.indo.dooit.helpers.bot.param.ParamMatch;
+import org.gem.indo.dooit.helpers.bot.param.ParamParser;
 import org.gem.indo.dooit.models.Badge;
 import org.gem.indo.dooit.models.Tip;
 import org.gem.indo.dooit.models.bot.Answer;
 import org.gem.indo.dooit.models.bot.BaseBotModel;
 import org.gem.indo.dooit.models.bot.Node;
 import org.gem.indo.dooit.models.challenge.BaseChallenge;
+import org.gem.indo.dooit.models.enums.BotCallType;
 import org.gem.indo.dooit.models.enums.BotMessageType;
 import org.gem.indo.dooit.models.enums.BotObjectType;
 import org.gem.indo.dooit.models.enums.BotParamType;
 import org.gem.indo.dooit.models.enums.BotType;
 import org.gem.indo.dooit.models.goal.Goal;
+import org.gem.indo.dooit.models.goal.GoalPrototype;
 import org.gem.indo.dooit.views.helpers.activity.CurrencyHelper;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 import javax.inject.Inject;
 
@@ -30,17 +42,38 @@ public abstract class GoalBotController extends DooitBotController {
     @Inject
     protected GoalManager goalManager;
 
+    protected BotRunner botRunner;
+    protected List<GoalPrototype> prototypes = new ArrayList<>();
     protected Goal goal;
     protected BaseChallenge challenge;
     // The Tip to be shown at the end of the conversation
     protected Tip tip;
 
-    public GoalBotController(Context context, BotType botType, Goal goal, BaseChallenge challenge, Tip tip) {
+    private Handler handler = new Handler(Looper.getMainLooper());
+
+    public GoalBotController(Context context, BotRunner botRunner, BotType botType, Goal goal,
+                             BaseChallenge challenge, Tip tip) {
         super(context, botType);
         ((DooitApplication) context.getApplicationContext()).component.inject(this);
+        this.botRunner = botRunner;
         this.goal = goal;
         this.challenge = challenge;
         this.tip = tip;
+    }
+
+    public GoalBotController(Context context, BotRunner botRunner, BotType botType,
+                             List<GoalPrototype> prototypes, Goal goal, BaseChallenge challenge, Tip tip) {
+        this(context, botRunner, botType, goal, challenge, tip);
+        this.prototypes.addAll(prototypes);
+    }
+
+    @Override
+    public void onCall(BotCallType key, Map<String, Answer> answerLog, BaseBotModel model) {
+        switch (key) {
+            case ADD_BADGE:
+                doAddBadge();
+                break;
+        }
     }
 
     @Override
@@ -49,7 +82,10 @@ public abstract class GoalBotController extends DooitBotController {
 
         switch (paramType) {
             case GOAL_NAME:
-                model.values.put(key, goal.getName());
+                if (goal.hasName())
+                    model.values.put(key, goal.getName());
+                else if (goal.hasPrototype())
+                    model.values.put(key, goal.getPrototype().getName());
                 break;
             case GOAL_VALUE:
                 model.values.put(key, goal.getValue());
@@ -99,16 +135,30 @@ public abstract class GoalBotController extends DooitBotController {
     }
 
     @Override
-    public void input(BotParamType inputType, Object value) {
-        // TODO: Currently unused
+    public void onAnswerInput(BotParamType inputType, Answer answer) {
         switch (inputType) {
+            case GOAL_PROTO:
+                goal.setPrototype(new GoalPrototype(
+                        answer.values.getLong(BotParamType.GOAL_PROTO_ID.getKey()),
+                        answer.values.getString(BotParamType.GOAL_PROTO_NAME.getKey()),
+                        answer.values.getString(BotParamType.GOAL_PROTO_IMAGE_URL.getKey())
+                ));
+                break;
             case GOAL_NAME:
-                goal.setName((String) value);
+                goal.setName(answer.getValue());
                 break;
             case GOAL_TARGET:
-                goal.setTarget((Double) value);
+                goal.setTarget(Double.parseDouble(answer.getValue()));
                 break;
         }
+    }
+
+    @Override
+    public boolean shouldSkip(BaseBotModel model) {
+        if (model.getCall() == BotCallType.ADD_BADGE && !goal.hasNewBadges())
+            return true;
+        else
+            return super.shouldSkip(model);
     }
 
     @Override
@@ -119,6 +169,8 @@ public abstract class GoalBotController extends DooitBotController {
     @Override
     public Object getObject(BotObjectType objType) {
         switch (objType) {
+            case GOAL_PROTOTYPES:
+                return prototypes;
             case GOAL:
                 return goal;
             case CHALLENGE:
@@ -130,9 +182,19 @@ public abstract class GoalBotController extends DooitBotController {
         }
     }
 
-    protected Node nodeFromBadge(Badge badge) {
+    private void doAddBadge() {
+        for (Badge badge : goal.getNewBadges())
+            botRunner.addNode(nodeFromBadge(badge));
+    }
+
+    private Node nodeFromBadge(Badge badge) {
+        // TODO: Think of a unified way to construct Nodes programmatically. Should it be done in the view holders? Factories?
+
+        String badgeName = botType.name().toLowerCase() + "_" + badge.getGraphName();
+
+        // Badge Graphic Display
         Node node = new Node();
-        node.setName(botType.name().toLowerCase() + badge.getGraphName());
+        node.setName(badgeName);
         node.setType(BotMessageType.BADGE);
         node.setText(null);
 
@@ -140,6 +202,27 @@ public abstract class GoalBotController extends DooitBotController {
         node.values.put(BotParamType.BADGE_IMAGE_URL.getKey(), badge.getImageUrl());
         node.values.put(BotParamType.BADGE_SOCIAL_URL.getKey(), badge.getSocialUrl());
 
-        return node;
+        if (badge.hasIntro()) {
+            // Badge Intro Text
+            Node introNode = new Node();
+            introNode.setName(badgeName + "_intro");
+            introNode.setType(BotMessageType.TEXT);
+            introNode.setAutoNext(node);
+
+            // TODO: Refactor Param parsing and populating into DooitBotController
+            // TODO: Text is processed here because Nodes currently don't support having text sourced from somewhere that's not the strings.xml files
+            ParamMatch args = ParamParser.parse(badge.getIntro());
+            if (!args.isEmpty())
+                for (ParamArg arg : args.getArgs())
+                    resolveParam(introNode, BotParamType.byKey(arg.getKey()));
+            introNode.setProcessedText(args.process(introNode.values.getRawMap()));
+
+            return introNode;
+        } else
+            return node;
+    }
+
+    protected void runOnUiThread(Runnable runnable) {
+        handler.post(runnable);
     }
 }

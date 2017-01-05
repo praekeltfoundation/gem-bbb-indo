@@ -120,6 +120,7 @@ public class ChangeSecurityQuestionActivity extends DooitActivity {
 
     @OnClick(R.id.activity_onboarding_change_secq_button)
     protected void submit() {
+        hideKeyboard();
         boolean valid = true;
         String question = questionBox.getEditText();
         String answer = answerBox.getEditText();

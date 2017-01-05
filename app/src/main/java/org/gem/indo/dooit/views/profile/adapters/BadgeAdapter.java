@@ -35,7 +35,7 @@ public class BadgeAdapter extends RecyclerView.Adapter<BadgeViewHolder> {
     @Override
     public BadgeViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.activity_profile_achievement_item, parent, false);
+                .inflate(R.layout.item_view_profile_achievement, parent, false);
         return new BadgeViewHolder(view);
     }
 

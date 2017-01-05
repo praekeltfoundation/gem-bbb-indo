@@ -66,6 +66,7 @@
       {
         "name": "goal_name",
         "nextOnFinish": "goalNameCongrats",
+        "onAnswerInput": "$(goal.name)",
         "type": "inlineText",
         "inlineEditHint": "$(type_name_hint)"
       }
@@ -328,8 +329,24 @@
     "answers": [
       {
         "name": "weeklySaveAmount",
-        "next": "infoGoalEnd",
+        "next": "goal_add_badges",
         "text": "$(goal_add_a_done_exit)"
+      }
+    ]
+  },
+
+
+
+  {
+    "name": "goal_add_badges",
+    "type": "blank",
+    "call": "#add_badge",
+    "next": "infoGoalEnd",
+    "answers": [
+      {
+        "name": "goal_add_badge_continue",
+        "text": "$(yay_me)",
+        "next": "infoGoalEnd"
       }
     ]
   },

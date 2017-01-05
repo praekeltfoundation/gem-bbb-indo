@@ -5,8 +5,8 @@ import android.content.res.Resources;
 import android.text.TextUtils;
 import android.util.Log;
 
-import org.gem.indo.dooit.models.enums.BotCallType;
 import org.gem.indo.dooit.helpers.ValueMap;
+import org.gem.indo.dooit.models.enums.BotCallType;
 import org.gem.indo.dooit.models.enums.BotMessageType;
 
 /**
@@ -100,6 +100,10 @@ public abstract class BaseBotModel {
 
     public void setNext(String next) {
         this.next = next;
+    }
+
+    public boolean hasNext() {
+        return !TextUtils.isEmpty(next);
     }
 
     // Call keys

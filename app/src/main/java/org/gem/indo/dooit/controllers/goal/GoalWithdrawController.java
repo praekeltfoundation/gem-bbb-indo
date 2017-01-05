@@ -6,9 +6,8 @@ import org.gem.indo.dooit.DooitApplication;
 import org.gem.indo.dooit.api.DooitAPIError;
 import org.gem.indo.dooit.api.DooitErrorHandler;
 import org.gem.indo.dooit.api.managers.GoalManager;
-import org.gem.indo.dooit.api.responses.EmptyResponse;
 import org.gem.indo.dooit.api.responses.TransactionResponse;
-import org.gem.indo.dooit.controllers.goal.GoalBotController;
+import org.gem.indo.dooit.helpers.bot.BotRunner;
 import org.gem.indo.dooit.models.challenge.BaseChallenge;
 import org.gem.indo.dooit.models.enums.BotCallType;
 import org.gem.indo.dooit.models.enums.BotParamType;
@@ -35,8 +34,8 @@ public class GoalWithdrawController extends GoalBotController {
     @Inject
     transient GoalManager goalManager;
 
-    public GoalWithdrawController(Activity activity, Goal goal, BaseChallenge challenge, Tip tip) {
-        super(activity, BotType.GOAL_WITHDRAW, goal, challenge, tip);
+    public GoalWithdrawController(Activity activity, BotRunner botRunner, Goal goal, BaseChallenge challenge, Tip tip) {
+        super(activity, botRunner, BotType.GOAL_WITHDRAW, goal, challenge, tip);
         ((DooitApplication) activity.getApplication()).component.inject(this);
         this.goal = goal;
     }
@@ -56,7 +55,7 @@ public class GoalWithdrawController extends GoalBotController {
     }
 
     @Override
-    public void input(BotParamType inputType, Object value) {
+    public void onAnswerInput(BotParamType inputType, Answer answer) {
 
     }
 

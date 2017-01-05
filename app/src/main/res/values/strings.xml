@@ -3,10 +3,12 @@
     <!-- General -->
     <string name="app_name">Dooit</string>
     <string name="connection_timed_out">The connection timed out, please try again later</string>
+    <string name="connection_error">A connection error occured, please try again later</string>
     <string name="general_error">An error occurred</string>
 
     <!-- Activity Titles  -->
     <string name="title_activity_main"></string>
+    <string name="title_activity_registration">Registration</string>
     <string name="title_activity_profile">Profile</string>
     <string name="title_activity_profile_image">Upload Photo</string>
     <string name="title_activity_settings">Settings</string>
@@ -45,6 +47,7 @@
 
     <string name="label_change_name">Change Name</string>
     <string name="label_change_password">Change Password</string>
+    <string name="label_change_email">Change Email</string>
     <string name="label_settings">Settings</string>
     <string name="label_build_info">@string/title_activity_build_info</string>
     <string name="label_share">Share</string>
@@ -100,6 +103,7 @@
     <string name="reg_example_number_error_1">Mobile Number can\'t be blank</string>
     <string name="reg_example_number_error_2">Mobile Number must be longer than 9 digits</string>
     <string name="reg_example_number_error_3">Mobile Number must be shorter than 15 digits</string>
+    <string name="reg_example_number_error_4">Mobile Number contains illegal characters</string>
     <string name="reg_example_password">Must have at least 6 characters</string>
     <string name="reg_example_password_error_1">Password can\'t be blank</string>
     <string name="reg_example_password_error_2">Password must be longer than 6 characters</string>
@@ -120,6 +124,7 @@
     <string name="login_example_password">Must have at least 6 characters</string>
     <string name="login_example_password_error_1">Password can\'t be blank</string>
     <string name="login_progress_dialog_message">Logging in</string>
+    <string name="login_not_registered">Not registered? *Register*</string>
 
     <!-- Bot -->
     <string name="bot_carousel_card_select">Select</string>
@@ -322,7 +327,7 @@
     <string name="challenge_quiz_counter_fmt">Question %1$d/%2$d</string>
     <string name="challenge_hint_template">Hint: %1$s</string>
     <string name="challenge_hint_none">Sorry, I don\'t have a hint for you</string>
-    <string name="challenge_could_not_connect_to_server">Could not make a connect to the server</string>
+    <string name="challenge_could_not_connect_to_server">Could not make a connection to the server</string>
     <string name="challenge_could_not_confirm_registration">Could not confirm registration</string>
     <string name="challenge_persisted_challenge_thrown_out">The persisted challenge is no longer valid and will be replaced by one from the server</string>
 
@@ -359,6 +364,7 @@
     <string name="profile_section_account">Your account</string>
     <string name="profile_account_change_name">Change name</string>
     <string name="profile_account_change_password">Change password</string>
+    <string name="profile_account_change_email">Change email</string>
     <string name="profile_account_change_security_question">Change security question</string>
     <string name="profile_account_sign_out">Sign out</string>
     <string name="profile_section_notifications">Notifications</string>
@@ -385,6 +391,10 @@
     <string name="profile_change_password_success">Your password has been changed</string>
     <string name="profile_change_password_error_1">Passwords can\'t be the same</string>
 
+    <!-- Profile: Change Email Address -->
+    <string name="profile_change_email_progress">We\'re changing your email address&#8230;</string>
+    <string name="profile_change_email_success">Your email address has been changed to \'%s\'</string>
+
     <!-- Profile: Build Info -->
     <string name="profile_build_info_app_id">App ID</string>
     <string name="profile_build_info_version">Version</string>
@@ -401,6 +411,13 @@
 
     <!-- Push Notifications -->
     <string name="notification_title_challenge_available">Challenge Available</string>
+    <string name="notification_title_challenge_reminder">Challenge Reminder</string>
+    <string name="notification_title_goal_deadline_missed">Target Missed</string>
+    <string name="notification_title_saving_reminder">Savings Reminder</string>
+    <string name="notification_title_survey_available">Survey Available</string>
+    <string name="notification_title_ad_hoc">Ad Hoc</string>
+
+    <string name="notification_content_saving_reminder">It\'s been %d weeks since you saved.</string>
 
     <!-- Sharing -->
     <string name="share_chooser_tip_title">Share Tip on&#8230;</string>
@@ -423,6 +440,7 @@
     <string name="heading_registration">Registration</string>
     <string name="heading_change_name">@string/label_change_name</string>
     <string name="heading_change_password">@string/label_change_password</string>
+    <string name="heading_change_email">@string/label_change_email</string>
 
     <string name="target_prefix_saved">saved</string>
     <string name="heading_current_saving_streak">Current Saving Streak</string>

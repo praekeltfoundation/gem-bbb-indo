@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import org.gem.indo.dooit.DooitApplication;
@@ -18,14 +19,11 @@ import org.gem.indo.dooit.api.DooitErrorHandler;
 import org.gem.indo.dooit.api.managers.FeedbackManager;
 import org.gem.indo.dooit.helpers.DooitSharedPreferences;
 import org.gem.indo.dooit.helpers.SquiggleBackgroundHelper;
-import org.gem.indo.dooit.models.User;
 import org.gem.indo.dooit.models.UserFeedback;
 import org.gem.indo.dooit.models.enums.FeedbackType;
 import org.gem.indo.dooit.views.DooitActivity;
 import org.gem.indo.dooit.views.helpers.activity.DooitActivityBuilder;
 import org.gem.indo.dooit.views.settings.adapters.FeedbackTypeAdapter;
-
-import java.util.Arrays;
 
 import javax.inject.Inject;
 
@@ -112,8 +110,9 @@ public class FeedbackActivity extends DooitActivity {
         // Populate feedback types
         FeedbackTypeAdapter feedbackTypeArrayAdapter = new FeedbackTypeAdapter(
                 this,
-                android.R.layout.simple_spinner_dropdown_item,
-                Arrays.asList(FeedbackType.values())
+                R.layout.item_view_spinner,
+                R.layout.spinner_dropdown_item,
+                FeedbackType.values()
         );
         subject.setAdapter(feedbackTypeArrayAdapter);
         Intent intent = getIntent();
@@ -122,6 +121,10 @@ public class FeedbackActivity extends DooitActivity {
             if (type != null) {
                 int i = feedbackTypeArrayAdapter.getPosition(type);
                 subject.setSelection(i >= 0 && i < feedbackTypeArrayAdapter.getCount() ? i : 0);
+                if (type.getValue() == FeedbackType.REPORT.getValue()) {
+                    TextView mTextView = (TextView) findViewById(R.id.activity_feedback_heading);
+                    mTextView.setText(getString(R.string.profile_help_report_problem));
+                }
             }
         }
 

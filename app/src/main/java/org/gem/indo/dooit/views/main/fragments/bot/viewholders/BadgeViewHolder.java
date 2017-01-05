@@ -58,10 +58,14 @@ public class BadgeViewHolder extends BaseBotViewHolder<Node> {
         super.populate(model);
 
         String title = dataModel.values.getString(BotParamType.BADGE_NAME.getKey());
-        Uri imageUri = Uri.parse(dataModel.values.getString(BotParamType.BADGE_IMAGE_URL.getKey()));
+        Uri imageUri = null;
+        if (!TextUtils.isEmpty(dataModel.values.getString(BotParamType.BADGE_SOCIAL_URL.getKey())))
+            imageUri = Uri.parse(dataModel.values.getString(BotParamType.BADGE_IMAGE_URL.getKey()));
         String socialUrl = dataModel.values.getString(BotParamType.BADGE_SOCIAL_URL.getKey());
 
-        setImageUri(image, imageUri);
+        if (imageUri != null)
+            setImageUri(image, imageUri);
+
         if (!TextUtils.isEmpty(socialUrl)) {
             final Uri socialUri = Uri.parse(socialUrl);
             shareView.setOnClickListener(new View.OnClickListener() {

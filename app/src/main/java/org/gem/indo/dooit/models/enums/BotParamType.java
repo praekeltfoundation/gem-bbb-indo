@@ -28,6 +28,7 @@ public enum BotParamType {
     GOAL_HAS_LOCAL_IMAGE_URI("goal.has_local_image_uri"),
 
     // Goal Prototype
+    GOAL_PROTO("goal_proto"),
     GOAL_PROTO_ID("goal_proto.id"),
     GOAL_PROTO_NAME("goal_proto.name"),
     GOAL_PROTO_IMAGE_URL("goal_proto.image_url"),
@@ -42,6 +43,9 @@ public enum BotParamType {
 
     // Tips
     TIP_INTRO("tip.intro"),
+    TIP_TITLE("tip.title"),
+    TIP_IMAGE_URL("tip.image_url"),
+    TIP_ARTICLE_URL("tip.article_url"),
 
     // Badge
     BADGE_NAME("badge.name"),
