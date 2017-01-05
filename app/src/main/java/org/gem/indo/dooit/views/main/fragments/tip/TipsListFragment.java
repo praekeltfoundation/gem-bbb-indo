@@ -186,9 +186,8 @@ public class TipsListFragment extends Fragment implements TipsListFilter.OnFilte
     }
 
     private void retrieveTips() {
-        progressContainer.setVisibility(View.VISIBLE);
+        showLoadingProgress();
         tipProvider.retrieveTips(new DooitErrorHandler() {
-
             @Override
             public void onError(DooitAPIError error) {
                 Toast.makeText(getContext(), "Error retrieving tips.", Toast.LENGTH_SHORT);
@@ -200,10 +199,7 @@ public class TipsListFragment extends Fragment implements TipsListFilter.OnFilte
                     getActivity().runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            View view = progressContainer;
-                            if (view != null) {
-                                hideLoadingProgress();
-                            }
+                            hideLoadingProgress();
                         }
                     });
             }
@@ -225,8 +221,15 @@ public class TipsListFragment extends Fragment implements TipsListFilter.OnFilte
     }
 
     private void hideLoadingProgress() {
+        View view = progressContainer;
+        if(view != null)
         progressContainer.setVisibility(View.GONE);
-        recyclerView.setVisibility(View.VISIBLE);
+    }
+
+    private void showLoadingProgress(){
+        View view = progressContainer;
+        if(view != null)
+            progressContainer.setVisibility(View.VISIBLE);
     }
 
     protected void hideFiltering() {
