@@ -29,3 +29,4 @@
 - Validation feedback on information changes in settings
 - Formatting currency input in bot
 - Fixes phone status bar colour
+- Implemented back button functionality for main screen pages
