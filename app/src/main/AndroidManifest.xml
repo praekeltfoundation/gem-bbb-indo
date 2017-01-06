@@ -41,15 +41,15 @@
         <activity
             android:name=".views.onboarding.ChangeNameActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.FullscreenTheme" />
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".views.onboarding.ChangePasswordActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.FullscreenTheme" />
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".views.onboarding.ChangeEmailAddressActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.FullscreenTheme" />
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".views.main.MainActivity"
             android:label="@string/title_activity_main"
