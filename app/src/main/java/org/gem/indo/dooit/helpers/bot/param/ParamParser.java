@@ -18,6 +18,8 @@ public class ParamParser {
     }
 
     public static ParamMatch parse(String text) {
+        // Escape percentage to prevent MissingFormatArgumentException later in ParamMatch
+        text = text.replace("%", "%%");
         Matcher matcher = paramPattern.matcher(text);
         List<ParamArg> matches = new ArrayList<>();
         while (matcher.find()) {

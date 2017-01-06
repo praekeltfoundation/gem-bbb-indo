@@ -21,7 +21,7 @@ import org.gem.indo.dooit.api.managers.UserManager;
 import org.gem.indo.dooit.api.responses.EmptyResponse;
 import org.gem.indo.dooit.helpers.Persisted;
 import org.gem.indo.dooit.models.User;
-import org.gem.indo.dooit.validatior.UserValidator;
+import org.gem.indo.dooit.validation.UserValidator;
 import org.gem.indo.dooit.views.DooitActivity;
 import org.gem.indo.dooit.views.helpers.activity.DooitActivityBuilder;
 
@@ -71,9 +71,17 @@ public class ChangeEmailAddressActivity extends DooitActivity {
 
     @OnClick(R.id.activity_change_email_button)
     public void changeEmail() {
+        hideKeyboard();
         UserValidator uValidator = new UserValidator();
-        if(!uValidator.isEmailValid(this.email.getText().toString()))
+        if(!uValidator.isEmailValid(this.email.getText().toString())) {
+            emailHint.setText(uValidator.getResponseText());
+            emailHint.setTextColor(ResourcesCompat.getColor(getResources(), android.R.color.holo_red_light, getTheme()));
             return;
+        }
+        else{
+            emailHint.setText(R.string.reg_example_email);
+            emailHint.setTextColor(ResourcesCompat.getColor(getResources(), android.R.color.white, getTheme()));
+        }
         final User user = persisted.getCurrentUser();
         final String email = this.email.getText().toString();
         userManager.updateUserEmail(user.getId(),email,new DooitErrorHandler() {

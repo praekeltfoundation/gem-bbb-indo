@@ -148,7 +148,7 @@ public class ProfileActivity extends ImageActivity {
             }
         });
 
-        // Achievevments
+        // Achievements
         setStreak(0);
 
         adapter = new BadgeAdapter();
