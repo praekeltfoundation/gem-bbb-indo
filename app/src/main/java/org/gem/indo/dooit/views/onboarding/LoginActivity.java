@@ -20,6 +20,7 @@ import org.gem.indo.dooit.api.managers.AuthenticationManager;
 import org.gem.indo.dooit.api.responses.AuthenticationResponse;
 import org.gem.indo.dooit.helpers.Persisted;
 import org.gem.indo.dooit.helpers.SquiggleBackgroundHelper;
+import org.gem.indo.dooit.helpers.TextSpannableHelper;
 import org.gem.indo.dooit.services.NotificationAlarm;
 import org.gem.indo.dooit.validation.UserValidator;
 import org.gem.indo.dooit.views.DooitActivity;
@@ -61,6 +62,9 @@ public class LoginActivity extends DooitActivity {
     @BindView(R.id.activity_login_forgot_text_view)
     TextView forgotLink;
 
+    @BindView(R.id.activity_login_not_registered)
+    TextView notRegister;
+
     @Inject
     AuthenticationManager authenticationManager;
 
@@ -73,6 +77,12 @@ public class LoginActivity extends DooitActivity {
         ((DooitApplication) getApplication()).component.inject(this);
         setContentView(org.gem.indo.dooit.R.layout.activity_login);
         ButterKnife.bind(this);
+
+        String stringRegister = getResources().getString(R.string.login_not_registered);
+        TextSpannableHelper spanRegistrationHelper = new TextSpannableHelper();
+
+        notRegister.setText(spanRegistrationHelper.styleText(this, R.style.AppTheme_TextView_Bold_Small_Accented, stringRegister));
+
         SquiggleBackgroundHelper.setBackground(this, R.color.purple, R.color.purple_light, background);
     }
 
@@ -93,9 +103,9 @@ public class LoginActivity extends DooitActivity {
                             for (String msg : error.getErrorResponse().getErrors()) {
                                 Snackbar.make(buttonLogin, msg, Snackbar.LENGTH_LONG).show();
                             }
-                        }else if(error.getCause() instanceof SocketTimeoutException){
+                        } else if (error.getCause() instanceof SocketTimeoutException) {
                             Snackbar.make(buttonLogin, R.string.connection_timed_out, Snackbar.LENGTH_LONG).show();
-                        }else if(error.getCause() instanceof UnknownHostException){
+                        } else if (error.getCause() instanceof UnknownHostException) {
                             Snackbar.make(buttonLogin, R.string.connection_error, Snackbar.LENGTH_LONG).show();
                         }
                         dismissDialog();
@@ -132,11 +142,16 @@ public class LoginActivity extends DooitActivity {
         PasswordResetActivity.Builder.create(this).startActivity();
     }
 
+    @OnClick(R.id.activity_login_not_registered)
+    protected void register() {
+        RegistrationActivity.Builder.create(this).startActivityClearTop();
+    }
+
     private boolean detailsValid() {
         boolean valid = true;
         UserValidator uValidator = new UserValidator();
 
-        if(!uValidator.isNameValid(name.getText().toString())){
+        if (!uValidator.isNameValid(name.getText().toString())) {
             valid = false;
             nameHint.setText(uValidator.getResponseText());
             nameHint.setTextColor(ResourcesCompat.getColor(getResources(), android.R.color.holo_red_light, getTheme()));
@@ -145,7 +160,7 @@ public class LoginActivity extends DooitActivity {
             nameHint.setTextColor(ResourcesCompat.getColor(getResources(), android.R.color.white, getTheme()));
         }
 
-        if(!uValidator.isPasswordValid(password.getText().toString())){
+        if (!uValidator.isPasswordValid(password.getText().toString())) {
             valid = false;
             passwordHint.setText(uValidator.getResponseText());
             passwordHint.setTextColor(ResourcesCompat.getColor(getResources(), android.R.color.holo_red_light, getTheme()));
