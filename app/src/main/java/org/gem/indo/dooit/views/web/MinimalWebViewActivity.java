@@ -32,11 +32,13 @@ import org.gem.indo.dooit.views.settings.SettingsActivity;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Vector;
 
 import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 /**
  * Created by Bernhard Müller on 2016/07/22.
@@ -58,6 +60,12 @@ public class MinimalWebViewActivity extends DooitActivity {
 
     @BindView(R.id.activity_settings_web_progress)
     ProgressBar progressBar;
+
+    @BindView((R.id.heart_pink))
+    Vector pinkHeart;
+
+    @BindView((R.id.heart_pink_inverted))
+    Vector invertedHeart;
 
     @Inject
     Persisted persisted;
@@ -127,13 +135,14 @@ public class MinimalWebViewActivity extends DooitActivity {
         headers.put("Accept-Language", LanguageCodeHelper.getLanguage());
 
         if(persisted.hasToken()) {
-//            headers.put("Authorization", persisted.getToken());
             auth = true;
         }
 
         webView.loadUrl(getIntent().getStringExtra(INTENT_URL),headers);
         Log.d("Web-Headers",headers.toString());
     }
+
+
 
     protected boolean hasInternetConnection() {
         ConnectivityManager cm =
@@ -143,6 +152,11 @@ public class MinimalWebViewActivity extends DooitActivity {
         return activeNetwork != null &&
                 activeNetwork.isConnectedOrConnecting();
     }
+
+    /*@OnClick(R.id.heart_pink)
+    public void onClickOnHeart(){
+        persisted.setFavourites();
+    }*/
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
