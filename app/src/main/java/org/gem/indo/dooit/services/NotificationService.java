@@ -9,7 +9,9 @@ import org.gem.indo.dooit.api.DooitAPIError;
 import org.gem.indo.dooit.api.DooitErrorHandler;
 import org.gem.indo.dooit.api.managers.AchievementManager;
 import org.gem.indo.dooit.api.managers.ChallengeManager;
+import org.gem.indo.dooit.api.managers.SurveyManager;
 import org.gem.indo.dooit.api.responses.AchievementResponse;
+import org.gem.indo.dooit.api.responses.SurveyResponse;
 import org.gem.indo.dooit.helpers.Persisted;
 import org.gem.indo.dooit.helpers.notifications.NotificationType;
 import org.gem.indo.dooit.helpers.notifications.Notifier;
@@ -40,6 +42,9 @@ public class NotificationService extends IntentService {
 
     @Inject
     ChallengeManager challengeManager;
+
+    @Inject
+    SurveyManager surveyManager;
 
     @Inject
     Persisted persisted;
@@ -78,6 +83,14 @@ public class NotificationService extends IntentService {
                 }));
         }
 
+        if (persisted.shouldNotify(NotificationType.SURVEY_AVAILABLE))
+            requests.add(surveyManager.retrieveCurrentSurvey(new DooitErrorHandler() {
+                @Override
+                public void onError(DooitAPIError error) {
+
+                }
+            }));
+
         if (requests.size() > 0)
             // Using flatmap to perform requests serially
             Observable.from(requests).flatMap(new Func1<Observable<?>, Observable<?>>() {
@@ -97,6 +110,8 @@ public class NotificationService extends IntentService {
                         currentChallengeRetrieved((BaseChallenge) o);
                     else if (o instanceof AchievementResponse)
                         achievementsRetrieved((AchievementResponse) o);
+                    else if (o instanceof SurveyResponse)
+                        surveyRetrieved((SurveyResponse) o);
                 }
             });
         else
@@ -120,6 +135,15 @@ public class NotificationService extends IntentService {
                             getApplicationContext().getString(R.string.notification_content_saving_reminder),
                             response.getWeeksSinceSaved()
                     )
+            );
+    }
+
+    protected void surveyRetrieved(SurveyResponse response) {
+        if (response.isAvailable())
+            new Notifier(getApplicationContext()).notify(
+                    NotificationType.SURVEY_AVAILABLE,
+                    MainActivity.class,
+                    "" // TODO: Notification content from Survey model
             );
     }
 

@@ -10,6 +10,7 @@ import org.gem.indo.dooit.api.managers.ChallengeManager;
 import org.gem.indo.dooit.api.managers.FeedbackManager;
 import org.gem.indo.dooit.api.managers.FileUploadManager;
 import org.gem.indo.dooit.api.managers.GoalManager;
+import org.gem.indo.dooit.api.managers.SurveyManager;
 import org.gem.indo.dooit.api.managers.TipManager;
 import org.gem.indo.dooit.api.managers.UserManager;
 import org.gem.indo.dooit.helpers.DooitSharedPreferences;
@@ -107,6 +108,12 @@ public class DooitModule {
     @Singleton
     Persisted providePersisted() {
         return new Persisted(application);
+    }
+
+    @Provides
+    @Singleton
+    SurveyManager provideSurveyManager() {
+        return new SurveyManager(application);
     }
 
     @Provides
