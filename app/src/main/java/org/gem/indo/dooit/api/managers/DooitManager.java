@@ -13,6 +13,7 @@ import org.gem.indo.dooit.api.serializers.ChallengeSerializer;
 import org.gem.indo.dooit.api.serializers.DateTimeSerializer;
 import org.gem.indo.dooit.api.serializers.LocalDateSerializer;
 import org.gem.indo.dooit.helpers.DooitSharedPreferences;
+import org.gem.indo.dooit.helpers.GlobalVariables.GlobalVariables;
 import org.gem.indo.dooit.helpers.InvalidTokenHandler.InvalidTokenHandler;
 import org.gem.indo.dooit.helpers.LanguageCodeHelper;
 import org.gem.indo.dooit.helpers.Persisted;
@@ -50,6 +51,8 @@ public class DooitManager {
     Persisted persisted;
     @Inject
     InvalidTokenHandler invalidTokenHandler;
+    @Inject
+    GlobalVariables globalVariables;
     private Context context;
 
     public DooitManager(Application application) {
@@ -83,7 +86,12 @@ public class DooitManager {
                 Request request = requestBuilder.build();
                 Response response = chain.proceed(request);
                 if(response != null && response.code() == 403){
-                    invalidTokenHandler.handle(context);
+                    synchronized(this){
+                        if(!globalVariables.getLoginStarted()){
+                            invalidTokenHandler.handle(context);
+                            globalVariables.setLoginStarted(true);
+                        }
+                    }
                 }
                 return response;
             }

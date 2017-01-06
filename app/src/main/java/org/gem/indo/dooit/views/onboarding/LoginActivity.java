@@ -18,6 +18,7 @@ import org.gem.indo.dooit.api.DooitAPIError;
 import org.gem.indo.dooit.api.DooitErrorHandler;
 import org.gem.indo.dooit.api.managers.AuthenticationManager;
 import org.gem.indo.dooit.api.responses.AuthenticationResponse;
+import org.gem.indo.dooit.helpers.GlobalVariables.GlobalVariables;
 import org.gem.indo.dooit.helpers.Persisted;
 import org.gem.indo.dooit.helpers.SquiggleBackgroundHelper;
 import org.gem.indo.dooit.helpers.TextSpannableHelper;
@@ -70,6 +71,9 @@ public class LoginActivity extends DooitActivity {
 
     @Inject
     Persisted persisted;
+
+    @Inject
+    GlobalVariables globalVariables;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -125,6 +129,7 @@ public class LoginActivity extends DooitActivity {
                 persisted.setNewBotUser(false);
                 NotificationAlarm.setAlarm(LoginActivity.this);
                 MainActivity.Builder.create(LoginActivity.this).startActivityClearTop();
+                globalVariables.setLoginStarted(false);
             }
         });
     }

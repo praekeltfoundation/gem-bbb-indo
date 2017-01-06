@@ -13,6 +13,7 @@ import org.gem.indo.dooit.api.managers.GoalManager;
 import org.gem.indo.dooit.api.managers.TipManager;
 import org.gem.indo.dooit.api.managers.UserManager;
 import org.gem.indo.dooit.helpers.DooitSharedPreferences;
+import org.gem.indo.dooit.helpers.GlobalVariables.GlobalVariables;
 import org.gem.indo.dooit.helpers.InvalidTokenHandler.InvalidTokenHandler;
 import org.gem.indo.dooit.helpers.InvalidTokenHandler.OpenLoginHandler;
 import org.gem.indo.dooit.helpers.Persisted;
@@ -127,5 +128,11 @@ public class DooitModule {
     @Singleton
     InvalidTokenHandler provideInvalidTokenHandler() {
         return new OpenLoginHandler();
+    }
+
+    @Provides
+    @Singleton
+    GlobalVariables provideGlobalClass() {
+        return new GlobalVariables();
     }
 }
