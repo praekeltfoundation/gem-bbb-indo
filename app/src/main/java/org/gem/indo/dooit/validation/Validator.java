@@ -1,4 +1,4 @@
-package org.gem.indo.dooit.validatior;
+package org.gem.indo.dooit.validation;
 
 
 /**
