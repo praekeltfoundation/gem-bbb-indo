@@ -5,6 +5,6 @@
         android:id="@+id/menu_webtips_share"
         android:icon="@drawable/ic_d_share_icon_small_pink"
         android:orderInCategory="100"
-        android:title="@string/action_settings"
+        android:title="@string/action_share"
         app:showAsAction="always" />
 </menu>
