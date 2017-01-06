@@ -28,7 +28,7 @@ public class NumberTextWatcher implements TextWatcher {
     }
 
     @SuppressWarnings("unused")
-    private static final String TAG = "NumberTextWatcher";
+    private static final String TAG = NumberTextWatcher.class.getName();
 
     public void afterTextChanged(Editable s) {
         et.removeTextChangedListener(this);
