@@ -23,7 +23,7 @@ import org.gem.indo.dooit.helpers.Persisted;
 import org.gem.indo.dooit.helpers.SquiggleBackgroundHelper;
 import org.gem.indo.dooit.helpers.TextSpannableHelper;
 import org.gem.indo.dooit.services.NotificationAlarm;
-import org.gem.indo.dooit.validatior.UserValidator;
+import org.gem.indo.dooit.validation.UserValidator;
 import org.gem.indo.dooit.views.DooitActivity;
 import org.gem.indo.dooit.views.helpers.activity.DooitActivityBuilder;
 import org.gem.indo.dooit.views.main.MainActivity;

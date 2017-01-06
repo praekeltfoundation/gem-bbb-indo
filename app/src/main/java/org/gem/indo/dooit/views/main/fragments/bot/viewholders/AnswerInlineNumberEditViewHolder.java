@@ -15,7 +15,11 @@ import org.gem.indo.dooit.R;
 import org.gem.indo.dooit.models.bot.Answer;
 import org.gem.indo.dooit.models.enums.BotMessageType;
 import org.gem.indo.dooit.views.helpers.activity.CurrencyHelper;
+import org.gem.indo.dooit.views.helpers.activity.NumberTextWatcher;
 import org.gem.indo.dooit.views.main.fragments.bot.adapters.BotAdapter;
+
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -54,6 +58,7 @@ public class AnswerInlineNumberEditViewHolder extends BaseBotViewHolder<Answer> 
         super.populate(model);
         currencySymbol.setText(CurrencyHelper.getCurrencySymbol());
         editText.setText("");
+        editText.addTextChangedListener(new NumberTextWatcher(editText));
         editText.setHint(dataModel.getInlineEditHint(getContext()));
         editText.setImeActionLabel("Done", EditorInfo.IME_ACTION_DONE);
         editText.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL);
@@ -65,10 +70,12 @@ public class AnswerInlineNumberEditViewHolder extends BaseBotViewHolder<Answer> 
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                 if (EditorInfo.IME_ACTION_DONE == actionId) {
                     dismissKeyboard(editText);
+                    char separator = ((DecimalFormat) NumberFormat.getCurrencyInstance()).getDecimalFormatSymbols().getGroupingSeparator();
+                    String stringSeparator = String.valueOf(separator);
 
-                    String input = v.getText().toString();
-
+                    String input = (v.getText().toString()).replace(stringSeparator,"");
                     Answer inputAnswer = new Answer();
+
                     inputAnswer.setValue(!TextUtils.isEmpty(input) ? input : DEFAULT);
                     inputAnswer.setName(dataModel.getName());
                     inputAnswer.setRemoveOnSelect(dataModel.getName());
