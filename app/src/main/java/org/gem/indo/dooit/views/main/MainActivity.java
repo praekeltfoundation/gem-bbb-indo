@@ -61,6 +61,7 @@ public class MainActivity extends DooitActivity {
 
     private Stack<MainViewPagerPositions> pageHistory;
     private int currentPos;
+    // Guard flag to prevent pushing to history when pressing back
     private boolean saveToHistory;
 
 
@@ -105,6 +106,7 @@ public class MainActivity extends DooitActivity {
         // Set alarm for when the app opens without going through registration or login
         NotificationAlarm.setAlarm(this);
 
+        // ViewPager history functionality
         pageHistory = new Stack<>();
         currentPos = 0;
         saveToHistory = true;
@@ -113,7 +115,7 @@ public class MainActivity extends DooitActivity {
     @OnPageChange(value = R.id.content_main_view_pager, callback = OnPageChange.Callback.PAGE_SELECTED)
     public void onMainPagerPageSelected(int position) {
 
-        if(saveToHistory)
+        if (saveToHistory)
             pageHistory.push(MainViewPagerPositions.getValueOf(currentPos));
 
         currentPos = position;
