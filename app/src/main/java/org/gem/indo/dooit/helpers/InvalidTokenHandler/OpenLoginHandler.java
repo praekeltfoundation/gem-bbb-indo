@@ -13,9 +13,6 @@ public class OpenLoginHandler implements InvalidTokenHandler {
 
     @Override
     public void handle(final Context context) {
-        //LoginActivity.Builder.create(context).startActivityClearTop();
-        Intent intent=new Intent(context,LoginActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        context.startActivity(intent);
+        LoginActivity.Builder.create(context).startActivityClearTop();
     }
 }
