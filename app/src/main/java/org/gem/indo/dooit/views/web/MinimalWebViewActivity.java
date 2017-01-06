@@ -40,10 +40,8 @@ public class MinimalWebViewActivity extends DooitActivity {
     private static final String INTENT_URL = "intent_webView_url";
     private static final String INTENT_TITLE = "intent_webView_title";
     private static final String INTENT_NO_CARET = "intent_noCaret_title";
-    private boolean caret = false;
     private static final String INTENT_WEBTIPS_SHARE = "intent_webtips_share";
     private boolean share = false;
-    //private static final String INTENT_NO_SHARE = "intent_no_share";
 
     @BindView(R.id.toolbar)
     Toolbar toolbar;
@@ -196,10 +194,5 @@ public class MinimalWebViewActivity extends DooitActivity {
             intent.putExtra(INTENT_WEBTIPS_SHARE, "web_tip_share");
             return this;
         }
-
-        /*public Builder setNoShare(){
-            intent.putExtra(INTENT_NO_SHARE, "no_share");
-            return this;
-        }*/
     }
 }
