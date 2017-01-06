@@ -101,7 +101,6 @@ public class TipBotViewHolder extends BaseBotViewHolder<Node> {
                 Toast.makeText(getContext(), String.format(openingText, title), Toast.LENGTH_LONG).show();
                 MinimalWebViewActivity.Builder.create(getContext())
                         .setUrl(articleUrl)
-                        .setNoCaret()
                         .startActivity();
             }
         });

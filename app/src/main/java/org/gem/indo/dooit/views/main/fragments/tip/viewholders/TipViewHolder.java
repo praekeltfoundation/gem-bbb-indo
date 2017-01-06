@@ -109,7 +109,6 @@ public class TipViewHolder extends RecyclerView.ViewHolder {
                 Toast.LENGTH_SHORT).show();
         MinimalWebViewActivity.Builder.create(getContext())
                 .setUrl(articleUrl)
-                .setNoCaret()
                 .setWebTipShare()
                 .startActivity();
     }

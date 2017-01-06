@@ -23,6 +23,7 @@ import org.gem.indo.dooit.helpers.LanguageCodeHelper;
 import org.gem.indo.dooit.helpers.social.SocialSharer;
 import org.gem.indo.dooit.views.DooitActivity;
 import org.gem.indo.dooit.views.helpers.activity.DooitActivityBuilder;
+import org.gem.indo.dooit.views.onboarding.LoginActivity;
 import org.gem.indo.dooit.views.settings.SettingsActivity;
 
 import java.util.HashMap;
@@ -39,7 +40,10 @@ public class MinimalWebViewActivity extends DooitActivity {
     private static final String INTENT_URL = "intent_webView_url";
     private static final String INTENT_TITLE = "intent_webView_title";
     private static final String INTENT_NO_CARET = "intent_noCaret_title";
+    private boolean caret = false;
     private static final String INTENT_WEBTIPS_SHARE = "intent_webtips_share";
+    private boolean share = false;
+    //private static final String INTENT_NO_SHARE = "intent_no_share";
 
     @BindView(R.id.toolbar)
     Toolbar toolbar;
@@ -72,8 +76,11 @@ public class MinimalWebViewActivity extends DooitActivity {
             else
                 actionBar.setTitle("");
 
-           /* if (getIntent().hasExtra(INTENT_WEBTIPS_SHARE))
-                actionBar.setWeb*/
+            if (getIntent().hasExtra(INTENT_WEBTIPS_SHARE))
+                share = true;
+            else
+                share = false;
+
             toolbar.setNavigationOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -123,8 +130,15 @@ public class MinimalWebViewActivity extends DooitActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_webtips_share, menu);
-        return super.onCreateOptionsMenu(menu);
+        //check boolean to see if intent was set, if no intent for share then load correct menu
+        if(share) {
+            getMenuInflater().inflate(R.menu.menu_webtips_share, menu);
+            return super.onCreateOptionsMenu(menu);
+        }
+        else{
+            getMenuInflater().inflate(R.menu.menu_main,menu);
+            return  super.onCreateOptionsMenu(menu);
+        }
 
     }
 
@@ -140,8 +154,6 @@ public class MinimalWebViewActivity extends DooitActivity {
             default:
                 return super.onOptionsItemSelected(item);
         }
-
-
         return super.onOptionsItemSelected(item);
     }
 
@@ -174,6 +186,7 @@ public class MinimalWebViewActivity extends DooitActivity {
             intent.putExtra(INTENT_URL, url);
             return this;
         }
+
         public Builder setNoCaret() {
             intent.putExtra(INTENT_NO_CARET, "caret");
             return this;
@@ -183,5 +196,10 @@ public class MinimalWebViewActivity extends DooitActivity {
             intent.putExtra(INTENT_WEBTIPS_SHARE, "web_tip_share");
             return this;
         }
+
+        /*public Builder setNoShare(){
+            intent.putExtra(INTENT_NO_SHARE, "no_share");
+            return this;
+        }*/
     }
 }
