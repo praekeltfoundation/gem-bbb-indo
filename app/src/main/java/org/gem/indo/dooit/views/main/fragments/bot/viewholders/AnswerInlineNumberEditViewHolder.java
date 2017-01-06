@@ -1,8 +1,8 @@
 package org.gem.indo.dooit.views.main.fragments.bot.viewholders;
 
-import android.content.Context;
 import android.support.v4.content.ContextCompat;
 import android.text.InputType;
+import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
@@ -15,7 +15,11 @@ import org.gem.indo.dooit.R;
 import org.gem.indo.dooit.models.bot.Answer;
 import org.gem.indo.dooit.models.enums.BotMessageType;
 import org.gem.indo.dooit.views.helpers.activity.CurrencyHelper;
+import org.gem.indo.dooit.views.helpers.activity.NumberTextWatcher;
 import org.gem.indo.dooit.views.main.fragments.bot.adapters.BotAdapter;
+
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -26,15 +30,16 @@ import butterknife.ButterKnife;
 
 public class AnswerInlineNumberEditViewHolder extends BaseBotViewHolder<Answer> {
 
+    private static final String DEFAULT = "0";
+
     @BindView(R.id.item_view_bot_inline_edit_currency_container)
     View background;
-
 
     @BindView(R.id.item_view_bot_inline_edit_view)
     EditText editText;
 
     @BindView(R.id.item_view_bot_inline_edit_currency_view)
-    TextView textViewCurrency;
+    TextView currencySymbol;
 
     BotAdapter botAdapter;
     HashtagView.TagsClickListener tagsClickListener;
@@ -51,8 +56,9 @@ public class AnswerInlineNumberEditViewHolder extends BaseBotViewHolder<Answer> 
     @Override
     public void populate(Answer model) {
         super.populate(model);
-        textViewCurrency.setText(CurrencyHelper.getCurrencySymbol());
+        currencySymbol.setText(CurrencyHelper.getCurrencySymbol());
         editText.setText("");
+        editText.addTextChangedListener(new NumberTextWatcher(editText));
         editText.setHint(dataModel.getInlineEditHint(getContext()));
         editText.setImeActionLabel("Done", EditorInfo.IME_ACTION_DONE);
         editText.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL);
@@ -64,8 +70,13 @@ public class AnswerInlineNumberEditViewHolder extends BaseBotViewHolder<Answer> 
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                 if (EditorInfo.IME_ACTION_DONE == actionId) {
                     dismissKeyboard(editText);
+                    char separator = ((DecimalFormat) NumberFormat.getCurrencyInstance()).getDecimalFormatSymbols().getGroupingSeparator();
+                    String stringSeparator = String.valueOf(separator);
+
+                    String input = (v.getText().toString()).replace(stringSeparator,"");
                     Answer inputAnswer = new Answer();
-                    inputAnswer.setValue(v.getText().toString());
+
+                    inputAnswer.setValue(!TextUtils.isEmpty(input) ? input : DEFAULT);
                     inputAnswer.setName(dataModel.getName());
                     inputAnswer.setRemoveOnSelect(dataModel.getName());
                     inputAnswer.setNext(dataModel.getNextOnFinish());

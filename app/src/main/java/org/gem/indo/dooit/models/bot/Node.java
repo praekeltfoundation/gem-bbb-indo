@@ -74,6 +74,10 @@ public class Node extends BaseBotModel {
         return autoNextNode != null;
     }
 
+    public boolean hasAnyNext() {
+        return hasNext() || hasAutoNext() || hasAutoNextNode();
+    }
+
     public boolean isIconHidden() {
         return iconHidden;
     }

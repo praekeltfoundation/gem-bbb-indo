@@ -133,7 +133,7 @@
                 android:layout_below="@+id/profile_current_achievement_title"
                 android:divider="@color/divider"
                 android:dividerHeight="1dp"
-                tools:listitem="@layout/activity_profile_achievement_item" />
+                tools:listitem="@layout/item_view_profile_achievement" />
 
             <RelativeLayout
                 android:id="@+id/achievements_progress_container"

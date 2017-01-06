@@ -310,6 +310,7 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
             case DEFAULT:
             case GOAL_ADD:
                 return new GoalAddController(getActivity(), this,
+                        persisted.loadGoalProtos(),
                         persisted.loadConvoGoal(botType),
                         persisted.loadConvoChallenge(botType),
                         persisted.loadConvoTip());
@@ -363,14 +364,17 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
 
         if (shouldAdd(answer))
             getBotAdapter().addItem(answer);
+
+        if (answer.hasInputKey() && hasController())
+            controller.onAnswerInput(answer.getInputKey(), answer);
+
         conversationRecyclerView.scrollToPosition(getBotAdapter().getItemCount() - 1);
         persisted.saveConversationState(type, getBotAdapter().getDataSet());
 
-        if (!TextUtils.isEmpty(answer.getNext())) {
+        if (answer.hasNext())
             getAndAddNode(answer.getNext());
-        } else {
+        else
             answerView.setData(new ArrayList<>());
-        }
     }
 
     private Map<String, Answer> createAnswerLog(List<BaseBotModel> conversation) {
@@ -408,8 +412,13 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
         // Nodes can be skipped completely. They will not be added to the adapter, and thus not
         // persisted. The `shouldSkip` method on the controller will not be called again when the
         // conversation is loaded.
-        if (hasController() && controller.shouldSkip(node) && node.hasNext()) {
-            getAndAddNode(node.getNext());
+        if (hasController() && controller.shouldSkip(node) && node.hasAnyNext()) {
+            if (node.hasNext())
+                getAndAddNode(node.getNext());
+            else if (node.hasAutoNext())
+                getAndAddNode(node.getAutoNext());
+            else if (node.hasAutoNextNode())
+                addNode(node.getAutoNextNode());
             return;
         }
 

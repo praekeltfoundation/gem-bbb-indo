@@ -47,7 +47,8 @@ public class Goal {
     private double weeklyAverage;
     private long user;
     // The id of the predefined Goal. null means custom.
-    private Long prototype;
+    @SerializedName("prototype")
+    private Long prototypeId;
     // New badges are awarded on responses
     @SerializedName("new_badges")
     private List<Badge> newBadges = new ArrayList<>();
@@ -55,6 +56,8 @@ public class Goal {
     // Local Properties
     private String localImageUri;
     private boolean imageFromProto = false;
+    // Server does not allow prototype object in Goal
+    transient private GoalPrototype prototype;
 
     public long getId() {
         return id;
@@ -70,6 +73,10 @@ public class Goal {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public boolean hasName() {
+        return !TextUtils.isEmpty(name);
     }
 
     public double getValue() {
@@ -174,16 +181,16 @@ public class Goal {
         this.user = user;
     }
 
-    public Long getPrototype() {
-        return prototype;
+    public Long getPrototypeId() {
+        return prototypeId;
     }
 
-    public void setPrototype(Long prototype) {
-        this.prototype = prototype;
+    public void setPrototypeId(Long prototypeId) {
+        this.prototypeId = prototypeId;
     }
 
     public boolean isCustom() {
-        return prototype == null;
+        return prototypeId == null;
     }
 
     public void setTransactions(List<GoalTransaction> transactions) {
@@ -195,10 +202,23 @@ public class Goal {
         calculateValue();
     }
 
-    public GoalTransaction createTransaction(double value) {
+    /**
+     * @param value The monetary value of the transaction
+     * @param clamp When true, and the transaction withdraws enough to put the Goal in the negative,
+     *              the value of the transaction will be clamped so the Goal value will be 0.
+     * @return The created transaction.
+     */
+    public GoalTransaction createTransaction(double value, boolean clamp) {
+        if (clamp && this.value + value < 0)
+            value = -this.value;
+
         GoalTransaction trans = new GoalTransaction(DateTime.now(), value);
         addTransaction(trans);
         return trans;
+    }
+
+    public GoalTransaction createTransaction(double value) {
+        return createTransaction(value, true);
     }
 
     public boolean canDeposit() {
@@ -260,5 +280,17 @@ public class Goal {
 
     public boolean isMissed() {
         return new Date().after(endDate.toDate());
+    }
+
+    public GoalPrototype getPrototype() {
+        return prototype;
+    }
+
+    public void setPrototype(GoalPrototype prototype) {
+        this.prototype = prototype;
+    }
+
+    public boolean hasPrototype() {
+        return prototype != null;
     }
 }

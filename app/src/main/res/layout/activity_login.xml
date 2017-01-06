@@ -116,5 +116,16 @@
             android:text="@string/label_log_in"
             android:textAllCaps="true" />
 
+        <TextView
+            android:id="@+id/activity_login_not_registered"
+            style="@style/AppTheme.TextView.Bold.Medium"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/activity_login_login_button"
+            android:layout_marginTop="16dp"
+            android:layout_centerHorizontal="true"
+            android:text="@string/login_not_registered"
+            android:textColor="@color/white" />
+
     </RelativeLayout>
 </ScrollView>

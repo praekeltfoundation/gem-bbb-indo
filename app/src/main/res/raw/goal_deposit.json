@@ -55,6 +55,36 @@
   {
     "name": "goal_deposit_info",
     "type": "goalInfo",
+    "answers" : [
+      {
+        "name": "goal_deposit_info_continue",
+        "text": "$(yay_me)",
+        "next": "goal_deposit_badges"
+      }
+    ]
+  },
+
+
+
+  {
+    "name": "goal_deposit_badges",
+    "type": "blank",
+    "call": "#add_badge",
+    "next": "goal_deposit_end_options",
+    "answers": [
+      {
+        "name": "goal_deposit_badges_continue",
+        "text": "$(yay_me)",
+        "next": "goal_deposit_end_options"
+      }
+    ]
+  },
+
+
+
+  {
+    "name": "goal_deposit_end_options",
+    "type": "blank",
     "answers": [
       {
         "name": "goal_deposit_challenge",
