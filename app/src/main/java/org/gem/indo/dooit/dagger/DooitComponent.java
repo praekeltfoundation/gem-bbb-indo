@@ -3,6 +3,7 @@ package org.gem.indo.dooit.dagger;
 import org.gem.indo.dooit.DooitApplication;
 import org.gem.indo.dooit.api.managers.DooitManager;
 import org.gem.indo.dooit.api.managers.FeedbackManager;
+import org.gem.indo.dooit.api.managers.SurveyManager;
 import org.gem.indo.dooit.controllers.DooitBotController;
 import org.gem.indo.dooit.controllers.RequirementResolver;
 import org.gem.indo.dooit.controllers.goal.GoalAddController;
@@ -134,6 +135,8 @@ public interface DooitComponent {
     void inject(RootActivity o);
 
     void inject(SettingsActivity o);
+
+    void inject(SurveyManager o);
 
     void inject(TargetFragment o);
 
