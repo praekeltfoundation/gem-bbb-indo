@@ -88,8 +88,8 @@ public class DooitManager {
                 if(response != null && response.code() == 403){
                     synchronized(this){
                         if(!globalVariables.getLoginStarted()){
-                            invalidTokenHandler.handle(context);
                             globalVariables.setLoginStarted(true);
+                            invalidTokenHandler.handle(context);
                         }
                     }
                 }
