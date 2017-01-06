@@ -90,6 +90,12 @@ public class LoginActivity extends DooitActivity {
         SquiggleBackgroundHelper.setBackground(this, R.color.purple, R.color.purple_light, background);
     }
 
+    @Override
+    protected void onStop() {
+        super.onStop();
+        globalVariables.setLoginStarted(false);
+    }
+
     @OnClick(R.id.activity_login_login_button)
     public void login() {
         if (!detailsValid())
@@ -129,7 +135,6 @@ public class LoginActivity extends DooitActivity {
                 persisted.setNewBotUser(false);
                 NotificationAlarm.setAlarm(LoginActivity.this);
                 MainActivity.Builder.create(LoginActivity.this).startActivityClearTop();
-                globalVariables.setLoginStarted(false);
             }
         });
     }
