@@ -18,8 +18,12 @@ import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.widget.ProgressBar;
 
+import org.gem.indo.dooit.DooitApplication;
 import org.gem.indo.dooit.R;
+import org.gem.indo.dooit.api.managers.AuthenticationManager;
+import org.gem.indo.dooit.api.responses.AuthenticationResponse;
 import org.gem.indo.dooit.helpers.LanguageCodeHelper;
+import org.gem.indo.dooit.helpers.Persisted;
 import org.gem.indo.dooit.helpers.social.SocialSharer;
 import org.gem.indo.dooit.views.DooitActivity;
 import org.gem.indo.dooit.views.helpers.activity.DooitActivityBuilder;
@@ -28,6 +32,8 @@ import org.gem.indo.dooit.views.settings.SettingsActivity;
 
 import java.util.HashMap;
 import java.util.Map;
+
+import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -42,6 +48,7 @@ public class MinimalWebViewActivity extends DooitActivity {
     private static final String INTENT_NO_CARET = "intent_noCaret_title";
     private static final String INTENT_WEBTIPS_SHARE = "intent_webtips_share";
     private boolean share = false;
+    private boolean auth = false;
 
     @BindView(R.id.toolbar)
     Toolbar toolbar;
@@ -52,10 +59,14 @@ public class MinimalWebViewActivity extends DooitActivity {
     @BindView(R.id.activity_settings_web_progress)
     ProgressBar progressBar;
 
+    @Inject
+    Persisted persisted;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(org.gem.indo.dooit.R.layout.activity_web_view);
+        ((DooitApplication) getApplication()).component.inject(this);
         ButterKnife.bind(this);
         setSupportActionBar(toolbar);
         ActionBar actionBar = getSupportActionBar();
@@ -111,8 +122,15 @@ public class MinimalWebViewActivity extends DooitActivity {
                 }
             }
         });
+
         Map<String, String> headers = new HashMap<String,String>();
         headers.put("Accept-Language", LanguageCodeHelper.getLanguage());
+
+        if(persisted.hasToken()) {
+//            headers.put("Authorization", persisted.getToken());
+            auth = true;
+        }
+
         webView.loadUrl(getIntent().getStringExtra(INTENT_URL),headers);
         Log.d("Web-Headers",headers.toString());
     }
@@ -129,7 +147,11 @@ public class MinimalWebViewActivity extends DooitActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         //check boolean to see if intent was set, if no intent for share then load correct menu
-        if(share) {
+        if(share && auth){
+            getMenuInflater().inflate(R.menu.menu_webtips_share_and_favourite, menu);
+            return super.onCreateOptionsMenu(menu);
+        }
+        else if(share) {
             getMenuInflater().inflate(R.menu.menu_webtips_share, menu);
             return super.onCreateOptionsMenu(menu);
         }
@@ -137,7 +159,6 @@ public class MinimalWebViewActivity extends DooitActivity {
             getMenuInflater().inflate(R.menu.menu_main,menu);
             return  super.onCreateOptionsMenu(menu);
         }
-
     }
 
     @Override

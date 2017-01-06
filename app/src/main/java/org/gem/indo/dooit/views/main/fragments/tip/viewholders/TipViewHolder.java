@@ -204,9 +204,9 @@ public class TipViewHolder extends RecyclerView.ViewHolder {
         isFavourite = favourite;
         // TODO: Proper checkable button
         if (isFavourite) {
-            favView.setImageDrawable(ContextCompat.getDrawable(getContext(), org.gem.indo.dooit.R.drawable.ic_d_heart));
+            favView.setImageDrawable(ContextCompat.getDrawable(getContext(), org.gem.indo.dooit.R.drawable.ic_d_heart_yellow));
         } else {
-            favView.setImageDrawable(ContextCompat.getDrawable(getContext(), org.gem.indo.dooit.R.drawable.ic_d_heart_inverted));
+            favView.setImageDrawable(ContextCompat.getDrawable(getContext(), org.gem.indo.dooit.R.drawable.ic_d_heart_yellow_inverted));
         }
     }
 
