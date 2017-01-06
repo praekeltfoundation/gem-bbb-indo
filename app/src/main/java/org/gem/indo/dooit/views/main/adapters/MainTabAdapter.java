@@ -11,10 +11,10 @@ import android.widget.TextView;
 
 import org.gem.indo.dooit.R;
 import org.gem.indo.dooit.views.main.MainViewPagerPositions;
-import org.gem.indo.dooit.views.main.fragments.challenge.ChallengeFragment;
-import org.gem.indo.dooit.views.main.fragments.tip.TipsFragment;
 import org.gem.indo.dooit.views.main.fragments.bot.BotFragment;
+import org.gem.indo.dooit.views.main.fragments.challenge.ChallengeFragment;
 import org.gem.indo.dooit.views.main.fragments.target.TargetFragment;
+import org.gem.indo.dooit.views.main.fragments.tip.TipsFragment;
 
 /**
  * Created by wsche on 2016/11/05.
@@ -34,7 +34,6 @@ public class MainTabAdapter extends FragmentStatePagerAdapter {
 
     @Override
     public Fragment getItem(int position) {
-        Fragment fragment;
         switch (MainViewPagerPositions.getValueOf(position)) {
             case BOT:
                 return botFragment;
@@ -53,7 +52,6 @@ public class MainTabAdapter extends FragmentStatePagerAdapter {
     public int getCount() {
         return MainViewPagerPositions.values().length;
     }
-
 
     @Override
     public CharSequence getPageTitle(int position) {
