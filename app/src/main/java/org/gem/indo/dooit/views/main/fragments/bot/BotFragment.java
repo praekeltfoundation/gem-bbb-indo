@@ -252,6 +252,10 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
                 feed.parse(R.raw.tip_intro, Node.class);
                 initializeBot();
                 break;
+            case SURVEY_BASELINE:
+                feed.parse(R.raw.survey_baseline, Node.class);
+                initializeBot();
+                break;
         }
     }
 
@@ -307,6 +311,9 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
                 break;
             case TIP_INTRO:
                 getAndAddNode("tip_intro_inline_link");
+                break;
+            case SURVEY_BASELINE:
+                getAndAddNode("survey_baseline_q01_occupation");
                 break;
         }
     }
