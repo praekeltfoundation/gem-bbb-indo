@@ -1,0 +1,67 @@
+[
+  {
+    "name": "survey_baseline_q01_occupation",
+    "type": "text",
+    "text": "$(survey_baseline_q01_occupation)",
+    "answers": [
+      {
+        "name": "survey_baseline_q01_a01",
+        "text": "$(survey_baseline_q01_a01)",
+        "next": "survey_baseline_end"
+      },
+      {
+        "name": "survey_baseline_q01_a02",
+        "text": "$(survey_baseline_q01_a02)",
+        "next": "survey_baseline_end"
+      },
+      {
+        "name": "survey_baseline_q01_a03",
+        "text": "$(survey_baseline_q01_a03)",
+        "next": "survey_baseline_end"
+      },
+      {
+        "name": "survey_baseline_q01_a04",
+        "text": "$(survey_baseline_q01_a04)",
+        "next": "survey_baseline_end"
+      },
+      {
+        "name": "survey_baseline_q01_a05",
+        "text": "$(survey_baseline_q01_a05)",
+        "next": "survey_baseline_end"
+      },
+      {
+        "name": "survey_baseline_q01_a06",
+        "text": "$(survey_baseline_q01_a06)",
+        "next": "survey_baseline_end"
+      },
+      {
+        "name": "survey_baseline_q01_a07",
+        "text": "$(survey_baseline_q01_a07)",
+        "next": "survey_baseline_end"
+      },
+      {
+        "name": "survey_baseline_q01_a08",
+        "text": "$(survey_baseline_q01_a08)",
+        "next": "survey_baseline_end"
+      },
+      {
+        "name": "survey_baseline_q01_a09",
+        "text": "$(survey_baseline_q01_a09)",
+        "next": "survey_baseline_end"
+      },
+      {
+        "name": "survey_baseline_q01_a10",
+        "text": "$(survey_baseline_q01_a10)",
+        "next": "survey_baseline_end"
+      }
+    ]
+  },
+
+
+
+
+  {
+    "name": "survey_baseline_end",
+    "type": "end"
+  }
+]

@@ -269,6 +269,44 @@
     <!-- BOT: tip_intro -->
     <string name="tip_intro_inline_link">TODO: Show Tip</string>
 
+    <!-- BOT: survey_baseline -->
+    <!-- Q1 -->
+    <string name="survey_baseline_q01_occupation">What is your primary occupation?</string>
+
+    <string name="survey_baseline_q01_a01">Student in elementary school (SD)</string>
+    <string name="survey_baseline_q01_a02">Student in middle school (SMP)</string>
+    <string name="survey_baseline_q01_a03">Student in academic high school (SMA)</string>
+    <string name="survey_baseline_q01_a04">Student in vocational high school (SMK)</string>
+    <string name="survey_baseline_q01_a05">Student in elementary school (SD)</string>
+    <string name="survey_baseline_q01_a06">Student in elementary school (SD)</string>
+    <string name="survey_baseline_q01_a07">Student in elementary school (SD)</string>
+    <string name="survey_baseline_q01_a08">Student in elementary school (SD)</string>
+    <string name="survey_baseline_q01_a09">Student in elementary school (SD)</string>
+    <string name="survey_baseline_q01_a10">Student in elementary school (SD)</string>
+
+    <!-- Q2 -->
+    <string name="survey_baseline_q02_grade">What grade are you in?</string>
+    <string name="survey_baseline_q02_a01">1st Year</string>
+    <string name="survey_baseline_q02_a02">2nd Year</string>
+    <string name="survey_baseline_q02_a03">3rd Year</string>
+
+    <!-- Q3 -->
+    <string name="survey_baseline_q03_school_name">What is the name of your SMK?</string>
+
+    <!-- Q4 -->
+    <string name="survey_baseline_q04_city">What city do you live in?</string>
+
+    <!-- Q5 -->
+    <string name="survey_baseline_q05_job_month">Have you ever had a paid job for longer than one month? (Include working in family business and/or apprenticeships if paid.)</string>
+    <string name="survey_baseline_q05_a01_yes">Yes</string>
+    <string name="survey_baseline_q05_s02_no">No</string>
+
+    <!-- Q6 -->
+    <string name="survey_baseline_q06_earning_range">Within what range did your monthly earning fall for your last job?</string>
+    <string name="survey_baseline_q06_a01_250">Less than 250 thousand</string>
+
+    <!-- END BOT: survey_baseline -->
+
     <!--Buttons-->
     <string name="Skip">Skip</string>
     <string name="Capture">Add photo</string>
@@ -422,6 +460,10 @@
     <!-- Sharing -->
     <string name="share_chooser_tip_title">Share Tip on&#8230;</string>
     <string name="share_chooser_badge_title">Share Badge on&#8230;</string>
+
+    <!-- Surveys -->
+    <string name="survey_baseline_title">Baseline Survey</string>
+    <string name="survey_eatool_title">EA Tool</string>
 
     <!-- Dev only -->
     <string name="placeholder_label_short">Placeholder</string>
