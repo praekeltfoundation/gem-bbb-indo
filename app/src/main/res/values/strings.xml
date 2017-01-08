@@ -428,7 +428,7 @@
     <!-- Q24 -->
     <string name="survey_baseline_q24_mobile_most_use">What is your mobile phone most useful for?</string>
     <string name="survey_baseline_q24_a01_friends">Calling or texting friends</string>
-    <string name="survey_baseline_q24_a02_familty">Calling or texting family</string>
+    <string name="survey_baseline_q24_a02_family">Calling or texting family</string>
     <string name="survey_baseline_q24_a03_social_media">Accessing social media</string>
     <string name="survey_baseline_q24_a04_internet">Accessing information on the internet</string>
     <string name="survey_baseline_q24_a05_apps">Using apps or tools to help me manage my life, like trackers or calendars.</string>
@@ -437,7 +437,7 @@
     <!-- Q25 -->
     <string name="survey_baseline_q25_mobile_least_use">What is your mobile phone least useful for?</string>
     <string name="survey_baseline_q25_a01_friends">Calling or texting friends</string>
-    <string name="survey_baseline_q25_a02_familty">Calling or texting family</string>
+    <string name="survey_baseline_q25_a02_family">Calling or texting family</string>
     <string name="survey_baseline_q25_a03_social_media">Accessing social media</string>
     <string name="survey_baseline_q25_a04_internet">Accessing information on the internet</string>
     <string name="survey_baseline_q25_a05_apps">Using apps or tools to help me manage my life, like trackers or calendars.</string>
