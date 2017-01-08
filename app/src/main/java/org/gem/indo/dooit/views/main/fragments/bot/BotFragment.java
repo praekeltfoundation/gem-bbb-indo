@@ -16,6 +16,7 @@ import android.view.ViewTreeObserver;
 
 import com.greenfrvr.hashtagview.HashtagView;
 
+import org.gem.indo.dooit.Constants;
 import org.gem.indo.dooit.DooitApplication;
 import org.gem.indo.dooit.R;
 import org.gem.indo.dooit.api.managers.ChallengeManager;
@@ -90,7 +91,7 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
 
     BotType type = BotType.DEFAULT;
     BotController controller;
-    BotFeed feed;
+    BotFeed<Node> feed;
     BaseBotModel currentModel;
     boolean clearState = false;
 
@@ -141,20 +142,32 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
         menu.clear();
-        getActivity().getMenuInflater().inflate(org.gem.indo.dooit.R.menu.menu_main, menu);
-        getActivity().getMenuInflater().inflate(org.gem.indo.dooit.R.menu.menu_main_bot, menu);
+        if (Constants.DEBUG) {
+            getActivity().getMenuInflater().inflate(R.menu.menu_main, menu);
+            getActivity().getMenuInflater().inflate(R.menu.menu_main_bot, menu);
+        }
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == R.id.menu_main_bot_clear) {
-            persisted.clearConversation();
-            persisted.clearConvoGoals();
-            persisted.clearConvoTip();
-            type = BotType.DEFAULT;
-            createFeed();
+        switch (item.getItemId()) {
+            case R.id.menu_main_bot_baseline_survey:
+                finishConversation();
+                setBotType(BotType.SURVEY_BASELINE);
+                createFeed();
+                return true;
+            case R.id.menu_main_bot_eatool_survey:
+                return true;
+            case R.id.menu_main_bot_clear:
+                persisted.clearConversation();
+                persisted.clearConvoGoals();
+                persisted.clearConvoTip();
+                type = BotType.DEFAULT;
+                createFeed();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
         }
-        return super.onOptionsItemSelected(item);
     }
 
     @Override
@@ -200,6 +213,7 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
                         .build()
                         .resolve(reqCallback);
                 break;
+            default:
             case DEFAULT:
             case GOAL_ADD:
                 feed.parse(R.raw.goal_add, Node.class);
@@ -274,6 +288,7 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
 
         // Jump to first node
         switch (type) {
+            default:
             case RETURNING_USER:
             case DEFAULT:
                 getAndAddNode(null);
