@@ -7,51 +7,61 @@
       {
         "name": "survey_baseline_q01_a01",
         "text": "$(survey_baseline_q01_a01)",
+        "value": "1",
         "next": "survey_baseline_end"
       },
       {
         "name": "survey_baseline_q01_a02",
         "text": "$(survey_baseline_q01_a02)",
+        "value": "2",
         "next": "survey_baseline_end"
       },
       {
         "name": "survey_baseline_q01_a03",
         "text": "$(survey_baseline_q01_a03)",
+        "value": "3",
         "next": "survey_baseline_end"
       },
       {
         "name": "survey_baseline_q01_a04",
         "text": "$(survey_baseline_q01_a04)",
+        "value": "4",
         "next": "survey_baseline_q02_grade"
       },
       {
         "name": "survey_baseline_q01_a05",
         "text": "$(survey_baseline_q01_a05)",
+        "value": "5",
         "next": "survey_baseline_end"
       },
       {
         "name": "survey_baseline_q01_a06",
         "text": "$(survey_baseline_q01_a06)",
+        "value": "6",
         "next": "survey_baseline_end"
       },
       {
         "name": "survey_baseline_q01_a07",
         "text": "$(survey_baseline_q01_a07)",
+        "value": "7",
         "next": "survey_baseline_end"
       },
       {
         "name": "survey_baseline_q01_a08",
         "text": "$(survey_baseline_q01_a08)",
+        "value": "8",
         "next": "survey_baseline_end"
       },
       {
         "name": "survey_baseline_q01_a09",
         "text": "$(survey_baseline_q01_a09)",
+        "value": "9",
         "next": "survey_baseline_end"
       },
       {
         "name": "survey_baseline_q01_a10",
         "text": "$(survey_baseline_q01_a10)",
+        "value": "10",
         "next": "survey_baseline_end"
       }
     ]
@@ -129,7 +139,7 @@
       {
         "name": "survey_baseline_q05_s02_no",
         "text": "$(survey_baseline_q05_s02_no)",
-        "next": "survey_baseline_q06_job_earning_range"
+        "next": "survey_baseline_q08_shared_ownership"
       }
     ]
   },
@@ -929,14 +939,22 @@
       {
         "name": "survey_baseline_q29_4_a01_yes",
         "text": "$(survey_baseline_q29_4_a01_yes)",
-        "next": "survey_baseline_end"
+        "next": "survey_baseline_submit"
       },
       {
         "name": "survey_baseline_q29_4_s02_no",
         "text": "$(survey_baseline_q29_4_s02_no)",
-        "next": "survey_baseline_end"
+        "next": "survey_baseline_submit"
       }
     ]
+  },
+
+
+
+  {
+    "name": "survey_baseline_submit",
+    "asyncCall": "#do_create",
+    "autoNext": "survey_baseline_end"
   },
 
 

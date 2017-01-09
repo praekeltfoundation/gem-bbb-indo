@@ -29,6 +29,7 @@ import org.gem.indo.dooit.controllers.goal.GoalDepositController;
 import org.gem.indo.dooit.controllers.goal.GoalEditController;
 import org.gem.indo.dooit.controllers.goal.GoalWithdrawController;
 import org.gem.indo.dooit.controllers.misc.ReturningUserController;
+import org.gem.indo.dooit.controllers.survey.BaselineSurveyController;
 import org.gem.indo.dooit.helpers.Persisted;
 import org.gem.indo.dooit.helpers.SquiggleBackgroundHelper;
 import org.gem.indo.dooit.helpers.bot.BotFeed;
@@ -351,6 +352,8 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
                         persisted.loadConvoGoal(botType),
                         persisted.loadConvoChallenge(botType),
                         persisted.loadConvoTip());
+            case SURVEY_BASELINE:
+                return new BaselineSurveyController(getActivity());
             default:
                 return null;
         }
@@ -401,9 +404,20 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
 
     private Map<String, Answer> createAnswerLog(List<BaseBotModel> conversation) {
         Map<String, Answer> answerLog = new LinkedHashMap<>();
-        for (BaseBotModel model : conversation)
-            if (model instanceof Answer)
+        for (int i = 0; i < conversation.size(); i++) {
+            BaseBotModel model = conversation.get(i);
+            if (model instanceof Answer) {
                 answerLog.put(model.getName(), (Answer) model);
+
+                // TODO: Find a better way to get Question->Answer pairs to the controllers
+                // Map the preceding Node name to the Answer, as it is probably the Corresponding Question
+                if (i - 1 >= 0) {
+                    BaseBotModel prevModel = conversation.get(i - 1);
+                    if (prevModel instanceof Node)
+                        answerLog.put(prevModel.getName(), (Answer) model);
+                }
+            }
+        }
         return answerLog;
     }
 
