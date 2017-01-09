@@ -46,6 +46,10 @@ public class Answer extends BaseBotModel {
         this.value = value;
     }
 
+    public boolean hasValue() {
+        return !TextUtils.isEmpty(value);
+    }
+
     public BotParamType getInputKey() {
         if (!TextUtils.isEmpty(inputKey)) {
             inputKey = inputKey.replace("$(", "").replace(")", "");

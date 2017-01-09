@@ -1,6 +1,8 @@
 package org.gem.indo.dooit.controllers.survey;
 
 import android.content.Context;
+import android.os.Handler;
+import android.os.Looper;
 
 import org.gem.indo.dooit.controllers.DooitBotController;
 import org.gem.indo.dooit.models.bot.Answer;
@@ -20,6 +22,8 @@ abstract public class SurveyController extends DooitBotController {
     protected static final String YES = "yes";
     protected static final String NO = "no";
 
+    private Handler handler = new Handler(Looper.getMainLooper());
+
     public SurveyController(Context context, BotType botType) {
         super(context, botType);
     }
@@ -37,5 +41,9 @@ abstract public class SurveyController extends DooitBotController {
     @Override
     public void onDone(Map<String, Answer> answerLog) {
 
+    }
+
+    protected void runOnUiThread(Runnable runnable) {
+        handler.post(runnable);
     }
 }

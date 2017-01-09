@@ -1,6 +1,7 @@
 package org.gem.indo.dooit.controllers.survey;
 
 import android.content.Context;
+import android.text.TextUtils;
 
 import org.gem.indo.dooit.controllers.BotController;
 import org.gem.indo.dooit.helpers.bot.BotRunner;
@@ -9,6 +10,7 @@ import org.gem.indo.dooit.models.bot.BaseBotModel;
 import org.gem.indo.dooit.models.enums.BotCallType;
 import org.gem.indo.dooit.models.enums.BotType;
 
+import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -16,6 +18,15 @@ import java.util.Map;
  */
 
 public class BaselineSurveyController extends SurveyController {
+
+    private static final String[] QUESTIONS = new String[]{
+            "survey_baseline_q01_occupation",
+            "survey_baseline_q02_grade",
+            "survey_baseline_a_school_name", // Inline text
+            "survey_baseline_a_city", // Inline text
+            "survey_baseline_q05_job_month",
+            "survey_baseline_q06_job_earning_range"
+    };
 
     public BaselineSurveyController(Context context) {
         super(context, BotType.SURVEY_BASELINE);
@@ -33,6 +44,12 @@ public class BaselineSurveyController extends SurveyController {
     }
 
     private void submitSurvey(Map<String, Answer> answerLog, OnAsyncListener listener) {
+        Map<String, String> submission = new HashMap<>();
+        for (String questionName : QUESTIONS) {
+            Answer answer = answerLog.get(questionName);
+            if (answer != null && answer.hasValue())
+                submission.put(questionName, answer.getValue());
+        }
         listener.onDone();
     }
 }

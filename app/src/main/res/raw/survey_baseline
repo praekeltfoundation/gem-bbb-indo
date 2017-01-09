@@ -77,16 +77,19 @@
       {
         "name": "survey_baseline_q02_a01_1styear",
         "text": "$(survey_baseline_q02_a01_1styear)",
+        "value": "1",
         "next": "survey_baseline_end"
       },
       {
         "name": "survey_baseline_q02_a02_2ndyear",
         "text": "$(survey_baseline_q02_a02_2ndyear)",
+        "value": "2",
         "next": "survey_baseline_end"
       },
       {
         "name": "survey_baseline_q02_a03_3rdyear",
         "text": "$(survey_baseline_q02_a03_3rdyear)",
+        "value": "3",
         "next": "survey_baseline_q03_school_name"
       }
     ]
@@ -134,11 +137,13 @@
       {
         "name": "survey_baseline_q05_a01_yes",
         "text": "$(survey_baseline_q05_a01_yes)",
+        "value": "yes",
         "next": "survey_baseline_q06_job_earning_range"
       },
       {
         "name": "survey_baseline_q05_s02_no",
         "text": "$(survey_baseline_q05_s02_no)",
+        "value": "no",
         "next": "survey_baseline_q08_shared_ownership"
       }
     ]
@@ -154,31 +159,37 @@
       {
         "name": "survey_baseline_q06_a01_250k",
         "text": "$(survey_baseline_q06_a01_250k)",
+        "value": "1",
         "next": "survey_baseline_q07_job_status"
       },
       {
         "name": "survey_baseline_q06_a02_250k_500k",
         "text": "$(survey_baseline_q06_a02_250k_500k)",
+        "value": "2",
         "next": "survey_baseline_q07_job_status"
       },
       {
         "name": "survey_baseline_q06_a03_500k_750k",
         "text": "$(survey_baseline_q06_a03_500k_750k)",
+        "value": "3",
         "next": "survey_baseline_q07_job_status"
       },
       {
         "name": "survey_baseline_q06_a04_750k_1m",
         "text": "$(survey_baseline_q06_a04_750k_1m)",
+        "value": "4",
         "next": "survey_baseline_q07_job_status"
       },
       {
         "name": "survey_baseline_q06_a05_1m_1_5m",
         "text": "$(survey_baseline_q06_a05_1m_1_5m)",
+        "value": "5",
         "next": "survey_baseline_q07_job_status"
       },
       {
         "name": "survey_baseline_q06_a06_1_5m",
         "text": "$(survey_baseline_q06_a06_1_5m)",
+        "value": "6",
         "next": "survey_baseline_q07_job_status"
       }
     ]
