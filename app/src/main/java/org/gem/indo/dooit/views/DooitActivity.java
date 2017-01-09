@@ -16,7 +16,10 @@ import com.google.android.gms.analytics.HitBuilders;
 import com.google.android.gms.analytics.Tracker;
 
 import org.gem.indo.dooit.BuildConfig;
+import org.gem.indo.dooit.Constants;
+import org.gem.indo.dooit.helpers.Persisted;
 import org.gem.indo.dooit.helpers.permissions.PermissionsHelper;
+import org.gem.indo.dooit.views.settings.BuildInfoActivity;
 
 import java.util.Locale;
 
@@ -39,6 +42,9 @@ public abstract class DooitActivity extends AppCompatActivity {
 
     @Inject
     Tracker tracker;
+
+    @Inject
+    Persisted persisted;
 
     ProgressDialog dialog;
 
@@ -65,6 +71,9 @@ public abstract class DooitActivity extends AppCompatActivity {
     }
 
     protected void onTrack() {
+        if (BuildConfig.DEBUG)
+            return;
+
         if (tracker != null) {
             tracker.setScreenName(getScreenName());
             tracker.send(new HitBuilders.ScreenViewBuilder().build());
