@@ -12,6 +12,7 @@ import android.view.inputmethod.InputMethodManager;
 
 import com.crashlytics.android.Crashlytics;
 
+import org.gem.indo.dooit.BuildConfig;
 import org.gem.indo.dooit.Constants;
 import org.gem.indo.dooit.helpers.permissions.PermissionsHelper;
 
@@ -39,7 +40,7 @@ public abstract class DooitActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         // TODO: Move this to where you establish a user session
-        if (!Constants.DEBUG)
+        if (!BuildConfig.DEBUG)
             logUser();
     }
 
