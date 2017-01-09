@@ -202,4 +202,20 @@ public class FeedbackActivity extends DooitActivity {
             }
         });
     }
+
+    @Override
+    public void onConnectionLost() {
+        super.onConnectionLost();
+        subject.setEnabled(false);
+        message.setEnabled(false);
+        submission.setEnabled(false);
+    }
+
+    @Override
+    public void onConnectionReestablished() {
+        super.onConnectionReestablished();
+        subject.setEnabled(true);
+        message.setEnabled(true);
+        submission.setEnabled(true);
+    }
 }

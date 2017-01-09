@@ -1,8 +1,11 @@
 package org.gem.indo.dooit.views;
 
 import android.app.ProgressDialog;
+import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.IntentFilter;
 import android.os.Bundle;
+import android.support.annotation.CallSuper;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.annotation.StringRes;
@@ -13,6 +16,7 @@ import android.view.inputmethod.InputMethodManager;
 import com.crashlytics.android.Crashlytics;
 
 import org.gem.indo.dooit.Constants;
+import org.gem.indo.dooit.helpers.Connectivity.NetworkChangeReceiver;
 import org.gem.indo.dooit.helpers.permissions.PermissionsHelper;
 
 import java.util.Locale;
@@ -25,7 +29,7 @@ import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
  * Created by wsche on 2016/11/05.
  */
 
-public abstract class DooitActivity extends AppCompatActivity {
+public abstract class DooitActivity extends AppCompatActivity implements NetworkChangeReceiver.NetworkChangeListener {
 
     static {
         AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
@@ -34,6 +38,7 @@ public abstract class DooitActivity extends AppCompatActivity {
     @Inject
     protected PermissionsHelper permissionsHelper;
     ProgressDialog dialog;
+    private BroadcastReceiver receiver;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -49,6 +54,29 @@ public abstract class DooitActivity extends AppCompatActivity {
         if (dialog != null)
             dialog.dismiss();
         super.onDestroy();
+
+        if (receiver != null) {
+            unregisterReceiver(receiver);
+            receiver = null;
+        }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (receiver == null) {
+            receiver = NetworkChangeReceiver.createNetworkBroadcastReceiver(this);
+            registerReceiver(receiver, new IntentFilter(NetworkChangeReceiver.BROADCAST_ID));
+        }
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        if (receiver != null) {
+            unregisterReceiver(receiver);
+            receiver = null;
+        }
     }
 
     public Locale getLocal() {
@@ -104,5 +132,14 @@ public abstract class DooitActivity extends AppCompatActivity {
                 }
             }
         });
+    }
+
+    @CallSuper
+    public void onConnectionLost() {
+        NetworkChangeReceiver.notifyUserOfNoInternetConnection(getBaseContext());
+    }
+
+    @CallSuper
+    public void onConnectionReestablished() {
     }
 }

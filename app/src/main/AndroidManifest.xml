@@ -92,6 +92,13 @@
             android:enabled="true" />
 
         <receiver android:name=".services.NotificationAlarm" />
+        <receiver android:name=".helpers.Connectivity.NetworkChangeReceiver"
+            android:exported="true" >
+            <intent-filter>
+                <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
+                <action android:name="android.net.wifi.WIFI_STATE_CHANGED" />
+            </intent-filter>
+        </receiver>
 
         <meta-data
             android:name="io.fabric.ApiKey"
