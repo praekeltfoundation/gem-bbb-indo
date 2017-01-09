@@ -407,15 +407,10 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
         for (int i = 0; i < conversation.size(); i++) {
             BaseBotModel model = conversation.get(i);
             if (model instanceof Answer) {
-                answerLog.put(model.getName(), (Answer) model);
-
-                // TODO: Find a better way to get Question->Answer pairs to the controllers
-                // Map the preceding Node name to the Answer, as it is probably the Corresponding Question
-                if (i - 1 >= 0) {
-                    BaseBotModel prevModel = conversation.get(i - 1);
-                    if (prevModel instanceof Node)
-                        answerLog.put(prevModel.getName(), (Answer) model);
-                }
+                Answer answer = (Answer) model;
+                answerLog.put(answer.getName(), answer);
+                if (answer.hasParentName())
+                    answerLog.put(answer.getParentName(), answer);
             }
         }
         return answerLog;

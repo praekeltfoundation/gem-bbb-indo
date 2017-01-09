@@ -24,6 +24,7 @@ public class Answer extends BaseBotModel {
     private String removeOnSelect;
     private String[] changeOnSelect;
     private String typeOnFinish;
+    private String parentName;
 
     public Answer() {
         super(Answer.class.toString());
@@ -95,6 +96,18 @@ public class Answer extends BaseBotModel {
 
     public void setTypeOnFinish(String typeOnFinish) {
         this.typeOnFinish = typeOnFinish;
+    }
+
+    public String getParentName() {
+        return parentName;
+    }
+
+    public void setParentName(String parent) {
+        this.parentName = parent;
+    }
+
+    public boolean hasParentName() {
+        return !TextUtils.isEmpty(parentName);
     }
 
     @Override
