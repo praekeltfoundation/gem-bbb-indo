@@ -11,6 +11,7 @@ import org.gem.indo.dooit.controllers.goal.GoalBotController;
 import org.gem.indo.dooit.controllers.goal.GoalDepositController;
 import org.gem.indo.dooit.controllers.goal.GoalEditController;
 import org.gem.indo.dooit.controllers.goal.GoalWithdrawController;
+import org.gem.indo.dooit.controllers.survey.SurveyController;
 import org.gem.indo.dooit.helpers.Persisted;
 import org.gem.indo.dooit.services.NotificationService;
 import org.gem.indo.dooit.views.DooitActivity;
@@ -135,6 +136,8 @@ public interface DooitComponent {
     void inject(RootActivity o);
 
     void inject(SettingsActivity o);
+
+    void inject(SurveyController o);
 
     void inject(SurveyManager o);
 

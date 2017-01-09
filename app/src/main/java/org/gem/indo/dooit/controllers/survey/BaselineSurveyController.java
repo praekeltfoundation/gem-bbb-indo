@@ -3,6 +3,9 @@ package org.gem.indo.dooit.controllers.survey;
 import android.content.Context;
 import android.text.TextUtils;
 
+import org.gem.indo.dooit.api.DooitAPIError;
+import org.gem.indo.dooit.api.DooitErrorHandler;
+import org.gem.indo.dooit.api.managers.SurveyManager;
 import org.gem.indo.dooit.controllers.BotController;
 import org.gem.indo.dooit.helpers.bot.BotRunner;
 import org.gem.indo.dooit.models.bot.Answer;
@@ -12,6 +15,10 @@ import org.gem.indo.dooit.models.enums.BotType;
 
 import java.util.HashMap;
 import java.util.Map;
+
+import javax.inject.Inject;
+
+import rx.functions.Action0;
 
 /**
  * Created by Wimpie Victor on 2017/01/09.
@@ -43,13 +50,24 @@ public class BaselineSurveyController extends SurveyController {
         }
     }
 
-    private void submitSurvey(Map<String, Answer> answerLog, OnAsyncListener listener) {
+    private void submitSurvey(Map<String, Answer> answerLog, final OnAsyncListener listener) {
         Map<String, String> submission = new HashMap<>();
         for (String questionName : QUESTIONS) {
             Answer answer = answerLog.get(questionName);
             if (answer != null && answer.hasValue())
                 submission.put(questionName, answer.getValue());
         }
-        listener.onDone();
+
+        surveyManager.submit(10, submission, new DooitErrorHandler() {
+            @Override
+            public void onError(DooitAPIError error) {
+
+            }
+        }).doAfterTerminate(new Action0() {
+            @Override
+            public void call() {
+                notifyDone(listener);
+            }
+        }).subscribe();
     }
 }
