@@ -11,3 +11,6 @@
 app/fabric.properties
 fabric.*
 app/fabric.properties
+
+# Google Analyics config contains confidential information
+google-services.json
