@@ -145,7 +145,7 @@ public class ChallengeFragment extends MainFragment {
                 if (challenge.getDeactivationDate().isBeforeNow()) {
                     //persisted challenge has expired
                     persisted.clearCurrentChallenge();
-                    Snackbar.make(getView(), R.string.challenge_persisted_challenge_thrown_out, Snackbar.LENGTH_LONG).show();
+                    Snackbar.make(getView(), R.string.challenge_persisted_challenge_thrown_out, Snackbar.LENGTH_SHORT).show();
                     challengeSubscription = challengeManager.retrieveCurrentChallenge(false, new DooitErrorHandler() {
                         @Override
                         public void onError(final DooitAPIError error) {
