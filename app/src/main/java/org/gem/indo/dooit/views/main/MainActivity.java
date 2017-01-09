@@ -13,6 +13,7 @@ import android.view.MenuItem;
 import android.view.View;
 
 import com.facebook.drawee.view.SimpleDraweeView;
+import com.google.android.gms.analytics.Tracker;
 
 import org.gem.indo.dooit.DooitApplication;
 import org.gem.indo.dooit.R;
@@ -40,6 +41,8 @@ import butterknife.OnPageChange;
 
 public class MainActivity extends DooitActivity {
 
+    private static final String TAG = MainActivity.class.getName();
+
     @BindView(R.id.toolbar)
     Toolbar toolbar;
 
@@ -53,11 +56,15 @@ public class MainActivity extends DooitActivity {
     TabLayout tabLayout;
 
     MainTabAdapter mainTabAdapter;
+
     @Inject
     ActivityForResultHelper activityForResultHelper;
 
     @Inject
     Persisted persisted;
+
+    @Inject
+    Tracker tracker;
 
     private Stack<MainViewPagerPositions> pageHistory;
     private int currentPos;
@@ -130,6 +137,9 @@ public class MainActivity extends DooitActivity {
                 MainViewPagerPositions.setInActiveState(tabView);
             }
         }
+
+        // Notify analytics of Main view navigation
+        onTrack();
     }
 
     @Override
@@ -188,6 +198,11 @@ public class MainActivity extends DooitActivity {
 
     public void refreshGoals() {
         ((TargetFragment) getFragment(MainViewPagerPositions.TARGET)).refreshGoals();
+    }
+
+    @Override
+    protected String getScreenName() {
+        return super.getScreenName() + " " + MainViewPagerPositions.getValueOf(viewPager.getCurrentItem()).name();
     }
 
     public static class Builder extends DooitActivityBuilder<Builder> {

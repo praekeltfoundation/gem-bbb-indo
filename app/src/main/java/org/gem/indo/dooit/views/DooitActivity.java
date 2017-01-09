@@ -8,12 +8,14 @@ import android.support.annotation.Nullable;
 import android.support.annotation.StringRes;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.app.AppCompatDelegate;
+import android.util.Log;
 import android.view.inputmethod.InputMethodManager;
 
 import com.crashlytics.android.Crashlytics;
+import com.google.android.gms.analytics.HitBuilders;
+import com.google.android.gms.analytics.Tracker;
 
 import org.gem.indo.dooit.BuildConfig;
-import org.gem.indo.dooit.Constants;
 import org.gem.indo.dooit.helpers.permissions.PermissionsHelper;
 
 import java.util.Locale;
@@ -34,6 +36,10 @@ public abstract class DooitActivity extends AppCompatActivity {
 
     @Inject
     protected PermissionsHelper permissionsHelper;
+
+    @Inject
+    Tracker tracker;
+
     ProgressDialog dialog;
 
     @Override
@@ -50,6 +56,24 @@ public abstract class DooitActivity extends AppCompatActivity {
         if (dialog != null)
             dialog.dismiss();
         super.onDestroy();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        onTrack();
+    }
+
+    protected void onTrack() {
+        if (tracker != null) {
+            tracker.setScreenName(getScreenName());
+            tracker.send(new HitBuilders.ScreenViewBuilder().build());
+        } else
+            Log.w(this.getClass().getName(), "Analytics tracker not instantiated");
+    }
+
+    protected String getScreenName() {
+        return this.getClass().getSimpleName().replaceAll("Activity|Fragment", "");
     }
 
     public Locale getLocal() {
