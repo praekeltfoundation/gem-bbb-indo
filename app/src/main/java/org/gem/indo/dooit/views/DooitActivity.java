@@ -16,6 +16,7 @@ import com.google.android.gms.analytics.HitBuilders;
 import com.google.android.gms.analytics.Tracker;
 
 import org.gem.indo.dooit.BuildConfig;
+import org.gem.indo.dooit.DooitApplication;
 import org.gem.indo.dooit.helpers.Persisted;
 import org.gem.indo.dooit.helpers.permissions.PermissionsHelper;
 import org.gem.indo.dooit.models.User;
@@ -50,6 +51,7 @@ public abstract class DooitActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        ((DooitApplication) getApplication()).component.inject(this);
         // TODO: Move this to where you establish a user session
         if (!BuildConfig.DEBUG)
             logUser();
