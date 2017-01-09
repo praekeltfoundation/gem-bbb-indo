@@ -16,10 +16,9 @@ import com.google.android.gms.analytics.HitBuilders;
 import com.google.android.gms.analytics.Tracker;
 
 import org.gem.indo.dooit.BuildConfig;
-import org.gem.indo.dooit.Constants;
 import org.gem.indo.dooit.helpers.Persisted;
 import org.gem.indo.dooit.helpers.permissions.PermissionsHelper;
-import org.gem.indo.dooit.views.settings.BuildInfoActivity;
+import org.gem.indo.dooit.models.User;
 
 import java.util.Locale;
 
@@ -90,11 +89,19 @@ public abstract class DooitActivity extends AppCompatActivity {
     }
 
     private void logUser() {
-        // TODO: Use the current user's information
+        User user = persisted.getCurrentUser();
+
+        if (user == null)
+            return;
+
+        String email = "";
+        if (user.hasEmail())
+            email = user.getEmail();
+
         // You can call any combination of these three methods
-        Crashlytics.setUserIdentifier("12345");
-        Crashlytics.setUserEmail("user@fabric.io");
-        Crashlytics.setUserName("Test User");
+        Crashlytics.setUserIdentifier(Long.toString(user.getId()));
+        Crashlytics.setUserName(user.getUsername());
+        Crashlytics.setUserEmail(email);
     }
 
     @Override

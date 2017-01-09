@@ -56,6 +56,10 @@ public class User {
         this.email = email;
     }
 
+    public boolean hasEmail() {
+        return !TextUtils.isEmpty(email);
+    }
+
     public String getLastName() {
         return lastName;
     }
