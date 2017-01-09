@@ -7,6 +7,7 @@ import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -17,28 +18,31 @@ import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import org.gem.indo.dooit.DooitApplication;
 import org.gem.indo.dooit.R;
-import org.gem.indo.dooit.api.managers.AuthenticationManager;
-import org.gem.indo.dooit.api.responses.AuthenticationResponse;
+import org.gem.indo.dooit.api.DooitAPIError;
+import org.gem.indo.dooit.api.DooitErrorHandler;
+import org.gem.indo.dooit.api.managers.TipManager;
+import org.gem.indo.dooit.api.responses.EmptyResponse;
 import org.gem.indo.dooit.helpers.LanguageCodeHelper;
 import org.gem.indo.dooit.helpers.Persisted;
 import org.gem.indo.dooit.helpers.social.SocialSharer;
+import org.gem.indo.dooit.models.Tip;
 import org.gem.indo.dooit.views.DooitActivity;
 import org.gem.indo.dooit.views.helpers.activity.DooitActivityBuilder;
-import org.gem.indo.dooit.views.onboarding.LoginActivity;
-import org.gem.indo.dooit.views.settings.SettingsActivity;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
-import java.util.Vector;
 
 import javax.inject.Inject;
 
+import butterknife.BindString;
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
+import rx.functions.Action1;
 
 /**
  * Created by Bernhard Müller on 2016/07/22.
@@ -49,11 +53,22 @@ public class MinimalWebViewActivity extends DooitActivity {
     private static final String INTENT_TITLE = "intent_webView_title";
     private static final String INTENT_NO_CARET = "intent_noCaret_title";
     private static final String INTENT_WEBTIPS_SHARE = "intent_webtips_share";
+    private static final String INTENT_WEBTIPS_ID = "intent_webtips_id";
     private boolean share = false;
     private boolean auth = false;
+    private int tipID;
+    private boolean isFavourite = false;
+    private MenuItem favView;
+    private String title;
 
     @BindView(R.id.toolbar)
     Toolbar toolbar;
+
+    @BindString(R.string.tips_article_add_fav)
+    String addFavArticleText;
+
+    @BindString(R.string.tips_article_remove_fav)
+    String removeFavArticleText;
 
     @BindView(R.id.activity_settings_web_view)
     WebView webView;
@@ -61,19 +76,17 @@ public class MinimalWebViewActivity extends DooitActivity {
     @BindView(R.id.activity_settings_web_progress)
     ProgressBar progressBar;
 
-    @BindView((R.id.heart_pink))
-    Vector pinkHeart;
-
-    @BindView((R.id.heart_pink_inverted))
-    Vector invertedHeart;
-
     @Inject
     Persisted persisted;
+
+    @Inject
+    TipManager tipManager;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(org.gem.indo.dooit.R.layout.activity_web_view);
+        setContentView(R.layout.activity_web_view);
         ((DooitApplication) getApplication()).component.inject(this);
         ButterKnife.bind(this);
         setSupportActionBar(toolbar);
@@ -88,15 +101,18 @@ public class MinimalWebViewActivity extends DooitActivity {
                 actionBar.setHomeAsUpIndicator(R.drawable.ic_d_back_caret_pink);
             }
 
-            if (getIntent().hasExtra(INTENT_TITLE))
-                actionBar.setTitle(getIntent().getStringExtra(INTENT_TITLE));
-            else
-                actionBar.setTitle("");
+            actionBar.setTitle("");
 
-            if (getIntent().hasExtra(INTENT_WEBTIPS_SHARE))
-                share = true;
+            if (getIntent().hasExtra(INTENT_TITLE)) {
+                setTitle(getIntent().getStringExtra(INTENT_TITLE));
+            }
             else
-                share = false;
+                setTitle("");
+
+            if (getIntent().hasExtra(INTENT_WEBTIPS_ID))
+                setTipID(getIntent().getIntExtra(INTENT_WEBTIPS_ID, 0));
+
+            share = getIntent().hasExtra(INTENT_WEBTIPS_SHARE) ? true : false;
 
             toolbar.setNavigationOnClickListener(new View.OnClickListener() {
                 @Override
@@ -134,9 +150,7 @@ public class MinimalWebViewActivity extends DooitActivity {
         Map<String, String> headers = new HashMap<String,String>();
         headers.put("Accept-Language", LanguageCodeHelper.getLanguage());
 
-        if(persisted.hasToken()) {
-            auth = true;
-        }
+        auth = persisted.hasToken() ? true : false;
 
         webView.loadUrl(getIntent().getStringExtra(INTENT_URL),headers);
         Log.d("Web-Headers",headers.toString());
@@ -153,20 +167,77 @@ public class MinimalWebViewActivity extends DooitActivity {
                 activeNetwork.isConnectedOrConnecting();
     }
 
-    /*@OnClick(R.id.heart_pink)
-    public void onClickOnHeart(){
-        persisted.setFavourites();
-    }*/
+    private boolean isFavourite(){return isFavourite;}
+
+    public void setTipID(int id){tipID = id;}
+
+    public void setTitle(String title){this.title = title;}
+
+    public int getTipID(){return this.tipID;}
+
+    public String getWebViewTitle(){return this.title;}
+
+    public void favouriteWebTip(final View view) {
+        if (isFavourite()) {
+            tipManager.unfavourite(getTipID(), new DooitErrorHandler() {
+                @Override
+                public void onError(DooitAPIError error) {
+                    Log.d("Favourite in WebView", "Tip favourite status could not be set " + error.getMessage());
+                }
+            }).subscribe(new Action1<EmptyResponse>() {
+                @Override
+                public void call(EmptyResponse emptyResponse) {
+                    view.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            setFavourite(false);
+                            persisted.clearFavourites();
+                            Toast.makeText(MinimalWebViewActivity.this, String.format(removeFavArticleText,
+                                   getWebViewTitle() ), Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                }
+            });
+        } else {
+            tipManager.favourite(getTipID(), new DooitErrorHandler() {
+                @Override
+                public void onError(DooitAPIError error) {
+                    Log.d("Favourite in WebView", "Tip favourite status could not be set " + error.getMessage());
+                }
+            }).subscribe(new Action1<EmptyResponse>() {
+                @Override
+                public void call(EmptyResponse emptyResponse) {
+                    view.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            setFavourite(true);
+                            persisted.clearFavourites();
+                            Toast.makeText(MinimalWebViewActivity.this, String.format(addFavArticleText,
+                                    getWebViewTitle()), Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                }
+            });
+        }
+    }
+
+    public void setFavourite(boolean favourite) {
+        isFavourite = favourite;
+        if (isFavourite) {
+            favView.setIcon(ContextCompat.getDrawable(MinimalWebViewActivity.this, R.drawable.ic_d_heart_pink));
+
+        } else {
+            favView.setIcon(ContextCompat.getDrawable(MinimalWebViewActivity.this, R.drawable.ic_d_heart_pink_inverted));
+        }
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         //check boolean to see if intent was set, if no intent for share then load correct menu
-        if(share && auth){
-            getMenuInflater().inflate(R.menu.menu_webtips_share_and_favourite, menu);
-            return super.onCreateOptionsMenu(menu);
-        }
-        else if(share) {
+        if(share) {
             getMenuInflater().inflate(R.menu.menu_webtips_share, menu);
+            favView = menu.findItem(R.id.menu_webtips_favourite_icon);
+            if (!auth) favView.setVisible(false);
             return super.onCreateOptionsMenu(menu);
         }
         else{
@@ -178,11 +249,14 @@ public class MinimalWebViewActivity extends DooitActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.menu_webtips_share:
+            case R.id.menu_webtips_share_icon:
                 new SocialSharer(this).share(
                         this.getText(R.string.share_chooser_tip_title),
                         Uri.parse(getIntent().getStringExtra(INTENT_URL))
                 );
+                break;
+            case R.id.menu_webtips_favourite_icon:
+                favouriteWebTip(this.webView);
                 break;
             default:
                 return super.onOptionsItemSelected(item);
@@ -227,6 +301,11 @@ public class MinimalWebViewActivity extends DooitActivity {
 
         public Builder setWebTipShare() {
             intent.putExtra(INTENT_WEBTIPS_SHARE, "web_tip_share");
+            return this;
+        }
+
+        public Builder setWebTipId(int id) {
+            intent.putExtra(INTENT_WEBTIPS_ID, id);
             return this;
         }
     }

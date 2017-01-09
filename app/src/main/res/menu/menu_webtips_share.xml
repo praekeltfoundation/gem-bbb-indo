@@ -1,8 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
+
     <item
-        android:id="@+id/menu_webtips_share"
+        android:id="@+id/menu_webtips_favourite_icon"
+        android:icon="@drawable/ic_d_heart_pink_inverted"
+        android:orderInCategory="90"
+        android:title="@string/action_favourite"
+        app:showAsAction="always"/>
+
+    <item
+        android:id="@+id/menu_webtips_share_icon"
         android:icon="@drawable/ic_d_share_icon_small_pink"
         android:orderInCategory="100"
         android:title="@string/action_share"
