@@ -136,9 +136,11 @@ public class FeedbackActivity extends DooitActivity {
     @Override
     protected void onResume() {
         super.onResume();
+        /*
         if(!NetworkChangeReceiver.isOnline(getBaseContext())){
             disableUI();
         }
+        */
     }
 
     @Override
@@ -214,15 +216,16 @@ public class FeedbackActivity extends DooitActivity {
     @Override
     public void onConnectionLost() {
         super.onConnectionLost();
-        disableUI();
+        //disableUI();
     }
 
     @Override
     public void onConnectionReestablished() {
         super.onConnectionReestablished();
-        enableUI();
+        //enableUI();
     }
 
+    /*
     private void enableUI(){
         subject.setEnabled(true);
         message.setEnabled(true);
@@ -234,4 +237,5 @@ public class FeedbackActivity extends DooitActivity {
         message.setEnabled(false);
         submission.setEnabled(false);
     }
+    */
 }

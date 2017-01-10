@@ -102,9 +102,11 @@ public class SettingsActivity extends DooitActivity {
         super.onResume();
         challengeAvailableSwitch.setChecked(persisted.shouldNotify(NotificationType.CHALLENGE_AVAILABLE));
         savingReminderSwitch.setChecked(persisted.shouldNotify(NotificationType.SAVING_REMINDER));
+        /*
         if(!NetworkChangeReceiver.isOnline(getBaseContext())){
             disableUI();
         }
+        */
     }
 
     @OnClick(R.id.settings_account_change_name)
@@ -204,6 +206,7 @@ public class SettingsActivity extends DooitActivity {
 
     }
 
+    /*
     private void enableUI(){
         challengeAvailableSwitch.setEnabled(true);
         savingReminderSwitch.setEnabled(true);
@@ -213,16 +216,17 @@ public class SettingsActivity extends DooitActivity {
         challengeAvailableSwitch.setEnabled(false);
         savingReminderSwitch.setEnabled(false);
     }
+    */
 
     @Override
     public void onConnectionLost() {
         super.onConnectionLost();
-        disableUI();
+        //disableUI();
     }
 
     @Override
     public void onConnectionReestablished() {
         super.onConnectionReestablished();
-        enableUI();
+        //enableUI();
     }
 }
