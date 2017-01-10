@@ -269,6 +269,16 @@
     <!-- BOT: tip_intro -->
     <string name="tip_intro_inline_link">TODO: Show Tip</string>
 
+    <!-- BOT: Surveys Common -->
+    <!-- Bot Barks -->
+    <string name="survey_common_q_intro">$(survey.intro)</string>
+    <string name="survey_common_q_outro">$(survey.outro)</string>
+
+    <!-- Consent -->
+    <string name="survey_common_q_consent">If you are 17 years of age or younger: Does a parent or guardian agree to you completing this survey?</string>
+    <string name="survey_common_q_consent_a_yes">Yes</string>
+    <string name="survey_common_q_consent_a_no">No</string>
+
     <!-- BOT: survey_baseline -->
     <!-- Q1 -->
     <string name="survey_baseline_q01_occupation">What is your primary occupation?</string>
