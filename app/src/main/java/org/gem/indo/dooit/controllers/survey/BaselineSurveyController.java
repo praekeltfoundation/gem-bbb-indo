@@ -1,13 +1,9 @@
 package org.gem.indo.dooit.controllers.survey;
 
 import android.content.Context;
-import android.text.TextUtils;
 
 import org.gem.indo.dooit.api.DooitAPIError;
 import org.gem.indo.dooit.api.DooitErrorHandler;
-import org.gem.indo.dooit.api.managers.SurveyManager;
-import org.gem.indo.dooit.controllers.BotController;
-import org.gem.indo.dooit.helpers.bot.BotRunner;
 import org.gem.indo.dooit.models.bot.Answer;
 import org.gem.indo.dooit.models.bot.BaseBotModel;
 import org.gem.indo.dooit.models.enums.BotCallType;
@@ -15,8 +11,6 @@ import org.gem.indo.dooit.models.enums.BotType;
 
 import java.util.HashMap;
 import java.util.Map;
-
-import javax.inject.Inject;
 
 import rx.functions.Action0;
 
