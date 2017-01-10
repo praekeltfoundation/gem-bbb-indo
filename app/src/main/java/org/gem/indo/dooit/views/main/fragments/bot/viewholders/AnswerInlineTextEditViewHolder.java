@@ -77,4 +77,11 @@ public class AnswerInlineTextEditViewHolder extends BaseBotViewHolder<Answer> {
     protected void populateModel() {
 
     }
+
+    @Override
+    public void reset() {
+        editText.setHint(null);
+        editText.setText(null);
+        editText.setOnEditorActionListener(null);
+    }
 }
