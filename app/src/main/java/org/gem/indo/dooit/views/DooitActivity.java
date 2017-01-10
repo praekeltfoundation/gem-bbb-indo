@@ -11,11 +11,14 @@ import android.support.annotation.Nullable;
 import android.support.annotation.StringRes;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.app.AppCompatDelegate;
+import android.view.View;
+import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 
 import com.crashlytics.android.Crashlytics;
 
 import org.gem.indo.dooit.Constants;
+import org.gem.indo.dooit.R;
 import org.gem.indo.dooit.helpers.Connectivity.NetworkChangeReceiver;
 import org.gem.indo.dooit.helpers.permissions.PermissionsHelper;
 
@@ -67,6 +70,10 @@ public abstract class DooitActivity extends AppCompatActivity implements Network
         if (receiver == null) {
             receiver = NetworkChangeReceiver.createNetworkBroadcastReceiver(this);
             registerReceiver(receiver, new IntentFilter(NetworkChangeReceiver.BROADCAST_ID));
+        }
+        if (!NetworkChangeReceiver.isOnline(getBaseContext())) {
+            showProgressDialog(R.string.waiting_for_internet_connection);
+            //setViewEnabled(this.findViewById(android.R.id.content), false);
         }
     }
 
@@ -137,9 +144,25 @@ public abstract class DooitActivity extends AppCompatActivity implements Network
     @CallSuper
     public void onConnectionLost() {
         NetworkChangeReceiver.notifyUserOfNoInternetConnection(getBaseContext());
+        showProgressDialog(R.string.waiting_for_internet_connection);
+        //setViewEnabled(this.findViewById(android.R.id.content), false);
     }
 
     @CallSuper
     public void onConnectionReestablished() {
+        ViewGroup viewGroup = (ViewGroup) findViewById(android.R.id.content);
+        //setViewEnabled(this.findViewById(android.R.id.content), true);
+        dismissDialog();
+    }
+
+    protected static void setViewEnabled(View view, boolean enabled) {
+        view.setEnabled(enabled);
+        if (view instanceof ViewGroup) {
+            ViewGroup viewGroup = (ViewGroup) view;
+            for (int i = 0; i < viewGroup.getChildCount(); i++) {
+                View child = viewGroup.getChildAt(i);
+                setViewEnabled(child, enabled);
+            }
+        }
     }
 }
