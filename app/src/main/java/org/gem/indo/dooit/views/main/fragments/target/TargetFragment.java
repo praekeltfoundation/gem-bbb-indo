@@ -243,9 +243,7 @@ public class TargetFragment extends MainFragment {
             missedMessage.setVisibility(View.VISIBLE);
         else
             missedMessage.setVisibility(View.INVISIBLE);
-
-        depositButton.setEnabled(goal.canDeposit());
-        withdrawButton.setEnabled(goal.canWithdraw() && !goal.isReached());
+        
     }
 
     private void retrieveGoals() {
