@@ -17,6 +17,7 @@ import org.gem.indo.dooit.R;
 public class NetworkChangeReceiver extends BroadcastReceiver {
     public static final String BROADCAST_ID = "networkStateChange";
     NetworkChangeListener listener;
+    boolean connectionWasPerviouslyLost = false;
 
     public static NetworkChangeReceiver createNetworkBroadcastReceiver(NetworkChangeListener listener) {
         NetworkChangeReceiver receiver = new NetworkChangeReceiver();
@@ -24,7 +25,7 @@ public class NetworkChangeReceiver extends BroadcastReceiver {
         return receiver;
     }
 
-    public boolean isOnline(Context context) {
+    public static boolean isOnline(Context context) {
         ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo netInfo = cm.getActiveNetworkInfo();
         //should check null because in airplane mode it will be null
@@ -43,10 +44,14 @@ public class NetworkChangeReceiver extends BroadcastReceiver {
     public void onReceive(Context context, Intent intent) {
         if (TextUtils.equals(BROADCAST_ID, intent.getAction())) {
             if (listener == null) return;
-            if (isOnline(context)) {
+            if (NetworkChangeReceiver.isOnline(context)) {
+                connectionWasPerviouslyLost = false;
                 listener.onConnectionReestablished();
             } else {
-                listener.onConnectionLost();
+                if (!connectionWasPerviouslyLost) {
+                    connectionWasPerviouslyLost = true;
+                    listener.onConnectionLost();
+                }
             }
         } else {
             context.sendBroadcast(new Intent(BROADCAST_ID));
