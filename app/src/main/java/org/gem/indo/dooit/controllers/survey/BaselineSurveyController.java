@@ -23,8 +23,8 @@ public class BaselineSurveyController extends SurveyController {
     private static final String[] QUESTIONS = new String[]{
             "survey_baseline_q01_occupation",
             "survey_baseline_q02_grade",
-            "survey_baseline_a_school_name", // Inline text
-            "survey_baseline_a_city", // Inline text
+            "survey_baseline_q03_school_name", // Inline text
+            "survey_baseline_q04_city", // Inline text
             "survey_baseline_q05_job_month",
             "survey_baseline_q06_job_earning_range",
             "survey_baseline_q07_job_status",
