@@ -64,6 +64,7 @@ public class AnswerInlineTextEditViewHolder extends BaseBotViewHolder<Answer> {
                     inputAnswer.setRemoveOnSelect(dataModel.getName());
                     inputAnswer.setNext(dataModel.getNextOnFinish());
                     inputAnswer.setType(BotMessageType.getValueOf(dataModel.getTypeOnFinish()));
+                    inputAnswer.setParentName(dataModel.getParentName());
                     tagsClickListener.onItemClicked(inputAnswer);
                     return true;
                 }
