@@ -60,7 +60,11 @@ public class Answer extends BaseBotModel {
     }
 
     public void setInputKey(BotParamType key) {
-        inputKey = key.getKey();
+
+        if (key != null)
+            inputKey = key.getKey();
+        else
+            inputKey = null;
     }
 
     public boolean hasInputKey() {
@@ -79,6 +83,13 @@ public class Answer extends BaseBotModel {
         if (changeOnSelect != null && changeOnSelect.length == 2)
             return new Pair<String, String>(changeOnSelect[0], changeOnSelect[1]);
         return null;
+    }
+
+    public void setChangeOnSelect(Pair<String, String> pair) {
+        if (pair != null)
+            changeOnSelect = new String[]{pair.first, pair.second};
+        else
+            changeOnSelect = null;
     }
 
     public String getInlineEditHint(Context context) {
@@ -111,6 +122,20 @@ public class Answer extends BaseBotModel {
 
     public boolean hasParentName() {
         return !TextUtils.isEmpty(parentName);
+    }
+
+    public Answer copy() {
+        Answer answer = new Answer();
+
+        answer.setValue(value);
+        answer.setInputKey(BotParamType.byKey(inputKey));
+        answer.setNextOnFinish(nextOnFinish);
+        answer.setRemoveOnSelect(removeOnSelect);
+        answer.setChangeOnSelect(getChangeOnSelect());
+        answer.setTypeOnFinish(getTypeOnFinish());
+        answer.setParentName(getParentName());
+
+        return answer;
     }
 
     @Override
