@@ -13,6 +13,7 @@ import android.widget.TextView;
 import org.gem.indo.dooit.Constants;
 import org.gem.indo.dooit.DooitApplication;
 import org.gem.indo.dooit.R;
+import org.gem.indo.dooit.helpers.Connectivity.NetworkChangeReceiver;
 import org.gem.indo.dooit.helpers.DooitSharedPreferences;
 import org.gem.indo.dooit.helpers.Persisted;
 import org.gem.indo.dooit.helpers.SquiggleBackgroundHelper;
@@ -101,6 +102,9 @@ public class SettingsActivity extends DooitActivity {
         super.onResume();
         challengeAvailableSwitch.setChecked(persisted.shouldNotify(NotificationType.CHALLENGE_AVAILABLE));
         savingReminderSwitch.setChecked(persisted.shouldNotify(NotificationType.SAVING_REMINDER));
+        if(!NetworkChangeReceiver.isOnline(getBaseContext())){
+            disableUI();
+        }
     }
 
     @OnClick(R.id.settings_account_change_name)
@@ -198,5 +202,27 @@ public class SettingsActivity extends DooitActivity {
             return intent;
         }
 
+    }
+
+    private void enableUI(){
+        challengeAvailableSwitch.setEnabled(true);
+        savingReminderSwitch.setEnabled(true);
+    }
+
+    private void disableUI(){
+        challengeAvailableSwitch.setEnabled(false);
+        savingReminderSwitch.setEnabled(false);
+    }
+
+    @Override
+    public void onConnectionLost() {
+        super.onConnectionLost();
+        disableUI();
+    }
+
+    @Override
+    public void onConnectionReestablished() {
+        super.onConnectionReestablished();
+        enableUI();
     }
 }
