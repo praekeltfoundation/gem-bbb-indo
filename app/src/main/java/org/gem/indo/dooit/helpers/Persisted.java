@@ -53,6 +53,7 @@ public class Persisted {
     private static final String FAVOURITES = "favourites";
     private static final String NOTIFICATION = "notification";
     private static final String TAG = Persisted.class.getName();
+    private static final String SURVEY_ID = "survey_id";
 
     @Inject
     DooitSharedPreferences dooitSharedPreferences;
@@ -190,6 +191,18 @@ public class Persisted {
 
     public boolean hasConvoChallenge(BotType botType) {
         return dooitSharedPreferences.containsKey(BOT + "_" + CHALLENGE + "_" + botType.name());
+    }
+
+    public void saveConvoSurveyId(BotType botType, long id) {
+        dooitSharedPreferences.setLong(BOT + "_" + SURVEY_ID + "_" + botType.name(), id);
+    }
+
+    public long loadConvoSurveyId(BotType botType) {
+        return dooitSharedPreferences.getLong(BOT + "_" + SURVEY_ID + "_" + botType.name(), 0L);
+    }
+
+    public boolean hasConvoSurveyId(BotType botType) {
+        return dooitSharedPreferences.containsKey(BOT + "_" + SURVEY_ID + "_" + botType.name());
     }
 
     public boolean isNewBotUser() {

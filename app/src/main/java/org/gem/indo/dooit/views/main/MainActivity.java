@@ -8,6 +8,7 @@ import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -23,6 +24,7 @@ import org.gem.indo.dooit.helpers.notifications.NotificationType;
 import org.gem.indo.dooit.models.User;
 import org.gem.indo.dooit.models.enums.BotType;
 import org.gem.indo.dooit.services.NotificationAlarm;
+import org.gem.indo.dooit.services.NotificationArgs;
 import org.gem.indo.dooit.views.DooitActivity;
 import org.gem.indo.dooit.views.helpers.activity.DooitActivityBuilder;
 import org.gem.indo.dooit.views.main.adapters.MainTabAdapter;
@@ -41,6 +43,8 @@ import butterknife.OnClick;
 import butterknife.OnPageChange;
 
 public class MainActivity extends DooitActivity {
+
+    private static final String TAG = MainActivity.class.getName();
 
     @BindView(R.id.toolbar)
     Toolbar toolbar;
@@ -107,7 +111,7 @@ public class MainActivity extends DooitActivity {
                     startPage(MainViewPagerPositions.TARGET);
                     break;
                 case SURVEY_AVAILABLE:
-                    startBot(BotType.SURVEY_BASELINE);
+                    handleSurveyNotification();
                     break;
             }
         }
@@ -212,6 +216,35 @@ public class MainActivity extends DooitActivity {
         @Override
         protected Intent createIntent(Context context) {
             return new Intent(context, MainActivity.class);
+        }
+    }
+
+    /**
+     * Gets extras from the notification to choose which Bot conversation to start for the Survey,
+     * and the ID of the Survey.
+     */
+    private void handleSurveyNotification() {
+        Bundle extras = getIntent().getExtras();
+        if (extras == null)
+            return;
+
+        if (!extras.containsKey(NotificationArgs.SURVEY_ID)
+                || !extras.containsKey(NotificationArgs.SURVEY_TYPE)) {
+            Log.w(TAG, "Activity opened from Survey Notification without ID or BotType set up");
+            return;
+        }
+
+        try {
+            long id = Long.parseLong(extras.getString(NotificationArgs.SURVEY_ID));
+            BotType type = BotType.valueOf(extras.getString(NotificationArgs.SURVEY_TYPE));
+
+            // Persist for Bot requirements
+            persisted.saveConvoSurveyId(type, id);
+            startBot(type);
+        } catch (NumberFormatException e) {
+            Log.e(TAG, "Failed parsing survey id", e);
+        } catch (IllegalArgumentException e) {
+            Log.e(TAG, "Failed to parse bot type", e);
         }
     }
 

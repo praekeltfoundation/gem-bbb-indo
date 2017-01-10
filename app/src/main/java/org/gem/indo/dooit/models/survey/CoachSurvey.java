@@ -59,6 +59,10 @@ public class CoachSurvey {
         return botType;
     }
 
+    public boolean hasBotType() {
+        return botType != null;
+    }
+
     public List<CoachSurveyField> getFields() {
         return fields;
     }

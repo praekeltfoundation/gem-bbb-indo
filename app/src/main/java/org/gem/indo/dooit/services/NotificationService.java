@@ -17,10 +17,13 @@ import org.gem.indo.dooit.helpers.notifications.NotificationType;
 import org.gem.indo.dooit.helpers.notifications.Notifier;
 import org.gem.indo.dooit.models.User;
 import org.gem.indo.dooit.models.challenge.BaseChallenge;
+import org.gem.indo.dooit.models.survey.CoachSurvey;
 import org.gem.indo.dooit.views.main.MainActivity;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.inject.Inject;
 
@@ -139,12 +142,20 @@ public class NotificationService extends IntentService {
     }
 
     protected void surveyRetrieved(SurveyResponse response) {
-        if (response.hasSurvey())
+        if (response.hasSurvey()) {
+            CoachSurvey survey = response.getSurvey();
+            Map<String, String> extras = new HashMap<>();
+            extras.put(NotificationArgs.SURVEY_ID, Long.toString(survey.getId()));
+            if (survey.hasBotType())
+                extras.put(NotificationArgs.SURVEY_TYPE, survey.getBotType().name());
+
             new Notifier(getApplicationContext()).notify(
                     NotificationType.SURVEY_AVAILABLE,
                     MainActivity.class,
-                    response.getSurvey().getNotificationBody()
+                    response.getSurvey().getNotificationBody(),
+                    extras
             );
+        }
     }
 
     protected void complete(Intent intent) {
