@@ -115,6 +115,8 @@ public class RequirementResolver {
                             persisted.saveGoalProtos((List<GoalPrototype>) o);
                     } else if (o instanceof BaseChallenge) {
                         persisted.saveConvoChallenge(botType, (BaseChallenge) o);
+                    } else if (o instanceof CoachSurvey) {
+                        persisted.saveConvoSurvey(botType, (CoachSurvey) o);
                     }
                 }
             });
@@ -225,7 +227,9 @@ public class RequirementResolver {
 
             }
         });
-        if (persisted.hasConvoSurvey(botType))
+        if (persisted.hasConvoSurvey(botType)
+                // Ensure the saved survey has the same ID as the requested survey
+                && persisted.loadConvoSurvey(botType).getId() == surveyId)
             survey.subscribe(new Action1<CoachSurvey>() {
                 @Override
                 public void call(CoachSurvey coachSurvey) {
@@ -272,7 +276,8 @@ public class RequirementResolver {
 
         public RequirementResolver build() {
             RequirementResolver resolver = new RequirementResolver(context, botType, requirements);
-            resolver.setSurveyId(surveyId);
+            if (surveyId != null)
+                resolver.setSurveyId(surveyId);
             return resolver;
         }
     }

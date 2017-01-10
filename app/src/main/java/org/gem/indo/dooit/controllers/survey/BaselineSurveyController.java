@@ -7,7 +7,9 @@ import org.gem.indo.dooit.api.DooitErrorHandler;
 import org.gem.indo.dooit.models.bot.Answer;
 import org.gem.indo.dooit.models.bot.BaseBotModel;
 import org.gem.indo.dooit.models.enums.BotCallType;
+import org.gem.indo.dooit.models.enums.BotParamType;
 import org.gem.indo.dooit.models.enums.BotType;
+import org.gem.indo.dooit.models.survey.CoachSurvey;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -58,8 +60,31 @@ public class BaselineSurveyController extends SurveyController {
             "survey_baseline_q29_4_mobile_data"
     };
 
-    public BaselineSurveyController(Context context) {
-        super(context, BotType.SURVEY_BASELINE);
+    public BaselineSurveyController(Context context, CoachSurvey survey) {
+        super(context, BotType.SURVEY_BASELINE, survey);
+    }
+
+    @Override
+    public void resolveParam(BaseBotModel model, BotParamType paramType) {
+        if (!hasSurvey()) {
+            super.resolveParam(model, paramType);
+            return;
+        }
+
+        String key = paramType.getKey();
+        switch (paramType) {
+            case SURVEY_TITLE:
+                model.values.put(key, survey.getTitle());
+                break;
+            case SURVEY_INTRO:
+                model.values.put(key, survey.getIntro());
+                break;
+            case SURVEY_OUTRO:
+                model.values.put(key, survey.getOutro());
+                break;
+            default:
+                super.resolveParam(model, paramType);
+        }
     }
 
     @Override
@@ -74,6 +99,9 @@ public class BaselineSurveyController extends SurveyController {
     }
 
     private void submitSurvey(Map<String, Answer> answerLog, final OnAsyncListener listener) {
+        if (!hasSurvey())
+            return;
+
         Map<String, String> submission = new HashMap<>();
         for (String questionName : QUESTIONS) {
             Answer answer = answerLog.get(questionName);

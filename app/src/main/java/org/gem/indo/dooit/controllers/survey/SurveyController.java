@@ -7,11 +7,13 @@ import android.os.Looper;
 import org.gem.indo.dooit.DooitApplication;
 import org.gem.indo.dooit.api.managers.SurveyManager;
 import org.gem.indo.dooit.controllers.DooitBotController;
+import org.gem.indo.dooit.helpers.Persisted;
 import org.gem.indo.dooit.models.bot.Answer;
 import org.gem.indo.dooit.models.bot.BaseBotModel;
 import org.gem.indo.dooit.models.enums.BotCallType;
 import org.gem.indo.dooit.models.enums.BotParamType;
 import org.gem.indo.dooit.models.enums.BotType;
+import org.gem.indo.dooit.models.survey.CoachSurvey;
 
 import java.util.Map;
 
@@ -23,15 +25,18 @@ import javax.inject.Inject;
 
 abstract public class SurveyController extends DooitBotController {
 
-    protected static final String YES = "yes";
-    protected static final String NO = "no";
-
     @Inject
     protected SurveyManager surveyManager;
 
-    public SurveyController(Context context, BotType botType) {
+    @Inject
+    protected Persisted persisted;
+
+    protected CoachSurvey survey;
+
+    public SurveyController(Context context, BotType botType, CoachSurvey survey) {
         super(context, botType);
         ((DooitApplication) context.getApplicationContext()).component.inject(this);
+        this.survey = survey;
     }
 
     @Override
@@ -47,5 +52,9 @@ abstract public class SurveyController extends DooitBotController {
     @Override
     public void onDone(Map<String, Answer> answerLog) {
 
+    }
+
+    protected boolean hasSurvey() {
+        return survey != null;
     }
 }

@@ -256,7 +256,11 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
                 break;
             case SURVEY_BASELINE:
                 feed.parse(R.raw.survey_baseline, Node.class);
-                initializeBot();
+                new RequirementResolver.Builder(getContext(), BotType.SURVEY_BASELINE)
+                        .require(BotObjectType.SURVEY)
+                        .setSurveyId(persisted.loadConvoSurveyId(type))
+                        .build()
+                        .resolve(reqCallback);
                 break;
         }
     }
@@ -354,7 +358,8 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
                         persisted.loadConvoChallenge(botType),
                         persisted.loadConvoTip());
             case SURVEY_BASELINE:
-                return new BaselineSurveyController(getActivity());
+                return new BaselineSurveyController(getActivity(),
+                        persisted.loadConvoSurvey(botType));
             default:
                 return null;
         }

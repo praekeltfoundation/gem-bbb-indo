@@ -155,6 +155,10 @@ public class NotificationService extends IntentService {
                     response.getSurvey().getNotificationBody(),
                     extras
             );
+
+            if (survey.hasBotType())
+                // Save Survey so Bot will start quicker
+                persisted.saveConvoSurvey(survey.getBotType(), survey);
         }
     }
 
