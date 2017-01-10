@@ -1,5 +1,65 @@
 [
   {
+    "name": "survey_baseline_intro",
+    "type": "text",
+    "text": "$(survey_common_q_intro)",
+    "answers": [
+      {
+        "name": "survey_baseline_q_intro_a_yes",
+        "text": "$(survey_common_q_intro_a_yes)",
+        "next": "survey_baseline_q_consent"
+      },
+      {
+        "name": "survey_baseline_q_intro_a_no",
+        "text": "$(survey_common_q_intro_a_no)",
+        "next": "survey_baseline_q_outro_cancel"
+      }
+    ]
+  },
+
+
+
+  {
+    "name": "survey_baseline_q_consent",
+    "type": "text",
+    "text": "$(survey_common_q_consent)",
+    "answers": [
+      {
+        "name": "survey_baseline_q_consent_a_yes",
+        "text": "$(survey_common_q_consent_a_yes)",
+        "next": "survey_baseline_q_terms_and_conditions"
+      },
+      {
+        "name": "survey_baseline_q_consent_a_no",
+        "text": "$(survey_common_q_consent_a_no)",
+        "next": "survey_baseline_q_outro_cancel"
+      }
+    ]
+  },
+
+
+
+  {
+    "name": "survey_baseline_q_terms_and_conditions",
+    "type": "text",
+    "text": "$(survey_common_q_terms)",
+    "answers": [
+      {
+        "name": "survey_baseline_q_terms_a_yes",
+        "text": "$(survey_common_q_terms_a_yes)",
+        "next": "survey_baseline_q01_occupation"
+      },
+      {
+        "name": "survey_baseline_q_terms_a_no",
+        "text": "$(survey_common_q_terms_a_no)",
+        "next": "survey_baseline_q_outro_cancel"
+      }
+    ]
+  },
+
+
+
+  {
     "name": "survey_baseline_q01_occupation",
     "type": "text",
     "text": "$(survey_baseline_q01_occupation)",
@@ -8,19 +68,19 @@
         "name": "survey_baseline_q01_a01",
         "text": "$(survey_baseline_q01_a01)",
         "value": "1",
-        "next": "survey_baseline_end"
+        "next": "survey_baseline_submit"
       },
       {
         "name": "survey_baseline_q01_a02",
         "text": "$(survey_baseline_q01_a02)",
         "value": "2",
-        "next": "survey_baseline_end"
+        "next": "survey_baseline_submit"
       },
       {
         "name": "survey_baseline_q01_a03",
         "text": "$(survey_baseline_q01_a03)",
         "value": "3",
-        "next": "survey_baseline_end"
+        "next": "survey_baseline_submit"
       },
       {
         "name": "survey_baseline_q01_a04",
@@ -32,37 +92,37 @@
         "name": "survey_baseline_q01_a05",
         "text": "$(survey_baseline_q01_a05)",
         "value": "5",
-        "next": "survey_baseline_end"
+        "next": "survey_baseline_submit"
       },
       {
         "name": "survey_baseline_q01_a06",
         "text": "$(survey_baseline_q01_a06)",
         "value": "6",
-        "next": "survey_baseline_end"
+        "next": "survey_baseline_submit"
       },
       {
         "name": "survey_baseline_q01_a07",
         "text": "$(survey_baseline_q01_a07)",
         "value": "7",
-        "next": "survey_baseline_end"
+        "next": "survey_baseline_submit"
       },
       {
         "name": "survey_baseline_q01_a08",
         "text": "$(survey_baseline_q01_a08)",
         "value": "8",
-        "next": "survey_baseline_end"
+        "next": "survey_baseline_submit"
       },
       {
         "name": "survey_baseline_q01_a09",
         "text": "$(survey_baseline_q01_a09)",
         "value": "9",
-        "next": "survey_baseline_end"
+        "next": "survey_baseline_submit"
       },
       {
         "name": "survey_baseline_q01_a10",
         "text": "$(survey_baseline_q01_a10)",
         "value": "10",
-        "next": "survey_baseline_end"
+        "next": "survey_baseline_submit"
       }
     ]
   },
@@ -78,13 +138,13 @@
         "name": "survey_baseline_q02_a01_1styear",
         "text": "$(survey_baseline_q02_a01_1styear)",
         "value": "1",
-        "next": "survey_baseline_end"
+        "next": "survey_baseline_submit"
       },
       {
         "name": "survey_baseline_q02_a02_2ndyear",
         "text": "$(survey_baseline_q02_a02_2ndyear)",
         "value": "2",
-        "next": "survey_baseline_end"
+        "next": "survey_baseline_submit"
       },
       {
         "name": "survey_baseline_q02_a03_3rdyear",
@@ -315,7 +375,7 @@
       {
         "name": "survey_baseline_q10_a02_no",
         "text": "$(survey_baseline_q10_a02_no)",
-        "next": "survey_baseline_end"
+        "next": "survey_baseline_submit"
       }
     ]
   },
@@ -964,7 +1024,20 @@
 
   {
     "name": "survey_baseline_submit",
+    "type": "blank",
     "asyncCall": "#do_create",
+    "autoNext": "survey_baseline_outro_success"
+  },
+  {
+    "name": "survey_baseline_outro_success",
+    "type": "text",
+    "text": "$(survey_common_q_outro)",
+    "autoNext": "survey_baseline_end"
+  },
+  {
+    "name": "survey_baseline_q_outro_cancel",
+    "type": "text",
+    "text": "$(survey_common_q_outro_cancel)",
     "autoNext": "survey_baseline_end"
   },
 
