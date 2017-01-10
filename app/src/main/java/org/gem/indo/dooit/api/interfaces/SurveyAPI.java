@@ -1,6 +1,7 @@
 package org.gem.indo.dooit.api.interfaces;
 
 import org.gem.indo.dooit.api.responses.SurveyResponse;
+import org.gem.indo.dooit.models.survey.CoachSurvey;
 
 import java.util.Map;
 
@@ -16,6 +17,9 @@ import rx.Observable;
  */
 
 public interface SurveyAPI {
+
+    @GET("/api/surveys/{id}/")
+    Observable<CoachSurvey> getSurvey(@Path("id") long id);
 
     @GET("/api/surveys/current/")
     Observable<SurveyResponse> getCurrentSurvey();

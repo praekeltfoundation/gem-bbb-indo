@@ -10,6 +10,5 @@ public enum BotObjectType {
     GOALS,
     GOAL_PROTOTYPES,
     TIP,
-    SURVEY_BASELINE,
-    SURVEY_EATOOL
+    SURVEY
 }

@@ -5,6 +5,7 @@ import android.app.Application;
 import org.gem.indo.dooit.api.DooitErrorHandler;
 import org.gem.indo.dooit.api.interfaces.SurveyAPI;
 import org.gem.indo.dooit.api.responses.SurveyResponse;
+import org.gem.indo.dooit.models.survey.CoachSurvey;
 
 import java.util.Map;
 
@@ -25,6 +26,10 @@ public class SurveyManager extends DooitManager {
     public SurveyManager(Application application) {
         super(application);
         surveyAPI = retrofit.create(SurveyAPI.class);
+    }
+
+    public Observable<CoachSurvey> retrieveSurvey(long id, DooitErrorHandler errorHandler) {
+        return useNetwork(surveyAPI.getSurvey(id), errorHandler);
     }
 
     public Observable<SurveyResponse> retrieveCurrentSurvey(DooitErrorHandler errorHandler) {
