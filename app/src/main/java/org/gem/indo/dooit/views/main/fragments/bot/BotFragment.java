@@ -153,6 +153,7 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.menu_main_bot_baseline_survey:
+                setClearState(true);
                 finishConversation();
                 setBotType(BotType.SURVEY_BASELINE);
                 createFeed();
@@ -314,7 +315,7 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
                 getAndAddNode("tip_intro_inline_link");
                 break;
             case SURVEY_BASELINE:
-                getAndAddNode("survey_baseline_q01_occupation");
+                getAndAddNode("survey_baseline_intro");
                 break;
         }
     }
