@@ -34,7 +34,7 @@ public class Notifier {
         // TODO: Activity class argument might have to be replaced with a DooitActivityBuilder
         NotificationCompat.Builder builder = new NotificationCompat.Builder(context)
                 .setLargeIcon(((BitmapDrawable) ContextCompat.getDrawable(context, R.mipmap.ic_launcher)).getBitmap())
-                .setContentTitle(context.getString(notifyType.getTitleRes()))
+                .setContentTitle(context.getString(R.string.app_name))
                 .setContentText(contentText)
                 .setAutoCancel(true);
 
