@@ -21,11 +21,13 @@ import org.gem.indo.dooit.helpers.activity.result.ActivityForResultHelper;
 import org.gem.indo.dooit.helpers.images.DraweeHelper;
 import org.gem.indo.dooit.helpers.notifications.NotificationType;
 import org.gem.indo.dooit.models.User;
+import org.gem.indo.dooit.models.enums.BotType;
 import org.gem.indo.dooit.services.NotificationAlarm;
 import org.gem.indo.dooit.views.DooitActivity;
 import org.gem.indo.dooit.views.helpers.activity.DooitActivityBuilder;
 import org.gem.indo.dooit.views.main.adapters.MainTabAdapter;
 import org.gem.indo.dooit.views.main.fragments.MainFragment;
+import org.gem.indo.dooit.views.main.fragments.bot.BotFragment;
 import org.gem.indo.dooit.views.main.fragments.target.TargetFragment;
 import org.gem.indo.dooit.views.profile.ProfileActivity;
 
@@ -100,6 +102,13 @@ public class MainActivity extends DooitActivity {
             switch (NotificationType.getValueOf(extras.getInt(NotificationType.NOTIFICATION_TYPE))) {
                 case CHALLENGE_AVAILABLE:
                     startPage(MainViewPagerPositions.CHALLENGE);
+                    break;
+                case SAVING_REMINDER:
+                    startPage(MainViewPagerPositions.TARGET);
+                    break;
+                case SURVEY_AVAILABLE:
+                    startBot(BotType.SURVEY_BASELINE);
+                    break;
             }
         }
 
@@ -204,5 +213,12 @@ public class MainActivity extends DooitActivity {
         protected Intent createIntent(Context context) {
             return new Intent(context, MainActivity.class);
         }
+    }
+
+    private void startBot(BotType type) {
+        BotFragment fragment = (BotFragment) viewPager.getAdapter().instantiateItem(viewPager, MainViewPagerPositions.BOT.getValue());
+        fragment.setBotType(type);
+        fragment.setClearState(true);
+        startPage(MainViewPagerPositions.BOT);
     }
 }

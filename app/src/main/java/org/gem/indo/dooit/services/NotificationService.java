@@ -139,11 +139,11 @@ public class NotificationService extends IntentService {
     }
 
     protected void surveyRetrieved(SurveyResponse response) {
-        if (response.isAvailable())
+        if (response.hasSurvey())
             new Notifier(getApplicationContext()).notify(
                     NotificationType.SURVEY_AVAILABLE,
                     MainActivity.class,
-                    "" // TODO: Notification content from Survey model
+                    response.getSurvey().getNotificationBody()
             );
     }
 

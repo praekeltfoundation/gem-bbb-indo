@@ -18,4 +18,8 @@ public class SurveyResponse {
     public CoachSurvey getSurvey() {
         return survey;
     }
+
+    public boolean hasSurvey() {
+        return available && survey != null;
+    }
 }
