@@ -55,7 +55,7 @@ public abstract class DooitActivityBuilder<T extends DooitActivityBuilder> {
             if (context instanceof DooitActivity)
                 ((DooitActivity) context).dismissDialog();
 
-            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
             context.startActivity(intent);
         } else
             throw new IncompleteBuilderException("Not all required intent values provided");

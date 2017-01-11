@@ -18,6 +18,7 @@ import org.gem.indo.dooit.api.DooitAPIError;
 import org.gem.indo.dooit.api.DooitErrorHandler;
 import org.gem.indo.dooit.api.managers.AuthenticationManager;
 import org.gem.indo.dooit.api.responses.AuthenticationResponse;
+import org.gem.indo.dooit.helpers.auth.InvalidTokenRedirectHelper;
 import org.gem.indo.dooit.helpers.Persisted;
 import org.gem.indo.dooit.helpers.SquiggleBackgroundHelper;
 import org.gem.indo.dooit.helpers.TextSpannableHelper;
@@ -71,6 +72,9 @@ public class LoginActivity extends DooitActivity {
     @Inject
     Persisted persisted;
 
+    @Inject
+    InvalidTokenRedirectHelper invalidTokenRedirectHelper;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -84,6 +88,12 @@ public class LoginActivity extends DooitActivity {
         notRegister.setText(spanRegistrationHelper.styleText(this, R.style.AppTheme_TextView_Bold_Small_Accented, stringRegister));
 
         SquiggleBackgroundHelper.setBackground(this, R.color.purple, R.color.purple_light, background);
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        invalidTokenRedirectHelper.setLoginStarted(false);
     }
 
     @OnClick(R.id.activity_login_login_button)
