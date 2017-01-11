@@ -73,7 +73,7 @@
                     android:layout_width="20dp"
                     android:layout_height="14dp"
                     android:layout_marginRight="@dimen/tip_card_icon_margin_right"
-                    app:srcCompat="@drawable/ic_d_heart_inverted"
+                    app:srcCompat="@drawable/ic_d_heart_yellow_inverted"
                     android:layout_toStartOf="@+id/card_tip_share"
                     android:layout_alignParentTop="true" />
             </RelativeLayout>
