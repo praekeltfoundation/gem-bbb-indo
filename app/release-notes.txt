@@ -36,3 +36,4 @@
 - Redirecting user to Login when token is invalid
 - Users can now Deposit and Withdraw from a reached Goal
 - Clearing Bot Challenge when Challenge expires
+- Implemented Campaign Analytics
