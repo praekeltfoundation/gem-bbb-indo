@@ -30,3 +30,4 @@
 - Formatting currency input in bot
 - Fixes phone status bar colour
 - Implemented back button functionality for main screen pages
+- Users can now Deposit and Withdraw from a reached Goal
