@@ -17,6 +17,7 @@ import org.gem.indo.dooit.R;
 import org.gem.indo.dooit.api.DooitAPIError;
 import org.gem.indo.dooit.api.DooitErrorHandler;
 import org.gem.indo.dooit.api.managers.FeedbackManager;
+import org.gem.indo.dooit.helpers.Connectivity.NetworkChangeReceiver;
 import org.gem.indo.dooit.helpers.DooitSharedPreferences;
 import org.gem.indo.dooit.helpers.SquiggleBackgroundHelper;
 import org.gem.indo.dooit.models.UserFeedback;
@@ -132,6 +133,15 @@ public class FeedbackActivity extends DooitActivity {
         SquiggleBackgroundHelper.setBackground(this, R.color.purple, R.color.purple_light, background);
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        /*
+        if(!NetworkChangeReceiver.isOnline(getBaseContext())){
+            disableUI();
+        }
+        */
+    }
 
     @Override
     protected void onStop() {
@@ -202,4 +212,30 @@ public class FeedbackActivity extends DooitActivity {
             }
         });
     }
+
+    @Override
+    public void onConnectionLost() {
+        super.onConnectionLost();
+        //disableUI();
+    }
+
+    @Override
+    public void onConnectionReestablished() {
+        super.onConnectionReestablished();
+        //enableUI();
+    }
+
+    /*
+    private void enableUI(){
+        subject.setEnabled(true);
+        message.setEnabled(true);
+        submission.setEnabled(true);
+    }
+
+    private void disableUI(){
+        subject.setEnabled(false);
+        message.setEnabled(false);
+        submission.setEnabled(false);
+    }
+    */
 }
