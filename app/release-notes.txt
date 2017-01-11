@@ -33,3 +33,4 @@
 - All Tips list now default screen
 - Removed sharing from Terms & Conditions
 - Implemented back button functionality for main screen pages
+- Redirecting user to Login when token is invalid
