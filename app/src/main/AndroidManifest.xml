@@ -92,7 +92,6 @@
             android:enabled="true" />
 
         <receiver android:name=".services.NotificationAlarm" />
-
         <meta-data
             android:name="io.fabric.ApiKey"
             android:value="21c49b39f896991f9c499d71d1371cd26cd8e499" />

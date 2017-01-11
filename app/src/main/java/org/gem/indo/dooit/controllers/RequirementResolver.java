@@ -140,7 +140,7 @@ public class RequirementResolver {
         });
         if (persisted.hasConvoGoals(botType)) {
             BaseChallenge loadedChallenge = persisted.loadConvoChallenge(botType);
-            if (loadedChallenge.getDeactivationDate().isBeforeNow()) {
+            if (loadedChallenge != null && loadedChallenge.getDeactivationDate().isBeforeNow()) {
                 //persisted challenge has expired
                 persisted.clearCurrentChallenge();
             }
