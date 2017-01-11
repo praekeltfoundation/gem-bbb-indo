@@ -16,13 +16,13 @@
     <string name="title_activity_privacy_policy">Kebijakan</string>
     <string name="action_settings">Pengaturan</string>
     <string name="action_share">Share</string>
-    <string name="action_favourite">Favourite</string>
+    <string name="action_favourite">@string/tips_tab_favourites</string>
 
     <!-- Bottom Navigation -->
     <string name="main_tab_text_0">BINA</string>
-    <string name="main_tab_text_1">TARGET</string>
+    <string name="main_tab_text_1">TARGET</string> <!-- The provided translation -->
     <string name="main_tab_text_2">TANTAGAN</string>
-    <string name="main_tab_text_3">TIPS</string>
+    <string name="main_tab_text_3">TIPS</string> <!-- The provided translation -->
 
     <!-- Common labels -->
     <string name="label_accept">Terima</string>
@@ -30,11 +30,12 @@
     <string name="label_image_chooser_title">Add Profile Photo!</string>
     <string name="label_take_picture">Take photo using camera</string>
     <string name="label_select_gallery">Select gallery</string>
+    <string name="label_select_picture">Select picture</string>
     <string name="label_check_result">Cek</string>
     <string name="label_clear_content">Bersihkan</string>
     <string name="label_continue">Lanjutkan</string>
     <string name="label_done">Selesai</string>
-    <string name="label_loading">Loading</string>
+    <string name="label_loading">Loading</string> <!-- The provided translation -->
     <string name="label_log_in">Masuk</string>
     <string name="label_mobile_number">Nomer telepon</string>
     <string name="label_name">Nama</string>
@@ -42,10 +43,9 @@
     <string name="label_next">Selanjutnya</string>
     <string name="label_new_password">Kata Sandi Baru</string>
     <string name="label_old_password">Kata Sandi Lama</string>
-
+    <string name="general_error">An error occurred</string>
     <string name="label_password">Kata Sandi</string>
     <string name="label_register">Daftar</string>
-
     <string name="label_change_name">Ubah Nama</string>
     <string name="label_change_password">Ubah Kata Sandi</string>
     <string name="label_change_email">Change Email</string>
@@ -53,11 +53,12 @@
     <string name="label_build_info">@string/title_activity_build_info</string>
     <string name="label_share">Bagikan</string>
     <string name="label_skip">Lewati</string>
-    <string name="label_start">Start</string>
+    <string name="label_start">Mulai</string>
     <string name="label_submit">Kirim</string>
     <string name="label_try_again">Coba lagi</string>
     <string name="label_uploading">Sedang Mengupload</string>
 
+    <!-- Permissions -->
     <string name="label_camera_permission_denied">Permission required to take camera using camera</string>
     <string name="label_gallery_permission_denied">Permission required to access phone storage</string>
 
@@ -121,7 +122,7 @@
     <string name="login_password">@string/label_password</string>
     <string name="login_example_name">Contoh: Aulia Dharmanigtyas</string>
     <string name="login_example_name_error_1">Maaf, kolom nama harus terisi.</string>
-    <string name="login_example_email">Example: aulia@gmail.com</string>
+    <string name="login_example_email">Contoh: aulia@gmail.com</string>
     <string name="login_example_password">Kata sandi harus terdiri dari 6 karakter.</string>
     <string name="login_example_password_error_1">Maaf, kolom kata sandi harus terisi.</string>
     <string name="login_progress_dialog_message">Logging in</string>
@@ -333,6 +334,9 @@
     <string name="challenge_could_not_connect_to_server">Could not make a connection to the server</string>
     <string name="challenge_could_not_confirm_registration">Could not confirm registration</string>
     <string name="challenge_persisted_challenge_thrown_out">The persisted challenge is no longer valid and will be replaced by one from the server</string>
+    <string name="challenge_done">Challenge done!</string>
+    <string name="challenge_completed">Challenge complete</string>
+
 
     <!--JSON CHALLENGES-->
     <string name="toes">Can you touch your toes?</string>
@@ -349,7 +353,8 @@
     <string name="target_savings_plan">Rencana Tabungan</string>
     <string name="target_date">Deadline Menabung</string>
     <string name="target_date_missed">Missed</string>
-    <string name="target_no_goal">No goal added</string>
+    <string name="target_no_goal">Tidak ada target tambahan</string>
+    <string name="saved">sudah tersimpan</string>
 
     <!-- Profile -->
     <string name="profile_week_streak_singular">%s minggu</string>
@@ -358,7 +363,7 @@
     <string name="profile_section_account">Akunmu</string>
     <string name="profile_account_change_name">Ubah nama</string>
     <string name="profile_account_change_password">Ubah kata sandi</string>
-    <string name="profile_account_change_email">Change email</string>
+    <string name="profile_account_change_email">@string/label_change_email</string>
     <string name="profile_account_sign_out">Keluar</string>
     <string name="profile_section_notifications">Notifikasi</string>
     <string name="profile_section_help">Tentang Dooit</string>
@@ -374,6 +379,7 @@
     <string name="profile_image_cancel">Batalkan</string>
     <string name="profile_image_progress">Kami sedang meng-upload foto profilmu&#8230;</string>
     <string name="profile_image_empty_error">You must set a profile image, or tap skip</string>
+
 
     <!-- Profile: Change Username -->
     <string name="profile_change_username_progress">Kami mengubah username-mu&#8230;</string>
@@ -409,7 +415,6 @@
     <string name="notification_title_saving_reminder">Savings Reminder</string>
     <string name="notification_title_survey_available">Survey Available</string>
     <string name="notification_title_ad_hoc">Ad Hoc</string>
-
     <string name="notification_content_saving_reminder">It\'s been %d weeks since you saved.</string>
 
     <!-- Sharing -->
@@ -430,7 +435,7 @@
     <string name="hasSavedY">Yes</string>
     <string name="hasSavedN">No</string>
 
-    <string name="heading_registration">Registration</string>
+    <string name="heading_registration">@string/title_activity_registration</string>
     <string name="heading_change_name">@string/label_change_name</string>
     <string name="heading_change_password">@string/label_change_password</string>
     <string name="heading_change_email">@string/label_change_email</string>
@@ -438,13 +443,8 @@
     <string name="target_prefix_saved">sudah tersimpan</string>
     <string name="heading_current_saving_streak">Rekor menabung sekarang</string>
     <string name="heading_achievements">Pencapaian</string>
-    <string name="challenge_done">Challenge done!</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="challenge_completed">Challenge complete</string>
-    <string name="saved">saved</string>
-    <string name="label_select_picture">Select picture</string>
+    <!-- Feedback -->
     <string name="feedback_pick_subject">Pick subject</string>
     <string name="feedback_your_message">Your message</string>
     <string name="feedback_option_ask">Ask a question</string>
@@ -452,20 +452,22 @@
     <string name="feedback_option_general"><![CDATA[Saran & Komentar]]></string>
     <string name="feedback_option_report">Laporkan Keluhan</string>
     <string name="feedback_option_partner">Penawaran Kerjasama</string>
-    <string name="profile_account_change_security_question">Change security question</string>
-    <string name="fragment_reset_could_not_fetch_security_q">Could not fetch security question.</string>
-    <string name="general_error">An error occurred</string>
-    <string name="label_required">Required</string>
-    <string name="msg_fix_indicated_fields">Please fix indicated fields.</string>
-    <string name="msg_security_question_too_short">Question must be at least %1$d letters long.</string>
     <string name="prompt_relogin">Could not authenticate. Please log out and back in.</string>
+
+    <!-- Security -->
     <string name="security_question_answer_label">Answer</string>
     <string name="security_question_change_successful">Security question changed.</string>
     <string name="security_question_could_not_send">Could not send new question.</string>
     <string name="security_question_label">Question</string>
     <string name="title_activity_change_security_question">ChangeSecurityQuestionActivity</string>
     <string name="title_change_security_question">Change Security Question</string>
+    <string name="profile_account_change_security_question">Change security question</string>
+    <string name="fragment_reset_could_not_fetch_security_q">Could not fetch security question.</string>
+    <string name="msg_fix_indicated_fields">Please fix indicated fields.</string>
+    <string name="label_required">Required</string>
+    <string name="msg_security_question_too_short">Question must be at least %1$d letters long.</string>
     <string name="activity_password_reset_username_required">Must enter a username.</string>
 
-
+    <!-- No Uses -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
