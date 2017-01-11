@@ -69,11 +69,17 @@ public abstract class DooitActivity extends AppCompatActivity implements Network
         super.onResume();
         if (receiver == null) {
             receiver = NetworkChangeReceiver.createNetworkBroadcastReceiver(this);
-            registerReceiver(receiver, new IntentFilter(NetworkChangeReceiver.BROADCAST_ID));
+            IntentFilter intentFilter = new IntentFilter();
+            intentFilter.addAction("android.net.conn.CONNECTIVITY_CHANGE");
+            intentFilter.addAction("android.net.wifi.WIFI_STATE_CHANGED");
+            intentFilter.addAction(NetworkChangeReceiver.BROADCAST_ID);
+            registerReceiver(receiver, intentFilter);
         }
         if (!NetworkChangeReceiver.isOnline(getBaseContext())) {
             showProgressDialog(R.string.waiting_for_internet_connection);
             //setViewEnabled(this.findViewById(android.R.id.content), false);
+        }else {
+            dismissDialog();
         }
     }
 
