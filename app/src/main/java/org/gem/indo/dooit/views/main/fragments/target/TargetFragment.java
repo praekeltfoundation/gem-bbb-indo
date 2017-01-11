@@ -244,8 +244,8 @@ public class TargetFragment extends MainFragment {
         else
             missedMessage.setVisibility(View.INVISIBLE);
 
-        depositButton.setEnabled(goal.canDeposit());
-        withdrawButton.setEnabled(goal.canWithdraw() && !goal.isReached());
+        // Goals can't go into overdraught
+        withdrawButton.setEnabled(goal.canWithdraw());
     }
 
     private void retrieveGoals() {

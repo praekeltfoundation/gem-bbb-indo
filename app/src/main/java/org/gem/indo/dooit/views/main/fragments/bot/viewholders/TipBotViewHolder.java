@@ -77,6 +77,7 @@ public class TipBotViewHolder extends BaseBotViewHolder<Node> {
     public void populate(Node model) {
         super.populate(model);
 
+        final int id = dataModel.values.getInteger(BotParamType.TIP_ID.getKey());
         final String title = dataModel.values.getString(BotParamType.TIP_TITLE.getKey());
         final String imageUrl = dataModel.values.getString(BotParamType.TIP_IMAGE_URL.getKey());
         final String articleUrl = dataModel.values.getString(BotParamType.TIP_ARTICLE_URL.getKey());
@@ -101,7 +102,9 @@ public class TipBotViewHolder extends BaseBotViewHolder<Node> {
                 Toast.makeText(getContext(), String.format(openingText, title), Toast.LENGTH_LONG).show();
                 MinimalWebViewActivity.Builder.create(getContext())
                         .setUrl(articleUrl)
-                        .setNoCaret()
+                        .setWebTipShare()
+                        .setTitle(titleView.getText().toString())
+                        .setWebTipId(id)
                         .startActivity();
             }
         });
@@ -123,6 +126,7 @@ public class TipBotViewHolder extends BaseBotViewHolder<Node> {
     protected void populateModel() {
         Tip tip = (Tip) adapter.getController().getObject(BotObjectType.TIP);
         if (tip != null) {
+            dataModel.values.put(BotParamType.TIP_ID.getKey(), tip.getId());
             dataModel.values.put(BotParamType.TIP_TITLE.getKey(), tip.getTitle());
             dataModel.values.put(BotParamType.TIP_IMAGE_URL.getKey(), tip.getCoverImageUrl());
             dataModel.values.put(BotParamType.TIP_ARTICLE_URL.getKey(), tip.getArticleUrl());

@@ -145,7 +145,7 @@ public class ChallengeFragment extends MainFragment {
                 if (challenge.getDeactivationDate().isBeforeNow()) {
                     //persisted challenge has expired
                     persisted.clearCurrentChallenge();
-                    Snackbar.make(getView(), R.string.challenge_persisted_challenge_thrown_out, Snackbar.LENGTH_LONG);
+                    Toast.makeText(getContext(), R.string.challenge_persisted_challenge_thrown_out, Toast.LENGTH_SHORT).show();
                     challengeSubscription = challengeManager.retrieveCurrentChallenge(false, new DooitErrorHandler() {
                         @Override
                         public void onError(final DooitAPIError error) {
@@ -154,7 +154,6 @@ public class ChallengeFragment extends MainFragment {
                                 public void run() {
                                     if(error.getCause() instanceof ConnectException ||
                                             error.getCause() instanceof UnknownHostException){
-                                        //Snackbar.make(getView(), R.string.challenge_could_not_connect_to_server, Snackbar.LENGTH_LONG).show();
                                         Toast.makeText(context, R.string.challenge_could_not_connect_to_server, Toast.LENGTH_SHORT).show();
                                     }else if(error.getCause() instanceof HttpException && (((HttpException) error.getCause()).code()) == 404){
                                         //This means no challenge could be found on the server, for now just do nothing
