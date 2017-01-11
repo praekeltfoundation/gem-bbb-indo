@@ -3,7 +3,11 @@ package org.gem.indo.dooit.dagger;
 import android.app.Application;
 import android.content.Context;
 
+import com.google.android.gms.analytics.GoogleAnalytics;
+import com.google.android.gms.analytics.Tracker;
+
 import org.gem.indo.dooit.DooitApplication;
+import org.gem.indo.dooit.R;
 import org.gem.indo.dooit.api.managers.AchievementManager;
 import org.gem.indo.dooit.api.managers.AuthenticationManager;
 import org.gem.indo.dooit.api.managers.ChallengeManager;
@@ -116,6 +120,12 @@ public class DooitModule {
     @Singleton
     TipManager provideTipManager() {
         return new TipManager(application);
+    }
+
+    @Provides
+    @Singleton
+    Tracker provideTracker() {
+        return GoogleAnalytics.getInstance(application).newTracker(R.xml.global_tracker);
     }
 
     @Provides

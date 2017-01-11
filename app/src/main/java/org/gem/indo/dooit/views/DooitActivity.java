@@ -11,16 +11,22 @@ import android.support.annotation.Nullable;
 import android.support.annotation.StringRes;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.app.AppCompatDelegate;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 
 import com.crashlytics.android.Crashlytics;
+import com.google.android.gms.analytics.HitBuilders;
+import com.google.android.gms.analytics.Tracker;
 
-import org.gem.indo.dooit.Constants;
+import org.gem.indo.dooit.BuildConfig;
+import org.gem.indo.dooit.DooitApplication;
 import org.gem.indo.dooit.R;
 import org.gem.indo.dooit.helpers.Connectivity.NetworkChangeReceiver;
+import org.gem.indo.dooit.helpers.Persisted;
 import org.gem.indo.dooit.helpers.permissions.PermissionsHelper;
+import org.gem.indo.dooit.models.User;
 
 import java.util.Locale;
 
@@ -40,14 +46,22 @@ public abstract class DooitActivity extends AppCompatActivity implements Network
 
     @Inject
     protected PermissionsHelper permissionsHelper;
+
+    @Inject
+    Tracker tracker;
+
+    @Inject
+    Persisted persisted;
+
     ProgressDialog dialog;
     private BroadcastReceiver receiver;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        ((DooitApplication) getApplication()).component.inject(this);
         // TODO: Move this to where you establish a user session
-        if (!Constants.DEBUG)
+        if (!BuildConfig.DEBUG)
             logUser();
     }
 
@@ -78,9 +92,11 @@ public abstract class DooitActivity extends AppCompatActivity implements Network
         if (!NetworkChangeReceiver.isOnline(getBaseContext())) {
             showProgressDialog(R.string.waiting_for_internet_connection);
             //setViewEnabled(this.findViewById(android.R.id.content), false);
-        }else {
+        } else {
             dismissDialog();
         }
+
+        onTrack();
     }
 
     @Override
@@ -92,16 +108,39 @@ public abstract class DooitActivity extends AppCompatActivity implements Network
         }
     }
 
+    protected void onTrack() {
+        if (BuildConfig.DEBUG)
+            return;
+
+        if (tracker != null) {
+            tracker.setScreenName(getScreenName());
+            tracker.send(new HitBuilders.ScreenViewBuilder().build());
+        } else
+            Log.w(this.getClass().getName(), "Analytics tracker not instantiated");
+    }
+
+    protected String getScreenName() {
+        return this.getClass().getSimpleName().replaceAll("Activity|Fragment", "");
+    }
+
     public Locale getLocal() {
         return Locale.getDefault();
     }
 
     private void logUser() {
-        // TODO: Use the current user's information
+        User user = persisted.getCurrentUser();
+
+        if (user == null)
+            return;
+
+        String email = "";
+        if (user.hasEmail())
+            email = user.getEmail();
+
         // You can call any combination of these three methods
-        Crashlytics.setUserIdentifier("12345");
-        Crashlytics.setUserEmail("user@fabric.io");
-        Crashlytics.setUserName("Test User");
+        Crashlytics.setUserIdentifier(Long.toString(user.getId()));
+        Crashlytics.setUserName(user.getUsername());
+        Crashlytics.setUserEmail(email);
     }
 
     @Override
