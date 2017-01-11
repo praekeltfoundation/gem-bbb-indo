@@ -1,8 +1,8 @@
-package org.gem.indo.dooit.helpers.GlobalVariables;
+package org.gem.indo.dooit.helpers.global;
 
 import android.content.Context;
 
-import org.gem.indo.dooit.helpers.InvalidTokenHandler.InvalidTokenHandler;
+import org.gem.indo.dooit.helpers.auth.InvalidTokenHandler;
 
 /**
  * Created by Reinhardt on 2017/01/06.

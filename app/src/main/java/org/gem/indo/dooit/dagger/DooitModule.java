@@ -13,9 +13,14 @@ import org.gem.indo.dooit.api.managers.GoalManager;
 import org.gem.indo.dooit.api.managers.TipManager;
 import org.gem.indo.dooit.api.managers.UserManager;
 import org.gem.indo.dooit.helpers.DooitSharedPreferences;
-import org.gem.indo.dooit.helpers.GlobalVariables.InvalidTokenRedirectHelper;
+<<<<<<< HEAD
+import org.gem.indo.dooit.helpers.global.InvalidTokenRedirectHelper;
 import org.gem.indo.dooit.helpers.InvalidTokenHandler.InvalidTokenHandler;
 import org.gem.indo.dooit.helpers.InvalidTokenHandler.OpenLoginHandler;
+=======
+import org.gem.indo.dooit.helpers.auth.InvalidTokenHandler;
+import org.gem.indo.dooit.helpers.auth.OpenLoginHandler;
+>>>>>>> ba92b0e7dfa98715aefadc92b3635e86b8c1fc7e
 import org.gem.indo.dooit.helpers.Persisted;
 import org.gem.indo.dooit.helpers.activity.result.ActivityForResultHelper;
 import org.gem.indo.dooit.helpers.bot.BotFeed;

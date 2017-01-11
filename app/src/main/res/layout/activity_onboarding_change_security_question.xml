@@ -55,7 +55,7 @@
                 android:id="@+id/activity_onboarding_change_secq_answer_textbox"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/challenge_inset_small"
+                android:layout_marginTop="4dp"
                 android:layout_marginBottom="@dimen/challenge_inset_small"
                 app:label_style="@style/AppTheme.TextView.Form.Message.Yellow"
                 app:label_text="@string/security_question_answer_label"

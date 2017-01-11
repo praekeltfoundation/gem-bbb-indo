@@ -46,6 +46,7 @@ import org.gem.indo.dooit.views.onboarding.fragments.PasswordResetUsernameFragme
 import org.gem.indo.dooit.views.profile.ProfileActivity;
 import org.gem.indo.dooit.views.settings.FeedbackActivity;
 import org.gem.indo.dooit.views.settings.SettingsActivity;
+import org.gem.indo.dooit.views.web.MinimalWebViewActivity;
 
 import javax.inject.Singleton;
 
@@ -112,6 +113,8 @@ public interface DooitComponent {
     void inject(LoginActivity o);
 
     void inject(MainActivity o);
+
+    void inject(MinimalWebViewActivity o);
 
     void inject(NotificationService o);
 

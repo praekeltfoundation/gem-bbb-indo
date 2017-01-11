@@ -12,6 +12,8 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import org.gem.indo.dooit.DooitApplication;
@@ -27,6 +29,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import rx.functions.Action0;
 import rx.functions.Action1;
 
 
@@ -37,6 +40,9 @@ public class TipsListFragment extends Fragment implements TipsListFilter.OnFilte
 
     @BindView(R.id.fragment_tips_list_recyclerview)
     RecyclerView recyclerView;
+
+    @BindView(R.id.fragment_tip_list_progress_container)
+    RelativeLayout progressContainer;
 
     TipsViewPagerPositions pos;
     TipProvider tipProvider;
@@ -119,7 +125,7 @@ public class TipsListFragment extends Fragment implements TipsListFilter.OnFilte
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        View listView = inflater.inflate(org.gem.indo.dooit.R.layout.fragment_tips_list, container, false);
+        View listView = inflater.inflate(R.layout.fragment_tips_list, container, false);
         ButterKnife.bind(this, listView);
 
         gridManager = new GridLayoutManager(getContext(), 2);
@@ -180,10 +186,22 @@ public class TipsListFragment extends Fragment implements TipsListFilter.OnFilte
     }
 
     private void retrieveTips() {
+        showLoadingProgress();
         tipProvider.retrieveTips(new DooitErrorHandler() {
             @Override
             public void onError(DooitAPIError error) {
                 Toast.makeText(getContext(), "Error retrieving tips.", Toast.LENGTH_SHORT);
+            }
+        }).doAfterTerminate(new Action0() {
+            @Override
+            public void call() {
+                if (getActivity() != null)
+                    getActivity().runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            hideLoadingProgress();
+                        }
+                    });
             }
         }).subscribe(new Action1<List<Tip>>() {
             @Override
@@ -200,6 +218,18 @@ public class TipsListFragment extends Fragment implements TipsListFilter.OnFilte
                 }
             }
         });
+    }
+
+    private void hideLoadingProgress() {
+        View view = progressContainer;
+        if(view != null)
+        progressContainer.setVisibility(View.GONE);
+    }
+
+    private void showLoadingProgress(){
+        View view = progressContainer;
+        if(view != null)
+            progressContainer.setVisibility(View.VISIBLE);
     }
 
     protected void hideFiltering() {
