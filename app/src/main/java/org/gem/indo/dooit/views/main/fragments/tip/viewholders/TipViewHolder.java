@@ -48,11 +48,14 @@ public class TipViewHolder extends RecyclerView.ViewHolder {
 
     private static final String TAG = TipViewHolder.class.getName();
 
-    @BindString(org.gem.indo.dooit.R.string.tips_article_opening)
+    @BindString(R.string.tips_article_opening)
     String openingArticleText;
 
-    @BindString(org.gem.indo.dooit.R.string.tips_article_add_fav)
+    @BindString(R.string.tips_article_add_fav)
     String addFavArticleText;
+
+    @BindString(R.string.tips_article_remove_fav)
+    String removeFavArticleText;
 
     @BindView(R.id.card_tip_image)
     SimpleDraweeView imageView;
@@ -109,8 +112,9 @@ public class TipViewHolder extends RecyclerView.ViewHolder {
                 Toast.LENGTH_SHORT).show();
         MinimalWebViewActivity.Builder.create(getContext())
                 .setUrl(articleUrl)
-                .setNoCaret()
                 .setWebTipShare()
+                .setTitle(titleView.getText().toString())
+                .setWebTipId(id)
                 .startActivity();
     }
 
@@ -132,7 +136,7 @@ public class TipViewHolder extends RecyclerView.ViewHolder {
                         public void run() {
                             setFavourite(false);
                             persisted.clearFavourites();
-                            Toast.makeText(getContext(), String.format(addFavArticleText,
+                            Toast.makeText(getContext(), String.format(removeFavArticleText,
                                     titleView.getText().toString()), Toast.LENGTH_SHORT).show();
                         }
                     });
@@ -181,9 +185,7 @@ public class TipViewHolder extends RecyclerView.ViewHolder {
         imageView.setController(controller);
     }
 
-    public void setId(int id) {
-        this.id = id;
-    }
+    public void setId(int id) {this.id = id;}
 
     public void setTitle(String title) {
         titleView.setText(title);
@@ -197,17 +199,15 @@ public class TipViewHolder extends RecyclerView.ViewHolder {
         this.articleUrl = articleUrl;
     }
 
-    public boolean isFavourite() {
-        return isFavourite;
-    }
+    public boolean isFavourite() {return isFavourite;}
 
     public void setFavourite(boolean favourite) {
         isFavourite = favourite;
         // TODO: Proper checkable button
         if (isFavourite) {
-            favView.setImageDrawable(ContextCompat.getDrawable(getContext(), org.gem.indo.dooit.R.drawable.ic_d_heart));
+            favView.setImageDrawable(ContextCompat.getDrawable(getContext(), org.gem.indo.dooit.R.drawable.ic_d_heart_yellow));
         } else {
-            favView.setImageDrawable(ContextCompat.getDrawable(getContext(), org.gem.indo.dooit.R.drawable.ic_d_heart_inverted));
+            favView.setImageDrawable(ContextCompat.getDrawable(getContext(), org.gem.indo.dooit.R.drawable.ic_d_heart_yellow_inverted));
         }
     }
 
