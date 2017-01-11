@@ -13,7 +13,7 @@ import org.gem.indo.dooit.api.managers.GoalManager;
 import org.gem.indo.dooit.api.managers.TipManager;
 import org.gem.indo.dooit.api.managers.UserManager;
 import org.gem.indo.dooit.helpers.DooitSharedPreferences;
-import org.gem.indo.dooit.helpers.global.InvalidTokenRedirectHelper;
+import org.gem.indo.dooit.helpers.auth.InvalidTokenRedirectHelper;
 import org.gem.indo.dooit.helpers.auth.InvalidTokenHandler;
 import org.gem.indo.dooit.helpers.auth.OpenLoginHandler;
 import org.gem.indo.dooit.helpers.Persisted;

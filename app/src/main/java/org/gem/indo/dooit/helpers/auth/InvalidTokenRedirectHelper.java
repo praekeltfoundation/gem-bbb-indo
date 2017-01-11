@@ -1,4 +1,4 @@
-package org.gem.indo.dooit.helpers.global;
+package org.gem.indo.dooit.helpers.auth;
 
 import android.content.Context;
 
