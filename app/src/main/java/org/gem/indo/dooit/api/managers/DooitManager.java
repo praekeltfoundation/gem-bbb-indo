@@ -13,7 +13,7 @@ import org.gem.indo.dooit.api.serializers.ChallengeSerializer;
 import org.gem.indo.dooit.api.serializers.DateTimeSerializer;
 import org.gem.indo.dooit.api.serializers.LocalDateSerializer;
 import org.gem.indo.dooit.helpers.DooitSharedPreferences;
-import org.gem.indo.dooit.helpers.GlobalVariables.GlobalVariables;
+import org.gem.indo.dooit.helpers.global.GlobalVariables;
 import org.gem.indo.dooit.helpers.InvalidTokenHandler.InvalidTokenHandler;
 import org.gem.indo.dooit.helpers.LanguageCodeHelper;
 import org.gem.indo.dooit.helpers.Persisted;

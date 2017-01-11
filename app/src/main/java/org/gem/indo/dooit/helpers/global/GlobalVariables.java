@@ -1,4 +1,4 @@
-package org.gem.indo.dooit.helpers.GlobalVariables;
+package org.gem.indo.dooit.helpers.global;
 
 /**
  * Created by Reinhardt on 2017/01/06.
