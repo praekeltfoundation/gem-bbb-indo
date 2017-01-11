@@ -6,8 +6,8 @@ import android.util.Pair;
 
 import com.google.gson.annotations.SerializedName;
 
-import org.gem.indo.dooit.models.enums.BotParamType;
 import org.gem.indo.dooit.models.enums.BotMessageType;
+import org.gem.indo.dooit.models.enums.BotParamType;
 
 /**
  * Created by Bernhard Müller on 11/7/2016.
