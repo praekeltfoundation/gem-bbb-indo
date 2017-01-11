@@ -1,0 +1,10 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/heart_pink"
+    android:width="24dp"
+    android:height="24dp"
+    android:viewportHeight="23.768"
+    android:viewportWidth="23.143">
+    <path
+        android:fillColor="#ff3e8d"
+        android:pathData="M11.551,3.678c2.281,-1.446 3.144,-4.313 7.629,-3.552c4.004,0.646 5.045,8.837 2.798,13.473c-0.842,1.739 -3.532,4.307 -4.579,5.596c-1.375,1.693 -3.711,4.573 -5.336,4.573c-2.143,0 -4.746,-3.959 -6.614,-6.609c-2.758,-3.924 -7.059,-8.41 -4.829,-13.48C2.533,-0.669 8.844,-0.124 11.551,3.678" />
+</vector>

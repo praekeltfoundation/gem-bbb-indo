@@ -4,6 +4,8 @@
     <string name="app_name">Dooit</string>
     <string name="connection_timed_out">The connection timed out, please try again later</string>
     <string name="connection_error">A connection error occured, please try again later</string>
+    <string name="no_internet_connection">No internet connection</string>
+    <string name="waiting_for_internet_connection">Waiting for internet connection</string>
     <string name="general_error">An error occurred</string>
 
     <!-- Activity Titles  -->
@@ -16,6 +18,8 @@
     <string name="title_activity_terms_and_conditions">Terms &amp; Conditions</string>
     <string name="title_activity_privacy_policy">Privacy Policy</string>
     <string name="action_settings">Settings</string>
+    <string name="action_share">Share</string>
+    <string name="action_favourite">Favourite</string>
 
     <!-- Bottom Navigation -->
     <string name="main_tab_text_0">BINA</string>
