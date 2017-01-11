@@ -1,4 +1,4 @@
-package org.gem.indo.dooit.helpers.InvalidTokenHandler;
+package org.gem.indo.dooit.helpers.auth;
 
 import android.content.Context;
 

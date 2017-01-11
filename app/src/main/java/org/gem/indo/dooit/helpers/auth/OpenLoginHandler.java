@@ -1,8 +1,7 @@
-package org.gem.indo.dooit.helpers.InvalidTokenHandler;
+package org.gem.indo.dooit.helpers.auth;
 
 import android.app.ActivityManager;
 import android.content.Context;
-import android.util.Log;
 
 import org.gem.indo.dooit.BuildConfig;
 import org.gem.indo.dooit.views.onboarding.LoginActivity;
