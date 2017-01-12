@@ -64,7 +64,8 @@ public abstract class GoalBotController extends DooitBotController {
     public GoalBotController(Context context, BotRunner botRunner, BotType botType,
                              List<GoalPrototype> prototypes, Goal goal, BaseChallenge challenge, Tip tip) {
         this(context, botRunner, botType, goal, challenge, tip);
-        this.prototypes.addAll(prototypes);
+        if (prototypes != null)
+            this.prototypes.addAll(prototypes);
     }
 
     @Override
