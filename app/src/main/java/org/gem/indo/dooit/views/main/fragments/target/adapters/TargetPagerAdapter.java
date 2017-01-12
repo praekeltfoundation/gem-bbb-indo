@@ -27,6 +27,7 @@ public class TargetPagerAdapter extends PagerAdapter {
 
     @Override
     public Object instantiateItem(ViewGroup container, int position) {
+
         LayoutInflater inflater = LayoutInflater.from(container.getContext());
         ViewGroup layout = (ViewGroup) inflater.inflate(R.layout.fragment_target_arc_progress, container, false);
 
@@ -56,5 +57,11 @@ public class TargetPagerAdapter extends PagerAdapter {
     public void updateGoals(List<Goal> goals) {
         this.goals = goals;
         notifyDataSetChanged();
+    }
+
+    @Override
+    public int getItemPosition(Object object) {
+        return POSITION_NONE;
+        //return super.getItemPosition(object);
     }
 }
