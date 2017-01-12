@@ -128,6 +128,7 @@
     <string name="login_example_password_error_1">Maaf, kolom kata sandi harus terisi.</string>
     <string name="login_progress_dialog_message">Logging in</string>
     <string name="login_not_registered">Not registered? *Register*</string>
+    <string name="login_redirect_message">You were logged out due to an authentication error</string>
 
     <!-- Bot -->
     <string name="bot_carousel_card_select">Select</string>

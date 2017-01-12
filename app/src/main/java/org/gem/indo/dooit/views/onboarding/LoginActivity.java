@@ -91,6 +91,15 @@ public class LoginActivity extends DooitActivity {
     }
 
     @Override
+    protected void onResume() {
+        super.onResume();
+        Boolean wasRedirected = getIntent().getBooleanExtra("wasRedirected",false);
+        if(wasRedirected){
+            Snackbar.make(buttonLogin, R.string.login_redirect_message, Snackbar.LENGTH_LONG).show();
+        }
+    }
+
+    @Override
     protected void onStop() {
         super.onStop();
         invalidTokenRedirectHelper.setLoginStarted(false);
@@ -183,12 +192,23 @@ public class LoginActivity extends DooitActivity {
     }
 
     public static class Builder extends DooitActivityBuilder<Builder> {
+
         protected Builder(Context context) {
             super(context);
         }
 
+        protected Builder(Context context, boolean wasRedirected ) {
+            super(context);
+            intent.putExtra("wasRedirected", wasRedirected);
+        }
+
         public static LoginActivity.Builder create(Context context) {
             Builder builder = new Builder(context);
+            return builder;
+        }
+
+        public static LoginActivity.Builder create(Context context, boolean wasRedirected) {
+            Builder builder = new Builder(context, wasRedirected);
             return builder;
         }
 
