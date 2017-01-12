@@ -6,6 +6,7 @@
     <string name="connection_error">A connection error occured, please try again later</string>
     <string name="no_internet_connection">No internet connection</string>
     <string name="waiting_for_internet_connection">Waiting for internet connection</string>
+    <string name="general_error">An error occurred</string>
 
     <!-- Activity Titles  -->
     <string name="title_activity_main"></string>
@@ -45,9 +46,10 @@
     <string name="label_next">Selanjutnya</string>
     <string name="label_new_password">Kata Sandi Baru</string>
     <string name="label_old_password">Kata Sandi Lama</string>
-    <string name="general_error">An error occurred</string>
+
     <string name="label_password">Kata Sandi</string>
     <string name="label_register">Daftar</string>
+
     <string name="label_change_name">Ubah Nama</string>
     <string name="label_change_password">Ubah Kata Sandi</string>
     <string name="label_change_email">Change Email</string>
@@ -83,6 +85,7 @@
     <string name="tips_article_remove_fav">Menghapus \'%s\' dari favorit</string>
     <string name="tips_list_filter">Menyaring \'%s\'</string>
     <string name="tips_no_tips_on_filter">No tips were found for the current search</string>
+    <string name="error_retrieve_tips">Error retrieving tips.</string>
 
     <!-- Registration -->
     <string name="reg_t_c">Dengan meng-klik \'Daftar\', kamu telah menyetujui *Syarat &amp; Ketentuan* yang berlaku.</string>
@@ -357,6 +360,8 @@
     <string name="target_date_missed">Missed</string>
     <string name="target_no_goal">Tidak ada target tambahan</string>
     <string name="saved">sudah tersimpan</string>
+    <string name="target_of">of</string>
+    <string name="error_retrieve_goals">Error retrieving goals.</string>
 
     <!-- Profile -->
     <string name="profile_week_streak_singular">%s minggu</string>
@@ -368,6 +373,8 @@
     <string name="profile_account_change_email">@string/label_change_email</string>
     <string name="profile_account_sign_out">Keluar</string>
     <string name="profile_section_notifications">Notifikasi</string>
+    <string name="notification_title_challenge_available">Challenge Available</string>
+    <string name="notification_title_saving_reminder">Savings Reminder</string>
     <string name="profile_section_help">Tentang Dooit</string>
     <string name="profile_help_help">Help</string>
     <string name="profile_help_report_problem">Laporkan Keluhan</string>
@@ -411,10 +418,8 @@
     <string name="legend_label_total">Total</string>
 
     <!-- Push Notifications -->
-    <string name="notification_title_challenge_available">Challenge Available</string>
     <string name="notification_title_challenge_reminder">Challenge Reminder</string>
     <string name="notification_title_goal_deadline_missed">Target Missed</string>
-    <string name="notification_title_saving_reminder">Savings Reminder</string>
     <string name="notification_title_survey_available">Survey Available</string>
     <string name="notification_title_ad_hoc">Ad Hoc</string>
     <string name="notification_content_saving_reminder">It\'s been %d weeks since you saved.</string>
