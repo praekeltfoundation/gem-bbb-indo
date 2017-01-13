@@ -341,6 +341,7 @@
     <string name="challenge_persisted_challenge_thrown_out">The persisted challenge is no longer valid and will be replaced by one from the server</string>
     <string name="challenge_done">Challenge done!</string>
     <string name="challenge_completed">Challenge complete</string>
+    <string name="challenge_deadline_message">Deadline: </string>
 
 
     <!--JSON CHALLENGES-->
