@@ -33,6 +33,7 @@
     <string name="label_image_chooser_title">Add Profile Photo!</string>
     <string name="label_take_picture">Take photo using camera</string>
     <string name="label_select_gallery">Select gallery</string>
+    <string name="label_select_picture">Select picture</string>
     <string name="label_check_result">Check</string>
     <string name="label_clear_content">Clear</string>
     <string name="label_continue">Continue</string>
@@ -61,6 +62,7 @@
     <string name="label_try_again">Try again</string>
     <string name="label_uploading">Uploading</string>
 
+    <!-- Permissions -->
     <string name="label_camera_permission_denied">Permission required to take camera using camera</string>
     <string name="label_gallery_permission_denied">Permission required to access phone storage</string>
 
@@ -83,6 +85,7 @@
     <string name="tips_article_remove_fav">Removing \'%s\' from favourites</string>
     <string name="tips_list_filter">Filtering \'%s\'</string>
     <string name="tips_no_tips_on_filter">No tips were found for the current search</string>
+    <string name="error_retrieve_tips">Error retrieving tips.</string>
 
     <!-- Registration -->
     <string name="reg_t_c">By clicking register, you are agreeing\n to our *Terms &amp; Condition*</string>
@@ -103,7 +106,7 @@
     <string name="reg_gender">Gender</string>
     <string name="reg_gender_boy">Boy</string>
     <string name="reg_gender_girl">Girl</string>
-    <string name="reg_example_number">Example: 1234567890</string>
+    <string name="reg_example_number">Example: 0813987654321</string>
     <string name="reg_example_number_error_1">Mobile Number can\'t be blank</string>
     <string name="reg_example_number_error_2">Mobile Number must be longer than 9 digits</string>
     <string name="reg_example_number_error_3">Mobile Number must be shorter than 15 digits</string>
@@ -360,6 +363,8 @@
     <string name="target_date">Target Date</string>
     <string name="target_date_missed">Missed</string>
     <string name="target_no_goal">No goal added</string>
+    <string name="target_of">of</string>
+    <string name="error_retrieve_goals"> Error retrieving goals.</string>
 
     <!-- Profile -->
     <string name="profile_week_streak_singular">%s week</string>
@@ -372,6 +377,8 @@
     <string name="profile_account_change_security_question">Change security question</string>
     <string name="profile_account_sign_out">Sign out</string>
     <string name="profile_section_notifications">Notifications</string>
+    <string name="notification_title_challenge_available">Challenge Available</string>
+    <string name="notification_title_saving_reminder">Savings Reminder</string>
     <string name="profile_section_help"><![CDATA[About & Help]]></string>
     <string name="profile_help_help">Help</string>
     <string name="profile_help_report_problem">Report A Problem</string>
@@ -414,10 +421,8 @@
     <string name="legend_label_total">Total</string>
 
     <!-- Push Notifications -->
-    <string name="notification_title_challenge_available">Challenge Available</string>
     <string name="notification_title_challenge_reminder">Challenge Reminder</string>
     <string name="notification_title_goal_deadline_missed">Target Missed</string>
-    <string name="notification_title_saving_reminder">Savings Reminder</string>
     <string name="notification_title_survey_available">Survey Available</string>
     <string name="notification_title_ad_hoc">Ad Hoc</string>
 
@@ -451,11 +456,11 @@
     <string name="heading_achievements">Achievements</string>
     <string name="challenge_done">Challenge done!</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
+
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="challenge_completed">Challenge complete</string>
     <string name="saved">saved</string>
-    <string name="label_select_picture">Select picture</string>
+
     <string name="title_activity_feedback">Contact Dooit</string>
     <string name="title_activity_change_security_question">ChangeSecurityQuestionActivity</string>
     <string name="label_required">Required</string>
