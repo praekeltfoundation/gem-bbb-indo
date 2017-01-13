@@ -47,6 +47,7 @@ import rx.functions.Action1;
 public class TipViewHolder extends RecyclerView.ViewHolder {
 
     private static final String TAG = TipViewHolder.class.getName();
+    private static final String SCREEN_NAME_TIP_ARTICLE = "Tip Article";
 
     @BindString(R.string.tips_article_opening)
     String openingArticleText;
@@ -115,6 +116,7 @@ public class TipViewHolder extends RecyclerView.ViewHolder {
                 .setWebTipShare()
                 .setTitle(titleView.getText().toString())
                 .setWebTipId(id)
+                .setScreenName(SCREEN_NAME_TIP_ARTICLE)
                 .startActivity();
     }
 

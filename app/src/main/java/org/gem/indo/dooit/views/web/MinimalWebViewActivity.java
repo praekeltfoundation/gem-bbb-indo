@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -54,12 +55,18 @@ public class MinimalWebViewActivity extends DooitActivity {
     private static final String INTENT_NO_CARET = "intent_noCaret_title";
     private static final String INTENT_WEBTIPS_SHARE = "intent_webtips_share";
     private static final String INTENT_WEBTIPS_ID = "intent_webtips_id";
+    private static final String INTENT_SCREEN_NAME = "screen_name";
     private boolean share = false;
     private boolean auth = false;
     private int tipID;
     private boolean isFavourite = false;
     private MenuItem favView;
     private String title;
+
+    /**
+     * Used to distinguish the web view usage in analytics.
+     */
+    private String screenName;
 
     @BindView(R.id.toolbar)
     Toolbar toolbar;
@@ -154,6 +161,10 @@ public class MinimalWebViewActivity extends DooitActivity {
 
         webView.loadUrl(getIntent().getStringExtra(INTENT_URL),headers);
         Log.d("Web-Headers",headers.toString());
+
+        // Usage Analytics
+        if (getIntent().hasExtra(INTENT_SCREEN_NAME))
+            screenName = getIntent().getStringExtra(INTENT_SCREEN_NAME);
     }
 
 
@@ -219,6 +230,13 @@ public class MinimalWebViewActivity extends DooitActivity {
                 }
             });
         }
+    }
+
+    @Override
+    protected String getScreenName() {
+        if (!TextUtils.isEmpty(screenName))
+            return screenName;
+        return super.getScreenName();
     }
 
     public void setFavourite(boolean favourite) {
@@ -296,6 +314,11 @@ public class MinimalWebViewActivity extends DooitActivity {
 
         public Builder setNoCaret() {
             intent.putExtra(INTENT_NO_CARET, "caret");
+            return this;
+        }
+
+        public Builder setScreenName(String screenName) {
+            intent.putExtra(INTENT_SCREEN_NAME, screenName);
             return this;
         }
 

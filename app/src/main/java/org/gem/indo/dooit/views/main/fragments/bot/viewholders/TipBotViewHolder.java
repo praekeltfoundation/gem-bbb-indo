@@ -38,6 +38,8 @@ import butterknife.ButterKnife;
 
 public class TipBotViewHolder extends BaseBotViewHolder<Node> {
 
+    private static final String SCREEN_NAME_TIP_ARTICLE = "Tip Article";
+
     @BindString(R.string.tips_article_opening)
     String openingText;
 
@@ -105,6 +107,7 @@ public class TipBotViewHolder extends BaseBotViewHolder<Node> {
                         .setWebTipShare()
                         .setTitle(titleView.getText().toString())
                         .setWebTipId(id)
+                        .setScreenName(SCREEN_NAME_TIP_ARTICLE)
                         .startActivity();
             }
         });
