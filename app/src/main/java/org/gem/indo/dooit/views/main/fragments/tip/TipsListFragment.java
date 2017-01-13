@@ -27,6 +27,7 @@ import org.gem.indo.dooit.views.main.fragments.tip.providers.TipProvider;
 
 import java.util.List;
 
+import butterknife.BindString;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import rx.functions.Action0;
@@ -43,6 +44,9 @@ public class TipsListFragment extends Fragment implements TipsListFilter.OnFilte
 
     @BindView(R.id.fragment_tip_list_progress_container)
     RelativeLayout progressContainer;
+
+    @BindString(R.string.error_retrieve_tips)
+    String error_retrieving_tips;
 
     TipsViewPagerPositions pos;
     TipProvider tipProvider;
@@ -190,7 +194,7 @@ public class TipsListFragment extends Fragment implements TipsListFilter.OnFilte
         tipProvider.retrieveTips(new DooitErrorHandler() {
             @Override
             public void onError(DooitAPIError error) {
-                Toast.makeText(getContext(), "Error retrieving tips.", Toast.LENGTH_SHORT);
+                Toast.makeText(getContext(), error_retrieving_tips, Toast.LENGTH_SHORT);
             }
         }).doAfterTerminate(new Action0() {
             @Override
