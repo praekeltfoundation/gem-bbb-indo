@@ -322,17 +322,12 @@
                 android:textAllCaps="true"
                 android:textColor="@color/grey"/>
 
+            <!-- Dummy textview so previous marginBottom works -->
             <TextView
                 android:id="@+id/dummy_spacer"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/fragment_target_savings_plan_edit"/>
-
-            <!-- Dummy textview so previous marginBottom works -->
-            <!--<TextView
-                android:id="@id/dummy_text_view"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>-->
 
         </RelativeLayout>
 
