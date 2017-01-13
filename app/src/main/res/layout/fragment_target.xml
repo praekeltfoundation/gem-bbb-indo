@@ -31,7 +31,7 @@
                 fontPath="fonts/LondrinaSolid-Regular.ttf"
                 android:layout_height="wrap_content"
                 android:layout_alignParentTop="true"
-                android:layout_marginTop="6dp"
+                android:layout_marginTop="18dp"
                 android:gravity="center_horizontal"
                 android:textColor="@color/black"
                 android:textStyle="bold"
@@ -42,7 +42,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="200dp"
                 android:layout_below="@+id/fragment_target_goal_name_text_view"
-                android:layout_marginTop="24dp" />
+                android:layout_marginTop="18dp" />
 
             <ImageButton
                 android:id="@+id/fragment_target_left_image_button"
