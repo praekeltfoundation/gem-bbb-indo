@@ -80,7 +80,7 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
     HashtagView answerView;
 
     @BindString(R.string.main_tab_text_0)
-    String fragmentTitle;
+    String BINA;
 
     @Inject
     Persisted persisted;
@@ -129,7 +129,6 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_bot, container, false);
         ButterKnife.bind(this, view);
-        ((MainActivity) getActivity()).setTitle(fragmentTitle);
         SquiggleBackgroundHelper.setBackground(getContext(), R.color.grey_back, R.color.grey_fore, background);
         answerView.addOnTagClickListener(this);
         conversationRecyclerView.setHasFixedSize(true);
@@ -141,6 +140,7 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
 
     @Override
     public void onStart() {
+//        ((MainActivity) getActivity()).setTitle(BINA);
         super.onStart();
     }
 

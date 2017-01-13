@@ -108,9 +108,6 @@ public class TargetFragment extends MainFragment {
     @BindString(R.string.error_retrieve_goals)
     String error_retrieving_goals;
 
-    @BindString(R.string.main_tab_text_2)
-    String fragmentTitle;
-
     @Inject
     Persisted persisted;
 
@@ -145,8 +142,6 @@ public class TargetFragment extends MainFragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_target, container, false);
         ButterKnife.bind(this, view);
-        ((MainActivity) getActivity()).setTitle(fragmentTitle);
-
         return view;
     }
 

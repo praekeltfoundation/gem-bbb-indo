@@ -65,9 +65,6 @@ public class ChallengeFragment extends MainFragment {
     @BindView(R.id.fragment_challenge_container)
     FrameLayout container;
 
-    @BindString(R.string.main_tab_text_1)
-    String fragmentTitle;
-
     BaseChallenge challenge;
 
     Unbinder unbinder;
@@ -245,7 +242,6 @@ public class ChallengeFragment extends MainFragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(org.gem.indo.dooit.R.layout.fragment_challenge, container, false);
         unbinder = ButterKnife.bind(this, view);
-        ((MainActivity) getActivity()).setTitle(fragmentTitle);
         SquiggleBackgroundHelper.setBackground(getContext(), R.color.grey_back, R.color.grey_fore, container);
         return view;
     }

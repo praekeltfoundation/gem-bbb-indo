@@ -35,6 +35,7 @@ import java.util.Stack;
 
 import javax.inject.Inject;
 
+import butterknife.BindString;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -58,6 +59,18 @@ public class MainActivity extends DooitActivity {
 
     @BindView(R.id.toolbar_title)
     TextView titleView;
+
+    @BindString(R.string.main_tab_text_0)
+    String BINA;
+
+    @BindString(R.string.main_tab_text_1)
+    String GOALS;
+
+    @BindString(R.string.main_tab_text_2)
+    String CHALLENGE;
+
+    @BindString(R.string.main_tab_text_3)
+    String TIPS;
 
     MainTabAdapter mainTabAdapter;
 
@@ -130,6 +143,23 @@ public class MainActivity extends DooitActivity {
             pageHistory.push(MainViewPagerPositions.getValueOf(currentPos));
 
         currentPos = position;
+
+        switch (position) {
+            case 0:
+                setTitle(BINA);
+                break;
+            case 1:
+                setTitle(GOALS);
+                break;
+            case 2:
+                setTitle(CHALLENGE);
+                break;
+            case 3:
+                setTitle(TIPS);
+                break;
+            default:
+                setTitle("DOOIT");
+        }
 
         for (int i = 0; i < tabLayout.getTabCount(); i++) {
             TabLayout.Tab tab = tabLayout.getTabAt(i);
