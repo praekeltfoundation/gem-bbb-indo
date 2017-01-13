@@ -155,7 +155,7 @@ public class TargetFragment extends MainFragment {
         adapter = new TargetPagerAdapter(new ArrayList<Goal>());
         viewPager.setAdapter(adapter);
 
-        if (adapter.getCount() == 1) {
+        if (adapter.getCount() == 0) {
             rightTarget.setVisibility(View.GONE);
             leftTarget.setVisibility(View.GONE);
         }
@@ -166,16 +166,7 @@ public class TargetFragment extends MainFragment {
     @OnPageChange(value = R.id.fragment_target_targets_view_pagers, callback = OnPageChange.Callback.PAGE_SELECTED)
     void onPageSelected(int position) {
         populateGoal(goals.get(position));
-
-        if (position == 0)
-            leftTarget.setVisibility(View.GONE);
-        else
-            leftTarget.setVisibility(View.VISIBLE);
-
-        if (position == goals.size() - 1)
-            rightTarget.setVisibility(View.GONE);
-        else
-            rightTarget.setVisibility(View.VISIBLE);
+        updateScrollImages();
     }
 
     @Override
@@ -278,7 +269,8 @@ public class TargetFragment extends MainFragment {
                             if (goals.size() > 0) {
                                 viewPager.setCurrentItem(0);
                                 populateGoal(goals.get(0));
-                                rightTarget.setVisibility(View.VISIBLE);
+//                                rightTarget.setVisibility(View.VISIBLE);
+                                updateScrollImages();
                                 showGoals();
                             } else {
                                 showNoGoals();
@@ -314,5 +306,18 @@ public class TargetFragment extends MainFragment {
                 retrieveGoals();
             }
         });
+    }
+
+    private void updateScrollImages() {
+        int position = viewPager.getCurrentItem();
+        if (position == 0)
+            leftTarget.setVisibility(View.GONE);
+        else
+            leftTarget.setVisibility(View.VISIBLE);
+
+        if (position == goals.size() - 1)
+            rightTarget.setVisibility(View.GONE);
+        else
+            rightTarget.setVisibility(View.VISIBLE);
     }
 }
