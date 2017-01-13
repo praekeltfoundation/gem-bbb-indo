@@ -110,10 +110,13 @@ public class MinimalWebViewActivity extends DooitActivity {
             else
                 setTitle("");
 
+            // Title is in HTML
+            actionBar.setTitle("");
+
             if (getIntent().hasExtra(INTENT_WEBTIPS_ID))
                 setTipID(getIntent().getIntExtra(INTENT_WEBTIPS_ID, 0));
 
-            share = getIntent().hasExtra(INTENT_WEBTIPS_SHARE);
+            share = getIntent().getBooleanExtra(INTENT_WEBTIPS_SHARE, false);
 
             toolbar.setNavigationOnClickListener(new View.OnClickListener() {
                 @Override
@@ -322,7 +325,7 @@ public class MinimalWebViewActivity extends DooitActivity {
         }
 
         public Builder setWebTipShare() {
-            intent.putExtra(INTENT_WEBTIPS_SHARE, "web_tip_share");
+            intent.putExtra(INTENT_WEBTIPS_SHARE, true);
             return this;
         }
 
