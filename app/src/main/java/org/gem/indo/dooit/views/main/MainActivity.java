@@ -11,6 +11,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.TextView;
 
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.google.android.gms.analytics.Tracker;
@@ -54,6 +55,9 @@ public class MainActivity extends DooitActivity {
 
     @BindView(R.id.content_main_tab_layout)
     TabLayout tabLayout;
+
+    @BindView(R.id.toolbar_title)
+    TextView titleView;
 
     MainTabAdapter mainTabAdapter;
 
@@ -198,6 +202,9 @@ public class MainActivity extends DooitActivity {
 
     public void refreshGoals() {
         ((TargetFragment) getFragment(MainViewPagerPositions.TARGET)).refreshGoals();
+    }
+    public void setTitle(String newTitle){
+        titleView.setText(newTitle);
     }
 
     @Override
