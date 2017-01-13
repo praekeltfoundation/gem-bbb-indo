@@ -2,6 +2,7 @@ package org.gem.indo.dooit.views.main.fragments.bot;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -13,6 +14,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
+import android.widget.TextView;
 
 import com.greenfrvr.hashtagview.HashtagView;
 
@@ -54,6 +56,7 @@ import java.util.Map;
 
 import javax.inject.Inject;
 
+import butterknife.BindString;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -75,6 +78,12 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
 
     @BindView(R.id.fragment_bot_answer_hash_view)
     HashtagView answerView;
+
+    @BindView(R.id.toolbar_title)
+    TextView title;
+
+    @BindString(R.string.main_tab_text_0)
+    String fragmentTitle;
 
     @Inject
     Persisted persisted;
@@ -121,8 +130,9 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(org.gem.indo.dooit.R.layout.fragment_bot, container, false);
+        View view = inflater.inflate(R.layout.fragment_bot, container, false);
         ButterKnife.bind(this, view);
+       // title.setText(fragmentTitle);
         SquiggleBackgroundHelper.setBackground(getContext(), R.color.grey_back, R.color.grey_fore, background);
         answerView.addOnTagClickListener(this);
         conversationRecyclerView.setHasFixedSize(true);
