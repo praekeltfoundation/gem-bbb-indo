@@ -42,6 +42,8 @@ import rx.functions.Action1;
 
 public class LoginActivity extends DooitActivity {
 
+    public static final String INTENT_WAS_REDIRECT = "was_redirect";
+
     @BindView(R.id.activity_login)
     View background;
 
@@ -93,7 +95,7 @@ public class LoginActivity extends DooitActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        Boolean wasRedirected = getIntent().getBooleanExtra("wasRedirected",false);
+        Boolean wasRedirected = getIntent().getBooleanExtra(INTENT_WAS_REDIRECT,false);
         if(wasRedirected){
             Snackbar.make(buttonLogin, R.string.login_redirect_message, Snackbar.LENGTH_LONG).show();
         }
@@ -199,7 +201,7 @@ public class LoginActivity extends DooitActivity {
 
         protected Builder(Context context, boolean wasRedirected ) {
             super(context);
-            intent.putExtra("wasRedirected", wasRedirected);
+            intent.putExtra(INTENT_WAS_REDIRECT, wasRedirected);
         }
 
         public static LoginActivity.Builder create(Context context) {
