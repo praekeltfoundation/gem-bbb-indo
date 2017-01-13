@@ -83,7 +83,7 @@ public class ChallengeQuizFragment extends Fragment implements OnOptionChangeLis
     @BindView(R.id.fragment_challenge_quiz_checkbutton)
     Button checkButton;
 
-    @BindView(R.id.fragment_challenge_close_image_view)
+    @BindView(R.id.fragment_challenge_quiz_close)
     ImageButton close;
 
     private boolean challengeCompleted = false;
@@ -138,7 +138,7 @@ public class ChallengeQuizFragment extends Fragment implements OnOptionChangeLis
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(org.gem.indo.dooit.R.layout.fragment_challenge_quiz, container, false);
+        View view = inflater.inflate(R.layout.fragment_challenge_quiz, container, false);
         unbinder = ButterKnife.bind(this, view);
         mPager.setAdapter(mAdapter);
         updateProgressCounter(0);
@@ -160,24 +160,16 @@ public class ChallengeQuizFragment extends Fragment implements OnOptionChangeLis
         super.onDestroy();
     }
 
-    @OnClick(R.id.fragment_challenge_close_image_view)
+    @OnClick(R.id.fragment_challenge_quiz_close)
     public void closeQuiz(){
-        if(challengeCompleted){
-            /*
-            * User finished the challenge
-            * load parent fragment
-            * button text change to completed on challenge page
-            * */
-        }
-        else{
-            /*
-            * User did not finish with the challenge
-            * Save the user's progress
-            * load parent fragment
-            * button text change to continue on challenge page
-            * */
-        }
 
+        if (!challengeCompleted) {
+            saveState();
+        }
+        if (entrySubscription != null) {
+            entrySubscription.unsubscribe();
+        }
+        returnToParent();
     }
 
     @OnClick(R.id.fragment_challenge_quiz_checkbutton)
@@ -188,7 +180,7 @@ public class ChallengeQuizFragment extends Fragment implements OnOptionChangeLis
         }
 
         if (currentOption == null) {
-            Toast.makeText(getContext(), org.gem.indo.dooit.R.string.challenge_quiz_select_option_required, Toast.LENGTH_SHORT).show();
+            Toast.makeText(getContext(), R.string.challenge_quiz_select_option_required, Toast.LENGTH_SHORT).show();
             return;
         }
 
@@ -255,7 +247,7 @@ public class ChallengeQuizFragment extends Fragment implements OnOptionChangeLis
         if (idx < mAdapter.getCount()) {
             mPager.setCurrentItem(idx);
         } else {
-            Toast.makeText(getContext(), org.gem.indo.dooit.R.string.challenge_all_questions_complete, Toast.LENGTH_SHORT).show();
+            Toast.makeText(getContext(),R.string.challenge_all_questions_complete, Toast.LENGTH_SHORT).show();
             submitParticipantEntry();
             returnToParent();
         }
@@ -274,7 +266,7 @@ public class ChallengeQuizFragment extends Fragment implements OnOptionChangeLis
         }
 
         if (position < challenge.numQuestions()) {
-            mProgressCounter.setText(String.format(getString(org.gem.indo.dooit.R.string.challenge_quiz_counter_fmt), position + 1, challenge.numQuestions()));
+            mProgressCounter.setText(String.format(getString(R.string.challenge_quiz_counter_fmt), position + 1, challenge.numQuestions()));
         } else {
             mProgressCounter.setText("");
         }
