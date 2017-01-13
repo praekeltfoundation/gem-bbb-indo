@@ -12,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -73,14 +74,17 @@ public class ChallengeQuizFragment extends Fragment implements OnOptionChangeLis
     @BindView(R.id.fragment_challenge_quiz_progressbar)
     ProgressBar mProgressBar;
 
-    @BindView(org.gem.indo.dooit.R.id.fragment_challenge_quiz_progresscounter)
+    @BindView(R.id.fragment_challenge_quiz_progresscounter)
     TextView mProgressCounter;
 
-    @BindView(org.gem.indo.dooit.R.id.fragment_challenge_quiz_pager)
+    @BindView(R.id.fragment_challenge_quiz_pager)
     ViewPager mPager;
 
-    @BindView(org.gem.indo.dooit.R.id.fragment_challenge_quiz_checkbutton)
+    @BindView(R.id.fragment_challenge_quiz_checkbutton)
     Button checkButton;
+
+    @BindView(R.id.fragment_challenge_close_image_view)
+    ImageButton close;
 
     private boolean challengeCompleted = false;
     private ChallengeQuizPagerAdapter mAdapter;
@@ -154,6 +158,26 @@ public class ChallengeQuizFragment extends Fragment implements OnOptionChangeLis
     public void onDestroy() {
         removeQuestionCompletedListener(mAdapter);
         super.onDestroy();
+    }
+
+    @OnClick(R.id.fragment_challenge_close_image_view)
+    public void closeQuiz(){
+        if(challengeCompleted){
+            /*
+            * User finished the challenge
+            * load parent fragment
+            * button text change to completed on challenge page
+            * */
+        }
+        else{
+            /*
+            * User did not finish with the challenge
+            * Save the user's progress
+            * load parent fragment
+            * button text change to continue on challenge page
+            * */
+        }
+
     }
 
     @OnClick(R.id.fragment_challenge_quiz_checkbutton)
