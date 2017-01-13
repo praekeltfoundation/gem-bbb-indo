@@ -30,12 +30,10 @@ import org.gem.indo.dooit.api.responses.EmptyResponse;
 import org.gem.indo.dooit.helpers.LanguageCodeHelper;
 import org.gem.indo.dooit.helpers.Persisted;
 import org.gem.indo.dooit.helpers.social.SocialSharer;
-import org.gem.indo.dooit.models.Tip;
 import org.gem.indo.dooit.views.DooitActivity;
 import org.gem.indo.dooit.views.helpers.activity.DooitActivityBuilder;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import javax.inject.Inject;
@@ -100,26 +98,22 @@ public class MinimalWebViewActivity extends DooitActivity {
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
             actionBar.setDisplayHomeAsUpEnabled(true);
-            if(getIntent().hasExtra(INTENT_NO_CARET)){
+            if (getIntent().hasExtra(INTENT_NO_CARET)) {
                 actionBar.setDisplayHomeAsUpEnabled(false);
-            }
-            else{
+            } else {
                 actionBar.setDisplayHomeAsUpEnabled(true);
                 actionBar.setHomeAsUpIndicator(R.drawable.ic_d_back_caret_pink);
             }
 
-            actionBar.setTitle("");
-
-            if (getIntent().hasExtra(INTENT_TITLE)) {
+            if (getIntent().hasExtra(INTENT_TITLE))
                 setTitle(getIntent().getStringExtra(INTENT_TITLE));
-            }
             else
                 setTitle("");
 
             if (getIntent().hasExtra(INTENT_WEBTIPS_ID))
                 setTipID(getIntent().getIntExtra(INTENT_WEBTIPS_ID, 0));
 
-            share = getIntent().hasExtra(INTENT_WEBTIPS_SHARE) ? true : false;
+            share = getIntent().hasExtra(INTENT_WEBTIPS_SHARE);
 
             toolbar.setNavigationOnClickListener(new View.OnClickListener() {
                 @Override
@@ -137,9 +131,8 @@ public class MinimalWebViewActivity extends DooitActivity {
         webView.getSettings().setJavaScriptEnabled(true);
         webView.getSettings().setCacheMode(WebSettings.LOAD_DEFAULT); // load online by default
 
-        if (!hasInternetConnection()) { // loading offline
+        if (!hasInternetConnection()) // loading offline
             webView.getSettings().setCacheMode(WebSettings.LOAD_CACHE_ELSE_NETWORK);
-        }
 
         webView.setWebChromeClient(new WebChromeClient() {
             public void onProgressChanged(WebView view, int progress) {
@@ -154,19 +147,18 @@ public class MinimalWebViewActivity extends DooitActivity {
             }
         });
 
-        Map<String, String> headers = new HashMap<String,String>();
+        Map<String, String> headers = new HashMap<>();
         headers.put("Accept-Language", LanguageCodeHelper.getLanguage());
 
-        auth = persisted.hasToken() ? true : false;
+        auth = persisted.hasToken();
 
-        webView.loadUrl(getIntent().getStringExtra(INTENT_URL),headers);
-        Log.d("Web-Headers",headers.toString());
+        webView.loadUrl(getIntent().getStringExtra(INTENT_URL), headers);
+        Log.d("Web-Headers", headers.toString());
 
         // Usage Analytics
         if (getIntent().hasExtra(INTENT_SCREEN_NAME))
             screenName = getIntent().getStringExtra(INTENT_SCREEN_NAME);
     }
-
 
 
     protected boolean hasInternetConnection() {
@@ -178,15 +170,25 @@ public class MinimalWebViewActivity extends DooitActivity {
                 activeNetwork.isConnectedOrConnecting();
     }
 
-    private boolean isFavourite(){return isFavourite;}
+    private boolean isFavourite() {
+        return isFavourite;
+    }
 
-    public void setTipID(int id){tipID = id;}
+    public void setTipID(int id) {
+        tipID = id;
+    }
 
-    public void setTitle(String title){this.title = title;}
+    public void setTitle(String title) {
+        this.title = title;
+    }
 
-    public int getTipID(){return this.tipID;}
+    public int getTipID() {
+        return this.tipID;
+    }
 
-    public String getWebViewTitle(){return this.title;}
+    public String getWebViewTitle() {
+        return this.title;
+    }
 
     public void favouriteWebTip(final View view) {
         if (isFavourite()) {
@@ -204,7 +206,7 @@ public class MinimalWebViewActivity extends DooitActivity {
                             setFavourite(false);
                             persisted.clearFavourites();
                             Toast.makeText(MinimalWebViewActivity.this, String.format(removeFavArticleText,
-                                   getWebViewTitle() ), Toast.LENGTH_SHORT).show();
+                                    getWebViewTitle()), Toast.LENGTH_SHORT).show();
                         }
                     });
                 }
@@ -241,26 +243,23 @@ public class MinimalWebViewActivity extends DooitActivity {
 
     public void setFavourite(boolean favourite) {
         isFavourite = favourite;
-        if (isFavourite) {
+        if (isFavourite)
             favView.setIcon(ContextCompat.getDrawable(MinimalWebViewActivity.this, R.drawable.ic_d_heart_pink));
-
-        } else {
+        else
             favView.setIcon(ContextCompat.getDrawable(MinimalWebViewActivity.this, R.drawable.ic_d_heart_pink_inverted));
-        }
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         //check boolean to see if intent was set, if no intent for share then load correct menu
-        if(share) {
+        if (share) {
             getMenuInflater().inflate(R.menu.menu_webtips_share, menu);
             favView = menu.findItem(R.id.menu_webtips_favourite_icon);
             if (!auth) favView.setVisible(false);
             return super.onCreateOptionsMenu(menu);
-        }
-        else{
-            getMenuInflater().inflate(R.menu.menu_main,menu);
-            return  super.onCreateOptionsMenu(menu);
+        } else {
+            getMenuInflater().inflate(R.menu.menu_main, menu);
+            return super.onCreateOptionsMenu(menu);
         }
     }
 
