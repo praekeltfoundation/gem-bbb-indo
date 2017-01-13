@@ -24,6 +24,7 @@ import org.gem.indo.dooit.api.managers.ChallengeManager;
 import org.gem.indo.dooit.helpers.Persisted;
 import org.gem.indo.dooit.helpers.SquiggleBackgroundHelper;
 import org.gem.indo.dooit.models.challenge.BaseChallenge;
+import org.gem.indo.dooit.views.main.MainActivity;
 import org.gem.indo.dooit.views.main.fragments.MainFragment;
 import org.gem.indo.dooit.views.main.fragments.challenge.fragments.ChallengeFreeformFragment;
 import org.gem.indo.dooit.views.main.fragments.challenge.fragments.ChallengeNoneFragment;
@@ -36,6 +37,7 @@ import java.net.UnknownHostException;
 
 import javax.inject.Inject;
 
+import butterknife.BindString;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
@@ -62,6 +64,9 @@ public class ChallengeFragment extends MainFragment {
 
     @BindView(R.id.fragment_challenge_container)
     FrameLayout container;
+
+    @BindString(R.string.main_tab_text_1)
+    String fragmentTitle;
 
     BaseChallenge challenge;
 
@@ -240,6 +245,7 @@ public class ChallengeFragment extends MainFragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(org.gem.indo.dooit.R.layout.fragment_challenge, container, false);
         unbinder = ButterKnife.bind(this, view);
+        ((MainActivity) getActivity()).setTitle(fragmentTitle);
         SquiggleBackgroundHelper.setBackground(getContext(), R.color.grey_back, R.color.grey_fore, container);
         return view;
     }

@@ -24,6 +24,7 @@ import org.gem.indo.dooit.R;
 import org.gem.indo.dooit.api.managers.TipManager;
 import org.gem.indo.dooit.helpers.SquiggleBackgroundHelper;
 import org.gem.indo.dooit.models.Tip;
+import org.gem.indo.dooit.views.main.MainActivity;
 import org.gem.indo.dooit.views.main.fragments.tip.adapters.TipsAutoCompleteAdapter;
 import org.gem.indo.dooit.views.main.fragments.tip.adapters.TipsTabAdapter;
 
@@ -70,6 +71,9 @@ public class TipsFragment extends Fragment implements OnTipsAvailableListener {
     @BindView(R.id.fragment_tips_list_filter_text_view)
     TextView filterTextView;
 
+    @BindString(R.string.main_tab_text_3)
+    String fragmentTitle;
+
     @Inject
     TipManager tipManager;
 
@@ -105,7 +109,7 @@ public class TipsFragment extends Fragment implements OnTipsAvailableListener {
 
         View view = inflater.inflate(org.gem.indo.dooit.R.layout.fragment_tips, container, false);
         ButterKnife.bind(this, view);
-
+        ((MainActivity) getActivity()).setTitle(fragmentTitle);
         return view;
     }
 
