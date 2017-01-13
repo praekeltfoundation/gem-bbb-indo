@@ -59,9 +59,15 @@ public class TargetPagerAdapter extends PagerAdapter {
         notifyDataSetChanged();
     }
 
+    /*
+        This was to fix the fact fragments were not updating when moving to a fragment directly next to it
+        issue https://github.com/praekeltfoundation/gem-bbb-indo/pull/389
+
+        This solution forces the position to become POSITION_NONE and as a result forces the fragments to
+        be reloaded thus seeing the updates between the two
+     */
     @Override
     public int getItemPosition(Object object) {
         return POSITION_NONE;
-        //return super.getItemPosition(object);
     }
 }
