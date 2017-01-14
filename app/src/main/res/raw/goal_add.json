@@ -30,7 +30,7 @@
     "name": "goal_add_ask_goal_gallery",
     "type": "goalGallery",
     "text": "",
-    "next": "goal_add_q_ask_amount",
+    "next": "goal_add_q_goal_name",
     "answers": [
       {
         "name": "goal_add_custom",
