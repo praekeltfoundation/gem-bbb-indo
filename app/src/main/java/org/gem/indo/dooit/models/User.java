@@ -12,8 +12,10 @@ public class User {
     private String username;
     private String password;
     private String email;
-    @SerializedName("first_name") private String firstName;
-    @SerializedName("last_name") private String lastName;
+    @SerializedName("first_name")
+    private String firstName;
+    @SerializedName("last_name")
+    private String lastName;
     private Profile profile;
 
     public long getId() {
