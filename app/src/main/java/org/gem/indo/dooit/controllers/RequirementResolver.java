@@ -150,15 +150,21 @@ public class RequirementResolver {
 
             }
         });
-        if (persisted.hasConvoGoals(botType))
+        if (persisted.hasConvoGoals(botType)) {
+            BaseChallenge loadedChallenge = persisted.loadConvoChallenge(botType);
+            if (loadedChallenge != null && loadedChallenge.getDeactivationDate().isBeforeNow()) {
+                //persisted challenge has expired
+                persisted.clearCurrentChallenge();
+            }
             challenge.subscribe(new Action1<BaseChallenge>() {
                 @Override
                 public void call(BaseChallenge retrievedChallenge) {
                     persisted.saveConvoChallenge(botType, retrievedChallenge);
                 }
             });
-        else
+        } else {
             sync.add(challenge);
+        }
     }
 
     private void retrieveGoalPrototypes() {

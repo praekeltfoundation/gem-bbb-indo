@@ -18,6 +18,7 @@ import org.gem.indo.dooit.api.DooitAPIError;
 import org.gem.indo.dooit.api.DooitErrorHandler;
 import org.gem.indo.dooit.api.managers.AuthenticationManager;
 import org.gem.indo.dooit.api.responses.AuthenticationResponse;
+import org.gem.indo.dooit.helpers.auth.InvalidTokenRedirectHelper;
 import org.gem.indo.dooit.helpers.Persisted;
 import org.gem.indo.dooit.helpers.SquiggleBackgroundHelper;
 import org.gem.indo.dooit.helpers.TextSpannableHelper;
@@ -40,6 +41,8 @@ import rx.functions.Action0;
 import rx.functions.Action1;
 
 public class LoginActivity extends DooitActivity {
+
+    public static final String INTENT_WAS_REDIRECT = "was_redirect";
 
     @BindView(R.id.activity_login)
     View background;
@@ -71,6 +74,9 @@ public class LoginActivity extends DooitActivity {
     @Inject
     Persisted persisted;
 
+    @Inject
+    InvalidTokenRedirectHelper invalidTokenRedirectHelper;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -84,6 +90,21 @@ public class LoginActivity extends DooitActivity {
         notRegister.setText(spanRegistrationHelper.styleText(this, R.style.AppTheme_TextView_Bold_Small_Accented, stringRegister));
 
         SquiggleBackgroundHelper.setBackground(this, R.color.purple, R.color.purple_light, background);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Boolean wasRedirected = getIntent().getBooleanExtra(INTENT_WAS_REDIRECT,false);
+        if(wasRedirected){
+            Snackbar.make(buttonLogin, R.string.login_redirect_message, Snackbar.LENGTH_LONG).show();
+        }
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        invalidTokenRedirectHelper.setLoginStarted(false);
     }
 
     @OnClick(R.id.activity_login_login_button)
@@ -173,12 +194,23 @@ public class LoginActivity extends DooitActivity {
     }
 
     public static class Builder extends DooitActivityBuilder<Builder> {
+
         protected Builder(Context context) {
             super(context);
         }
 
+        protected Builder(Context context, boolean wasRedirected ) {
+            super(context);
+            intent.putExtra(INTENT_WAS_REDIRECT, wasRedirected);
+        }
+
         public static LoginActivity.Builder create(Context context) {
             Builder builder = new Builder(context);
+            return builder;
+        }
+
+        public static LoginActivity.Builder create(Context context, boolean wasRedirected) {
+            Builder builder = new Builder(context, wasRedirected);
             return builder;
         }
 

@@ -101,6 +101,11 @@ public class TargetFragment extends MainFragment {
     @BindString(R.string.target_savings_message)
     String savingsMessage;
 
+    @BindString(R.string.target_of)
+    String of_goal_total;
+
+    @BindString(R.string.error_retrieve_goals)
+    String error_retrieving_goals;
     @Inject
     Persisted persisted;
 
@@ -230,7 +235,7 @@ public class TargetFragment extends MainFragment {
     private void populateGoal(Goal goal) {
         goalName.setText(goal.getName());
         saved.setText(CurrencyHelper.format(goal.getValue()));
-        total.setText(String.format("of %s", CurrencyHelper.format(goal.getTarget())));
+        total.setText(String.format(of_goal_total +" %s", CurrencyHelper.format(goal.getTarget())));
         int weeks = Weeks.weeksBetween(goal.getStartDate(), goal.getEndDate()).getWeeks();
         double toSavePerWeek = goal.getTarget() / weeks;
         bars.setGoal(goal);
@@ -244,8 +249,8 @@ public class TargetFragment extends MainFragment {
         else
             missedMessage.setVisibility(View.INVISIBLE);
 
-        depositButton.setEnabled(goal.canDeposit());
-        withdrawButton.setEnabled(goal.canWithdraw() && !goal.isReached());
+        // Goals can't go into overdraught
+        withdrawButton.setEnabled(goal.canWithdraw());
     }
 
     private void retrieveGoals() {
@@ -256,7 +261,7 @@ public class TargetFragment extends MainFragment {
                 getActivity().runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        Toast.makeText(getContext(), "Error retrieving goals.", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getContext(), error_retrieving_goals, Toast.LENGTH_SHORT).show();
                         showNoGoals();
                     }
                 });

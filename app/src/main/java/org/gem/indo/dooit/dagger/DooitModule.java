@@ -3,7 +3,11 @@ package org.gem.indo.dooit.dagger;
 import android.app.Application;
 import android.content.Context;
 
+import com.google.android.gms.analytics.GoogleAnalytics;
+import com.google.android.gms.analytics.Tracker;
+
 import org.gem.indo.dooit.DooitApplication;
+import org.gem.indo.dooit.R;
 import org.gem.indo.dooit.api.managers.AchievementManager;
 import org.gem.indo.dooit.api.managers.AuthenticationManager;
 import org.gem.indo.dooit.api.managers.ChallengeManager;
@@ -14,6 +18,9 @@ import org.gem.indo.dooit.api.managers.SurveyManager;
 import org.gem.indo.dooit.api.managers.TipManager;
 import org.gem.indo.dooit.api.managers.UserManager;
 import org.gem.indo.dooit.helpers.DooitSharedPreferences;
+import org.gem.indo.dooit.helpers.auth.InvalidTokenRedirectHelper;
+import org.gem.indo.dooit.helpers.auth.InvalidTokenHandler;
+import org.gem.indo.dooit.helpers.auth.OpenLoginHandler;
 import org.gem.indo.dooit.helpers.Persisted;
 import org.gem.indo.dooit.helpers.activity.result.ActivityForResultHelper;
 import org.gem.indo.dooit.helpers.bot.BotFeed;
@@ -124,7 +131,25 @@ public class DooitModule {
 
     @Provides
     @Singleton
+    Tracker provideTracker() {
+        return GoogleAnalytics.getInstance(application).newTracker(R.xml.global_tracker);
+    }
+
+    @Provides
+    @Singleton
     UserManager provideUserManager() {
         return new UserManager(application);
+    }
+
+    @Provides
+    @Singleton
+    InvalidTokenHandler provideInvalidTokenHandler() {
+        return new OpenLoginHandler();
+    }
+
+    @Provides
+    @Singleton
+    InvalidTokenRedirectHelper provideGlobalClass() {
+        return new InvalidTokenRedirectHelper();
     }
 }

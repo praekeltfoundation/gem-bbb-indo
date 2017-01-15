@@ -126,18 +126,18 @@ public class TipsFragment extends Fragment implements OnTipsAvailableListener {
             tab.setCustomView(tipsTabAdapter.getTabView(i));
         }
 
+        // Default Tab
+        viewPager.setCurrentItem(TipsViewPagerPositions.ALL.getValue());
+
         // Set initial search hint
         String hint = getString(TipsViewPagerPositions.getValueOf(
                 viewPager.getCurrentItem()).getSearchRes());
         searchView.setHint(hint);
-
     }
 
     @OnClick(R.id.fragment_tips_list_filter_image_button)
     public void clearFilter(View v) {
-
         tipsTabAdapter.getPrimaryItem().clearFilter(v);
-
     }
 
     @OnEditorAction(R.id.fragment_tips_search_view)
@@ -209,10 +209,10 @@ public class TipsFragment extends Fragment implements OnTipsAvailableListener {
         if (this.getActivity() == null)
             return;
 
-        View view = this.getActivity().findViewById(R.id.fragment_tip_progress_container);
+       /* View view = this.getActivity().findViewById(R.id.fragment_tip_progress_container);
         if (view != null) {
             view.setVisibility(View.GONE);
-        }
+        }*/
         Log.d(TAG, "Updating Tips");
         searchAdapter.updateAllTips(tips);
 
