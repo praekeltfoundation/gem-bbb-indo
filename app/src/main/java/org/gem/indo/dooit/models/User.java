@@ -62,6 +62,10 @@ public class User {
         this.firstName = firstName;
     }
 
+    public boolean hasFirstName() {
+        return !TextUtils.isEmpty(firstName);
+    }
+
     public String getLastName() {
         return lastName;
     }
@@ -71,9 +75,8 @@ public class User {
     }
 
     public String getPreferredName() {
-        if (hasProfile())
-            if (profile.hasNickname())
-                return profile.getNickname();
+        if (hasFirstName())
+            return firstName;
         return username;
     }
 

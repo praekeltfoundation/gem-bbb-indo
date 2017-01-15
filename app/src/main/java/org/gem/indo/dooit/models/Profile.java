@@ -14,24 +14,11 @@ public class Profile
     public static final int MALE = 0;
     public static final int FEMALE = 1;
 
-    private String nickname;
     private Integer age;
     private Integer gender;
     private String mobile;
     @SerializedName("profile_image_url")
     private String profileImageUrl;
-
-    public String getNickname() {
-        return nickname;
-    }
-
-    public void setNickname(String nickname) {
-        this.nickname = nickname;
-    }
-
-    public boolean hasNickname() {
-        return !TextUtils.isEmpty(nickname);
-    }
 
     public Integer getAge() {
         return age;
