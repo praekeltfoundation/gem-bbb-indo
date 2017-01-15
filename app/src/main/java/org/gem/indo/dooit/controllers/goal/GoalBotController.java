@@ -158,6 +158,8 @@ public abstract class GoalBotController extends DooitBotController {
     public boolean shouldSkip(BaseBotModel model) {
         if (model.getCall() == BotCallType.ADD_BADGE && !goal.hasNewBadges())
             return true;
+        else if (model.getMessageType() == BotMessageType.GOALGALLERY && prototypes.isEmpty())
+            return true;
         else
             return super.shouldSkip(model);
     }

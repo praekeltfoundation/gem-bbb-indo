@@ -83,6 +83,11 @@ public class GoalAddController extends GoalBotController {
     }
 
     @Override
+    public boolean shouldSkip(BaseBotModel model) {
+        return super.shouldSkip(model);
+    }
+
+    @Override
     public void onDone(Map<String, Answer> answerLog) {
 
     }
