@@ -37,7 +37,12 @@ public abstract class DooitBotController extends BotController {
 
         switch (paramType) {
             case USER_USERNAME:
-                model.values.put(paramType.getKey(), persisted.getCurrentUser().getUsername());
+                if (persisted.getCurrentUser() != null)
+                    model.values.put(paramType.getKey(), persisted.getCurrentUser().getUsername());
+                break;
+            case USER_PREFERRED_NAME:
+                if (persisted.getCurrentUser() != null)
+                    model.values.put(paramType.getKey(), persisted.getCurrentUser().getPreferredName());
                 break;
             default:
                 super.resolveParam(model, paramType);

@@ -169,6 +169,7 @@
     <string name="infoGoalAddedCongratulations">Kerja yang bagus! Kamu telah membuat target tabungan pertamamu!</string>
 
     <!-- BOT: returning_user -->
+    <string name="convo_default_return_q_nickname">Hi! What should I call you?</string>
     <string name="convo_default_return_q_greeting_1">Halo, $(user.username)!</string>
     <string name="convo_default_return_q_greeting_2">Senang bertemu denganmu lagi!</string>
     <string name="convo_default_return_q_progress_intro">Mari kita lihat perkembangan tabunganmu&#8230;</string>

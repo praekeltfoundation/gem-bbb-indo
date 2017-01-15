@@ -26,14 +26,6 @@ public class User {
         this.id = id;
     }
 
-    public String getFirstName() {
-        return firstName;
-    }
-
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
     public String getUsername() {
         return username;
     }
@@ -62,6 +54,14 @@ public class User {
         return !TextUtils.isEmpty(email);
     }
 
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
     public String getLastName() {
         return lastName;
     }
@@ -70,12 +70,23 @@ public class User {
         this.lastName = lastName;
     }
 
+    public String getPreferredName() {
+        if (hasProfile())
+            if (profile.hasNickname())
+                return profile.getNickname();
+        return username;
+    }
+
     public Profile getProfile() {
         return profile;
     }
 
     public void setProfile(Profile profile) {
         this.profile = profile;
+    }
+
+    public boolean hasProfile() {
+        return profile != null;
     }
 
     public boolean hasProfileImage() {
