@@ -58,6 +58,17 @@ public abstract class DooitBotController extends BotController {
     }
 
     @Override
+    public boolean shouldSkip(BaseBotModel model) {
+        User user = persisted.getCurrentUser();
+        if (user != null && user.hasFirstName())
+            // Skip asking for a first name
+            if (model.getName().equals("goal_add_q_greeting_username")
+                    || model.getName().equals("goal_add_q_first_name"))
+                return true;
+        return super.shouldSkip(model);
+    }
+
+    @Override
     public void onAnswerInput(BotParamType inputType, Answer answer) {
         switch (inputType) {
             case USER_FIRST_NAME:

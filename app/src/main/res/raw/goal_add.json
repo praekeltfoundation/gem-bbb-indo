@@ -9,6 +9,7 @@
     "name": "goal_add_q_first_name",
     "type": "text",
     "text": "$(goal_add_q_first_name)",
+    "next": "goal_add_q_greeting_preferred_name",
     "autoAnswer": "goal_add_user_firstname",
     "answers": [
       {
