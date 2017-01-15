@@ -93,16 +93,21 @@ public class GoalAddController extends GoalBotController {
     }
 
     private void doPopulate(Map<String, Answer> answerLog) {
-        // Goal Prototype is mandatory
+        // Goal Prototype is mandatory, but can still be empty if no prototypes were set up on the
+        // server.
         Answer protoAnswer = answerLog.get("goal_add_ask_goal_gallery");
 
         // Prototype ID
-        goal.setPrototypeId(protoAnswer.values.getLong(BotParamType.GOAL_PROTO_ID.getKey()));
+        if (protoAnswer != null)
+            goal.setPrototypeId(protoAnswer.values.getLong(BotParamType.GOAL_PROTO_ID.getKey()));
 
         // Goal Name
         String name = answerLog.get("goal_name").getValue();
         if (TextUtils.isEmpty(name))
-            goal.setName(protoAnswer.values.getString(BotParamType.GOAL_PROTO_NAME.getKey()));
+            if (protoAnswer != null)
+                goal.setName(protoAnswer.values.getString(BotParamType.GOAL_PROTO_NAME.getKey()));
+            else
+                goal.setName("");
         else
             goal.setName(name);
 
@@ -122,7 +127,7 @@ public class GoalAddController extends GoalBotController {
         } else if (answerLog.containsKey("goal_add_a_gallery")) {
             goal.setLocalImageUri(answerLog.get("goal_add_a_gallery").getValue());
             goal.setImageFromProto(false);
-        } else {
+        } else if (protoAnswer != null) {
             // Skipped; use Goal Prototype image
             goal.setLocalImageUri(protoAnswer.values.getString(BotParamType.GOAL_PROTO_IMAGE_URL.getKey()));
             goal.setImageFromProto(true);
