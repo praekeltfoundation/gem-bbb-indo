@@ -169,8 +169,7 @@
     <string name="infoGoalAddedCongratulations">Kerja yang bagus! Kamu telah membuat target tabungan pertamamu!</string>
 
     <!-- BOT: returning_user -->
-    <string name="convo_default_return_q_nickname">Hi! What should I call you?</string>
-    <string name="convo_default_return_q_greeting_1">Halo, $(user.username)!</string>
+    <string name="convo_default_return_q_greeting_1">Halo, $(user.preferred_name)!</string>
     <string name="convo_default_return_q_greeting_2">Senang bertemu denganmu lagi!</string>
     <string name="convo_default_return_q_progress_intro">Mari kita lihat perkembangan tabunganmu&#8230;</string>
     <string name="convo_default_return_a_progress_intro_tip">Tolong berikan aku tips.</string>
@@ -178,7 +177,10 @@
 
     <!-- BOT: goal_add -->
     <!-- Questions -->
-    <string name="goal_add_q_greeting">Hai, $(user.username)! Namaku Bina. Aku mentor keuangan pribadi kamu dan aku akan membantu kamu menabung. Mari kita mulai!</string>
+    <string name="goal_add_q_greeting_username">Hai, $(user.username)! Namaku Bina. Aku mentor keuangan pribadi kamu dan aku akan membantu kamu menabung.</string>
+    <string name="goal_add_q_first_name">Siapa nama kamu?</string>
+
+    <string name="goal_add_q_greeting_preferred_name">Hei $(user.preferred_name). Selamat datang di Dooit. Gak sabar membantumu menabung. Kita mulai yuk?</string>
     <string name="goal_add_a_greeting_1">Hai, Bina. Hore! Yuk!</string>
     <string name="goal_add_a_greeting_2">Keren! Yuk kita menabung.</string>
 

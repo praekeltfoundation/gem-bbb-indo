@@ -10,6 +10,7 @@ import java.util.Map;
 public enum BotParamType {
     // User
     USER_USERNAME("user.username"),
+    USER_FIRST_NAME("user.first_name"),
     USER_PREFERRED_NAME("user.preferred_name"),
     USER_GOALS("user.goals"),
 
