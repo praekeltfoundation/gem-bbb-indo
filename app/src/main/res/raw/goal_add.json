@@ -1,8 +1,32 @@
 [
   {
-    "name": "goal_add_q_greeting",
+    "name": "goal_add_q_greeting_username",
     "type": "text",
-    "text": "$(goal_add_q_greeting)",
+    "text": "$(goal_add_q_greeting_username)",
+    "autoNext": "goal_add_q_first_name"
+  },
+  {
+    "name": "goal_add_q_first_name",
+    "type": "text",
+    "text": "$(goal_add_q_first_name)",
+    "next": "goal_add_q_greeting_preferred_name",
+    "autoAnswer": "goal_add_user_firstname",
+    "answers": [
+      {
+        "name": "goal_add_user_firstname",
+        "type": "inlineText",
+        "onAnswerInput": "$(user.first_name)",
+        "nextOnFinish": "goal_add_q_greeting_preferred_name",
+        "inlineEditHint": "$(type_name_hint)"
+      }
+    ]
+  },
+
+
+  {
+    "name": "goal_add_q_greeting_preferred_name",
+    "type": "text",
+    "text": "$(goal_add_q_greeting_preferred_name)",
     "answers": [
       {
         "name": "goal_add_a_greeting_1",

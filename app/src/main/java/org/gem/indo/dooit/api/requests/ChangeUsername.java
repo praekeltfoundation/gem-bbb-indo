@@ -4,11 +4,11 @@ package org.gem.indo.dooit.api.requests;
  * Created by chris on 2016-11-21.
  */
 
-public class ChangeUser {
+public class ChangeUsername {
 
     private String username;
 
-    public ChangeUser(String name){
+    public ChangeUsername(String name){
         this.username = name;
     }
 
