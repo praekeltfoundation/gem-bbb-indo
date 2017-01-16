@@ -43,7 +43,8 @@ public class DooitParamBuilder {
 
         if (user != null) {
             map.put(BotParamType.USER_USERNAME.getKey(), user.getUsername());
-            map.put(BotParamType.USER_PREFERRED_NAME.getKey(), user.getPre
+            map.put(BotParamType.USER_FIRST_NAME.getKey(), user.getFirstName());
+            map.put(BotParamType.USER_PREFERRED_NAME.getKey(), user.getPreferredName());
         }
 
         return new HashMap<>();
