@@ -17,13 +17,13 @@ public class Answer extends BaseBotModel {
 
     private String inlineEditHint;
     private String value;
-    // Input is currently unused
     @SerializedName("onAnswerInput")
     private String inputKey;
     private String nextOnFinish;
     private String removeOnSelect;
     private String[] changeOnSelect;
     private String typeOnFinish;
+    private String parentName;
 
     public Answer() {
         super(Answer.class.toString());
@@ -46,6 +46,10 @@ public class Answer extends BaseBotModel {
         this.value = value;
     }
 
+    public boolean hasValue() {
+        return !TextUtils.isEmpty(value);
+    }
+
     public BotParamType getInputKey() {
         if (!TextUtils.isEmpty(inputKey)) {
             inputKey = inputKey.replace("$(", "").replace(")", "");
@@ -56,7 +60,11 @@ public class Answer extends BaseBotModel {
     }
 
     public void setInputKey(BotParamType key) {
-        inputKey = key.getKey();
+
+        if (key != null)
+            inputKey = key.getKey();
+        else
+            inputKey = null;
     }
 
     public boolean hasInputKey() {
@@ -77,6 +85,13 @@ public class Answer extends BaseBotModel {
         return null;
     }
 
+    public void setChangeOnSelect(Pair<String, String> pair) {
+        if (pair != null)
+            changeOnSelect = new String[]{pair.first, pair.second};
+        else
+            changeOnSelect = null;
+    }
+
     public String getInlineEditHint(Context context) {
         return getResourceString(context, inlineEditHint);
     }
@@ -95,6 +110,32 @@ public class Answer extends BaseBotModel {
 
     public void setTypeOnFinish(String typeOnFinish) {
         this.typeOnFinish = typeOnFinish;
+    }
+
+    public String getParentName() {
+        return parentName;
+    }
+
+    public void setParentName(String parent) {
+        this.parentName = parent;
+    }
+
+    public boolean hasParentName() {
+        return !TextUtils.isEmpty(parentName);
+    }
+
+    public Answer copy() {
+        Answer answer = new Answer();
+
+        answer.setValue(value);
+        answer.setInputKey(BotParamType.byKey(inputKey));
+        answer.setNextOnFinish(nextOnFinish);
+        answer.setRemoveOnSelect(removeOnSelect);
+        answer.setChangeOnSelect(getChangeOnSelect());
+        answer.setTypeOnFinish(getTypeOnFinish());
+        answer.setParentName(getParentName());
+
+        return answer;
     }
 
     @Override

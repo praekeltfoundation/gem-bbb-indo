@@ -56,6 +56,9 @@ public class SettingsActivity extends DooitActivity {
     @BindView(R.id.settings_notifications_saving_reminder)
     CompoundButton savingReminderSwitch;
 
+    @BindView(R.id.settings_notifications_survey_available)
+    CompoundButton surveyAvailableSwitch;
+
     @Inject
     DooitSharedPreferences dooitSharedPreferences;
 
@@ -102,6 +105,7 @@ public class SettingsActivity extends DooitActivity {
         super.onResume();
         challengeAvailableSwitch.setChecked(persisted.shouldNotify(NotificationType.CHALLENGE_AVAILABLE));
         savingReminderSwitch.setChecked(persisted.shouldNotify(NotificationType.SAVING_REMINDER));
+        surveyAvailableSwitch.setChecked(persisted.shouldNotify(NotificationType.SURVEY_AVAILABLE));
         /*
         if(!NetworkChangeReceiver.isOnline(getBaseContext())){
             disableUI();
@@ -149,6 +153,11 @@ public class SettingsActivity extends DooitActivity {
     @OnCheckedChanged({R.id.settings_notifications_saving_reminder})
     public void checkSavingReminder(CompoundButton button, boolean checked) {
         persisted.setNotify(NotificationType.SAVING_REMINDER, checked);
+    }
+
+    @OnCheckedChanged({R.id.settings_notifications_survey_available})
+    public void checkSurveyReminder(CompoundButton button, boolean checked) {
+        persisted.setNotify(NotificationType.SURVEY_AVAILABLE, checked);
     }
 
     @OnClick({R.id.settings_about_terms})
