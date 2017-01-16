@@ -31,7 +31,6 @@ import org.gem.indo.dooit.views.main.fragments.MainFragment;
 import org.gem.indo.dooit.views.main.fragments.target.adapters.TargetPagerAdapter;
 import org.joda.time.Weeks;
 
-import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -166,7 +165,7 @@ public class TargetFragment extends MainFragment {
     @OnPageChange(value = R.id.fragment_target_targets_view_pagers, callback = OnPageChange.Callback.PAGE_SELECTED)
     void onPageSelected(int position) {
         populateGoal(goals.get(position));
-        updateScrollImages();
+        updateNavCarets();
     }
 
     @Override
@@ -270,7 +269,7 @@ public class TargetFragment extends MainFragment {
                                 viewPager.setCurrentItem(0);
                                 populateGoal(goals.get(0));
 //                                rightTarget.setVisibility(View.VISIBLE);
-                                updateScrollImages();
+                                updateNavCarets();
                                 showGoals();
                             } else {
                                 showNoGoals();
@@ -308,7 +307,7 @@ public class TargetFragment extends MainFragment {
         });
     }
 
-    private void updateScrollImages() {
+    private void updateNavCarets() {
         int position = viewPager.getCurrentItem();
         if (position == 0)
             leftTarget.setVisibility(View.GONE);
