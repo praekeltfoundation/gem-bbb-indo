@@ -6,3 +6,7 @@
 - Implemented basic survey retrieve and submit
 - Added WebView descriptive screen names for analytics
 - Fix camera crash during Goal Edit conversation
+
+0.0.15
+
+- Inserting user's preferred name into survey notification
