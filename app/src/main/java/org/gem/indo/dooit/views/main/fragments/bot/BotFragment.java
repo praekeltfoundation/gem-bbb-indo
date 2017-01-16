@@ -79,9 +79,6 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
     @BindView(R.id.fragment_bot_answer_hash_view)
     HashtagView answerView;
 
-    @BindString(R.string.main_tab_text_0)
-    String BINA;
-
     @Inject
     Persisted persisted;
 
@@ -140,7 +137,6 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
 
     @Override
     public void onStart() {
-//        ((MainActivity) getActivity()).setTitle(BINA);
         super.onStart();
     }
 

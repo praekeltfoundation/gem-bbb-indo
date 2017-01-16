@@ -41,6 +41,9 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.OnPageChange;
 
+import static org.gem.indo.dooit.views.main.MainViewPagerPositions.BOT;
+import static org.gem.indo.dooit.views.main.MainViewPagerPositions.TARGET;
+
 public class MainActivity extends DooitActivity {
 
     private static final String TAG = MainActivity.class.getName();
@@ -92,7 +95,7 @@ public class MainActivity extends DooitActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(org.gem.indo.dooit.R.layout.activity_main);
+        setContentView(R.layout.activity_main);
         ((DooitApplication) getApplication()).component.inject(this);
         ButterKnife.bind(this);
 
@@ -134,6 +137,10 @@ public class MainActivity extends DooitActivity {
         pageHistory = new Stack<>();
         currentPos = 0;
         saveToHistory = true;
+
+        /*Set the ActionBar's title for Bina here to ensure it gets set initially
+        When the app starts up for a logged in user technically no page has been selected*/
+        onMainPagerPageSelected(currentPos);
     }
 
     @OnPageChange(value = R.id.content_main_view_pager, callback = OnPageChange.Callback.PAGE_SELECTED)
@@ -144,17 +151,17 @@ public class MainActivity extends DooitActivity {
 
         currentPos = position;
 
-        switch (position) {
-            case 0:
+        switch (MainViewPagerPositions.getValueOf(position)) {
+            case BOT:
                 setTitle(BINA);
                 break;
-            case 1:
+            case TARGET:
                 setTitle(GOALS);
                 break;
-            case 2:
+            case CHALLENGE:
                 setTitle(CHALLENGE);
                 break;
-            case 3:
+            case TIPS:
                 setTitle(TIPS);
                 break;
             default:
