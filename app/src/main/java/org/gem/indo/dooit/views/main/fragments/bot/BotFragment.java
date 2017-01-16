@@ -18,6 +18,7 @@ import android.widget.TextView;
 
 import com.greenfrvr.hashtagview.HashtagView;
 
+import org.gem.indo.dooit.Constants;
 import org.gem.indo.dooit.DooitApplication;
 import org.gem.indo.dooit.R;
 import org.gem.indo.dooit.api.managers.ChallengeManager;
@@ -30,6 +31,7 @@ import org.gem.indo.dooit.controllers.goal.GoalDepositController;
 import org.gem.indo.dooit.controllers.goal.GoalEditController;
 import org.gem.indo.dooit.controllers.goal.GoalWithdrawController;
 import org.gem.indo.dooit.controllers.misc.ReturningUserController;
+import org.gem.indo.dooit.controllers.survey.BaselineSurveyController;
 import org.gem.indo.dooit.helpers.Persisted;
 import org.gem.indo.dooit.helpers.SquiggleBackgroundHelper;
 import org.gem.indo.dooit.helpers.bot.BotFeed;
@@ -93,7 +95,7 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
 
     BotType type = BotType.DEFAULT;
     BotController controller;
-    BotFeed feed;
+    BotFeed<Node> feed;
     BaseBotModel currentModel;
     boolean clearState = false;
 
@@ -144,20 +146,33 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
         menu.clear();
-        getActivity().getMenuInflater().inflate(org.gem.indo.dooit.R.menu.menu_main, menu);
-        getActivity().getMenuInflater().inflate(org.gem.indo.dooit.R.menu.menu_main_bot, menu);
+        if (Constants.DEBUG) {
+            getActivity().getMenuInflater().inflate(R.menu.menu_main, menu);
+            getActivity().getMenuInflater().inflate(R.menu.menu_main_bot, menu);
+        }
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == R.id.menu_main_bot_clear) {
-            persisted.clearConversation();
-            persisted.clearConvoGoals();
-            persisted.clearConvoTip();
-            type = BotType.DEFAULT;
-            createFeed();
+        switch (item.getItemId()) {
+            case R.id.menu_main_bot_baseline_survey:
+                setClearState(true);
+                finishConversation();
+                setBotType(BotType.SURVEY_BASELINE);
+                createFeed();
+                return true;
+            case R.id.menu_main_bot_eatool_survey:
+                return true;
+            case R.id.menu_main_bot_clear:
+                persisted.clearConversation();
+                persisted.clearConvoGoals();
+                persisted.clearConvoTip();
+                type = BotType.DEFAULT;
+                createFeed();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
         }
-        return super.onOptionsItemSelected(item);
     }
 
     @Override
@@ -203,6 +218,7 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
                         .build()
                         .resolve(reqCallback);
                 break;
+            default:
             case DEFAULT:
             case GOAL_ADD:
                 feed.parse(R.raw.goal_add, Node.class);
@@ -241,6 +257,14 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
                 feed.parse(R.raw.tip_intro, Node.class);
                 initializeBot();
                 break;
+            case SURVEY_BASELINE:
+                feed.parse(R.raw.survey_baseline, Node.class);
+                new RequirementResolver.Builder(getContext(), BotType.SURVEY_BASELINE)
+                        .require(BotObjectType.SURVEY)
+                        .setSurveyId(persisted.loadConvoSurveyId(type))
+                        .build()
+                        .resolve(reqCallback);
+                break;
         }
     }
 
@@ -277,6 +301,7 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
 
         // Jump to first node
         switch (type) {
+            default:
             case RETURNING_USER:
             case DEFAULT:
                 getAndAddNode(null);
@@ -295,6 +320,9 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
                 break;
             case TIP_INTRO:
                 getAndAddNode("tip_intro_inline_link");
+                break;
+            case SURVEY_BASELINE:
+                getAndAddNode("survey_baseline_intro");
                 break;
         }
     }
@@ -332,6 +360,9 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
                         persisted.loadConvoGoal(botType),
                         persisted.loadConvoChallenge(botType),
                         persisted.loadConvoTip());
+            case SURVEY_BASELINE:
+                return new BaselineSurveyController(getActivity(),
+                        persisted.loadConvoSurvey(botType));
             default:
                 return null;
         }
@@ -382,9 +413,15 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
 
     private Map<String, Answer> createAnswerLog(List<BaseBotModel> conversation) {
         Map<String, Answer> answerLog = new LinkedHashMap<>();
-        for (BaseBotModel model : conversation)
-            if (model instanceof Answer)
-                answerLog.put(model.getName(), (Answer) model);
+        for (int i = 0; i < conversation.size(); i++) {
+            BaseBotModel model = conversation.get(i);
+            if (model instanceof Answer) {
+                Answer answer = (Answer) model;
+                answerLog.put(answer.getName(), answer);
+                if (answer.hasParentName())
+                    answerLog.put(answer.getParentName(), answer);
+            }
+        }
         return answerLog;
     }
 

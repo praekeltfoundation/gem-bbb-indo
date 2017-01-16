@@ -61,6 +61,7 @@ public class AchievementResponse {
     /////////////
 
     public boolean shouldRemindSavings() {
-        return weeksSinceSaved >= WEEKS_SINCE_THRESHOLD;
+        return weeksSinceSaved != 0 // Has saved this week
+                && weeksSinceSaved % WEEKS_SINCE_THRESHOLD == 0;
     }
 }

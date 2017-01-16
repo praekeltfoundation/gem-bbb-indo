@@ -41,4 +41,6 @@ public class AnswerImageViewHolder extends BaseBotViewHolder<Answer> {
     protected void populateModel() {
 
     }
+
+
 }

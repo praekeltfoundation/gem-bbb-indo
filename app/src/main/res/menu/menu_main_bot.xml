@@ -1,7 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <group>
+        <item
+            android:id="@+id/menu_main_bot_baseline_survey"
+            android:title="@string/survey_baseline_title"
+            app:showAsAction="never"/>
+        <item
+            android:id="@+id/menu_main_bot_eatool_survey"
+            android:title="@string/survey_eatool_title"
+            app:showAsAction="never"/>
+    </group>
     <item
         android:id="@+id/menu_main_bot_clear"
-        app:showAsAction="ifRoom" />
+        android:title="@string/label_clear_content"
+        app:showAsAction="never" />
 </menu>

@@ -8,6 +8,7 @@ import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -23,11 +24,14 @@ import org.gem.indo.dooit.helpers.activity.result.ActivityForResultHelper;
 import org.gem.indo.dooit.helpers.images.DraweeHelper;
 import org.gem.indo.dooit.helpers.notifications.NotificationType;
 import org.gem.indo.dooit.models.User;
+import org.gem.indo.dooit.models.enums.BotType;
 import org.gem.indo.dooit.services.NotificationAlarm;
+import org.gem.indo.dooit.services.NotificationArgs;
 import org.gem.indo.dooit.views.DooitActivity;
 import org.gem.indo.dooit.views.helpers.activity.DooitActivityBuilder;
 import org.gem.indo.dooit.views.main.adapters.MainTabAdapter;
 import org.gem.indo.dooit.views.main.fragments.MainFragment;
+import org.gem.indo.dooit.views.main.fragments.bot.BotFragment;
 import org.gem.indo.dooit.views.main.fragments.target.TargetFragment;
 import org.gem.indo.dooit.views.profile.ProfileActivity;
 
@@ -127,6 +131,13 @@ public class MainActivity extends DooitActivity {
             switch (NotificationType.getValueOf(extras.getInt(NotificationType.NOTIFICATION_TYPE))) {
                 case CHALLENGE_AVAILABLE:
                     startPage(MainViewPagerPositions.CHALLENGE);
+                    break;
+                case SAVING_REMINDER:
+                    startPage(MainViewPagerPositions.TARGET);
+                    break;
+                case SURVEY_AVAILABLE:
+                    handleSurveyNotification();
+                    break;
             }
         }
 
@@ -263,5 +274,41 @@ public class MainActivity extends DooitActivity {
         protected Intent createIntent(Context context) {
             return new Intent(context, MainActivity.class);
         }
+    }
+
+    /**
+     * Gets extras from the notification to choose which Bot conversation to start for the Survey,
+     * and the ID of the Survey.
+     */
+    private void handleSurveyNotification() {
+        Bundle extras = getIntent().getExtras();
+        if (extras == null)
+            return;
+
+        if (!extras.containsKey(NotificationArgs.SURVEY_ID)
+                || !extras.containsKey(NotificationArgs.SURVEY_TYPE)) {
+            Log.w(TAG, "Activity opened from Survey Notification without ID or BotType set up");
+            return;
+        }
+
+        try {
+            long id = Long.parseLong(extras.getString(NotificationArgs.SURVEY_ID));
+            BotType type = BotType.valueOf(extras.getString(NotificationArgs.SURVEY_TYPE));
+
+            // Persist for Bot requirements
+            persisted.saveConvoSurveyId(type, id);
+            startBot(type);
+        } catch (NumberFormatException e) {
+            Log.e(TAG, "Failed parsing survey id", e);
+        } catch (IllegalArgumentException e) {
+            Log.e(TAG, "Failed to parse bot type", e);
+        }
+    }
+
+    private void startBot(BotType type) {
+        BotFragment fragment = (BotFragment) viewPager.getAdapter().instantiateItem(viewPager, MainViewPagerPositions.BOT.getValue());
+        fragment.setBotType(type);
+        fragment.setClearState(true);
+        startPage(MainViewPagerPositions.BOT);
     }
 }
