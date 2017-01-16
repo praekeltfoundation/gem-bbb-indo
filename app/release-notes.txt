@@ -6,3 +6,4 @@
 - Implemented basic survey retrieve and submit
 - Added WebView descriptive screen names for analytics
 - Fix camera crash during Goal Edit conversation
+- Quiz has a visible scrollbar
