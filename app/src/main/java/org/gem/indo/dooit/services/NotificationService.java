@@ -12,7 +12,10 @@ import org.gem.indo.dooit.api.managers.ChallengeManager;
 import org.gem.indo.dooit.api.managers.SurveyManager;
 import org.gem.indo.dooit.api.responses.AchievementResponse;
 import org.gem.indo.dooit.api.responses.SurveyResponse;
+import org.gem.indo.dooit.helpers.DooitParamBuilder;
 import org.gem.indo.dooit.helpers.Persisted;
+import org.gem.indo.dooit.helpers.bot.param.ParamMatch;
+import org.gem.indo.dooit.helpers.bot.param.ParamParser;
 import org.gem.indo.dooit.helpers.notifications.NotificationType;
 import org.gem.indo.dooit.helpers.notifications.Notifier;
 import org.gem.indo.dooit.models.User;
@@ -142,17 +145,25 @@ public class NotificationService extends IntentService {
     }
 
     protected void surveyRetrieved(SurveyResponse response) {
-        if (response.hasSurvey()) {
+        if (response.hasSurvey() && persisted.getCurrentUser() != null) {
             CoachSurvey survey = response.getSurvey();
+
             Map<String, String> extras = new HashMap<>();
             extras.put(NotificationArgs.SURVEY_ID, Long.toString(survey.getId()));
+
+            Map<String, Object> params = DooitParamBuilder.create(this)
+                    .setUser(persisted.getCurrentUser())
+                    .build();
+
+            ParamMatch match = ParamParser.parse(response.getSurvey().getNotificationBody());
+
             if (survey.hasBotType())
                 extras.put(NotificationArgs.SURVEY_TYPE, survey.getBotType().name());
 
             new Notifier(getApplicationContext()).notify(
                     NotificationType.SURVEY_AVAILABLE,
                     MainActivity.class,
-                    response.getSurvey().getNotificationBody(),
+                    match.process(params),
                     extras
             );
 

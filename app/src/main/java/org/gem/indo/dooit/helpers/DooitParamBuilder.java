@@ -33,13 +33,25 @@ public class DooitParamBuilder {
         ((DooitApplication) context.getApplicationContext()).component.inject(this);
     }
 
+    public static DooitParamBuilder create(Context context) {
+        return new DooitParamBuilder(context);
+    }
+
+    public DooitParamBuilder setUser(User user) {
+        this.user = user;
+        return this;
+    }
+
     public DooitParamBuilder setGoal(Goal goal) {
         this.goal = goal;
         return this;
     }
 
-    public Map<String, String> build() {
-        Map<String, String> map = new HashMap<>();
+    public Map<String, Object> build() {
+        Map<String, Object> map = new HashMap<>();
+
+        if (user == null)
+            user = persisted.getCurrentUser();
 
         if (user != null) {
             map.put(BotParamType.USER_USERNAME.getKey(), user.getUsername());
@@ -47,6 +59,6 @@ public class DooitParamBuilder {
             map.put(BotParamType.USER_PREFERRED_NAME.getKey(), user.getPreferredName());
         }
 
-        return new HashMap<>();
+        return map;
     }
 }
