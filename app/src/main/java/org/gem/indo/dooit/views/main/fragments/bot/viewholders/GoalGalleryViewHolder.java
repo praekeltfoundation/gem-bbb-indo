@@ -28,7 +28,10 @@ import butterknife.ButterKnife;
 
 /**
  * Gallery of predefined Goals to use as prototypes for Goal creation.
- * <p>
+ *
+ * The Goal prototype gallery is of type Node because it had to be displayed with a quick answer.
+ * This is no longer the case, and it can potentially be changed to an Answer type.
+ *
  * Created by Wimpie Victor on 2016/11/24.
  */
 

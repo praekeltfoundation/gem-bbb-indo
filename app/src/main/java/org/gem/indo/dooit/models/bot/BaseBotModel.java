@@ -78,6 +78,16 @@ public abstract class BaseBotModel {
         return type;
     }
 
+    public BotMessageType getMessageType() {
+        if (!TextUtils.isEmpty(type))
+            try {
+                return BotMessageType.valueOf(type.toUpperCase());
+            } catch (IllegalArgumentException e) {
+                return BotMessageType.UNDEFINED;
+            }
+        return BotMessageType.UNDEFINED;
+    }
+
     public void setType(BotMessageType type) {
         this.type = type.name();
     }

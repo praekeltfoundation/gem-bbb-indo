@@ -12,8 +12,10 @@
 - Users can now Deposit and Withdraw from a reached Goal
 - Clearing Bot Challenge when Challenge expires
 - Implemented Campaign Analytics
-- Fixed an issue where progress bar did not update when a deposit was made towards a goal
 
+0.0.14
+- Fixed an issue where progress bar did not update when a deposit was made towards a goal
+- Made Goal prototype mandatory
 - Notification title is now app name
 - Implemented basic survey retrieve and submit
 - Added WebView descriptive screen names for analytics
