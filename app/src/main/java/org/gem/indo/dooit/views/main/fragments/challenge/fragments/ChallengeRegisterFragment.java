@@ -43,6 +43,7 @@ import org.gem.indo.dooit.views.web.MinimalWebViewActivity;
 
 import javax.inject.Inject;
 
+import butterknife.BindString;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -57,9 +58,11 @@ import rx.functions.Action1;
  * create an instance of this fragment.
  */
 public class ChallengeRegisterFragment extends Fragment implements HasChallengeFragmentState {
+
     private static final String TAG = "ChallengeRegister";
     private static final String ARG_HASACTIVE = "has_active";
     private static final ChallengeFragmentState FRAGMENT_STATE = ChallengeFragmentState.REGISTER;
+    private static final String SCREEN_NAME_TERMS = "Challenge Terms & Conditions";
 
     @Inject
     ChallengeManager challengeManager;
@@ -87,6 +90,9 @@ public class ChallengeRegisterFragment extends Fragment implements HasChallengeF
 
     @BindView(R.id.fragment_challenge_register_button)
     Button register;
+
+    @BindString(R.string.challenge_deadline_message)
+    String deadlineMessage;
 
     private boolean hasActive = false;
     private BaseChallenge challenge;
@@ -153,7 +159,7 @@ public class ChallengeRegisterFragment extends Fragment implements HasChallengeF
     public void onStart() {
         super.onStart();
         name.setText(challenge.getName());
-        date.setText(challenge.getDeactivationDate().toLocalDateTime().toString("yyyy-MM-dd HH:mm"));
+        date.setText(deadlineMessage + " " + challenge.getDeactivationDate().toLocalDateTime().toString("yyyy-MM-dd HH:mm"));
         instruction.setText(challenge.getInstruction());
 
         if (TextUtils.isEmpty(instruction.getText())) {
@@ -242,6 +248,7 @@ public class ChallengeRegisterFragment extends Fragment implements HasChallengeF
         MinimalWebViewActivity.Builder.create(getContext())
                 //.setTitle(getString(org.gem.indo.dooit.R.string.title_activity_privacy_policy))
                 .setUrl(challenge.getTermsUrl())
+                .setScreenName(SCREEN_NAME_TERMS)
                 .startActivity();
     }
 

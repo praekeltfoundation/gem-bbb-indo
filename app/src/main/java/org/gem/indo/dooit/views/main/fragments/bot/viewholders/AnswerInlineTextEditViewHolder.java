@@ -59,10 +59,12 @@ public class AnswerInlineTextEditViewHolder extends BaseBotViewHolder<Answer> {
                     Answer inputAnswer = new Answer();
                     inputAnswer.setValue(v.getText().toString());
                     inputAnswer.setName(dataModel.getName());
-                    inputAnswer.setInputKey(dataModel.getInputKey());
+                    if (dataModel.hasInputKey())
+                        inputAnswer.setInputKey(dataModel.getInputKey());
                     inputAnswer.setRemoveOnSelect(dataModel.getName());
                     inputAnswer.setNext(dataModel.getNextOnFinish());
                     inputAnswer.setType(BotMessageType.getValueOf(dataModel.getTypeOnFinish()));
+                    inputAnswer.setParentName(dataModel.getParentName());
                     tagsClickListener.onItemClicked(inputAnswer);
                     return true;
                 }
@@ -74,5 +76,12 @@ public class AnswerInlineTextEditViewHolder extends BaseBotViewHolder<Answer> {
     @Override
     protected void populateModel() {
 
+    }
+
+    @Override
+    public void reset() {
+        editText.setHint(null);
+        editText.setText(null);
+        editText.setOnEditorActionListener(null);
     }
 }

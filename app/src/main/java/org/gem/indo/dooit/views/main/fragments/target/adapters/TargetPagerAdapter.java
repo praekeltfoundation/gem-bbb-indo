@@ -27,6 +27,7 @@ public class TargetPagerAdapter extends PagerAdapter {
 
     @Override
     public Object instantiateItem(ViewGroup container, int position) {
+
         LayoutInflater inflater = LayoutInflater.from(container.getContext());
         ViewGroup layout = (ViewGroup) inflater.inflate(R.layout.fragment_target_arc_progress, container, false);
 
@@ -56,5 +57,17 @@ public class TargetPagerAdapter extends PagerAdapter {
     public void updateGoals(List<Goal> goals) {
         this.goals = goals;
         notifyDataSetChanged();
+    }
+
+    /*
+        This was to fix the fact fragments were not updating when moving to a fragment directly next to it
+        issue https://github.com/praekeltfoundation/gem-bbb-indo/pull/389
+
+        This solution forces the position to become POSITION_NONE and as a result forces the fragments to
+        be reloaded thus seeing the updates between the two
+     */
+    @Override
+    public int getItemPosition(Object object) {
+        return POSITION_NONE;
     }
 }

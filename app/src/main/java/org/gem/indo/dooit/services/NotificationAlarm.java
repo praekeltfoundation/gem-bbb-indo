@@ -17,6 +17,7 @@ public class NotificationAlarm extends WakefulBroadcastReceiver {
     private static final String TAG = NotificationAlarm.class.getName();
     // milliseconds * seconds * minutes * hours * days
     public static final long WEEK = 1000 * 60 * 60 * 24 * 7;
+    public static final long DAY = 1000 * 60 * 60 * 24;
     public static final long MINUTE = 1000 * 60; // For dev
 
     @Override
@@ -35,7 +36,7 @@ public class NotificationAlarm extends WakefulBroadcastReceiver {
         if (Constants.DEBUG)
             interval = MINUTE * 10;
         else
-            interval = WEEK;
+            interval = DAY;
 
         // RTC because we don't want to wake the device up.
         manager.setRepeating(AlarmManager.RTC, System.currentTimeMillis(), interval, pending);

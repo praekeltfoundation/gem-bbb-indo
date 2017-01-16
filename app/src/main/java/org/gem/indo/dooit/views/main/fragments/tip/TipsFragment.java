@@ -137,9 +137,7 @@ public class TipsFragment extends Fragment implements OnTipsAvailableListener {
 
     @OnClick(R.id.fragment_tips_list_filter_image_button)
     public void clearFilter(View v) {
-
         tipsTabAdapter.getPrimaryItem().clearFilter(v);
-
     }
 
     @OnEditorAction(R.id.fragment_tips_search_view)

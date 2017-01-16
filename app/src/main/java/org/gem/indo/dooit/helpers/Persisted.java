@@ -26,6 +26,7 @@ import org.gem.indo.dooit.models.challenge.BaseChallenge;
 import org.gem.indo.dooit.models.challenge.ParticipantAnswer;
 import org.gem.indo.dooit.models.challenge.QuizChallengeQuestionState;
 import org.gem.indo.dooit.models.enums.BotType;
+import org.gem.indo.dooit.models.survey.CoachSurvey;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -53,6 +54,8 @@ public class Persisted {
     private static final String FAVOURITES = "favourites";
     private static final String NOTIFICATION = "notification";
     private static final String TAG = Persisted.class.getName();
+    private static final String SURVEY_ID = "survey_id";
+    private static final String SURVEY = "survey";
 
     @Inject
     DooitSharedPreferences dooitSharedPreferences;
@@ -190,6 +193,32 @@ public class Persisted {
 
     public boolean hasConvoChallenge(BotType botType) {
         return dooitSharedPreferences.containsKey(BOT + "_" + CHALLENGE + "_" + botType.name());
+    }
+
+    public void saveConvoSurveyId(BotType botType, long id) {
+        dooitSharedPreferences.setLong(BOT + "_" + SURVEY_ID + "_" + botType.name(), id);
+    }
+
+    public long loadConvoSurveyId(BotType botType) {
+        return dooitSharedPreferences.getLong(BOT + "_" + SURVEY_ID + "_" + botType.name(), 0L);
+    }
+
+    public boolean hasConvoSurveyId(BotType botType) {
+        return dooitSharedPreferences.containsKey(BOT + "_" + SURVEY_ID + "_" + botType.name());
+    }
+
+    public void saveConvoSurvey(BotType botType, CoachSurvey survey) {
+        dooitSharedPreferences.setComplex(BOT + "_" + SURVEY + "_" + botType.name(), survey);
+    }
+
+    public CoachSurvey loadConvoSurvey(BotType botType) {
+        if (hasConvoSurvey(botType))
+            return dooitSharedPreferences.getComplex(BOT + "_" + SURVEY + "_" + botType.name(), CoachSurvey.class);
+        return null;
+    }
+
+    public boolean hasConvoSurvey(BotType botType) {
+        return dooitSharedPreferences.containsKey(BOT + "_" + SURVEY + "_" + botType.name());
     }
 
     public boolean isNewBotUser() {
