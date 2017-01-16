@@ -11,5 +11,8 @@ public enum BotType {
     GOAL_DEPOSIT,
     GOAL_WITHDRAW,
     GOAL_EDIT,
-    TIP_INTRO
+    TIP_INTRO,
+    SURVEY_BASELINE,
+    SURVEY_EATOOL,
+    SURVEY_ADHOC
 }

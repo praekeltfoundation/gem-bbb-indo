@@ -30,32 +30,8 @@
     "name": "goal_add_ask_goal_gallery",
     "type": "goalGallery",
     "text": "",
-    "next": "goal_add_q_ask_amount",
-    "answers": [
-      {
-        "name": "goal_add_custom",
-        "next": "goal_add_q_goal_name",
-        "text": "$(goal_add_custom)",
-        "removeOnSelect": "goal_add_ask_goal_gallery"
-      }
-    ]
+    "next": "goal_add_q_goal_name"
   },
-
-
-
-  {
-    "name": "goal_add_q_goal_prototype_selected",
-    "type": "text",
-    "text": "$(goal_add_q_goal_prototype_selected)",
-    "answers": [
-      {
-        "name": "goal_add_a_goal_prototype_target",
-        "text": "$(goal_add_a_goal_prototype_target)",
-        "next": "goal_add_q_ask_amount"
-      }
-    ]
-  },
-
 
 
   {

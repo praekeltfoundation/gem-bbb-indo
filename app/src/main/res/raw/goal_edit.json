@@ -95,7 +95,7 @@
       {
         "name": "goal_edit_camera",
         "text": "$(goal_edit_camera)",
-        "type": "captureUpload",
+        "type": "cameraUpload",
         "nextOnFinish": "goal_edit_do_update",
         "removeOnSelect": "goal_edit_camera"
       },

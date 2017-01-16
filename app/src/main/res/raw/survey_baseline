@@ -1,0 +1,1162 @@
+[
+  {
+    "name": "survey_baseline_intro",
+    "type": "text",
+    "text": "$(survey_common_q_intro)",
+    "answers": [
+      {
+        "name": "survey_baseline_q_intro_a_yes",
+        "text": "$(survey_common_q_intro_a_yes)",
+        "value": "yes",
+        "next": "survey_baseline_q_consent"
+      },
+      {
+        "name": "survey_baseline_q_intro_a_no",
+        "text": "$(survey_common_q_intro_a_no)",
+        "value": "no",
+        "next": "survey_baseline_q_outro_cancel"
+      }
+    ]
+  },
+
+
+
+  {
+    "name": "survey_baseline_q_consent",
+    "type": "text",
+    "text": "$(survey_common_q_consent)",
+    "answers": [
+      {
+        "name": "survey_baseline_q_consent_a_yes",
+        "text": "$(survey_common_q_consent_a_yes)",
+        "value": "yes",
+        "next": "survey_baseline_q_terms_and_conditions"
+      },
+      {
+        "name": "survey_baseline_q_consent_a_no",
+        "text": "$(survey_common_q_consent_a_no)",
+        "value": "no",
+        "next": "survey_baseline_q_outro_cancel"
+      }
+    ]
+  },
+
+
+
+  {
+    "name": "survey_baseline_q_terms_and_conditions",
+    "type": "text",
+    "text": "$(survey_common_q_terms)",
+    "answers": [
+      {
+        "name": "survey_baseline_q_terms_a_yes",
+        "text": "$(survey_common_q_terms_a_yes)",
+        "value": "yes",
+        "next": "survey_baseline_q01_occupation"
+      },
+      {
+        "name": "survey_baseline_q_terms_a_no",
+        "text": "$(survey_common_q_terms_a_no)",
+        "value": "no",
+        "next": "survey_baseline_q_outro_cancel"
+      }
+    ]
+  },
+
+
+
+  {
+    "name": "survey_baseline_q01_occupation",
+    "type": "text",
+    "text": "$(survey_baseline_q01_occupation)",
+    "answers": [
+      {
+        "name": "survey_baseline_q01_a01",
+        "text": "$(survey_baseline_q01_a01)",
+        "value": "1",
+        "next": "survey_baseline_submit"
+      },
+      {
+        "name": "survey_baseline_q01_a02",
+        "text": "$(survey_baseline_q01_a02)",
+        "value": "2",
+        "next": "survey_baseline_submit"
+      },
+      {
+        "name": "survey_baseline_q01_a03",
+        "text": "$(survey_baseline_q01_a03)",
+        "value": "3",
+        "next": "survey_baseline_submit"
+      },
+      {
+        "name": "survey_baseline_q01_a04",
+        "text": "$(survey_baseline_q01_a04)",
+        "value": "4",
+        "next": "survey_baseline_q02_grade"
+      },
+      {
+        "name": "survey_baseline_q01_a05",
+        "text": "$(survey_baseline_q01_a05)",
+        "value": "5",
+        "next": "survey_baseline_submit"
+      },
+      {
+        "name": "survey_baseline_q01_a06",
+        "text": "$(survey_baseline_q01_a06)",
+        "value": "6",
+        "next": "survey_baseline_submit"
+      },
+      {
+        "name": "survey_baseline_q01_a07",
+        "text": "$(survey_baseline_q01_a07)",
+        "value": "7",
+        "next": "survey_baseline_submit"
+      },
+      {
+        "name": "survey_baseline_q01_a08",
+        "text": "$(survey_baseline_q01_a08)",
+        "value": "8",
+        "next": "survey_baseline_submit"
+      },
+      {
+        "name": "survey_baseline_q01_a09",
+        "text": "$(survey_baseline_q01_a09)",
+        "value": "9",
+        "next": "survey_baseline_submit"
+      },
+      {
+        "name": "survey_baseline_q01_a10",
+        "text": "$(survey_baseline_q01_a10)",
+        "value": "10",
+        "next": "survey_baseline_submit"
+      }
+    ]
+  },
+
+
+
+  {
+    "name": "survey_baseline_q02_grade",
+    "type": "text",
+    "text": "$(survey_baseline_q02_grade)",
+    "answers": [
+      {
+        "name": "survey_baseline_q02_a01_1styear",
+        "text": "$(survey_baseline_q02_a01_1styear)",
+        "value": "1",
+        "next": "survey_baseline_submit"
+      },
+      {
+        "name": "survey_baseline_q02_a02_2ndyear",
+        "text": "$(survey_baseline_q02_a02_2ndyear)",
+        "value": "2",
+        "next": "survey_baseline_submit"
+      },
+      {
+        "name": "survey_baseline_q02_a03_3rdyear",
+        "text": "$(survey_baseline_q02_a03_3rdyear)",
+        "value": "3",
+        "next": "survey_baseline_q03_school_name"
+      }
+    ]
+  },
+
+
+
+  {
+    "name": "survey_baseline_q03_school_name",
+    "type": "text",
+    "text": "survey_baseline_q03_school_name",
+    "autoAnswer": "survey_baseline_a_school_name",
+    "answers": [
+      {
+        "name": "survey_baseline_a_school_name",
+        "type": "inlinetext",
+        "nextOnFinish": "survey_baseline_q04_city"
+      }
+    ]
+  },
+
+
+
+  {
+    "name": "survey_baseline_q04_city",
+    "type": "text",
+    "text": "$(survey_baseline_q04_city)",
+    "autoAnswer": "survey_baseline_a_city",
+    "answers": [
+      {
+        "name": "survey_baseline_a_city",
+        "type": "inlinetext",
+        "nextOnFinish": "survey_baseline_q05_job_month"
+      }
+    ]
+  },
+
+
+
+  {
+    "name": "survey_baseline_q05_job_month",
+    "type": "text",
+    "text": "$(survey_baseline_q05_job_month)",
+    "answers": [
+      {
+        "name": "survey_baseline_q05_a01_yes",
+        "text": "$(survey_baseline_q05_a01_yes)",
+        "value": "yes",
+        "next": "survey_baseline_q06_job_earning_range"
+      },
+      {
+        "name": "survey_baseline_q05_s02_no",
+        "text": "$(survey_baseline_q05_s02_no)",
+        "value": "no",
+        "next": "survey_baseline_q08_shared_ownership"
+      }
+    ]
+  },
+
+
+
+  {
+    "name": "survey_baseline_q06_job_earning_range",
+    "type": "text",
+    "text": "$(survey_baseline_q06_job_earning_range)",
+    "answers": [
+      {
+        "name": "survey_baseline_q06_a01_250k",
+        "text": "$(survey_baseline_q06_a01_250k)",
+        "value": "1",
+        "next": "survey_baseline_q07_job_status"
+      },
+      {
+        "name": "survey_baseline_q06_a02_250k_500k",
+        "text": "$(survey_baseline_q06_a02_250k_500k)",
+        "value": "2",
+        "next": "survey_baseline_q07_job_status"
+      },
+      {
+        "name": "survey_baseline_q06_a03_500k_750k",
+        "text": "$(survey_baseline_q06_a03_500k_750k)",
+        "value": "3",
+        "next": "survey_baseline_q07_job_status"
+      },
+      {
+        "name": "survey_baseline_q06_a04_750k_1m",
+        "text": "$(survey_baseline_q06_a04_750k_1m)",
+        "value": "4",
+        "next": "survey_baseline_q07_job_status"
+      },
+      {
+        "name": "survey_baseline_q06_a05_1m_1_5m",
+        "text": "$(survey_baseline_q06_a05_1m_1_5m)",
+        "value": "5",
+        "next": "survey_baseline_q07_job_status"
+      },
+      {
+        "name": "survey_baseline_q06_a06_1_5m",
+        "text": "$(survey_baseline_q06_a06_1_5m)",
+        "value": "6",
+        "next": "survey_baseline_q07_job_status"
+      }
+    ]
+  },
+
+
+
+  {
+    "name": "survey_baseline_q07_job_status",
+    "type": "text",
+    "text": "$(survey_baseline_q07_job_status)",
+    "answers": [
+      {
+        "name": "survey_baseline_q07_a01_permanent",
+        "text": "$(survey_baseline_q07_a01_permanent)",
+        "value": "1",
+        "next": "survey_baseline_q08_shared_ownership"
+      },
+      {
+        "name": "survey_baseline_q07_a02_indefinite",
+        "text": "$(survey_baseline_q07_a02_indefinite)",
+        "value": "2",
+        "next": "survey_baseline_q08_shared_ownership"
+      },
+      {
+        "name": "survey_baseline_q07_a03_temp",
+        "text": "$(survey_baseline_q07_a03_temp)",
+        "value": "3",
+        "next": "survey_baseline_q08_shared_ownership"
+      },
+      {
+        "name": "survey_baseline_q07_a04_apprenticeship",
+        "text": "$(survey_baseline_q07_a04_apprenticeship)",
+        "value": "4",
+        "next": "survey_baseline_q08_shared_ownership"
+      },
+      {
+        "name": "survey_baseline_q07_a05_daily",
+        "text": "$(survey_baseline_q07_a05_daily)",
+        "value": "5",
+        "next": "survey_baseline_q08_shared_ownership"
+      },
+      {
+        "name": "survey_baseline_q07_a06_family",
+        "text": "$(survey_baseline_q07_a06_family)",
+        "value": "6",
+        "next": "survey_baseline_q08_shared_ownership"
+      },
+      {
+        "name": "survey_baseline_q07_a07_unknown",
+        "text": "$(survey_baseline_q07_a07_unknown)",
+        "value": "7",
+        "next": "survey_baseline_q08_shared_ownership"
+      }
+    ]
+  },
+
+
+
+  {
+    "name": "survey_baseline_q08_shared_ownership",
+    "type": "text",
+    "text": "$(survey_baseline_q08_shared_ownership)",
+    "answers": [
+      {
+        "name": "survey_baseline_q08_a01_yes",
+        "text": "$(survey_baseline_q08_a01_yes)",
+        "value": "yes",
+        "next": "survey_baseline_q09_business_earning_range"
+      },
+      {
+        "name": "survey_baseline_q08_a02_no",
+        "text": "$(survey_baseline_q08_a02_no)",
+        "value": "no",
+        "next": "survey_baseline_q10_save"
+      }
+    ]
+  },
+
+
+
+  {
+    "name": "survey_baseline_q09_business_earning_range",
+    "type": "text",
+    "text": "$(survey_baseline_q09_business_earning_range)",
+    "answers": [
+      {
+        "name": "survey_baseline_q09_a01_250k",
+        "text": "$(survey_baseline_q09_a01_250k)",
+        "value": "1",
+        "next": "survey_baseline_q10_save"
+      },
+      {
+        "name": "survey_baseline_q09_a02_250k_500k",
+        "text": "$(survey_baseline_q09_a02_250k_500k)",
+        "value": "2",
+        "next": "survey_baseline_q10_save"
+      },
+      {
+        "name": "survey_baseline_q09_a03_500k_750k",
+        "text": "$(survey_baseline_q09_a03_500k_750k)",
+        "value": "3",
+        "next": "survey_baseline_q10_save"
+      },
+      {
+        "name": "survey_baseline_q09_a04_750k_1m",
+        "text": "$(survey_baseline_q09_a04_750k_1m)",
+        "value": "4",
+        "next": "survey_baseline_q10_save"
+      },
+      {
+        "name": "survey_baseline_q09_a05_1m_1_5m",
+        "text": "$(survey_baseline_q09_a05_1m_1_5m)",
+        "value": "5",
+        "next": "survey_baseline_q10_save"
+      },
+      {
+        "name": "survey_baseline_q09_a06_1_5m",
+        "text": "$(survey_baseline_q09_a06_1_5m)",
+        "value": "6",
+        "next": "survey_baseline_q10_save"
+      }
+    ]
+  },
+
+
+
+  {
+    "name": "survey_baseline_q10_save",
+    "type": "text",
+    "text": "$(survey_baseline_q10_save)",
+    "answers": [
+      {
+        "name": "survey_baseline_q10_a01_yes",
+        "text": "$(survey_baseline_q10_a01_yes)",
+        "value": "yes",
+        "next": "survey_baseline_q11_savings_frequency"
+      },
+      {
+        "name": "survey_baseline_q10_a02_no",
+        "text": "$(survey_baseline_q10_a02_no)",
+        "value": "no",
+        "next": "survey_baseline_submit"
+      }
+    ]
+  },
+
+
+
+  {
+    "name": "survey_baseline_q11_savings_frequency",
+    "type": "text",
+    "text": "$(survey_baseline_q11_savings_frequency)",
+    "answers": [
+      {
+        "name": "survey_baseline_q11_a01_daily",
+        "text": "$(survey_baseline_q11_a01_daily)",
+        "value": "1",
+        "next": "survey_baseline_q12_savings_where"
+      },
+      {
+        "name": "survey_baseline_q11_a02_weekly",
+        "text": "$(survey_baseline_q11_a02_weekly)",
+        "value": "2",
+        "next": "survey_baseline_q12_savings_where"
+      },
+      {
+        "name": "survey_baseline_q11_a03_monthly",
+        "text": "$(survey_baseline_q11_a03_monthly)",
+        "value": "3",
+        "next": "survey_baseline_q12_savings_where"
+      },
+      {
+        "name": "survey_baseline_q11_a04_2_months",
+        "text": "$(survey_baseline_q11_a04_2_months)",
+        "value": "4",
+        "next": "survey_baseline_q12_savings_where"
+      },
+      {
+        "name": "survey_baseline_q11_a05_3_4_months",
+        "text": "$(survey_baseline_q11_a05_3_4_months)",
+        "value": "5",
+        "next": "survey_baseline_q12_savings_where"
+      },
+      {
+        "name": "survey_baseline_q11_a06_year",
+        "text": "$(survey_baseline_q11_a06_year)",
+        "value": "6",
+        "next": "survey_baseline_q12_savings_where"
+      },
+      {
+        "name": "survey_baseline_q11_a07_dont_know",
+        "text": "$(survey_baseline_q11_a07_dont_know)",
+        "value": "7",
+        "next": "survey_baseline_q12_savings_where"
+      },
+      {
+        "name": "survey_baseline_q11_a08_vary",
+        "text": "$(survey_baseline_q11_a08_vary)",
+        "value": "8",
+        "next": "survey_baseline_q12_savings_where"
+      }
+    ]
+  },
+
+
+
+  {
+    "name": "survey_baseline_q12_savings_where",
+    "type": "text",
+    "text": "$(survey_baseline_q12_savings_where)",
+    "answers": [
+      {
+        "name": "survey_baseline_q12_a01_bank",
+        "text": "$(survey_baseline_q12_a01_bank)",
+        "value": "1",
+        "next": "survey_baseline_q13_savings_3_months"
+      },
+      {
+        "name": "survey_baseline_q12_a02_community",
+        "text": "$(survey_baseline_q12_a02_community)",
+        "value": "2",
+        "next": "survey_baseline_q13_savings_3_months"
+      },
+      {
+        "name": "survey_baseline_q12_a03_home",
+        "text": "$(survey_baseline_q12_a03_home)",
+        "value": "3",
+        "next": "survey_baseline_q13_savings_3_months"
+      },
+      {
+        "name": "survey_baseline_q12_a04_family",
+        "text": "$(survey_baseline_q12_a04_family)",
+        "value": "4",
+        "next": "survey_baseline_q13_savings_3_months"
+      },
+      {
+        "name": "survey_baseline_q12_a05_gold",
+        "text": "$(survey_baseline_q12_a05_gold)",
+        "value": "5",
+        "next": "survey_baseline_q13_savings_3_months"
+      },
+      {
+        "name": "survey_baseline_q12_a06_other",
+        "text": "$(survey_baseline_q12_a06_other)",
+        "value": "6",
+        "next": "survey_baseline_q13_savings_3_months"
+      }
+    ]
+  },
+
+
+
+  {
+    "name": "survey_baseline_q13_savings_3_months",
+    "type": "text",
+    "text": "$(survey_baseline_q13_savings_3_months)",
+    "answers": [
+      {
+        "name": "survey_baseline_q13_a01_lt_100k",
+        "text": "$(survey_baseline_q13_a01_lt_100k)",
+        "value": "1",
+        "next": "survey_baseline_q14_saving_education"
+      },
+      {
+        "name": "survey_baseline_q13_a02_100k_150k",
+        "text": "$(survey_baseline_q13_a02_100k_150k)",
+        "value": "2",
+        "next": "survey_baseline_q14_saving_education"
+      },
+      {
+        "name": "survey_baseline_q13_a03_150k_200k",
+        "text": "$(survey_baseline_q13_a03_150k_200k)",
+        "value": "3",
+        "next": "survey_baseline_q14_saving_education"
+      },
+      {
+        "name": "survey_baseline_q13_a04_200k_250k",
+        "text": "$(survey_baseline_q13_a04_200k_250k)",
+        "value": "4",
+        "next": "survey_baseline_q14_saving_education"
+      },
+      {
+        "name": "survey_baseline_q13_a05_250k_300k",
+        "text": "$(survey_baseline_q13_a05_250k_300k)",
+        "value": "5",
+        "next": "survey_baseline_q14_saving_education"
+      },
+      {
+        "name": "survey_baseline_q13_a06_250k_300k",
+        "text": "$(survey_baseline_q13_a06_300k_350k)",
+        "value": "6",
+        "next": "survey_baseline_q14_saving_education"
+      },
+      {
+        "name": "survey_baseline_q13_a07_350k_400k",
+        "text": "$(survey_baseline_q13_a07_350k_400k)",
+        "value": "7",
+        "next": "survey_baseline_q14_saving_education"
+      },
+      {
+        "name": "survey_baseline_q13_a08_gt_400k",
+        "text": "$(survey_baseline_q13_a08_gt_400k)",
+        "value": "8",
+        "next": "survey_baseline_q14_saving_education"
+      }
+    ]
+  },
+
+
+
+  {
+    "name": "survey_baseline_q14_saving_education",
+    "type": "text",
+    "text": "$(survey_baseline_q14_saving_education)",
+    "answers": [
+      {
+        "name": "survey_baseline_q14_a01_yes",
+        "text": "$(survey_baseline_q14_a01_yes)",
+        "value": "yes",
+        "next": "survey_baseline_q15_job_hunt"
+      },
+      {
+        "name": "survey_baseline_q14_a02_no",
+        "text": "$(survey_baseline_q14_a02_no)",
+        "value": "no",
+        "next": "survey_baseline_q15_job_hunt"
+      }
+    ]
+  },
+
+
+
+  {
+    "name": "survey_baseline_q15_job_hunt",
+    "type": "text",
+    "text": "$(survey_baseline_q15_job_hunt)",
+    "answers": [
+      {
+        "name": "survey_baseline_q15_a01_yes",
+        "text": "$(survey_baseline_q15_a01_yes)",
+        "value": "yes",
+        "next": "survey_baseline_q16_emergencies"
+      },
+      {
+        "name": "survey_baseline_q15_a02_no",
+        "text": "$(survey_baseline_q15_a02_no)",
+        "value": "no",
+        "next": "survey_baseline_q16_emergencies"
+      }
+    ]
+  },
+
+
+  {
+    "name": "survey_baseline_q16_emergencies",
+    "type": "text",
+    "text": "$(survey_baseline_q16_emergencies)",
+    "answers": [
+      {
+        "name": "survey_baseline_q16_a01_yes",
+        "text": "$(survey_baseline_q16_a01_yes)",
+        "value": "yes",
+        "next": "survey_baseline_q17_invest"
+      },
+      {
+        "name": "survey_baseline_q16_a02_no",
+        "text": "$(survey_baseline_q16_a02_no)",
+        "value": "no",
+        "next": "survey_baseline_q17_invest"
+      }
+    ]
+  },
+
+
+
+  {
+    "name": "survey_baseline_q17_invest",
+    "type": "text",
+    "text": "$(survey_baseline_q17_invest)",
+    "answers": [
+      {
+        "name": "survey_baseline_q17_a01_yes",
+        "text": "$(survey_baseline_q17_a01_yes)",
+        "value": "yes",
+        "next": "survey_baseline_q18_family"
+      },
+      {
+        "name": "survey_baseline_q17_a02_no",
+        "text": "$(survey_baseline_q17_a02_no)",
+        "value": "no",
+        "next": "survey_baseline_q18_family"
+      }
+    ]
+  },
+
+
+
+  {
+    "name": "survey_baseline_q18_family",
+    "type": "text",
+    "text": "$(survey_baseline_q18_family)",
+    "answers": [
+      {
+        "name": "survey_baseline_q18_a01_yes",
+        "text": "$(survey_baseline_q18_a01_yes)",
+        "value": "yes",
+        "next": "survey_baseline_q19_clothes_food"
+      },
+      {
+        "name": "survey_baseline_q18_a02_no",
+        "text": "$(survey_baseline_q18_a02_no)",
+        "value": "no",
+        "next": "survey_baseline_q19_clothes_food"
+      }
+    ]
+  },
+
+
+
+  {
+    "name": "survey_baseline_q19_clothes_food",
+    "type": "text",
+    "text": "$(survey_baseline_q19_clothes_food)",
+    "answers": [
+      {
+        "name": "survey_baseline_q19_a01_yes",
+        "text": "$(survey_baseline_q19_a01_yes)",
+        "value": "yes",
+        "next": "survey_baseline_q21_gadgets"
+      },
+      {
+        "name": "survey_baseline_q19_a02_no",
+        "text": "$(survey_baseline_q19_a02_no)",
+        "value": "no",
+        "next": "survey_baseline_q21_gadgets"
+      }
+    ]
+  },
+
+
+
+  {
+    "name": "survey_baseline_q21_gadgets",
+    "type": "text",
+    "text": "$(survey_baseline_q21_gadgets)",
+    "answers": [
+      {
+        "name": "survey_baseline_q21_a01_yes",
+        "text": "$(survey_baseline_q21_a01_yes)",
+        "value": "yes",
+        "next": "survey_baseline_q22_friends"
+      },
+      {
+        "name": "survey_baseline_q21_a02_no",
+        "text": "$(survey_baseline_q21_a02_no)",
+        "value": "no",
+        "next": "survey_baseline_q22_friends"
+      }
+    ]
+  },
+
+
+  {
+    "name": "survey_baseline_q22_friends",
+    "type": "text",
+    "text": "$(survey_baseline_q22_friends)",
+    "answers": [
+      {
+        "name": "survey_baseline_q22_a01_yes",
+        "text": "$(survey_baseline_q22_a01_yes)",
+        "value": "yes",
+        "next": "survey_baseline_q23_mobile_frequency"
+      },
+      {
+        "name": "survey_baseline_q22_a02_no",
+        "text": "$(survey_baseline_q22_a02_no)",
+        "value": "no",
+        "next": "survey_baseline_q23_mobile_frequency"
+      }
+    ]
+  },
+
+
+
+  {
+    "name": "survey_baseline_q23_mobile_frequency",
+    "type": "text",
+    "text": "$(survey_baseline_q23_mobile_frequency)",
+    "answers": [
+      {
+        "name": "survey_baseline_q23_a01_never",
+        "text": "$(survey_baseline_q23_a01_never)",
+        "value": "1",
+        "next": "survey_baseline_q24_mobile_most_use"
+      },
+      {
+        "name": "survey_baseline_q23_a02_month",
+        "text": "$(survey_baseline_q23_a02_month)",
+        "value": "2",
+        "next": "survey_baseline_q24_mobile_most_use"
+      },
+      {
+        "name": "survey_baseline_q23_a03_week",
+        "text": "$(survey_baseline_q23_a03_week)",
+        "value": "3",
+        "next": "survey_baseline_q24_mobile_most_use"
+      },
+      {
+        "name": "survey_baseline_q23_a04_day",
+        "text": "$(survey_baseline_q23_a04_day)",
+        "value": "4",
+        "next": "survey_baseline_q24_mobile_most_use"
+      },
+      {
+        "name": "survey_baseline_q23_a05_day_multiple",
+        "text": "$(survey_baseline_q23_a05_day_multiple)",
+        "value": "5",
+        "next": "survey_baseline_q24_mobile_most_use"
+      }
+    ]
+  },
+
+
+
+  {
+    "name": "survey_baseline_q24_mobile_most_use",
+    "type": "text",
+    "text": "$(survey_baseline_q24_mobile_most_use)",
+    "answers": [
+      {
+        "name": "survey_baseline_q24_a01_friends",
+        "text": "$(survey_baseline_q24_a01_friends)",
+        "value": "1",
+        "next": "survey_baseline_q25_mobile_least_use"
+      },
+      {
+        "name": "survey_baseline_q24_a02_family",
+        "text": "$(survey_baseline_q24_a02_family)",
+        "value": "2",
+        "next": "survey_baseline_q25_mobile_least_use"
+      },
+      {
+        "name": "survey_baseline_q24_a03_social_media",
+        "text": "$(survey_baseline_q24_a03_social_media)",
+        "value": "3",
+        "next": "survey_baseline_q25_mobile_least_use"
+      },
+      {
+        "name": "survey_baseline_q24_a04_internet",
+        "text": "$(survey_baseline_q24_a04_internet)",
+        "value": "4",
+        "next": "survey_baseline_q25_mobile_least_use"
+      },
+      {
+        "name": "survey_baseline_q24_a05_apps",
+        "text": "$(survey_baseline_q24_a05_apps)",
+        "value": "5",
+        "next": "survey_baseline_q25_mobile_least_use"
+      },
+      {
+        "name": "survey_baseline_q24_a06_other",
+        "text": "$(survey_baseline_q24_a06_other)",
+        "value": "6",
+        "next": "survey_baseline_q25_mobile_least_use"
+      }
+    ]
+  },
+
+
+
+  {
+    "name": "survey_baseline_q25_mobile_least_use",
+    "type": "text",
+    "text": "$(survey_baseline_q25_mobile_least_use)",
+    "answers": [
+      {
+        "name": "survey_baseline_q25_a01_friends",
+        "text": "$(survey_baseline_q25_a01_friends)",
+        "value": "1",
+        "next": "survey_baseline_q26_mobile_own"
+      },
+      {
+        "name": "survey_baseline_q25_a02_family",
+        "text": "$(survey_baseline_q25_a02_family)",
+        "value": "2",
+        "next": "survey_baseline_q26_mobile_own"
+      },
+      {
+        "name": "survey_baseline_q25_a03_social_media",
+        "text": "$(survey_baseline_q25_a03_social_media)",
+        "value": "3",
+        "next": "survey_baseline_q26_mobile_own"
+      },
+      {
+        "name": "survey_baseline_q25_a04_internet",
+        "text": "$(survey_baseline_q25_a04_internet)",
+        "value": "4",
+        "next": "survey_baseline_q26_mobile_own"
+      },
+      {
+        "name": "survey_baseline_q25_a05_apps",
+        "text": "$(survey_baseline_q25_a05_apps)",
+        "value": "5",
+        "next": "survey_baseline_q26_mobile_own"
+      },
+      {
+        "name": "survey_baseline_q25_a06_other",
+        "text": "$(survey_baseline_q25_a06_other)",
+        "value": "6",
+        "next": "survey_baseline_q26_mobile_own"
+      }
+    ]
+  },
+
+
+
+  {
+    "name": "survey_baseline_q26_mobile_own",
+    "type": "text",
+    "text": "$(survey_baseline_q26_mobile_own)",
+    "answers": [
+      {
+        "name": "survey_baseline_q26_a01_you",
+        "text": "$(survey_baseline_q26_a01_you)",
+        "value": "1",
+        "next": "survey_baseline_q27_mobile_use_opinion"
+      },
+      {
+        "name": "survey_baseline_q26_a02_mother",
+        "text": "$(survey_baseline_q26_a02_mother)",
+        "value": "2",
+        "next": "survey_baseline_q27_mobile_use_opinion"
+      },
+      {
+        "name": "survey_baseline_q26_a03_father",
+        "text": "$(survey_baseline_q26_a03_father)",
+        "value": "3",
+        "next": "survey_baseline_q27_mobile_use_opinion"
+      },
+      {
+        "name": "survey_baseline_q26_a04_sibling",
+        "text": "$(survey_baseline_q26_a04_sibling)",
+        "value": "4",
+        "next": "survey_baseline_q27_mobile_use_opinion"
+      },
+      {
+        "name": "survey_baseline_q26_a05_relative",
+        "text": "$(survey_baseline_q26_a05_relative)",
+        "value": "5",
+        "next": "survey_baseline_q27_mobile_use_opinion"
+      },
+      {
+        "name": "survey_baseline_q26_a06_someone_else",
+        "text": "$(survey_baseline_q26_a06_someone_else)",
+        "value": "6",
+        "next": "survey_baseline_q27_mobile_use_opinion"
+      }
+    ]
+  },
+
+
+
+  {
+    "name": "survey_baseline_q27_mobile_use_opinion",
+    "type": "text",
+    "text": "$(survey_baseline_q27_mobile_use_opinion)",
+    "autoNext": "survey_baseline_q27_1_friends"
+  },
+  {
+    "name": "survey_baseline_q27_1_friends",
+    "type": "text",
+    "text": "$(survey_baseline_q27_1_friends)",
+    "answers": [
+      {
+        "name": "survey_baseline_q27_1_a01_approve",
+        "text": "$(survey_baseline_q27_1_a01_approve)",
+        "value": "1",
+        "next": "survey_baseline_q27_2_family"
+      },
+      {
+        "name": "survey_baseline_q27_1_a02_neutral",
+        "text": "$(survey_baseline_q27_1_a02_neutral)",
+        "value": "2",
+        "next": "survey_baseline_q27_2_family"
+      },
+      {
+        "name": "survey_baseline_q27_1_a03_disapprove",
+        "text": "$(survey_baseline_q27_1_a03_disapprove)",
+        "value": "3",
+        "next": "survey_baseline_q27_2_family"
+      }
+    ]
+  },
+  {
+    "name": "survey_baseline_q27_2_family",
+    "type": "text",
+    "text": "$(survey_baseline_q27_2_family)",
+    "answers": [
+      {
+        "name": "survey_baseline_q27_2_a01_approve",
+        "text": "$(survey_baseline_q27_2_a01_approve)",
+        "value": "1",
+        "next": "survey_baseline_q27_3_community"
+      },
+      {
+        "name": "survey_baseline_q27_2_a02_neutral",
+        "text": "$(survey_baseline_q27_2_a02_neutral)",
+        "value": "2",
+        "next": "survey_baseline_q27_3_community"
+      },
+      {
+        "name": "survey_baseline_q27_2_a03_disapprove",
+        "text": "$(survey_baseline_q27_2_a03_disapprove)",
+        "value": "3",
+        "next": "survey_baseline_q27_3_community"
+      }
+    ]
+  },
+  {
+    "name": "survey_baseline_q27_3_community",
+    "type": "text",
+    "text": "$(survey_baseline_q27_3_community)",
+    "answers": [
+      {
+        "name": "survey_baseline_q27_3_a01_approve",
+        "text": "$(survey_baseline_q27_3_a01_approve)",
+        "value": "1",
+        "next": "survey_baseline_q28_mobile_credit"
+      },
+      {
+        "name": "survey_baseline_q27_3_a02_neutral",
+        "text": "$(survey_baseline_q27_3_a02_neutral)",
+        "value": "2",
+        "next": "survey_baseline_q28_mobile_credit"
+      },
+      {
+        "name": "survey_baseline_q27_3_a03_disapprove",
+        "text": "$(survey_baseline_q27_3_a03_disapprove)",
+        "value": "3",
+        "next": "survey_baseline_q28_mobile_credit"
+      }
+    ]
+  },
+
+
+
+  {
+    "name": "survey_baseline_q28_mobile_credit",
+    "type": "text",
+    "text": "$(survey_baseline_q28_mobile_credit)",
+    "answers": [
+      {
+        "name": "survey_baseline_q28_a01_lt_5k",
+        "text": "$(survey_baseline_q28_a01_lt_5k)",
+        "value": "1",
+        "next": "survey_baseline_q29_assets"
+      },
+      {
+        "name": "survey_baseline_q28_a02_5k_15k",
+        "text": "$(survey_baseline_q28_a02_5k_15k)",
+        "value": "2",
+        "next": "survey_baseline_q29_assets"
+      },
+      {
+        "name": "survey_baseline_q28_a03_15k_25k",
+        "text": "$(survey_baseline_q28_a03_15k_25k)",
+        "value": "3",
+        "next": "survey_baseline_q29_assets"
+      },
+      {
+        "name": "survey_baseline_q28_a04_25k_35k",
+        "text": "$(survey_baseline_q28_a04_25k_35k)",
+        "value": "4",
+        "next": "survey_baseline_q29_assets"
+      },
+      {
+        "name": "survey_baseline_q28_a05_35k_45k",
+        "text": "$(survey_baseline_q28_a05_35k_45k)",
+        "value": "5",
+        "next": "survey_baseline_q29_assets"
+      },
+      {
+        "name": "survey_baseline_q28_a06_gt_45k",
+        "text": "$(survey_baseline_q28_a06_gt_45k)",
+        "value": "6",
+        "next": "survey_baseline_q29_assets"
+      }
+    ]
+  },
+
+
+
+  {
+    "name": "survey_baseline_q29_assets",
+    "type": "text",
+    "text": "$(survey_baseline_q29_assets)",
+    "autoNext": "survey_baseline_q29_1_desktop"
+  },
+  {
+    "name": "survey_baseline_q29_1_desktop",
+    "type": "text",
+    "text": "$(survey_baseline_q29_1_desktop)",
+    "answers": [
+      {
+        "name": "survey_baseline_q29_1_a01_yes",
+        "text": "$(survey_baseline_q29_1_a01_yes)",
+        "value": "yes",
+        "next": "survey_baseline_q29_2_laptop"
+      },
+      {
+        "name": "survey_baseline_q29_1_a01_no",
+        "text": "$(survey_baseline_q29_1_a01_no)",
+        "value": "no",
+        "next": "survey_baseline_q29_2_laptop"
+      }
+    ]
+  },
+  {
+    "name": "survey_baseline_q29_2_laptop",
+    "type": "text",
+    "text": " $(survey_baseline_q29_2_laptop)",
+    "answers": [
+      {
+        "name": "survey_baseline_q29_2_a01_yes",
+        "text": "$(survey_baseline_q29_2_a01_yes)",
+        "value": "yes",
+        "next": "survey_baseline_q29_3_mobile_no_data"
+      },
+      {
+        "name": "survey_baseline_q29_2_s02_no",
+        "text": "$(survey_baseline_q29_2_s02_no)",
+        "value": "no",
+        "next": "survey_baseline_q29_3_mobile_no_data"
+      }
+    ]
+  },
+  {
+    "name": "survey_baseline_q29_3_mobile_no_data",
+    "type": "text",
+    "text": "$(survey_baseline_q29_3_mobile_no_data)",
+    "answers": [
+      {
+        "name": "survey_baseline_q29_3_a01_yes",
+        "text": "$(survey_baseline_q29_3_a01_yes)",
+        "value": "yes",
+        "next": "survey_baseline_q29_4_mobile_data"
+      },
+      {
+        "name": "survey_baseline_q29_3_s02_no",
+        "text": "$(survey_baseline_q29_3_s02_no)",
+        "value": "no",
+        "next": "survey_baseline_q29_4_mobile_data"
+      }
+    ]
+  },
+  {
+    "name": "survey_baseline_q29_4_mobile_data",
+    "type": "text",
+    "text": "$(survey_baseline_q29_4_mobile_data)",
+    "answers": [
+      {
+        "name": "survey_baseline_q29_4_a01_yes",
+        "text": "$(survey_baseline_q29_4_a01_yes)",
+        "value": "yes",
+        "next": "survey_baseline_submit"
+      },
+      {
+        "name": "survey_baseline_q29_4_s02_no",
+        "text": "$(survey_baseline_q29_4_s02_no)",
+        "value": "no",
+        "next": "survey_baseline_submit"
+      }
+    ]
+  },
+
+
+
+  {
+    "name": "survey_baseline_submit",
+    "type": "blank",
+    "asyncCall": "#do_create",
+    "autoNext": "survey_baseline_outro_success"
+  },
+  {
+    "name": "survey_baseline_outro_success",
+    "type": "text",
+    "text": "$(survey_common_q_outro)",
+    "autoNext": "survey_baseline_end"
+  },
+  {
+    "name": "survey_baseline_q_outro_cancel",
+    "type": "text",
+    "text": "$(survey_common_q_outro_cancel)",
+    "autoNext": "survey_baseline_end"
+  },
+
+
+
+  {
+    "name": "survey_baseline_end",
+    "type": "end"
+  }
+]
