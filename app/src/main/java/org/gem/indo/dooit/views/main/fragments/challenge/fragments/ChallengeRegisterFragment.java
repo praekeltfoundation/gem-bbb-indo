@@ -58,9 +58,11 @@ import rx.functions.Action1;
  * create an instance of this fragment.
  */
 public class ChallengeRegisterFragment extends Fragment implements HasChallengeFragmentState {
+
     private static final String TAG = "ChallengeRegister";
     private static final String ARG_HASACTIVE = "has_active";
     private static final ChallengeFragmentState FRAGMENT_STATE = ChallengeFragmentState.REGISTER;
+    private static final String SCREEN_NAME_TERMS = "Challenge Terms & Conditions";
 
     @Inject
     ChallengeManager challengeManager;
@@ -246,6 +248,7 @@ public class ChallengeRegisterFragment extends Fragment implements HasChallengeF
         MinimalWebViewActivity.Builder.create(getContext())
                 //.setTitle(getString(org.gem.indo.dooit.R.string.title_activity_privacy_policy))
                 .setUrl(challenge.getTermsUrl())
+                .setScreenName(SCREEN_NAME_TERMS)
                 .startActivity();
     }
 
