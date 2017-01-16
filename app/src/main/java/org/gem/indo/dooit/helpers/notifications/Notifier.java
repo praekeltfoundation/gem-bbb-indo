@@ -14,6 +14,9 @@ import android.support.v4.content.ContextCompat;
 import org.gem.indo.dooit.R;
 import org.gem.indo.dooit.views.main.MainActivity;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * Created by Wimpie Victor on 2016/12/06.
  */
@@ -30,11 +33,12 @@ public class Notifier {
      * @param notifyType
      * @param cls        The Activity type to open when the notification is clicked.
      */
-    public <T extends Activity> void notify(NotificationType notifyType, Class<T> cls, String contentText) {
+    public <T extends Activity> void notify(NotificationType notifyType, Class<T> cls,
+                                            String contentText, Map<String, String> extras) {
         // TODO: Activity class argument might have to be replaced with a DooitActivityBuilder
         NotificationCompat.Builder builder = new NotificationCompat.Builder(context)
                 .setLargeIcon(((BitmapDrawable) ContextCompat.getDrawable(context, R.mipmap.ic_launcher)).getBitmap())
-                .setContentTitle(context.getString(notifyType.getTitleRes()))
+                .setContentTitle(context.getString(R.string.app_name))
                 .setContentText(contentText)
                 .setAutoCancel(true);
 
@@ -51,6 +55,10 @@ public class Notifier {
 
         Intent intent = new Intent(context, MainActivity.class);
         intent.putExtra(NotificationType.NOTIFICATION_TYPE, notifyType.getMessageId());
+        if (extras != null)
+            for (String key : extras.keySet())
+                intent.putExtra(key, extras.get(key));
+
         stackBuilder.addNextIntent(intent);
         PendingIntent pendingIntent = stackBuilder.getPendingIntent(notifyType.getMessageId(),
                 PendingIntent.FLAG_UPDATE_CURRENT);
@@ -58,5 +66,9 @@ public class Notifier {
 
         NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
         notificationManager.notify(notifyType.getMessageId(), builder.build());
+    }
+
+    public <T extends Activity> void notify(NotificationType notifyType, Class<T> cls, String contentText) {
+        notify(notifyType, cls, contentText, null);
     }
 }

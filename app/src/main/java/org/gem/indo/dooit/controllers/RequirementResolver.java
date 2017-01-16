@@ -9,6 +9,7 @@ import org.gem.indo.dooit.api.DooitAPIError;
 import org.gem.indo.dooit.api.DooitErrorHandler;
 import org.gem.indo.dooit.api.managers.ChallengeManager;
 import org.gem.indo.dooit.api.managers.GoalManager;
+import org.gem.indo.dooit.api.managers.SurveyManager;
 import org.gem.indo.dooit.api.managers.TipManager;
 import org.gem.indo.dooit.helpers.Persisted;
 import org.gem.indo.dooit.models.Tip;
@@ -17,6 +18,7 @@ import org.gem.indo.dooit.models.enums.BotObjectType;
 import org.gem.indo.dooit.models.enums.BotType;
 import org.gem.indo.dooit.models.goal.Goal;
 import org.gem.indo.dooit.models.goal.GoalPrototype;
+import org.gem.indo.dooit.models.survey.CoachSurvey;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -46,12 +48,17 @@ public class RequirementResolver {
     TipManager tipManager;
 
     @Inject
+    SurveyManager surveyManager;
+
+    @Inject
     Persisted persisted;
 
     private BotType botType;
     private List<Observable> sync = new ArrayList<>();
     private List<BotObjectType> requirements;
     private Handler handler;
+
+    private Long surveyId;
 
     private RequirementResolver(Context context, BotType botType, List<BotObjectType> requirements) {
         ((DooitApplication) context.getApplicationContext()).component.inject(this);
@@ -75,6 +82,9 @@ public class RequirementResolver {
                     break;
                 case TIP:
                     retrieveTip();
+                    break;
+                case SURVEY:
+                    retrieveSurvey();
                     break;
             }
 
@@ -105,6 +115,8 @@ public class RequirementResolver {
                             persisted.saveGoalProtos((List<GoalPrototype>) o);
                     } else if (o instanceof BaseChallenge) {
                         persisted.saveConvoChallenge(botType, (BaseChallenge) o);
+                    } else if (o instanceof CoachSurvey) {
+                        persisted.saveConvoSurvey(botType, (CoachSurvey) o);
                     }
                 }
             });
@@ -211,6 +223,34 @@ public class RequirementResolver {
             sync.add(tip);
     }
 
+    private void retrieveSurvey() {
+        if (surveyId == null)
+            return;
+
+        Observable survey = surveyManager.retrieveSurvey(surveyId, new DooitErrorHandler() {
+            @Override
+            public void onError(DooitAPIError error) {
+
+            }
+        });
+        if (persisted.hasConvoSurvey(botType)
+                // Ensure the saved survey has the same ID as the requested survey
+                && persisted.loadConvoSurvey(botType).getId() == surveyId)
+            survey.subscribe(new Action1<CoachSurvey>() {
+                @Override
+                public void call(CoachSurvey coachSurvey) {
+                    if (coachSurvey == null) return;
+                    persisted.saveConvoSurvey(botType, coachSurvey);
+                }
+            });
+        else
+            sync.add(survey);
+    }
+
+    public void setSurveyId(long surveyId) {
+        this.surveyId = surveyId;
+    }
+
     public interface Callback {
         void onStart();
 
@@ -223,6 +263,8 @@ public class RequirementResolver {
         private Context context;
         private BotType botType;
 
+        private Long surveyId;
+
         public Builder(Context context, BotType botType) {
             this.context = context;
             this.botType = botType;
@@ -233,8 +275,16 @@ public class RequirementResolver {
             return this;
         }
 
+        public Builder setSurveyId(Long id) {
+            surveyId = id;
+            return this;
+        }
+
         public RequirementResolver build() {
-            return new RequirementResolver(context, botType, requirements);
+            RequirementResolver resolver = new RequirementResolver(context, botType, requirements);
+            if (surveyId != null)
+                resolver.setSurveyId(surveyId);
+            return resolver;
         }
     }
 }

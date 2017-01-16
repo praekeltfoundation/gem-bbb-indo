@@ -277,6 +277,265 @@
     <!-- BOT: tip_intro -->
     <string name="tip_intro_inline_link">TODO: Show Tip</string>
 
+    <!-- BOT: Surveys Common -->
+    <!-- Bot Barks -->
+    <string name="survey_common_q_intro">$(survey.intro)</string>
+    <string name="survey_common_q_intro_a_yes">Yeah, sure</string>
+    <string name="survey_common_q_intro_a_no">No Thanks</string>
+
+    <string name="survey_common_q_outro">$(survey.outro)</string>
+
+    <!-- Terms & Conditions -->
+    <string name="survey_common_q_terms">Terms and Conditions: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam rhoncus tempus lacus, et maximus est sagittis non. Donec erat lacus, fermentum pellentesque ornare mollis, posuere non nisi. Curabitur ullamcorper, nulla sit amet tincidunt rhoncus, dui arcu sollicitudin lacus, id scelerisque quam tellus a mi. Maecenas blandit dui ac eleifend pellentesque. Proin ullamcorper ac sem eget malesuada. Mauris blandit urna in nibh suscipit imperdiet. Nulla quis porttitor urna. Aliquam erat volutpat. Phasellus feugiat ligula auctor vestibulum dignissim. Nullam placerat purus sed feugiat sagittis. Etiam odio ligula, consectetur fringilla rutrum sed, ultricies eu ligula. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed nisi ante, placerat at orci vel, dictum interdum neque. Sed non arcu a nibh hendrerit imperdiet. Sed gravida faucibus justo vitae malesuada.</string>
+    <string name="survey_common_q_terms_a_yes">Yes</string>
+    <string name="survey_common_q_terms_a_no">No</string>
+
+    <!-- Consent -->
+    <string name="survey_common_q_consent">If you are 17 years of age or younger: Does a parent or guardian agree to you completing this survey?</string>
+    <string name="survey_common_q_consent_a_yes">Yes</string>
+    <string name="survey_common_q_consent_a_no">No</string>
+
+    <!-- Cancel Survey -->
+    <string name="survey_common_q_outro_cancel">That\'s OK!</string>
+
+    <!-- BOT: survey_baseline -->
+    <!-- Q1 -->
+    <string name="survey_baseline_q01_occupation">What is your primary occupation?</string>
+
+    <string name="survey_baseline_q01_a01">Student in elementary school (SD)</string>
+    <string name="survey_baseline_q01_a02">Student in middle school (SMP)</string>
+    <string name="survey_baseline_q01_a03">Student in academic high school (SMA)</string>
+    <string name="survey_baseline_q01_a04">Student in vocational high school (SMK)</string>
+    <string name="survey_baseline_q01_a05">Student in college or above</string>
+    <string name="survey_baseline_q01_a06">Employee working in a job</string>
+    <string name="survey_baseline_q01_a07">Business owner or co-owner</string>
+    <string name="survey_baseline_q01_a08">Volunteer in church or community</string>
+    <string name="survey_baseline_q01_a09">Care giver of family members or children</string>
+    <string name="survey_baseline_q01_a10">Not working, studying, or volunteering</string>
+
+    <!-- Q2 -->
+    <string name="survey_baseline_q02_grade">What grade are you in?</string>
+    <string name="survey_baseline_q02_a01_1styear">1st Year</string>
+    <string name="survey_baseline_q02_a02_2ndyear">2nd Year</string>
+    <string name="survey_baseline_q02_a03_3rdyear">3rd Year</string>
+
+    <!-- Q3 -->
+    <string name="survey_baseline_q03_school_name">What is the name of your SMK?</string>
+
+    <!-- Q4 -->
+    <string name="survey_baseline_q04_city">What city do you live in?</string>
+
+    <!-- Q5 -->
+    <string name="survey_baseline_q05_job_month">Have you ever had a paid job for longer than one month? (Include working in family business and/or apprenticeships if paid.)</string>
+    <string name="survey_baseline_q05_a01_yes">Yes</string>
+    <string name="survey_baseline_q05_s02_no">No</string>
+
+    <!-- Q6 -->
+    <string name="survey_baseline_q06_job_earning_range">Within what range did your monthly earning fall for your last job?</string>
+    <string name="survey_baseline_q06_a01_250k">Less than 250 thousand</string>
+    <string name="survey_baseline_q06_a02_250k_500k">Between 250 thousand and 500 thousand</string>
+    <string name="survey_baseline_q06_a03_500k_750k">Between 500 thousand and 750 thousand</string>
+    <string name="survey_baseline_q06_a04_750k_1m">Between 750 thousand and 1 million</string>
+    <string name="survey_baseline_q06_a05_1m_1_5m">Between 1 million and 1,5 million</string>
+    <string name="survey_baseline_q06_a06_1_5m">More than 1,5 million</string>
+
+    <!-- Q7 -->
+    <string name="survey_baseline_q07_job_status">What was your employment status in your last job?</string>
+    <string name="survey_baseline_q07_a01_permanent">Permanent staff (signed contract with specific salary and benefits)</string>
+    <string name="survey_baseline_q07_a02_indefinite">Indefinite term employment (probation, pathway to permanent staff)</string>
+    <string name="survey_baseline_q07_a03_temp">Temporary/casual (working on short assignments or task, no contract)</string>
+    <string name="survey_baseline_q07_a04_apprenticeship">Apprenticeship (learning new skill and receiving small monetary support to cover transport cost)</string>
+    <string name="survey_baseline_q07_a05_daily">Daily worker (working on a day to day basis)</string>
+    <string name="survey_baseline_q07_a06_family">Helping family business with pay</string>
+    <string name="survey_baseline_q07_a07_unknown">Does not know</string>
+
+    <!-- Q8 -->
+    <string name="survey_baseline_q08_shared_ownership">Have you ever owned or shared ownership of a business?</string>
+    <string name="survey_baseline_q08_a01_yes">Yes</string>
+    <string name="survey_baseline_q08_a02_no">No</string>
+
+    <!-- Q9 -->
+    <string name="survey_baseline_q09_business_earning_range">Within what range did your monthly business earnings fall?</string>
+    <string name="survey_baseline_q09_a01_250k">Less than 250 thousand</string>
+    <string name="survey_baseline_q09_a02_250k_500k">Between 250 thousand and 500 thousand</string>
+    <string name="survey_baseline_q09_a03_500k_750k">Between 500 thousand and 750 thousand</string>
+    <string name="survey_baseline_q09_a04_750k_1m">Between 750 thousand and 1 million</string>
+    <string name="survey_baseline_q09_a05_1m_1_5m">Between 1 million and 1,5 million</string>
+    <string name="survey_baseline_q09_a06_1_5m">More than 1,5 million</string>
+
+    <!-- Q10 -->
+    <string name="survey_baseline_q10_save">Do you ever save some of your money?</string>
+    <string name="survey_baseline_q10_a01_yes">Yes</string>
+    <string name="survey_baseline_q10_a02_no">No</string>
+
+    <!-- Q11 -->
+    <string name="survey_baseline_q11_savings_frequency">How frequently do you save money?</string>
+    <string name="survey_baseline_q11_a01_daily">Daily</string>
+    <string name="survey_baseline_q11_a02_weekly">Weekly</string>
+    <string name="survey_baseline_q11_a03_monthly">Monthly</string>
+    <string name="survey_baseline_q11_a04_2_months">Every 2 months</string>
+    <string name="survey_baseline_q11_a05_3_4_months">Every 3 or 4 months</string>
+    <string name="survey_baseline_q11_a06_year">Once or twice a year</string>
+    <string name="survey_baseline_q11_a07_dont_know">Do not remember</string>
+    <string name="survey_baseline_q11_a08_vary">Varies (different times, not a set frequency)</string>
+
+    <!-- Q12 -->
+    <string name="survey_baseline_q12_savings_where">Where do you keep most of your savings?</string>
+    <string name="survey_baseline_q12_a01_bank">Bank</string>
+    <string name="survey_baseline_q12_a02_community">Community savings group</string>
+    <string name="survey_baseline_q12_a03_home">At home (chicken bank)</string>
+    <string name="survey_baseline_q12_a04_family">Send to family for safekeeping</string>
+    <string name="survey_baseline_q12_a05_gold">Buy gold or other valuables</string>
+    <string name="survey_baseline_q12_a06_other">Other</string>
+
+
+    <!-- Q13 -->
+    <string name="survey_baseline_q13_savings_3_months">In the last 3 months, approximately how much money did you save in total?</string>
+    <string name="survey_baseline_q13_a01_lt_100k">Less than 100 thousand</string>
+    <string name="survey_baseline_q13_a02_100k_150k">Between 100 thousand and 150 thousand</string>
+    <string name="survey_baseline_q13_a03_150k_200k">Between 150 thousand and 200 thousand</string>
+    <string name="survey_baseline_q13_a04_200k_250k">Between 200 thousand and 250 thousand</string>
+    <string name="survey_baseline_q13_a05_250k_300k">Between 250 thousand and 300 thousand</string>
+    <string name="survey_baseline_q13_a06_300k_350k">Between 300 thousand and 350 thousand</string>
+    <string name="survey_baseline_q13_a07_350k_400k">Between 350 thousand and 400 thousand</string>
+    <string name="survey_baseline_q13_a08_gt_400k">More than 400 thousand</string>
+
+    <!-- Q14 -->
+    <string name="survey_baseline_q14_saving_education">Have you ever saved money to pay for education costs, like fees for a training course?</string>
+    <string name="survey_baseline_q14_a01_yes">Yes</string>
+    <string name="survey_baseline_q14_a02_no">No</string>
+
+    <!-- Q15 -->
+    <string name="survey_baseline_q15_job_hunt">Have you ever saved money to pay for the cost of looking for a job or attending job interviews?</string>
+    <string name="survey_baseline_q15_a01_yes">Yes</string>
+    <string name="survey_baseline_q15_a02_no">No</string>
+
+    <!-- Q16 -->
+    <string name="survey_baseline_q16_emergencies">Have you ever saved money to have some extra in case of emergencies?</string>
+    <string name="survey_baseline_q16_a01_yes">Yes</string>
+    <string name="survey_baseline_q16_a02_no">No</string>
+
+    <!-- Q17 -->
+    <string name="survey_baseline_q17_invest">Have you ever saved money to invest in business opportunities?</string>
+    <string name="survey_baseline_q17_a01_yes">Yes</string>
+    <string name="survey_baseline_q17_a02_no">No</string>
+
+    <!-- Q18 -->
+    <string name="survey_baseline_q18_family">Have you ever saved money to support family needs?</string>
+    <string name="survey_baseline_q18_a01_yes">Yes</string>
+    <string name="survey_baseline_q18_a02_no">No</string>
+
+    <!-- Q19 -->
+    <string name="survey_baseline_q19_clothes_food">Have you ever saved money to buy personal items for everyday use like clothes or food?</string>
+    <string name="survey_baseline_q19_a01_yes">Yes</string>
+    <string name="survey_baseline_q19_a02_no">No</string>
+
+    <!-- Q20 -->
+    <!-- Same as Q19??? -->
+    <string name="survey_baseline_q20_clothes_food">Have you ever saved money to buy personal items for everyday use like clothes or food?</string>
+    <string name="survey_baseline_q20_a01_yes">Yes</string>
+    <string name="survey_baseline_q20_a02_no">No</string>
+
+    <!-- Q21 -->
+    <string name="survey_baseline_q21_gadgets">Have you ever saved money to buy items that last longer, like a phone, computer, or motorbike?</string>
+    <string name="survey_baseline_q21_a01_yes">Yes</string>
+    <string name="survey_baseline_q21_a02_no">No</string>
+
+    <!-- Q22 -->
+    <string name="survey_baseline_q22_friends">Have you ever saved money to go out friends for fun?</string>
+    <string name="survey_baseline_q22_a01_yes">Yes</string>
+    <string name="survey_baseline_q22_a02_no">No</string>
+
+    <!-- Q23 -->
+    <string name="survey_baseline_q23_mobile_frequency">How often do you use a mobile phone?</string>
+    <string name="survey_baseline_q23_a01_never">Never</string>
+    <string name="survey_baseline_q23_a02_month">Once a month</string>
+    <string name="survey_baseline_q23_a03_week">Once a week</string>
+    <string name="survey_baseline_q23_a04_day">Once a day</string>
+    <string name="survey_baseline_q23_a05_day_multiple">Multiple times per day</string>
+
+    <!-- Q24 -->
+    <string name="survey_baseline_q24_mobile_most_use">What is your mobile phone most useful for?</string>
+    <string name="survey_baseline_q24_a01_friends">Calling or texting friends</string>
+    <string name="survey_baseline_q24_a02_family">Calling or texting family</string>
+    <string name="survey_baseline_q24_a03_social_media">Accessing social media</string>
+    <string name="survey_baseline_q24_a04_internet">Accessing information on the internet</string>
+    <string name="survey_baseline_q24_a05_apps">Using apps or tools to help me manage my life, like trackers or calendars.</string>
+    <string name="survey_baseline_q24_a06_other">Other</string>
+
+    <!-- Q25 -->
+    <string name="survey_baseline_q25_mobile_least_use">What is your mobile phone least useful for?</string>
+    <string name="survey_baseline_q25_a01_friends">Calling or texting friends</string>
+    <string name="survey_baseline_q25_a02_family">Calling or texting family</string>
+    <string name="survey_baseline_q25_a03_social_media">Accessing social media</string>
+    <string name="survey_baseline_q25_a04_internet">Accessing information on the internet</string>
+    <string name="survey_baseline_q25_a05_apps">Using apps or tools to help me manage my life, like trackers or calendars.</string>
+    <string name="survey_baseline_q25_a06_other">Other</string>
+
+    <!-- Q26 -->
+    <string name="survey_baseline_q26_mobile_own">Who owns the mobile phone that you use?</string>
+    <string name="survey_baseline_q26_a01_you">You</string>
+    <string name="survey_baseline_q26_a02_mother">Mother</string>
+    <string name="survey_baseline_q26_a03_father">Father</string>
+    <string name="survey_baseline_q26_a04_sibling">Sibling</string>
+    <string name="survey_baseline_q26_a05_relative">Another relative</string>
+    <string name="survey_baseline_q26_a06_someone_else">Someone else</string>
+
+    <!-- Q27 -->
+    <string name="survey_baseline_q27_mobile_use_opinion">Here are some people you might interact with. Please tell me if you think they approve, disapprove, or are neutral toward you or your friends using mobile phones?</string>
+
+    <!-- Q27.1 -->
+    <string name="survey_baseline_q27_1_friends">Your friends</string>
+    <string name="survey_baseline_q27_1_a01_approve">Approve</string>
+    <string name="survey_baseline_q27_1_a02_neutral">Neutral</string>
+    <string name="survey_baseline_q27_1_a03_disapprove">Disapprove</string>
+
+    <!-- Q27.2 -->
+    <string name="survey_baseline_q27_2_family">Your family</string>
+    <string name="survey_baseline_q27_2_a01_approve">Approve</string>
+    <string name="survey_baseline_q27_2_a02_neutral">Neutral</string>
+    <string name="survey_baseline_q27_2_a03_disapprove">Disapprove</string>
+
+    <!-- Q27.3 -->
+    <string name="survey_baseline_q27_3_community">Other people in your community</string>
+    <string name="survey_baseline_q27_3_a01_approve">Approve</string>
+    <string name="survey_baseline_q27_3_a02_neutral">Neutral</string>
+    <string name="survey_baseline_q27_3_a03_disapprove">Disapprove</string>
+
+    <!-- Q28 -->
+    <string name="survey_baseline_q28_mobile_credit">How much credit do you or your family put into your mobile phone on a typical week?</string>
+    <string name="survey_baseline_q28_a01_lt_5k">Less than 5 thousand rupiah</string>
+    <string name="survey_baseline_q28_a02_5k_15k">Between 5 thousand and 15 thousand rupiah</string>
+    <string name="survey_baseline_q28_a03_15k_25k">Between 15 thousand and 25 thousand rupiah</string>
+    <string name="survey_baseline_q28_a04_25k_35k">Between 25 thousand and 35 thousand rupiah</string>
+    <string name="survey_baseline_q28_a05_35k_45k">Between 35 thousand and 45 thousand rupiah</string>
+    <string name="survey_baseline_q28_a06_gt_45k">More than 45 thousand rupiah</string>
+
+    <!-- Q29 -->
+    <string name="survey_baseline_q29_assets">Do you have any of the following assets in your home?</string>
+
+    <!-- Q29.1 -->
+    <string name="survey_baseline_q29_1_desktop">Desktop computer</string>
+    <string name="survey_baseline_q29_1_a01_yes">Yes</string>
+    <string name="survey_baseline_q29_1_a01_no">No</string>
+
+    <!-- Q29.2 -->
+    <string name="survey_baseline_q29_2_laptop">Laptop</string>
+    <string name="survey_baseline_q29_2_a01_yes">Yes</string>
+    <string name="survey_baseline_q29_2_s02_no">No</string>
+
+    <!-- Q29.3 -->
+    <string name="survey_baseline_q29_3_mobile_no_data">Mobile phone (without data)</string>
+    <string name="survey_baseline_q29_3_a01_yes">Yes</string>
+    <string name="survey_baseline_q29_3_s02_no">No</string>
+
+    <!-- Q29.4 -->
+    <string name="survey_baseline_q29_4_mobile_data">Mobile phone (with data)</string>
+    <string name="survey_baseline_q29_4_a01_yes">Yes</string>
+    <string name="survey_baseline_q29_4_s02_no">No</string>
+
+    <!-- END BOT: survey_baseline -->
+
     <!--Buttons-->
     <string name="Skip">Skip</string>
     <string name="Capture">Add photo</string>
@@ -423,8 +682,10 @@
 
     <!-- Push Notifications -->
     <string name="notification_title_challenge_reminder">Challenge Reminder</string>
+    <string name="notification_title_challenge_answer_reminder">Challenge Answer Reminder</string>
     <string name="notification_title_goal_deadline_missed">Target Missed</string>
     <string name="notification_title_survey_available">Survey Available</string>
+    <string name="notification_title_survey_reminder">Survey Reminder</string>
     <string name="notification_title_ad_hoc">Ad Hoc</string>
 
     <string name="notification_content_saving_reminder">It\'s been %d weeks since you saved.</string>
@@ -432,6 +693,10 @@
     <!-- Sharing -->
     <string name="share_chooser_tip_title">Share Tip on&#8230;</string>
     <string name="share_chooser_badge_title">Share Badge on&#8230;</string>
+
+    <!-- Surveys -->
+    <string name="survey_baseline_title">Baseline Survey</string>
+    <string name="survey_eatool_title">EA Tool</string>
 
     <!-- Dev only -->
     <string name="placeholder_label_short">Placeholder</string>

@@ -41,8 +41,9 @@ public class AnswerInlineNumberEditViewHolder extends BaseBotViewHolder<Answer> 
     @BindView(R.id.item_view_bot_inline_edit_currency_view)
     TextView currencySymbol;
 
-    BotAdapter botAdapter;
-    HashtagView.TagsClickListener tagsClickListener;
+    private BotAdapter botAdapter;
+    private HashtagView.TagsClickListener tagsClickListener;
+    private NumberTextWatcher watcher;
 
     public AnswerInlineNumberEditViewHolder(View itemView, BotAdapter botAdapter, HashtagView.TagsClickListener tagsClickListener) {
         super(itemView);
@@ -56,9 +57,12 @@ public class AnswerInlineNumberEditViewHolder extends BaseBotViewHolder<Answer> 
     @Override
     public void populate(Answer model) {
         super.populate(model);
+
+        watcher = new NumberTextWatcher(editText);
+
         currencySymbol.setText(CurrencyHelper.getCurrencySymbol());
         editText.setText("");
-        editText.addTextChangedListener(new NumberTextWatcher(editText));
+        editText.addTextChangedListener(watcher);
         editText.setHint(dataModel.getInlineEditHint(getContext()));
         editText.setImeActionLabel("Done", EditorInfo.IME_ACTION_DONE);
         editText.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL);
@@ -92,5 +96,14 @@ public class AnswerInlineNumberEditViewHolder extends BaseBotViewHolder<Answer> 
     @Override
     protected void populateModel() {
 
+    }
+
+    @Override
+    public void reset() {
+        editText.setText(null);
+        editText.removeTextChangedListener(watcher);
+        watcher = null;
+        editText.setHint(null);
+        editText.setOnEditorActionListener(null);
     }
 }

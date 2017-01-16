@@ -47,6 +47,7 @@ import rx.functions.Action1;
 public class TipViewHolder extends RecyclerView.ViewHolder {
 
     private static final String TAG = TipViewHolder.class.getName();
+    private static final String SCREEN_NAME_TIP_ARTICLE = "Tip Article";
 
     @BindString(R.string.tips_article_opening)
     String openingArticleText;
@@ -102,11 +103,11 @@ public class TipViewHolder extends RecyclerView.ViewHolder {
     }
 
     @OnClick(R.id.card_tip_button_overlay)
-    public void clickOnButton(View view){
+    public void clickOnButton(View view) {
         startArticle(view);
     }
 
-    public void startArticle(View view){
+    public void startArticle(View view) {
         Toast.makeText(view.getContext(),
                 String.format(openingArticleText, titleView.getText().toString()),
                 Toast.LENGTH_SHORT).show();
@@ -115,9 +116,9 @@ public class TipViewHolder extends RecyclerView.ViewHolder {
                 .setWebTipShare()
                 .setTitle(titleView.getText().toString())
                 .setWebTipId(id)
+                .setScreenName(SCREEN_NAME_TIP_ARTICLE)
                 .startActivity();
     }
-
 
 
     @OnClick(R.id.card_tip_fav)
@@ -185,7 +186,9 @@ public class TipViewHolder extends RecyclerView.ViewHolder {
         imageView.setController(controller);
     }
 
-    public void setId(int id) {this.id = id;}
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public void setTitle(String title) {
         titleView.setText(title);
@@ -199,16 +202,17 @@ public class TipViewHolder extends RecyclerView.ViewHolder {
         this.articleUrl = articleUrl;
     }
 
-    public boolean isFavourite() {return isFavourite;}
+    public boolean isFavourite() {
+        return isFavourite;
+    }
 
     public void setFavourite(boolean favourite) {
         isFavourite = favourite;
         // TODO: Proper checkable button
-        if (isFavourite) {
+        if (isFavourite)
             favView.setImageDrawable(ContextCompat.getDrawable(getContext(), org.gem.indo.dooit.R.drawable.ic_d_heart_yellow));
-        } else {
+        else
             favView.setImageDrawable(ContextCompat.getDrawable(getContext(), org.gem.indo.dooit.R.drawable.ic_d_heart_yellow_inverted));
-        }
     }
 
     public void clearTags() {
