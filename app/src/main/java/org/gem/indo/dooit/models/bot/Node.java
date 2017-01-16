@@ -47,6 +47,7 @@ public class Node extends BaseBotModel {
     }
 
     public void addAnswer(Answer answer) {
+        answer.setParentName(name);
         answers.add(answer);
     }
 

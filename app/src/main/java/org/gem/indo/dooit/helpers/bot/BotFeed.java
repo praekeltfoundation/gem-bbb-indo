@@ -5,7 +5,9 @@ import android.util.Log;
 
 import com.google.gson.Gson;
 
+import org.gem.indo.dooit.models.bot.Answer;
 import org.gem.indo.dooit.models.bot.BaseBotModel;
+import org.gem.indo.dooit.models.bot.Node;
 
 import java.io.BufferedReader;
 import java.io.InputStream;
@@ -13,6 +15,7 @@ import java.io.InputStreamReader;
 import java.io.Reader;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 /**
  * Created by Bernhard Müller on 11/7/2016.
@@ -40,6 +43,7 @@ public class BotFeed<T extends BaseBotModel> {
             ArrayList<T> listItems = gson.fromJson(reader, type);
             data.clear();
             for (T item : listItems) {
+                process(item);
                 data.put(item.getName(), item);
                 indexMap.add(item.getName());
             }
@@ -71,5 +75,14 @@ public class BotFeed<T extends BaseBotModel> {
 
     public T getItem(String key) {
         return data.get(key);
+    }
+
+    private void process(T model) {
+        // Set up a reference from the Answer to the parent Node
+        if (model instanceof Node) {
+            List<Answer> answers = ((Node) model).getAnswers();
+            for (Answer answer : answers)
+                answer.setParentName(model.getName());
+        }
     }
 }

@@ -9,16 +9,21 @@ import org.gem.indo.dooit.api.DooitAPIError;
 import org.gem.indo.dooit.api.DooitErrorHandler;
 import org.gem.indo.dooit.api.managers.AchievementManager;
 import org.gem.indo.dooit.api.managers.ChallengeManager;
+import org.gem.indo.dooit.api.managers.SurveyManager;
 import org.gem.indo.dooit.api.responses.AchievementResponse;
+import org.gem.indo.dooit.api.responses.SurveyResponse;
 import org.gem.indo.dooit.helpers.Persisted;
 import org.gem.indo.dooit.helpers.notifications.NotificationType;
 import org.gem.indo.dooit.helpers.notifications.Notifier;
 import org.gem.indo.dooit.models.User;
 import org.gem.indo.dooit.models.challenge.BaseChallenge;
+import org.gem.indo.dooit.models.survey.CoachSurvey;
 import org.gem.indo.dooit.views.main.MainActivity;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.inject.Inject;
 
@@ -40,6 +45,9 @@ public class NotificationService extends IntentService {
 
     @Inject
     ChallengeManager challengeManager;
+
+    @Inject
+    SurveyManager surveyManager;
 
     @Inject
     Persisted persisted;
@@ -78,6 +86,14 @@ public class NotificationService extends IntentService {
                 }));
         }
 
+        if (persisted.shouldNotify(NotificationType.SURVEY_AVAILABLE))
+            requests.add(surveyManager.retrieveCurrentSurvey(new DooitErrorHandler() {
+                @Override
+                public void onError(DooitAPIError error) {
+
+                }
+            }));
+
         if (requests.size() > 0)
             // Using flatmap to perform requests serially
             Observable.from(requests).flatMap(new Func1<Observable<?>, Observable<?>>() {
@@ -97,6 +113,8 @@ public class NotificationService extends IntentService {
                         currentChallengeRetrieved((BaseChallenge) o);
                     else if (o instanceof AchievementResponse)
                         achievementsRetrieved((AchievementResponse) o);
+                    else if (o instanceof SurveyResponse)
+                        surveyRetrieved((SurveyResponse) o);
                 }
             });
         else
@@ -121,6 +139,27 @@ public class NotificationService extends IntentService {
                             response.getWeeksSinceSaved()
                     )
             );
+    }
+
+    protected void surveyRetrieved(SurveyResponse response) {
+        if (response.hasSurvey()) {
+            CoachSurvey survey = response.getSurvey();
+            Map<String, String> extras = new HashMap<>();
+            extras.put(NotificationArgs.SURVEY_ID, Long.toString(survey.getId()));
+            if (survey.hasBotType())
+                extras.put(NotificationArgs.SURVEY_TYPE, survey.getBotType().name());
+
+            new Notifier(getApplicationContext()).notify(
+                    NotificationType.SURVEY_AVAILABLE,
+                    MainActivity.class,
+                    response.getSurvey().getNotificationBody(),
+                    extras
+            );
+
+            if (survey.hasBotType())
+                // Save Survey so Bot will start quicker
+                persisted.saveConvoSurvey(survey.getBotType(), survey);
+        }
     }
 
     protected void complete(Intent intent) {

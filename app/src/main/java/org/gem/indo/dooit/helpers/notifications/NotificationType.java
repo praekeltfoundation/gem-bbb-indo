@@ -12,9 +12,11 @@ import java.util.Map;
 public enum NotificationType {
     CHALLENGE_AVAILABLE(100, R.string.notification_title_challenge_available),
     CHALLENGE_REMINDER(101, R.string.notification_title_challenge_reminder), // TODO: Two days after a Challenge has been published, if the user has not participated, they should be reminded
+    CHALLENGE_ANSWER_REMINDER(103, R.string.notification_title_challenge_answer_reminder), // TODO: Remind the user that they have an answer persisted that has not been submitted
     GOAL_DEADLINE_MISSED(200, R.string.notification_title_goal_deadline_missed), // TODO: Notify user that they missed one of their Goals
     SAVING_REMINDER(300, R.string.notification_title_saving_reminder),
-    SURVEY_AVAILABLE(400, R.string.notification_title_survey_available), // TODO: Notify user of feedback
+    SURVEY_AVAILABLE(400, R.string.notification_title_survey_available), // TODO: Notify user of new survey
+    SURVEY_REMINDER(401, R.string.notification_title_survey_reminder), // TODO: Remind the user that a survey is waiting
     AD_HOC(500, R.string.notification_title_ad_hoc); // TODO: Ad Hoc Notifications from CMS
 
     // Argument key used in Intent extra for directing the MainFragment's viewpager

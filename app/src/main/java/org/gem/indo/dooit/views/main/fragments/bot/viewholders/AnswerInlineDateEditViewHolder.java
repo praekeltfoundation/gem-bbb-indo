@@ -90,4 +90,10 @@ public class AnswerInlineDateEditViewHolder extends BaseBotViewHolder<Answer> {
     protected void populateModel() {
 
     }
+
+    @Override
+    public void reset() {
+        editText.setHint(null);
+        editText.setOnClickListener(null);
+    }
 }

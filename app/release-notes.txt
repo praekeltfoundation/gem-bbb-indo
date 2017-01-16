@@ -13,3 +13,6 @@
 - Clearing Bot Challenge when Challenge expires
 - Implemented Campaign Analytics
 - Fixed an issue where progress bar did not update when a deposit was made towards a goal
+
+- Notification title is now app name
+- Implemented basic survey retrieve and submit
