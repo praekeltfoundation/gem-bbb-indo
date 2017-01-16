@@ -157,6 +157,7 @@ public class NotificationService extends IntentService {
 
             ParamMatch match = ParamParser.parse(response.getSurvey().getNotificationBody());
 
+            // Specifically for BASELINE and EATOOL types so bot knows what conversation to start
             if (survey.hasBotType())
                 extras.put(NotificationArgs.SURVEY_TYPE, survey.getBotType().name());
 
