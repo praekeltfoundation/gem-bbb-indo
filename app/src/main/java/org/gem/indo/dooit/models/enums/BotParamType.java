@@ -52,7 +52,12 @@ public enum BotParamType {
     BADGE_NAME("badge.name"),
     BADGE_IMAGE_URL("badge.image_url"),
     BADGE_SOCIAL_URL("badge.social_url"),
-    BADGE_EARNED_ON("badge.earned_on");
+    BADGE_EARNED_ON("badge.earned_on"),
+
+    // Survey
+    SURVEY_TITLE("survey.title"),
+    SURVEY_INTRO("survey.intro"),
+    SURVEY_OUTRO("survey.outro");
 
     private static Map<String, BotParamType> map = new HashMap<>();
 

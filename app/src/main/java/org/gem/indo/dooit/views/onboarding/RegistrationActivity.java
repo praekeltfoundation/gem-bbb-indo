@@ -53,6 +53,7 @@ public class RegistrationActivity extends DooitActivity {
     private static final int DEFAULT_AGE = 16;
     private static final int MIN_AGE = 12;
     private static final int MAX_AGE = 80;
+    private static final String SCREEN_NAME_TERMS = "Terms & Conditions";
 
     @BindView(R.id.activity_registration)
     View background;
@@ -162,6 +163,7 @@ public class RegistrationActivity extends DooitActivity {
         MinimalWebViewActivity.Builder.create(this)
                 //.setTitle(getString(org.gem.indo.dooit.R.string.title_activity_terms_and_conditions))
                 .setUrl(Constants.TERMS_URL)
+                .setScreenName(SCREEN_NAME_TERMS)
                 .startActivity();
     }
 
