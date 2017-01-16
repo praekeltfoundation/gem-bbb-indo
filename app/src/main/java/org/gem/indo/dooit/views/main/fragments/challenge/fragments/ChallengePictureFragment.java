@@ -35,6 +35,7 @@ import org.gem.indo.dooit.helpers.permissions.PermissionsHelper;
 import org.gem.indo.dooit.models.challenge.Participant;
 import org.gem.indo.dooit.models.challenge.PictureChallenge;
 import org.gem.indo.dooit.models.challenge.PictureChallengeQuestion;
+import org.gem.indo.dooit.views.main.fragments.challenge.ChallengeActivity;
 import org.gem.indo.dooit.views.main.fragments.challenge.ChallengeFragment;
 import org.gem.indo.dooit.views.main.fragments.challenge.ChallengeFragmentState;
 
@@ -292,12 +293,12 @@ public class ChallengePictureFragment extends Fragment {
      * Cleanup *
      ***********/
 
-    private void returnToParent() {
+    /*aprivate void returnToParent() {
         Fragment f = getParentFragment();
         if (f instanceof ChallengeFragment) {
-            ((ChallengeFragment) f).loadChallenge();
+            ((ChallengeActivity) f).loadChallenge();
         }
-    }
+    }*/
 
 
     /*************************

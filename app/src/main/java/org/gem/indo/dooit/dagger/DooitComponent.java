@@ -1,6 +1,7 @@
 package org.gem.indo.dooit.dagger;
 
 import org.gem.indo.dooit.DooitApplication;
+import org.gem.indo.dooit.api.interfaces.ChallengeAPI;
 import org.gem.indo.dooit.api.managers.DooitManager;
 import org.gem.indo.dooit.api.managers.FeedbackManager;
 import org.gem.indo.dooit.api.managers.SurveyManager;
@@ -24,6 +25,7 @@ import org.gem.indo.dooit.views.main.fragments.bot.viewholders.GoalInfoViewHolde
 import org.gem.indo.dooit.views.main.fragments.bot.viewholders.GoalVerificationViewHolder;
 import org.gem.indo.dooit.views.main.fragments.bot.viewholders.TextViewHolder;
 import org.gem.indo.dooit.views.main.fragments.bot.viewholders.TipBotViewHolder;
+import org.gem.indo.dooit.views.main.fragments.challenge.ChallengeActivity;
 import org.gem.indo.dooit.views.main.fragments.challenge.ChallengeFragment;
 import org.gem.indo.dooit.views.main.fragments.challenge.fragments.ChallengeFreeformFragment;
 import org.gem.indo.dooit.views.main.fragments.challenge.fragments.ChallengePictureFragment;
@@ -67,6 +69,8 @@ public interface DooitComponent {
     void inject(GoalGalleryViewHolder o);
 
     void inject(BotFragment o);
+
+    void inject(ChallengeActivity o);
 
     void inject(ChallengeFragment o);
 

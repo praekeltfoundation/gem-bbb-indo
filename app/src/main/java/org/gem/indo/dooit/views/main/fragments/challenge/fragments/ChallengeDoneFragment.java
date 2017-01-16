@@ -114,7 +114,7 @@ public class ChallengeDoneFragment extends Fragment {
     public void finishChallenge() {
         Fragment f = getParentFragment();
         if (f != null && f instanceof ChallengeFragment) {
-            ((ChallengeFragment) f).loadChallenge();
+            //((ChallengeFragment) f).loadChallenge();
         }
     }
 }
