@@ -44,7 +44,7 @@ abstract public class SurveyController extends DooitBotController {
     protected static final int ANSWER_NO = 0;
 
     protected static final int ANSWER_APPROVE = 1;
-    protected static final int ANSWER_NEATURE = 2;
+    protected static final int ANSWER_NEUTRAL = 2;
     protected static final int ANSWER_DISAPPROVE = 3;
 
 
