@@ -217,12 +217,12 @@
       {
         "name": "changeDate",
         "text": "$(changeDate)",
-        "next": "askGoalDate"
+        "next": "askGoalDateCustom"
       },
       {
         "name": "changeAmount",
         "text": "$(changeAmount)",
-        "next": "askGoalAmount"
+        "next": "goal_add_q_ask_amount"
       },
       {
         "name": "startOver",
