@@ -32,7 +32,7 @@
                 android:layout_width="130dp"
                 android:layout_height="130dp"
                 android:layout_gravity="center_horizontal"
-                android:layout_marginTop="?attr/actionBarSize"
+                android:layout_marginTop="63dp"
                 android:background="@color/transparent"
                 app:layout_collapseMode="parallax"
                 app:layout_scrollFlags="scroll|enterAlways|enterAlwaysCollapsed"
