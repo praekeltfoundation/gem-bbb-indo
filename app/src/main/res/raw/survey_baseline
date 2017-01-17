@@ -7,13 +7,13 @@
       {
         "name": "survey_baseline_q_intro_a_yes",
         "text": "$(survey_common_q_intro_a_yes)",
-        "value": "yes",
+        "value": "1",
         "next": "survey_baseline_q_consent"
       },
       {
         "name": "survey_baseline_q_intro_a_no",
         "text": "$(survey_common_q_intro_a_no)",
-        "value": "no",
+        "value": "0",
         "next": "survey_baseline_q_outro_cancel"
       }
     ]
@@ -29,13 +29,13 @@
       {
         "name": "survey_baseline_q_consent_a_yes",
         "text": "$(survey_common_q_consent_a_yes)",
-        "value": "yes",
+        "value": "1",
         "next": "survey_baseline_q_terms_and_conditions"
       },
       {
         "name": "survey_baseline_q_consent_a_no",
         "text": "$(survey_common_q_consent_a_no)",
-        "value": "no",
+        "value": "0",
         "next": "survey_baseline_q_outro_cancel"
       }
     ]
@@ -51,13 +51,13 @@
       {
         "name": "survey_baseline_q_terms_a_yes",
         "text": "$(survey_common_q_terms_a_yes)",
-        "value": "yes",
+        "value": "1",
         "next": "survey_baseline_q01_occupation"
       },
       {
         "name": "survey_baseline_q_terms_a_no",
         "text": "$(survey_common_q_terms_a_no)",
-        "value": "no",
+        "value": "0",
         "next": "survey_baseline_q_outro_cancel"
       }
     ]
@@ -203,13 +203,13 @@
       {
         "name": "survey_baseline_q05_a01_yes",
         "text": "$(survey_baseline_q05_a01_yes)",
-        "value": "yes",
+        "value": "1",
         "next": "survey_baseline_q06_job_earning_range"
       },
       {
         "name": "survey_baseline_q05_s02_no",
         "text": "$(survey_baseline_q05_s02_no)",
-        "value": "no",
+        "value": "0",
         "next": "survey_baseline_q08_shared_ownership"
       }
     ]
@@ -307,7 +307,7 @@
       {
         "name": "survey_baseline_q07_a07_unknown",
         "text": "$(survey_baseline_q07_a07_unknown)",
-        "value": "7",
+        "value": "888",
         "next": "survey_baseline_q08_shared_ownership"
       }
     ]
@@ -323,13 +323,13 @@
       {
         "name": "survey_baseline_q08_a01_yes",
         "text": "$(survey_baseline_q08_a01_yes)",
-        "value": "yes",
+        "value": "1",
         "next": "survey_baseline_q09_business_earning_range"
       },
       {
         "name": "survey_baseline_q08_a02_no",
         "text": "$(survey_baseline_q08_a02_no)",
-        "value": "no",
+        "value": "0",
         "next": "survey_baseline_q10_save"
       }
     ]
@@ -391,13 +391,13 @@
       {
         "name": "survey_baseline_q10_a01_yes",
         "text": "$(survey_baseline_q10_a01_yes)",
-        "value": "yes",
+        "value": "1",
         "next": "survey_baseline_q11_savings_frequency"
       },
       {
         "name": "survey_baseline_q10_a02_no",
         "text": "$(survey_baseline_q10_a02_no)",
-        "value": "no",
+        "value": "0",
         "next": "survey_baseline_submit"
       }
     ]
@@ -575,13 +575,13 @@
       {
         "name": "survey_baseline_q14_a01_yes",
         "text": "$(survey_baseline_q14_a01_yes)",
-        "value": "yes",
+        "value": "1",
         "next": "survey_baseline_q15_job_hunt"
       },
       {
         "name": "survey_baseline_q14_a02_no",
         "text": "$(survey_baseline_q14_a02_no)",
-        "value": "no",
+        "value": "0",
         "next": "survey_baseline_q15_job_hunt"
       }
     ]
@@ -597,13 +597,13 @@
       {
         "name": "survey_baseline_q15_a01_yes",
         "text": "$(survey_baseline_q15_a01_yes)",
-        "value": "yes",
+        "value": "1",
         "next": "survey_baseline_q16_emergencies"
       },
       {
         "name": "survey_baseline_q15_a02_no",
         "text": "$(survey_baseline_q15_a02_no)",
-        "value": "no",
+        "value": "0",
         "next": "survey_baseline_q16_emergencies"
       }
     ]
@@ -618,13 +618,13 @@
       {
         "name": "survey_baseline_q16_a01_yes",
         "text": "$(survey_baseline_q16_a01_yes)",
-        "value": "yes",
+        "value": "1",
         "next": "survey_baseline_q17_invest"
       },
       {
         "name": "survey_baseline_q16_a02_no",
         "text": "$(survey_baseline_q16_a02_no)",
-        "value": "no",
+        "value": "0",
         "next": "survey_baseline_q17_invest"
       }
     ]
@@ -640,13 +640,13 @@
       {
         "name": "survey_baseline_q17_a01_yes",
         "text": "$(survey_baseline_q17_a01_yes)",
-        "value": "yes",
+        "value": "1",
         "next": "survey_baseline_q18_family"
       },
       {
         "name": "survey_baseline_q17_a02_no",
         "text": "$(survey_baseline_q17_a02_no)",
-        "value": "no",
+        "value": "0",
         "next": "survey_baseline_q18_family"
       }
     ]
@@ -662,13 +662,13 @@
       {
         "name": "survey_baseline_q18_a01_yes",
         "text": "$(survey_baseline_q18_a01_yes)",
-        "value": "yes",
+        "value": "1",
         "next": "survey_baseline_q19_clothes_food"
       },
       {
         "name": "survey_baseline_q18_a02_no",
         "text": "$(survey_baseline_q18_a02_no)",
-        "value": "no",
+        "value": "0",
         "next": "survey_baseline_q19_clothes_food"
       }
     ]
@@ -684,13 +684,13 @@
       {
         "name": "survey_baseline_q19_a01_yes",
         "text": "$(survey_baseline_q19_a01_yes)",
-        "value": "yes",
+        "value": "1",
         "next": "survey_baseline_q21_gadgets"
       },
       {
         "name": "survey_baseline_q19_a02_no",
         "text": "$(survey_baseline_q19_a02_no)",
-        "value": "no",
+        "value": "0",
         "next": "survey_baseline_q21_gadgets"
       }
     ]
@@ -706,13 +706,13 @@
       {
         "name": "survey_baseline_q21_a01_yes",
         "text": "$(survey_baseline_q21_a01_yes)",
-        "value": "yes",
+        "value": "1",
         "next": "survey_baseline_q22_friends"
       },
       {
         "name": "survey_baseline_q21_a02_no",
         "text": "$(survey_baseline_q21_a02_no)",
-        "value": "no",
+        "value": "0",
         "next": "survey_baseline_q22_friends"
       }
     ]
@@ -727,13 +727,13 @@
       {
         "name": "survey_baseline_q22_a01_yes",
         "text": "$(survey_baseline_q22_a01_yes)",
-        "value": "yes",
+        "value": "1",
         "next": "survey_baseline_q23_mobile_frequency"
       },
       {
         "name": "survey_baseline_q22_a02_no",
         "text": "$(survey_baseline_q22_a02_no)",
-        "value": "no",
+        "value": "0",
         "next": "survey_baseline_q23_mobile_frequency"
       }
     ]
@@ -1063,13 +1063,13 @@
       {
         "name": "survey_baseline_q29_1_a01_yes",
         "text": "$(survey_baseline_q29_1_a01_yes)",
-        "value": "yes",
+        "value": "1",
         "next": "survey_baseline_q29_2_laptop"
       },
       {
         "name": "survey_baseline_q29_1_a01_no",
         "text": "$(survey_baseline_q29_1_a01_no)",
-        "value": "no",
+        "value": "0",
         "next": "survey_baseline_q29_2_laptop"
       }
     ]
@@ -1082,13 +1082,13 @@
       {
         "name": "survey_baseline_q29_2_a01_yes",
         "text": "$(survey_baseline_q29_2_a01_yes)",
-        "value": "yes",
+        "value": "1",
         "next": "survey_baseline_q29_3_mobile_no_data"
       },
       {
         "name": "survey_baseline_q29_2_s02_no",
         "text": "$(survey_baseline_q29_2_s02_no)",
-        "value": "no",
+        "value": "0",
         "next": "survey_baseline_q29_3_mobile_no_data"
       }
     ]
@@ -1101,13 +1101,13 @@
       {
         "name": "survey_baseline_q29_3_a01_yes",
         "text": "$(survey_baseline_q29_3_a01_yes)",
-        "value": "yes",
+        "value": "1",
         "next": "survey_baseline_q29_4_mobile_data"
       },
       {
         "name": "survey_baseline_q29_3_s02_no",
         "text": "$(survey_baseline_q29_3_s02_no)",
-        "value": "no",
+        "value": "0",
         "next": "survey_baseline_q29_4_mobile_data"
       }
     ]
@@ -1120,13 +1120,13 @@
       {
         "name": "survey_baseline_q29_4_a01_yes",
         "text": "$(survey_baseline_q29_4_a01_yes)",
-        "value": "yes",
+        "value": "1",
         "next": "survey_baseline_submit"
       },
       {
         "name": "survey_baseline_q29_4_s02_no",
         "text": "$(survey_baseline_q29_4_s02_no)",
-        "value": "no",
+        "value": "0",
         "next": "survey_baseline_submit"
       }
     ]
