@@ -290,6 +290,8 @@
 
     <string name="survey_common_q_outro">$(survey.outro)</string>
 
+    <string name="survey_common_skip">Tidak ingin menjawab</string>
+
     <!-- Terms & Conditions -->
     <string name="survey_common_q_terms">Terms and Conditions: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam rhoncus tempus lacus, et maximus est sagittis non. Donec erat lacus, fermentum pellentesque ornare mollis, posuere non nisi. Curabitur ullamcorper, nulla sit amet tincidunt rhoncus, dui arcu sollicitudin lacus, id scelerisque quam tellus a mi. Maecenas blandit dui ac eleifend pellentesque. Proin ullamcorper ac sem eget malesuada. Mauris blandit urna in nibh suscipit imperdiet. Nulla quis porttitor urna. Aliquam erat volutpat. Phasellus feugiat ligula auctor vestibulum dignissim. Nullam placerat purus sed feugiat sagittis. Etiam odio ligula, consectetur fringilla rutrum sed, ultricies eu ligula. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed nisi ante, placerat at orci vel, dictum interdum neque. Sed non arcu a nibh hendrerit imperdiet. Sed gravida faucibus justo vitae malesuada.</string>
     <string name="survey_common_q_terms_a_yes">Yes</string>

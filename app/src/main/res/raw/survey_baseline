@@ -211,6 +211,12 @@
         "text": "$(survey_baseline_q05_s02_no)",
         "value": "0",
         "next": "survey_baseline_q08_shared_ownership"
+      },
+      {
+        "name": "survey_baseline_q05_a_skip",
+        "text": "$(survey_common_skip)",
+        "value": "999",
+        "next": "survey_baseline_q08_shared_ownership"
       }
     ]
   },
@@ -256,6 +262,12 @@
         "name": "survey_baseline_q06_a06_1_5m",
         "text": "$(survey_baseline_q06_a06_1_5m)",
         "value": "6",
+        "next": "survey_baseline_q07_job_status"
+      },
+      {
+        "name": "survey_baseline_q06_a_skip",
+        "text": "$(survey_common_skip)",
+        "value": "999",
         "next": "survey_baseline_q07_job_status"
       }
     ]
