@@ -11,3 +11,4 @@
 
 - Inserting user's preferred name into survey notification
 - Inserting user's preferred name into survey conversation
+- Notifications now use an expandable style
