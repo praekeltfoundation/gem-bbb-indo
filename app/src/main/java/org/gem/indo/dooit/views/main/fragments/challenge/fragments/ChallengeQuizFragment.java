@@ -29,6 +29,7 @@ import org.gem.indo.dooit.models.challenge.QuizChallengeEntry;
 import org.gem.indo.dooit.models.challenge.QuizChallengeOption;
 import org.gem.indo.dooit.models.challenge.QuizChallengeQuestion;
 import org.gem.indo.dooit.models.challenge.QuizChallengeQuestionState;
+import org.gem.indo.dooit.views.main.fragments.challenge.ChallengeActivity;
 import org.gem.indo.dooit.views.main.fragments.challenge.ChallengeFragment;
 import org.gem.indo.dooit.views.main.fragments.challenge.ChallengeFragmentState;
 import org.gem.indo.dooit.views.main.fragments.challenge.adapters.ChallengeQuizPagerAdapter;
@@ -120,12 +121,12 @@ public class ChallengeQuizFragment extends Fragment implements OnOptionChangeLis
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            participant = getArguments().getParcelable(ChallengeFragment.ARG_PARTICIPANT);
-            challenge = getArguments().getParcelable(ChallengeFragment.ARG_CHALLENGE);
+            participant = getArguments().getParcelable(ChallengeActivity.ARG_PARTICIPANT);
+            challenge = getArguments().getParcelable(ChallengeActivity.ARG_CHALLENGE);
         }
         ((DooitApplication) getActivity().getApplication()).component.inject(this);
         if (mAdapter == null) {
-            mAdapter = new ChallengeQuizPagerAdapter(this, getChildFragmentManager(), challenge);
+            mAdapter = new ChallengeQuizPagerAdapter(this, getFragmentManager(), challenge);
             addOptionChangeListener(mAdapter);
         }
     }
@@ -134,7 +135,7 @@ public class ChallengeQuizFragment extends Fragment implements OnOptionChangeLis
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(org.gem.indo.dooit.R.layout.fragment_challenge_quiz, container, false);
+        View view = inflater.inflate(R.layout.fragment_challenge_quiz, container, false);
         unbinder = ButterKnife.bind(this, view);
         mPager.setAdapter(mAdapter);
         updateProgressCounter(0);

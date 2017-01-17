@@ -76,6 +76,7 @@ public class ChallengeActivity extends DooitActivity {
         setContentView(R.layout.fragment_challenge);
         ((DooitApplication) getApplication()).component.inject(this);
         ButterKnife.bind(this);
+        loadChallenge();
     }
 
     private Fragment createEmptyFragment(ChallengeFragmentState state) {
@@ -207,14 +208,6 @@ public class ChallengeActivity extends DooitActivity {
     }
 
 
-    /*@Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        super.onCreateOptionsMenu(menu, inflater);
-        this.getMenuInflater().inflate(org.gem.indo.dooit.R.menu.menu_main, menu);
-        this.getMenuInflater().inflate(org.gem.indo.dooit.R.menu.menu_main_challenge, menu);
-    }*/
-
-
     /*************************
      * State-keeping methods *
      *************************/
@@ -259,14 +252,11 @@ public class ChallengeActivity extends DooitActivity {
         }
     }
 
-    /*@Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        //Fragment fragment = getSupportFragmentManager().getFragment(savedInstanceState,challenge.toString());
-        if (fragment != null) {
-            fragment.onActivityResult(requestCode, resultCode, data);
-        }
-    }*/
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        overridePendingTransition(R.anim.slide_enter, R.anim.slide_exit);
+    }
 
     public static class Builder extends DooitActivityBuilder<ChallengeActivity.Builder> {
         protected Builder(Context context) {

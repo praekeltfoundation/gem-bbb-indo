@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -17,6 +18,7 @@ import org.gem.indo.dooit.api.managers.ChallengeManager;
 import org.gem.indo.dooit.helpers.Persisted;
 import org.gem.indo.dooit.helpers.SquiggleBackgroundHelper;
 import org.gem.indo.dooit.models.challenge.BaseChallenge;
+import org.gem.indo.dooit.views.DooitActivity;
 import org.gem.indo.dooit.views.main.fragments.MainFragment;
 import org.gem.indo.dooit.views.main.fragments.challenge.fragments.ChallengeFreeformFragment;
 import org.gem.indo.dooit.views.main.fragments.challenge.fragments.ChallengeNoneFragment;
@@ -126,101 +128,16 @@ public class ChallengeFragment extends MainFragment {
         }
     }
 
-    /*public void loadChallenge() {
-        if (persisted.hasCurrentChallenge()) {
-            try {
-                challenge = persisted.getCurrentChallenge();
-                if (challenge.getDeactivationDate().isBeforeNow()) {
-                    //persisted challenge has expired
-                    persisted.clearCurrentChallenge();
-                    Toast.makeText(getContext(), R.string.challenge_persisted_challenge_thrown_out, Toast.LENGTH_SHORT).show();
-                    challengeSubscription = challengeManager.retrieveCurrentChallenge(false, new DooitErrorHandler() {
-                        @Override
-                        public void onError(final DooitAPIError error) {
-                            getActivity().runOnUiThread(new Runnable() {
-                                @Override
-                                public void run() {
-                                    if(error.getCause() instanceof ConnectException ||
-                                            error.getCause() instanceof UnknownHostException){
-                                        Toast.makeText(context, R.string.challenge_could_not_connect_to_server, Toast.LENGTH_SHORT).show();
-                                    }else if(error.getCause() instanceof HttpException && (((HttpException) error.getCause()).code()) == 404){
-                                        //This means no challenge could be found on the server, for now just do nothing
-                                    }
-                                }
-                            });
-                        }
-                    }).subscribe(new Action1<BaseChallenge>() {
-                        @Override
-                        public void call(BaseChallenge challenge) {
-                            loadTypeFragment(challenge, false);
-                        }
-                    });
-                } else {
-                    loadTypeFragment(challenge, true);
-                }
-            } catch (Exception e) {
-                Log.d(TAG, "Could not load persisted challenge");
-                persisted.clearCurrentChallenge();
-                Snackbar.make(getView(), R.string.challenge_persisted_challenge_thrown_out, Snackbar.LENGTH_LONG);
-                challengeSubscription = challengeManager.retrieveCurrentChallenge(false, new DooitErrorHandler() {
-                    @Override
-                    public void onError(final DooitAPIError error) {
-                        getActivity().runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                if(error.getCause() instanceof ConnectException ||
-                                        error.getCause() instanceof UnknownHostException){
-                                    //Snackbar.make(getView(), R.string.challenge_could_not_connect_to_server, Snackbar.LENGTH_LONG).show();
-                                    Toast.makeText(context, R.string.challenge_could_not_connect_to_server, Toast.LENGTH_SHORT).show();
-                                }else if(error.getCause() instanceof HttpException && (((HttpException) error.getCause()).code()) == 404){
-                                    //This means no challenge could be found on the server, for now just do nothing
-                                }
-                            }
-                        });
-                    }
-                }).subscribe(new Action1<BaseChallenge>() {
-                    @Override
-                    public void call(BaseChallenge challenge) {
-                        loadTypeFragment(challenge, false);
-                    }
-                });
-            }
-        }else{
-            challengeSubscription = challengeManager.retrieveCurrentChallenge(false, new DooitErrorHandler() {
-                @Override
-                public void onError(final DooitAPIError error) {
-                    getActivity().runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            if(error.getCause() instanceof ConnectException ||
-                                    error.getCause() instanceof UnknownHostException){
-                                //Snackbar.make(getView(), R.string.challenge_could_not_connect_to_server, Snackbar.LENGTH_LONG).show();
-                                Toast.makeText(context, R.string.challenge_could_not_connect_to_server, Toast.LENGTH_SHORT).show();
-                            }else if(error.getCause() instanceof HttpException && (((HttpException) error.getCause()).code()) == 404){
-                                //This means no challenge could be found on the server, for now just do nothing
-                            }
-                        }
-                    });
-                }
-            }).subscribe(new Action1<BaseChallenge>() {
-                @Override
-                public void call(BaseChallenge challenge) {
-                    loadTypeFragment(challenge, false);
-                }
-            });
-        }
-    }
-*/
-
     /************************
      * Life-cycle overrides *
      ************************/
 
     @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
+    public void onCreate(@Nullable  Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
         ((DooitApplication) getActivity().getApplication()).component.inject(this);
+        ChallengeActivity.Builder.create(this.getActivity()).startActivity();
     }
 
     @Override
@@ -229,6 +146,7 @@ public class ChallengeFragment extends MainFragment {
         View view = inflater.inflate(R.layout.fragment_challenge, container, false);
         unbinder = ButterKnife.bind(this, view);
         SquiggleBackgroundHelper.setBackground(getContext(), R.color.grey_back, R.color.grey_fore, container);
+        if (getActivity() != null) ChallengeActivity.Builder.create(getActivity()).startActivity();
         return view;
     }
 
@@ -236,7 +154,7 @@ public class ChallengeFragment extends MainFragment {
     public void onStart() {
         super.onStart();
         if (getActivity() != null && !childFragmentExists()) {
-            //loadChallenge();
+
         }
     }
 
@@ -297,7 +215,7 @@ public class ChallengeFragment extends MainFragment {
                 if (f == null) {
                     f = createEmptyChildFragment(page);
                     if (f == null) {
-                        loadChallenge();
+//                        ChallengeActivity.Builder.createIntent()
                     } else {
                         f.setArguments(savedInstanceState);
                         ft.replace(R.id.fragment_challenge_container, f, "fragment_challenge");
@@ -311,7 +229,7 @@ public class ChallengeFragment extends MainFragment {
         }
     }
 
-    @Override
+    /*@Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         Fragment fragment = getChildFragment();
