@@ -43,6 +43,7 @@ public class ChallengeActivity extends DooitActivity {
     public static final String ARG_CHALLENGE = "challenge";
     public static final String ARG_PAGE = "challenge_page";
     public static final String ARG_PARTICIPANT = "participant";
+    public static final String ARG_RETURNPAGE = "return_page";
 
     @Inject
     ChallengeManager challengeManager;
@@ -74,7 +75,7 @@ public class ChallengeActivity extends DooitActivity {
         }
     }
 
-    private Fragment createEmptyFragment(ChallengeFragmentState state) {
+    /*private Fragment createEmptyFragment(ChallengeFragmentState state) {
         if (state == null) return null;
         switch (state) {
             case FREEFORM:
@@ -88,7 +89,7 @@ public class ChallengeActivity extends DooitActivity {
             default:
                 return null;
         }
-    }
+    }*/
 
     /*************************
      * State-keeping methods *

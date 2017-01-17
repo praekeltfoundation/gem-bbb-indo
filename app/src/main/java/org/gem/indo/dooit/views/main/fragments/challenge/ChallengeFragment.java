@@ -24,6 +24,7 @@ import org.gem.indo.dooit.helpers.Persisted;
 import org.gem.indo.dooit.helpers.SquiggleBackgroundHelper;
 import org.gem.indo.dooit.models.challenge.BaseChallenge;
 import org.gem.indo.dooit.views.main.fragments.MainFragment;
+import org.gem.indo.dooit.views.main.fragments.challenge.fragments.ChallengeDoneFragment;
 import org.gem.indo.dooit.views.main.fragments.challenge.fragments.ChallengeFreeformFragment;
 import org.gem.indo.dooit.views.main.fragments.challenge.fragments.ChallengePictureFragment;
 import org.gem.indo.dooit.views.main.fragments.challenge.fragments.ChallengeQuizFragment;
@@ -121,12 +122,10 @@ public class ChallengeFragment extends MainFragment {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
         ((DooitApplication) getActivity().getApplication()).component.inject(this);
-
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_challenge, container, false);
         unbinder = ButterKnife.bind(this, view);
         SquiggleBackgroundHelper.setBackground(getContext(), R.color.grey_back, R.color.grey_fore, container);
@@ -136,7 +135,7 @@ public class ChallengeFragment extends MainFragment {
     @Override
     public void onStart() {
         super.onStart();
-            loadChallenge();
+        loadChallenge();
     }
 
     @Override
@@ -308,6 +307,10 @@ public class ChallengeFragment extends MainFragment {
         Fragment fragment = getChildFragment();
         if (fragment != null) {
             fragment.onActivityResult(requestCode, resultCode, data);
+            FragmentTransaction ft = getChildFragmentManager().beginTransaction();
+            Fragment f = ChallengeDoneFragment.newInstance(null);
+            ft.replace(R.id.fragment_challenge_container, f, "fragment_challenge");
+            ft.commit();
         }
     }
 }

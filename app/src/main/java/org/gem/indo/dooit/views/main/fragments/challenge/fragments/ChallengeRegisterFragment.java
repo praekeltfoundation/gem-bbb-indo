@@ -47,6 +47,10 @@ import rx.Subscription;
 import rx.functions.Action0;
 import rx.functions.Action1;
 
+import static org.gem.indo.dooit.helpers.RequestCodes.RESPONSE_CHALLENGE_REQUEST_RUN;
+import static org.gem.indo.dooit.helpers.RequestCodes.RESPONSE_CAMERA_REQUEST_CHALLENGE_IMAGE;
+import static org.gem.indo.dooit.helpers.RequestCodes.RESPONSE_GALLERY_REQUEST_CHALLENGE_IMAGE;
+
 /**
  * A simple {@link Fragment} subclass.
  * Use the {@link ChallengeRegisterFragment#newInstance} factory method to
@@ -298,18 +302,26 @@ public class ChallengeRegisterFragment extends Fragment implements HasChallengeF
         Bundle args = new Bundle();
         args.putParcelable(ChallengeActivity.ARG_CHALLENGE, challenge);
         args.putParcelable(ChallengeActivity.ARG_PARTICIPANT,participant);
-        ChallengeActivity.Builder.create(getContext()).setArgs(args).startActivity();
+        ChallengeActivity.Builder.create(getContext()).setArgs(args).startActivityForResult(RESPONSE_CHALLENGE_REQUEST_RUN);
     }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         switch (requestCode) {
-            case RequestCodes.RESPONSE_GALLERY_REQUEST_CHALLENGE_IMAGE:
-            case RequestCodes.RESPONSE_CAMERA_REQUEST_CHALLENGE_IMAGE:
+            case RESPONSE_GALLERY_REQUEST_CHALLENGE_IMAGE:
+            case RESPONSE_CAMERA_REQUEST_CHALLENGE_IMAGE:
                 if (getActivity() != null) {
                     FragmentTransaction ft = getFragmentManager().beginTransaction();
                     Fragment fragment = new ChallengePictureFragment();
+                    ft.replace(R.id.fragment_challenge_container, fragment, "fragment_challenge");
+                    ft.commit();
+                }
+                break;
+            case RESPONSE_CHALLENGE_REQUEST_RUN:
+                if (getActivity() != null) {
+                    FragmentTransaction ft = getFragmentManager().beginTransaction();
+                    Fragment fragment = new ChallengeDoneFragment();
                     ft.replace(R.id.fragment_challenge_container, fragment, "fragment_challenge");
                     ft.commit();
                 }

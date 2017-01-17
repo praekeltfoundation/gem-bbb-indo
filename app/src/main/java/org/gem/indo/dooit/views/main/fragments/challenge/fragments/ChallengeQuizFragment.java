@@ -1,12 +1,16 @@
 package org.gem.indo.dooit.views.main.fragments.challenge.fragments;
 
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
 import android.support.v4.util.LongSparseArray;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -31,6 +35,7 @@ import org.gem.indo.dooit.models.challenge.QuizChallengeQuestion;
 import org.gem.indo.dooit.models.challenge.QuizChallengeQuestionState;
 import org.gem.indo.dooit.views.main.fragments.challenge.ChallengeActivity;
 import org.gem.indo.dooit.views.main.fragments.challenge.ChallengeFragment;
+import org.gem.indo.dooit.views.main.fragments.challenge.ChallengeFragmentMainPage;
 import org.gem.indo.dooit.views.main.fragments.challenge.ChallengeFragmentState;
 import org.gem.indo.dooit.views.main.fragments.challenge.adapters.ChallengeQuizPagerAdapter;
 import org.gem.indo.dooit.views.main.fragments.challenge.interfaces.OnOptionChangeListener;
@@ -126,7 +131,7 @@ public class ChallengeQuizFragment extends Fragment implements OnOptionChangeLis
         }
         ((DooitApplication) getActivity().getApplication()).component.inject(this);
         if (mAdapter == null) {
-            mAdapter = new ChallengeQuizPagerAdapter(this, getFragmentManager(), challenge);
+            mAdapter = new ChallengeQuizPagerAdapter(this, getChildFragmentManager(), challenge);
             addOptionChangeListener(mAdapter);
         }
     }
@@ -202,7 +207,7 @@ public class ChallengeQuizFragment extends Fragment implements OnOptionChangeLis
             @Override
             public void onError(DooitAPIError error) {
                 Log.d(TAG, "Could not submit challenge entry");
-                returnToParent();
+                returnToParent(null);
             }
         }).doAfterTerminate(new Action0() {
             @Override
@@ -216,7 +221,7 @@ public class ChallengeQuizFragment extends Fragment implements OnOptionChangeLis
                 persisted.clearCurrentChallenge();
                 clearState();
                 challengeCompleted = true;
-                returnToParent();
+                returnToParent(ChallengeFragmentMainPage.DONE);
             }
         });
     }
@@ -229,15 +234,24 @@ public class ChallengeQuizFragment extends Fragment implements OnOptionChangeLis
         } else {
             Toast.makeText(getContext(), org.gem.indo.dooit.R.string.challenge_all_questions_complete, Toast.LENGTH_SHORT).show();
             submitParticipantEntry();
-            returnToParent();
+            returnToParent(ChallengeFragmentMainPage.DONE);
         }
     }
 
-    private void returnToParent() {
-        Fragment f = getParentFragment();
-        if (f instanceof ChallengeFragment) {
-            //((ChallengeFragment) f).loadChallenge();
+    private void returnToParent(ChallengeFragmentMainPage returnPage) {
+        FragmentActivity activity = getActivity();
+        Intent intent = new Intent();
+        Bundle bundle = new Bundle();
+        bundle.putParcelable(ChallengeActivity.ARG_CHALLENGE,challenge);
+        bundle.putInt(ChallengeActivity.ARG_RETURNPAGE, returnPage != null ? returnPage.ordinal() : -1);
+        intent.putExtras(bundle);
+
+        if (activity.getParent() == null) {
+            activity.setResult(Activity.RESULT_OK, intent);
+        } else {
+            activity.getParent().setResult(Activity.RESULT_OK, intent);
         }
+        activity.finish();
     }
 
     private void updateProgressCounter(int position) {
