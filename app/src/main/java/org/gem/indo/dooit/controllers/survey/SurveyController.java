@@ -25,6 +25,29 @@ import javax.inject.Inject;
 
 abstract public class SurveyController extends DooitBotController {
 
+    /**
+     * When questions are unanswered because the survey jumped forward.
+     */
+    protected static final int ANSWER_NOT_APPLICABLE = 998;
+
+    /**
+     * The user chose not to answer the question, for whatever reason.
+     */
+    protected static final int ANSWER_MISSING = 999;
+
+    /**
+     * The user does not know what the answer is.
+     */
+    protected static final int ANSWER_DOES_NOT_KNOW = 888;
+
+    protected static final int ANSWER_YES = 1;
+    protected static final int ANSWER_NO = 0;
+
+    protected static final int ANSWER_APPROVE = 1;
+    protected static final int ANSWER_NEATURE = 2;
+    protected static final int ANSWER_DISAPPROVE = 3;
+
+
     @Inject
     protected SurveyManager surveyManager;
 
