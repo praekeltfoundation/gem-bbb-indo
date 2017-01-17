@@ -29,7 +29,6 @@ import org.gem.indo.dooit.models.challenge.QuizChallengeEntry;
 import org.gem.indo.dooit.models.challenge.QuizChallengeOption;
 import org.gem.indo.dooit.models.challenge.QuizChallengeQuestion;
 import org.gem.indo.dooit.models.challenge.QuizChallengeQuestionState;
-import org.gem.indo.dooit.views.DooitActivity;
 import org.gem.indo.dooit.views.main.fragments.challenge.ChallengeActivity;
 import org.gem.indo.dooit.views.main.fragments.challenge.ChallengeFragment;
 import org.gem.indo.dooit.views.main.fragments.challenge.ChallengeFragmentState;
@@ -75,13 +74,13 @@ public class ChallengeQuizFragment extends Fragment implements OnOptionChangeLis
     @BindView(R.id.fragment_challenge_quiz_progressbar)
     ProgressBar mProgressBar;
 
-    @BindView(org.gem.indo.dooit.R.id.fragment_challenge_quiz_progresscounter)
+    @BindView(R.id.fragment_challenge_quiz_progresscounter)
     TextView mProgressCounter;
 
-    @BindView(org.gem.indo.dooit.R.id.fragment_challenge_quiz_pager)
+    @BindView(R.id.fragment_challenge_quiz_pager)
     ViewPager mPager;
 
-    @BindView(org.gem.indo.dooit.R.id.fragment_challenge_quiz_checkbutton)
+    @BindView(R.id.fragment_challenge_quiz_checkbutton)
     Button checkButton;
 
     private boolean challengeCompleted = false;

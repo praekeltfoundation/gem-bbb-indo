@@ -4,38 +4,34 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.util.Log;
+import android.text.TextUtils;
 import android.widget.FrameLayout;
-import android.widget.Toast;
 
 import org.gem.indo.dooit.DooitApplication;
 import org.gem.indo.dooit.R;
-import org.gem.indo.dooit.api.DooitAPIError;
-import org.gem.indo.dooit.api.DooitErrorHandler;
 import org.gem.indo.dooit.api.managers.ChallengeManager;
 import org.gem.indo.dooit.helpers.Persisted;
 import org.gem.indo.dooit.models.challenge.BaseChallenge;
+import org.gem.indo.dooit.models.challenge.FreeformChallenge;
+import org.gem.indo.dooit.models.challenge.Participant;
+import org.gem.indo.dooit.models.challenge.PictureChallenge;
+import org.gem.indo.dooit.models.challenge.QuizChallenge;
+import org.gem.indo.dooit.models.challenge.QuizChallengeOption;
+import org.gem.indo.dooit.models.challenge.QuizChallengeQuestion;
 import org.gem.indo.dooit.views.DooitActivity;
 import org.gem.indo.dooit.views.helpers.activity.DooitActivityBuilder;
 import org.gem.indo.dooit.views.main.fragments.challenge.fragments.ChallengeFreeformFragment;
+import org.gem.indo.dooit.views.main.fragments.challenge.fragments.ChallengeNoneFragment;
 import org.gem.indo.dooit.views.main.fragments.challenge.fragments.ChallengePictureFragment;
 import org.gem.indo.dooit.views.main.fragments.challenge.fragments.ChallengeQuizFragment;
 import org.gem.indo.dooit.views.main.fragments.challenge.fragments.ChallengeRegisterFragment;
-
-import java.net.ConnectException;
-import java.net.UnknownHostException;
 
 import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import retrofit2.adapter.rxjava.HttpException;
-import rx.Subscription;
-import rx.functions.Action1;
 
 /**
  * Created by frede on 2017/01/16.
@@ -47,7 +43,6 @@ public class ChallengeActivity extends DooitActivity {
     public static final String ARG_CHALLENGE = "challenge";
     public static final String ARG_PAGE = "challenge_page";
     public static final String ARG_PARTICIPANT = "participant";
-    private FragmentManager fragmentManager = null;
 
     @Inject
     ChallengeManager challengeManager;
@@ -59,8 +54,7 @@ public class ChallengeActivity extends DooitActivity {
     FrameLayout container;
 
     BaseChallenge challenge;
-
-    private Subscription challengeSubscription;
+    Participant participant;
 
     public ChallengeActivity(){
         // Empty constructor
@@ -72,7 +66,12 @@ public class ChallengeActivity extends DooitActivity {
         setContentView(R.layout.fragment_challenge);
         ((DooitApplication) getApplication()).component.inject(this);
         ButterKnife.bind(this);
-        loadChallenge();
+        Bundle args = getIntent().getExtras();
+        if(args != null) {
+            challenge = args.getParcelable(ARG_CHALLENGE);
+            participant = args.getParcelable(ARG_PARTICIPANT);
+            startChallenge(participant);
+        }
     }
 
     private Fragment createEmptyFragment(ChallengeFragmentState state) {
@@ -91,119 +90,6 @@ public class ChallengeActivity extends DooitActivity {
         }
     }
 
-
-    /****************
-     * Load helpers *
-     ****************/
-
-    private void loadTypeFragment(BaseChallenge challenge, boolean hasActive) {
-        if (challenge != null) {
-            this.challenge = challenge;
-
-            FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-            Fragment fragment = ChallengeRegisterFragment.newInstance(challenge, hasActive);
-            ft.replace(R.id.fragment_challenge_container, fragment, "fragment_challenge");
-            ft.commit();
-            }
-    }
-
-    public void loadChallenge() {
-        if (persisted.hasCurrentChallenge()) {
-            try {
-                challenge = persisted.getCurrentChallenge();
-                if (challenge.getDeactivationDate().isBeforeNow()) {
-                    //persisted challenge has expired
-                    persisted.clearCurrentChallenge();
-                    Toast.makeText(this, R.string.challenge_persisted_challenge_thrown_out, Toast.LENGTH_SHORT).show();
-                    challengeSubscription = challengeManager.retrieveCurrentChallenge(false, new DooitErrorHandler() {
-                        @Override
-                        public void onError(final DooitAPIError error) {
-                            runOnUiThread(new Runnable() {
-                                @Override
-                                public void run() {
-                                if(error.getCause() instanceof ConnectException ||
-                                        error.getCause() instanceof UnknownHostException){
-                                    Toast.makeText(context, R.string.challenge_could_not_connect_to_server, Toast.LENGTH_SHORT).show();
-                                }else if(error.getCause() instanceof HttpException && (((HttpException) error.getCause()).code()) == 404){
-                                    //This means no challenge could be found on the server, for now just do nothing
-                                }
-                                }
-                            });
-                        }
-                    }).subscribe(new Action1<BaseChallenge>() {
-                        @Override
-                        public void call(BaseChallenge challenge) {
-                            loadTypeFragment(challenge, false);
-                        }
-                    });
-                } else {
-                    loadTypeFragment(challenge, true);
-                }
-            } catch (Exception e) {
-                Log.d(TAG, "Could not load persisted challenge");
-                persisted.clearCurrentChallenge();
-                Snackbar.make(container, R.string.challenge_persisted_challenge_thrown_out, Snackbar.LENGTH_LONG);
-                challengeSubscription = challengeManager.retrieveCurrentChallenge(false, new DooitErrorHandler() {
-                    @Override
-                    public void onError(final DooitAPIError error) {
-                        runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                            if(error.getCause() instanceof ConnectException ||
-                                    error.getCause() instanceof UnknownHostException){
-                                Toast.makeText(context, R.string.challenge_could_not_connect_to_server, Toast.LENGTH_SHORT).show();
-                            }else if(error.getCause() instanceof HttpException && (((HttpException) error.getCause()).code()) == 404){
-                                //This means no challenge could be found on the server, for now just do nothing
-                            }
-                            }
-                        });
-                    }
-                }).subscribe(new Action1<BaseChallenge>() {
-                    @Override
-                    public void call(BaseChallenge challenge) {
-                        loadTypeFragment(challenge, false);
-                    }
-                });
-            }
-        }else{
-            challengeSubscription = challengeManager.retrieveCurrentChallenge(false, new DooitErrorHandler() {
-                @Override
-                public void onError(final DooitAPIError error) {
-                    runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                        if(error.getCause() instanceof ConnectException ||
-                                error.getCause() instanceof UnknownHostException){
-                            Toast.makeText(context, R.string.challenge_could_not_connect_to_server, Toast.LENGTH_SHORT).show();
-                        }else if(error.getCause() instanceof HttpException && (((HttpException) error.getCause()).code()) == 404){
-                            //This means no challenge could be found on the server, for now just do nothing
-                        }
-                        }
-                    });
-                }
-            }).subscribe(new Action1<BaseChallenge>() {
-                @Override
-                public void call(BaseChallenge challenge) {
-                    loadTypeFragment(challenge, false);
-                }
-            });
-        }
-    }
-
-    @Override
-    public void onStart() {
-        super.onStart();
-            loadChallenge();
-    }
-
-    @Override
-    public void onStop() {
-        super.onStop();
-        if (challengeSubscription != null)
-            challengeSubscription.unsubscribe();
-    }
-
-
     /*************************
      * State-keeping methods *
      *************************/
@@ -219,39 +105,89 @@ public class ChallengeActivity extends DooitActivity {
         super.onSaveInstanceState(outState);
     }
 
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        if (savedInstanceState != null) {
-            ChallengeFragmentState page = null;
-            try {
-                page = (ChallengeFragmentState) savedInstanceState.getSerializable(ARG_PAGE);
-            } catch (Exception e) {
-                Log.d(TAG, "Could not load saved challenge state");
-                e.printStackTrace();
-            } finally {
-                challenge = savedInstanceState.getParcelable(ARG_CHALLENGE);
-                FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-                Fragment f = getSupportFragmentManager().getFragment(savedInstanceState,challenge.toString());
-                if (f == null) {
-                    f = createEmptyFragment(page);
-                    if (f == null) {
-                        loadChallenge();
-                    } else {
-                        f.setArguments(savedInstanceState);
-                        ft.replace(R.id.fragment_challenge_container, f, "fragment_challenge");
-                        ft.commit();
-                    }
-                } else {
-                    ft.replace(R.id.fragment_challenge_container, f, "fragment_challenge");
-                    ft.commit();
-                }
-            }
-        }
-    }
-
     @Override
     public void onBackPressed() {
         super.onBackPressed();
         overridePendingTransition(R.anim.slide_enter, R.anim.slide_exit);
+    }
+
+    void startChallenge(Participant participant) {
+        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+        Fragment fragment = null;
+
+        switch (challenge.getType()) {
+            case QUIZ:
+                if (challenge instanceof QuizChallenge) {
+                    fragment = startQuizChallenge(participant, (QuizChallenge) challenge);
+                }
+                break;
+            case FREEFORM:
+                if (challenge instanceof FreeformChallenge) {
+                    fragment = startFreeformChallenge(participant, (FreeformChallenge) challenge);
+                }
+                break;
+            case PICTURE:
+                if (challenge instanceof PictureChallenge) {
+                    fragment = startPictureChallenge(participant, (PictureChallenge) challenge);
+                }
+                break;
+            default:
+                throw new RuntimeException("Invalid challenge type provided");
+        }
+
+        if (fragment != null) {
+            ft.setCustomAnimations(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
+            ft.replace(R.id.fragment_challenge_container, fragment, "fragment_challenge");
+            ft.commit();
+        }
+    }
+
+    private Fragment startQuizChallenge(Participant participant, QuizChallenge quizChallenge) {
+        if (quizChallenge.getQuestions() == null || quizChallenge.getQuestions().size() <= 0) {
+            return ChallengeNoneFragment.newInstance(getString(org.gem.indo.dooit.R.string.challenge_quiz_no_questions));
+        }
+
+        for (QuizChallengeQuestion q : quizChallenge.getQuestions()) {
+            // check for empty question or empty list of options for question
+            if (TextUtils.isEmpty(q.getText())) {
+                return ChallengeNoneFragment.newInstance(getString(org.gem.indo.dooit.R.string.challenge_quiz_no_questions));
+            } else if (q.getOptions() == null || q.getOptions().size() <= 0) {
+                return ChallengeNoneFragment.newInstance(getString(org.gem.indo.dooit.R.string.challenge_quiz_no_questions));
+            }
+
+            // check whether any options are empty or none of the question's options are correct
+            boolean hasCorrect = false;
+            for (QuizChallengeOption o : q.getOptions()) {
+                if (TextUtils.isEmpty(o.getText())) {
+                    return ChallengeNoneFragment.newInstance(getString(org.gem.indo.dooit.R.string.challenge_quiz_empty_option));
+                }
+                hasCorrect |= o.getCorrect();
+            }
+            if (!hasCorrect) {
+                return ChallengeNoneFragment.newInstance(getString(org.gem.indo.dooit.R.string.challenge_quiz_no_correct_answer));
+            }
+        }
+        return ChallengeQuizFragment.newInstance(participant, quizChallenge);
+    }
+
+    private Fragment startFreeformChallenge(Participant participant, FreeformChallenge freeformChallenge) {
+        if (freeformChallenge.getQuestion() == null) {
+            return ChallengeNoneFragment.newInstance("Freeform challenge has no question.");
+        } else if (freeformChallenge.getQuestion().getText() == null ||
+                freeformChallenge.getQuestion().getText().isEmpty()) {
+            return ChallengeNoneFragment.newInstance("Freeform challenge question is empty.");
+        }
+        return ChallengeFreeformFragment.newInstance(participant, freeformChallenge);
+    }
+
+    private Fragment startPictureChallenge(Participant participant, PictureChallenge pictureChallenge) {
+//        if (pictureChallenge.getQuestion() == null) {
+//            return ChallengeNoneFragment.newInstance("Picture challenge has no question.");
+//        } else if (pictureChallenge.getQuestion().getText() == null ||
+//                pictureChallenge.getQuestion().getText().isEmpty()) {
+//            return ChallengeNoneFragment.newInstance("Picture challenge question is empty.");
+//        }
+        return ChallengePictureFragment.newInstance(participant, pictureChallenge);
     }
 
     public static class Builder extends DooitActivityBuilder<ChallengeActivity.Builder> {
@@ -267,6 +203,11 @@ public class ChallengeActivity extends DooitActivity {
         @Override
         protected Intent createIntent(Context context) {
             return new Intent(context, ChallengeActivity.class);
+        }
+
+        public Builder setArgs(Bundle bundle){
+            intent.putExtras(bundle);
+            return this;
         }
     }
 }
