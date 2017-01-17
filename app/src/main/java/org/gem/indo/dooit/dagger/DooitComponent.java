@@ -1,7 +1,6 @@
 package org.gem.indo.dooit.dagger;
 
 import org.gem.indo.dooit.DooitApplication;
-import org.gem.indo.dooit.api.interfaces.ChallengeAPI;
 import org.gem.indo.dooit.api.managers.DooitManager;
 import org.gem.indo.dooit.api.managers.FeedbackManager;
 import org.gem.indo.dooit.api.managers.SurveyManager;

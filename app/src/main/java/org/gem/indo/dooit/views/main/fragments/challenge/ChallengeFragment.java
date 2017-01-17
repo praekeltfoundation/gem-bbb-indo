@@ -1,5 +1,6 @@
 package org.gem.indo.dooit.views.main.fragments.challenge;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -10,6 +11,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.FrameLayout;
 
 import org.gem.indo.dooit.DooitApplication;
@@ -18,7 +20,6 @@ import org.gem.indo.dooit.api.managers.ChallengeManager;
 import org.gem.indo.dooit.helpers.Persisted;
 import org.gem.indo.dooit.helpers.SquiggleBackgroundHelper;
 import org.gem.indo.dooit.models.challenge.BaseChallenge;
-import org.gem.indo.dooit.views.DooitActivity;
 import org.gem.indo.dooit.views.main.fragments.MainFragment;
 import org.gem.indo.dooit.views.main.fragments.challenge.fragments.ChallengeFreeformFragment;
 import org.gem.indo.dooit.views.main.fragments.challenge.fragments.ChallengeNoneFragment;
@@ -30,6 +31,7 @@ import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import butterknife.Unbinder;
 import rx.Subscription;
 
@@ -50,8 +52,8 @@ public class ChallengeFragment extends MainFragment {
     @Inject
     Persisted persisted;
 
-    @BindView(R.id.fragment_challenge_container)
-    FrameLayout container;
+    @BindView(R.id.fragment_challenge_register_button)
+    Button registerButton;
 
     BaseChallenge challenge;
 
@@ -105,11 +107,17 @@ public class ChallengeFragment extends MainFragment {
         }
     }
 
+    @OnClick(R.id.fragment_challenge_register_button)
+    public void loadActivity(){
+        if(getActivity() != null)
+            ChallengeActivity.Builder.create(getActivity()).startActivity();
+    }
+
 
     /****************
      * Load helpers *
      ****************/
-
+/*
     private void loadTypeFragment(BaseChallenge challenge, boolean hasActive) {
         if (challenge != null) {
             ChallengeFragment.this.challenge = challenge;
@@ -127,7 +135,7 @@ public class ChallengeFragment extends MainFragment {
             ft.commit();
         }
     }
-
+*/
     /************************
      * Life-cycle overrides *
      ************************/
@@ -137,26 +145,26 @@ public class ChallengeFragment extends MainFragment {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
         ((DooitApplication) getActivity().getApplication()).component.inject(this);
-        ChallengeActivity.Builder.create(this.getActivity()).startActivity();
+
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_challenge, container, false);
+        View view = inflater.inflate(R.layout.fragment_challenge_register, container, false);
         unbinder = ButterKnife.bind(this, view);
         SquiggleBackgroundHelper.setBackground(getContext(), R.color.grey_back, R.color.grey_fore, container);
-        if (getActivity() != null) ChallengeActivity.Builder.create(getActivity()).startActivity();
+        //if (getActivity() != null) ChallengeActivity.Builder.create(getActivity()).startActivity();
         return view;
     }
 
-    @Override
+   /* @Override
     public void onStart() {
         super.onStart();
         if (getActivity() != null && !childFragmentExists()) {
 
         }
-    }
+    }*/
 
     @Override
     public void onStop() {
@@ -229,12 +237,12 @@ public class ChallengeFragment extends MainFragment {
         }
     }
 
-    /*@Override
+    @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         Fragment fragment = getChildFragment();
         if (fragment != null) {
             fragment.onActivityResult(requestCode, resultCode, data);
         }
-    }*/
+    }
 }

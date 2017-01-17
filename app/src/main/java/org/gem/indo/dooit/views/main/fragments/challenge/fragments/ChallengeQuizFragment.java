@@ -29,6 +29,7 @@ import org.gem.indo.dooit.models.challenge.QuizChallengeEntry;
 import org.gem.indo.dooit.models.challenge.QuizChallengeOption;
 import org.gem.indo.dooit.models.challenge.QuizChallengeQuestion;
 import org.gem.indo.dooit.models.challenge.QuizChallengeQuestionState;
+import org.gem.indo.dooit.views.DooitActivity;
 import org.gem.indo.dooit.views.main.fragments.challenge.ChallengeActivity;
 import org.gem.indo.dooit.views.main.fragments.challenge.ChallengeFragment;
 import org.gem.indo.dooit.views.main.fragments.challenge.ChallengeFragmentState;
@@ -111,8 +112,8 @@ public class ChallengeQuizFragment extends Fragment implements OnOptionChangeLis
     public static ChallengeQuizFragment newInstance(Participant participant, QuizChallenge challenge) {
         ChallengeQuizFragment fragment = new ChallengeQuizFragment();
         Bundle args = new Bundle();
-        args.putParcelable(ChallengeFragment.ARG_PARTICIPANT, participant);
-        args.putParcelable(ChallengeFragment.ARG_CHALLENGE, challenge);
+        args.putParcelable(ChallengeActivity.ARG_PARTICIPANT, participant);
+        args.putParcelable(ChallengeActivity.ARG_CHALLENGE, challenge);
         fragment.setArguments(args);
         return fragment;
     }
@@ -144,16 +145,11 @@ public class ChallengeQuizFragment extends Fragment implements OnOptionChangeLis
     }
 
     @Override
-    public void onDestroyView() {
+    public void onDestroy() {
+        removeQuestionCompletedListener(mAdapter);
         if (unbinder != null) {
             unbinder.unbind();
         }
-        super.onDestroyView();
-    }
-
-    @Override
-    public void onDestroy() {
-        removeQuestionCompletedListener(mAdapter);
         super.onDestroy();
     }
 
@@ -409,9 +405,9 @@ public class ChallengeQuizFragment extends Fragment implements OnOptionChangeLis
     @Override
     public void onSaveInstanceState(Bundle outState) {
         if (outState != null) {
-            outState.putSerializable(ChallengeFragment.ARG_PAGE, FRAGMENT_STATE);
-            outState.putParcelable(ChallengeFragment.ARG_PARTICIPANT, participant);
-            outState.putParcelable(ChallengeFragment.ARG_CHALLENGE, challenge);
+            outState.putSerializable(ChallengeActivity.ARG_PAGE, FRAGMENT_STATE);
+            outState.putParcelable(ChallengeActivity.ARG_PARTICIPANT, participant);
+            outState.putParcelable(ChallengeActivity.ARG_CHALLENGE, challenge);
             outState.putParcelableArray(ARG_ANSWERS, answers.toArray(new ParticipantAnswer[]{}));
             Bundle state = new Bundle();
             for (int i = 0; i < selections.size(); i++) {
@@ -426,8 +422,8 @@ public class ChallengeQuizFragment extends Fragment implements OnOptionChangeLis
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         if (savedInstanceState != null) {
-            participant = savedInstanceState.getParcelable(ChallengeFragment.ARG_PARTICIPANT);
-            challenge = savedInstanceState.getParcelable(ChallengeFragment.ARG_CHALLENGE);
+            participant = savedInstanceState.getParcelable(ChallengeActivity.ARG_PARTICIPANT);
+            challenge = savedInstanceState.getParcelable(ChallengeActivity.ARG_CHALLENGE);
             ParticipantAnswer storedAnswers[] = (ParticipantAnswer[]) savedInstanceState.getParcelableArray(ARG_ANSWERS);
             if (storedAnswers != null) {
                 answers = Arrays.asList(storedAnswers);
