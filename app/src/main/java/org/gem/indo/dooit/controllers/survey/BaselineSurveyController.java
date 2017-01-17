@@ -109,6 +109,8 @@ public class BaselineSurveyController extends SurveyController {
                     // Don't overwrite an existing answer submission
                     && !submission.containsKey(questionName))
                 submission.put(questionName, answer.getValue());
+            else
+                submission.put(questionName, Integer.toString(ANSWER_MISSING));
         }
 
         if (answerEquals(answerLog.get("survey_baseline_q05_job_month"), ANSWER_NO)
