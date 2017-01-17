@@ -105,8 +105,28 @@ public class BaselineSurveyController extends SurveyController {
         Map<String, String> submission = new HashMap<>();
         for (String questionName : QUESTIONS) {
             Answer answer = answerLog.get(questionName);
-            if (answer != null && answer.hasValue())
+            if (answer != null && answer.hasValue()) {
                 submission.put(questionName, answer.getValue());
+
+                // Handle cases where the user jumped ahead in the survey
+                switch (answer.getName()) {
+                    case "survey_baseline_q05_job_month":
+                        if (answerEquals(answer, ANSWER_NO)) {
+                            // User skipped job branch
+                            submission.put("survey_baseline_q06_job_earning_range",
+                                    Integer.toString(ANSWER_NOT_APPLICABLE));
+                            submission.put("survey_baseline_q07_job_status",
+                                    Integer.toString(ANSWER_NOT_APPLICABLE));
+                        }
+                        break;
+                    case "survey_baseline_q08_shared_ownership":
+                        if (answerEquals(answer, ANSWER_NO))
+                            // User skipped the shared business branch
+                            submission.put("survey_baseline_q09_business_earning_range",
+                                    Integer.toString(ANSWER_NOT_APPLICABLE));
+                        break;
+                }
+            }
         }
 
         surveyManager.submit(10, submission, new DooitErrorHandler() {

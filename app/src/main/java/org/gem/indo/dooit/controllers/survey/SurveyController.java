@@ -77,6 +77,17 @@ abstract public class SurveyController extends DooitBotController {
 
     }
 
+    protected boolean answerEquals(Answer answer, int answerValue) {
+        if (answer == null || answer.getValue() == null)
+            return false;
+
+        try {
+            return answerValue == Integer.parseInt(answer.getValue());
+        } catch (NumberFormatException e) {
+            return false;
+        }
+    }
+
     protected boolean hasSurvey() {
         return survey != null;
     }
