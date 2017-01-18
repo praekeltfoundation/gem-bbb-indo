@@ -217,12 +217,12 @@
       {
         "name": "changeDate",
         "text": "$(changeDate)",
-        "next": "askGoalDateCustom"
+        "next": "goal_add_q_change_date"
       },
       {
         "name": "changeAmount",
         "text": "$(changeAmount)",
-        "next": "goal_add_q_ask_amount"
+        "next": "goal_add_q_change_target"
       },
       {
         "name": "startOver",
@@ -232,6 +232,38 @@
     ]
   },
 
+
+
+  {
+    "name": "goal_add_q_change_date",
+    "type": "blank",
+    "autoAnswer": "goalDate",
+    "answers": [
+      {
+        "name": "goalDate",
+        "nextOnFinish": "goal_add_q_verify",
+        "type": "inlineDate",
+        "inlineEditHint": "$(type_date_hint)"
+      }
+    ]
+  },
+
+
+
+  {
+    "name": "goal_add_q_change_target",
+    "type": "blank",
+    "autoAnswer": "goal_amount",
+    "answers": [
+      {
+        "name": "goal_amount",
+        "nextOnFinish": "goal_add_q_verify",
+        "type": "inlineCurrency",
+        "typeOnFinish": "textCurrency",
+        "inlineEditHint": "$(type_currency_hint)"
+      }
+    ]
+  },
 
 
 
