@@ -20,6 +20,7 @@
         android:layout_alignParentBottom="true"
         android:layout_below="@+id/fragment_challengequizquestion_title"
         android:scrollbars="vertical"
-        tools:listitem="@layout/fragment_challengequizquestion_option"/>
+        tools:listitem="@layout/fragment_challengequizquestion_option"
+        android:layout_alignParentStart="true" />
 
 </RelativeLayout>

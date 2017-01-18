@@ -210,5 +210,9 @@ public class ChallengeActivity extends DooitActivity {
             intent.putExtras(bundle);
             return this;
         }
+
+        public Intent getIntent() {
+            return intent;
+        }
     }
 }
