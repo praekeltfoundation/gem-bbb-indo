@@ -1,0 +1,45 @@
+
+task majorVersionBump(type: VersioningBumpTask) {
+    majorInterval = 1
+}
+
+task minorVersionBump(type: VersioningBumpTask) {
+    minorInterval = 1
+}
+
+task patchVersionBump(type: VersioningBumpTask) {
+    patchInterval = 1
+}
+
+class VersioningBumpTask extends DefaultTask {
+
+    int majorInterval = 0
+    int minorInterval = 0
+    int patchInterval = 0
+
+    @TaskAction
+    def bump() {
+        def props = new Properties()
+        def file = new File('version.properties');
+
+        file.withInputStream {
+            stream -> props.load(stream)
+        }
+
+        int major = (props.major as Integer) + majorInterval
+        int minor = (props.minor as Integer) + minorInterval
+        int patch = (props.patch as Integer) + patchInterval
+
+        def versionCode = major * 10000 + minor * 100 + patch
+
+        println "Bumping version to ${major}.${minor}.${patch} (${versionCode})"
+
+        props.major = major.toString()
+        props.minor = minor.toString()
+        props.patch = patch.toString()
+
+        file.withOutputStream {
+            stream -> props.store(stream, null)
+        }
+    }
+}
