@@ -1,0 +1,9 @@
+
+
+class GenerateReleaseNotesTask extends DefaultTask {
+
+    @TaskAction
+    def generate() {
+
+    }
+}
