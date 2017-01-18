@@ -1,7 +1,5 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 
-apply from: 'buildsystem/version.gradle';
-
 buildscript {
     repositories {
         jcenter()
@@ -11,6 +9,7 @@ buildscript {
         classpath 'com.android.tools.build:gradle:2.2.2'
         classpath 'com.jakewharton:butterknife-gradle-plugin:8.4.0'
         classpath 'com.google.gms:google-services:3.0.0'
+        classpath 'com.selesse:gradle-git-changelog:0.3.0'
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
     }
@@ -25,4 +24,20 @@ allprojects {
 
 task clean(type: Delete) {
     delete rootProject.buildDir
+}
+
+apply plugin: 'com.selesse.git.changelog'
+apply from: 'buildsystem/version.gradle'
+
+changelog {
+    title = "${project.name} - Changelog"
+    outputDirectory = file("$projectDir")
+    formats = ['markdown']
+    commitFormat = '(%an) %s' // Author first
+    includeLines {
+        line -> !line.contains("Merge ") && !line.contains("[ci skip]")
+    }
+    markdown {
+        commitFormat = '- (%an) %s'
+    }
 }
