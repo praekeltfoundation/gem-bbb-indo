@@ -564,6 +564,10 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
     }
 
     private void processText(Answer answer) {
+        // When answers are added after an async call, the activity may no longer be valid.
+        if (getContext() == null)
+            return;
+
         ParamMatch args = ParamParser.parse(answer.getText(getContext()));
         if (!args.isEmpty() && getBotAdapter().hasController()) {
             BotController cb = getBotAdapter().getController();
