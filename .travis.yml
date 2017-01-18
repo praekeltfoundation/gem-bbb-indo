@@ -59,7 +59,7 @@ before_script:
   - sudo chmod u+x createPassfile
   - sudo ./createPassfile -pwd $KEYSTORE_PASS;
 
-#  - echo y | $ANDROID_HOME/tools/android update sdk --no-ui --all --filter "tools, platform-tools"
+  - echo y | $ANDROID_HOME/tools/android update sdk --no-ui --all --filter "tools, platform-tools"
 #  - echo y | $ANDROID_HOME/tools/bin/sdkmanager "platforms;android-24"
 #  - echo y | $ANDROID_HOME/tools/bin/sdkmanager "system-images;android-22;default;armeabi-v7a"
 #  - echo no | android create avd --force -n test -t android-22 --abi armeabi-v7a
