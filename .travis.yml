@@ -72,4 +72,4 @@ before_script:
 #  - export ANDROID_NDK_HOME=$ANDROID_HOME/ndk-bundle
 
 script:
-    - if [ $TRAVIS_BRANCH == "release_candidate" ]; then ./gradlew assembleStagingRelease crashlyticsUploadDistributionStagingRelease; else ./gradlew assembleStagingDebug; fi
+    - if [ $TRAVIS_BRANCH == "release_candidate" ]; then ./gradlew assembleStagingRelease crashlyticsUploadDistributionStagingRelease; else ./gradlew assembleStagingDebug --debug; fi
