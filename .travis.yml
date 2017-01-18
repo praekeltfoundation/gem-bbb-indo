@@ -40,6 +40,7 @@ cache:
         #- $HOME/docker
 
 before_install:
+  - sudo touch "~/.android/repositories.cfg"
   - sudo bash -c 'sudo echo -e "count=0" >> "~/.android/repositories.cfg"'
   - sudo mkdir $ANDROID_HOME/licenses
   - sudo touch "$ANDROID_HOME/licenses/android-sdk-license"
