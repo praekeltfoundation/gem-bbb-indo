@@ -4,6 +4,7 @@ import android.app.ProgressDialog;
 import android.content.ContentResolver;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -27,6 +28,7 @@ import org.gem.indo.dooit.api.DooitAPIError;
 import org.gem.indo.dooit.api.DooitErrorHandler;
 import org.gem.indo.dooit.api.managers.FileUploadManager;
 import org.gem.indo.dooit.api.responses.EmptyResponse;
+import org.gem.indo.dooit.helpers.images.ImageChooserOptions;
 import org.gem.indo.dooit.helpers.images.MediaUriHelper;
 import org.gem.indo.dooit.helpers.Persisted;
 import org.gem.indo.dooit.helpers.RequestCodes;
@@ -35,6 +37,7 @@ import org.gem.indo.dooit.helpers.permissions.PermissionsHelper;
 import org.gem.indo.dooit.models.challenge.Participant;
 import org.gem.indo.dooit.models.challenge.PictureChallenge;
 import org.gem.indo.dooit.models.challenge.PictureChallengeQuestion;
+import org.gem.indo.dooit.views.ImageActivity;
 import org.gem.indo.dooit.views.main.fragments.challenge.ChallengeActivity;
 import org.gem.indo.dooit.views.main.fragments.challenge.ChallengeFragment;
 import org.gem.indo.dooit.views.main.fragments.challenge.ChallengeFragmentState;
@@ -172,32 +175,7 @@ public class ChallengePictureFragment extends Fragment {
 
     @OnClick(R.id.fragment_challenge_picture_image)
     public void selectImage() {
-        final CharSequence[] items = {
-                getString(R.string.label_take_picture),
-                getString(R.string.label_select_gallery),
-                getString(R.string.label_cancel)
-        };
-
-        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-        builder.setTitle("Add picture submission!");
-        builder.setItems(items, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int item) {
-                // TODO: Use Enums or Constants
-                switch (item) {
-                    case 0:
-                        startCamera();
-                        break;
-                    case 1:
-                        startGallery();
-                        break;
-                    case 2:
-                        dialog.dismiss();
-                        break;
-                }
-            }
-        });
-        builder.show();
+        ((ChallengeActivity)getActivity()).showOptions();
     }
 
 
@@ -205,55 +183,21 @@ public class ChallengePictureFragment extends Fragment {
      * Image selection helpers *
      ***************************/
 
-    protected void startCamera() {
-        permissionsHelper.askForPermission(this, PermissionsHelper.D_WRITE_EXTERNAL_STORAGE, new PermissionCallback() {
-            @Override
-            public void permissionGranted() {
-                permissionsHelper.askForPermission(ChallengePictureFragment.this, PermissionsHelper.D_CAMERA, new PermissionCallback() {
-                    @Override
-                    public void permissionGranted() {
-                        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                        if (takePictureIntent.resolveActivity(getActivity().getPackageManager()) != null) {
-                            startActivityForResult(takePictureIntent, RequestCodes.RESPONSE_CAMERA_REQUEST_CHALLENGE_IMAGE);
-                        }
-                    }
-
-                    @Override
-                    public void permissionRefused() {
-                        Toast.makeText(getContext(), "Can't take ic_d_profile image without camera permission", Toast.LENGTH_SHORT).show();
-                    }
-                });
-            }
-
-            @Override
-            public void permissionRefused() {
-                Toast.makeText(getContext(), "Can't take ic_d_profile image without storage permission", Toast.LENGTH_SHORT).show();
-            }
-        });
-    }
-
-    protected void startGallery() {
-        permissionsHelper.askForPermission(this, PermissionsHelper.D_WRITE_EXTERNAL_STORAGE, new PermissionCallback() {
-            @Override
-            public void permissionGranted() {
-                Intent intent = new Intent();
-                intent.setType("image/*");
-                intent.setAction(Intent.ACTION_GET_CONTENT);//
-                startActivityForResult(Intent.createChooser(intent, "Select File"), RequestCodes.RESPONSE_GALLERY_REQUEST_CHALLENGE_IMAGE);
-            }
-
-            @Override
-            public void permissionRefused() {
-                Toast.makeText(getContext(), "Can't take ic_d_profile image without storage permission", Toast.LENGTH_SHORT).show();
-            }
-        });
-
+    public void receiveImageDetails(String mediaType, Uri imageUri, String imagePath){
+        if((imageUri != null) && (imagePath !=  null)){
+            this.imagePath = imagePath;
+            this.imageUri = imageUri;
+        }
+        if (image != null) {
+            image.setImageURI(imageUri);
+        }
     }
 
     @OnClick(R.id.fragment_challenge_picture_submit_button)
     public void submitImage() {
         if (TextUtils.isEmpty(imagePath)) {
             Log.d(TAG, "Attempted to submit empty image");
+            //Hardcoded string
             Toast.makeText(getContext(), "Must select a picture to submit", Toast.LENGTH_SHORT).show();
             return;
         }
@@ -288,19 +232,6 @@ public class ChallengePictureFragment extends Fragment {
         });
     }
 
-
-    /***********
-     * Cleanup *
-     ***********/
-
-    /*aprivate void returnToParent() {
-        Fragment f = getParentFragment();
-        if (f instanceof ChallengeFragment) {
-            ((ChallengeActivity) f).loadChallenge();
-        }
-    }*/
-
-
     /*************************
      * State-keeping methods *
      *************************/
@@ -308,9 +239,9 @@ public class ChallengePictureFragment extends Fragment {
     @Override
     public void onSaveInstanceState(Bundle outState) {
         if (outState != null) {
-            outState.putSerializable(ChallengeFragment.ARG_PAGE, FRAGMENT_STATE);
-            outState.putParcelable(ChallengeFragment.ARG_PARTICIPANT, participant);
-            outState.putParcelable(ChallengeFragment.ARG_CHALLENGE, challenge);
+            outState.putSerializable(ChallengeActivity.ARG_PAGE, FRAGMENT_STATE);
+            outState.putParcelable(ChallengeActivity.ARG_PARTICIPANT, participant);
+            outState.putParcelable(ChallengeActivity.ARG_CHALLENGE, challenge);
             outState.putString(ARG_IMGURI, imageUri == null ? null : imageUri.toString());
         }
         super.onSaveInstanceState(outState);
@@ -321,10 +252,12 @@ public class ChallengePictureFragment extends Fragment {
         if (requestCode == RequestCodes.RESPONSE_GALLERY_REQUEST_CHALLENGE_IMAGE ||
                 requestCode == RequestCodes.RESPONSE_CAMERA_REQUEST_CHALLENGE_IMAGE) {
             if (resultCode == RESULT_OK) {
-                imagePath = MediaUriHelper.getPath(getContext(), data.getData());
-                imageUri = data.getData();
-                if (image != null) {
-                    image.setImageURI(imageUri);
+                if(data.getData() != null) {
+                    imagePath = MediaUriHelper.getPath(getContext(), data.getData());
+                    imageUri = data.getData();
+                    if (image != null) {
+                        image.setImageURI(imageUri);
+                    }
                 }
             }
         }

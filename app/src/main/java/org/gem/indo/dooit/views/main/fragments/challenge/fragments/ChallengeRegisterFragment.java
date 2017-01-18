@@ -135,7 +135,7 @@ public class ChallengeRegisterFragment extends Fragment implements HasChallengeF
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(org.gem.indo.dooit.R.layout.fragment_challenge_register, container, false);
+        View view = inflater.inflate(R.layout.fragment_challenge_register, container, false);
         unbinder = ButterKnife.bind(this, view);
         if (hasActive) {
             register.setText(getText(R.string.label_continue));

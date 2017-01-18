@@ -2,9 +2,11 @@ package org.gem.indo.dooit.views.main.fragments.challenge;
 
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.text.TextUtils;
 import android.widget.FrameLayout;
@@ -20,13 +22,13 @@ import org.gem.indo.dooit.models.challenge.PictureChallenge;
 import org.gem.indo.dooit.models.challenge.QuizChallenge;
 import org.gem.indo.dooit.models.challenge.QuizChallengeOption;
 import org.gem.indo.dooit.models.challenge.QuizChallengeQuestion;
-import org.gem.indo.dooit.views.DooitActivity;
+import org.gem.indo.dooit.models.enums.ChallengeType;
+import org.gem.indo.dooit.views.ImageActivity;
 import org.gem.indo.dooit.views.helpers.activity.DooitActivityBuilder;
 import org.gem.indo.dooit.views.main.fragments.challenge.fragments.ChallengeFreeformFragment;
 import org.gem.indo.dooit.views.main.fragments.challenge.fragments.ChallengeNoneFragment;
 import org.gem.indo.dooit.views.main.fragments.challenge.fragments.ChallengePictureFragment;
 import org.gem.indo.dooit.views.main.fragments.challenge.fragments.ChallengeQuizFragment;
-import org.gem.indo.dooit.views.main.fragments.challenge.fragments.ChallengeRegisterFragment;
 
 import javax.inject.Inject;
 
@@ -37,7 +39,7 @@ import butterknife.ButterKnife;
  * Created by frede on 2017/01/16.
  */
 
-public class ChallengeActivity extends DooitActivity {
+public class ChallengeActivity extends ImageActivity {
 
     public static final String TAG = "ChallengeMain";
     public static final String ARG_CHALLENGE = "challenge";
@@ -67,29 +69,19 @@ public class ChallengeActivity extends DooitActivity {
         setContentView(R.layout.fragment_challenge);
         ((DooitApplication) getApplication()).component.inject(this);
         ButterKnife.bind(this);
-        Bundle args = getIntent().getExtras();
-        if(args != null) {
-            challenge = args.getParcelable(ARG_CHALLENGE);
-            participant = args.getParcelable(ARG_PARTICIPANT);
+        //Bundle args = getIntent().getExtras();
+        participant = new Participant();
+        if(persisted.hasCurrentChallenge()) {
+            challenge = persisted.getCurrentChallenge();
+            participant.setChallenge(challenge.getId());
+            startChallenge(participant);
+        }
+        else{
+            participant.setId(1);
+            participant.setChallenge(ChallengeType.QUIZ.getValue());
             startChallenge(participant);
         }
     }
-
-    /*private Fragment createEmptyFragment(ChallengeFragmentState state) {
-        if (state == null) return null;
-        switch (state) {
-            case FREEFORM:
-                return new ChallengeFreeformFragment();
-            case PICTURE:
-                return new ChallengePictureFragment();
-            case QUIZ:
-                return new ChallengeQuizFragment();
-            case REGISTER:
-                return new ChallengeRegisterFragment();
-            default:
-                return null;
-        }
-    }*/
 
     /*************************
      * State-keeping methods *
@@ -137,7 +129,8 @@ public class ChallengeActivity extends DooitActivity {
         }
 
         if (fragment != null) {
-            ft.setCustomAnimations(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
+            //Changes made to slide in it was android.R.anim.slide_in_left
+            ft.setCustomAnimations(R.anim.slide_in_right, android.R.anim.slide_out_right);
             ft.replace(R.id.fragment_challenge_container, fragment, "fragment_challenge");
             ft.commit();
         }
@@ -145,27 +138,27 @@ public class ChallengeActivity extends DooitActivity {
 
     private Fragment startQuizChallenge(Participant participant, QuizChallenge quizChallenge) {
         if (quizChallenge.getQuestions() == null || quizChallenge.getQuestions().size() <= 0) {
-            return ChallengeNoneFragment.newInstance(getString(org.gem.indo.dooit.R.string.challenge_quiz_no_questions));
+            return ChallengeNoneFragment.newInstance(getString(R.string.challenge_quiz_no_questions));
         }
 
         for (QuizChallengeQuestion q : quizChallenge.getQuestions()) {
             // check for empty question or empty list of options for question
             if (TextUtils.isEmpty(q.getText())) {
-                return ChallengeNoneFragment.newInstance(getString(org.gem.indo.dooit.R.string.challenge_quiz_no_questions));
+                return ChallengeNoneFragment.newInstance(getString(R.string.challenge_quiz_no_questions));
             } else if (q.getOptions() == null || q.getOptions().size() <= 0) {
-                return ChallengeNoneFragment.newInstance(getString(org.gem.indo.dooit.R.string.challenge_quiz_no_questions));
+                return ChallengeNoneFragment.newInstance(getString(R.string.challenge_quiz_no_questions));
             }
 
             // check whether any options are empty or none of the question's options are correct
             boolean hasCorrect = false;
             for (QuizChallengeOption o : q.getOptions()) {
                 if (TextUtils.isEmpty(o.getText())) {
-                    return ChallengeNoneFragment.newInstance(getString(org.gem.indo.dooit.R.string.challenge_quiz_empty_option));
+                    return ChallengeNoneFragment.newInstance(getString(R.string.challenge_quiz_empty_option));
                 }
                 hasCorrect |= o.getCorrect();
             }
             if (!hasCorrect) {
-                return ChallengeNoneFragment.newInstance(getString(org.gem.indo.dooit.R.string.challenge_quiz_no_correct_answer));
+                return ChallengeNoneFragment.newInstance(getString(R.string.challenge_quiz_no_correct_answer));
             }
         }
         return ChallengeQuizFragment.newInstance(participant, quizChallenge);
@@ -189,6 +182,18 @@ public class ChallengeActivity extends DooitActivity {
 //            return ChallengeNoneFragment.newInstance("Picture challenge question is empty.");
 //        }
         return ChallengePictureFragment.newInstance(participant, pictureChallenge);
+    }
+
+    public void showOptions(){
+        showImageChooser();
+    }
+
+    @Override
+    protected void onImageResult(String mediaType, Uri imageUri, String imagePath) {
+        FragmentManager fm = getSupportFragmentManager();
+        ChallengePictureFragment fragment = (ChallengePictureFragment)fm.findFragmentByTag("fragment_challenge");
+        if(fragment != null)
+            fragment.receiveImageDetails(mediaType,imageUri,imagePath);
     }
 
     public static class Builder extends DooitActivityBuilder<ChallengeActivity.Builder> {
