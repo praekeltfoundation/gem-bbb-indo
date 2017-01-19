@@ -1,13 +1,13 @@
 package org.gem.indo.dooit.api.managers;
 
 import android.app.Application;
-import android.support.annotation.NonNull;
 
 import org.gem.indo.dooit.api.DooitErrorHandler;
 import org.gem.indo.dooit.api.interfaces.UserAPI;
 import org.gem.indo.dooit.api.requests.ChangePassword;
 import org.gem.indo.dooit.api.requests.ChangeSecurityQuestion;
-import org.gem.indo.dooit.api.requests.ChangeUser;
+import org.gem.indo.dooit.api.requests.ChangeUserFirstName;
+import org.gem.indo.dooit.api.requests.ChangeUsername;
 import org.gem.indo.dooit.api.requests.ChangeUserEmail;
 import org.gem.indo.dooit.api.requests.ResetPassword;
 import org.gem.indo.dooit.api.responses.EmptyResponse;
@@ -15,11 +15,6 @@ import org.gem.indo.dooit.models.User;
 
 import javax.inject.Inject;
 
-import retrofit2.http.GET;
-import retrofit2.http.Multipart;
-import retrofit2.http.POST;
-import retrofit2.http.Part;
-import retrofit2.http.Query;
 import rx.Observable;
 
 /**
@@ -41,7 +36,11 @@ public class UserManager extends DooitManager {
     }
 
     public Observable<EmptyResponse> updateUser(long userId, String name, DooitErrorHandler errorHandler) {
-        return useNetwork(userAPI.renameUser(userId,new ChangeUser(name)), errorHandler);
+        return useNetwork(userAPI.renameUser(userId,new ChangeUsername(name)), errorHandler);
+    }
+
+    public Observable<EmptyResponse> updateUserFirstName(long userId, String firstName, DooitErrorHandler errorHandler) {
+        return useNetwork(userAPI.changeUserFirstName(userId, new ChangeUserFirstName(firstName)), errorHandler);
     }
 
     public Observable<EmptyResponse> updateUserEmail(long userId, String email, DooitErrorHandler errorHandler) {

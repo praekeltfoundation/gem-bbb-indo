@@ -1,82 +1,67 @@
 [
-    {
-        "name": "convo_default_return_q_greeting_1",
-        "type": "text",
-        "text": "$(convo_default_return_q_greeting_1)",
-        "autoNext": "convo_default_return_q_greeting_2"
-    },
-    {
-        "name": "convo_default_return_q_greeting_2",
-        "type": "text",
-        "text": "$(convo_default_return_q_greeting_2)",
-        "autoNext": "convo_default_return_q_progress_intro"
-    },
-    {
-        "name": "convo_default_return_q_progress_intro",
-        "type": "text",
-        "text": "$(convo_default_return_q_progress_intro)",
-        "autoNext": "convo_default_return_q_summary"
-    },
-
-
-
-
-    {
-        "name": "convo_default_return_q_summary",
-        "type": "goalListSummary",
-        "autoNext": "convo_default_return_q_options"
-    },
-    {
-        "name": "convo_default_return_q_options",
-        "type": "blank",
-        "answers": [
-            {
-                "name": "convo_default_return_a_progress_intro_tip",
-                "text": "$(convo_default_return_a_progress_intro_tip)",
-                "next": "convo_default_return_q_tip_intro"
-            },{
-                "name": "convo_default_return_a_progress_intro_challenge",
-                "text": "$(convo_default_return_a_progress_intro_challenge)",
-                "next": "convo_default_return_q_challenge_intro"
-            }
-        ]
-    },
-
-
-
-
-    {
-        "name": "convo_default_return_q_tip_intro",
-        "type": "text",
-        "text": "$(bot_tip_intro)",
-        "autoNext": "convo_default_return_q_tip_show"
-    },
-    {
-        "name": "convo_default_return_q_tip_show",
-        "type": "tip",
-        "autoNext": "convo_default_return_end"
-    },
-
-
-
-
-    {
-        "name": "convo_default_return_q_challenge_intro",
-        "type": "text",
-        "text": "$(bot_challenge_intro)",
-        "autoNext": "convo_default_return_q_challenge_show"
-    },
-    {
-        "name": "convo_default_return_q_challenge_show",
-        "type": "challenge",
-        "autoNext": "convo_default_return_end"
-    },
-
-
-
-
-    {
-        "name": "convo_default_return_end",
-        "type": "end"
-    }
+  {
+    "name": "convo_default_return_q_greeting_1",
+    "type": "text",
+    "text": "$(convo_default_return_q_greeting_1)",
+    "autoNext": "convo_default_return_q_greeting_2"
+  },
+  {
+    "name": "convo_default_return_q_greeting_2",
+    "type": "text",
+    "text": "$(convo_default_return_q_greeting_2)",
+    "autoNext": "convo_default_return_q_progress_intro"
+  },
+  {
+    "name": "convo_default_return_q_progress_intro",
+    "type": "text",
+    "text": "$(convo_default_return_q_progress_intro)",
+    "autoNext": "convo_default_return_q_summary"
+  },
+  {
+    "name": "convo_default_return_q_summary",
+    "type": "goalListSummary",
+    "autoNext": "convo_default_return_q_options"
+  },
+  {
+    "name": "convo_default_return_q_options",
+    "type": "blank",
+    "answers": [
+      {
+        "name": "convo_default_return_a_progress_intro_tip",
+        "text": "$(convo_default_return_a_progress_intro_tip)",
+        "next": "convo_default_return_q_tip_intro"
+      },
+      {
+        "name": "convo_default_return_a_progress_intro_challenge",
+        "text": "$(convo_default_return_a_progress_intro_challenge)",
+        "next": "convo_default_return_q_challenge_intro"
+      }
+    ]
+  },
+  {
+    "name": "convo_default_return_q_tip_intro",
+    "type": "text",
+    "text": "$(bot_tip_intro)",
+    "autoNext": "convo_default_return_q_tip_show"
+  },
+  {
+    "name": "convo_default_return_q_tip_show",
+    "type": "tip",
+    "autoNext": "convo_default_return_end"
+  },
+  {
+    "name": "convo_default_return_q_challenge_intro",
+    "type": "text",
+    "text": "$(bot_challenge_intro)",
+    "autoNext": "convo_default_return_q_challenge_show"
+  },
+  {
+    "name": "convo_default_return_q_challenge_show",
+    "type": "challenge",
+    "autoNext": "convo_default_return_end"
+  },
+  {
+    "name": "convo_default_return_end",
+    "type": "end"
+  }
 ]
