@@ -40,6 +40,8 @@ public class Notifier {
                 .setLargeIcon(((BitmapDrawable) ContextCompat.getDrawable(context, R.mipmap.ic_launcher)).getBitmap())
                 .setContentTitle(context.getString(R.string.app_name))
                 .setContentText(contentText)
+                // Big text is displayed when the user pinches outward
+                .setStyle(new NotificationCompat.BigTextStyle().bigText(contentText))
                 .setAutoCancel(true);
 
         // Fix old API vector drawable crash

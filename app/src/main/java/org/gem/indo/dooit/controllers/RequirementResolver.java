@@ -53,10 +53,10 @@ public class RequirementResolver {
     @Inject
     Persisted persisted;
 
-    private BotType botType;
+    private final BotType botType;
+    private final List<BotObjectType> requirements;
+    private final Handler handler;
     private List<Observable> sync = new ArrayList<>();
-    private List<BotObjectType> requirements;
-    private Handler handler;
 
     private Long surveyId;
 
@@ -113,6 +113,9 @@ public class RequirementResolver {
                             persisted.saveConvoTip((Tip) ((List) o).get(0));
                         else if (((List) o).get(0) instanceof GoalPrototype)
                             persisted.saveGoalProtos((List<GoalPrototype>) o);
+                        else if (((List) o).get(0) instanceof CoachSurvey)
+                            // Survey was retrieved by bot type
+                            persisted.saveConvoSurvey(botType, ((List<CoachSurvey>) o).get(0));
                     } else if (o instanceof BaseChallenge) {
                         persisted.saveConvoChallenge(botType, (BaseChallenge) o);
                     } else if (o instanceof CoachSurvey) {
@@ -224,27 +227,49 @@ public class RequirementResolver {
     }
 
     private void retrieveSurvey() {
-        if (surveyId == null)
-            return;
-
-        Observable survey = surveyManager.retrieveSurvey(surveyId, new DooitErrorHandler() {
-            @Override
-            public void onError(DooitAPIError error) {
-
-            }
-        });
-        if (persisted.hasConvoSurvey(botType)
-                // Ensure the saved survey has the same ID as the requested survey
-                && persisted.loadConvoSurvey(botType).getId() == surveyId)
-            survey.subscribe(new Action1<CoachSurvey>() {
+        if (surveyId == null) {
+            // Retrieve survey by type
+            Observable survey = surveyManager.retrieveSurveys(botType, new DooitErrorHandler() {
                 @Override
-                public void call(CoachSurvey coachSurvey) {
-                    if (coachSurvey == null) return;
-                    persisted.saveConvoSurvey(botType, coachSurvey);
+                public void onError(DooitAPIError error) {
+
                 }
             });
-        else
-            sync.add(survey);
+            if (persisted.hasConvoSurvey(botType))
+                survey.subscribe(new Action1<List<CoachSurvey>>() {
+                    @Override
+                    public void call(List<CoachSurvey> coachSurveys) {
+                        if (coachSurveys.isEmpty()) return;
+                        persisted.saveConvoSurvey(botType, coachSurveys.get(0));
+                    }
+                });
+            else
+                sync.add(survey);
+        } else {
+            // Retrieve survey by id
+            // Used when opening specific surveys.
+            Observable survey = surveyManager.retrieveSurvey(surveyId, botType, new DooitErrorHandler() {
+                @Override
+                public void onError(DooitAPIError error) {
+
+                }
+            });
+            if (persisted.hasConvoSurvey(botType)
+                    // Ensure the saved survey has the same ID as the requested survey
+                    && persisted.loadConvoSurvey(botType).getId() == surveyId)
+                survey.subscribe(new Action1<CoachSurvey>() {
+                    @Override
+                    public void call(CoachSurvey coachSurvey) {
+                        if (coachSurvey == null) return;
+                        persisted.saveConvoSurvey(botType, coachSurvey);
+                    }
+                });
+            else
+                sync.add(survey);
+        }
+
+
+
     }
 
     public void setSurveyId(long surveyId) {

@@ -6,6 +6,7 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.gem.indo.dooit.Constants;
 import org.gem.indo.dooit.R;
 import org.gem.indo.dooit.models.bot.Answer;
 
@@ -38,12 +39,13 @@ public class AnswerViewHolder extends BaseBotViewHolder<Answer> {
         else
             textView.setText(dataModel.getValue());
 
-        itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(getContext(), getModel().getNext(), Toast.LENGTH_LONG).show();
-            }
-        });
+        if (Constants.DEBUG)
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Toast.makeText(getContext(), getModel().getNext(), Toast.LENGTH_LONG).show();
+                }
+            });
     }
 
     @Override
