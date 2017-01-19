@@ -14,7 +14,7 @@ public class ParamParser {
     private static final Pattern paramPattern = Pattern.compile("(\\$\\(([a-zA-Z0-9-_\\.]+)\\))");
 
     private ParamParser() {
-
+        // Empty
     }
 
     public static ParamMatch parse(String text) {
@@ -30,5 +30,13 @@ public class ParamParser {
         }
         ParamArg[] arr = new ParamArg[matches.size()];
         return new ParamMatch(text, matcher.replaceAll("%s"), matches.toArray(arr));
+    }
+
+    /**
+     * @param text The string that might contain a param.
+     * @return Whether or not the string contains a param.
+     */
+    public static boolean containsParams(String text) {
+        return paramPattern.matcher(text).find();
     }
 }

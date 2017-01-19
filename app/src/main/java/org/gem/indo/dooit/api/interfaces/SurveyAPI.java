@@ -1,8 +1,10 @@
 package org.gem.indo.dooit.api.interfaces;
 
 import org.gem.indo.dooit.api.responses.SurveyResponse;
+import org.gem.indo.dooit.models.enums.BotType;
 import org.gem.indo.dooit.models.survey.CoachSurvey;
 
+import java.util.List;
 import java.util.Map;
 
 import retrofit2.Response;
@@ -10,6 +12,7 @@ import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
+import retrofit2.http.Query;
 import rx.Observable;
 
 /**
@@ -19,7 +22,10 @@ import rx.Observable;
 public interface SurveyAPI {
 
     @GET("/api/surveys/{id}/")
-    Observable<CoachSurvey> getSurvey(@Path("id") long id);
+    Observable<CoachSurvey> getSurvey(@Path("id") long id, @Query("bot-conversation") BotType type);
+
+    @GET("/api/surveys/")
+    Observable<List<CoachSurvey>> getSurveys(@Query("bot-conversation") BotType type);
 
     @GET("/api/surveys/current/")
     Observable<SurveyResponse> getCurrentSurvey();

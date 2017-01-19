@@ -31,7 +31,7 @@
                 fontPath="fonts/LondrinaSolid-Regular.ttf"
                 android:layout_height="wrap_content"
                 android:layout_alignParentTop="true"
-                android:layout_marginTop="6dp"
+                android:layout_marginTop="18dp"
                 android:gravity="center_horizontal"
                 android:textColor="@color/black"
                 android:textStyle="bold"
@@ -42,7 +42,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="200dp"
                 android:layout_below="@+id/fragment_target_goal_name_text_view"
-                android:layout_marginTop="24dp" />
+                android:layout_marginTop="18dp" />
 
             <ImageButton
                 android:id="@+id/fragment_target_left_image_button"
@@ -278,7 +278,7 @@
                                 app:layout_constraintRight_toRightOf="parent"
                                 app:layout_constraintVertical_bias="0.0"
                                 app:layout_constraintBottom_toBottomOf="parent"
-                                app:layout_constraintTop_toBottomOf="@id/fragment_target_history_date" />
+                                app:layout_constraintTop_toBottomOf="@+id/fragment_target_history_date" />
 
                         </android.support.constraint.ConstraintLayout>
                     </FrameLayout>
@@ -318,9 +318,16 @@
                 android:layout_marginTop="24dp"
                 android:text="@string/target_edit_savings_plan"
                 android:textAlignment="center"
-                android:layout_marginBottom="30dp"
+                android:layout_marginBottom="10dp"
                 android:textAllCaps="true"
-                android:textColor="@color/grey" />
+                android:textColor="@color/grey"/>
+
+            <!-- Dummy textview so previous marginBottom works -->
+            <TextView
+                android:id="@+id/dummy_spacer"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/fragment_target_savings_plan_edit"/>
 
         </RelativeLayout>
 

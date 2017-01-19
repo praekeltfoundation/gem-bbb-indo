@@ -111,31 +111,6 @@ public class ChangeEmailAddressActivity extends DooitActivity {
         });
 
     }
-    public boolean isEmailValid() {
-        boolean valid = true;
-        String emailText = email.getText().toString();
-        if (TextUtils.isEmpty(emailText)) {
-            valid = false;
-            emailHint.setText(org.gem.indo.dooit.R.string.reg_example_email_error_1);
-            emailHint.setTextColor(ResourcesCompat.getColor(getResources(), android.R.color.holo_red_light, getTheme()));
-        } else if (emailText.contains(" ")) {
-            valid = false;
-            emailHint.setText(org.gem.indo.dooit.R.string.reg_example_email_error_2);
-            emailHint.setTextColor(ResourcesCompat.getColor(getResources(), android.R.color.holo_red_light, getTheme()));
-        } else if (!Patterns.EMAIL_ADDRESS.matcher(emailText).matches()) {
-            valid = false;
-            emailHint.setText(org.gem.indo.dooit.R.string.reg_example_email_error_3);
-            emailHint.setTextColor(ResourcesCompat.getColor(getResources(), android.R.color.holo_red_light, getTheme()));
-        } else if (emailText.length() > MAX_NAME_LENGTH) {
-            valid = false;
-            emailHint.setText(org.gem.indo.dooit.R.string.reg_example_email_error_4);
-            emailHint.setTextColor(ResourcesCompat.getColor(getResources(), android.R.color.holo_red_light, getTheme()));
-        } else {
-            emailHint.setText(org.gem.indo.dooit.R.string.reg_example_email);
-            emailHint.setTextColor(ResourcesCompat.getColor(getResources(), org.gem.indo.dooit.R.color.white, getTheme()));
-        }
-        return valid;
-    }
 
     public static class Builder extends DooitActivityBuilder<ChangeEmailAddressActivity.Builder> {
         protected Builder(Context context) {
