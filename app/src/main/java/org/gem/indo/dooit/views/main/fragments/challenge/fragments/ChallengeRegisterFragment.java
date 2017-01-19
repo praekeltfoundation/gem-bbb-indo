@@ -27,7 +27,6 @@ import org.gem.indo.dooit.api.DooitAPIError;
 import org.gem.indo.dooit.api.DooitErrorHandler;
 import org.gem.indo.dooit.api.managers.ChallengeManager;
 import org.gem.indo.dooit.helpers.Persisted;
-import org.gem.indo.dooit.helpers.RequestCodes;
 import org.gem.indo.dooit.helpers.TextSpannableHelper;
 import org.gem.indo.dooit.helpers.activity.result.ActivityForResultCallback;
 import org.gem.indo.dooit.helpers.activity.result.ActivityForResultHelper;
@@ -49,8 +48,8 @@ import rx.Subscription;
 import rx.functions.Action0;
 import rx.functions.Action1;
 
-import static org.gem.indo.dooit.helpers.RequestCodes.RESPONSE_CHALLENGE_REQUEST_RUN;
 import static org.gem.indo.dooit.helpers.RequestCodes.RESPONSE_CAMERA_REQUEST_CHALLENGE_IMAGE;
+import static org.gem.indo.dooit.helpers.RequestCodes.RESPONSE_CHALLENGE_REQUEST_RUN;
 import static org.gem.indo.dooit.helpers.RequestCodes.RESPONSE_GALLERY_REQUEST_CHALLENGE_IMAGE;
 
 /**

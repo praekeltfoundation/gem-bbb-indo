@@ -22,7 +22,6 @@ import org.gem.indo.dooit.models.challenge.PictureChallenge;
 import org.gem.indo.dooit.models.challenge.QuizChallenge;
 import org.gem.indo.dooit.models.challenge.QuizChallengeOption;
 import org.gem.indo.dooit.models.challenge.QuizChallengeQuestion;
-import org.gem.indo.dooit.models.enums.ChallengeType;
 import org.gem.indo.dooit.views.ImageActivity;
 import org.gem.indo.dooit.views.helpers.activity.DooitActivityBuilder;
 import org.gem.indo.dooit.views.main.fragments.challenge.fragments.ChallengeFreeformFragment;
@@ -69,9 +68,10 @@ public class ChallengeActivity extends ImageActivity {
         setContentView(R.layout.fragment_challenge);
         ((DooitApplication) getApplication()).component.inject(this);
         ButterKnife.bind(this);
-        //Bundle args = getIntent().getExtras();
-        participant = new Participant();
-        if(persisted.hasCurrentChallenge()) {
+        Bundle args = getIntent().getExtras();
+        participant = args.getParcelable(ARG_PARTICIPANT);
+        startChallenge(participant);
+        /*if (persisted.hasCurrentChallenge()) {
             challenge = persisted.getCurrentChallenge();
             participant.setChallenge(challenge.getId());
             startChallenge(participant);
@@ -80,7 +80,7 @@ public class ChallengeActivity extends ImageActivity {
             participant.setId(1);
             participant.setChallenge(ChallengeType.QUIZ.getValue());
             startChallenge(participant);
-        }
+        }*/
     }
 
     /*************************
@@ -175,12 +175,12 @@ public class ChallengeActivity extends ImageActivity {
     }
 
     private Fragment startPictureChallenge(Participant participant, PictureChallenge pictureChallenge) {
-//        if (pictureChallenge.getQuestion() == null) {
-//            return ChallengeNoneFragment.newInstance("Picture challenge has no question.");
-//        } else if (pictureChallenge.getQuestion().getText() == null ||
-//                pictureChallenge.getQuestion().getText().isEmpty()) {
-//            return ChallengeNoneFragment.newInstance("Picture challenge question is empty.");
-//        }
+        if (pictureChallenge.getQuestion() == null) {
+            return ChallengeNoneFragment.newInstance("Picture challenge has no question.");
+        } else if (pictureChallenge.getQuestion().getText() == null ||
+                pictureChallenge.getQuestion().getText().isEmpty()) {
+            return ChallengeNoneFragment.newInstance("Picture challenge question is empty.");
+        }
         return ChallengePictureFragment.newInstance(participant, pictureChallenge);
     }
 

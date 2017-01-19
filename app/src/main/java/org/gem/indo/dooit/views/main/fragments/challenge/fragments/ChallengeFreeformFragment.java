@@ -215,7 +215,7 @@ public class ChallengeFreeformFragment extends Fragment {
         submitAnswer(submissionBox.getText().toString());
         FragmentTransaction ft = getFragmentManager().beginTransaction();
         Fragment fragment = ChallengeDoneFragment.newInstance(challenge);
-        ft.replace(R.id.fragment_challenge_container, fragment);
+        ft.replace(R.id.fragment_challenge_container, fragment,"fragment_challenge");
         ft.commit();
     }
 

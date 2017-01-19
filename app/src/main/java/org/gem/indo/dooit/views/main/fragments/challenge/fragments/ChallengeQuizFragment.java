@@ -10,7 +10,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.util.LongSparseArray;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -34,7 +33,6 @@ import org.gem.indo.dooit.models.challenge.QuizChallengeOption;
 import org.gem.indo.dooit.models.challenge.QuizChallengeQuestion;
 import org.gem.indo.dooit.models.challenge.QuizChallengeQuestionState;
 import org.gem.indo.dooit.views.main.fragments.challenge.ChallengeActivity;
-import org.gem.indo.dooit.views.main.fragments.challenge.ChallengeFragment;
 import org.gem.indo.dooit.views.main.fragments.challenge.ChallengeFragmentMainPage;
 import org.gem.indo.dooit.views.main.fragments.challenge.ChallengeFragmentState;
 import org.gem.indo.dooit.views.main.fragments.challenge.adapters.ChallengeQuizPagerAdapter;
@@ -232,7 +230,7 @@ public class ChallengeQuizFragment extends Fragment implements OnOptionChangeLis
         if (idx < mAdapter.getCount()) {
             mPager.setCurrentItem(idx);
         } else {
-            Toast.makeText(getContext(), org.gem.indo.dooit.R.string.challenge_all_questions_complete, Toast.LENGTH_SHORT).show();
+            Toast.makeText(getContext(), R.string.challenge_all_questions_complete, Toast.LENGTH_SHORT).show();
             submitParticipantEntry();
             returnToParent(ChallengeFragmentMainPage.DONE);
         }
@@ -260,7 +258,7 @@ public class ChallengeQuizFragment extends Fragment implements OnOptionChangeLis
         }
 
         if (position < challenge.numQuestions()) {
-            mProgressCounter.setText(String.format(getString(org.gem.indo.dooit.R.string.challenge_quiz_counter_fmt), position + 1, challenge.numQuestions()));
+            mProgressCounter.setText(String.format(getString(R.string.challenge_quiz_counter_fmt), position + 1, challenge.numQuestions()));
         } else {
             mProgressCounter.setText("");
         }
@@ -279,9 +277,9 @@ public class ChallengeQuizFragment extends Fragment implements OnOptionChangeLis
         Log.d(TAG, "Quiz page change: " + String.valueOf(position));
         updateProgressCounter(position);
         if (position == mAdapter.getCount() - 1) {
-            checkButton.setText(org.gem.indo.dooit.R.string.label_done);
+            checkButton.setText(R.string.label_done);
         } else {
-            checkButton.setText(org.gem.indo.dooit.R.string.label_check_result);
+            checkButton.setText(R.string.label_check_result);
         }
     }
 
