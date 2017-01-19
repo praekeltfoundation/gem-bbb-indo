@@ -212,7 +212,7 @@ public class MainActivity extends DooitActivity {
     }
 
     @Override
-    protected String getScreenName() {
+    public String getScreenName() {
         return super.getScreenName() + " " + MainViewPagerPositions.getValueOf(viewPager.getCurrentItem()).name();
     }
 

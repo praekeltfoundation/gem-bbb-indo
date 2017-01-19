@@ -12,8 +12,10 @@ public class User {
     private String username;
     private String password;
     private String email;
-    @SerializedName("first_name") private String firstName;
-    @SerializedName("last_name") private String lastName;
+    @SerializedName("first_name")
+    private String firstName;
+    @SerializedName("last_name")
+    private String lastName;
     private Profile profile;
 
     public long getId() {
@@ -22,14 +24,6 @@ public class User {
 
     public void setId(long id) {
         this.id = id;
-    }
-
-    public String getFirstName() {
-        return firstName;
-    }
-
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
     }
 
     public String getUsername() {
@@ -60,6 +54,18 @@ public class User {
         return !TextUtils.isEmpty(email);
     }
 
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public boolean hasFirstName() {
+        return !TextUtils.isEmpty(firstName);
+    }
+
     public String getLastName() {
         return lastName;
     }
@@ -68,12 +74,22 @@ public class User {
         this.lastName = lastName;
     }
 
+    public String getPreferredName() {
+        if (hasFirstName())
+            return firstName;
+        return username;
+    }
+
     public Profile getProfile() {
         return profile;
     }
 
     public void setProfile(Profile profile) {
         this.profile = profile;
+    }
+
+    public boolean hasProfile() {
+        return profile != null;
     }
 
     public boolean hasProfileImage() {

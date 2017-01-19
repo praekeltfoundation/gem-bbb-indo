@@ -3,7 +3,7 @@
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
     <dimen name="fab_margin">16dp</dimen>
-    <dimen name="app_bar_height">220dp</dimen>
+    <dimen name="app_bar_height">250dp</dimen>
     <dimen name="text_margin">16dp</dimen>
 
     <dimen name="k_font_xxx_large">40dp</dimen>
@@ -37,6 +37,9 @@
     <!-- Profile -->
     <dimen name="profile_activity_horizontal_margin">24dp</dimen>
     <dimen name="profile_activity_vertical_margin">24dp</dimen>
+    <dimen name="profile_activity_profile_image_size">150dp</dimen>
+    <dimen name="profile_activity_profile_image_top_margin">74dp</dimen>
+    <dimen name="profile_activity_toolbar_height">60dp</dimen>
 
     <!-- Bot -->
     <dimen name="bot_left_margin">64dp</dimen>
