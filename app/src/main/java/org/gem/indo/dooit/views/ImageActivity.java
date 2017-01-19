@@ -184,6 +184,10 @@ public abstract class ImageActivity extends DooitActivity {
                             bitmap = rotateImage(bitmap, 270);
                             break;
 
+                        case ExifInterface.ORIENTATION_UNDEFINED:
+                            bitmap = rotateImage(bitmap,90);
+                            break;
+
                         case ExifInterface.ORIENTATION_NORMAL:
 
                         default:
