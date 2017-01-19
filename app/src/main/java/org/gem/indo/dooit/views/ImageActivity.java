@@ -8,6 +8,8 @@ import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Matrix;
+import android.media.ExifInterface;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Environment;
@@ -162,9 +164,34 @@ public abstract class ImageActivity extends DooitActivity {
                 try {
                     // This is the case where the camera only returns a thumbnail
                     ContentResolver cR = this.getContentResolver();
-                    Bitmap bm = (Bitmap) data.getExtras().get("data");
-                    Log.d("IMAGE_TESTS", "Bitmap size : " + bm.getByteCount());
-                    imageUri = Uri.parse(MediaStore.Images.Media.insertImage(cR, bm, "", ""));
+                    Bitmap bitmap = (Bitmap) data.getExtras().get("data");
+
+                    ExifInterface ei = new ExifInterface(imagePath);
+                    int orientation = ei.getAttributeInt(ExifInterface.TAG_ORIENTATION,
+                            ExifInterface.ORIENTATION_UNDEFINED);
+
+                    switch(orientation) {
+
+                        case ExifInterface.ORIENTATION_ROTATE_90:
+                            bitmap = rotateImage(bitmap, 90);
+                            break;
+
+                        case ExifInterface.ORIENTATION_ROTATE_180:
+                            bitmap = rotateImage(bitmap, 180);
+                            break;
+
+                        case ExifInterface.ORIENTATION_ROTATE_270:
+                            bitmap = rotateImage(bitmap, 270);
+                            break;
+
+                        case ExifInterface.ORIENTATION_NORMAL:
+
+                        default:
+                            break;
+                    }
+
+                    Log.d("IMAGE_TESTS", "Bitmap size : " + bitmap.getByteCount());
+                    imageUri = Uri.parse(MediaStore.Images.Media.insertImage(cR, bitmap, "", ""));
                 } catch (Throwable ex) {
 
                 }
@@ -175,7 +202,8 @@ public abstract class ImageActivity extends DooitActivity {
             // MediaUriHelper does not work when uri points to temp image file
             imagePath = MediaUriHelper.getPath(this, imageUri);
 
-        downscaleImage();
+        checkImageForRotation();
+        //downscaleImage();
 
         ContentResolver cR = this.getContentResolver();
         onImageResult(cR.getType(imageUri), imageUri, imagePath);
@@ -185,7 +213,8 @@ public abstract class ImageActivity extends DooitActivity {
      * Loads the image file stored in imagePath, saves a new downscaled version, and resets imageUri
      * and imagePath.
      */
-    private void downscaleImage() {
+
+    private void checkImageForRotation() {
         FileOutputStream outstream = null;
         BitmapFactory.Options options = new BitmapFactory.Options();
         options.inPreferredConfig = Bitmap.Config.ARGB_8888;
@@ -194,17 +223,42 @@ public abstract class ImageActivity extends DooitActivity {
             File downscaledFile = createImageFile();
             outstream = new FileOutputStream(downscaledFile);
             Bitmap downscaledBitmap = null;
-            Bitmap existingBitmap = BitmapFactory.decodeFile(imagePath, options);
+            Bitmap bitmap = BitmapFactory.decodeFile(imagePath, options);
 
-            if (existingBitmap == null) {
+            if (bitmap == null) {
                 Log.e(TAG, "Failed to load existing bitmap during downscale");
                 return;
             }
 
-            Log.d(TAG, String.format("Existing image dimensions: (%d, %d) %dKB",
-                    existingBitmap.getWidth(), existingBitmap.getHeight(), existingBitmap.getByteCount() / 1024));
+            ExifInterface ei = new ExifInterface(imagePath);
+            int orientation = ei.getAttributeInt(ExifInterface.TAG_ORIENTATION,
+                    ExifInterface.ORIENTATION_UNDEFINED);
 
-            downscaledBitmap = ImageScaler.scale(existingBitmap, maxImageWidth, maxImageHeight);
+            switch(orientation) {
+
+                case ExifInterface.ORIENTATION_ROTATE_90:
+                    bitmap = rotateImage(bitmap, 90);
+                    break;
+
+                case ExifInterface.ORIENTATION_ROTATE_180:
+                    bitmap = rotateImage(bitmap, 180);
+                    break;
+
+                case ExifInterface.ORIENTATION_ROTATE_270:
+                    bitmap = rotateImage(bitmap, 270);
+                    break;
+
+                case ExifInterface.ORIENTATION_UNDEFINED:
+                    bitmap = rotateImage(bitmap,90);
+                    break;
+
+                case ExifInterface.ORIENTATION_NORMAL:
+
+                default:
+                    break;
+            }
+
+            downscaledBitmap = ImageScaler.scale(bitmap, maxImageWidth, maxImageHeight);
             downscaledBitmap.compress(Bitmap.CompressFormat.JPEG, 80, outstream);
 
             Log.d(TAG, String.format("Downscaled image dimensions: (%d, %d) %dKB",
@@ -214,9 +268,9 @@ public abstract class ImageActivity extends DooitActivity {
             imagePath = downscaledFile.getAbsolutePath();
             imageUri = FileProvider.getUriForFile(this, Constants.FILE_PROVIDER, downscaledFile);
         } catch (IOException e) {
-            Toast.makeText(this, "Unable to create temporary downscaled image file", Toast.LENGTH_LONG).show();
+            Toast.makeText(this, "Unable to do image rotation", Toast.LENGTH_LONG).show();
             Log.e(TAG, "Unable to create temporary downscaled image file", e);
-        } finally {
+        }finally {
             try {
                 if (outstream != null)
                     outstream.close();
@@ -224,6 +278,13 @@ public abstract class ImageActivity extends DooitActivity {
                 Log.e(TAG, "Failed to close outstream", e);
             }
         }
+    }
+
+    public static Bitmap rotateImage(Bitmap source, float angle) {
+        Matrix matrix = new Matrix();
+        matrix.postRotate(angle);
+        return Bitmap.createBitmap(source, 0, 0, source.getWidth(), source.getHeight(),
+                matrix, true);
     }
 
     private File createImageFile() throws IOException {
