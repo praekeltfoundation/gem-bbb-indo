@@ -1,5 +1,7 @@
 package org.gem.indo.dooit.models;
 
+import android.text.TextUtils;
+
 import com.google.gson.annotations.SerializedName;
 
 /**
@@ -18,16 +20,6 @@ public class Profile
     @SerializedName("profile_image_url")
     private String profileImageUrl;
 
-    public String getMobile ()
-    {
-        return mobile;
-    }
-
-    public void setMobile (String mobile)
-    {
-        this.mobile = mobile;
-    }
-
     public Integer getAge() {
         return age;
     }
@@ -42,6 +34,16 @@ public class Profile
 
     public void setGender(Integer gender) {
         this.gender = gender;
+    }
+
+    public String getMobile ()
+    {
+        return mobile;
+    }
+
+    public void setMobile (String mobile)
+    {
+        this.mobile = mobile;
     }
 
     public String getProfileImageUrl()
