@@ -22,6 +22,7 @@ import org.gem.indo.dooit.models.challenge.PictureChallenge;
 import org.gem.indo.dooit.models.challenge.QuizChallenge;
 import org.gem.indo.dooit.models.challenge.QuizChallengeOption;
 import org.gem.indo.dooit.models.challenge.QuizChallengeQuestion;
+import org.gem.indo.dooit.models.enums.ChallengeType;
 import org.gem.indo.dooit.views.ImageActivity;
 import org.gem.indo.dooit.views.helpers.activity.DooitActivityBuilder;
 import org.gem.indo.dooit.views.main.fragments.challenge.fragments.ChallengeFreeformFragment;
@@ -70,17 +71,17 @@ public class ChallengeActivity extends ImageActivity {
         ButterKnife.bind(this);
         Bundle args = getIntent().getExtras();
         participant = args.getParcelable(ARG_PARTICIPANT);
-        startChallenge(participant);
-        /*if (persisted.hasCurrentChallenge()) {
+        challenge = args.getParcelable(ARG_CHALLENGE);
+
+        if (persisted.hasCurrentChallenge()) {
             challenge = persisted.getCurrentChallenge();
             participant.setChallenge(challenge.getId());
             startChallenge(participant);
         }
         else{
-            participant.setId(1);
             participant.setChallenge(ChallengeType.QUIZ.getValue());
             startChallenge(participant);
-        }*/
+        }
     }
 
     /*************************
