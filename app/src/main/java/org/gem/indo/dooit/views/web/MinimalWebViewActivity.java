@@ -238,7 +238,7 @@ public class MinimalWebViewActivity extends DooitActivity {
     }
 
     @Override
-    protected String getScreenName() {
+    public String getScreenName() {
         if (!TextUtils.isEmpty(screenName))
             return screenName;
         return super.getScreenName();
