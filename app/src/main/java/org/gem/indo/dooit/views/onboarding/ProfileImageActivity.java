@@ -106,7 +106,9 @@ public class ProfileImageActivity extends ImageActivity {
             @Override
             public void call(Response<EmptyResponse> response) {
                 User user = persisted.getCurrentUser();
-                user.getProfile().setProfileImageUrl(getImageUri().toString());
+                if(user != null && user.getProfile() != null && getImageUri() != null) {
+                    user.getProfile().setProfileImageUrl(getImageUri().toString());
+                }
                 persisted.setCurrentUser(user);
                 MainActivity.Builder.create(ProfileImageActivity.this).startActivityClearTop();
             }
