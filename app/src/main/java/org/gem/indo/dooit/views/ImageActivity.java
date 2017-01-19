@@ -47,6 +47,7 @@ public abstract class ImageActivity extends DooitActivity {
     private static final int maxImageWidth = 1024;
     private static final int maxImageHeight = 1024;
 
+    private boolean gallery = false;
     private AlertDialog imageChooser;
     private Uri imageUri;
     private String imagePath;
@@ -72,6 +73,7 @@ public abstract class ImageActivity extends DooitActivity {
                         break;
                     case GALLERY:
                         startGallery();
+                        gallery = true;
                         break;
                     case CANCEL:
                         dialog.dismiss();
@@ -253,7 +255,9 @@ public abstract class ImageActivity extends DooitActivity {
                     break;
 
                 case ExifInterface.ORIENTATION_UNDEFINED:
-                    bitmap = rotateImage(bitmap,90);
+                    if (gallery == false)
+                        bitmap = rotateImage(bitmap,90);
+
                     break;
 
                 case ExifInterface.ORIENTATION_NORMAL:
