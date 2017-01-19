@@ -47,7 +47,6 @@ public abstract class ImageActivity extends DooitActivity {
     private static final int maxImageWidth = 1024;
     private static final int maxImageHeight = 1024;
 
-    private boolean gallery = false;
     private AlertDialog imageChooser;
     private Uri imageUri;
     private String imagePath;
@@ -73,7 +72,6 @@ public abstract class ImageActivity extends DooitActivity {
                         break;
                     case GALLERY:
                         startGallery();
-                        gallery = true;
                         break;
                     case CANCEL:
                         dialog.dismiss();
@@ -147,8 +145,10 @@ public abstract class ImageActivity extends DooitActivity {
         switch (requestCode) {
             case RequestCodes.RESPONSE_CAMERA_REQUEST_PROFILE_IMAGE:
                 revokeCameraPermissions();
+                handleImageResult(data,RequestCodes.RESPONSE_CAMERA_REQUEST_PROFILE_IMAGE);
+                break;
             case RequestCodes.RESPONSE_GALLERY_REQUEST_PROFILE_IMAGE:
-                handleImageResult(data);
+                handleImageResult(data,RequestCodes.RESPONSE_GALLERY_REQUEST_PROFILE_IMAGE);
                 break;
             default:
                 super.onActivityResult(requestCode, resultCode, data);
@@ -156,7 +156,7 @@ public abstract class ImageActivity extends DooitActivity {
         }
     }
 
-    private void handleImageResult(Intent data) {
+    private void handleImageResult(Intent data, int requestCodes) {
         // When the camera is provided with an existing file beforehand, the intent is null. The
         // pre-created image can be found via `imageUri`.
         if (data != null) {
@@ -168,33 +168,7 @@ public abstract class ImageActivity extends DooitActivity {
                     ContentResolver cR = this.getContentResolver();
                     Bitmap bitmap = (Bitmap) data.getExtras().get("data");
 
-                    ExifInterface ei = new ExifInterface(imagePath);
-                    int orientation = ei.getAttributeInt(ExifInterface.TAG_ORIENTATION,
-                            ExifInterface.ORIENTATION_UNDEFINED);
-
-                    switch(orientation) {
-
-                        case ExifInterface.ORIENTATION_ROTATE_90:
-                            bitmap = rotateImage(bitmap, 90);
-                            break;
-
-                        case ExifInterface.ORIENTATION_ROTATE_180:
-                            bitmap = rotateImage(bitmap, 180);
-                            break;
-
-                        case ExifInterface.ORIENTATION_ROTATE_270:
-                            bitmap = rotateImage(bitmap, 270);
-                            break;
-
-                        case ExifInterface.ORIENTATION_UNDEFINED:
-                            bitmap = rotateImage(bitmap,90);
-                            break;
-
-                        case ExifInterface.ORIENTATION_NORMAL:
-
-                        default:
-                            break;
-                    }
+                    bitmap = checkScreenOrientation(imagePath,bitmap,requestCodes);
 
                     Log.d("IMAGE_TESTS", "Bitmap size : " + bitmap.getByteCount());
                     imageUri = Uri.parse(MediaStore.Images.Media.insertImage(cR, bitmap, "", ""));
@@ -208,8 +182,7 @@ public abstract class ImageActivity extends DooitActivity {
             // MediaUriHelper does not work when uri points to temp image file
             imagePath = MediaUriHelper.getPath(this, imageUri);
 
-        checkImageForRotation();
-        //downscaleImage();
+        checkImageForRotation(requestCodes);
 
         ContentResolver cR = this.getContentResolver();
         onImageResult(cR.getType(imageUri), imageUri, imagePath);
@@ -220,14 +193,14 @@ public abstract class ImageActivity extends DooitActivity {
      * and imagePath.
      */
 
-    private void checkImageForRotation() {
-        FileOutputStream outstream = null;
+    private void checkImageForRotation(int requestCodes) {
+        FileOutputStream outStream = null;
         BitmapFactory.Options options = new BitmapFactory.Options();
         options.inPreferredConfig = Bitmap.Config.ARGB_8888;
 
         try {
             File downscaledFile = createImageFile();
-            outstream = new FileOutputStream(downscaledFile);
+            outStream = new FileOutputStream(downscaledFile);
             Bitmap downscaledBitmap = null;
             Bitmap bitmap = BitmapFactory.decodeFile(imagePath, options);
 
@@ -236,38 +209,10 @@ public abstract class ImageActivity extends DooitActivity {
                 return;
             }
 
-            ExifInterface ei = new ExifInterface(imagePath);
-            int orientation = ei.getAttributeInt(ExifInterface.TAG_ORIENTATION,
-                    ExifInterface.ORIENTATION_UNDEFINED);
-
-            switch(orientation) {
-
-                case ExifInterface.ORIENTATION_ROTATE_90:
-                    bitmap = rotateImage(bitmap, 90);
-                    break;
-
-                case ExifInterface.ORIENTATION_ROTATE_180:
-                    bitmap = rotateImage(bitmap, 180);
-                    break;
-
-                case ExifInterface.ORIENTATION_ROTATE_270:
-                    bitmap = rotateImage(bitmap, 270);
-                    break;
-
-                case ExifInterface.ORIENTATION_UNDEFINED:
-                    if (gallery == false)
-                        bitmap = rotateImage(bitmap,90);
-
-                    break;
-
-                case ExifInterface.ORIENTATION_NORMAL:
-
-                default:
-                    break;
-            }
+            bitmap = checkScreenOrientation(imagePath,bitmap,requestCodes);
 
             downscaledBitmap = ImageScaler.scale(bitmap, maxImageWidth, maxImageHeight);
-            downscaledBitmap.compress(Bitmap.CompressFormat.JPEG, 80, outstream);
+            downscaledBitmap.compress(Bitmap.CompressFormat.JPEG, 80, outStream);
 
             Log.d(TAG, String.format("Downscaled image dimensions: (%d, %d) %dKB",
                     downscaledBitmap.getWidth(), downscaledBitmap.getHeight(), downscaledBitmap.getByteCount() / 1024));
@@ -280,8 +225,8 @@ public abstract class ImageActivity extends DooitActivity {
             Log.e(TAG, "Unable to create temporary downscaled image file", e);
         }finally {
             try {
-                if (outstream != null)
-                    outstream.close();
+                if (outStream != null)
+                    outStream.close();
             } catch (IOException e) {
                 Log.e(TAG, "Failed to close outstream", e);
             }
@@ -302,6 +247,42 @@ public abstract class ImageActivity extends DooitActivity {
         File image = File.createTempFile(filename, ".jpg", storageDir);
 
         return image;
+    }
+
+    private Bitmap checkScreenOrientation(String imageP, Bitmap bitmap, int requestCodes){
+        try {
+            ExifInterface ei = new ExifInterface(imageP);
+            int orientation = ei.getAttributeInt(ExifInterface.TAG_ORIENTATION,
+                    ExifInterface.ORIENTATION_UNDEFINED);
+
+            switch(orientation) {
+
+                case ExifInterface.ORIENTATION_ROTATE_90:
+                    bitmap = rotateImage(bitmap, 90);
+                    break;
+
+                case ExifInterface.ORIENTATION_ROTATE_180:
+                    bitmap = rotateImage(bitmap, 180);
+                    break;
+
+                case ExifInterface.ORIENTATION_ROTATE_270:
+                    bitmap = rotateImage(bitmap, 270);
+                    break;
+
+                case ExifInterface.ORIENTATION_UNDEFINED:
+                    if(requestCodes != RequestCodes.RESPONSE_GALLERY_REQUEST_PROFILE_IMAGE)
+                        bitmap = rotateImage(bitmap, 90);
+                    break;
+
+                case ExifInterface.ORIENTATION_NORMAL:
+
+                default:
+                    break;
+            }
+        }catch (IOException io){
+
+        }
+        return bitmap;
     }
 
     @Override
