@@ -9,3 +9,4 @@
 
 
 - Right nav arrow only shows when there is more than one Goal
+- Made margins of toolbar elements on profile screen equidistant
