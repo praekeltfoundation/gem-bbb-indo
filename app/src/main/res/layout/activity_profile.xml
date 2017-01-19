@@ -29,10 +29,10 @@
 
             <com.facebook.drawee.view.SimpleDraweeView
                 android:id="@+id/activity_profile_image"
-                android:layout_width="130dp"
-                android:layout_height="130dp"
+                android:layout_width="@dimen/profile_activity_profile_image_size"
+                android:layout_height="@dimen/profile_activity_profile_image_size"
                 android:layout_gravity="center_horizontal"
-                android:layout_marginTop="63dp"
+                android:layout_marginTop="@dimen/profile_activity_profile_image_top_margin"
                 android:background="@color/transparent"
                 app:layout_collapseMode="parallax"
                 app:layout_scrollFlags="scroll|enterAlways|enterAlwaysCollapsed"
@@ -42,11 +42,12 @@
 
             <TextView
                 android:id="@+id/toolbar_title"
-                style="@style/AppTheme.TextView.Regular.ExtraExtraLarge"
+                style="@style/AppTheme.TextView.Regular.XXXLarge"
                 fontPath="fonts/LondrinaSolid-Regular.ttf"
                 android:layout_width="match_parent"
-                android:layout_height="?attr/actionBarSize"
+                android:layout_height="@dimen/profile_activity_toolbar_height"
                 android:layout_gravity="top"
+                android:layout_marginTop="5dp"
                 android:layout_marginEnd="?attr/actionBarSize"
                 android:layout_marginStart="?attr/actionBarSize"
                 android:background="@null"
