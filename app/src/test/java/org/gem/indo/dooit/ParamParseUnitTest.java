@@ -10,6 +10,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 /**
  * Created by Wimpie Victor on 2017/01/03.
@@ -22,6 +24,16 @@ public class ParamParseUnitTest {
         ParamMatch match = ParamParser.parse("$(one) $(two) $(three)");
 
         assertEquals(3, match.count());
+    }
+
+    @Test
+    public void parse_containsParams_true() throws Exception {
+        assertTrue(ParamParser.containsParams("one $(two) three"));
+    }
+
+    @Test
+    public void parse_containsParams_false() throws Exception {
+        assertFalse(ParamParser.containsParams("one two three"));
     }
 
     @Test

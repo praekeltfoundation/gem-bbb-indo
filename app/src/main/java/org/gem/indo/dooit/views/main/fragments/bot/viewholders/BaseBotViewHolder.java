@@ -20,7 +20,12 @@ import com.facebook.drawee.view.SimpleDraweeView;
 import com.facebook.imagepipeline.request.ImageRequest;
 import com.facebook.imagepipeline.request.ImageRequestBuilder;
 
+import org.gem.indo.dooit.controllers.BotController;
+import org.gem.indo.dooit.helpers.bot.param.ParamArg;
+import org.gem.indo.dooit.helpers.bot.param.ParamMatch;
+import org.gem.indo.dooit.helpers.bot.param.ParamParser;
 import org.gem.indo.dooit.models.bot.BaseBotModel;
+import org.gem.indo.dooit.models.enums.BotParamType;
 import org.gem.indo.dooit.views.DooitActivity;
 
 /**
@@ -33,7 +38,7 @@ public abstract class BaseBotViewHolder<T extends BaseBotModel> extends Recycler
     public BaseBotViewHolder(View itemView) {
         super(itemView);
     }
-    
+
     @CallSuper
     public void populate(T model) {
         dataModel = model;
@@ -50,7 +55,8 @@ public abstract class BaseBotViewHolder<T extends BaseBotModel> extends Recycler
      */
     protected abstract void populateModel();
 
-    public void reset() {}
+    public void reset() {
+    }
 
     public Context getContext() {
         return itemView.getContext();
@@ -123,5 +129,27 @@ public abstract class BaseBotViewHolder<T extends BaseBotModel> extends Recycler
                 .setOldController(imageView.getController())
                 .build();
         imageView.setController(controller);
+    }
+
+    /**
+     * Helper to keep resolving params until all $(_) instances in a string are processed.
+     */
+    protected void keepResolving(Context context, BotController controller, BaseBotModel model) {
+        // Text may have been processed when creating a Node in Java code
+        if (model.hasProcessedText() || !model.hasText())
+            return;
+
+        String processed = model.getText(context);
+        int iterations = 50;
+        while (ParamParser.containsParams(processed) && iterations > 0) {
+            ParamMatch match = ParamParser.parse(processed);
+            if (!match.isEmpty())
+                for (ParamArg arg : match.getArgs())
+                    controller.resolveParam(model, BotParamType.byKey(arg.getKey()));
+
+            processed = match.process(model.values.getRawMap());
+            iterations--;
+        }
+        model.setProcessedText(processed);
     }
 }

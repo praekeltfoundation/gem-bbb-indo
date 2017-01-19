@@ -254,14 +254,18 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
                 feed.parse(R.raw.tip_intro, Node.class);
                 initializeBot();
                 break;
-            case SURVEY_BASELINE:
+            case SURVEY_BASELINE: {
                 feed.parse(R.raw.survey_baseline, Node.class);
-                new RequirementResolver.Builder(getContext(), BotType.SURVEY_BASELINE)
-                        .require(BotObjectType.SURVEY)
-                        .setSurveyId(persisted.loadConvoSurveyId(type))
-                        .build()
+                RequirementResolver.Builder builder = new RequirementResolver.Builder(getContext(), BotType.SURVEY_BASELINE)
+                        .require(BotObjectType.SURVEY);
+
+                if (persisted.hasConvoSurvey(type))
+                    builder.setSurveyId(persisted.loadConvoSurveyId(type));
+
+                builder.build()
                         .resolve(reqCallback);
-                break;
+            }
+            break;
         }
     }
 
