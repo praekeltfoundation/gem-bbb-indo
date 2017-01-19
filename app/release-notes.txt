@@ -1,12 +1,4 @@
 
-0.0.14
-- Fixed an issue where progress bar did not update when a deposit was made towards a goal
-- Made Goal prototype mandatory
-- Notification title is now app name
-- Implemented basic survey retrieve and submit
-- Added WebView descriptive screen names for analytics
-- Fix camera crash during Goal Edit conversation
-
 0.0.15
 
 - Fixed crash in Bot
