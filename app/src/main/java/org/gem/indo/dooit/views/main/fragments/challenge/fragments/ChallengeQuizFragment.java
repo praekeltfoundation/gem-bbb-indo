@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -18,6 +19,8 @@ import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.github.jinatonic.confetti.CommonConfetti;
 
 import org.gem.indo.dooit.DooitApplication;
 import org.gem.indo.dooit.R;
@@ -278,6 +281,7 @@ public class ChallengeQuizFragment extends Fragment implements OnOptionChangeLis
         updateProgressCounter(position);
         if (position == mAdapter.getCount() - 1) {
             checkButton.setText(R.string.label_done);
+            CommonConfetti.rainingConfetti(((ViewGroup)this.getView().getParent()), new int[] { Color.RED, Color.YELLOW }).oneShot();
         } else {
             checkButton.setText(R.string.label_check_result);
         }
