@@ -145,10 +145,10 @@ public abstract class ImageActivity extends DooitActivity {
         switch (requestCode) {
             case RequestCodes.RESPONSE_CAMERA_REQUEST_PROFILE_IMAGE:
                 revokeCameraPermissions();
-                handleImageResult(data,RequestCodes.RESPONSE_CAMERA_REQUEST_PROFILE_IMAGE);
+                handleImageResult(data, RequestCodes.RESPONSE_CAMERA_REQUEST_PROFILE_IMAGE);
                 break;
             case RequestCodes.RESPONSE_GALLERY_REQUEST_PROFILE_IMAGE:
-                handleImageResult(data,RequestCodes.RESPONSE_GALLERY_REQUEST_PROFILE_IMAGE);
+                handleImageResult(data, RequestCodes.RESPONSE_GALLERY_REQUEST_PROFILE_IMAGE);
                 break;
             default:
                 super.onActivityResult(requestCode, resultCode, data);
@@ -168,7 +168,7 @@ public abstract class ImageActivity extends DooitActivity {
                     ContentResolver cR = this.getContentResolver();
                     Bitmap bitmap = (Bitmap) data.getExtras().get("data");
 
-                    bitmap = checkScreenOrientation(imagePath,bitmap,requestCodes);
+                    bitmap = checkScreenOrientation(imagePath, bitmap, requestCodes);
 
                     Log.d("IMAGE_TESTS", "Bitmap size : " + bitmap.getByteCount());
                     imageUri = Uri.parse(MediaStore.Images.Media.insertImage(cR, bitmap, "", ""));
@@ -182,7 +182,7 @@ public abstract class ImageActivity extends DooitActivity {
             // MediaUriHelper does not work when uri points to temp image file
             imagePath = MediaUriHelper.getPath(this, imageUri);
 
-        checkImageForRotation(requestCodes);
+        processImage(requestCodes);
 
         ContentResolver cR = this.getContentResolver();
         onImageResult(cR.getType(imageUri), imageUri, imagePath);
@@ -193,7 +193,7 @@ public abstract class ImageActivity extends DooitActivity {
      * and imagePath.
      */
 
-    private void checkImageForRotation(int requestCodes) {
+    private void processImage(int requestCodes) {
         FileOutputStream outStream = null;
         BitmapFactory.Options options = new BitmapFactory.Options();
         options.inPreferredConfig = Bitmap.Config.ARGB_8888;
@@ -201,21 +201,21 @@ public abstract class ImageActivity extends DooitActivity {
         try {
             File downscaledFile = createImageFile();
             outStream = new FileOutputStream(downscaledFile);
-            Bitmap downscaledBitmap = null;
             Bitmap bitmap = BitmapFactory.decodeFile(imagePath, options);
 
             if (bitmap == null) {
                 Log.e(TAG, "Failed to load existing bitmap during downscale");
                 return;
             }
-
-            bitmap = checkScreenOrientation(imagePath,bitmap,requestCodes);
-
-            downscaledBitmap = ImageScaler.scale(bitmap, maxImageWidth, maxImageHeight);
-            downscaledBitmap.compress(Bitmap.CompressFormat.JPEG, 80, outStream);
+            //Here the orientation is checked and corrected if needed
+            bitmap = checkScreenOrientation(imagePath, bitmap, requestCodes);
+            //Here the image is scaled to an acceptable size
+            bitmap = ImageScaler.scale(bitmap, maxImageWidth, maxImageHeight);
+            //file is written out
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 80, outStream);
 
             Log.d(TAG, String.format("Downscaled image dimensions: (%d, %d) %dKB",
-                    downscaledBitmap.getWidth(), downscaledBitmap.getHeight(), downscaledBitmap.getByteCount() / 1024));
+                    bitmap.getWidth(), bitmap.getHeight(), bitmap.getByteCount() / 1024));
 
             // Set uri and filepath to new downscaled image
             imagePath = downscaledFile.getAbsolutePath();
@@ -223,7 +223,7 @@ public abstract class ImageActivity extends DooitActivity {
         } catch (IOException e) {
             Toast.makeText(this, "Unable to do image rotation", Toast.LENGTH_LONG).show();
             Log.e(TAG, "Unable to create temporary downscaled image file", e);
-        }finally {
+        } finally {
             try {
                 if (outStream != null)
                     outStream.close();
@@ -249,28 +249,25 @@ public abstract class ImageActivity extends DooitActivity {
         return image;
     }
 
-    private Bitmap checkScreenOrientation(String imageP, Bitmap bitmap, int requestCodes){
+    private Bitmap checkScreenOrientation(String imageP, Bitmap bitmap, int requestCodes) {
         try {
             ExifInterface ei = new ExifInterface(imageP);
             int orientation = ei.getAttributeInt(ExifInterface.TAG_ORIENTATION,
                     ExifInterface.ORIENTATION_UNDEFINED);
 
-            switch(orientation) {
+            switch (orientation) {
 
                 case ExifInterface.ORIENTATION_ROTATE_90:
-                    bitmap = rotateImage(bitmap, 90);
-                    break;
+                   return rotateImage(bitmap, 90);
 
                 case ExifInterface.ORIENTATION_ROTATE_180:
-                    bitmap = rotateImage(bitmap, 180);
-                    break;
+                    return rotateImage(bitmap, 180);
 
                 case ExifInterface.ORIENTATION_ROTATE_270:
-                    bitmap = rotateImage(bitmap, 270);
-                    break;
+                    return rotateImage(bitmap, 270);
 
                 case ExifInterface.ORIENTATION_UNDEFINED:
-                    if(requestCodes != RequestCodes.RESPONSE_GALLERY_REQUEST_PROFILE_IMAGE)
+                    if (requestCodes != RequestCodes.RESPONSE_GALLERY_REQUEST_PROFILE_IMAGE)
                         bitmap = rotateImage(bitmap, 90);
                     break;
 
@@ -279,7 +276,7 @@ public abstract class ImageActivity extends DooitActivity {
                 default:
                     break;
             }
-        }catch (IOException io){
+        } catch (IOException io) {
 
         }
         return bitmap;
@@ -297,10 +294,10 @@ public abstract class ImageActivity extends DooitActivity {
     /**
      * Brute force grant permission to access the URI to every Activity that can respond to
      * ACTION_IMAGE_CAPTURE. Fixes `SecurityException` on API 17, 18 and 19.
-     *
+     * <p>
      * Since API 19 special permissions are not required and the uri is accessible to any app with
      * the READ_EXTERNAL_STORAGE or WRITE_EXTERNAL_STORAGE permission.
-     *
+     * <p>
      * Use this when the camera needs access to a file on the external storage. Paths associated by
      * `external-files-path` and `getExternalFilesDir`.
      *
