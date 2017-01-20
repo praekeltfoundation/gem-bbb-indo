@@ -26,6 +26,7 @@ import org.gem.indo.dooit.models.challenge.BaseChallenge;
 import org.gem.indo.dooit.views.main.fragments.MainFragment;
 import org.gem.indo.dooit.views.main.fragments.challenge.fragments.ChallengeDoneFragment;
 import org.gem.indo.dooit.views.main.fragments.challenge.fragments.ChallengeFreeformFragment;
+import org.gem.indo.dooit.views.main.fragments.challenge.fragments.ChallengeNoneFragment;
 import org.gem.indo.dooit.views.main.fragments.challenge.fragments.ChallengePictureFragment;
 import org.gem.indo.dooit.views.main.fragments.challenge.fragments.ChallengeQuizFragment;
 import org.gem.indo.dooit.views.main.fragments.challenge.fragments.ChallengeRegisterFragment;
@@ -38,6 +39,7 @@ import javax.inject.Inject;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
+import butterknife.internal.ListenerClass;
 import retrofit2.adapter.rxjava.HttpException;
 import rx.Subscription;
 import rx.functions.Action1;
@@ -99,7 +101,7 @@ public class ChallengeFragment extends MainFragment {
     }
 
     private Fragment createEmptyChildFragment(ChallengeFragmentState state) {
-        if (state == null) return null;
+        if (state == null) return new ChallengeNoneFragment();
         switch (state) {
             case FREEFORM:
                 return new ChallengeFreeformFragment();
@@ -109,6 +111,8 @@ public class ChallengeFragment extends MainFragment {
                 return new ChallengeQuizFragment();
             case REGISTER:
                 return new ChallengeRegisterFragment();
+            case NONE:
+                return new ChallengeNoneFragment();
             default:
                 return null;
         }
@@ -180,8 +184,9 @@ public class ChallengeFragment extends MainFragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+        ChallengeFragmentState page = ChallengeFragmentState.NONE;
         if (savedInstanceState != null) {
-            ChallengeFragmentState page = null;
+            page = ChallengeFragmentState.NONE;
             try {
                 page = (ChallengeFragmentState) savedInstanceState.getSerializable(ARG_PAGE);
             } catch (Exception e) {
@@ -204,6 +209,14 @@ public class ChallengeFragment extends MainFragment {
                     ft.commit();
                 }
             }
+        }
+        else {
+            FragmentTransaction ft = getChildFragmentManager().beginTransaction();
+            Fragment f = getChildFragment();
+            f = createEmptyChildFragment(page);
+            f.setArguments(savedInstanceState);
+            ft.replace(R.id.fragment_challenge_container, f, "fragment_challenge");
+            ft.commit();
         }
     }
 
@@ -277,6 +290,7 @@ public class ChallengeFragment extends MainFragment {
                 });
             }
         }else{
+
             challengeSubscription = challengeManager.retrieveCurrentChallenge(false, new DooitErrorHandler() {
                 @Override
                 public void onError(final DooitAPIError error) {

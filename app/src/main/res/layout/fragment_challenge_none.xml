@@ -7,9 +7,15 @@
 
     <TextView
         android:id="@+id/fragment_challenge_none_text"
+        fontPath="fonts/LondrinaSolid-Regular.ttf"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
+        android:layout_marginLeft="40dp"
+        android:layout_marginRight="40dp"
+        android:textAllCaps="true"
+        android:textStyle="bold"
+        android:textColor="#828282"
         android:text="@string/challenge_none_available"
         android:textAppearance="@style/AppTheme.TextView.Quiz.Title" />
 </FrameLayout>
