@@ -8,6 +8,8 @@ import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Matrix;
+import android.media.ExifInterface;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Environment;
@@ -44,7 +46,6 @@ import java.util.List;
 public abstract class ImageActivity extends DooitActivity {
 
     private static final String TAG = ImageActivity.class.getName();
-    // Same as `authorities` attribute in manifest
     private static final int maxImageWidth = 1024;
     private static final int maxImageHeight = 1024;
 
@@ -145,8 +146,10 @@ public abstract class ImageActivity extends DooitActivity {
         switch (requestCode) {
             case RequestCodes.RESPONSE_CAMERA_REQUEST_PROFILE_IMAGE:
                 revokeCameraPermissions();
+                handleImageResult(data, RequestCodes.RESPONSE_CAMERA_REQUEST_PROFILE_IMAGE);
+                break;
             case RequestCodes.RESPONSE_GALLERY_REQUEST_PROFILE_IMAGE:
-                handleImageResult(data);
+                handleImageResult(data, RequestCodes.RESPONSE_GALLERY_REQUEST_PROFILE_IMAGE);
                 break;
             default:
                 super.onActivityResult(requestCode, resultCode, data);
@@ -154,7 +157,7 @@ public abstract class ImageActivity extends DooitActivity {
         }
     }
 
-    private void handleImageResult(Intent data) {
+    private void handleImageResult(Intent data, int requestCodes) {
         // When the camera is provided with an existing file beforehand, the intent is null. The
         // pre-created image can be found via `imageUri`.
         if (data != null) {
@@ -164,9 +167,12 @@ public abstract class ImageActivity extends DooitActivity {
                 try {
                     // This is the case where the camera only returns a thumbnail
                     ContentResolver cR = this.getContentResolver();
-                    Bitmap bm = (Bitmap) data.getExtras().get("data");
-                    Log.d("IMAGE_TESTS", "Bitmap size : " + bm.getByteCount());
-                    imageUri = Uri.parse(MediaStore.Images.Media.insertImage(cR, bm, "", ""));
+                    Bitmap bitmap = (Bitmap) data.getExtras().get("data");
+
+                    bitmap = checkScreenOrientation(imagePath, bitmap, requestCodes);
+
+                    Log.d("IMAGE_TESTS", "Bitmap size : " + bitmap.getByteCount());
+                    imageUri = Uri.parse(MediaStore.Images.Media.insertImage(cR, bitmap, "", ""));
                 } catch (Throwable ex) {
 
                 }
@@ -183,7 +189,7 @@ public abstract class ImageActivity extends DooitActivity {
             }
         }
 
-        downscaleImage();
+        processImage(requestCodes);
 
         ContentResolver cR = this.getContentResolver();
         onImageResult(cR.getType(imageUri), imageUri, imagePath);
@@ -193,45 +199,52 @@ public abstract class ImageActivity extends DooitActivity {
      * Loads the image file stored in imagePath, saves a new downscaled version, and resets imageUri
      * and imagePath.
      */
-    private void downscaleImage() {
-        FileOutputStream outstream = null;
+
+    private void processImage(int requestCodes) {
+        FileOutputStream outStream = null;
         BitmapFactory.Options options = new BitmapFactory.Options();
         options.inPreferredConfig = Bitmap.Config.ARGB_8888;
 
         try {
             File downscaledFile = createImageFile();
-            outstream = new FileOutputStream(downscaledFile);
-            Bitmap downscaledBitmap = null;
-            Bitmap existingBitmap = BitmapFactory.decodeFile(imagePath, options);
+            outStream = new FileOutputStream(downscaledFile);
+            Bitmap bitmap = BitmapFactory.decodeFile(imagePath, options);
 
-            if (existingBitmap == null) {
+            if (bitmap == null) {
                 Log.e(TAG, "Failed to load existing bitmap during downscale");
                 return;
             }
-
-            Log.d(TAG, String.format("Existing image dimensions: (%d, %d) %dKB",
-                    existingBitmap.getWidth(), existingBitmap.getHeight(), existingBitmap.getByteCount() / 1024));
-
-            downscaledBitmap = ImageScaler.scale(existingBitmap, maxImageWidth, maxImageHeight);
-            downscaledBitmap.compress(Bitmap.CompressFormat.JPEG, 80, outstream);
+            //Here the orientation is checked and corrected if needed
+            bitmap = checkScreenOrientation(imagePath, bitmap, requestCodes);
+            //Here the image is scaled to an acceptable size
+            bitmap = ImageScaler.scale(bitmap, maxImageWidth, maxImageHeight);
+            //file is written out
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 80, outStream);
 
             Log.d(TAG, String.format("Downscaled image dimensions: (%d, %d) %dKB",
-                    downscaledBitmap.getWidth(), downscaledBitmap.getHeight(), downscaledBitmap.getByteCount() / 1024));
+                    bitmap.getWidth(), bitmap.getHeight(), bitmap.getByteCount() / 1024));
 
             // Set uri and filepath to new downscaled image
             imagePath = downscaledFile.getAbsolutePath();
             imageUri = FileProvider.getUriForFile(this, Constants.FILE_PROVIDER, downscaledFile);
         } catch (IOException e) {
-            Toast.makeText(this, "Unable to create temporary downscaled image file", Toast.LENGTH_LONG).show();
+            Toast.makeText(this, "Unable to do image rotation", Toast.LENGTH_LONG).show();
             Log.e(TAG, "Unable to create temporary downscaled image file", e);
         } finally {
             try {
-                if (outstream != null)
-                    outstream.close();
+                if (outStream != null)
+                    outStream.close();
             } catch (IOException e) {
                 Log.e(TAG, "Failed to close outstream", e);
             }
         }
+    }
+
+    public static Bitmap rotateImage(Bitmap source, float angle) {
+        Matrix matrix = new Matrix();
+        matrix.postRotate(angle);
+        return Bitmap.createBitmap(source, 0, 0, source.getWidth(), source.getHeight(),
+                matrix, true);
     }
 
     private File createImageFile() throws IOException {
@@ -241,6 +254,39 @@ public abstract class ImageActivity extends DooitActivity {
         File image = File.createTempFile(filename, ".jpg", storageDir);
 
         return image;
+    }
+
+    private Bitmap checkScreenOrientation(String imageP, Bitmap bitmap, int requestCodes) {
+        try {
+            ExifInterface ei = new ExifInterface(imageP);
+            int orientation = ei.getAttributeInt(ExifInterface.TAG_ORIENTATION,
+                    ExifInterface.ORIENTATION_UNDEFINED);
+
+            switch (orientation) {
+
+                case ExifInterface.ORIENTATION_ROTATE_90:
+                    return rotateImage(bitmap, 90);
+
+                case ExifInterface.ORIENTATION_ROTATE_180:
+                    return rotateImage(bitmap, 180);
+
+                case ExifInterface.ORIENTATION_ROTATE_270:
+                    return rotateImage(bitmap, 270);
+
+                case ExifInterface.ORIENTATION_UNDEFINED:
+                    if (requestCodes != RequestCodes.RESPONSE_GALLERY_REQUEST_PROFILE_IMAGE)
+                        bitmap = rotateImage(bitmap, 90);
+                    break;
+
+                case ExifInterface.ORIENTATION_NORMAL:
+
+                default:
+                    break;
+            }
+        } catch (IOException io) {
+
+        }
+        return bitmap;
     }
 
     @Override
@@ -255,10 +301,10 @@ public abstract class ImageActivity extends DooitActivity {
     /**
      * Brute force grant permission to access the URI to every Activity that can respond to
      * ACTION_IMAGE_CAPTURE. Fixes `SecurityException` on API 17, 18 and 19.
-     *
+     * <p>
      * Since API 19 special permissions are not required and the uri is accessible to any app with
      * the READ_EXTERNAL_STORAGE or WRITE_EXTERNAL_STORAGE permission.
-     *
+     * <p>
      * Use this when the camera needs access to a file on the external storage. Paths associated by
      * `external-files-path` and `getExternalFilesDir`.
      *
