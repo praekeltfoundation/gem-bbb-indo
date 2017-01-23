@@ -540,6 +540,21 @@
 
     <!-- END BOT: survey_baseline -->
 
+    <!-- BOT: survey_eatool -->
+    <string name="survey_eatool_a_1_never">Never</string>
+    <string name="survey_eatool_a_2_almost_never">Almost never</string>
+    <string name="survey_eatool_a_3_sometimes">Sometimes</string>
+    <string name="survey_eatool_a_4_often">Often</string>
+    <string name="survey_eatool_a_5_always">Always</string>
+
+    <!-- Q1 -->
+    <string name="survey_eatool_q_01">I feel appreciated by others</string>
+
+    <!-- Q2 -->
+    <string name="survey_eatool_q_02">qwertyuiop</string>
+
+    <!-- END BOT: survey_eatool -->
+
     <!--Buttons-->
     <string name="Skip">Skip</string>
     <string name="Capture">Add photo</string>
