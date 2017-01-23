@@ -77,6 +77,7 @@ public class ProfileImageActivity extends ImageActivity {
 
     @OnClick(R.id.activity_profile_image_profile_image)
     public void selectImage() {
+        crashlyticsHelper.log(this.getClass().getSimpleName(),"OnClick select image : ", "Tap to change profile image (onboarding)");
         showImageChooser();
     }
 
@@ -85,10 +86,13 @@ public class ProfileImageActivity extends ImageActivity {
         simpleDraweeView.setImageURI(imageUri);
         this.mediaType = mediaType;
         this.imagePath = imagePath;
+        crashlyticsHelper.log(this.getClass().getSimpleName(), "onImageResult" , "a successful image result (onboarding)");
     }
 
     @OnClick(R.id.activity_profile_image_next_button)
     public void uploadProfileImage() {
+        crashlyticsHelper.log(this.getClass().getSimpleName(),"uploadProfileImage", "attempting to upload image (onboarding)");
+
         // Image must be set
         if (TextUtils.isEmpty(mediaType) || TextUtils.isEmpty(imagePath)) {
             Snackbar.make(nextButton, getString(R.string.profile_image_empty_error), Snackbar.LENGTH_LONG).show();
@@ -124,6 +128,7 @@ public class ProfileImageActivity extends ImageActivity {
 
     @OnClick(R.id.activity_profile_image_skip_text_view)
     public void skip() {
+        crashlyticsHelper.log(this.getClass().getSimpleName(),"Skip", "setting profile image (onboarding)");
         MainActivity.Builder.create(ProfileImageActivity.this).startActivityClearTop();
     }
 

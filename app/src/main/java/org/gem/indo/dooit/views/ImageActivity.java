@@ -143,6 +143,8 @@ public abstract class ImageActivity extends DooitActivity {
         if (resultCode == Activity.RESULT_CANCELED)
             return;
 
+        crashlyticsHelper.log(this.getClass().getSimpleName(),"startCamera : ", "Request code from dialog: " + requestCode
+                + " resultCode : " + requestCode + String.format(" Is intent null? : %s ", data == null));
         switch (requestCode) {
             case RequestCodes.RESPONSE_CAMERA_REQUEST_PROFILE_IMAGE:
                 revokeCameraPermissions();
@@ -230,6 +232,7 @@ public abstract class ImageActivity extends DooitActivity {
         } catch (IOException e) {
             Toast.makeText(this, "Unable to do image rotation", Toast.LENGTH_LONG).show();
             Log.e(TAG, "Unable to create temporary downscaled image file", e);
+            crashlyticsHelper.log(this.getClass().getSimpleName()," processImage : ", "an IOException");
         } finally {
             try {
                 if (outStream != null)
@@ -251,9 +254,7 @@ public abstract class ImageActivity extends DooitActivity {
         String timestamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
         String filename = "JPEG_" + timestamp + "_";
         File storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
-        File image = File.createTempFile(filename, ".jpg", storageDir);
-
-        return image;
+        return File.createTempFile(filename, ".jpg", storageDir);
     }
 
     private Bitmap checkScreenOrientation(String imageP, Bitmap bitmap, int requestCodes) {

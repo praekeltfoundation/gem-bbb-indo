@@ -136,7 +136,6 @@ public class GoalEditController extends GoalBotController {
             crashlyticsHelper.log(this.getClass().getSimpleName(),"doCreate (BOT) : ",
                     "MediaURI.getPath : context: "+ context + " uri: " + imageUri);
         }
-
     }
 
     private void uploadImage(final Goal goal, String mimetype, File file, final OnAsyncListener listener) {
