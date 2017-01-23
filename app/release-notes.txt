@@ -15,4 +15,5 @@
 
 - Image no longer rotates on API 17 - 25
 - Main navigation icons updated
+- Crashlytics across the app surrounding the use of images
 
