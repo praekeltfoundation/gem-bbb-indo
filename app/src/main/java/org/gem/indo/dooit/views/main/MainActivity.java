@@ -2,6 +2,7 @@ package org.gem.indo.dooit.views.main;
 
 import android.content.Context;
 import android.content.Intent;
+import android.media.Image;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
@@ -12,6 +13,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.facebook.drawee.view.SimpleDraweeView;
@@ -45,6 +47,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.OnPageChange;
 
+import static android.view.View.GONE;
 import static org.gem.indo.dooit.views.main.MainViewPagerPositions.BOT;
 import static org.gem.indo.dooit.views.main.MainViewPagerPositions.TARGET;
 
@@ -66,6 +69,9 @@ public class MainActivity extends DooitActivity {
 
     @BindView(R.id.toolbar_title)
     TextView titleView;
+
+    @BindView(R.id.toolbar_logo_dooit_image_view)
+    ImageView dooitIcon;
 
     @BindString(R.string.main_tab_text_0)
     String BINA;
@@ -109,6 +115,7 @@ public class MainActivity extends DooitActivity {
         persisted.clearConvoTip();
 
         setSupportActionBar(toolbar);
+        dooitIcon.setVisibility(View.GONE);
         mainTabAdapter = new MainTabAdapter(getSupportFragmentManager(), this);
         viewPager.setAdapter(mainTabAdapter);
         tabLayout.setupWithViewPager(viewPager);
@@ -164,19 +171,23 @@ public class MainActivity extends DooitActivity {
 
         switch (MainViewPagerPositions.getValueOf(position)) {
             case BOT:
-                setTitle(BINA);
+                dooitIcon.setVisibility(View.VISIBLE);
+                setTitle("");
                 break;
             case TARGET:
+                dooitIcon.setVisibility(View.GONE);
                 setTitle(GOALS);
                 break;
             case CHALLENGE:
+                dooitIcon.setVisibility(View.GONE);
                 setTitle(CHALLENGE);
                 break;
             case TIPS:
+                dooitIcon.setVisibility(View.GONE);
                 setTitle(TIPS);
                 break;
             default:
-                setTitle("DOOIT");
+                dooitIcon.setVisibility(View.VISIBLE);
         }
 
         for (int i = 0; i < tabLayout.getTabCount(); i++) {
