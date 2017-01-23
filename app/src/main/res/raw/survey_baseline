@@ -30,33 +30,11 @@
         "name": "survey_baseline_q_consent_a_yes",
         "text": "$(survey_common_q_consent_a_yes)",
         "value": "1",
-        "next": "survey_baseline_q_terms_and_conditions"
+        "next": "survey_baseline_q01_occupation"
       },
       {
         "name": "survey_baseline_q_consent_a_no",
         "text": "$(survey_common_q_consent_a_no)",
-        "value": "0",
-        "next": "survey_baseline_q_outro_cancel"
-      }
-    ]
-  },
-
-
-
-  {
-    "name": "survey_baseline_q_terms_and_conditions",
-    "type": "text",
-    "text": "$(survey_common_q_terms)",
-    "answers": [
-      {
-        "name": "survey_baseline_q_terms_a_yes",
-        "text": "$(survey_common_q_terms_a_yes)",
-        "value": "1",
-        "next": "survey_baseline_q01_occupation"
-      },
-      {
-        "name": "survey_baseline_q_terms_a_no",
-        "text": "$(survey_common_q_terms_a_no)",
         "value": "0",
         "next": "survey_baseline_q_outro_cancel"
       }
@@ -129,6 +107,12 @@
         "text": "$(survey_baseline_q01_a10)",
         "value": "10",
         "next": "survey_baseline_submit"
+      },
+      {
+        "name": "survey_baseline_q01_a_skip",
+        "text": "$(survey_common_skip)",
+        "value": "999",
+        "next": "survey_baseline_submit"
       }
     ]
   },
@@ -157,6 +141,12 @@
         "text": "$(survey_baseline_q02_a03_3rdyear)",
         "value": "3",
         "next": "survey_baseline_q03_school_name"
+      },
+      {
+        "name": "survey_baseline_q02_a_skip",
+        "text": "$(survey_common_skip)",
+        "value": "999",
+        "next": "survey_baseline_submit"
       }
     ]
   },
@@ -321,6 +311,12 @@
         "text": "$(survey_baseline_q07_a07_unknown)",
         "value": "888",
         "next": "survey_baseline_q08_shared_ownership"
+      },
+      {
+        "name": "survey_baseline_q07_a_skip",
+        "text": "$(survey_common_skip)",
+        "value": "999",
+        "next": "survey_baseline_q08_shared_ownership"
       }
     ]
   },
@@ -342,6 +338,12 @@
         "name": "survey_baseline_q08_a02_no",
         "text": "$(survey_baseline_q08_a02_no)",
         "value": "0",
+        "next": "survey_baseline_q10_save"
+      },
+      {
+        "name": "survey_baseline_q08_a_skip",
+        "text": "$(survey_common_skip)",
+        "value": "999",
         "next": "survey_baseline_q10_save"
       }
     ]
@@ -389,6 +391,12 @@
         "text": "$(survey_baseline_q09_a06_1_5m)",
         "value": "6",
         "next": "survey_baseline_q10_save"
+      },
+      {
+        "name": "survey_baseline_q09_a_skip",
+        "text": "$(survey_common_skip)",
+        "value": "999",
+        "next": "survey_baseline_q10_save"
       }
     ]
   },
@@ -410,6 +418,12 @@
         "name": "survey_baseline_q10_a02_no",
         "text": "$(survey_baseline_q10_a02_no)",
         "value": "0",
+        "next": "survey_baseline_submit"
+      },
+      {
+        "name": "survey_baseline_q10_a_skip",
+        "text": "$(survey_common_skip)",
+        "value": "999",
         "next": "survey_baseline_submit"
       }
     ]
@@ -469,6 +483,12 @@
         "text": "$(survey_baseline_q11_a08_vary)",
         "value": "8",
         "next": "survey_baseline_q12_savings_where"
+      },
+      {
+        "name": "survey_baseline_q11_a_skip",
+        "text": "$(survey_common_skip)",
+        "value": "999",
+        "next": "survey_baseline_q12_savings_where"
       }
     ]
   },
@@ -514,6 +534,12 @@
         "name": "survey_baseline_q12_a06_other",
         "text": "$(survey_baseline_q12_a06_other)",
         "value": "6",
+        "next": "survey_baseline_q13_savings_3_months"
+      },
+      {
+        "name": "survey_baseline_q12_a_skip",
+        "text": "$(survey_common_skip)",
+        "value": "999",
         "next": "survey_baseline_q13_savings_3_months"
       }
     ]
@@ -573,6 +599,12 @@
         "text": "$(survey_baseline_q13_a08_gt_400k)",
         "value": "8",
         "next": "survey_baseline_q14_saving_education"
+      },
+      {
+        "name": "survey_baseline_q13_a_skip",
+        "text": "$(survey_common_skip)",
+        "value": "999",
+        "next": "survey_baseline_q14_saving_education"
       }
     ]
   },
@@ -594,6 +626,12 @@
         "name": "survey_baseline_q14_a02_no",
         "text": "$(survey_baseline_q14_a02_no)",
         "value": "0",
+        "next": "survey_baseline_q15_job_hunt"
+      },
+      {
+        "name": "survey_baseline_q14_a_skip",
+        "text": "$(survey_common_skip)",
+        "value": "999",
         "next": "survey_baseline_q15_job_hunt"
       }
     ]
@@ -617,6 +655,12 @@
         "text": "$(survey_baseline_q15_a02_no)",
         "value": "0",
         "next": "survey_baseline_q16_emergencies"
+      },
+      {
+        "name": "survey_baseline_q15_a_skip",
+        "text": "$(survey_common_skip)",
+        "value": "999",
+        "next": "survey_baseline_q16_emergencies"
       }
     ]
   },
@@ -637,6 +681,12 @@
         "name": "survey_baseline_q16_a02_no",
         "text": "$(survey_baseline_q16_a02_no)",
         "value": "0",
+        "next": "survey_baseline_q17_invest"
+      },
+      {
+        "name": "survey_baseline_q16_a_skip",
+        "text": "$(survey_common_skip)",
+        "value": "999",
         "next": "survey_baseline_q17_invest"
       }
     ]
@@ -660,6 +710,12 @@
         "text": "$(survey_baseline_q17_a02_no)",
         "value": "0",
         "next": "survey_baseline_q18_family"
+      },
+      {
+        "name": "survey_baseline_q17_a_skip",
+        "text": "$(survey_common_skip)",
+        "value": "999",
+        "next": "survey_baseline_q18_family"
       }
     ]
   },
@@ -681,6 +737,12 @@
         "name": "survey_baseline_q18_a02_no",
         "text": "$(survey_baseline_q18_a02_no)",
         "value": "0",
+        "next": "survey_baseline_q19_clothes_food"
+      },
+      {
+        "name": "survey_baseline_q18_a_skip",
+        "text": "$(survey_common_skip)",
+        "value": "999",
         "next": "survey_baseline_q19_clothes_food"
       }
     ]
@@ -704,6 +766,12 @@
         "text": "$(survey_baseline_q19_a02_no)",
         "value": "0",
         "next": "survey_baseline_q21_gadgets"
+      },
+      {
+        "name": "survey_baseline_q19_a_skip",
+        "text": "$(survey_common_skip)",
+        "value": "999",
+        "next": "survey_baseline_q21_gadgets"
       }
     ]
   },
@@ -726,6 +794,12 @@
         "text": "$(survey_baseline_q21_a02_no)",
         "value": "0",
         "next": "survey_baseline_q22_friends"
+      },
+      {
+        "name": "survey_baseline_q21_a_skip",
+        "text": "$(survey_common_skip)",
+        "value": "999",
+        "next": "survey_baseline_q22_friends"
       }
     ]
   },
@@ -746,6 +820,12 @@
         "name": "survey_baseline_q22_a02_no",
         "text": "$(survey_baseline_q22_a02_no)",
         "value": "0",
+        "next": "survey_baseline_q23_mobile_frequency"
+      },
+      {
+        "name": "survey_baseline_q22_a_skip",
+        "text": "$(survey_common_skip)",
+        "value": "999",
         "next": "survey_baseline_q23_mobile_frequency"
       }
     ]
@@ -786,6 +866,12 @@
         "name": "survey_baseline_q23_a05_day_multiple",
         "text": "$(survey_baseline_q23_a05_day_multiple)",
         "value": "5",
+        "next": "survey_baseline_q24_mobile_most_use"
+      },
+      {
+        "name": "survey_baseline_q23_a_skip",
+        "text": "$(survey_common_skip)",
+        "value": "999",
         "next": "survey_baseline_q24_mobile_most_use"
       }
     ]
@@ -833,6 +919,12 @@
         "text": "$(survey_baseline_q24_a06_other)",
         "value": "6",
         "next": "survey_baseline_q25_mobile_least_use"
+      },
+      {
+        "name": "survey_baseline_q24_a_skip",
+        "text": "$(survey_common_skip)",
+        "value": "999",
+        "next": "survey_baseline_q25_mobile_least_use"
       }
     ]
   },
@@ -878,6 +970,12 @@
         "name": "survey_baseline_q25_a06_other",
         "text": "$(survey_baseline_q25_a06_other)",
         "value": "6",
+        "next": "survey_baseline_q26_mobile_own"
+      },
+      {
+        "name": "survey_baseline_q25_a_skip",
+        "text": "$(survey_common_skip)",
+        "value": "999",
         "next": "survey_baseline_q26_mobile_own"
       }
     ]
@@ -925,6 +1023,12 @@
         "text": "$(survey_baseline_q26_a06_someone_else)",
         "value": "6",
         "next": "survey_baseline_q27_mobile_use_opinion"
+      },
+      {
+        "name": "survey_baseline_q26_a_skip",
+        "text": "$(survey_common_skip)",
+        "value": "999",
+        "next": "survey_baseline_q27_mobile_use_opinion"
       }
     ]
   },
@@ -959,6 +1063,12 @@
         "text": "$(survey_baseline_q27_1_a03_disapprove)",
         "value": "3",
         "next": "survey_baseline_q27_2_family"
+      },
+      {
+        "name": "survey_baseline_q27_1_a_skip",
+        "text": "$(survey_common_skip)",
+        "value": "999",
+        "next": "survey_baseline_q27_2_family"
       }
     ]
   },
@@ -984,6 +1094,12 @@
         "text": "$(survey_baseline_q27_2_a03_disapprove)",
         "value": "3",
         "next": "survey_baseline_q27_3_community"
+      },
+      {
+        "name": "survey_baseline_q27_2_a_skip",
+        "text": "$(survey_common_skip)",
+        "value": "999",
+        "next": "survey_baseline_q27_3_community"
       }
     ]
   },
@@ -1008,6 +1124,12 @@
         "name": "survey_baseline_q27_3_a03_disapprove",
         "text": "$(survey_baseline_q27_3_a03_disapprove)",
         "value": "3",
+        "next": "survey_baseline_q28_mobile_credit"
+      },
+      {
+        "name": "survey_baseline_q27_3_a_skip",
+        "text": "$(survey_common_skip)",
+        "value": "999",
         "next": "survey_baseline_q28_mobile_credit"
       }
     ]
@@ -1055,6 +1177,12 @@
         "text": "$(survey_baseline_q28_a06_gt_45k)",
         "value": "6",
         "next": "survey_baseline_q29_assets"
+      },
+      {
+        "name": "survey_baseline_q28_a_skip",
+        "text": "$(survey_common_skip)",
+        "value": "999",
+        "next": "survey_baseline_q29_assets"
       }
     ]
   },
@@ -1083,6 +1211,12 @@
         "text": "$(survey_baseline_q29_1_a01_no)",
         "value": "0",
         "next": "survey_baseline_q29_2_laptop"
+      },
+      {
+        "name": "survey_baseline_q29_1_a_skip",
+        "text": "$(survey_common_skip)",
+        "value": "999",
+        "next": "survey_baseline_q29_2_laptop"
       }
     ]
   },
@@ -1101,6 +1235,12 @@
         "name": "survey_baseline_q29_2_s02_no",
         "text": "$(survey_baseline_q29_2_s02_no)",
         "value": "0",
+        "next": "survey_baseline_q29_3_mobile_no_data"
+      },
+      {
+        "name": "survey_baseline_q29_2_a_skip",
+        "text": "$(survey_common_skip)",
+        "value": "999",
         "next": "survey_baseline_q29_3_mobile_no_data"
       }
     ]
@@ -1121,6 +1261,12 @@
         "text": "$(survey_baseline_q29_3_s02_no)",
         "value": "0",
         "next": "survey_baseline_q29_4_mobile_data"
+      },
+      {
+        "name": "survey_baseline_q29_3_a_skip",
+        "text": "$(survey_common_skip)",
+        "value": "999",
+        "next": "survey_baseline_q29_4_mobile_data"
       }
     ]
   },
@@ -1139,6 +1285,13 @@
         "name": "survey_baseline_q29_4_s02_no",
         "text": "$(survey_baseline_q29_4_s02_no)",
         "value": "0",
+        "next": "survey_baseline_submit"
+      }
+    ,
+      {
+        "name": "survey_baseline_q29_4_a_skip",
+        "text": "$(survey_common_skip)",
+        "value": "999",
         "next": "survey_baseline_submit"
       }
     ]
