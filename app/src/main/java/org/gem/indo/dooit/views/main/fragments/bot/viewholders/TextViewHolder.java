@@ -8,13 +8,8 @@ import android.widget.TextView;
 
 import org.gem.indo.dooit.DooitApplication;
 import org.gem.indo.dooit.R;
-import org.gem.indo.dooit.controllers.BotController;
 import org.gem.indo.dooit.helpers.Persisted;
-import org.gem.indo.dooit.helpers.bot.param.ParamArg;
-import org.gem.indo.dooit.helpers.bot.param.ParamMatch;
-import org.gem.indo.dooit.helpers.bot.param.ParamParser;
 import org.gem.indo.dooit.models.bot.Node;
-import org.gem.indo.dooit.models.enums.BotParamType;
 import org.gem.indo.dooit.views.main.fragments.bot.adapters.BotAdapter;
 
 import javax.inject.Inject;
@@ -66,16 +61,7 @@ public class TextViewHolder extends BaseBotViewHolder<Node> {
 
     @Override
     protected void populateModel() {
-        // Text may have been processed when creating a Node in Java code
-        if (!dataModel.hasProcessedText() && dataModel.hasText()) {
-            ParamMatch args = ParamParser.parse(dataModel.getText(getContext()));
-            if (!args.isEmpty() && botAdapter.hasController()) {
-                BotController cb = botAdapter.getController();
-                for (ParamArg arg : args.getArgs())
-                    cb.resolveParam(dataModel, BotParamType.byKey(arg.getKey()));
-            }
-            dataModel.setProcessedText(args.process(dataModel.values.getRawMap()));
-        }
+        keepResolving(getContext(), botAdapter.getController(), dataModel);
     }
 
     @Override

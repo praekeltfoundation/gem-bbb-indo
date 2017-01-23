@@ -1,8 +1,32 @@
 [
   {
-    "name": "goal_add_q_greeting",
+    "name": "goal_add_q_greeting_username",
     "type": "text",
-    "text": "$(goal_add_q_greeting)",
+    "text": "$(goal_add_q_greeting_username)",
+    "autoNext": "goal_add_q_first_name"
+  },
+  {
+    "name": "goal_add_q_first_name",
+    "type": "text",
+    "text": "$(goal_add_q_first_name)",
+    "next": "goal_add_q_greeting_preferred_name",
+    "autoAnswer": "goal_add_user_firstname",
+    "answers": [
+      {
+        "name": "goal_add_user_firstname",
+        "type": "inlineText",
+        "onAnswerInput": "$(user.first_name)",
+        "nextOnFinish": "goal_add_q_greeting_preferred_name",
+        "inlineEditHint": "$(type_name_hint)"
+      }
+    ]
+  },
+
+
+  {
+    "name": "goal_add_q_greeting_preferred_name",
+    "type": "text",
+    "text": "$(goal_add_q_greeting_preferred_name)",
     "answers": [
       {
         "name": "goal_add_a_greeting_1",
@@ -30,32 +54,8 @@
     "name": "goal_add_ask_goal_gallery",
     "type": "goalGallery",
     "text": "",
-    "next": "goal_add_q_ask_amount",
-    "answers": [
-      {
-        "name": "goal_add_custom",
-        "next": "goal_add_q_goal_name",
-        "text": "$(goal_add_custom)",
-        "removeOnSelect": "goal_add_ask_goal_gallery"
-      }
-    ]
+    "next": "goal_add_q_goal_name"
   },
-
-
-
-  {
-    "name": "goal_add_q_goal_prototype_selected",
-    "type": "text",
-    "text": "$(goal_add_q_goal_prototype_selected)",
-    "answers": [
-      {
-        "name": "goal_add_a_goal_prototype_target",
-        "text": "$(goal_add_a_goal_prototype_target)",
-        "next": "goal_add_q_ask_amount"
-      }
-    ]
-  },
-
 
 
   {
@@ -217,12 +217,12 @@
       {
         "name": "changeDate",
         "text": "$(changeDate)",
-        "next": "askGoalDate"
+        "next": "goal_add_q_change_date"
       },
       {
         "name": "changeAmount",
         "text": "$(changeAmount)",
-        "next": "askGoalAmount"
+        "next": "goal_add_q_change_target"
       },
       {
         "name": "startOver",
@@ -232,6 +232,38 @@
     ]
   },
 
+
+
+  {
+    "name": "goal_add_q_change_date",
+    "type": "blank",
+    "autoAnswer": "goalDate",
+    "answers": [
+      {
+        "name": "goalDate",
+        "nextOnFinish": "goal_add_q_verify",
+        "type": "inlineDate",
+        "inlineEditHint": "$(type_date_hint)"
+      }
+    ]
+  },
+
+
+
+  {
+    "name": "goal_add_q_change_target",
+    "type": "blank",
+    "autoAnswer": "goal_amount",
+    "answers": [
+      {
+        "name": "goal_amount",
+        "nextOnFinish": "goal_add_q_verify",
+        "type": "inlineCurrency",
+        "typeOnFinish": "textCurrency",
+        "inlineEditHint": "$(type_currency_hint)"
+      }
+    ]
+  },
 
 
 

@@ -2,6 +2,7 @@ package org.gem.indo.dooit.controllers.goal;
 
 import android.app.Activity;
 import android.net.Uri;
+import android.text.TextUtils;
 
 import org.gem.indo.dooit.DooitApplication;
 import org.gem.indo.dooit.api.DooitAPIError;
@@ -82,39 +83,54 @@ public class GoalAddController extends GoalBotController {
     }
 
     @Override
+    public boolean shouldSkip(BaseBotModel model) {
+        return super.shouldSkip(model);
+    }
+
+    @Override
     public void onDone(Map<String, Answer> answerLog) {
 
     }
 
     private void doPopulate(Map<String, Answer> answerLog) {
-        if (answerLog.containsKey("goal_add_ask_goal_gallery")) {
-            // Predefined Goal branch
-            Answer answer = answerLog.get("goal_add_ask_goal_gallery");
+        // Goal Prototype is mandatory, but can still be empty if no prototypes were set up on the
+        // server.
+        Answer protoAnswer = answerLog.get("goal_add_ask_goal_gallery");
 
-            goal.setPrototypeId(answer.values.getLong(BotParamType.GOAL_PROTO_ID.getKey()));
-            goal.setName(answer.values.getString(BotParamType.GOAL_PROTO_NAME.getKey()));
-            goal.setLocalImageUri(answer.values.getString(BotParamType.GOAL_PROTO_IMAGE_URL.getKey()));
-            goal.setImageFromProto(true);
-        } else {
-            // Custom Goal branch
-            goal.setName(answerLog.get("goal_name").getValue());
-        }
+        // Prototype ID
+        if (protoAnswer != null)
+            goal.setPrototypeId(protoAnswer.values.getLong(BotParamType.GOAL_PROTO_ID.getKey()));
+
+        // Goal Name
+        String name = answerLog.get("goal_name").getValue();
+        if (TextUtils.isEmpty(name))
+            if (protoAnswer != null)
+                goal.setName(protoAnswer.values.getString(BotParamType.GOAL_PROTO_NAME.getKey()));
+            else
+                goal.setName("");
+        else
+            goal.setName(name);
 
         goal.setTarget(Float.parseFloat(answerLog.get("goal_amount").getValue()));
         goal.setStartDate(LocalDate.now());
         goal.setEndDate(DateTimeFormat.forPattern("yyyy-MM-dd")
                 .parseLocalDate(answerLog.get("goalDate").getValue().substring(0, 10)));
 
+        // User has existing savings
         if (answerLog.containsKey("hasSavedY"))
             goal.createTransaction(Double.parseDouble(answerLog.get("priorSaveAmount").getValue()));
 
-        // Find Image
+        // Goal Image
         if (answerLog.containsKey("goal_add_a_camera")) {
             goal.setLocalImageUri(answerLog.get("goal_add_a_camera").getValue());
             goal.setImageFromProto(false);
         } else if (answerLog.containsKey("goal_add_a_gallery")) {
             goal.setLocalImageUri(answerLog.get("goal_add_a_gallery").getValue());
             goal.setImageFromProto(false);
+        } else if (protoAnswer != null) {
+            // Skipped; use Goal Prototype image
+            goal.setLocalImageUri(protoAnswer.values.getString(BotParamType.GOAL_PROTO_IMAGE_URL.getKey()));
+            goal.setImageFromProto(true);
         }
 
         goal.calculateFields();

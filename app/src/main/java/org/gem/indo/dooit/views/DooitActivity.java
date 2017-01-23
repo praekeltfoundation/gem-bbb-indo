@@ -119,7 +119,7 @@ public abstract class DooitActivity extends AppCompatActivity implements Network
             Log.w(this.getClass().getName(), "Analytics tracker not instantiated");
     }
 
-    protected String getScreenName() {
+    public String getScreenName() {
         return this.getClass().getSimpleName().replaceAll("Activity|Fragment", "");
     }
 

@@ -1,19 +1,16 @@
+0.0.15
 
-- Main page swiping navigation was disabled
-- Option to return to register page from login
-- Validation feedback on information changes in settings
-- Formatting currency input in bot
-- Fixes phone status bar colour
-- Fixed Favouriting functionality for the tips in Webview
-- All Tips list now default screen
-- Removed sharing from Terms & Conditions
-- Implemented back button functionality for main screen pages
-- Redirecting user to Login when token is invalid
-- Users can now Deposit and Withdraw from a reached Goal
-- Clearing Bot Challenge when Challenge expires
-- Implemented Campaign Analytics
-- Fixed an issue where progress bar did not update when a deposit was made towards a goal
-- Notification title is now app name
-- Implemented basic survey retrieve and submit
-- Quiz close (X) works as expected
-- ActionBar's title is set to the current fragment's name.
+- Fixed crash in Bot
+- Inserting user's preferred name into survey notification
+- Inserting user's preferred name into survey conversation
+- Notifications now use an expandable style
+- Implemented survey submission
+- Quiz has a visible scrollbar
+- Right nav arrow only shows when there is more than one Goal
+- Made margins of toolbar elements on profile screen equidistant
+- Goal add conversation now allows user to change date or amount
+
+0.0.16
+
+- Image no longer rotates on API 17 - 25
+- Main navigation icons updated

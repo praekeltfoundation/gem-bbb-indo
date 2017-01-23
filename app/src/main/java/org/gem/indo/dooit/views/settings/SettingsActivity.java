@@ -41,6 +41,9 @@ import butterknife.OnClick;
  */
 public class SettingsActivity extends DooitActivity {
 
+    private static final String SCREEN_NAME_TERMS = "Terms & Conditions";
+    private static final String SCREEN_NAME_PRIVACY = "Privacy Policy";
+
     @BindView(R.id.activity_settings)
     View background;
 
@@ -165,6 +168,7 @@ public class SettingsActivity extends DooitActivity {
         MinimalWebViewActivity.Builder.create(this)
                 //.setTitle(getString(org.gem.indo.dooit.R.string.title_activity_terms_and_conditions))
                 .setUrl(Constants.TERMS_URL)
+                .setScreenName(SCREEN_NAME_TERMS)
                 .startActivity();
     }
 
@@ -188,6 +192,7 @@ public class SettingsActivity extends DooitActivity {
         MinimalWebViewActivity.Builder.create(this)
                 //.setTitle(getString(org.gem.indo.dooit.R.string.title_activity_privacy_policy))
                 .setUrl(Constants.PRIVACY_URL)
+                .setScreenName(SCREEN_NAME_PRIVACY)
                 .startActivity();
     }
 

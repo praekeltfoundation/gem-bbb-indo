@@ -151,12 +151,16 @@ public abstract class GoalBotController extends DooitBotController {
             case GOAL_TARGET:
                 goal.setTarget(Double.parseDouble(answer.getValue()));
                 break;
+            default:
+                super.onAnswerInput(inputType, answer);
         }
     }
 
     @Override
     public boolean shouldSkip(BaseBotModel model) {
         if (model.getCall() == BotCallType.ADD_BADGE && !goal.hasNewBadges())
+            return true;
+        else if (model.getMessageType() == BotMessageType.GOALGALLERY && prototypes.isEmpty())
             return true;
         else
             return super.shouldSkip(model);

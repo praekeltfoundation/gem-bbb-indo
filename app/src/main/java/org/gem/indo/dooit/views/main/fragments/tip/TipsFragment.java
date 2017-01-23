@@ -20,11 +20,14 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.AutoCompleteTextView;
 import android.widget.TextView;
 
+import com.google.android.gms.analytics.Tracker;
+
+import org.gem.indo.dooit.DooitApplication;
 import org.gem.indo.dooit.R;
 import org.gem.indo.dooit.api.managers.TipManager;
 import org.gem.indo.dooit.helpers.SquiggleBackgroundHelper;
 import org.gem.indo.dooit.models.Tip;
-import org.gem.indo.dooit.views.main.MainActivity;
+import org.gem.indo.dooit.views.DooitActivity;
 import org.gem.indo.dooit.views.main.fragments.tip.adapters.TipsAutoCompleteAdapter;
 import org.gem.indo.dooit.views.main.fragments.tip.adapters.TipsTabAdapter;
 
@@ -74,6 +77,9 @@ public class TipsFragment extends Fragment implements OnTipsAvailableListener {
     @Inject
     TipManager tipManager;
 
+    @Inject
+    Tracker tracker;
+
     TipsTabAdapter tipsTabAdapter;
     TipsAutoCompleteAdapter searchAdapter;
 
@@ -97,13 +103,13 @@ public class TipsFragment extends Fragment implements OnTipsAvailableListener {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        ((DooitApplication) getActivity().getApplication()).component.inject(this);
         setHasOptionsMenu(true);
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-
         View view = inflater.inflate(org.gem.indo.dooit.R.layout.fragment_tips, container, false);
         ButterKnife.bind(this, view);
         return view;
@@ -194,6 +200,10 @@ public class TipsFragment extends Fragment implements OnTipsAvailableListener {
     public void onPageSelected(int position) {
         TipsViewPagerPositions pos = TipsViewPagerPositions.getValueOf(position);
         searchView.setHint(getString(pos.getSearchRes()));
+        DooitActivity activity = (DooitActivity) getActivity();
+        if(activity != null){
+            tracker.setScreenName(activity.getScreenName() + " " + TipsViewPagerPositions.getValueOf(viewPager.getCurrentItem()).name());
+        }
     }
 
     @Override
@@ -207,14 +217,8 @@ public class TipsFragment extends Fragment implements OnTipsAvailableListener {
     public void onTipsAvailable(List<Tip> tips) {
         if (this.getActivity() == null)
             return;
-
-       /* View view = this.getActivity().findViewById(R.id.fragment_tip_progress_container);
-        if (view != null) {
-            view.setVisibility(View.GONE);
-        }*/
         Log.d(TAG, "Updating Tips");
         searchAdapter.updateAllTips(tips);
-
     }
 
     protected void showFiltering(String constraint) {
