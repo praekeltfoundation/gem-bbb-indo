@@ -5,6 +5,7 @@ import android.app.Application;
 import org.gem.indo.dooit.api.DooitErrorHandler;
 import org.gem.indo.dooit.api.interfaces.GoalAPI;
 import org.gem.indo.dooit.api.responses.EmptyResponse;
+import org.gem.indo.dooit.api.responses.GoalPrototypeUsersReponse;
 import org.gem.indo.dooit.api.responses.TransactionResponse;
 import org.gem.indo.dooit.models.goal.Goal;
 import org.gem.indo.dooit.models.goal.GoalPrototype;
@@ -15,6 +16,7 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import retrofit2.http.Path;
 import rx.Observable;
 
 /**
@@ -56,5 +58,9 @@ public class GoalManager extends DooitManager {
 
     public Observable<EmptyResponse> deleteGoal(Goal goal, DooitErrorHandler errorHandler) {
         return useNetwork(goalAPI.deleteGoal(goal.getId()), errorHandler);
+    }
+
+    public Observable<GoalPrototypeUsersReponse> getUsers(long goalPrototypeId, DooitErrorHandler errorHandler){
+        return useNetwork(goalAPI.getUsers(goalPrototypeId), errorHandler);
     }
 }
