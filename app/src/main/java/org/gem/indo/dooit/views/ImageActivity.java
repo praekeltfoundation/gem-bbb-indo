@@ -18,9 +18,12 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.facebook.common.references.SharedReference;
+
 import org.gem.indo.dooit.Constants;
 import org.gem.indo.dooit.R;
 import org.gem.indo.dooit.helpers.RequestCodes;
+import org.gem.indo.dooit.helpers.crashlytics.crashlyticsHelper;
 import org.gem.indo.dooit.helpers.images.ImageChooserOptions;
 import org.gem.indo.dooit.helpers.images.ImageScaler;
 import org.gem.indo.dooit.helpers.images.MediaUriHelper;
@@ -171,9 +174,15 @@ public abstract class ImageActivity extends DooitActivity {
             }
         }
 
-        if (TextUtils.isEmpty(imagePath))
+        if (TextUtils.isEmpty(imagePath)) {
             // MediaUriHelper does not work when uri points to temp image file
-            imagePath = MediaUriHelper.getPath(this, imageUri);
+            try {
+                imagePath = MediaUriHelper.getPath(this, imageUri);
+            } catch (NullPointerException nullException) {
+                crashlyticsHelper.log(this.getClass().getSimpleName(), "handleImageResult :", String.format("imagePath %s: ",
+                        imagePath) + " imageUri :" + imageUri);
+            }
+        }
 
         downscaleImage();
 

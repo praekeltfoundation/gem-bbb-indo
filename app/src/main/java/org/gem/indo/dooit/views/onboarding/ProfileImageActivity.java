@@ -6,6 +6,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
@@ -20,6 +21,7 @@ import org.gem.indo.dooit.api.managers.FileUploadManager;
 import org.gem.indo.dooit.api.responses.EmptyResponse;
 import org.gem.indo.dooit.helpers.Persisted;
 import org.gem.indo.dooit.helpers.SquiggleBackgroundHelper;
+import org.gem.indo.dooit.helpers.crashlytics.crashlyticsHelper;
 import org.gem.indo.dooit.models.User;
 import org.gem.indo.dooit.views.ImageActivity;
 import org.gem.indo.dooit.views.helpers.activity.DooitActivityBuilder;
@@ -106,7 +108,14 @@ public class ProfileImageActivity extends ImageActivity {
             @Override
             public void call(Response<EmptyResponse> response) {
                 User user = persisted.getCurrentUser();
-                user.getProfile().setProfileImageUrl(getImageUri().toString());
+                try{
+                    user.getProfile().setProfileImageUrl(getImageUri().toString());
+                }
+                catch (NullPointerException nullException){
+                    crashlyticsHelper.log(this.getClass().getSimpleName(),"uploadProfileImage :",String.format("User is null %s: ",
+                            user == null) + " Uri :" + getImageUri());
+                }
+
                 persisted.setCurrentUser(user);
                 MainActivity.Builder.create(ProfileImageActivity.this).startActivityClearTop();
             }
