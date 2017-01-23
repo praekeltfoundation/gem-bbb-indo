@@ -80,7 +80,6 @@
                     android:ellipsize="end"
                     android:gravity="center_vertical"
                     android:maxLines="1"
-                    android:textAlignment="textStart"
                     android:paddingLeft="20dp"
                     android:textColor="#391563"
                     app:layout_collapseMode="pin"
