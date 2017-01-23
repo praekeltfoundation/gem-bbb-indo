@@ -89,7 +89,6 @@ public abstract class ImageActivity extends DooitActivity {
             @Override
             public void permissionGranted() {
                 Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-
                 // The file where the full sized photo will be temporarily stored. When this is not
                 // done, we would get the thumbnail back instead. See documentation:
                 // https://developer.android.com/training/camera/photobasics.html#TaskPath
@@ -179,8 +178,8 @@ public abstract class ImageActivity extends DooitActivity {
             try {
                 imagePath = MediaUriHelper.getPath(this, imageUri);
             } catch (NullPointerException nullException) {
-                crashlyticsHelper.log(this.getClass().getSimpleName(), "handleImageResult :", String.format("imagePath %s: ",
-                        imagePath) + " imageUri :" + imageUri);
+                crashlyticsHelper.log(this.getClass().getSimpleName(), "handleImageResult : ",
+                        "Context: " + this + " imageUri :" + imageUri);
             }
         }
 

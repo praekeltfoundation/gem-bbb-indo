@@ -130,7 +130,6 @@ public class GoalEditController extends GoalBotController {
         // Crashlytics for MediaURI null check
         try {
             final String path = MediaUriHelper.getPath(context, imageUri);
-
             uploadImage(goal, mimetype, new File(path), listener);
         }
         catch (NullPointerException nullException){
