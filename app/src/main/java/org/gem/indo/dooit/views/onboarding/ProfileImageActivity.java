@@ -112,6 +112,7 @@ public class ProfileImageActivity extends ImageActivity {
             @Override
             public void call(Response<EmptyResponse> response) {
                 User user = persisted.getCurrentUser();
+
                 try{
                     user.getProfile().setProfileImageUrl(getImageUri().toString());
                 }

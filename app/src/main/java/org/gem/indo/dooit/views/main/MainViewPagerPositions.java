@@ -85,6 +85,6 @@ public enum MainViewPagerPositions {
 
         TextView text = (TextView) view.findViewById(R.id.tab_custom_title);
         text.setVisibility(View.VISIBLE);
-        text.setTextColor(ContextCompat.getColor(view.getContext(),R.color.grey));
+        text.setTextColor(ContextCompat.getColor(view.getContext(),R.color.light_grey));
     }
 }
