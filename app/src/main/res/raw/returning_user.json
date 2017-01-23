@@ -35,6 +35,11 @@
         "name": "convo_default_return_a_progress_intro_challenge",
         "text": "$(convo_default_return_a_progress_intro_challenge)",
         "next": "convo_default_return_q_challenge_intro"
+      },
+      {
+        "name": "convo_default_return_a_progress_intro_target",
+        "text": "$(convo_default_return_a_progress_intro_target)",
+        "next": "convo_default_return_q_target_show"
       }
     ]
   },
@@ -59,6 +64,11 @@
     "name": "convo_default_return_q_challenge_show",
     "type": "challenge",
     "autoNext": "convo_default_return_end"
+  },
+  {
+    "name": "convo_default_return_q_target_show",
+    "type": "end",
+    "autoNextScreen": "TARGET"
   },
   {
     "name": "convo_default_return_end",
