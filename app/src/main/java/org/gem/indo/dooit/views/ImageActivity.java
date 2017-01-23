@@ -257,7 +257,7 @@ public abstract class ImageActivity extends DooitActivity {
             switch (orientation) {
 
                 case ExifInterface.ORIENTATION_ROTATE_90:
-                   return rotateImage(bitmap, 90);
+                    return rotateImage(bitmap, 90);
 
                 case ExifInterface.ORIENTATION_ROTATE_180:
                     return rotateImage(bitmap, 180);
