@@ -1,7 +1,6 @@
 package org.gem.indo.dooit.api.interfaces;
 
 import org.gem.indo.dooit.api.responses.EmptyResponse;
-import org.gem.indo.dooit.api.responses.GoalPrototypeUsersReponse;
 import org.gem.indo.dooit.api.responses.TransactionResponse;
 import org.gem.indo.dooit.models.goal.Goal;
 import org.gem.indo.dooit.models.goal.GoalPrototype;
@@ -41,7 +40,4 @@ public interface GoalAPI {
 
     @DELETE("/api/goals/{id}/")
     Observable<EmptyResponse> deleteGoal(@Path("id") long goalId);
-
-    @GET("/api/goal-prototypes/{id}/usercount")
-    Observable<GoalPrototypeUsersReponse> getUsers(@Path("id") long goalPrototypeId);
 }

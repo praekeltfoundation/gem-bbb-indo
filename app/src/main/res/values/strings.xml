@@ -201,6 +201,8 @@
 
     <string name="goal_add_a_done_exit">Thanks! I\'m done for now.</string>
 
+    <string name="number_of_other_users_with_similar_goal">Fantastic! Did you know that $(goal_proto.num_users) users are also saving for this goal?</string>
+
     <!-- Answers -->
     <string name="goal_add_greeting_response">Hola!</string>
 
