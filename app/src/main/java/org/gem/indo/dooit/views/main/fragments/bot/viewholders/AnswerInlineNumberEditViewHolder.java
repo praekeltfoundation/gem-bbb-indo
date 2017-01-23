@@ -12,6 +12,7 @@ import android.widget.TextView;
 import com.greenfrvr.hashtagview.HashtagView;
 
 import org.gem.indo.dooit.R;
+import org.gem.indo.dooit.helpers.crashlytics.crashlyticsHelper;
 import org.gem.indo.dooit.models.bot.Answer;
 import org.gem.indo.dooit.models.enums.BotMessageType;
 import org.gem.indo.dooit.views.helpers.activity.CurrencyHelper;
@@ -86,6 +87,7 @@ public class AnswerInlineNumberEditViewHolder extends BaseBotViewHolder<Answer> 
                     inputAnswer.setNext(dataModel.getNextOnFinish());
                     inputAnswer.setType(BotMessageType.getValueOf(dataModel.getTypeOnFinish()));
                     tagsClickListener.onItemClicked(inputAnswer);
+                    crashlyticsHelper.log(this.getClass().getSimpleName(),"populate (numberedit): ", "number: " + inputAnswer.getValue());
                     return true;
                 }
                 return false;

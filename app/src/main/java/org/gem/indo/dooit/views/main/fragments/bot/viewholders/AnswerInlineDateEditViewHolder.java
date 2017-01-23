@@ -11,6 +11,7 @@ import com.greenfrvr.hashtagview.HashtagView;
 
 import org.gem.indo.dooit.R;
 import org.gem.indo.dooit.helpers.Utils;
+import org.gem.indo.dooit.helpers.crashlytics.crashlyticsHelper;
 import org.gem.indo.dooit.models.bot.Answer;
 import org.gem.indo.dooit.models.enums.BotMessageType;
 import org.gem.indo.dooit.views.custom.DatePickerFragment;
@@ -67,6 +68,7 @@ public class AnswerInlineDateEditViewHolder extends BaseBotViewHolder<Answer> {
                         inputAnswer.setNext(dataModel.getNextOnFinish());
                         inputAnswer.setType(BotMessageType.getValueOf(dataModel.getTypeOnFinish()));
                         tagsClickListener.onItemClicked(inputAnswer);
+                        crashlyticsHelper.log(this.getClass().getSimpleName(),"populate (dateEdit): ","New date: " + inputAnswer.getValue());
                     }
                 });
             }

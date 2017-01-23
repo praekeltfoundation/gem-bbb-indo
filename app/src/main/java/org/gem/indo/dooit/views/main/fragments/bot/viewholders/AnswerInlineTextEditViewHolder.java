@@ -12,6 +12,7 @@ import android.widget.TextView;
 import com.greenfrvr.hashtagview.HashtagView;
 
 import org.gem.indo.dooit.R;
+import org.gem.indo.dooit.helpers.crashlytics.crashlyticsHelper;
 import org.gem.indo.dooit.models.bot.Answer;
 import org.gem.indo.dooit.models.enums.BotMessageType;
 import org.gem.indo.dooit.views.main.fragments.bot.adapters.BotAdapter;
@@ -66,6 +67,7 @@ public class AnswerInlineTextEditViewHolder extends BaseBotViewHolder<Answer> {
                     inputAnswer.setType(BotMessageType.getValueOf(dataModel.getTypeOnFinish()));
                     inputAnswer.setParentName(dataModel.getParentName());
                     tagsClickListener.onItemClicked(inputAnswer);
+                    crashlyticsHelper.log(this.getClass().getSimpleName(),"populate (textedit): ", "text: " + inputAnswer.getValue());
                     return true;
                 }
                 return false;
