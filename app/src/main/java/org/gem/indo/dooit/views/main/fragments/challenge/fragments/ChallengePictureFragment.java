@@ -27,6 +27,7 @@ import org.gem.indo.dooit.api.DooitAPIError;
 import org.gem.indo.dooit.api.DooitErrorHandler;
 import org.gem.indo.dooit.api.managers.FileUploadManager;
 import org.gem.indo.dooit.api.responses.EmptyResponse;
+import org.gem.indo.dooit.helpers.crashlytics.crashlyticsHelper;
 import org.gem.indo.dooit.helpers.images.MediaUriHelper;
 import org.gem.indo.dooit.helpers.Persisted;
 import org.gem.indo.dooit.helpers.RequestCodes;
@@ -320,10 +321,16 @@ public class ChallengePictureFragment extends Fragment {
         if (requestCode == RequestCodes.RESPONSE_GALLERY_REQUEST_CHALLENGE_IMAGE ||
                 requestCode == RequestCodes.RESPONSE_CAMERA_REQUEST_CHALLENGE_IMAGE) {
             if (resultCode == RESULT_OK) {
-                imagePath = MediaUriHelper.getPath(getContext(), data.getData());
-                imageUri = data.getData();
-                if (image != null) {
-                    image.setImageURI(imageUri);
+                try {
+                    imagePath = MediaUriHelper.getPath(getContext(), data.getData());
+                    imageUri = data.getData();
+                    if (image != null) {
+                        image.setImageURI(imageUri);
+                    }
+                }
+                catch (NullPointerException nullException){
+                    crashlyticsHelper.log(this.getClass().getSimpleName(),"onActivityResult :",
+                            "imagePath : " + imagePath + " imageUri : " + imageUri);
                 }
             }
         }
