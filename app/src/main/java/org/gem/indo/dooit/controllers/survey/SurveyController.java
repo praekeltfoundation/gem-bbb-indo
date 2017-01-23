@@ -1,8 +1,6 @@
 package org.gem.indo.dooit.controllers.survey;
 
 import android.content.Context;
-import android.os.Handler;
-import android.os.Looper;
 
 import org.gem.indo.dooit.DooitApplication;
 import org.gem.indo.dooit.api.managers.SurveyManager;
