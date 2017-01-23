@@ -8,6 +8,7 @@ import com.facebook.drawee.view.SimpleDraweeView;
 
 import org.gem.indo.dooit.DooitApplication;
 import org.gem.indo.dooit.R;
+import org.gem.indo.dooit.helpers.crashlytics.crashlyticsHelper;
 import org.gem.indo.dooit.models.enums.BotParamType;
 import org.gem.indo.dooit.helpers.Persisted;
 import org.gem.indo.dooit.models.goal.Goal;
@@ -52,8 +53,14 @@ public class GoalInfoViewHolder extends BaseBotViewHolder<Node> {
         ButterKnife.bind(this, itemView);
         itemView.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.bkg_carousel_card));
 
-        if (!botAdapter.hasController())
-            throw new BotCallbackRequired(String.format("%s requires adapter to have callback", TAG));
+        try {
+            if (!botAdapter.hasController())
+                throw new BotCallbackRequired(String.format("%s requires adapter to have callback", TAG));
+        }
+        catch (BotCallbackRequired e){
+            crashlyticsHelper.log(this.getClass().getSimpleName(),"GoalInfoViewHolder : ", "crash because botadapter had no controller");
+        }
+
     }
 
     @Override
