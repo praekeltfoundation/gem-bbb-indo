@@ -132,6 +132,7 @@ public abstract class GoalBotController extends DooitBotController {
                 break;
             case CURRENCY_SYMBOL:
                 model.values.put(key, CurrencyHelper.getCurrencySymbol());
+                break;
             default:
                 super.resolveParam(model, paramType);
         }
