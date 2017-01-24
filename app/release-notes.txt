@@ -1,4 +1,3 @@
-
 0.0.15
 
 - Fixed crash in Bot
@@ -18,4 +17,6 @@
 - Image no longer rotates on API 17 - 25
 - Main navigation icons updated
 - ChallengeQuizFragment now uses The ChallengeDoneFragment instead of its own done screen
-
+- Close button on Challenge returns to Main screen
+- Main page titles displaying in toolbar
+- Challenges are now contained in their own screen

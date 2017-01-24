@@ -16,6 +16,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -87,6 +88,9 @@ public class ChallengeQuizFragment extends Fragment implements OnOptionChangeLis
     @BindView(R.id.fragment_challenge_quiz_checkbutton)
     Button checkButton;
 
+    @BindView(R.id.fragment_challenge_quiz_close)
+    ImageButton close;
+
     private boolean challengeCompleted = false;
     private ChallengeQuizPagerAdapter mAdapter;
     private List<ParticipantAnswer> answers = new ArrayList<ParticipantAnswer>();
@@ -156,6 +160,18 @@ public class ChallengeQuizFragment extends Fragment implements OnOptionChangeLis
         super.onDestroy();
     }
 
+    @OnClick(R.id.fragment_challenge_quiz_close)
+    public void closeQuiz(){
+
+        if (!challengeCompleted) {
+            saveState();
+        }
+        if (entrySubscription != null) {
+            entrySubscription.unsubscribe();
+        }
+        returnToParent(null);
+    }
+
     @OnClick(R.id.fragment_challenge_quiz_checkbutton)
     public void checkAnswer() {
         if (mPager.getCurrentItem() >= challenge.numQuestions()) {
@@ -164,7 +180,7 @@ public class ChallengeQuizFragment extends Fragment implements OnOptionChangeLis
         }
 
         if (currentOption == null) {
-            Toast.makeText(getContext(), org.gem.indo.dooit.R.string.challenge_quiz_select_option_required, Toast.LENGTH_SHORT).show();
+            Toast.makeText(getContext(), R.string.challenge_quiz_select_option_required, Toast.LENGTH_SHORT).show();
             return;
         }
 
