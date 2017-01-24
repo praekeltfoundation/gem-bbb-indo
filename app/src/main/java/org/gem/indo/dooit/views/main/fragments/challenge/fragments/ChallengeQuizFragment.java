@@ -281,7 +281,6 @@ public class ChallengeQuizFragment extends Fragment implements OnOptionChangeLis
         updateProgressCounter(position);
         if (position == mAdapter.getCount() - 1) {
             checkButton.setText(R.string.label_done);
-            CommonConfetti.rainingConfetti(((ViewGroup)this.getView().getParent()), new int[] { Color.RED, Color.YELLOW }).oneShot();
         } else {
             checkButton.setText(R.string.label_check_result);
         }
