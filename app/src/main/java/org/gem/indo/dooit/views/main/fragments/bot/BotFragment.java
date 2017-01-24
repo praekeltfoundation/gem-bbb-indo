@@ -396,12 +396,12 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
             model.setType(BotMessageType.TEXT);
             getBotAdapter().removeItem(model);
             getBotAdapter().addItem(model);
-            CrashlyticsHelper.log(this.getClass().getSimpleName(),"onItemClicked: ", "model: " + model.toString());
+            CrashlyticsHelper.log(this.getClass().getSimpleName(),"onItemClicked: ", "model changed: " + model.toString());
         }
 
         if (shouldAdd(answer)){
             getBotAdapter().addItem(answer);
-            CrashlyticsHelper.log(this.getClass().getSimpleName(),"onItemClicked: ","answer: " + answer.toString());
+            CrashlyticsHelper.log(this.getClass().getSimpleName(),"onItemClicked: ","adding to conversation: " + answer.toString());
         }
 
         if (answer.hasInputKey() && hasController())
