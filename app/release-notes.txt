@@ -18,3 +18,4 @@
 - Main navigation icons updated
 - Close button on Challenge returns to Main screen
 - Main page titles displaying in toolbar
+- Challenges are now contained in their own screen
