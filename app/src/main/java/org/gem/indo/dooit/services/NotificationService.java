@@ -97,6 +97,15 @@ public class NotificationService extends IntentService {
                 }
             }));
 
+        /*
+            an equivalent for Winnernotification available and notify this user if he is the one that
+            won the competition.
+            click on the notification should take to the bot
+            display convo "You won"
+            confetti rain
+            post to server "award received" and server sets flag and no more notification for the user
+         */
+
         if (requests.size() > 0)
             // Using flatmap to perform requests serially
             Observable.from(requests).flatMap(new Func1<Observable<?>, Observable<?>>() {

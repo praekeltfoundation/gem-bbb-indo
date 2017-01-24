@@ -156,6 +156,9 @@ public class MainActivity extends DooitActivity {
         currentPos = 0;
         saveToHistory = true;
 
+        // Did the user win?
+        checkCompetitionWinner();
+
         /*Set the ActionBar's title for Bina here to ensure it gets set initially
         When the app starts up for a logged in user technically no page has been selected*/
         onMainPagerPageSelected(currentPos);
@@ -269,6 +272,16 @@ public class MainActivity extends DooitActivity {
     @Override
     public String getScreenName() {
         return super.getScreenName() + " " + MainViewPagerPositions.getValueOf(viewPager.getCurrentItem()).name();
+    }
+
+    private boolean checkCompetitionWinner(){
+        //locally check if user has participant, if so which challenge did they do
+        //Make a connection to the server
+        //pass through participant id and challenge id
+        //Retrieve winner's user id
+        //check if the persisted user id matches winner id
+        //if logged in user == winner start bot with Congratulations message + Confetti
+        return false;
     }
 
     public static class Builder extends DooitActivityBuilder<Builder> {
