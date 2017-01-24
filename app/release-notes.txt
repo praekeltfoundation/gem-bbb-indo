@@ -14,3 +14,5 @@
 
 - Image no longer rotates on API 17 - 25
 - Main navigation icons updated
+- Close button on Challenge returns to Main screen
+- Main page titles displaying in toolbar
