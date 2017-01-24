@@ -12,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -73,14 +74,17 @@ public class ChallengeQuizFragment extends Fragment implements OnOptionChangeLis
     @BindView(R.id.fragment_challenge_quiz_progressbar)
     ProgressBar mProgressBar;
 
-    @BindView(org.gem.indo.dooit.R.id.fragment_challenge_quiz_progresscounter)
+    @BindView(R.id.fragment_challenge_quiz_progresscounter)
     TextView mProgressCounter;
 
-    @BindView(org.gem.indo.dooit.R.id.fragment_challenge_quiz_pager)
+    @BindView(R.id.fragment_challenge_quiz_pager)
     ViewPager mPager;
 
-    @BindView(org.gem.indo.dooit.R.id.fragment_challenge_quiz_checkbutton)
+    @BindView(R.id.fragment_challenge_quiz_checkbutton)
     Button checkButton;
+
+    @BindView(R.id.fragment_challenge_quiz_close)
+    ImageButton close;
 
     private boolean challengeCompleted = false;
     private ChallengeQuizPagerAdapter mAdapter;
@@ -134,7 +138,7 @@ public class ChallengeQuizFragment extends Fragment implements OnOptionChangeLis
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(org.gem.indo.dooit.R.layout.fragment_challenge_quiz, container, false);
+        View view = inflater.inflate(R.layout.fragment_challenge_quiz, container, false);
         unbinder = ButterKnife.bind(this, view);
         mPager.setAdapter(mAdapter);
         updateProgressCounter(0);
@@ -156,6 +160,18 @@ public class ChallengeQuizFragment extends Fragment implements OnOptionChangeLis
         super.onDestroy();
     }
 
+    @OnClick(R.id.fragment_challenge_quiz_close)
+    public void closeQuiz(){
+
+        if (!challengeCompleted) {
+            saveState();
+        }
+        if (entrySubscription != null) {
+            entrySubscription.unsubscribe();
+        }
+        returnToParent();
+    }
+
     @OnClick(R.id.fragment_challenge_quiz_checkbutton)
     public void checkAnswer() {
         if (mPager.getCurrentItem() >= challenge.numQuestions()) {
@@ -164,7 +180,7 @@ public class ChallengeQuizFragment extends Fragment implements OnOptionChangeLis
         }
 
         if (currentOption == null) {
-            Toast.makeText(getContext(), org.gem.indo.dooit.R.string.challenge_quiz_select_option_required, Toast.LENGTH_SHORT).show();
+            Toast.makeText(getContext(), R.string.challenge_quiz_select_option_required, Toast.LENGTH_SHORT).show();
             return;
         }
 
@@ -231,7 +247,7 @@ public class ChallengeQuizFragment extends Fragment implements OnOptionChangeLis
         if (idx < mAdapter.getCount()) {
             mPager.setCurrentItem(idx);
         } else {
-            Toast.makeText(getContext(), org.gem.indo.dooit.R.string.challenge_all_questions_complete, Toast.LENGTH_SHORT).show();
+            Toast.makeText(getContext(),R.string.challenge_all_questions_complete, Toast.LENGTH_SHORT).show();
             submitParticipantEntry();
             returnToParent();
         }
@@ -250,7 +266,7 @@ public class ChallengeQuizFragment extends Fragment implements OnOptionChangeLis
         }
 
         if (position < challenge.numQuestions()) {
-            mProgressCounter.setText(String.format(getString(org.gem.indo.dooit.R.string.challenge_quiz_counter_fmt), position + 1, challenge.numQuestions()));
+            mProgressCounter.setText(String.format(getString(R.string.challenge_quiz_counter_fmt), position + 1, challenge.numQuestions()));
         } else {
             mProgressCounter.setText("");
         }

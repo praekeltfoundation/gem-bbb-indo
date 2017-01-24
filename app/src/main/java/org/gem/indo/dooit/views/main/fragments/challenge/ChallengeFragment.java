@@ -24,6 +24,7 @@ import org.gem.indo.dooit.api.managers.ChallengeManager;
 import org.gem.indo.dooit.helpers.Persisted;
 import org.gem.indo.dooit.helpers.SquiggleBackgroundHelper;
 import org.gem.indo.dooit.models.challenge.BaseChallenge;
+import org.gem.indo.dooit.views.main.MainActivity;
 import org.gem.indo.dooit.views.main.fragments.MainFragment;
 import org.gem.indo.dooit.views.main.fragments.challenge.fragments.ChallengeFreeformFragment;
 import org.gem.indo.dooit.views.main.fragments.challenge.fragments.ChallengeNoneFragment;
@@ -36,6 +37,7 @@ import java.net.UnknownHostException;
 
 import javax.inject.Inject;
 
+import butterknife.BindString;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
