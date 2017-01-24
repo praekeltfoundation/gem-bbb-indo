@@ -29,7 +29,7 @@ import org.gem.indo.dooit.api.managers.AchievementManager;
 import org.gem.indo.dooit.api.managers.FileUploadManager;
 import org.gem.indo.dooit.api.responses.AchievementResponse;
 import org.gem.indo.dooit.api.responses.EmptyResponse;
-import org.gem.indo.dooit.helpers.crashlytics.crashlyticsHelper;
+import org.gem.indo.dooit.helpers.Crashlytics.CrashlyticsHelper;
 import org.gem.indo.dooit.helpers.images.DraweeHelper;
 import org.gem.indo.dooit.helpers.Persisted;
 import org.gem.indo.dooit.helpers.SquiggleBackgroundHelper;
@@ -241,13 +241,13 @@ public class ProfileActivity extends ImageActivity {
 
     @OnClick(R.id.activity_profile_image)
     public void selectImage() {
-        crashlyticsHelper.log(this.getClass().getSimpleName(),"OnClick select image : ", "Tap to change profile image (Settings)");
+        CrashlyticsHelper.log(this.getClass().getSimpleName(),"OnClick select image : ", "Tap to change profile image (Settings)");
         showImageChooser();
     }
 
     @Override
     protected void onImageResult(String mediaType, Uri imageUri, String imagePath) {
-        crashlyticsHelper.log(this.getClass().getSimpleName(),"OnImageResult : ", "successful image result (settings)");
+        CrashlyticsHelper.log(this.getClass().getSimpleName(),"OnImageResult : ", "successful image result (settings)");
         // Upload image to server
         User user = persisted.getCurrentUser();
         if (user == null) {

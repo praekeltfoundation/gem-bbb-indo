@@ -17,7 +17,7 @@ import org.gem.indo.dooit.api.managers.FileUploadManager;
 import org.gem.indo.dooit.helpers.Persisted;
 import org.gem.indo.dooit.helpers.activity.result.ActivityForResultCallback;
 import org.gem.indo.dooit.helpers.activity.result.ActivityForResultHelper;
-import org.gem.indo.dooit.helpers.crashlytics.crashlyticsHelper;
+import org.gem.indo.dooit.helpers.Crashlytics.CrashlyticsHelper;
 import org.gem.indo.dooit.helpers.permissions.PermissionCallback;
 import org.gem.indo.dooit.helpers.permissions.PermissionsHelper;
 import org.gem.indo.dooit.models.bot.Answer;
@@ -136,7 +136,7 @@ public class AnswerImageSelectViewHolder extends BaseBotViewHolder<Answer> {
             tagsClickListener.onItemClicked(answer);
         }
 
-        crashlyticsHelper.log(this.getClass().getSimpleName(), "uploadImage: ","upload an image from bot");
+        CrashlyticsHelper.log(this.getClass().getSimpleName(), "uploadImage: ","upload an image from bot");
     }
 
     public Context getContext() {

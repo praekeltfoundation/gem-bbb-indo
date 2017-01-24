@@ -20,12 +20,10 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.widget.Toast;
 
-import com.facebook.common.references.SharedReference;
-
 import org.gem.indo.dooit.Constants;
 import org.gem.indo.dooit.R;
 import org.gem.indo.dooit.helpers.RequestCodes;
-import org.gem.indo.dooit.helpers.crashlytics.crashlyticsHelper;
+import org.gem.indo.dooit.helpers.Crashlytics.CrashlyticsHelper;
 import org.gem.indo.dooit.helpers.images.ImageChooserOptions;
 import org.gem.indo.dooit.helpers.images.ImageScaler;
 import org.gem.indo.dooit.helpers.images.MediaUriHelper;
@@ -143,7 +141,7 @@ public abstract class ImageActivity extends DooitActivity {
         if (resultCode == Activity.RESULT_CANCELED)
             return;
 
-        crashlyticsHelper.log(this.getClass().getSimpleName(),"startCamera : ", "Request code from dialog: " + requestCode
+        CrashlyticsHelper.log(this.getClass().getSimpleName(),"startCamera : ", "Request code from dialog: " + requestCode
                 + " resultCode : " + requestCode + String.format(" Is intent null? : %s ", data == null));
         switch (requestCode) {
             case RequestCodes.RESPONSE_CAMERA_REQUEST_PROFILE_IMAGE:
@@ -185,9 +183,10 @@ public abstract class ImageActivity extends DooitActivity {
             // MediaUriHelper does not work when uri points to temp image file
             try {
                 imagePath = MediaUriHelper.getPath(this, imageUri);
-            } catch (NullPointerException nullException) {
-                crashlyticsHelper.log(this.getClass().getSimpleName(), "handleImageResult : ",
+                CrashlyticsHelper.log(this.getClass().getSimpleName(), "handleImageResult : ",
                         "Context: " + this + " imageUri :" + imageUri);
+            } catch (NullPointerException nullException) {
+                CrashlyticsHelper.logException(nullException);
             }
         }
 
@@ -232,7 +231,7 @@ public abstract class ImageActivity extends DooitActivity {
         } catch (IOException e) {
             Toast.makeText(this, "Unable to do image rotation", Toast.LENGTH_LONG).show();
             Log.e(TAG, "Unable to create temporary downscaled image file", e);
-            crashlyticsHelper.log(this.getClass().getSimpleName()," processImage : ", "an IOException");
+            CrashlyticsHelper.log(this.getClass().getSimpleName()," processImage : ", "an IOException");
         } finally {
             try {
                 if (outStream != null)

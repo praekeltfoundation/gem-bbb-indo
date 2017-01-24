@@ -27,7 +27,7 @@ import org.gem.indo.dooit.api.DooitAPIError;
 import org.gem.indo.dooit.api.DooitErrorHandler;
 import org.gem.indo.dooit.api.managers.FileUploadManager;
 import org.gem.indo.dooit.api.responses.EmptyResponse;
-import org.gem.indo.dooit.helpers.crashlytics.crashlyticsHelper;
+import org.gem.indo.dooit.helpers.Crashlytics.CrashlyticsHelper;
 import org.gem.indo.dooit.helpers.images.MediaUriHelper;
 import org.gem.indo.dooit.helpers.Persisted;
 import org.gem.indo.dooit.helpers.RequestCodes;
@@ -327,10 +327,11 @@ public class ChallengePictureFragment extends Fragment {
                     if (image != null) {
                         image.setImageURI(imageUri);
                     }
+                    CrashlyticsHelper.log(this.getClass().getSimpleName(),"onActivityResult :",
+                            "imagePath : " + imagePath + " imageUri : " + imageUri);
                 }
                 catch (NullPointerException nullException){
-                    crashlyticsHelper.log(this.getClass().getSimpleName(),"onActivityResult :",
-                            "imagePath : " + imagePath + " imageUri : " + imageUri);
+                    CrashlyticsHelper.logException(nullException);
                 }
             }
         }

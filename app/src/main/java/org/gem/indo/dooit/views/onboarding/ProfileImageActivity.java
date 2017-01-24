@@ -6,7 +6,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
@@ -21,7 +20,7 @@ import org.gem.indo.dooit.api.managers.FileUploadManager;
 import org.gem.indo.dooit.api.responses.EmptyResponse;
 import org.gem.indo.dooit.helpers.Persisted;
 import org.gem.indo.dooit.helpers.SquiggleBackgroundHelper;
-import org.gem.indo.dooit.helpers.crashlytics.crashlyticsHelper;
+import org.gem.indo.dooit.helpers.Crashlytics.CrashlyticsHelper;
 import org.gem.indo.dooit.models.User;
 import org.gem.indo.dooit.views.ImageActivity;
 import org.gem.indo.dooit.views.helpers.activity.DooitActivityBuilder;
@@ -77,7 +76,7 @@ public class ProfileImageActivity extends ImageActivity {
 
     @OnClick(R.id.activity_profile_image_profile_image)
     public void selectImage() {
-        crashlyticsHelper.log(this.getClass().getSimpleName(),"OnClick select image : ", "Tap to change profile image (onboarding)");
+        CrashlyticsHelper.log(this.getClass().getSimpleName(),"OnClick select image : ", "Tap to change profile image (onboarding)");
         showImageChooser();
     }
 
@@ -86,12 +85,12 @@ public class ProfileImageActivity extends ImageActivity {
         simpleDraweeView.setImageURI(imageUri);
         this.mediaType = mediaType;
         this.imagePath = imagePath;
-        crashlyticsHelper.log(this.getClass().getSimpleName(), "onImageResult" , "a successful image result (onboarding)");
+        CrashlyticsHelper.log(this.getClass().getSimpleName(), "onImageResult" , "a successful image result (onboarding)");
     }
 
     @OnClick(R.id.activity_profile_image_next_button)
     public void uploadProfileImage() {
-        crashlyticsHelper.log(this.getClass().getSimpleName(),"uploadProfileImage", "attempting to upload image (onboarding)");
+        CrashlyticsHelper.log(this.getClass().getSimpleName(),"uploadProfileImage", "attempting to upload image (onboarding)");
 
         // Image must be set
         if (TextUtils.isEmpty(mediaType) || TextUtils.isEmpty(imagePath)) {
@@ -115,10 +114,11 @@ public class ProfileImageActivity extends ImageActivity {
 
                 try{
                     user.getProfile().setProfileImageUrl(getImageUri().toString());
+                    CrashlyticsHelper.log(this.getClass().getSimpleName(),"uploadProfileImage :",String.format("User id %s: ",
+                            user.getId()) + " Uri :" + getImageUri() + " mediaType: " + mediaType);
                 }
                 catch (NullPointerException nullException){
-                    crashlyticsHelper.log(this.getClass().getSimpleName(),"uploadProfileImage :",String.format("User is null %s: ",
-                            user == null) + " Uri :" + getImageUri());
+                    CrashlyticsHelper.logException(nullException);
                 }
 
                 persisted.setCurrentUser(user);
@@ -129,7 +129,7 @@ public class ProfileImageActivity extends ImageActivity {
 
     @OnClick(R.id.activity_profile_image_skip_text_view)
     public void skip() {
-        crashlyticsHelper.log(this.getClass().getSimpleName(),"Skip", "setting profile image (onboarding)");
+        CrashlyticsHelper.log(this.getClass().getSimpleName(),"Skip", "setting profile image (onboarding)");
         MainActivity.Builder.create(ProfileImageActivity.this).startActivityClearTop();
     }
 

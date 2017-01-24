@@ -1,6 +1,5 @@
 package org.gem.indo.dooit.views.main.fragments.bot.viewholders;
 
-import android.content.Context;
 import android.support.v7.app.AppCompatActivity;
 import android.text.InputType;
 import android.view.KeyEvent;
@@ -11,13 +10,12 @@ import com.greenfrvr.hashtagview.HashtagView;
 
 import org.gem.indo.dooit.R;
 import org.gem.indo.dooit.helpers.Utils;
-import org.gem.indo.dooit.helpers.crashlytics.crashlyticsHelper;
+import org.gem.indo.dooit.helpers.Crashlytics.CrashlyticsHelper;
 import org.gem.indo.dooit.models.bot.Answer;
 import org.gem.indo.dooit.models.enums.BotMessageType;
 import org.gem.indo.dooit.views.custom.DatePickerFragment;
 import org.gem.indo.dooit.views.main.fragments.bot.adapters.BotAdapter;
 
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Locale;
 
@@ -68,7 +66,7 @@ public class AnswerInlineDateEditViewHolder extends BaseBotViewHolder<Answer> {
                         inputAnswer.setNext(dataModel.getNextOnFinish());
                         inputAnswer.setType(BotMessageType.getValueOf(dataModel.getTypeOnFinish()));
                         tagsClickListener.onItemClicked(inputAnswer);
-                        crashlyticsHelper.log(this.getClass().getSimpleName(),"populate (dateEdit): ","New date: " + inputAnswer.getValue());
+                        CrashlyticsHelper.log(this.getClass().getSimpleName(),"populate (dateEdit): ","New date: " + inputAnswer.getValue());
                     }
                 });
             }

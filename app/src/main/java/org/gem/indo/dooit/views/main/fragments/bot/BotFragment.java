@@ -37,7 +37,7 @@ import org.gem.indo.dooit.helpers.bot.BotRunner;
 import org.gem.indo.dooit.helpers.bot.param.ParamArg;
 import org.gem.indo.dooit.helpers.bot.param.ParamMatch;
 import org.gem.indo.dooit.helpers.bot.param.ParamParser;
-import org.gem.indo.dooit.helpers.crashlytics.crashlyticsHelper;
+import org.gem.indo.dooit.helpers.Crashlytics.CrashlyticsHelper;
 import org.gem.indo.dooit.models.bot.Answer;
 import org.gem.indo.dooit.models.bot.BaseBotModel;
 import org.gem.indo.dooit.models.bot.Node;
@@ -396,12 +396,12 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
             model.setType(BotMessageType.TEXT);
             getBotAdapter().removeItem(model);
             getBotAdapter().addItem(model);
-            crashlyticsHelper.log(this.getClass().getSimpleName(),"onItemClicked: ", "model: " + model.toString());
+            CrashlyticsHelper.log(this.getClass().getSimpleName(),"onItemClicked: ", "model: " + model.toString());
         }
 
         if (shouldAdd(answer)){
             getBotAdapter().addItem(answer);
-            crashlyticsHelper.log(this.getClass().getSimpleName(),"onItemClicked: ","answer: " + answer.toString());
+            CrashlyticsHelper.log(this.getClass().getSimpleName(),"onItemClicked: ","answer: " + answer.toString());
         }
 
         if (answer.hasInputKey() && hasController())
@@ -511,7 +511,7 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
         } else {
             addAnswerOptions(node);
             persisted.saveConversationState(type, getBotAdapter().getDataSet());
-            crashlyticsHelper.log(this.getClass().getSimpleName(),"checkEndOrAddAnswers: ", "data set: " + getBotAdapter().getDataSet());
+            CrashlyticsHelper.log(this.getClass().getSimpleName(),"checkEndOrAddAnswers: ", "data set: " + getBotAdapter().getDataSet());
         }
     }
 
@@ -584,7 +584,7 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
                 cb.resolveParam(answer, BotParamType.byKey(arg.getKey()));
         }
         answer.setProcessedText(args.process(answer.values.getRawMap()));
-        crashlyticsHelper.log(this.getClass().getSimpleName(),"processText: ","Processed answer : " + answer.toString());
+        CrashlyticsHelper.log(this.getClass().getSimpleName(),"processText: ","Processed answer : " + answer.toString());
     }
 
     private void clearAnswerView() {

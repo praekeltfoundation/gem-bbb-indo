@@ -13,7 +13,7 @@ import org.gem.indo.dooit.api.managers.FileUploadManager;
 import org.gem.indo.dooit.api.managers.GoalManager;
 import org.gem.indo.dooit.api.responses.EmptyResponse;
 import org.gem.indo.dooit.helpers.bot.BotRunner;
-import org.gem.indo.dooit.helpers.crashlytics.crashlyticsHelper;
+import org.gem.indo.dooit.helpers.Crashlytics.CrashlyticsHelper;
 import org.gem.indo.dooit.models.challenge.BaseChallenge;
 import org.gem.indo.dooit.models.enums.BotCallType;
 import org.gem.indo.dooit.helpers.images.MediaUriHelper;
@@ -131,10 +131,11 @@ public class GoalEditController extends GoalBotController {
         try {
             final String path = MediaUriHelper.getPath(context, imageUri);
             uploadImage(goal, mimetype, new File(path), listener);
+            CrashlyticsHelper.log(this.getClass().getSimpleName(),"handleImage (BOT): ",
+                    "MediaURI.getPath : context: "+ context + " uri: " + imageUri);
         }
         catch (NullPointerException nullException){
-            crashlyticsHelper.log(this.getClass().getSimpleName(),"doCreate (BOT) : ",
-                    "MediaURI.getPath : context: "+ context + " uri: " + imageUri);
+            CrashlyticsHelper.logException(nullException);
         }
     }
 
