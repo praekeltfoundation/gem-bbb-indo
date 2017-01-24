@@ -27,16 +27,12 @@ import org.gem.indo.dooit.api.DooitAPIError;
 import org.gem.indo.dooit.api.DooitErrorHandler;
 import org.gem.indo.dooit.api.managers.ChallengeManager;
 import org.gem.indo.dooit.helpers.Persisted;
-import org.gem.indo.dooit.helpers.RequestCodes;
 import org.gem.indo.dooit.helpers.TextSpannableHelper;
+import org.gem.indo.dooit.helpers.activity.result.ActivityForResultCallback;
+import org.gem.indo.dooit.helpers.activity.result.ActivityForResultHelper;
 import org.gem.indo.dooit.models.challenge.BaseChallenge;
-import org.gem.indo.dooit.models.challenge.FreeformChallenge;
 import org.gem.indo.dooit.models.challenge.Participant;
-import org.gem.indo.dooit.models.challenge.PictureChallenge;
-import org.gem.indo.dooit.models.challenge.QuizChallenge;
-import org.gem.indo.dooit.models.challenge.QuizChallengeOption;
-import org.gem.indo.dooit.models.challenge.QuizChallengeQuestion;
-import org.gem.indo.dooit.views.main.fragments.challenge.ChallengeFragment;
+import org.gem.indo.dooit.views.main.fragments.challenge.ChallengeActivity;
 import org.gem.indo.dooit.views.main.fragments.challenge.ChallengeFragmentState;
 import org.gem.indo.dooit.views.main.fragments.challenge.interfaces.HasChallengeFragmentState;
 import org.gem.indo.dooit.views.web.MinimalWebViewActivity;
@@ -51,6 +47,10 @@ import butterknife.Unbinder;
 import rx.Subscription;
 import rx.functions.Action0;
 import rx.functions.Action1;
+
+import static org.gem.indo.dooit.helpers.RequestCodes.RESPONSE_CAMERA_REQUEST_CHALLENGE_IMAGE;
+import static org.gem.indo.dooit.helpers.RequestCodes.RESPONSE_CHALLENGE_REQUEST_RUN;
+import static org.gem.indo.dooit.helpers.RequestCodes.RESPONSE_GALLERY_REQUEST_CHALLENGE_IMAGE;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -106,7 +106,7 @@ public class ChallengeRegisterFragment extends Fragment implements HasChallengeF
     public static ChallengeRegisterFragment newInstance(BaseChallenge challenge) {
         ChallengeRegisterFragment fragment = new ChallengeRegisterFragment();
         Bundle args = new Bundle();
-        args.putParcelable(ChallengeFragment.ARG_CHALLENGE, challenge);
+        args.putParcelable(ChallengeActivity.ARG_CHALLENGE, challenge);
         args.putBoolean(ARG_HASACTIVE, false);
         fragment.setArguments(args);
         return fragment;
@@ -115,7 +115,7 @@ public class ChallengeRegisterFragment extends Fragment implements HasChallengeF
     public static ChallengeRegisterFragment newInstance(BaseChallenge challenge, boolean hasActive) {
         ChallengeRegisterFragment fragment = new ChallengeRegisterFragment();
         Bundle args = new Bundle();
-        args.putParcelable(ChallengeFragment.ARG_CHALLENGE, challenge);
+        args.putParcelable(ChallengeActivity.ARG_CHALLENGE, challenge);
         args.putBoolean(ARG_HASACTIVE, hasActive);
         fragment.setArguments(args);
         return fragment;
@@ -125,7 +125,7 @@ public class ChallengeRegisterFragment extends Fragment implements HasChallengeF
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            challenge = getArguments().getParcelable(ChallengeFragment.ARG_CHALLENGE);
+            challenge = getArguments().getParcelable(ChallengeActivity.ARG_CHALLENGE);
             hasActive = getArguments().getBoolean(ARG_HASACTIVE);
         }
         ((DooitApplication) getActivity().getApplication()).component.inject(this);
@@ -134,7 +134,7 @@ public class ChallengeRegisterFragment extends Fragment implements HasChallengeF
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(org.gem.indo.dooit.R.layout.fragment_challenge_register, container, false);
+        View view = inflater.inflate(R.layout.fragment_challenge_register, container, false);
         unbinder = ButterKnife.bind(this, view);
         if (hasActive) {
             register.setText(getText(R.string.label_continue));
@@ -195,58 +195,11 @@ public class ChallengeRegisterFragment extends Fragment implements HasChallengeF
         super.onStop();
     }
 
-    private Fragment startQuizChallenge(Participant participant, QuizChallenge quizChallenge) {
-        if (quizChallenge.getQuestions() == null || quizChallenge.getQuestions().size() <= 0) {
-            return ChallengeNoneFragment.newInstance(getString(org.gem.indo.dooit.R.string.challenge_quiz_no_questions));
-        }
 
-        for (QuizChallengeQuestion q : quizChallenge.getQuestions()) {
-            // check for empty question or empty list of options for question
-            if (TextUtils.isEmpty(q.getText())) {
-                return ChallengeNoneFragment.newInstance(getString(org.gem.indo.dooit.R.string.challenge_quiz_no_questions));
-            } else if (q.getOptions() == null || q.getOptions().size() <= 0) {
-                return ChallengeNoneFragment.newInstance(getString(org.gem.indo.dooit.R.string.challenge_quiz_no_questions));
-            }
-
-            // check whether any options are empty or none of the question's options are correct
-            boolean hasCorrect = false;
-            for (QuizChallengeOption o : q.getOptions()) {
-                if (TextUtils.isEmpty(o.getText())) {
-                    return ChallengeNoneFragment.newInstance(getString(org.gem.indo.dooit.R.string.challenge_quiz_empty_option));
-                }
-                hasCorrect |= o.getCorrect();
-            }
-            if (!hasCorrect) {
-                return ChallengeNoneFragment.newInstance(getString(org.gem.indo.dooit.R.string.challenge_quiz_no_correct_answer));
-            }
-        }
-        return ChallengeQuizFragment.newInstance(participant, quizChallenge);
-    }
-
-    private Fragment startFreeformChallenge(Participant participant, FreeformChallenge freeformChallenge) {
-        if (freeformChallenge.getQuestion() == null) {
-            return ChallengeNoneFragment.newInstance("Freeform challenge has no question.");
-        } else if (freeformChallenge.getQuestion().getText() == null ||
-                freeformChallenge.getQuestion().getText().isEmpty()) {
-            return ChallengeNoneFragment.newInstance("Freeform challenge question is empty.");
-        }
-        return ChallengeFreeformFragment.newInstance(participant, freeformChallenge);
-    }
-
-    private Fragment startPictureChallenge(Participant participant, PictureChallenge pictureChallenge) {
-//        if (pictureChallenge.getQuestion() == null) {
-//            return ChallengeNoneFragment.newInstance("Picture challenge has no question.");
-//        } else if (pictureChallenge.getQuestion().getText() == null ||
-//                pictureChallenge.getQuestion().getText().isEmpty()) {
-//            return ChallengeNoneFragment.newInstance("Picture challenge question is empty.");
-//        }
-        return ChallengePictureFragment.newInstance(participant, pictureChallenge);
-    }
 
     @OnClick(R.id.fragment_challenge_t_c_text_view)
     void termsClick(View view) {
         MinimalWebViewActivity.Builder.create(getContext())
-                //.setTitle(getString(org.gem.indo.dooit.R.string.title_activity_privacy_policy))
                 .setUrl(challenge.getTermsUrl())
                 .setScreenName(SCREEN_NAME_TERMS)
                 .startActivity();
@@ -346,45 +299,38 @@ public class ChallengeRegisterFragment extends Fragment implements HasChallengeF
     }
 
     void startChallenge(Participant participant) {
-        FragmentTransaction ft = getFragmentManager().beginTransaction();
-        Fragment fragment = null;
+//        Create intent here with part in a bundle and send through intent
+        Bundle args = new Bundle();
+        args.putParcelable(ChallengeActivity.ARG_CHALLENGE, challenge);
+        args.putParcelable(ChallengeActivity.ARG_PARTICIPANT,participant);
+        ActivityForResultHelper helper = new ActivityForResultHelper();
+        Intent intent = ChallengeActivity.Builder.create(getContext()).setArgs(args).getIntent();
+        helper.startActivityForResult(getContext(), intent, new ActivityForResultCallback() {
+            @Override
+            public void onActivityResultOK(Intent data) {
+                register.setText("");
+            }
+        });
 
-        switch (challenge.getType()) {
-            case QUIZ:
-                if (challenge instanceof QuizChallenge) {
-                    fragment = startQuizChallenge(participant, (QuizChallenge) challenge);
-                }
-                break;
-            case FREEFORM:
-                if (challenge instanceof FreeformChallenge) {
-                    fragment = startFreeformChallenge(participant, (FreeformChallenge) challenge);
-                }
-                break;
-            case PICTURE:
-                if (challenge instanceof PictureChallenge) {
-                    fragment = startPictureChallenge(participant, (PictureChallenge) challenge);
-                }
-                break;
-            default:
-                throw new RuntimeException("Invalid challenge type provided");
-        }
-
-        if (fragment != null) {
-            ft.setCustomAnimations(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
-            ft.replace(R.id.fragment_challenge_container, fragment, "fragment_challenge");
-            ft.commit();
-        }
     }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         switch (requestCode) {
-            case RequestCodes.RESPONSE_GALLERY_REQUEST_CHALLENGE_IMAGE:
-            case RequestCodes.RESPONSE_CAMERA_REQUEST_CHALLENGE_IMAGE:
+            case RESPONSE_GALLERY_REQUEST_CHALLENGE_IMAGE:
+            case RESPONSE_CAMERA_REQUEST_CHALLENGE_IMAGE:
                 if (getActivity() != null) {
                     FragmentTransaction ft = getFragmentManager().beginTransaction();
                     Fragment fragment = new ChallengePictureFragment();
+                    ft.replace(R.id.fragment_challenge_container, fragment, "fragment_challenge");
+                    ft.commit();
+                }
+                break;
+            case RESPONSE_CHALLENGE_REQUEST_RUN:
+                if (getActivity() != null) {
+                    FragmentTransaction ft = getFragmentManager().beginTransaction();
+                    Fragment fragment = new ChallengeDoneFragment();
                     ft.replace(R.id.fragment_challenge_container, fragment, "fragment_challenge");
                     ft.commit();
                 }

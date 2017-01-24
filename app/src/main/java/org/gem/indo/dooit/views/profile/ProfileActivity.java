@@ -260,6 +260,7 @@ public class ProfileActivity extends ImageActivity {
         fileUploadManager.uploadProfileImage(user.getId(), mediaType, new File(imagePath), new DooitErrorHandler() {
             @Override
             public void onError(DooitAPIError error) {
+                //hardcoded string
                 Toast.makeText(ProfileActivity.this, "Unable to uploadProfileImage Image", Toast.LENGTH_SHORT).show();
             }
         }).doAfterTerminate(new Action0() {

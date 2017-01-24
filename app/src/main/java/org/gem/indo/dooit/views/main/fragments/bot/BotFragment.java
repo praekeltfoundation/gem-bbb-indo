@@ -30,6 +30,7 @@ import org.gem.indo.dooit.controllers.goal.GoalEditController;
 import org.gem.indo.dooit.controllers.goal.GoalWithdrawController;
 import org.gem.indo.dooit.controllers.misc.ReturningUserController;
 import org.gem.indo.dooit.controllers.survey.BaselineSurveyController;
+import org.gem.indo.dooit.helpers.Crashlytics.CrashlyticsHelper;
 import org.gem.indo.dooit.helpers.Persisted;
 import org.gem.indo.dooit.helpers.SquiggleBackgroundHelper;
 import org.gem.indo.dooit.helpers.bot.BotFeed;
@@ -37,7 +38,6 @@ import org.gem.indo.dooit.helpers.bot.BotRunner;
 import org.gem.indo.dooit.helpers.bot.param.ParamArg;
 import org.gem.indo.dooit.helpers.bot.param.ParamMatch;
 import org.gem.indo.dooit.helpers.bot.param.ParamParser;
-import org.gem.indo.dooit.helpers.Crashlytics.CrashlyticsHelper;
 import org.gem.indo.dooit.models.bot.Answer;
 import org.gem.indo.dooit.models.bot.BaseBotModel;
 import org.gem.indo.dooit.models.bot.Node;
@@ -124,7 +124,7 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(org.gem.indo.dooit.R.layout.fragment_bot, container, false);
+        View view = inflater.inflate(R.layout.fragment_bot, container, false);
         ButterKnife.bind(this, view);
         SquiggleBackgroundHelper.setBackground(getContext(), R.color.grey_back, R.color.grey_fore, background);
         answerView.addOnTagClickListener(this);

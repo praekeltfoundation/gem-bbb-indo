@@ -1,9 +1,11 @@
 package org.gem.indo.dooit.views.main.fragments.challenge.fragments;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
+import android.support.v4.app.FragmentActivity;
 import android.support.v7.widget.CardView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,7 +17,8 @@ import com.facebook.drawee.view.SimpleDraweeView;
 
 import org.gem.indo.dooit.R;
 import org.gem.indo.dooit.models.challenge.BaseChallenge;
-import org.gem.indo.dooit.views.main.fragments.challenge.ChallengeFragment;
+import org.gem.indo.dooit.views.main.fragments.challenge.ChallengeActivity;
+import org.gem.indo.dooit.views.main.fragments.challenge.ChallengeFragmentMainPage;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -112,9 +115,22 @@ public class ChallengeDoneFragment extends Fragment {
 
     @OnClick(R.id.challenge_done_button)
     public void finishChallenge() {
-        Fragment f = getParentFragment();
-        if (f != null && f instanceof ChallengeFragment) {
-            ((ChallengeFragment) f).loadChallenge();
+        returnToParent(null);
+    }
+
+    private void returnToParent(ChallengeFragmentMainPage returnPage) {
+        FragmentActivity activity = getActivity();
+        Intent intent = new Intent();
+        Bundle bundle = new Bundle();
+        bundle.putParcelable(ChallengeActivity.ARG_CHALLENGE,challenge);
+        bundle.putInt(ChallengeActivity.ARG_RETURNPAGE, returnPage != null ? returnPage.ordinal() : -1);
+        intent.putExtras(bundle);
+
+        if (activity.getParent() == null) {
+            activity.setResult(Activity.RESULT_OK, intent);
+        } else {
+            activity.getParent().setResult(Activity.RESULT_OK, intent);
         }
+        activity.finish();
     }
 }

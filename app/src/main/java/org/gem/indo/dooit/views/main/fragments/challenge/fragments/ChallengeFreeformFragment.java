@@ -114,7 +114,7 @@ public class ChallengeFreeformFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(org.gem.indo.dooit.R.layout.fragment_challenge_freeform, container, false);
+        View view = inflater.inflate(R.layout.fragment_challenge_freeform, container, false);
         unbinder = ButterKnife.bind(this, view);
         title.setText(question != null ? question.getText() : getString(R.string.challenge_no_question));
         if (savedInstanceState == null) {
@@ -178,12 +178,12 @@ public class ChallengeFreeformFragment extends Fragment {
     /******************
      * Submit helpers *
      ******************/
-
-    public void submitAnswer(String text) {
+    @OnClick(R.id.fragment_challenge_freeform_submitbutton)
+    public void submitAnswer() {
         ParticipantFreeformAnswer answer = new ParticipantFreeformAnswer();
         answer.setParticipant(participant.getId());
         answer.setQuestion(question.getId());
-        answer.setText(text);
+        answer.setText(submissionBox.getText().toString());
 
         final ProgressDialog dialog = new ProgressDialog(getContext());
         dialog.setIndeterminate(true);
@@ -204,20 +204,22 @@ public class ChallengeFreeformFragment extends Fragment {
             @Override
             public void call(ParticipantFreeformAnswer answer) {
                 Log.d(TAG, "Entry submitted");
+                FragmentTransaction ft = getFragmentManager().beginTransaction();
+                Fragment fragment = ChallengeDoneFragment.newInstance(challenge);
+                ft.replace(R.id.fragment_challenge_container, fragment, "fragment_challenge");
+                ft.commit();
+
             }
         });
         persisted.clearCurrentChallenge();
     }
 
-    @OnClick(R.id.fragment_challenge_freeform_submitbutton)
-    public void submitFreeformAnswer() {
+
+   /* public void submitFreeformAnswer() {
         Log.d(TAG, "Submitting freeform answer.");
-        submitAnswer(submissionBox.getText().toString());
-        FragmentTransaction ft = getFragmentManager().beginTransaction();
-        Fragment fragment = ChallengeDoneFragment.newInstance(challenge);
-        ft.replace(R.id.fragment_challenge_container, fragment);
-        ft.commit();
-    }
+        submitAnswer();
+
+    }*/
 
 
     /*************************
