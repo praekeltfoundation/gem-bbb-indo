@@ -168,7 +168,7 @@ public class ChallengeQuizFragment extends Fragment implements OnOptionChangeLis
         if (entrySubscription != null) {
             entrySubscription.unsubscribe();
         }
-        returnToParent();
+        returnToParent(null);
     }
 
     @OnClick(R.id.fragment_challenge_quiz_checkbutton)
