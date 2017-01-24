@@ -1,6 +1,8 @@
 package org.gem.indo.dooit.controllers.survey;
 
 import android.content.Context;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 
 import org.gem.indo.dooit.DooitApplication;
 import org.gem.indo.dooit.api.managers.SurveyManager;
@@ -45,6 +47,8 @@ abstract public class SurveyController extends DooitBotController {
     protected static final int ANSWER_NEUTRAL = 2;
     protected static final int ANSWER_DISAPPROVE = 3;
 
+    protected static final String CONSENT_KEY = "survey_consent";
+
 
     @Inject
     protected SurveyManager surveyManager;
@@ -88,5 +92,16 @@ abstract public class SurveyController extends DooitBotController {
 
     protected boolean hasSurvey() {
         return survey != null;
+    }
+
+    /**
+     * Helper to check whether the user has given consent to take the survey.
+     *
+     * @param submission The submission that the controller is building up. The consent answer will
+     *                   be added to the submission under CONSENT_KEY.
+     * @param answer     The answer that holds the consent answer value.
+     */
+    protected void handleConsent(@NonNull Map<String, String> submission, @Nullable Answer answer) {
+        submission.put(CONSENT_KEY, answer == null ? Long.toString(ANSWER_NO) : answer.getValue());
     }
 }

@@ -14,7 +14,9 @@ import org.gem.indo.dooit.models.survey.CoachSurvey;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+import retrofit2.Response;
 import rx.functions.Action0;
+import rx.functions.Action1;
 
 /**
  * Created by Wimpie Victor on 2017/01/09.
@@ -103,6 +105,11 @@ public class BaselineSurveyController extends SurveyController {
             return;
 
         Map<String, String> submission = new LinkedHashMap<>();
+
+        // Consent
+        handleConsent(submission, answerLog.get("survey_baseline_q_consent"));
+
+        // Survey Questions
         for (String questionName : QUESTIONS) {
             Answer answer = answerLog.get(questionName);
             if (answer != null && answer.hasValue()
@@ -139,6 +146,14 @@ public class BaselineSurveyController extends SurveyController {
                 public void call() {
                     notifyDone(listener);
                 }
-            }).subscribe();
+            }).subscribe(new Action1<Response<Void>>() {
+                @Override
+                public void call(Response<Void> voidResponse) {
+                    // TODO: Remove push notification if it's still in the phone's notification drawer
+                    // After user has successfully submitted, they should not be able to take the
+                    // survey again. The server endpoint should prevent further notifications.
+                    persisted.clearConvoSurvey(botType);
+                }
+            });
     }
 }
