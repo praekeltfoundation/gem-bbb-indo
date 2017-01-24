@@ -116,8 +116,12 @@ public class GoalAddController extends GoalBotController {
         goal.setStartDate(LocalDate.now());
         goal.setEndDate(DateTimeFormat.forPattern("yyyy-MM-dd")
                 .parseLocalDate(answerLog.get("goalDate").getValue().substring(0, 10)));
+
+        if(goal.getEndDate() == null)
+            crashlyticsHelper.log(this.getClass().getSimpleName(),"do Populate (addGoal): ","goal start date: " + goal.getStartDate() +
+                " Target amount: " + goal.getTarget() + " Goal name: " + goal.getName());
         //the statement above was null and therefore when it was used later for calculations it crashed
-        crashlyticsHelper.log(this.getClass().getSimpleName(),"do Populate (addGoal): ","goal end date: " + goal.getEndDate());
+
         // User has existing savings
         if (answerLog.containsKey("hasSavedY"))
             goal.createTransaction(Double.parseDouble(answerLog.get("priorSaveAmount").getValue()));
