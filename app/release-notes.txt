@@ -8,6 +8,8 @@
 - Quiz has a visible scrollbar
 - Right nav arrow only shows when there is more than one Goal
 - Made margins of toolbar elements on profile screen equidistant
+- Goal add conversation now allows user ot change date or amount
+- ChallengeFragment is now a an activity and everything shows through the activity
 - Goal add conversation now allows user to change date or amount
 
 0.0.16
@@ -16,3 +18,4 @@
 - Main navigation icons updated
 - Close button on Challenge returns to Main screen
 - Main page titles displaying in toolbar
+- Challenges are now contained in their own screen

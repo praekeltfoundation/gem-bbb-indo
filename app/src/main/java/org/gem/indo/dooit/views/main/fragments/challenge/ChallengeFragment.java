@@ -6,7 +6,6 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v4.media.MediaBrowserCompat;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -26,6 +25,7 @@ import org.gem.indo.dooit.helpers.SquiggleBackgroundHelper;
 import org.gem.indo.dooit.models.challenge.BaseChallenge;
 import org.gem.indo.dooit.views.main.MainActivity;
 import org.gem.indo.dooit.views.main.fragments.MainFragment;
+import org.gem.indo.dooit.views.main.fragments.challenge.fragments.ChallengeDoneFragment;
 import org.gem.indo.dooit.views.main.fragments.challenge.fragments.ChallengeFreeformFragment;
 import org.gem.indo.dooit.views.main.fragments.challenge.fragments.ChallengeNoneFragment;
 import org.gem.indo.dooit.views.main.fragments.challenge.fragments.ChallengePictureFragment;
@@ -41,6 +41,7 @@ import butterknife.BindString;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
+import butterknife.internal.ListenerClass;
 import retrofit2.adapter.rxjava.HttpException;
 import rx.Subscription;
 import rx.functions.Action1;
@@ -102,7 +103,7 @@ public class ChallengeFragment extends MainFragment {
     }
 
     private Fragment createEmptyChildFragment(ChallengeFragmentState state) {
-        if (state == null) return null;
+        if (state == null) return new ChallengeNoneFragment();
         switch (state) {
             case FREEFORM:
                 return new ChallengeFreeformFragment();
@@ -112,29 +113,121 @@ public class ChallengeFragment extends MainFragment {
                 return new ChallengeQuizFragment();
             case REGISTER:
                 return new ChallengeRegisterFragment();
+            case NONE:
+                return new ChallengeNoneFragment();
             default:
                 return null;
         }
     }
+    /************************
+     * Life-cycle overrides *
+     ************************/
 
+    @Override
+    public void onCreate(@Nullable  Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
+        ((DooitApplication) getActivity().getApplication()).component.inject(this);
+    }
 
-    /****************
-     * Load helpers *
-     ****************/
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.fragment_challenge, container, false);
+        unbinder = ButterKnife.bind(this, view);
+        SquiggleBackgroundHelper.setBackground(getContext(), R.color.grey_back, R.color.grey_fore, container);
+        return view;
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        loadChallenge();
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        if (challengeSubscription != null)
+            challengeSubscription.unsubscribe();
+    }
+
+    @Override
+    public void onDestroyView() {
+        if (unbinder != null) {
+            unbinder.unbind();
+        }
+        super.onDestroyView();
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+        getActivity().getMenuInflater().inflate(R.menu.menu_main, menu);
+        getActivity().getMenuInflater().inflate(R.menu.menu_main_challenge, menu);
+    }
+
+    /*************************
+     * State-keeping methods *
+     *************************/
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        if (outState != null) {
+            if (getActivity() != null && childFragmentExists()) {
+                Fragment f = getChildFragment();
+                if (f != null) {
+                    f.onSaveInstanceState(outState);
+                }
+            }
+        }
+        super.onSaveInstanceState(outState);
+    }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        ChallengeFragmentState page = ChallengeFragmentState.NONE;
+        if (savedInstanceState != null) {
+            page = ChallengeFragmentState.NONE;
+            try {
+                page = (ChallengeFragmentState) savedInstanceState.getSerializable(ARG_PAGE);
+            } catch (Exception e) {
+                Log.d(TAG, "Could not load saved challenge state");
+                e.printStackTrace();
+            } finally {
+                challenge = savedInstanceState.getParcelable(ARG_CHALLENGE);
+                FragmentTransaction ft = getChildFragmentManager().beginTransaction();
+                Fragment f = getChildFragment();
+                if (f == null) {
+                    f = createEmptyChildFragment(page);
+                    if (f == null) {
+                    } else {
+                        f.setArguments(savedInstanceState);
+                        ft.replace(R.id.fragment_challenge_container, f, "fragment_challenge");
+                        ft.commit();
+                    }
+                } else {
+                    ft.replace(R.id.fragment_challenge_container, f, "fragment_challenge");
+                    ft.commit();
+                }
+            }
+        }
+        else {
+            FragmentTransaction ft = getChildFragmentManager().beginTransaction();
+            Fragment f = getChildFragment();
+            f = createEmptyChildFragment(page);
+            f.setArguments(savedInstanceState);
+            ft.replace(R.id.fragment_challenge_container, f, "fragment_challenge");
+            ft.commit();
+        }
+    }
 
     private void loadTypeFragment(BaseChallenge challenge, boolean hasActive) {
         if (challenge != null) {
-            ChallengeFragment.this.challenge = challenge;
+            this.challenge = challenge;
 
-            if (getActivity() != null) {
-                FragmentTransaction ft = getChildFragmentManager().beginTransaction();
-                Fragment fragment = ChallengeRegisterFragment.newInstance(challenge, hasActive);
-                ft.replace(R.id.fragment_challenge_container, fragment, "fragment_challenge");
-                ft.commit();
-            }
-        } else {
             FragmentTransaction ft = getChildFragmentManager().beginTransaction();
-            Fragment fragment = ChallengeNoneFragment.newInstance();
+            Fragment fragment = ChallengeRegisterFragment.newInstance(challenge, hasActive);
             ft.replace(R.id.fragment_challenge_container, fragment, "fragment_challenge");
             ft.commit();
         }
@@ -175,7 +268,7 @@ public class ChallengeFragment extends MainFragment {
             } catch (Exception e) {
                 Log.d(TAG, "Could not load persisted challenge");
                 persisted.clearCurrentChallenge();
-                Snackbar.make(getView(), R.string.challenge_persisted_challenge_thrown_out, Snackbar.LENGTH_LONG);
+                Snackbar.make(container, R.string.challenge_persisted_challenge_thrown_out, Snackbar.LENGTH_LONG);
                 challengeSubscription = challengeManager.retrieveCurrentChallenge(false, new DooitErrorHandler() {
                     @Override
                     public void onError(final DooitAPIError error) {
@@ -184,7 +277,6 @@ public class ChallengeFragment extends MainFragment {
                             public void run() {
                                 if(error.getCause() instanceof ConnectException ||
                                         error.getCause() instanceof UnknownHostException){
-                                    //Snackbar.make(getView(), R.string.challenge_could_not_connect_to_server, Snackbar.LENGTH_LONG).show();
                                     Toast.makeText(context, R.string.challenge_could_not_connect_to_server, Toast.LENGTH_SHORT).show();
                                 }else if(error.getCause() instanceof HttpException && (((HttpException) error.getCause()).code()) == 404){
                                     //This means no challenge could be found on the server, for now just do nothing
@@ -200,6 +292,7 @@ public class ChallengeFragment extends MainFragment {
                 });
             }
         }else{
+
             challengeSubscription = challengeManager.retrieveCurrentChallenge(false, new DooitErrorHandler() {
                 @Override
                 public void onError(final DooitAPIError error) {
@@ -208,7 +301,6 @@ public class ChallengeFragment extends MainFragment {
                         public void run() {
                             if(error.getCause() instanceof ConnectException ||
                                     error.getCause() instanceof UnknownHostException){
-                                //Snackbar.make(getView(), R.string.challenge_could_not_connect_to_server, Snackbar.LENGTH_LONG).show();
                                 Toast.makeText(context, R.string.challenge_could_not_connect_to_server, Toast.LENGTH_SHORT).show();
                             }else if(error.getCause() instanceof HttpException && (((HttpException) error.getCause()).code()) == 404){
                                 //This means no challenge could be found on the server, for now just do nothing
@@ -225,112 +317,16 @@ public class ChallengeFragment extends MainFragment {
         }
     }
 
-
-    /************************
-     * Life-cycle overrides *
-     ************************/
-
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setHasOptionsMenu(true);
-        ((DooitApplication) getActivity().getApplication()).component.inject(this);
-    }
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        View view = inflater.inflate(org.gem.indo.dooit.R.layout.fragment_challenge, container, false);
-        unbinder = ButterKnife.bind(this, view);
-        SquiggleBackgroundHelper.setBackground(getContext(), R.color.grey_back, R.color.grey_fore, container);
-        return view;
-    }
-
-    @Override
-    public void onStart() {
-        super.onStart();
-        if (getActivity() != null && !childFragmentExists()) {
-            loadChallenge();
-        }
-    }
-
-    @Override
-    public void onStop() {
-        super.onStop();
-        if (challengeSubscription != null)
-            challengeSubscription.unsubscribe();
-    }
-
-    @Override
-    public void onDestroyView() {
-        if (unbinder != null) {
-            unbinder.unbind();
-        }
-        super.onDestroyView();
-    }
-
-    @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        super.onCreateOptionsMenu(menu, inflater);
-        getActivity().getMenuInflater().inflate(org.gem.indo.dooit.R.menu.menu_main, menu);
-        getActivity().getMenuInflater().inflate(org.gem.indo.dooit.R.menu.menu_main_challenge, menu);
-    }
-
-
-    /*************************
-     * State-keeping methods *
-     *************************/
-
-    @Override
-    public void onSaveInstanceState(Bundle outState) {
-        if (outState != null) {
-            if (getActivity() != null && childFragmentExists()) {
-                Fragment f = getChildFragment();
-                if (f != null) {
-                    f.onSaveInstanceState(outState);
-                }
-            }
-        }
-        super.onSaveInstanceState(outState);
-    }
-
-    @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-        if (savedInstanceState != null) {
-            ChallengeFragmentState page = null;
-            try {
-                page = (ChallengeFragmentState) savedInstanceState.getSerializable(ARG_PAGE);
-            } catch (Exception e) {
-                Log.d(TAG, "Could not load saved challenge state");
-                e.printStackTrace();
-            } finally {
-                challenge = savedInstanceState.getParcelable(ARG_CHALLENGE);
-                FragmentTransaction ft = getChildFragmentManager().beginTransaction();
-                Fragment f = getChildFragment();
-                if (f == null) {
-                    f = createEmptyChildFragment(page);
-                    if (f == null) {
-                        loadChallenge();
-                    } else {
-                        f.setArguments(savedInstanceState);
-                        ft.replace(R.id.fragment_challenge_container, f, "fragment_challenge");
-                        ft.commit();
-                    }
-                } else {
-                    ft.replace(R.id.fragment_challenge_container, f, "fragment_challenge");
-                    ft.commit();
-                }
-            }
-        }
-    }
-
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         Fragment fragment = getChildFragment();
         if (fragment != null) {
             fragment.onActivityResult(requestCode, resultCode, data);
+            FragmentTransaction ft = getChildFragmentManager().beginTransaction();
+            Fragment f = ChallengeDoneFragment.newInstance(null);
+            ft.replace(R.id.fragment_challenge_container, f, "fragment_challenge");
+            ft.commit();
         }
     }
 }
