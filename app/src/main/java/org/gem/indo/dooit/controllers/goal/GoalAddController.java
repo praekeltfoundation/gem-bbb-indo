@@ -12,6 +12,7 @@ import org.gem.indo.dooit.api.managers.GoalManager;
 import org.gem.indo.dooit.api.responses.EmptyResponse;
 import org.gem.indo.dooit.helpers.Persisted;
 import org.gem.indo.dooit.helpers.bot.BotRunner;
+import org.gem.indo.dooit.helpers.crashlytics.CrashlyticsHelper;
 import org.gem.indo.dooit.helpers.images.MediaUriHelper;
 import org.gem.indo.dooit.models.Tip;
 import org.gem.indo.dooit.models.bot.Answer;
@@ -113,8 +114,18 @@ public class GoalAddController extends GoalBotController {
 
         goal.setTarget(Float.parseFloat(answerLog.get("goal_amount").getValue()));
         goal.setStartDate(LocalDate.now());
-        goal.setEndDate(DateTimeFormat.forPattern("yyyy-MM-dd")
-                .parseLocalDate(answerLog.get("goalDate").getValue().substring(0, 10)));
+        CrashlyticsHelper.log(this.getClass().getSimpleName(), "do Populate (addGoal): ", "goal start date: " + goal.getStartDate() +
+                " Target amount: " + goal.getTarget() + " Goal name: " + goal.getName());
+
+        try {
+            goal.setEndDate(DateTimeFormat.forPattern("yyyy-MM-dd")
+                    .parseLocalDate(answerLog.get("goalDate").getValue().substring(0, 10)));
+        } catch (NullPointerException nullException) {
+            CrashlyticsHelper.logException(nullException);
+        }
+
+
+        //the statement above was null and therefore when it was used later for calculations it crashed
 
         // User has existing savings
         if (answerLog.containsKey("hasSavedY"))
@@ -162,16 +173,26 @@ public class GoalAddController extends GoalBotController {
         if (goal.hasLocalImageUri() && !goal.imageFromProto()) {
             Uri uri = Uri.parse(goal.getLocalImageUri());
             final String mimetype = context.getContentResolver().getType(uri);
-            final String path = MediaUriHelper.getPath(context, uri);
-            observe.subscribe(new Action1<Goal>() {
-                @Override
-                public void call(final Goal newGoal) {
-                    // New Achievements is what we care about
-                    goal.addNewBadges(newGoal.getNewBadges());
-                    saveGoal();
-                    uploadImage(newGoal, mimetype, new File(path));
-                }
-            });
+
+            // Crashlytics for MediaURI null check
+            try {
+                final String path = MediaUriHelper.getPath(context, uri);
+                observe.subscribe(new Action1<Goal>() {
+                    @Override
+                    public void call(final Goal newGoal) {
+                        // New Achievements is what we care about
+                        goal.addNewBadges(newGoal.getNewBadges());
+                        saveGoal();
+                        uploadImage(newGoal, mimetype, new File(path));
+                    }
+                });
+
+                CrashlyticsHelper.log(this.getClass().getSimpleName(), "doCreate (BOT) : ",
+                        "MediaURI.getPath : context: " + context + " uri: " + uri + "MimeType: " + mimetype);
+            } catch (NullPointerException nullException) {
+                CrashlyticsHelper.logException(nullException);
+            }
+
         } else {
             observe.subscribe(new Action1<Goal>() {
                 @Override
