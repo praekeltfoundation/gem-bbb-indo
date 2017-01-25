@@ -308,35 +308,35 @@
 
     <!-- BOT: survey_baseline -->
     <!-- Q1 -->
-    <string name="survey_baseline_q01_occupation">What is your primary occupation?</string>
+    <string name="survey_baseline_q01_occupation">Apakah pekerjaan utamamu?</string>
 
-    <string name="survey_baseline_q01_a01">Student in elementary school (SD)</string>
-    <string name="survey_baseline_q01_a02">Student in middle school (SMP)</string>
-    <string name="survey_baseline_q01_a03">Student in academic high school (SMA)</string>
-    <string name="survey_baseline_q01_a04">Student in vocational high school (SMK)</string>
-    <string name="survey_baseline_q01_a05">Student in college or above</string>
-    <string name="survey_baseline_q01_a06">Employee working in a job</string>
-    <string name="survey_baseline_q01_a07">Business owner or co-owner</string>
-    <string name="survey_baseline_q01_a08">Volunteer in church or community</string>
-    <string name="survey_baseline_q01_a09">Care giver of family members or children</string>
-    <string name="survey_baseline_q01_a10">Not working, studying, or volunteering</string>
+    <string name="survey_baseline_q01_a01">Pelajar Sekolah Dasar (SD)</string>
+    <string name="survey_baseline_q01_a02">Pelajar Sekolah Menengah Pertama (SMP)</string>
+    <string name="survey_baseline_q01_a03">Pelajar Sekolah Menengah Atas (SMA)</string>
+    <string name="survey_baseline_q01_a04">Pelajar Sekolah Menengah Kejuruan (SMK)</string>
+    <string name="survey_baseline_q01_a05">Sedang menjalani pendidikan S1 atau di atasnya</string>
+    <string name="survey_baseline_q01_a06">Pegawai</string>
+    <string name="survey_baseline_q01_a07">Pemilik usaha atau pemilik bersama suatu perusahaanu</string>
+    <string name="survey_baseline_q01_a08">Relawan di gereja atau lingkungan</string>
+    <string name="survey_baseline_q01_a09">Perawat anggota keluarga atau anak-anak</string>
+    <string name="survey_baseline_q01_a10">Tidak bekerja, belajar, atau menjadi relawan</string>
 
     <!-- Q2 -->
-    <string name="survey_baseline_q02_grade">What grade are you in?</string>
-    <string name="survey_baseline_q02_a01_1styear">1st Year</string>
-    <string name="survey_baseline_q02_a02_2ndyear">2nd Year</string>
-    <string name="survey_baseline_q02_a03_3rdyear">3rd Year</string>
+    <string name="survey_baseline_q02_grade">Kelas berapakah kamu?</string>
+    <string name="survey_baseline_q02_a01_1styear">Kelas 1</string>
+    <string name="survey_baseline_q02_a02_2ndyear">Kelas 2</string>
+    <string name="survey_baseline_q02_a03_3rdyear">Kelas 3</string>
 
     <!-- Q3 -->
-    <string name="survey_baseline_q03_school_name">What is the name of your SMK?</string>
+    <string name="survey_baseline_q03_school_name">Apa nama SMKmu?</string>
 
     <!-- Q4 -->
-    <string name="survey_baseline_q04_city">What city do you live in?</string>
+    <string name="survey_baseline_q04_city">Di kota manakah kamu tinggal?</string>
 
     <!-- Q5 -->
-    <string name="survey_baseline_q05_job_month">Have you ever had a paid job for longer than one month? (Include working in family business and/or apprenticeships if paid.)</string>
-    <string name="survey_baseline_q05_a01_yes">Yes</string>
-    <string name="survey_baseline_q05_s02_no">No</string>
+    <string name="survey_baseline_q05_job_month">Pernahkah kamu memiliki pekerjaan dibayar selama lebih dari sebulan? (Termasuk bekerja di bisnis keluarga dan atau magang jika dibayar.)</string>
+    <string name="survey_baseline_q05_a01_yes">Ya</string>
+    <string name="survey_baseline_q05_s02_no">Tidak</string>
 
     <!-- Q6 -->
     <string name="survey_baseline_q06_job_earning_range">Within what range did your monthly earning fall for your last job?</string>
