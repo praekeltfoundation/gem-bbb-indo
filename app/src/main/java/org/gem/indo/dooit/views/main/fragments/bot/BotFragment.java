@@ -30,7 +30,6 @@ import org.gem.indo.dooit.controllers.goal.GoalEditController;
 import org.gem.indo.dooit.controllers.goal.GoalWithdrawController;
 import org.gem.indo.dooit.controllers.misc.ReturningUserController;
 import org.gem.indo.dooit.controllers.survey.BaselineSurveyController;
-import org.gem.indo.dooit.helpers.Crashlytics.CrashlyticsHelper;
 import org.gem.indo.dooit.helpers.Persisted;
 import org.gem.indo.dooit.helpers.SquiggleBackgroundHelper;
 import org.gem.indo.dooit.helpers.bot.BotFeed;
@@ -38,6 +37,7 @@ import org.gem.indo.dooit.helpers.bot.BotRunner;
 import org.gem.indo.dooit.helpers.bot.param.ParamArg;
 import org.gem.indo.dooit.helpers.bot.param.ParamMatch;
 import org.gem.indo.dooit.helpers.bot.param.ParamParser;
+import org.gem.indo.dooit.helpers.crashlytics.CrashlyticsHelper;
 import org.gem.indo.dooit.models.bot.Answer;
 import org.gem.indo.dooit.models.bot.BaseBotModel;
 import org.gem.indo.dooit.models.bot.Node;
@@ -396,12 +396,12 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
             model.setType(BotMessageType.TEXT);
             getBotAdapter().removeItem(model);
             getBotAdapter().addItem(model);
-            CrashlyticsHelper.log(this.getClass().getSimpleName(),"onItemClicked: ", "model changed: " + model.toString());
+            CrashlyticsHelper.log(this.getClass().getSimpleName(), "onItemClicked: ", "model changed: " + model.toString());
         }
 
-        if (shouldAdd(answer)){
+        if (shouldAdd(answer)) {
             getBotAdapter().addItem(answer);
-            CrashlyticsHelper.log(this.getClass().getSimpleName(),"onItemClicked: ","adding to conversation: " + answer.toString());
+            CrashlyticsHelper.log(this.getClass().getSimpleName(), "onItemClicked: ", "adding to conversation: " + answer.toString());
         }
 
         if (answer.hasInputKey() && hasController())
@@ -511,7 +511,7 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
         } else {
             addAnswerOptions(node);
             persisted.saveConversationState(type, getBotAdapter().getDataSet());
-            CrashlyticsHelper.log(this.getClass().getSimpleName(),"checkEndOrAddAnswers: ", "data set: " + getBotAdapter().getDataSet());
+            CrashlyticsHelper.log(this.getClass().getSimpleName(), "checkEndOrAddAnswers: ", "data set: " + getBotAdapter().getDataSet());
         }
     }
 
@@ -584,7 +584,7 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
                 cb.resolveParam(answer, BotParamType.byKey(arg.getKey()));
         }
         answer.setProcessedText(args.process(answer.values.getRawMap()));
-        CrashlyticsHelper.log(this.getClass().getSimpleName(),"processText: ","Processed answer : " + answer.toString());
+        CrashlyticsHelper.log(this.getClass().getSimpleName(), "processText: ", "Processed answer : " + answer.toString());
     }
 
     private void clearAnswerView() {

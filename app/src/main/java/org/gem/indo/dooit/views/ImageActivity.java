@@ -23,7 +23,7 @@ import android.widget.Toast;
 import org.gem.indo.dooit.Constants;
 import org.gem.indo.dooit.R;
 import org.gem.indo.dooit.helpers.RequestCodes;
-import org.gem.indo.dooit.helpers.Crashlytics.CrashlyticsHelper;
+import org.gem.indo.dooit.helpers.crashlytics.CrashlyticsHelper;
 import org.gem.indo.dooit.helpers.images.ImageChooserOptions;
 import org.gem.indo.dooit.helpers.images.ImageScaler;
 import org.gem.indo.dooit.helpers.images.MediaUriHelper;
@@ -141,7 +141,7 @@ public abstract class ImageActivity extends DooitActivity {
         if (resultCode == Activity.RESULT_CANCELED)
             return;
 
-        CrashlyticsHelper.log(this.getClass().getSimpleName(),"startCamera : ", "Request code from dialog: " + requestCode
+        CrashlyticsHelper.log(this.getClass().getSimpleName(), "startCamera : ", "Request code from dialog: " + requestCode
                 + " resultCode : " + requestCode + String.format(" Is intent null? : %s ", data == null));
         switch (requestCode) {
             case RequestCodes.RESPONSE_CAMERA_REQUEST_PROFILE_IMAGE:
@@ -231,7 +231,7 @@ public abstract class ImageActivity extends DooitActivity {
         } catch (IOException e) {
             Toast.makeText(this, "Unable to do image rotation", Toast.LENGTH_LONG).show();
             Log.e(TAG, "Unable to create temporary downscaled image file", e);
-            CrashlyticsHelper.log(this.getClass().getSimpleName()," processImage : ", "an IOException");
+            CrashlyticsHelper.log(this.getClass().getSimpleName(), " processImage : ", "an IOException");
         } finally {
             try {
                 if (outStream != null)

@@ -5,7 +5,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import org.gem.indo.dooit.R;
-import org.gem.indo.dooit.helpers.Crashlytics.CrashlyticsHelper;
+import org.gem.indo.dooit.helpers.crashlytics.CrashlyticsHelper;
 import org.gem.indo.dooit.models.bot.Answer;
 import org.gem.indo.dooit.views.helpers.activity.CurrencyHelper;
 import org.gem.indo.dooit.views.main.fragments.bot.adapters.BotAdapter;
@@ -36,7 +36,7 @@ public class AnswerTextCurrencyViewHolder extends BaseBotViewHolder<Answer> {
     public void populate(Answer model) {
         super.populate(model);
         textView.setText(CurrencyHelper.format(dataModel.getValue()));
-        CrashlyticsHelper.log(this.getClass().getSimpleName(),"populate (TextCurrencyEdit): ", "Amount: " + dataModel.getValue());
+        CrashlyticsHelper.log(this.getClass().getSimpleName(), "populate (TextCurrencyEdit): ", "Amount: " + dataModel.getValue());
     }
 
     @Override

@@ -12,7 +12,7 @@ import android.widget.TextView;
 import com.greenfrvr.hashtagview.HashtagView;
 
 import org.gem.indo.dooit.R;
-import org.gem.indo.dooit.helpers.Crashlytics.CrashlyticsHelper;
+import org.gem.indo.dooit.helpers.crashlytics.CrashlyticsHelper;
 import org.gem.indo.dooit.models.bot.Answer;
 import org.gem.indo.dooit.models.enums.BotMessageType;
 import org.gem.indo.dooit.views.helpers.activity.CurrencyHelper;
@@ -78,7 +78,7 @@ public class AnswerInlineNumberEditViewHolder extends BaseBotViewHolder<Answer> 
                     char separator = ((DecimalFormat) NumberFormat.getCurrencyInstance()).getDecimalFormatSymbols().getGroupingSeparator();
                     String stringSeparator = String.valueOf(separator);
 
-                    String input = (v.getText().toString()).replace(stringSeparator,"");
+                    String input = (v.getText().toString()).replace(stringSeparator, "");
                     Answer inputAnswer = new Answer();
 
                     inputAnswer.setValue(!TextUtils.isEmpty(input) ? input : DEFAULT);
@@ -87,7 +87,7 @@ public class AnswerInlineNumberEditViewHolder extends BaseBotViewHolder<Answer> 
                     inputAnswer.setNext(dataModel.getNextOnFinish());
                     inputAnswer.setType(BotMessageType.getValueOf(dataModel.getTypeOnFinish()));
                     tagsClickListener.onItemClicked(inputAnswer);
-                    CrashlyticsHelper.log(this.getClass().getSimpleName(),"populate (numberedit): ", "number: " + inputAnswer.getValue());
+                    CrashlyticsHelper.log(this.getClass().getSimpleName(), "populate (numberedit): ", "number: " + inputAnswer.getValue());
                     return true;
                 }
                 return false;

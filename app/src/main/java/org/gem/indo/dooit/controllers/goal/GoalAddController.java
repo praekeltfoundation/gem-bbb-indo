@@ -4,8 +4,6 @@ import android.app.Activity;
 import android.net.Uri;
 import android.text.TextUtils;
 
-import com.facebook.common.references.SharedReference;
-
 import org.gem.indo.dooit.DooitApplication;
 import org.gem.indo.dooit.api.DooitAPIError;
 import org.gem.indo.dooit.api.DooitErrorHandler;
@@ -14,7 +12,7 @@ import org.gem.indo.dooit.api.managers.GoalManager;
 import org.gem.indo.dooit.api.responses.EmptyResponse;
 import org.gem.indo.dooit.helpers.Persisted;
 import org.gem.indo.dooit.helpers.bot.BotRunner;
-import org.gem.indo.dooit.helpers.Crashlytics.CrashlyticsHelper;
+import org.gem.indo.dooit.helpers.crashlytics.CrashlyticsHelper;
 import org.gem.indo.dooit.helpers.images.MediaUriHelper;
 import org.gem.indo.dooit.models.Tip;
 import org.gem.indo.dooit.models.bot.Answer;
@@ -116,13 +114,13 @@ public class GoalAddController extends GoalBotController {
 
         goal.setTarget(Float.parseFloat(answerLog.get("goal_amount").getValue()));
         goal.setStartDate(LocalDate.now());
-        CrashlyticsHelper.log(this.getClass().getSimpleName(),"do Populate (addGoal): ","goal start date: " + goal.getStartDate() +
+        CrashlyticsHelper.log(this.getClass().getSimpleName(), "do Populate (addGoal): ", "goal start date: " + goal.getStartDate() +
                 " Target amount: " + goal.getTarget() + " Goal name: " + goal.getName());
 
         try {
             goal.setEndDate(DateTimeFormat.forPattern("yyyy-MM-dd")
                     .parseLocalDate(answerLog.get("goalDate").getValue().substring(0, 10)));
-        }catch (NullPointerException nullException){
+        } catch (NullPointerException nullException) {
             CrashlyticsHelper.logException(nullException);
         }
 
@@ -189,10 +187,9 @@ public class GoalAddController extends GoalBotController {
                     }
                 });
 
-                CrashlyticsHelper.log(this.getClass().getSimpleName(),"doCreate (BOT) : ",
-                        "MediaURI.getPath : context: "+ context + " uri: " + uri + "MimeType: " + mimetype);
-            }
-            catch (NullPointerException nullException){
+                CrashlyticsHelper.log(this.getClass().getSimpleName(), "doCreate (BOT) : ",
+                        "MediaURI.getPath : context: " + context + " uri: " + uri + "MimeType: " + mimetype);
+            } catch (NullPointerException nullException) {
                 CrashlyticsHelper.logException(nullException);
             }
 

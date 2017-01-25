@@ -1,4 +1,4 @@
-package org.gem.indo.dooit.helpers.Crashlytics;
+package org.gem.indo.dooit.helpers.crashlytics;
 
 import android.util.Log;
 
