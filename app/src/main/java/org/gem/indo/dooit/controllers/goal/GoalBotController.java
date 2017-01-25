@@ -154,6 +154,12 @@ public abstract class GoalBotController extends DooitBotController {
             case GOAL_TARGET:
                 goal.setTarget(Double.parseDouble(answer.getValue()));
                 break;
+            case GOAL_VALUE:
+                    goal.setValue(Double.parseDouble(answer.getValue()));
+                break;
+            case GOAL_WEEKLY_TARGET:
+                goal.setWeeklyTarget(Double.parseDouble(answer.getValue()));
+                break;
             default:
                 super.onAnswerInput(inputType, answer);
         }

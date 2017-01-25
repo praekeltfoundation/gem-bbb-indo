@@ -135,6 +135,8 @@ public class Answer extends BaseBotModel {
         answer.setTypeOnFinish(getTypeOnFinish());
         answer.setParentName(getParentName());
 
+        //copy parent atttributes
+
         return answer;
     }
 

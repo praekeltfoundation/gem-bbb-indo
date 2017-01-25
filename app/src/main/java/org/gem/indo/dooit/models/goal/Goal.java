@@ -285,7 +285,7 @@ public class Goal {
     public void calculateFields() {
         if(endDate != null) {
             weekCount = (int) (TimeUnit.MILLISECONDS.toDays((long) Math.ceil(endDate.toDate().getTime() - startDate.toDate().getTime()) / 7));
-            weeklyTarget = target / weekCount;
+            weeklyTarget = (target-value) / weekCount;
         }else if(weeklyTarget != 0){
             //calculate weekcount
             double stillNeeded = target - value;

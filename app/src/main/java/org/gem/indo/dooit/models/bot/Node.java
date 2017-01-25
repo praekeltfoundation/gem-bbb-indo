@@ -107,6 +107,30 @@ public class Node extends BaseBotModel {
         return !TextUtils.isEmpty(autoNextScreen);
     }
 
+    public void setAnswerName(String answerName) {
+        this.answerName = answerName;
+    }
+
+    public void setAutoAnswer(String autoAnswer) {
+        this.autoAnswer = autoAnswer;
+    }
+
+
+    public Node copy() {
+        Node n = new Node();
+        String newAutoNext = new String(autoNext);
+        String newAutoAnswer = new String(autoAnswer);
+        String newAnswerName = new String(answerName);
+        String newAutoNexScreen = new String(autoNextScreen);
+        n.setAutoNext(newAutoNext);
+        n.setAutoAnswer(newAutoAnswer);
+        n.setName(newAnswerName);
+        n.
+
+        n.setIconHidden(iconHidden);
+        return n;
+    }
+
     @Override
     public String toString() {
         return "Node{" + name + "}";
