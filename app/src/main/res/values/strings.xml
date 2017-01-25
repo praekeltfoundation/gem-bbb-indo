@@ -283,8 +283,8 @@
     <!-- BOT: Surveys Common -->
     <!-- Bot Barks -->
     <string name="survey_common_q_intro">$(survey.intro)</string>
-    <string name="survey_common_q_intro_a_yes">Yeah, sure</string>
-    <string name="survey_common_q_intro_a_no">No Thanks</string>
+    <string name="survey_common_q_intro_a_yes">Yup, let's do it!</string>
+    <string name="survey_common_q_intro_a_no">No, thank you</string>
 
     <string name="survey_common_q_outro">$(survey.outro)</string>
 
@@ -301,7 +301,7 @@
     <string name="survey_common_q_consent_a_no">No</string>
 
     <!-- Cancel Survey -->
-    <string name="survey_common_q_outro_cancel">That\'s OK!</string>
+    <string name="survey_common_q_outro_cancel">That\'s alright, maybe next time. Would you like to check out some savings tips?</string>
 
     <!-- BOT: survey_baseline -->
     <!-- Q1 -->

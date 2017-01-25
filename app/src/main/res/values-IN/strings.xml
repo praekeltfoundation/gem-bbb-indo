@@ -286,8 +286,8 @@
     <!-- BOT: Surveys Common -->
     <!-- Bot Barks -->
     <string name="survey_common_q_intro">$(survey.intro)</string>
-    <string name="survey_common_q_intro_a_yes">Yeah, sure</string>
-    <string name="survey_common_q_intro_a_no">No Thanks</string>
+    <string name="survey_common_q_intro_a_yes">Boleh, yuk mulai!</string>
+    <string name="survey_common_q_intro_a_no">Tidak ah, makasih.</string>
 
     <string name="survey_common_q_outro">$(survey.outro)</string>
 
@@ -304,7 +304,7 @@
     <string name="survey_common_q_consent_a_no">No</string>
 
     <!-- Cancel Survey -->
-    <string name="survey_common_q_outro_cancel">That\'s OK!</string>
+    <string name="survey_common_q_outro_cancel">Tidak masalah, lain kali saja. Apakah kamu ingin membaca tips menabung?</string>
 
     <!-- BOT: survey_baseline -->
     <!-- Q1 -->
@@ -339,208 +339,208 @@
     <string name="survey_baseline_q05_s02_no">Tidak</string>
 
     <!-- Q6 -->
-    <string name="survey_baseline_q06_job_earning_range">Within what range did your monthly earning fall for your last job?</string>
-    <string name="survey_baseline_q06_a01_250k">Less than 250 thousand</string>
-    <string name="survey_baseline_q06_a02_250k_500k">Between 250 thousand and 500 thousand</string>
-    <string name="survey_baseline_q06_a03_500k_750k">Between 500 thousand and 750 thousand</string>
-    <string name="survey_baseline_q06_a04_750k_1m">Between 750 thousand and 1 million</string>
-    <string name="survey_baseline_q06_a05_1m_1_5m">Between 1 million and 1,5 million</string>
-    <string name="survey_baseline_q06_a06_1_5m">More than 1,5 million</string>
+    <string name="survey_baseline_q06_job_earning_range">Berapakah kisaran gaji bulanan yang kamu terima dari pekerjaan terakhirmu?</string>
+    <string name="survey_baseline_q06_a01_250k">Kurang dari Rp 250.000,-</string>
+    <string name="survey_baseline_q06_a02_250k_500k">Di antara Rp 250.000,- sampai Rp 500.000,-</string>
+    <string name="survey_baseline_q06_a03_500k_750k">Di antara Rp 500.000,- sampai Rp 750.000,-</string>
+    <string name="survey_baseline_q06_a04_750k_1m">Di antara Rp 750.000,- sampai Rp 1.000.000,-</string>
+    <string name="survey_baseline_q06_a05_1m_1_5m">Di antara Rp 1.000.000,- sampai Rp 1.500.000,-</string>
+    <string name="survey_baseline_q06_a06_1_5m">Di atas Rp 1.500.000,-</string>
 
     <!-- Q7 -->
-    <string name="survey_baseline_q07_job_status">What was your employment status in your last job?</string>
-    <string name="survey_baseline_q07_a01_permanent">Permanent staff (signed contract with specific salary and benefits)</string>
-    <string name="survey_baseline_q07_a02_indefinite">Indefinite term employment (probation, pathway to permanent staff)</string>
-    <string name="survey_baseline_q07_a03_temp">Temporary/casual (working on short assignments or task, no contract)</string>
-    <string name="survey_baseline_q07_a04_apprenticeship">Apprenticeship (learning new skill and receiving small monetary support to cover transport cost)</string>
-    <string name="survey_baseline_q07_a05_daily">Daily worker (working on a day to day basis)</string>
-    <string name="survey_baseline_q07_a06_family">Helping family business with pay</string>
-    <string name="survey_baseline_q07_a07_unknown">Does not know</string>
+    <string name="survey_baseline_q07_job_status">Apakah status kepegawaianmu di pekerjaan terakhirmu?</string>
+    <string name="survey_baseline_q07_a01_permanent">Karyawan tetap (kontrak bertandatangan dengan gaji spesifik dan fasilitas kantor)</string>
+    <string name="survey_baseline_q07_a02_indefinite">Kontrak kerja waktu tak tertentu (masa percobaan kerja, belum karyawan tetap)</string>
+    <string name="survey_baseline_q07_a03_temp">Tidak tetap/pekerja biasa (bekerja untuk proyek atau tugas singkat, tanpa kontrak)</string>
+    <string name="survey_baseline_q07_a04_apprenticeship">Pekerja magang (kerja untuk belajar hal baru dan menerima sejumlah uang untuk ongkos transportasi)</string>
+    <string name="survey_baseline_q07_a05_daily">Pekerja harian (bekerja dengan basis perhari)</string>
+    <string name="survey_baseline_q07_a06_family">Membantu usaha keluarga dengan bayaran</string>
+    <string name="survey_baseline_q07_a07_unknown">Tidak tahu</string>
 
     <!-- Q8 -->
-    <string name="survey_baseline_q08_shared_ownership">Have you ever owned or shared ownership of a business?</string>
-    <string name="survey_baseline_q08_a01_yes">Yes</string>
-    <string name="survey_baseline_q08_a02_no">No</string>
+    <string name="survey_baseline_q08_shared_ownership">Apa kamu pernah memiliki atau berbagi kepemilikan suatu bisnis?</string>
+    <string name="survey_baseline_q08_a01_yes">Ya</string>
+    <string name="survey_baseline_q08_a02_no">Tidak</string>
 
     <!-- Q9 -->
-    <string name="survey_baseline_q09_business_earning_range">Within what range did your monthly business earnings fall?</string>
-    <string name="survey_baseline_q09_a01_250k">Less than 250 thousand</string>
-    <string name="survey_baseline_q09_a02_250k_500k">Between 250 thousand and 500 thousand</string>
-    <string name="survey_baseline_q09_a03_500k_750k">Between 500 thousand and 750 thousand</string>
-    <string name="survey_baseline_q09_a04_750k_1m">Between 750 thousand and 1 million</string>
-    <string name="survey_baseline_q09_a05_1m_1_5m">Between 1 million and 1,5 million</string>
-    <string name="survey_baseline_q09_a06_1_5m">More than 1,5 million</string>
+    <string name="survey_baseline_q09_business_earning_range">Berapakah kisaran pendapatan bisnismu tiap bulannya?</string>
+    <string name="survey_baseline_q09_a01_250k">Kurang dari Rp 250.000,-</string>
+    <string name="survey_baseline_q09_a02_250k_500k">Di antara Rp 250.000,- sampai Rp 500.000,-</string>
+    <string name="survey_baseline_q09_a03_500k_750k">Di antara Rp 500.000,- sampai Rp 750.000,-</string>
+    <string name="survey_baseline_q09_a04_750k_1m">Di antara Rp 750.000,- sampai Rp 1.000.000,-</string>
+    <string name="survey_baseline_q09_a05_1m_1_5m">Di antara Rp 1.000.000,- sampai Rp 1.500.000,-</string>
+    <string name="survey_baseline_q09_a06_1_5m">Di atas Rp 1.500.000,-</string>
 
     <!-- Q10 -->
-    <string name="survey_baseline_q10_save">Do you ever save some of your money?</string>
-    <string name="survey_baseline_q10_a01_yes">Yes</string>
-    <string name="survey_baseline_q10_a02_no">No</string>
+    <string name="survey_baseline_q10_save">Apa kamu pernah menabung sebagian dari uangmu?</string>
+    <string name="survey_baseline_q10_a01_yes">Ya </string>
+    <string name="survey_baseline_q10_a02_no">Tidak</string>
 
     <!-- Q11 -->
-    <string name="survey_baseline_q11_savings_frequency">How frequently do you save money?</string>
-    <string name="survey_baseline_q11_a01_daily">Daily</string>
-    <string name="survey_baseline_q11_a02_weekly">Weekly</string>
-    <string name="survey_baseline_q11_a03_monthly">Monthly</string>
-    <string name="survey_baseline_q11_a04_2_months">Every 2 months</string>
-    <string name="survey_baseline_q11_a05_3_4_months">Every 3 or 4 months</string>
-    <string name="survey_baseline_q11_a06_year">Once or twice a year</string>
-    <string name="survey_baseline_q11_a07_dont_know">Do not remember</string>
-    <string name="survey_baseline_q11_a08_vary">Varies (different times, not a set frequency)</string>
+    <string name="survey_baseline_q11_savings_frequency">Seberapa sering kamu menabung?</string>
+    <string name="survey_baseline_q11_a01_daily">Setiap hari</string>
+    <string name="survey_baseline_q11_a02_weekly">Setiap minggu</string>
+    <string name="survey_baseline_q11_a03_monthly">Setiap bulan</string>
+    <string name="survey_baseline_q11_a04_2_months">Setiap dua bulan sekali</string>
+    <string name="survey_baseline_q11_a05_3_4_months">Setiap 3 atau 4 bulan</string>
+    <string name="survey_baseline_q11_a06_year">Setahun atau dua tahun sekali</string>
+    <string name="survey_baseline_q11_a07_dont_know">Tidak ingat</string>
+    <string name="survey_baseline_q11_a08_vary">Bervariasi (Berbeda tiap saatnya, tidak ada waktu yang tetap)</string>
 
     <!-- Q12 -->
-    <string name="survey_baseline_q12_savings_where">Where do you keep most of your savings?</string>
+    <string name="survey_baseline_q12_savings_where">Di mana biasanya kamu menyimpan tabunganmu?</string>
     <string name="survey_baseline_q12_a01_bank">Bank</string>
-    <string name="survey_baseline_q12_a02_community">Community savings group</string>
-    <string name="survey_baseline_q12_a03_home">At home (chicken bank)</string>
-    <string name="survey_baseline_q12_a04_family">Send to family for safekeeping</string>
-    <string name="survey_baseline_q12_a05_gold">Buy gold or other valuables</string>
-    <string name="survey_baseline_q12_a06_other">Other</string>
+    <string name="survey_baseline_q12_a02_community">Grup menabung bersama</string>
+    <string name="survey_baseline_q12_a03_home">Di rumah (celengan)</string>
+    <string name="survey_baseline_q12_a04_family">Dititipkan di keluarga supaya aman</string>
+    <string name="survey_baseline_q12_a05_gold">Diinvestasikan ke emas atau hal berharga lainnya</string>
+    <string name="survey_baseline_q12_a06_other">Lainnya</string>
 
 
     <!-- Q13 -->
-    <string name="survey_baseline_q13_savings_3_months">In the last 3 months, approximately how much money did you save in total?</string>
-    <string name="survey_baseline_q13_a01_lt_100k">Less than 100 thousand</string>
-    <string name="survey_baseline_q13_a02_100k_150k">Between 100 thousand and 150 thousand</string>
-    <string name="survey_baseline_q13_a03_150k_200k">Between 150 thousand and 200 thousand</string>
-    <string name="survey_baseline_q13_a04_200k_250k">Between 200 thousand and 250 thousand</string>
-    <string name="survey_baseline_q13_a05_250k_300k">Between 250 thousand and 300 thousand</string>
-    <string name="survey_baseline_q13_a06_300k_350k">Between 300 thousand and 350 thousand</string>
-    <string name="survey_baseline_q13_a07_350k_400k">Between 350 thousand and 400 thousand</string>
-    <string name="survey_baseline_q13_a08_gt_400k">More than 400 thousand</string>
+    <string name="survey_baseline_q13_savings_3_months">Dalam 3 bulan kebelakang, kira-kira berapa banyak jumlah uang yang kamu tabung?</string>
+    <string name="survey_baseline_q13_a01_lt_100k">Kurang dari Rp 100.000,-</string>
+    <string name="survey_baseline_q13_a02_100k_150k">Di antara Rp 100.000,- dan Rp 150.000,-</string>
+    <string name="survey_baseline_q13_a03_150k_200k">Di antara Rp 150.000,- dan Rp 200.000,-</string>
+    <string name="survey_baseline_q13_a04_200k_250k">Di antara Rp 200.000,- dan Rp 250.000,-</string>
+    <string name="survey_baseline_q13_a05_250k_300k">Di antara Rp 250.000,- dan Rp 300.000,-</string>
+    <string name="survey_baseline_q13_a06_300k_350k">Di antara Rp 300.000,- dan Rp 350.000,-</string>
+    <string name="survey_baseline_q13_a07_350k_400k">Di antara Rp 350.000,- dan Rp 400.000,-</string>
+    <string name="survey_baseline_q13_a08_gt_400k">Lebih dari Rp 400.000,-</string>
 
     <!-- Q14 -->
-    <string name="survey_baseline_q14_saving_education">Have you ever saved money to pay for education costs, like fees for a training course?</string>
-    <string name="survey_baseline_q14_a01_yes">Yes</string>
-    <string name="survey_baseline_q14_a02_no">No</string>
+    <string name="survey_baseline_q14_saving_education">Pernahkah kamu menabung untuk membayar biaya pendidikanmu, atau biaya les/pelatihanmu?</string>
+    <string name="survey_baseline_q14_a01_yes">Ya</string>
+    <string name="survey_baseline_q14_a02_no">Tidak</string>
 
     <!-- Q15 -->
-    <string name="survey_baseline_q15_job_hunt">Have you ever saved money to pay for the cost of looking for a job or attending job interviews?</string>
-    <string name="survey_baseline_q15_a01_yes">Yes</string>
-    <string name="survey_baseline_q15_a02_no">No</string>
+    <string name="survey_baseline_q15_job_hunt">Pernahkah kamu menabung untuk membayar ongkos pergi melamar kerja atau wawancara kerja?</string>
+    <string name="survey_baseline_q15_a01_yes">Ya</string>
+    <string name="survey_baseline_q15_a02_no">Tidak</string>
 
     <!-- Q16 -->
-    <string name="survey_baseline_q16_emergencies">Have you ever saved money to have some extra in case of emergencies?</string>
-    <string name="survey_baseline_q16_a01_yes">Yes</string>
-    <string name="survey_baseline_q16_a02_no">No</string>
+    <string name="survey_baseline_q16_emergencies">Pernahkah kamu menabung agar ada biaya tambahan di saat-saat darurat?</string>
+    <string name="survey_baseline_q16_a01_yes">Ya</string>
+    <string name="survey_baseline_q16_a02_no">Tidak</string>
 
     <!-- Q17 -->
-    <string name="survey_baseline_q17_invest">Have you ever saved money to invest in business opportunities?</string>
-    <string name="survey_baseline_q17_a01_yes">Yes</string>
-    <string name="survey_baseline_q17_a02_no">No</string>
+    <string name="survey_baseline_q17_invest">Pernahkah kamu menabung sebagai modal untuk bisnis?</string>
+    <string name="survey_baseline_q17_a01_yes">Ya</string>
+    <string name="survey_baseline_q17_a02_no">Tidak</string>
 
     <!-- Q18 -->
-    <string name="survey_baseline_q18_family">Have you ever saved money to support family needs?</string>
-    <string name="survey_baseline_q18_a01_yes">Yes</string>
-    <string name="survey_baseline_q18_a02_no">No</string>
+    <string name="survey_baseline_q18_family">Pernahkah kamu menabung untuk membantu kebutuhan keluargamu?</string>
+    <string name="survey_baseline_q18_a01_yes">Ya</string>
+    <string name="survey_baseline_q18_a02_no">Tidak</string>
 
     <!-- Q19 -->
-    <string name="survey_baseline_q19_clothes_food">Have you ever saved money to buy personal items for everyday use like clothes or food?</string>
-    <string name="survey_baseline_q19_a01_yes">Yes</string>
-    <string name="survey_baseline_q19_a02_no">No</string>
+    <string name="survey_baseline_q19_clothes_food">Pernahkah kamu menabung untuk membeli barang kebutuhan sehari-hari seperti baju atau makanan?</string>
+    <string name="survey_baseline_q19_a01_yes">Ya</string>
+    <string name="survey_baseline_q19_a02_no">Tidak</string>
 
     <!-- Q20 -->
     <!-- Same as Q19??? -->
-    <string name="survey_baseline_q20_clothes_food">Have you ever saved money to buy personal items for everyday use like clothes or food?</string>
-    <string name="survey_baseline_q20_a01_yes">Yes</string>
-    <string name="survey_baseline_q20_a02_no">No</string>
+    <string name="survey_baseline_q20_clothes_food">Pernahkah kamu menabung untuk membeli barang kebutuhan sehari-hari seperti baju atau makanan?</string>
+    <string name="survey_baseline_q20_a01_yes">Ya</string>
+    <string name="survey_baseline_q20_a02_no">Tidak</string>
 
     <!-- Q21 -->
-    <string name="survey_baseline_q21_gadgets">Have you ever saved money to buy items that last longer, like a phone, computer, or motorbike?</string>
-    <string name="survey_baseline_q21_a01_yes">Yes</string>
-    <string name="survey_baseline_q21_a02_no">No</string>
+    <string name="survey_baseline_q21_gadgets">Pernahkah kamu menabung untuk membeli barang dengan daya tahan lama seperti HP, komputer, atau motor?</string>
+    <string name="survey_baseline_q21_a01_yes">Ya</string>
+    <string name="survey_baseline_q21_a02_no">Tidak</string>
 
     <!-- Q22 -->
-    <string name="survey_baseline_q22_friends">Have you ever saved money to go out friends for fun?</string>
-    <string name="survey_baseline_q22_a01_yes">Yes</string>
-    <string name="survey_baseline_q22_a02_no">No</string>
+    <string name="survey_baseline_q22_friends">Pernahkah kamu menabung untuk jalan-jalan dengan teman-temanmu?</string>
+    <string name="survey_baseline_q22_a01_yes">Ya</string>
+    <string name="survey_baseline_q22_a02_no">Tidak</string>
 
     <!-- Q23 -->
-    <string name="survey_baseline_q23_mobile_frequency">How often do you use a mobile phone?</string>
-    <string name="survey_baseline_q23_a01_never">Never</string>
-    <string name="survey_baseline_q23_a02_month">Once a month</string>
-    <string name="survey_baseline_q23_a03_week">Once a week</string>
-    <string name="survey_baseline_q23_a04_day">Once a day</string>
-    <string name="survey_baseline_q23_a05_day_multiple">Multiple times per day</string>
+    <string name="survey_baseline_q23_mobile_frequency">Seberapa sering kamu menggunakan handphone?</string>
+    <string name="survey_baseline_q23_a01_never">Tidak pernah</string>
+    <string name="survey_baseline_q23_a02_month">Sebulan sekali</string>
+    <string name="survey_baseline_q23_a03_week">Seminggu sekali</string>
+    <string name="survey_baseline_q23_a04_day">Sehari sekali</string>
+    <string name="survey_baseline_q23_a05_day_multiple">Beberapa kali dalam sehari</string>
 
     <!-- Q24 -->
-    <string name="survey_baseline_q24_mobile_most_use">What is your mobile phone most useful for?</string>
-    <string name="survey_baseline_q24_a01_friends">Calling or texting friends</string>
-    <string name="survey_baseline_q24_a02_family">Calling or texting family</string>
-    <string name="survey_baseline_q24_a03_social_media">Accessing social media</string>
-    <string name="survey_baseline_q24_a04_internet">Accessing information on the internet</string>
-    <string name="survey_baseline_q24_a05_apps">Using apps or tools to help me manage my life, like trackers or calendars.</string>
-    <string name="survey_baseline_q24_a06_other">Other</string>
+    <string name="survey_baseline_q24_mobile_most_use">Kamu paling sering menggunakan handphone untuk apa?</string>
+    <string name="survey_baseline_q24_a01_friends">Telepon atau sms teman-teman </string>
+    <string name="survey_baseline_q24_a02_family">Telepon atau sms keluarga</string>
+    <string name="survey_baseline_q24_a03_social_media">Mengakses media sosial</string>
+    <string name="survey_baseline_q24_a04_internet">Mengakses informasi di internet</string>
+    <string name="survey_baseline_q24_a05_apps">Menggunakan aplikasi atau alat yang bisa membantuku untuk mengatur hidup, seperti pelacak atau kalender</string>
+    <string name="survey_baseline_q24_a06_other">Lainnya</string>
 
     <!-- Q25 -->
-    <string name="survey_baseline_q25_mobile_least_use">What is your mobile phone least useful for?</string>
-    <string name="survey_baseline_q25_a01_friends">Calling or texting friends</string>
-    <string name="survey_baseline_q25_a02_family">Calling or texting family</string>
-    <string name="survey_baseline_q25_a03_social_media">Accessing social media</string>
-    <string name="survey_baseline_q25_a04_internet">Accessing information on the internet</string>
-    <string name="survey_baseline_q25_a05_apps">Using apps or tools to help me manage my life, like trackers or calendars.</string>
-    <string name="survey_baseline_q25_a06_other">Other</string>
+    <string name="survey_baseline_q25_mobile_least_use">Kamu paling jarang menggunakan handphone untuk apa?</string>
+    <string name="survey_baseline_q25_a01_friends">Telepon atau sms teman-teman</string>
+    <string name="survey_baseline_q25_a02_family">Telepon atau sms keluarga</string>
+    <string name="survey_baseline_q25_a03_social_media">Mengakses media sosial</string>
+    <string name="survey_baseline_q25_a04_internet">Mengakses informasi di internet</string>
+    <string name="survey_baseline_q25_a05_apps">Menggunakan aplikasi atau alat yang bisa membantuku untuk mengatur hidup, seperti pelacak atau kalender</string>
+    <string name="survey_baseline_q25_a06_other">Lainnya</string>
 
     <!-- Q26 -->
-    <string name="survey_baseline_q26_mobile_own">Who owns the mobile phone that you use?</string>
-    <string name="survey_baseline_q26_a01_you">You</string>
-    <string name="survey_baseline_q26_a02_mother">Mother</string>
-    <string name="survey_baseline_q26_a03_father">Father</string>
-    <string name="survey_baseline_q26_a04_sibling">Sibling</string>
-    <string name="survey_baseline_q26_a05_relative">Another relative</string>
-    <string name="survey_baseline_q26_a06_someone_else">Someone else</string>
+    <string name="survey_baseline_q26_mobile_own">Handphone yang kamu gunakan, kepunyaan siapa?</string>
+    <string name="survey_baseline_q26_a01_you">Kamu</string>
+    <string name="survey_baseline_q26_a02_mother">Ibu</string>
+    <string name="survey_baseline_q26_a03_father">Ayah </string>
+    <string name="survey_baseline_q26_a04_sibling">Saudara</string>
+    <string name="survey_baseline_q26_a05_relative">Anggota keluarga lain</string>
+    <string name="survey_baseline_q26_a06_someone_else">Orang lain</string>
 
     <!-- Q27 -->
-    <string name="survey_baseline_q27_mobile_use_opinion">Here are some people you might interact with. Please tell me if you think they approve, disapprove, or are neutral toward you or your friends using mobile phones?</string>
+    <string name="survey_baseline_q27_mobile_use_opinion">Berikut adalah beberapa orang yang mungkin berinteraksi dengan kamu. Tolong beritahu jika kamu pikir mereka meyetujui, tidak menyetujui, atau netral terhadap kamu atau teman-teman kamu menggunakan handphone?</string>
 
     <!-- Q27.1 -->
-    <string name="survey_baseline_q27_1_friends">Your friends</string>
-    <string name="survey_baseline_q27_1_a01_approve">Approve</string>
-    <string name="survey_baseline_q27_1_a02_neutral">Neutral</string>
-    <string name="survey_baseline_q27_1_a03_disapprove">Disapprove</string>
+    <string name="survey_baseline_q27_1_friends">Teman-teman kamu</string>
+    <string name="survey_baseline_q27_1_a01_approve">Menyetujui</string>
+    <string name="survey_baseline_q27_1_a02_neutral">Netral</string>
+    <string name="survey_baseline_q27_1_a03_disapprove">Tidak menyetujui</string>
 
     <!-- Q27.2 -->
-    <string name="survey_baseline_q27_2_family">Your family</string>
-    <string name="survey_baseline_q27_2_a01_approve">Approve</string>
-    <string name="survey_baseline_q27_2_a02_neutral">Neutral</string>
-    <string name="survey_baseline_q27_2_a03_disapprove">Disapprove</string>
+    <string name="survey_baseline_q27_2_family">Keluarga kamu</string>
+    <string name="survey_baseline_q27_2_a01_approve">Menyetujui</string>
+    <string name="survey_baseline_q27_2_a02_neutral">netral</string>
+    <string name="survey_baseline_q27_2_a03_disapprove">Tidak menyetujui</string>
 
     <!-- Q27.3 -->
-    <string name="survey_baseline_q27_3_community">Other people in your community</string>
-    <string name="survey_baseline_q27_3_a01_approve">Approve</string>
-    <string name="survey_baseline_q27_3_a02_neutral">Neutral</string>
-    <string name="survey_baseline_q27_3_a03_disapprove">Disapprove</string>
+    <string name="survey_baseline_q27_3_community">Orang lain di komunitas kamu</string>
+    <string name="survey_baseline_q27_3_a01_approve">Menyetujui</string>
+    <string name="survey_baseline_q27_3_a02_neutral">Netral</string>
+    <string name="survey_baseline_q27_3_a03_disapprove">Tidak menyetujui</string>
 
     <!-- Q28 -->
-    <string name="survey_baseline_q28_mobile_credit">How much credit do you or your family put into your mobile phone on a typical week?</string>
-    <string name="survey_baseline_q28_a01_lt_5k">Less than 5 thousand rupiah</string>
-    <string name="survey_baseline_q28_a02_5k_15k">Between 5 thousand and 15 thousand rupiah</string>
-    <string name="survey_baseline_q28_a03_15k_25k">Between 15 thousand and 25 thousand rupiah</string>
-    <string name="survey_baseline_q28_a04_25k_35k">Between 25 thousand and 35 thousand rupiah</string>
-    <string name="survey_baseline_q28_a05_35k_45k">Between 35 thousand and 45 thousand rupiah</string>
-    <string name="survey_baseline_q28_a06_gt_45k">More than 45 thousand rupiah</string>
+    <string name="survey_baseline_q28_mobile_credit">Berapa banyak pulsa yang kamu atau keluargamu beli setiap minggunya?</string>
+    <string name="survey_baseline_q28_a01_lt_5k">Kurang dari lima ribu rupiah</string>
+    <string name="survey_baseline_q28_a02_5k_15k">Antara 5 ribu dan 15 ribu rupiah</string>
+    <string name="survey_baseline_q28_a03_15k_25k">Antara 15 ribu dan 25 ribu rupiah</string>
+    <string name="survey_baseline_q28_a04_25k_35k">Antara 25 ribu dan 35 ribu rupiah</string>
+    <string name="survey_baseline_q28_a05_35k_45k">Antara 35 ribu dan 45 ribu rupiah</string>
+    <string name="survey_baseline_q28_a06_gt_45k">Lebih dari 45 ribu rupiah</string>
 
     <!-- Q29 -->
-    <string name="survey_baseline_q29_assets">Do you have any of the following assets in your home?</string>
+    <string name="survey_baseline_q29_assets">Apakah kamu memiliki salah satu aset berikut di rumah?</string>
 
     <!-- Q29.1 -->
-    <string name="survey_baseline_q29_1_desktop">Desktop computer</string>
-    <string name="survey_baseline_q29_1_a01_yes">Yes</string>
-    <string name="survey_baseline_q29_1_a01_no">No</string>
+    <string name="survey_baseline_q29_1_desktop">Komputer</string>
+    <string name="survey_baseline_q29_1_a01_yes">Iya</string>
+    <string name="survey_baseline_q29_1_a01_no">Tidak</string>
 
     <!-- Q29.2 -->
     <string name="survey_baseline_q29_2_laptop">Laptop</string>
-    <string name="survey_baseline_q29_2_a01_yes">Yes</string>
-    <string name="survey_baseline_q29_2_s02_no">No</string>
+    <string name="survey_baseline_q29_2_a01_yes">Iya</string>
+    <string name="survey_baseline_q29_2_s02_no">Tidak</string>
 
     <!-- Q29.3 -->
-    <string name="survey_baseline_q29_3_mobile_no_data">Mobile phone (without data)</string>
-    <string name="survey_baseline_q29_3_a01_yes">Yes</string>
-    <string name="survey_baseline_q29_3_s02_no">No</string>
+    <string name="survey_baseline_q29_3_mobile_no_data">Handphone (tanpa paket internet)</string>
+    <string name="survey_baseline_q29_3_a01_yes">Iya</string>
+    <string name="survey_baseline_q29_3_s02_no">Tidak</string>
 
     <!-- Q29.4 -->
-    <string name="survey_baseline_q29_4_mobile_data">Mobile phone (with data)</string>
-    <string name="survey_baseline_q29_4_a01_yes">Yes</string>
-    <string name="survey_baseline_q29_4_s02_no">No</string>
+    <string name="survey_baseline_q29_4_mobile_data">Handphone (dengan paket internet)</string>
+    <string name="survey_baseline_q29_4_a01_yes">Iya</string>
+    <string name="survey_baseline_q29_4_s02_no">Tidak</string>
 
     <!-- END BOT: survey_baseline -->
 
