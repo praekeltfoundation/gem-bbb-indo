@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.facebook.drawee.view.SimpleDraweeView;
@@ -50,6 +51,9 @@ public class ChallengeDoneFragment extends Fragment {
 
     @BindView(R.id.challenge_done_button)
     Button doneButton;
+
+    @BindView(R.id.fragment_challenge_close)
+    ImageButton close;
 
     Unbinder unbinder = null;
 
@@ -97,6 +101,11 @@ public class ChallengeDoneFragment extends Fragment {
             unbinder.unbind();
         }
         super.onDestroyView();
+    }
+
+    @OnClick(R.id.fragment_challenge_close)
+    public void closeQuiz(){
+        returnToParent(null);
     }
 
     @Override

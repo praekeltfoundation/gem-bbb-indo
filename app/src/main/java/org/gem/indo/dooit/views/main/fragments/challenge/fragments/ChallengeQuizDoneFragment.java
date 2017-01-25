@@ -11,6 +11,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.facebook.drawee.view.SimpleDraweeView;
@@ -36,6 +38,9 @@ public class ChallengeQuizDoneFragment extends Fragment {
 
     private BaseChallenge challenge;
 
+    @BindView(R.id.fragment_challenge_quiz_progressbar)
+    ProgressBar mProgressBar;
+
     @BindView(R.id.challenge_done_card)
     CardView doneCard;
 
@@ -50,6 +55,9 @@ public class ChallengeQuizDoneFragment extends Fragment {
 
     @BindView(R.id.challenge_done_button)
     Button doneButton;
+
+    @BindView(R.id.fragment_challenge_close)
+    ImageButton close;
 
     Unbinder unbinder = null;
 
@@ -84,7 +92,7 @@ public class ChallengeQuizDoneFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_challenge_Quiz_done, container, false);
+        View view = inflater.inflate(R.layout.fragment_challenge_quiz_done, container, false);
         SquiggleBackgroundHelper.setBackground(getContext(), R.color.grey_back, R.color.grey_fore, view);
         unbinder = ButterKnife.bind(this, view);
         title.setText(challenge.getName());
@@ -113,6 +121,14 @@ public class ChallengeQuizDoneFragment extends Fragment {
     public void onStart() {
         super.onStart();
         challengeImage.setImageURI(challenge.getImageURL());
+        if (mProgressBar != null){
+            mProgressBar.setProgress(100);
+        }
+    }
+
+    @OnClick(R.id.fragment_challenge_close)
+    public void closeQuiz(){
+        returnToParent(null);
     }
 
     @OnClick(R.id.challenge_done_button)

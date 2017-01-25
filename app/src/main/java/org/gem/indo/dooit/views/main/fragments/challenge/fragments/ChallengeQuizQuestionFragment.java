@@ -28,10 +28,12 @@ public class ChallengeQuizQuestionFragment extends Fragment implements OnOptionC
     private static final String ARG_QUESTION = "question";
     private static final String ARG_OPTION_ID = "option_id";
     private static final String ARG_COMPLETED = "completed";
+
     @BindView(R.id.fragment_challengequizquestion_title)
     TextView title;
     @BindView(R.id.option_recycler_view)
     RecyclerView optionList;
+
     private QuizChallengeQuestion mQuestion = null;
     private long optionId = -1;
     private boolean completed = false;

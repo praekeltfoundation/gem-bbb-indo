@@ -304,7 +304,7 @@ public class ChallengeRegisterFragment extends Fragment implements HasChallengeF
 //        Create intent here with part in a bundle and send through intent
         Bundle args = new Bundle();
         args.putParcelable(ChallengeActivity.ARG_CHALLENGE, challenge);
-        args.putParcelable(ChallengeActivity.ARG_PARTICIPANT,participant);
+        args.putParcelable(ChallengeActivity.ARG_PARTICIPANT, participant);
         ActivityForResultHelper helper = new ActivityForResultHelper();
         Intent intent = ChallengeActivity.Builder.create(getContext()).setArgs(args).getIntent();
         helper.startActivityForResult(getContext(), intent, new ActivityForResultCallback() {

@@ -197,6 +197,15 @@ public class ChallengeActivity extends ImageActivity {
             fragment.receiveImageDetails(mediaType,imageUri,imagePath);
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        Bundle args = data.getExtras();
+        participant = args.getParcelable(ARG_PARTICIPANT);
+        challenge = args.getParcelable(ARG_CHALLENGE);
+    }
+
     public static class Builder extends DooitActivityBuilder<ChallengeActivity.Builder> {
         protected Builder(Context context) {
             super(context);
