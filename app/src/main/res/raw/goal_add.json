@@ -225,8 +225,8 @@
         "next": "goal_add_q_change_date"
       },
       {
-        "name": "changeAmount",
-        "text": "$(changeAmount)",
+        "name": "changeTarget",
+        "text": "$(goal_change_target)",
         "next": "goal_add_q_change_target"
       },
       {
@@ -373,13 +373,13 @@
         "next": "goal_add_do_create"
       },
       {
-        "name": "changeDate",
-        "text": "$(changeDate)",
+        "name": "changeWeeklyAmount",
+        "text": "$(changeAmount)",
         "next": "goal_add_q_change_weekly_save_amountFromWeeklySaveAmount"
       },
       {
-        "name": "changeAmount",
-        "text": "$(changeAmount)",
+        "name": "changeTarget",
+        "text": "$(goal_change_target)",
         "next": "goal_add_q_change_targetFromWeeklySaveAmount"
       },
       {

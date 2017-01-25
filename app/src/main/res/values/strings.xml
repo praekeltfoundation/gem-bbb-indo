@@ -276,6 +276,7 @@
     <string name="goal_edit_info_exit">Okay, I\'m done for now. Can we exit?</string>
     <string name="goal_edit_delete_difficult_help">Okay! Please help me create a new savings plan.</string>
     <string name="goal_edit_delete_difficult_do_delete">No thanks. Just delete my goal.</string>
+    <string name="goal_change_target">Change Target Value</string>
 
     <!-- BOT: tip_intro -->
     <string name="tip_intro_inline_link">TODO: Show Tip</string>
