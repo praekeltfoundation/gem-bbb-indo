@@ -1,6 +1,7 @@
 buildscript {
     repositories {
         maven { url 'https://maven.fabric.io/public' }
+        maven { url 'https://jitpack.io' }
     }
 
     dependencies {
@@ -12,6 +13,7 @@ apply plugin: 'io.fabric'
 
 repositories {
     maven { url 'https://maven.fabric.io/public' }
+    maven { url 'https://jitpack.io' }
 }
 
 
@@ -117,6 +119,7 @@ dependencies {
     compile 'com.facebook.fresco:imagepipeline-okhttp3:0.14.1'
     compile 'com.android.support.constraint:constraint-layout:1.0.0-beta4'
     compile 'com.facebook.fresco:animated-gif:0.14.1'
+    compile 'com.github.jinatonic:confetti:1.1.0@aar'
     compile('com.crashlytics.sdk.android:crashlytics:2.6.5@aar') {
         transitive = true;
     }
