@@ -113,8 +113,12 @@ public class GoalAddController extends GoalBotController {
 
         goal.setTarget(Float.parseFloat(answerLog.get("goal_amount").getValue()));
         goal.setStartDate(LocalDate.now());
-        goal.setEndDate(DateTimeFormat.forPattern("yyyy-MM-dd")
-                .parseLocalDate(answerLog.get("goalDate").getValue().substring(0, 10)));
+        if(answerLog.containsKey("goalDate")) {
+            goal.setEndDate(DateTimeFormat.forPattern("yyyy-MM-dd")
+                    .parseLocalDate(answerLog.get("goalDate").getValue().substring(0, 10)));
+        }else if(answerLog.containsKey("weeklySaveAmount")){
+            goal.setWeeklyTarget(Float.parseFloat(answerLog.get("weeklySaveAmount").getValue()));
+        }
 
         // User has existing savings
         if (answerLog.containsKey("hasSavedY"))

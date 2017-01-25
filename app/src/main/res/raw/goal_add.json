@@ -364,7 +364,7 @@
   {
     "name": "goal_add_q_verifyFromWeeklySaveAmount",
     "type": "text",
-    "call": "#populate_goal",
+    "call": "##populate_goal",
     "text": "$(goal_add_q_verify)",
     "answers": [
       {
@@ -375,7 +375,7 @@
       {
         "name": "changeDate",
         "text": "$(changeDate)",
-        "next": "goal_add_q_change_dateFromWeeklySaveAmount"
+        "next": "goal_add_q_change_weekly_save_amountFromWeeklySaveAmount"
       },
       {
         "name": "changeAmount",
@@ -390,15 +390,15 @@
     ]
   },
   {
-    "name": "goal_add_q_change_dateFromWeeklySaveAmount",
+    "name": "goal_add_q_change_weekly_save_amountFromWeeklySaveAmount",
     "type": "blank",
-    "autoAnswer": "goalDate",
+    "autoAnswer": "weeklySaveAmount",
     "answers": [
       {
-        "name": "goalDate",
+        "name": "weeklySaveAmount",
         "nextOnFinish": "goal_add_q_verifyFromWeeklySaveAmount",
-        "type": "inlineDate",
-        "inlineEditHint": "$(type_date_hint)"
+        "type": "textCurrency",
+        "inlineEditHint": "$(type_currency_hint)"
       }
     ]
   },
