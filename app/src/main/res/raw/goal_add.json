@@ -281,28 +281,28 @@
         "name": "weeklySaveAmount",
         "value": "500",
         "text": "$(five)",
-        "next": "askGoalPriorSave",
+        "next": "askGoalPriorSaveFromWeeklySaveAmount",
         "type": "textCurrency"
       },
       {
         "name": "weeklySaveAmount",
         "value": "1000",
         "text": "$(thousand)",
-        "next": "askGoalPriorSave",
+        "next": "askGoalPriorSaveFromWeeklySaveAmount",
         "type": "textCurrency"
       },
       {
         "name": "weeklySaveAmount",
         "value": "1500",
         "text": "$(thousandFive)",
-        "next": "askGoalPriorSave",
+        "next": "askGoalPriorSaveFromWeeklySaveAmount",
         "type": "textCurrency"
       },
       {
         "name": "weeklySaveAmount",
         "value": "2000",
         "text": "$(twoThousand)",
-        "next": "askGoalPriorSave",
+        "next": "askGoalPriorSaveFromWeeklySaveAmount",
         "type": "textCurrency"
       },
       {
@@ -322,7 +322,7 @@
     "answers": [
       {
         "name": "weeklySaveAmount",
-        "nextOnFinish": "askGoalPriorSave",
+        "nextOnFinish": "askGoalPriorSaveFromWeeklySaveAmount",
         "type": "inlineCurrency",
         "typeOnFinish": "textCurrency",
         "inlineEditHint": "$(type_currency_hint)"
@@ -364,7 +364,7 @@
   {
     "name": "goal_add_q_verifyFromWeeklySaveAmount",
     "type": "text",
-    "call": "##populate_goal",
+    "call": "#populate_goal",
     "text": "$(goal_add_q_verify)",
     "answers": [
       {
@@ -397,7 +397,8 @@
       {
         "name": "weeklySaveAmount",
         "nextOnFinish": "goal_add_q_verifyFromWeeklySaveAmount",
-        "type": "textCurrency",
+        "type": "inlineCurrency",
+        "typeOnFinish": "textCurrency",
         "inlineEditHint": "$(type_currency_hint)"
       }
     ]

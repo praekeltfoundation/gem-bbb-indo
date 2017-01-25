@@ -236,7 +236,14 @@ public class Goal {
     }
 
     public int getWeeksLeft(Utils.ROUNDWEEK rounding) {
-        return Utils.weekDiff(endDate.toDate().getTime(), rounding);
+        if(endDate != null) {
+            return Utils.weekDiff(endDate.toDate().getTime(), rounding);
+        }else{
+            //if endDate == null then the user chose to set die amount to save per week and not the end date
+            double stillNeeded = target - value;
+            weekCount = (int) Math.ceil(stillNeeded/weeklyTarget);
+            return weekCount;
+        }
     }
 
     public int getRemainderDaysLeft() {
