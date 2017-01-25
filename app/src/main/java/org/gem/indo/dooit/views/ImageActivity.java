@@ -23,6 +23,7 @@ import android.widget.Toast;
 import org.gem.indo.dooit.Constants;
 import org.gem.indo.dooit.R;
 import org.gem.indo.dooit.helpers.RequestCodes;
+import org.gem.indo.dooit.helpers.crashlytics.CrashlyticsHelper;
 import org.gem.indo.dooit.helpers.images.ImageChooserOptions;
 import org.gem.indo.dooit.helpers.images.ImageScaler;
 import org.gem.indo.dooit.helpers.images.MediaUriHelper;
@@ -87,7 +88,6 @@ public abstract class ImageActivity extends DooitActivity {
             @Override
             public void permissionGranted() {
                 Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-
                 // The file where the full sized photo will be temporarily stored. When this is not
                 // done, we would get the thumbnail back instead. See documentation:
                 // https://developer.android.com/training/camera/photobasics.html#TaskPath
@@ -141,6 +141,8 @@ public abstract class ImageActivity extends DooitActivity {
         if (resultCode == Activity.RESULT_CANCELED)
             return;
 
+        CrashlyticsHelper.log(this.getClass().getSimpleName(), "startCamera : ", "Request code from dialog: " + requestCode
+                + " resultCode : " + requestCode + String.format(" Is intent null? : %s ", data == null));
         switch (requestCode) {
             case RequestCodes.RESPONSE_CAMERA_REQUEST_PROFILE_IMAGE:
                 revokeCameraPermissions();
@@ -177,9 +179,16 @@ public abstract class ImageActivity extends DooitActivity {
             }
         }
 
-        if (TextUtils.isEmpty(imagePath))
+        if (TextUtils.isEmpty(imagePath)) {
             // MediaUriHelper does not work when uri points to temp image file
-            imagePath = MediaUriHelper.getPath(this, imageUri);
+            try {
+                imagePath = MediaUriHelper.getPath(this, imageUri);
+                CrashlyticsHelper.log(this.getClass().getSimpleName(), "handleImageResult : ",
+                        "Context: " + this + " imageUri :" + imageUri);
+            } catch (NullPointerException nullException) {
+                CrashlyticsHelper.logException(nullException);
+            }
+        }
 
         processImage(requestCodes);
 
@@ -222,6 +231,7 @@ public abstract class ImageActivity extends DooitActivity {
         } catch (IOException e) {
             Toast.makeText(this, "Unable to do image rotation", Toast.LENGTH_LONG).show();
             Log.e(TAG, "Unable to create temporary downscaled image file", e);
+            CrashlyticsHelper.log(this.getClass().getSimpleName(), " processImage : ", "an IOException");
         } finally {
             try {
                 if (outStream != null)
@@ -243,9 +253,7 @@ public abstract class ImageActivity extends DooitActivity {
         String timestamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
         String filename = "JPEG_" + timestamp + "_";
         File storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
-        File image = File.createTempFile(filename, ".jpg", storageDir);
-
-        return image;
+        return File.createTempFile(filename, ".jpg", storageDir);
     }
 
     private Bitmap checkScreenOrientation(String imageP, Bitmap bitmap, int requestCodes) {
