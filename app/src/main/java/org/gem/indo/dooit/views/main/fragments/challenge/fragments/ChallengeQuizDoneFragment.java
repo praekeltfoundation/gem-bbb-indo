@@ -28,10 +28,10 @@ import butterknife.Unbinder;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link ChallengeDoneFragment#newInstance} factory method to
+ * Use the {@link ChallengeQuizDoneFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class ChallengeDoneFragment extends Fragment {
+public class ChallengeQuizDoneFragment extends Fragment {
     private static final String ARG_CHALLENGE = "challenge";
 
     private BaseChallenge challenge;
@@ -53,7 +53,7 @@ public class ChallengeDoneFragment extends Fragment {
 
     Unbinder unbinder = null;
 
-    public ChallengeDoneFragment() {
+    public ChallengeQuizDoneFragment() {
         // Required empty public constructor
     }
 
@@ -65,8 +65,8 @@ public class ChallengeDoneFragment extends Fragment {
      * @return A new instance of fragment ChallengeDoneFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static ChallengeDoneFragment newInstance(BaseChallenge challenge) {
-        ChallengeDoneFragment fragment = new ChallengeDoneFragment();
+    public static ChallengeQuizDoneFragment newInstance(BaseChallenge challenge) {
+        ChallengeQuizDoneFragment fragment = new ChallengeQuizDoneFragment();
         Bundle args = new Bundle();
         args.putParcelable(ARG_CHALLENGE, challenge);
         fragment.setArguments(args);
@@ -84,7 +84,7 @@ public class ChallengeDoneFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_challenge_done, container, false);
+        View view = inflater.inflate(R.layout.fragment_challenge_Quiz_done, container, false);
         SquiggleBackgroundHelper.setBackground(getContext(), R.color.grey_back, R.color.grey_fore, view);
         unbinder = ButterKnife.bind(this, view);
         title.setText(challenge.getName());

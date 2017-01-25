@@ -115,6 +115,7 @@ public class ChallengeFreeformFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_challenge_freeform, container, false);
+        SquiggleBackgroundHelper.setBackground(getContext(), R.color.grey_back, R.color.grey_fore, view);
         unbinder = ButterKnife.bind(this, view);
         title.setText(question != null ? question.getText() : getString(R.string.challenge_no_question));
         if (savedInstanceState == null) {
