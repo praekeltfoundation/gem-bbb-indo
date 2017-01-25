@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.util.LongSparseArray;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
@@ -238,7 +239,10 @@ public class ChallengeQuizFragment extends Fragment implements OnOptionChangeLis
                 persisted.clearCurrentChallenge();
                 clearState();
                 challengeCompleted = true;
-                returnToParent(ChallengeFragmentMainPage.DONE);
+                FragmentTransaction ft = getFragmentManager().beginTransaction();
+                Fragment fragment = ChallengeDoneFragment.newInstance(challenge);
+                ft.replace(R.id.fragment_challenge_container, fragment, "fragment_challenge");
+                ft.commit();
             }
         });
     }
@@ -251,7 +255,6 @@ public class ChallengeQuizFragment extends Fragment implements OnOptionChangeLis
         } else {
             Toast.makeText(getContext(), R.string.challenge_all_questions_complete, Toast.LENGTH_SHORT).show();
             submitParticipantEntry();
-            returnToParent(ChallengeFragmentMainPage.DONE);
         }
     }
 
@@ -296,7 +299,7 @@ public class ChallengeQuizFragment extends Fragment implements OnOptionChangeLis
         Log.d(TAG, "Quiz page change: " + String.valueOf(position));
         updateProgressCounter(position);
         if (position == mAdapter.getCount() - 1) {
-            checkButton.setText(R.string.label_done);
+            submitParticipantEntry();
         } else {
             checkButton.setText(R.string.label_check_result);
         }
