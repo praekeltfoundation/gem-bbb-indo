@@ -11,8 +11,10 @@ import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collection;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -274,8 +276,17 @@ public class Goal {
     }
 
     public void calculateFields() {
-        weekCount = (int) (TimeUnit.MILLISECONDS.toDays((long) Math.ceil(endDate.toDate().getTime() - startDate.toDate().getTime()) / 7));
-        weeklyTarget = target / weekCount;
+        if(endDate != null) {
+            weekCount = (int) (TimeUnit.MILLISECONDS.toDays((long) Math.ceil(endDate.toDate().getTime() - startDate.toDate().getTime()) / 7));
+            weeklyTarget = target / weekCount;
+        }else if(weeklyTarget != 0){
+            //calculate weekcount
+            double stillNeeded = target - value;
+            weekCount = (int) Math.ceil(stillNeeded/weeklyTarget);
+
+            //calculate end date
+            endDate = startDate.plusWeeks(weekCount);
+        }
     }
 
     public boolean isMissed() {
