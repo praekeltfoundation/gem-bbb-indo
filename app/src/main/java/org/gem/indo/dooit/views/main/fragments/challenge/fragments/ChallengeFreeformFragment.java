@@ -113,7 +113,8 @@ public class ChallengeFreeformFragment extends Fragment {
         super.onCreate(savedInstanceState);
         ((DooitApplication) getActivity().getApplication()).component.inject(this);
         if (getArguments() != null) {
-            participant = getArguments().getParcelable(ChallengeFragment.ARG_PARTICIPANT);
+            participant = persisted.getParticipant();
+            //participant = getArguments().getParcelable(ChallengeFragment.ARG_PARTICIPANT);
             challenge = getArguments().getParcelable(ChallengeFragment.ARG_CHALLENGE);
             question = challenge != null ? challenge.getQuestion() : null;
         }
@@ -152,7 +153,6 @@ public class ChallengeFreeformFragment extends Fragment {
         super.onDestroyView();
     }
 
-
     /****************
      * Load helpers *
      ****************/
@@ -190,7 +190,8 @@ public class ChallengeFreeformFragment extends Fragment {
     @OnClick(R.id.fragment_challenge_freeform_submitbutton)
     public void submitAnswer() {
         ParticipantFreeformAnswer answer = new ParticipantFreeformAnswer();
-        answer.setParticipant(participant.getId());
+
+        answer.setParticipant(persisted.getParticipant().getId());
         answer.setQuestion(question.getId());
         answer.setText(submissionBox.getText().toString());
 
@@ -226,17 +227,19 @@ public class ChallengeFreeformFragment extends Fragment {
 
     @OnClick(R.id.fragment_challenge_close)
     public void closeQuiz(){
-        getActivity().finish();
+        returnToParent(null);
     }
 
     private void returnToParent(ChallengeFragmentMainPage returnPage) {
+        persisted.setParticipant(participant);
+
         FragmentActivity activity = getActivity();
         Intent intent = new Intent();
         Bundle bundle = new Bundle();
         bundle.putParcelable(ChallengeActivity.ARG_CHALLENGE,challenge);
         bundle.putInt(ChallengeActivity.ARG_RETURNPAGE, returnPage != null ? returnPage.ordinal() : -1);
-        bundle.putParcelable(ChallengeActivity.ARG_PARTICIPANT,participant);
         intent.putExtras(bundle);
+        this.onSaveInstanceState(bundle);
 
         if (activity.getParent() == null) {
             activity.setResult(Activity.RESULT_OK, intent);
@@ -255,7 +258,8 @@ public class ChallengeFreeformFragment extends Fragment {
     public void onSaveInstanceState(Bundle outState) {
         if (outState != null) {
             outState.putSerializable(ChallengeFragment.ARG_PAGE, FRAGMENT_STATE);
-            outState.putParcelable(ChallengeFragment.ARG_PARTICIPANT, participant);
+            //outState.putParcelable(ChallengeFragment.ARG_PARTICIPANT, participant);
+            persisted.setParticipant(participant);
             outState.putParcelable(ChallengeFragment.ARG_CHALLENGE, challenge);
             outState.putString(ARG_ANSWER, submissionBox == null ? "" : submissionBox.toString());
         }

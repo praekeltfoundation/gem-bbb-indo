@@ -70,16 +70,13 @@ public class ChallengeActivity extends ImageActivity {
         ((DooitApplication) getApplication()).component.inject(this);
         ButterKnife.bind(this);
         Bundle args = getIntent().getExtras();
-        participant = args.getParcelable(ARG_PARTICIPANT);
+        //participant = args.getParcelable(ARG_PARTICIPANT);
         challenge = args.getParcelable(ARG_CHALLENGE);
 
         if (persisted.hasCurrentChallenge()) {
             challenge = persisted.getCurrentChallenge();
+            participant = persisted.getParticipant();
             participant.setChallenge(challenge.getId());
-            startChallenge(participant);
-        }
-        else{
-            participant.setChallenge(ChallengeType.QUIZ.getValue());
             startChallenge(participant);
         }
     }
@@ -189,21 +186,16 @@ public class ChallengeActivity extends ImageActivity {
         showImageChooser();
     }
 
+    public void clearParticipant(){
+        persisted.setParticipant(null);
+    }
+
     @Override
     protected void onImageResult(String mediaType, Uri imageUri, String imagePath) {
         FragmentManager fm = getSupportFragmentManager();
         ChallengePictureFragment fragment = (ChallengePictureFragment)fm.findFragmentByTag("fragment_challenge");
         if(fragment != null)
             fragment.receiveImageDetails(mediaType,imageUri,imagePath);
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-
-        Bundle args = data.getExtras();
-        participant = args.getParcelable(ARG_PARTICIPANT);
-        challenge = args.getParcelable(ARG_CHALLENGE);
     }
 
     public static class Builder extends DooitActivityBuilder<ChallengeActivity.Builder> {

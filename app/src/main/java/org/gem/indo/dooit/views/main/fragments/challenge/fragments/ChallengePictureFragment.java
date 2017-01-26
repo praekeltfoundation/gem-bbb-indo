@@ -226,6 +226,7 @@ public class ChallengePictureFragment extends Fragment {
             public void call(EmptyResponse emptyResponse) {
                 Log.d(TAG, "Uploaded image");
                 persist.clearCurrentChallenge();
+                persist.setParticipant(null);
                 FragmentTransaction ft = getFragmentManager().beginTransaction();
                 Fragment f = ChallengeDoneFragment.newInstance(challenge);
                 ft.replace(R.id.fragment_challenge_container, f, "fragment_challenge");
@@ -277,7 +278,7 @@ public class ChallengePictureFragment extends Fragment {
         Bundle bundle = new Bundle();
         bundle.putParcelable(ChallengeActivity.ARG_CHALLENGE,challenge);
         bundle.putInt(ChallengeActivity.ARG_RETURNPAGE, returnPage != null ? returnPage.ordinal() : -1);
-        bundle.putParcelable(ChallengeActivity.ARG_PARTICIPANT,participant);
+        persist.setParticipant(participant);
         intent.putExtras(bundle);
 
         if (activity.getParent() == null) {
