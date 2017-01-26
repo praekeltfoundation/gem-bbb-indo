@@ -244,7 +244,8 @@
     <string name="goal_edit_intro">Hey, $(user.preferred_name)!</string>
     <string name="goal_edit_ask_options">What do you want to edit?</string>
     <string name="goal_edit_updated">Your goal has been updated!</string>
-    <string name="goal_edit_target">How much money do you think can you save each week?</string>
+    <string name="goal_edit_weekly_target">How much money do you think can you save each week?</string>
+    <string name="goal_edit_target"></string>
     <string name="goal_edit_target_confirm">If you save $(goal.weekly_target_currency) per week, you\’ll have enough money to get your $(goal.name) in only $(goal.weeks_left_up) weeks.</string>
     <string name="goal_edit_come_back">Come back to track your savings weekly and watch as your goal becomes a reality!</string>
     <string name="goal_edit_delete_confirm">Oh? Why do you want to delete this goal?</string>

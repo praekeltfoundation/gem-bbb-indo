@@ -21,6 +21,11 @@
         "next": "goal_edit_target"
       },
       {
+        "name": "goal_edit_choice_weekly_target",
+        "text": "$(goal_edit_choice_weekly_target)",
+        "next": "goal_edit_weekly_target"
+      },
+      {
         "name": "goal_edit_choice_image",
         "text": "$(goal_edit_choice_image)",
         "next": "goal_edit_image_choose"
@@ -56,7 +61,7 @@
   {
     "name": "goal_edit_target",
     "type": "text",
-    "text": "$(goal_edit_target)",
+    "text": "$(goal_add_q_ask_amount)",
     "autoAnswer": "goal_target",
     "answers": [
       {
@@ -67,6 +72,23 @@
       }
     ]
   },
+
+  {
+    "name": "goal_edit_weekly_target",
+    "type": "text",
+    "text": "$(goal_edit_weekly_target)",
+    "autoAnswer": "goal_weekly_target",
+    "answers": [
+      {
+        "name": "goal_weekly_target",
+        "nextOnFinish": "goal_edit_weekly_target_confirm",
+        "type": "inlineCurrency",
+        "inlineEditHint": "$(type_currency_hint)"
+      }
+    ]
+  },
+
+
   {
     "name": "goal_edit_target_confirm",
     "type": "text",
@@ -84,7 +106,24 @@
       }
     ]
   },
-  
+
+  {
+    "name": "goal_edit_weekly_target_confirm",
+    "type": "text",
+    "text": "$(goal_edit_target_confirm)",
+    "answers": [
+      {
+        "name": "goal_edit_weekly_target_accept",
+        "text": "$(goal_edit_target_accept)",
+        "next": "goal_edit_do_update"
+      },
+      {
+        "name": "goal_edit_weekly_target_cancel",
+        "text": "$(goal_edit_target_cancel)",
+        "next": "goal_edit_end"
+      }
+    ]
+  },
 
 
 

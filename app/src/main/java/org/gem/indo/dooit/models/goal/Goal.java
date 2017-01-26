@@ -129,6 +129,7 @@ public class Goal {
 
     public void setEndDate(LocalDate endDate) {
         this.endDate = endDate;
+        updateWeeklyTarget();
     }
 
     public List<GoalTransaction> getTransactions() {
@@ -149,6 +150,7 @@ public class Goal {
 
     public void setWeeklyTarget(double weeklyTarget) {
         this.weeklyTarget = weeklyTarget;
+        updateEndDate();
     }
 
     public int getWeekCount() {
@@ -284,16 +286,26 @@ public class Goal {
 
     public void calculateFields() {
         if(endDate != null) {
-            weekCount = (int) (TimeUnit.MILLISECONDS.toDays((long) Math.ceil(endDate.toDate().getTime() - startDate.toDate().getTime()) / 7));
-            weeklyTarget = (target-value) / weekCount;
+            updateWeeklyTarget();
         }else if(weeklyTarget != 0){
-            //calculate weekcount
-            double stillNeeded = target - value;
-            weekCount = (int) Math.ceil(stillNeeded/weeklyTarget);
-
-            //calculate end date
-            endDate = startDate.plusWeeks(weekCount);
+            updateEndDate();
         }
+    }
+
+    private void updateEndDate(){
+        //This will be called if the weekly target has been edited
+
+        //calculate weekcount
+        double stillNeeded = target - value;
+        weekCount = (int) Math.ceil(stillNeeded/weeklyTarget);
+
+        //calculate end date
+        endDate = startDate.plusWeeks(weekCount);
+    }
+
+    private void updateWeeklyTarget(){
+        weekCount = (int) (TimeUnit.MILLISECONDS.toDays((long) Math.ceil(endDate.toDate().getTime() - startDate.toDate().getTime()) / 7));
+        weeklyTarget = (target-value) / weekCount;
     }
 
     public boolean isMissed() {
