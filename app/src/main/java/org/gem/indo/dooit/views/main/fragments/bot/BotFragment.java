@@ -439,12 +439,17 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
         } else
             model = feed.getItem(name);
 
-        if (model != null) {
+        if (model == null) {
             // TODO: Log to Crashlytics
             return;
         }
 
-        // TODO: Explain why we are copying
+        /*  We are copying the node since in BaseBotViewHolder the BaseBotModel Object is set to be
+         *  immutable after the first time it is used to populate the conversation so that the conversation
+         *  cannot be changed when the user navigates away and back to the bot. Making a deep copy of the
+         *  BaseBotModel Object and passing it through the process means that the objects in the BotFeed
+         *  are not modified directly and should solve this problem.
+         */
         currentNode = ((Node) model).copy();
         addNode(currentNode, iconHidden);
     }
