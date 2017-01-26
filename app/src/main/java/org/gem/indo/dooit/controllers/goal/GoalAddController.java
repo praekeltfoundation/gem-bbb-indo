@@ -114,14 +114,12 @@ public class GoalAddController extends GoalBotController {
 
         goal.setTarget(Float.parseFloat(answerLog.get("goal_amount").getValue()));
         goal.setStartDate(LocalDate.now());
-<<<<<<< HEAD
         if(answerLog.containsKey("goalDate")) {
             goal.setEndDate(DateTimeFormat.forPattern("yyyy-MM-dd")
                     .parseLocalDate(answerLog.get("goalDate").getValue().substring(0, 10)));
         }else if(answerLog.containsKey("weeklySaveAmount")){
             goal.setWeeklyTarget(Float.parseFloat(answerLog.get("weeklySaveAmount").getValue()));
         }
-=======
         CrashlyticsHelper.log(this.getClass().getSimpleName(), "do Populate (addGoal): ", "goal start date: " + goal.getStartDate() +
                 " Target amount: " + goal.getTarget() + " Goal name: " + goal.getName());
 
@@ -134,7 +132,6 @@ public class GoalAddController extends GoalBotController {
 
 
         //the statement above was null and therefore when it was used later for calculations it crashed
->>>>>>> 6a96c4a7e09837496f8f85b55efb87b1e88a7c81
 
         // User has existing savings
         if (answerLog.containsKey("hasSavedY"))
