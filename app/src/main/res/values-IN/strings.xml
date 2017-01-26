@@ -203,7 +203,7 @@
 
     <string name="goal_add_a_done_exit">Terima Kasih! Aku sudah selesai.</string>
 
-    <string name="number_of_other_users_with_similar_goal">Fantastic! Did you know that $(goal_proto.num_users) users are also saving for this goal?</string>
+    <string name="number_of_other_users_with_similar_goal">Hebat! Apa kamu tau $(goal_proto.num_users) pengguna lain juga menabung untuk tujuan yang sama?</string>
 
     <!-- Answers -->
     <string name="goal_add_greeting_response">Hola!</string>
