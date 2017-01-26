@@ -8,11 +8,12 @@ import com.facebook.drawee.view.SimpleDraweeView;
 
 import org.gem.indo.dooit.DooitApplication;
 import org.gem.indo.dooit.R;
-import org.gem.indo.dooit.models.enums.BotParamType;
 import org.gem.indo.dooit.helpers.Persisted;
-import org.gem.indo.dooit.models.goal.Goal;
+import org.gem.indo.dooit.helpers.crashlytics.CrashlyticsHelper;
 import org.gem.indo.dooit.models.bot.Node;
+import org.gem.indo.dooit.models.enums.BotParamType;
 import org.gem.indo.dooit.models.exceptions.BotCallbackRequired;
+import org.gem.indo.dooit.models.goal.Goal;
 import org.gem.indo.dooit.views.custom.ArcProgressBar;
 import org.gem.indo.dooit.views.helpers.activity.CurrencyHelper;
 import org.gem.indo.dooit.views.main.fragments.bot.adapters.BotAdapter;
@@ -52,8 +53,13 @@ public class GoalInfoViewHolder extends BaseBotViewHolder<Node> {
         ButterKnife.bind(this, itemView);
         itemView.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.bkg_carousel_card));
 
-        if (!botAdapter.hasController())
-            throw new BotCallbackRequired(String.format("%s requires adapter to have callback", TAG));
+        try {
+            if (!botAdapter.hasController())
+                throw new BotCallbackRequired(String.format("%s requires adapter to have callback", TAG));
+        } catch (BotCallbackRequired e) {
+            CrashlyticsHelper.logException(e);
+        }
+
     }
 
     @Override

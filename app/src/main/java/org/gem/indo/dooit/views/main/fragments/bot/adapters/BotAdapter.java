@@ -9,6 +9,7 @@ import com.greenfrvr.hashtagview.HashtagView;
 
 import org.gem.indo.dooit.R;
 import org.gem.indo.dooit.controllers.BotController;
+import org.gem.indo.dooit.helpers.crashlytics.CrashlyticsHelper;
 import org.gem.indo.dooit.models.bot.BaseBotModel;
 import org.gem.indo.dooit.models.enums.BotMessageType;
 import org.gem.indo.dooit.views.main.fragments.bot.viewholders.AnswerImageSelectViewHolder;
@@ -30,6 +31,8 @@ import org.gem.indo.dooit.views.main.fragments.bot.viewholders.TipBotViewHolder;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static org.gem.indo.dooit.models.enums.BotMessageType.GOALINFO;
 
 /**
  * Created by Bernhard Müller on 11/7/2016.
@@ -77,6 +80,7 @@ public class BotAdapter extends RecyclerView.Adapter<BaseBotViewHolder> {
             case TIP:
                 return new TipBotViewHolder(LayoutInflater.from(context).inflate(R.layout.item_view_bot_tip, parent, false), this, tagsClickListener);
             case GOALINFO:
+                CrashlyticsHelper.log(this.getClass().getSimpleName(), "onCreateViewHolder: ", "from(context) : " + context + "case: " + GOALINFO);
                 return new GoalInfoViewHolder(LayoutInflater.from(context).inflate(R.layout.item_view_bot_goal_info, parent, false), this);
             case BADGE:
                 return new BadgeViewHolder(LayoutInflater.from(context).inflate(R.layout.item_view_bot_badge, parent, false), this);

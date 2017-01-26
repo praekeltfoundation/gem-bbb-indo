@@ -1,6 +1,5 @@
 package org.gem.indo.dooit.views.main.fragments.bot.viewholders;
 
-import android.content.Context;
 import android.net.Uri;
 import android.view.View;
 
@@ -8,6 +7,7 @@ import com.facebook.drawee.view.SimpleDraweeView;
 import com.greenfrvr.hashtagview.HashtagView;
 
 import org.gem.indo.dooit.R;
+import org.gem.indo.dooit.helpers.crashlytics.CrashlyticsHelper;
 import org.gem.indo.dooit.models.bot.Answer;
 import org.gem.indo.dooit.views.main.fragments.bot.adapters.BotAdapter;
 
@@ -35,6 +35,7 @@ public class AnswerImageViewHolder extends BaseBotViewHolder<Answer> {
     public void populate(Answer model) {
         super.populate(model);
         simpleDraweeView.setImageURI(Uri.parse(model.getValue()));
+        CrashlyticsHelper.log(this.getClass().getSimpleName(), "populate (Image): ", "URI: " + dataModel.getValue());
     }
 
     @Override

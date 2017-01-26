@@ -26,6 +26,7 @@ import org.gem.indo.dooit.api.managers.FileUploadManager;
 import org.gem.indo.dooit.api.responses.EmptyResponse;
 import org.gem.indo.dooit.helpers.Persisted;
 import org.gem.indo.dooit.helpers.RequestCodes;
+import org.gem.indo.dooit.helpers.crashlytics.CrashlyticsHelper;
 import org.gem.indo.dooit.helpers.images.MediaUriHelper;
 import org.gem.indo.dooit.helpers.permissions.PermissionsHelper;
 import org.gem.indo.dooit.models.challenge.Participant;
@@ -168,7 +169,7 @@ public class ChallengePictureFragment extends Fragment {
 
     @OnClick(R.id.fragment_challenge_picture_image)
     public void selectImage() {
-        ((ChallengeActivity)getActivity()).showOptions();
+        ((ChallengeActivity) getActivity()).showOptions();
     }
 
 
@@ -176,8 +177,8 @@ public class ChallengePictureFragment extends Fragment {
      * Image selection helpers *
      ***************************/
 
-    public void receiveImageDetails(String mediaType, Uri imageUri, String imagePath){
-        if((imageUri != null) && (imagePath !=  null)){
+    public void receiveImageDetails(String mediaType, Uri imageUri, String imagePath) {
+        if ((imageUri != null) && (imagePath != null)) {
             this.imagePath = imagePath;
             this.imageUri = imageUri;
         }
@@ -245,12 +246,18 @@ public class ChallengePictureFragment extends Fragment {
         if (requestCode == RequestCodes.RESPONSE_GALLERY_REQUEST_CHALLENGE_IMAGE ||
                 requestCode == RequestCodes.RESPONSE_CAMERA_REQUEST_CHALLENGE_IMAGE) {
             if (resultCode == RESULT_OK) {
-                if(data.getData() != null) {
-                    imagePath = MediaUriHelper.getPath(getContext(), data.getData());
-                    imageUri = data.getData();
-                    if (image != null) {
-                        image.setImageURI(imageUri);
+                try {
+                    if (data.getData() != null) {
+                        imagePath = MediaUriHelper.getPath(getContext(), data.getData());
+                        imageUri = data.getData();
+                        if (image != null) {
+                            image.setImageURI(imageUri);
+                        }
+                        CrashlyticsHelper.log(this.getClass().getSimpleName(), "onActivityResult :",
+                                "imagePath : " + imagePath + " imageUri : " + imageUri);
                     }
+                } catch (NullPointerException nullException) {
+                    CrashlyticsHelper.logException(nullException);
                 }
             }
         }
