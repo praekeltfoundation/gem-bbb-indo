@@ -11,7 +11,16 @@ import org.gem.indo.dooit.models.survey.CoachSurvey;
 
 public class EAToolSurveyController extends SurveyController {
 
+    private static final String[] QUESTIONS = new String[] {
+
+    };
+
     public EAToolSurveyController(Context context, CoachSurvey survey) {
         super(context, BotType.SURVEY_EATOOL, survey);
+    }
+
+    @Override
+    protected String[] getQuestionKeys() {
+        return QUESTIONS;
     }
 }

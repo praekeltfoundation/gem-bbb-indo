@@ -427,6 +427,9 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
         if (answer.hasInputKey() && hasController())
             controller.onAnswerInput(answer.getInputKey(), answer);
 
+        if (hasController())
+            controller.onAnswer(answer);
+
         conversationRecyclerView.scrollToPosition(getBotAdapter().getItemCount() - 1);
         persisted.saveConversationState(type, getBotAdapter().getDataSet());
 

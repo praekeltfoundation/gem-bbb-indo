@@ -5,6 +5,8 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
 import org.gem.indo.dooit.DooitApplication;
+import org.gem.indo.dooit.api.DooitAPIError;
+import org.gem.indo.dooit.api.DooitErrorHandler;
 import org.gem.indo.dooit.api.managers.SurveyManager;
 import org.gem.indo.dooit.controllers.DooitBotController;
 import org.gem.indo.dooit.helpers.Persisted;
@@ -15,6 +17,7 @@ import org.gem.indo.dooit.models.enums.BotParamType;
 import org.gem.indo.dooit.models.enums.BotType;
 import org.gem.indo.dooit.models.survey.CoachSurvey;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import javax.inject.Inject;
@@ -66,7 +69,20 @@ abstract public class SurveyController extends DooitBotController {
 
     @Override
     public void onAnswerInput(BotParamType inputType, Answer answer) {
+        super.onAnswerInput(inputType, answer);
+    }
 
+    @Override
+    public void onAnswer(Answer answer) {
+        Map<String, String> draft = createDraft(answer);
+        if (!draft.isEmpty())
+            if (hasSurvey())
+                surveyManager.draft(survey.getId(), createDraft(answer), new DooitErrorHandler() {
+                    @Override
+                    public void onError(DooitAPIError error) {
+
+                    }
+                }).subscribe();
     }
 
     @Override
@@ -77,6 +93,14 @@ abstract public class SurveyController extends DooitBotController {
     @Override
     public void onDone(Map<String, Answer> answerLog) {
 
+    }
+
+    protected abstract String[] getQuestionKeys();
+
+    protected Map<String, String> createDraft(@NonNull Answer answer) {
+        Map<String, String> draft = new HashMap<>();
+        draft.put(answer.getParentName(), answer.getValue());
+        return draft;
     }
 
     protected boolean answerEquals(Answer answer, int answerValue) {

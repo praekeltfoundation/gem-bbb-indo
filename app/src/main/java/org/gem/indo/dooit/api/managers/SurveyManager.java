@@ -50,4 +50,9 @@ public class SurveyManager extends DooitManager {
                                              DooitErrorHandler errorHandler) {
         return useNetwork(surveyAPI.createSubmission(surveyId, submission), errorHandler);
     }
+
+    public Observable<Response<Void>> draft(long surveyId, @NonNull Map<String, String> submission,
+                                            DooitErrorHandler errorHandler) {
+        return useNetwork(surveyAPI.updateDraft(surveyId, submission), errorHandler);
+    }
 }
