@@ -174,6 +174,7 @@
     <string name="convo_default_return_q_progress_intro">Let\'s have a look at your progress&#8230;</string>
     <string name="convo_default_return_a_progress_intro_tip">Take me to the tips, please.</string>
     <string name="convo_default_return_a_progress_intro_challenge">Take me to this week\'s challenge.</string>
+    <string name="convo_default_return_a_progress_intro_target">Track Savings</string>
 
     <!-- BOT: goal_add -->
     <string name="goal_add_q_greeting_username">Hi, $(user.preferred_name)! My name is Bina. I\'m your personal money coach and I\'m here to help you save.</string>
@@ -588,7 +589,7 @@
     <string name="challenge_register">Register</string>
     <string name="challenge_freeform_submit">Submitting freeform answer</string>
     <string name="challenge_all_questions_complete">You have completed all questions</string>
-    <string name="challenge_none_available">No challenge available. Please try again soon!</string>
+    <string name="challenge_none_available">No challenge available.\nPlease try again soon!</string>
     <string name="challenge_quiz_select_option_required">You must select an answer</string>
     <string name="challenge_quiz_no_questions">No questions available</string>
     <string name="challenge_quiz_congratulate_correct">Well done!</string>

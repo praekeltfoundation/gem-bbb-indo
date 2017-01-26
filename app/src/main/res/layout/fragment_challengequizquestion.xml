@@ -24,5 +24,4 @@
         android:scrollbarSize="10dp"
         android:scrollbarThumbVertical="@drawable/custom_scroll_style"
         tools:listitem="@layout/fragment_challengequizquestion_option"/>
-
 </RelativeLayout>
