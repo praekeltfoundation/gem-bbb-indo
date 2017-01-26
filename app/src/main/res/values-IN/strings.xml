@@ -545,88 +545,100 @@
     <!-- END BOT: survey_baseline -->
 
     <!-- BOT: survey_eatool -->
-    <string name="survey_eatool_a_1_never">Never</string>
-    <string name="survey_eatool_a_1_cant_understand">They can\’t understand</string>
-    <string name="survey_eatool_a_2_almost_never">Almost never</string>
-    <string name="survey_eatool_a_2_very_little">Very little</string>
-    <string name="survey_eatool_a_3_sometimes">Sometimes</string>
-    <string name="survey_eatool_a_3_some">Some</string>
-    <string name="survey_eatool_a_4_often">Often</string>
-    <string name="survey_eatool_a_4_quite_a_bit">Quite a bit</string>
-    <string name="survey_eatool_a_5_always">Always</string>
-    <string name="survey_eatool_a_5_very_much">Very much</string>
+
+    <!-- Instructions -->
+
+    <string name="survey_eatool_instruction">Instruksi: Coba ingat-ingat lagi hidupmu sekarang atau 3 bulan ke belakang, lingkari pilihan yang paling menggambarkan seberapa sering pernyataan ini sesuai denganmu:</string>
+    <string name="survey_eatool_instruction_1">Tidak pernah – Kamu tidak pernah merasa pernyataan ini benar atau sesuai denganmu.</string>
+    <string name="survey_eatool_instruction_2">Hampir tidak pernah – Kamu jarang, atau hampir tidak pernah merasa pernyataan ini benar atau sesuai denganmu.</string>
+    <string name="survey_eatool_instruction_3">Kadang-kadang – Kamu kadang-kadang merasa bahwa pernyataan ini benar atau sesuai denganmu.</string>
+    <string name="survey_eatool_instruction_4">Sering – Kamu sering merasa bahwa pernyataan ini benar atau sesuai denganmu.</string>
+    <string name="survey_eatool_instruction_5">Selalu – Kamu selalu merasa bahwa pernyataan ini benar atau sesuai denganmu.</string>
+
+    <!-- Answers -->
+    <string name="survey_eatool_a_1_never">Tidak pernah</string>
+    <string name="survey_eatool_a_1_cant_understand">Tidak dapat mengerti</string>
+    <string name="survey_eatool_a_1_none">Tidak punya</string>
+    <string name="survey_eatool_a_2_seldom">Hampir tidak pernah</string>
+    <string name="survey_eatool_a_2_very_little">Sedikit</string>
+    <string name="survey_eatool_a_3_sometimes">Kadang-kadang</string>
+    <string name="survey_eatool_a_3_some">Cukup</string>
+    <string name="survey_eatool_a_4_often">Sering</string>
+    <string name="survey_eatool_a_4_quite_a_bit">Banyak</string>
+    <string name="survey_eatool_a_5_always">Selalu</string>
+    <string name="survey_eatool_a_5_very_much">Sangat banyak</string>
 
     <!-- Q1 -->
-    <string name="survey_eatool_q01_appreciate">I feel appreciated by other people.</string>
+    <string name="survey_eatool_q01_appreciate">Aku merasa dihargai oleh orang lain.</string>
 
     <!-- Q2 -->
-    <string name="survey_eatool_q02_optimistic">I’m optimistic with my future.</string>
+    <string name="survey_eatool_q02_optimistic">Aku yakin akan masa depanku.</string>
 
     <!-- Q3 -->
-    <string name="survey_eatool_q03_career">I do things that will make me achieve great career for my future.</string>
+    <string name="survey_eatool_q03_career">Aku melakukan hal-hal yang akan membuatku meraih karir masa depan yang baik.</string>
 
     <!-- Q4 -->
-    <string name="survey_eatool_q04_adapt">I learn new things to adapt.</string>
+    <string name="survey_eatool_q04_adapt">Aku belajar hal baru untuk menyesuaikan diri.</string>
 
     <!-- Q5 -->
-    <string name="survey_eatool_q05_duties">I finish my duties on time.</string>
+    <string name="survey_eatool_q05_duties">Aku menyelesaikan tugas tepat waktu.</string>
 
     <!-- Q6 -->
-    <string name="survey_eatool_q06_lazy">Despite being lazy, I still go to school or work.</string>
+    <string name="survey_eatool_q06_lazy">Walaupun sedang malas, aku tetap pergi sekolah atau kerja.</string>
 
     <!-- Q7 -->
-    <string name="survey_eatool_q07_proud">I feel proud when I my work quality is good.</string>
+    <string name="survey_eatool_q07_proud">Aku merasa bangga ketika kualitas kerjaku baik.</string>
 
     <!-- Q8 -->
-    <string name="survey_eatool_q08_dress">I follow the dress code in my workplace or school.</string>
+    <string name="survey_eatool_q08_dress">Aku mengikuti aturan berpakaian di lingkungan kerja atau sekolah.</string>
 
     <!-- Q9 -->
-    <string name="survey_eatool_q09_along">I get along with many kind of people.</string>
+    <string name="survey_eatool_q09_along">Aku bergaul dengan berbagai macam orang.</string>
 
     <!-- Q10 -->
-    <string name="survey_eatool_q10_anyone">I work with anyone (with different backgrounds or social environment).</string>
+    <string name="survey_eatool_q10_anyone">Aku bekerja dengan siapa saja ( beda latar belakang, lingkungan pergaulan).</string>
 
     <!-- Q11 -->
-    <string name="survey_eatool_q11_input">I appreciate any input or help from other people.</string>
+    <string name="survey_eatool_q11_input">Aku menghargai masukan dan bantuan dari orang lain.</string>
 
     <!-- Q12 -->
-    <string name="survey_eatool_q12_responsible">I’m responsible for what I do.</string>
+    <string name="survey_eatool_q12_responsible">Aku bertanggung jawab atas apa yang aku lakukan.</string>
 
     <!-- Q13 -->
-    <string name="survey_eatool_q13_express">I can express what I feel and what I think clearly.</string>
+    <string name="survey_eatool_q13_express">Aku bisa mengungkapkan apa yang saya rasakan dan pikirkan dengan jelas.</string>
 
     <!-- Q14 -->
-    <string name="survey_eatool_q14_understand">Other people can understand my ideas and opinions.</string>
+    <string name="survey_eatool_q14_understand">Orang lain dapat mengerti ide dan pendapatku.</string>
 
     <!-- Q15 -->
-    <string name="survey_eatool_q15_read">I read to get new information (from books, internet, etc) and use that information.</string>
+    <string name="survey_eatool_q15_read">Aku membaca untuk mendapat informasi baru (dari buku, internet, dsb) dan memakai informasi tersebut.</string>
 
     <!-- Q16 -->
-    <string name="survey_eatool_q16_learn">I learn new things by listening.</string>
+    <string name="survey_eatool_q16_learn">Aku belajar untuk mengerti sesuatu dengan cara mendengarkan dengan baik.</string>
 
     <!-- Q17 -->
-    <string name="survey_eatool_q17_organise">I gather, learn and organize information to solve a problem.</string>
+    <string name="survey_eatool_q17_organise">Aku mengumpulkan, mempelajari dan menyusun informasi untuk menyelesaikan suatu masalah.</string>
 
     <!-- Q18 -->
-    <string name="survey_eatool_q18_sources">I seek information from various sources to solve problems in the workplace/school.</string>
+    <string name="survey_eatool_q18_sources">Aku mencari informasi dari berbagai sumber / banyak pihak untuk memecahkan masalah di lingkungan kerja/sekolah.</string>
 
     <!-- Q19 -->
-    <string name="survey_eatool_q19_experience">I decide something based on experience.</string>
+    <string name="survey_eatool_q19_experience">Aku memutuskan sesuatu berdasarkan pengalaman.</string>
 
     <!-- Q20 -->
-    <string name="survey_eatool_q20_adapting">I’m good at adapting to changes (example: workplace, school, community).</string>
+    <string name="survey_eatool_q20_adapting">Aku mudah menyesuaikan diri terhadap situasi lingkungan yang berubah-ubah (contoh: lingkungan kerja, sekolah, masyarakat).</string>
 
     <!-- Q21 -->
-    <string name="survey_eatool_q21_interview">I have the skills needed for the job interview.</string>
+    <string name="survey_eatool_q21_interview">Aku punya kemampuan yang dibutuhkan untuk wawancara kerja.</string>
 
     <!-- Q22 -->
-    <string name="survey_eatool_q22_cv">I have the ability to make an interesting CV/Resume.</string>
+    <string name="survey_eatool_q22_cv">Aku punya kemampuan dalam membuat CV/daftar riwayat hidup yang disukai perusahaan.</string>
 
     <!-- Q23 -->
-    <string name="survey_eatool_q23_cover">I have the ability to create an interesting cover letter for the company.</string>
+    <string name="survey_eatool_q23_cover">Aku punya kemampuan dalam membuat surat lamaran yang menarik untuk perusahaan .</string>
 
     <!-- Q24 -->
-    <string name="survey_eatool_q24_company">I have the ability and experience required by the company.</string>
+    <string name="survey_eatool_q24_company">Aku punya kemampuan dan pengalaman yang dibutuhkan oleh perusahaan.</string>
 
     <!-- END BOT: survey_eatool -->
 

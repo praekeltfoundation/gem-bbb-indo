@@ -542,6 +542,17 @@
     <!-- END BOT: survey_baseline -->
 
     <!-- BOT: survey_eatool -->
+
+    <!-- Instructions -->
+
+    <string name="survey_eatool_instruction">Thinking about your life right now, or in the past 3 months, circle the option that best reflects how often you feel this statement is true for you:</string>
+    <string name="survey_eatool_instruction_1">Never – You never feel this statement is true for you or applies to you.</string>
+    <string name="survey_eatool_instruction_2">Seldom – You seldom, or almost never, feel this statement is true for you or applies to you.</string>
+    <string name="survey_eatool_instruction_3">Sometimes – You sometimes feel this statement is true for you or applies to you.</string>
+    <string name="survey_eatool_instruction_4">Often – You often feel this statement is true for you or applies to you.</string>
+    <string name="survey_eatool_instruction_5">Always – You always feel this statement is true for you or applies to you.</string>
+
+    <!-- Answers -->
     <string name="survey_eatool_a_1_never">Never</string>
     <string name="survey_eatool_a_1_cant_understand">They can\’t understand</string>
     <string name="survey_eatool_a_1_none">None</string>

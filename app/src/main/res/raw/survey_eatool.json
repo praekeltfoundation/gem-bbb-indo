@@ -30,7 +30,7 @@
         "name": "survey_eatool_q_consent_a_yes",
         "text": "$(survey_common_q_consent_a_yes)",
         "value": "1",
-        "next": "survey_eatool_q01_appreciate"
+        "next": "survey_eatool_instruction"
       },
       {
         "name": "survey_eatool_q_consent_a_no",
@@ -39,6 +39,15 @@
         "next": "survey_eatool_submit_cancel"
       }
     ]
+  },
+
+
+
+  {
+    "name": "survey_eatool_instruction",
+    "type": "text",
+    "text": "$(survey_eatool_instruction)",
+    "autoNext": "survey_eatool_q01_appreciate"
   },
 
 
