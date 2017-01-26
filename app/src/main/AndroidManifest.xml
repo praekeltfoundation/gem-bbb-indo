@@ -86,6 +86,10 @@
             android:name=".views.settings.BuildInfoActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".views.main.fragments.challenge.ChallengeActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.FullscreenTheme" />
 
         <service
             android:name=".services.NotificationService"

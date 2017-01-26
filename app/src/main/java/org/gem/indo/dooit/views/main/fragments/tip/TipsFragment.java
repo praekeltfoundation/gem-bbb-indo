@@ -112,14 +112,12 @@ public class TipsFragment extends Fragment implements OnTipsAvailableListener {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(org.gem.indo.dooit.R.layout.fragment_tips, container, false);
         ButterKnife.bind(this, view);
-
         return view;
     }
 
     @Override
     public void onStart() {
         super.onStart();
-
         searchAdapter = new TipsAutoCompleteAdapter(getContext(), org.gem.indo.dooit.R.layout.item_tips_search_suggestion);
         searchView.setAdapter(searchAdapter);
 
@@ -219,14 +217,8 @@ public class TipsFragment extends Fragment implements OnTipsAvailableListener {
     public void onTipsAvailable(List<Tip> tips) {
         if (this.getActivity() == null)
             return;
-
-       /* View view = this.getActivity().findViewById(R.id.fragment_tip_progress_container);
-        if (view != null) {
-            view.setVisibility(View.GONE);
-        }*/
         Log.d(TAG, "Updating Tips");
         searchAdapter.updateAllTips(tips);
-
     }
 
     protected void showFiltering(String constraint) {
