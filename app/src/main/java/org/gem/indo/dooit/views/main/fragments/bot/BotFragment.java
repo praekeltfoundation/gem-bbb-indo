@@ -266,20 +266,20 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
                         .require(BotObjectType.SURVEY);
 
                 if (persisted.hasConvoSurvey(type))
-                    builder.setSurveyId(persisted.loadConvoSurveyId(type));
+                    builder.setSurveyId(persisted.loadConvoSurvey(type).getId());
 
                 builder.build()
                         .resolve(reqCallback);
             }
             break;
             case SURVEY_EATOOL: {
-                feed.parse(R.raw.survey_baseline, Node.class);
+                feed.parse(R.raw.survey_eatool, Node.class);
                 RequirementResolver.Builder builder = new RequirementResolver.Builder(
                         getContext(), BotType.SURVEY_EATOOL)
                         .require(BotObjectType.SURVEY);
 
                 if (persisted.hasConvoSurvey(type))
-                    builder.setSurveyId(persisted.loadConvoSurveyId(type));
+                    builder.setSurveyId(persisted.loadConvoSurvey(type).getId());
 
                 builder.build()
                         .resolve(reqCallback);
@@ -342,9 +342,10 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
                 getAndAddNode("tip_intro_inline_link");
                 break;
             case SURVEY_BASELINE:
-                getAndAddNode("survey_baseline_intro");
+                getAndAddNode(null);
                 break;
             case SURVEY_EATOOL:
+                getAndAddNode(null);
                 break;
         }
     }

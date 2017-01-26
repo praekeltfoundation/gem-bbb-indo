@@ -30,35 +30,13 @@
         "name": "survey_eatool_q_consent_a_yes",
         "text": "$(survey_common_q_consent_a_yes)",
         "value": "1",
-        "next": "survey_eatool_q_terms_and_conditions"
+        "next": "survey_eatool_q01_appreciate"
       },
       {
         "name": "survey_eatool_q_consent_a_no",
         "text": "$(survey_common_q_consent_a_no)",
         "value": "0",
-        "next": "survey_eatool_q_outro_cancel"
-      }
-    ]
-  },
-
-
-
-  {
-    "name": "survey_eatool_q_terms_and_conditions",
-    "type": "text",
-    "text": "$(survey_common_q_terms)",
-    "answers": [
-      {
-        "name": "survey_eatool_q_terms_a_yes",
-        "text": "$(survey_common_q_terms_a_yes)",
-        "value": "1",
-        "next": "survey_eatool_q01_occupation"
-      },
-      {
-        "name": "survey_eatool_q_terms_a_no",
-        "text": "$(survey_common_q_terms_a_no)",
-        "value": "0",
-        "next": "survey_eatool_q_outro_cancel"
+        "next": "survey_eatool_submit_cancel"
       }
     ]
   },
@@ -66,39 +44,45 @@
 
   
   {
-    "name": "survey_eatool_q_01",
+    "name": "survey_eatool_q01_appreciate",
     "type": "text",
-    "text": "$(survey_eatool_q_01)",
+    "text": "$(survey_eatool_q01_appreciate)",
     "answers": [
       {
-        "name": "survey_eatool_q_01",
+        "name": "survey_eatool_q01_a01",
         "text": "$(survey_eatool_a_1_never)",
         "value": "1",
-        "next": "survey_eatool_submit"
+        "next": "survey_eatool_q02_optimistic"
       },
       {
-        "name": "survey_eatool_q_02",
-        "text": "$(survey_eatool_a_2_almost_never)",
+        "name": "survey_eatool_q01_a02",
+        "text": "$(survey_eatool_a_2_seldom)",
         "value": "2",
-        "next": "survey_eatool_submit"
+        "next": "survey_eatool_q02_optimistic"
       },
       {
-        "name": "survey_eatool_q_03",
+        "name": "survey_eatool_q01_a03",
         "text": "$(survey_eatool_a_3_sometimes)",
         "value": "3",
-        "next": "survey_eatool_submit"
+        "next": "survey_eatool_q02_optimistic"
       },
       {
-        "name": "survey_eatool_q_04",
+        "name": "survey_eatool_q01_a04",
         "text": "$(survey_eatool_a_4_often)",
         "value": "4",
-        "next": "survey_eatool_submit"
+        "next": "survey_eatool_q02_optimistic"
       },
       {
-        "name": "survey_eatool_q_05",
+        "name": "survey_eatool_q01_a05",
         "text": "$(survey_eatool_a_5_always)",
         "value": "5",
-        "next": "survey_eatool_submit"
+        "next": "survey_eatool_q02_optimistic"
+      },
+      {
+        "name": "survey_eatool_q01_skip",
+        "text": "$(survey_common_skip)",
+        "value": "999",
+        "next": "survey_eatool_q02_optimistic"
       }
     ]
   },
@@ -106,9 +90,1059 @@
 
 
   {
-    "name": "survey_eatool_q_02",
+    "name": "survey_eatool_q02_optimistic",
     "type": "text",
-    "text": "$(survey_eatool_q_02)"
+    "text": "$(survey_eatool_q02_optimistic)",
+    "answers": [
+      {
+        "name": "survey_eatool_q02_a01",
+        "text": "$(survey_eatool_a_1_never)",
+        "value": "1",
+        "next": "survey_eatool_q03_career"
+      },
+      {
+        "name": "survey_eatool_q02_a02",
+        "text": "$(survey_eatool_a_2_seldom)",
+        "value": "2",
+        "next": "survey_eatool_q03_career"
+      },
+      {
+        "name": "survey_eatool_q02_a03",
+        "text": "$(survey_eatool_a_3_sometimes)",
+        "value": "3",
+        "next": "survey_eatool_q03_career"
+      },
+      {
+        "name": "survey_eatool_q02_a04",
+        "text": "$(survey_eatool_a_4_often)",
+        "value": "4",
+        "next": "survey_eatool_q03_career"
+      },
+      {
+        "name": "survey_eatool_q02_a05",
+        "text": "$(survey_eatool_a_5_always)",
+        "value": "5",
+        "next": "survey_eatool_q03_career"
+      },
+      {
+        "name": "survey_eatool_q02_skip",
+        "text": "$(survey_common_skip)",
+        "value": "999",
+        "next": "survey_eatool_q03_career"
+      }
+    ]
+  },
+
+
+
+  {
+    "name": "survey_eatool_q03_career",
+    "type": "text",
+    "text": "$(survey_eatool_q03_career)",
+    "answers": [
+      {
+        "name": "survey_eatool_q03_a01",
+        "text": "$(survey_eatool_a_1_never)",
+        "value": "1",
+        "next": "survey_eatool_q04_adapt"
+      },
+      {
+        "name": "survey_eatool_q03_a02",
+        "text": "$(survey_eatool_a_2_seldom)",
+        "value": "2",
+        "next": "survey_eatool_q04_adapt"
+      },
+      {
+        "name": "survey_eatool_q03_a03",
+        "text": "$(survey_eatool_a_3_sometimes)",
+        "value": "3",
+        "next": "survey_eatool_q04_adapt"
+      },
+      {
+        "name": "survey_eatool_q03_a04",
+        "text": "$(survey_eatool_a_4_often)",
+        "value": "4",
+        "next": "survey_eatool_q04_adapt"
+      },
+      {
+        "name": "survey_eatool_q03_a05",
+        "text": "$(survey_eatool_a_5_always)",
+        "value": "5",
+        "next": "survey_eatool_q04_adapt"
+      },
+      {
+        "name": "survey_eatool_q03_skip",
+        "text": "$(survey_common_skip)",
+        "value": "999",
+        "next": "survey_eatool_q04_adapt"
+      }
+    ]
+  },
+
+
+
+  {
+    "name": "survey_eatool_q04_adapt",
+    "type": "text",
+    "text": "$(survey_eatool_q04_adapt)",
+    "answers": [
+      {
+        "name": "survey_eatool_q04_a01",
+        "text": "$(survey_eatool_a_1_never)",
+        "value": "1",
+        "next": "survey_eatool_q05_duties"
+      },
+      {
+        "name": "survey_eatool_q04_a02",
+        "text": "$(survey_eatool_a_2_seldom)",
+        "value": "2",
+        "next": "survey_eatool_q05_duties"
+      },
+      {
+        "name": "survey_eatool_q04_a03",
+        "text": "$(survey_eatool_a_3_sometimes)",
+        "value": "3",
+        "next": "survey_eatool_q05_duties"
+      },
+      {
+        "name": "survey_eatool_q04_a04",
+        "text": "$(survey_eatool_a_4_often)",
+        "value": "4",
+        "next": "survey_eatool_q05_duties"
+      },
+      {
+        "name": "survey_eatool_q04_a05",
+        "text": "$(survey_eatool_a_5_always)",
+        "value": "5",
+        "next": "survey_eatool_q05_duties"
+      },
+      {
+        "name": "survey_eatool_q04_skip",
+        "text": "$(survey_common_skip)",
+        "value": "999",
+        "next": "survey_eatool_q05_duties"
+      }
+    ]
+  },
+
+
+
+  {
+    "name": "survey_eatool_q05_duties",
+    "type": "text",
+    "text": "$(survey_eatool_q05_duties)",
+    "answers": [
+      {
+        "name": "survey_eatool_q05_a01",
+        "text": "$(survey_eatool_a_1_never)",
+        "value": "1",
+        "next": "survey_eatool_q06_lazy"
+      },
+      {
+        "name": "survey_eatool_q05_a02",
+        "text": "$(survey_eatool_a_2_seldom)",
+        "value": "2",
+        "next": "survey_eatool_q06_lazy"
+      },
+      {
+        "name": "survey_eatool_q05_a03",
+        "text": "$(survey_eatool_a_3_sometimes)",
+        "value": "3",
+        "next": "survey_eatool_q06_lazy"
+      },
+      {
+        "name": "survey_eatool_q05_a04",
+        "text": "$(survey_eatool_a_4_often)",
+        "value": "4",
+        "next": "survey_eatool_q06_lazy"
+      },
+      {
+        "name": "survey_eatool_q05_a05",
+        "text": "$(survey_eatool_a_5_always)",
+        "value": "5",
+        "next": "survey_eatool_q06_lazy"
+      },
+      {
+        "name": "survey_eatool_q05_skip",
+        "text": "$(survey_common_skip)",
+        "value": "999",
+        "next": "survey_eatool_q06_lazy"
+      }
+    ]
+  },
+
+
+
+  {
+    "name": "survey_eatool_q06_lazy",
+    "type": "text",
+    "text": "$(survey_eatool_q06_lazy)",
+    "answers": [
+      {
+        "name": "survey_eatool_q06_a01",
+        "text": "$(survey_eatool_a_1_never)",
+        "value": "1",
+        "next": "survey_eatool_q07_proud"
+      },
+      {
+        "name": "survey_eatool_q06_a02",
+        "text": "$(survey_eatool_a_2_seldom)",
+        "value": "2",
+        "next": "survey_eatool_q07_proud"
+      },
+      {
+        "name": "survey_eatool_q06_a03",
+        "text": "$(survey_eatool_a_3_sometimes)",
+        "value": "3",
+        "next": "survey_eatool_q07_proud"
+      },
+      {
+        "name": "survey_eatool_q06_a04",
+        "text": "$(survey_eatool_a_4_often)",
+        "value": "4",
+        "next": "survey_eatool_q07_proud"
+      },
+      {
+        "name": "survey_eatool_q06_a05",
+        "text": "$(survey_eatool_a_5_always)",
+        "value": "5",
+        "next": "survey_eatool_q07_proud"
+      },
+      {
+        "name": "survey_eatool_q06_skip",
+        "text": "$(survey_common_skip)",
+        "value": "999",
+        "next": "survey_eatool_q07_proud"
+      }
+    ]
+  },
+
+
+
+  {
+    "name": "survey_eatool_q07_proud",
+    "type": "text",
+    "text": "$(survey_eatool_q07_proud)",
+    "answers": [
+      {
+        "name": "survey_eatool_q07_a01",
+        "text": "$(survey_eatool_a_1_never)",
+        "value": "1",
+        "next": "survey_eatool_q08_dress"
+      },
+      {
+        "name": "survey_eatool_q07_a02",
+        "text": "$(survey_eatool_a_2_seldom)",
+        "value": "2",
+        "next": "survey_eatool_q08_dress"
+      },
+      {
+        "name": "survey_eatool_q07_a03",
+        "text": "$(survey_eatool_a_3_sometimes)",
+        "value": "3",
+        "next": "survey_eatool_q08_dress"
+      },
+      {
+        "name": "survey_eatool_q07_a04",
+        "text": "$(survey_eatool_a_4_often)",
+        "value": "4",
+        "next": "survey_eatool_q08_dress"
+      },
+      {
+        "name": "survey_eatool_q07_a05",
+        "text": "$(survey_eatool_a_5_always)",
+        "value": "5",
+        "next": "survey_eatool_q08_dress"
+      },
+      {
+        "name": "survey_eatool_q07_skip",
+        "text": "$(survey_common_skip)",
+        "value": "999",
+        "next": "survey_eatool_q08_dress"
+      }
+    ]
+  },
+
+
+
+  {
+    "name": "survey_eatool_q08_dress",
+    "type": "text",
+    "text": "$(survey_eatool_q08_dress)",
+    "answers": [
+      {
+        "name": "survey_eatool_q08_a01",
+        "text": "$(survey_eatool_a_1_never)",
+        "value": "1",
+        "next": "survey_eatool_q09_along"
+      },
+      {
+        "name": "survey_eatool_q08_a02",
+        "text": "$(survey_eatool_a_2_seldom)",
+        "value": "2",
+        "next": "survey_eatool_q09_along"
+      },
+      {
+        "name": "survey_eatool_q08_a03",
+        "text": "$(survey_eatool_a_3_sometimes)",
+        "value": "3",
+        "next": "survey_eatool_q09_along"
+      },
+      {
+        "name": "survey_eatool_q08_a04",
+        "text": "$(survey_eatool_a_4_often)",
+        "value": "4",
+        "next": "survey_eatool_q09_along"
+      },
+      {
+        "name": "survey_eatool_q08_a05",
+        "text": "$(survey_eatool_a_5_always)",
+        "value": "5",
+        "next": "survey_eatool_q09_along"
+      },
+      {
+        "name": "survey_eatool_q08_skip",
+        "text": "$(survey_common_skip)",
+        "value": "999",
+        "next": "survey_eatool_q09_along"
+      }
+    ]
+  },
+
+
+
+  {
+    "name": "survey_eatool_q09_along",
+    "type": "text",
+    "text": "$(survey_eatool_q09_along)",
+    "answers": [
+      {
+        "name": "survey_eatool_q09_a01",
+        "text": "$(survey_eatool_a_1_never)",
+        "value": "1",
+        "next": "survey_eatool_q10_anyone"
+      },
+      {
+        "name": "survey_eatool_q09_a02",
+        "text": "$(survey_eatool_a_2_seldom)",
+        "value": "2",
+        "next": "survey_eatool_q10_anyone"
+      },
+      {
+        "name": "survey_eatool_q09_a03",
+        "text": "$(survey_eatool_a_3_sometimes)",
+        "value": "3",
+        "next": "survey_eatool_q10_anyone"
+      },
+      {
+        "name": "survey_eatool_q09_a04",
+        "text": "$(survey_eatool_a_4_often)",
+        "value": "4",
+        "next": "survey_eatool_q10_anyone"
+      },
+      {
+        "name": "survey_eatool_q09_a05",
+        "text": "$(survey_eatool_a_5_always)",
+        "value": "5",
+        "next": "survey_eatool_q10_anyone"
+      },
+      {
+        "name": "survey_eatool_q09_skip",
+        "text": "$(survey_common_skip)",
+        "value": "999",
+        "next": "survey_eatool_q10_anyone"
+      }
+    ]
+  },
+
+
+
+  {
+    "name": "survey_eatool_q10_anyone",
+    "type": "text",
+    "text": "$(survey_eatool_q10_anyone)",
+    "answers": [
+      {
+        "name": "survey_eatool_q10_a01",
+        "text": "$(survey_eatool_a_1_never)",
+        "value": "1",
+        "next": "survey_eatool_q11_input"
+      },
+      {
+        "name": "survey_eatool_q10_a02",
+        "text": "$(survey_eatool_a_2_seldom)",
+        "value": "2",
+        "next": "survey_eatool_q11_input"
+      },
+      {
+        "name": "survey_eatool_q10_a03",
+        "text": "$(survey_eatool_a_3_sometimes)",
+        "value": "3",
+        "next": "survey_eatool_q11_input"
+      },
+      {
+        "name": "survey_eatool_q10_a04",
+        "text": "$(survey_eatool_a_4_often)",
+        "value": "4",
+        "next": "survey_eatool_q11_input"
+      },
+      {
+        "name": "survey_eatool_q10_a05",
+        "text": "$(survey_eatool_a_5_always)",
+        "value": "5",
+        "next": "survey_eatool_q11_input"
+      },
+      {
+        "name": "survey_eatool_q10_skip",
+        "text": "$(survey_common_skip)",
+        "value": "999",
+        "next": "survey_eatool_q11_input"
+      }
+    ]
+  },
+
+
+
+  {
+    "name": "survey_eatool_q11_input",
+    "type": "text",
+    "text": "$(survey_eatool_q11_input)",
+    "answers": [
+      {
+        "name": "survey_eatool_q11_a01",
+        "text": "$(survey_eatool_a_1_never)",
+        "value": "1",
+        "next": "survey_eatool_q12_responsible"
+      },
+      {
+        "name": "survey_eatool_q11_a02",
+        "text": "$(survey_eatool_a_2_seldom)",
+        "value": "2",
+        "next": "survey_eatool_q12_responsible"
+      },
+      {
+        "name": "survey_eatool_q11_a03",
+        "text": "$(survey_eatool_a_3_sometimes)",
+        "value": "3",
+        "next": "survey_eatool_q12_responsible"
+      },
+      {
+        "name": "survey_eatool_q11_a04",
+        "text": "$(survey_eatool_a_4_often)",
+        "value": "4",
+        "next": "survey_eatool_q12_responsible"
+      },
+      {
+        "name": "survey_eatool_q11_a05",
+        "text": "$(survey_eatool_a_5_always)",
+        "value": "5",
+        "next": "survey_eatool_q12_responsible"
+      },
+      {
+        "name": "survey_eatool_q11_skip",
+        "text": "$(survey_common_skip)",
+        "value": "999",
+        "next": "survey_eatool_q12_responsible"
+      }
+    ]
+  },
+
+
+
+  {
+    "name": "survey_eatool_q12_responsible",
+    "type": "text",
+    "text": "$(survey_eatool_q12_responsible)",
+    "answers": [
+      {
+        "name": "survey_eatool_q12_a01",
+        "text": "$(survey_eatool_a_1_never)",
+        "value": "1",
+        "next": "survey_eatool_q13_express"
+      },
+      {
+        "name": "survey_eatool_q12_a02",
+        "text": "$(survey_eatool_a_2_seldom)",
+        "value": "2",
+        "next": "survey_eatool_q13_express"
+      },
+      {
+        "name": "survey_eatool_q12_a03",
+        "text": "$(survey_eatool_a_3_sometimes)",
+        "value": "3",
+        "next": "survey_eatool_q13_express"
+      },
+      {
+        "name": "survey_eatool_q12_a04",
+        "text": "$(survey_eatool_a_4_often)",
+        "value": "4",
+        "next": "survey_eatool_q13_express"
+      },
+      {
+        "name": "survey_eatool_q12_a05",
+        "text": "$(survey_eatool_a_5_always)",
+        "value": "5",
+        "next": "survey_eatool_q13_express"
+      },
+      {
+        "name": "survey_eatool_q12_skip",
+        "text": "$(survey_common_skip)",
+        "value": "999",
+        "next": "survey_eatool_q13_express"
+      }
+    ]
+  },
+
+
+
+  {
+    "name": "survey_eatool_q13_express",
+    "type": "text",
+    "text": "$(survey_eatool_q13_express)",
+    "answers": [
+      {
+        "name": "survey_eatool_q13_a01",
+        "text": "$(survey_eatool_a_1_never)",
+        "value": "1",
+        "next": "survey_eatool_q14_understand"
+      },
+      {
+        "name": "survey_eatool_q13_a02",
+        "text": "$(survey_eatool_a_2_seldom)",
+        "value": "2",
+        "next": "survey_eatool_q14_understand"
+      },
+      {
+        "name": "survey_eatool_q13_a03",
+        "text": "$(survey_eatool_a_3_sometimes)",
+        "value": "3",
+        "next": "survey_eatool_q14_understand"
+      },
+      {
+        "name": "survey_eatool_q13_a04",
+        "text": "$(survey_eatool_a_4_often)",
+        "value": "4",
+        "next": "survey_eatool_q14_understand"
+      },
+      {
+        "name": "survey_eatool_q13_a05",
+        "text": "$(survey_eatool_a_5_always)",
+        "value": "5",
+        "next": "survey_eatool_q14_understand"
+      },
+      {
+        "name": "survey_eatool_q13_skip",
+        "text": "$(survey_common_skip)",
+        "value": "999",
+        "next": "survey_eatool_q14_understand"
+      }
+    ]
+  },
+
+
+
+  {
+    "name": "survey_eatool_q14_understand",
+    "type": "text",
+    "text": "$(survey_eatool_q14_understand)",
+    "answers": [
+      {
+        "name": "survey_eatool_q14_a01",
+        "text": "$(survey_eatool_a_1_cant_understand)",
+        "value": "1",
+        "next": "survey_eatool_q15_read"
+      },
+      {
+        "name": "survey_eatool_q14_a02",
+        "text": "$(survey_eatool_a_2_seldom)",
+        "value": "2",
+        "next": "survey_eatool_q15_read"
+      },
+      {
+        "name": "survey_eatool_q14_a03",
+        "text": "$(survey_eatool_a_3_sometimes)",
+        "value": "3",
+        "next": "survey_eatool_q15_read"
+      },
+      {
+        "name": "survey_eatool_q14_a04",
+        "text": "$(survey_eatool_a_4_often)",
+        "value": "4",
+        "next": "survey_eatool_q15_read"
+      },
+      {
+        "name": "survey_eatool_q14_a05",
+        "text": "$(survey_eatool_a_5_always)",
+        "value": "5",
+        "next": "survey_eatool_q15_read"
+      },
+      {
+        "name": "survey_eatool_q14_skip",
+        "text": "$(survey_common_skip)",
+        "value": "999",
+        "next": "survey_eatool_q15_read"
+      }
+    ]
+  },
+
+
+
+  {
+    "name": "survey_eatool_q15_read",
+    "type": "text",
+    "text": "$(survey_eatool_q15_read)",
+    "answers": [
+      {
+        "name": "survey_eatool_q15_a01",
+        "text": "$(survey_eatool_a_1_never)",
+        "value": "1",
+        "next": "survey_eatool_q16_learn"
+      },
+      {
+        "name": "survey_eatool_q15_a02",
+        "text": "$(survey_eatool_a_2_seldom)",
+        "value": "2",
+        "next": "survey_eatool_q16_learn"
+      },
+      {
+        "name": "survey_eatool_q15_a03",
+        "text": "$(survey_eatool_a_3_sometimes)",
+        "value": "3",
+        "next": "survey_eatool_q16_learn"
+      },
+      {
+        "name": "survey_eatool_q15_a04",
+        "text": "$(survey_eatool_a_4_often)",
+        "value": "4",
+        "next": "survey_eatool_q16_learn"
+      },
+      {
+        "name": "survey_eatool_q15_a05",
+        "text": "$(survey_eatool_a_5_always)",
+        "value": "5",
+        "next": "survey_eatool_q16_learn"
+      },
+      {
+        "name": "survey_eatool_q15_skip",
+        "text": "$(survey_common_skip)",
+        "value": "999",
+        "next": "survey_eatool_q16_learn"
+      }
+    ]
+  },
+
+
+
+  {
+    "name": "survey_eatool_q16_learn",
+    "type": "text",
+    "text": "$(survey_eatool_q16_learn)",
+    "answers": [
+      {
+        "name": "survey_eatool_q16_a01",
+        "text": "$(survey_eatool_a_1_never)",
+        "value": "1",
+        "next": "survey_eatool_q17_organise"
+      },
+      {
+        "name": "survey_eatool_q16_a02",
+        "text": "$(survey_eatool_a_2_seldom)",
+        "value": "2",
+        "next": "survey_eatool_q17_organise"
+      },
+      {
+        "name": "survey_eatool_q16_a03",
+        "text": "$(survey_eatool_a_3_sometimes)",
+        "value": "3",
+        "next": "survey_eatool_q17_organise"
+      },
+      {
+        "name": "survey_eatool_q16_a04",
+        "text": "$(survey_eatool_a_4_often)",
+        "value": "4",
+        "next": "survey_eatool_q17_organise"
+      },
+      {
+        "name": "survey_eatool_q16_a05",
+        "text": "$(survey_eatool_a_5_always)",
+        "value": "5",
+        "next": "survey_eatool_q17_organise"
+      },
+      {
+        "name": "survey_eatool_q16_skip",
+        "text": "$(survey_common_skip)",
+        "value": "999",
+        "next": "survey_eatool_q17_organise"
+      }
+    ]
+  },
+
+
+
+  {
+    "name": "survey_eatool_q17_organise",
+    "type": "text",
+    "text": "$(survey_eatool_q17_organise)",
+    "answers": [
+      {
+        "name": "survey_eatool_q17_a01",
+        "text": "$(survey_eatool_a_1_never)",
+        "value": "1",
+        "next": "survey_eatool_q18_sources"
+      },
+      {
+        "name": "survey_eatool_q17_a02",
+        "text": "$(survey_eatool_a_2_seldom)",
+        "value": "2",
+        "next": "survey_eatool_q18_sources"
+      },
+      {
+        "name": "survey_eatool_q17_a03",
+        "text": "$(survey_eatool_a_3_sometimes)",
+        "value": "3",
+        "next": "survey_eatool_q18_sources"
+      },
+      {
+        "name": "survey_eatool_q17_a04",
+        "text": "$(survey_eatool_a_4_often)",
+        "value": "4",
+        "next": "survey_eatool_q18_sources"
+      },
+      {
+        "name": "survey_eatool_q17_a05",
+        "text": "$(survey_eatool_a_5_always)",
+        "value": "5",
+        "next": "survey_eatool_q18_sources"
+      },
+      {
+        "name": "survey_eatool_q17_skip",
+        "text": "$(survey_common_skip)",
+        "value": "999",
+        "next": "survey_eatool_q18_sources"
+      }
+    ]
+  },
+
+
+
+  {
+    "name": "survey_eatool_q18_sources",
+    "type": "text",
+    "text": "$(survey_eatool_q18_sources)",
+    "answers": [
+      {
+        "name": "survey_eatool_q18_a01",
+        "text": "$(survey_eatool_a_1_never)",
+        "value": "1",
+        "next": "survey_eatool_q19_experience"
+      },
+      {
+        "name": "survey_eatool_q18_a02",
+        "text": "$(survey_eatool_a_2_seldom)",
+        "value": "2",
+        "next": "survey_eatool_q19_experience"
+      },
+      {
+        "name": "survey_eatool_q18_a03",
+        "text": "$(survey_eatool_a_3_sometimes)",
+        "value": "3",
+        "next": "survey_eatool_q19_experience"
+      },
+      {
+        "name": "survey_eatool_q18_a04",
+        "text": "$(survey_eatool_a_4_often)",
+        "value": "4",
+        "next": "survey_eatool_q19_experience"
+      },
+      {
+        "name": "survey_eatool_q18_a05",
+        "text": "$(survey_eatool_a_5_always)",
+        "value": "5",
+        "next": "survey_eatool_q19_experience"
+      },
+      {
+        "name": "survey_eatool_q18_skip",
+        "text": "$(survey_common_skip)",
+        "value": "999",
+        "next": "survey_eatool_q19_experience"
+      }
+    ]
+  },
+
+
+
+  {
+    "name": "survey_eatool_q19_experience",
+    "type": "text",
+    "text": "$(survey_eatool_q19_experience)",
+    "answers": [
+      {
+        "name": "survey_eatool_q19_a01",
+        "text": "$(survey_eatool_a_1_never)",
+        "value": "1",
+        "next": "survey_eatool_q20_adapting"
+      },
+      {
+        "name": "survey_eatool_q19_a02",
+        "text": "$(survey_eatool_a_2_seldom)",
+        "value": "2",
+        "next": "survey_eatool_q20_adapting"
+      },
+      {
+        "name": "survey_eatool_q19_a03",
+        "text": "$(survey_eatool_a_3_sometimes)",
+        "value": "3",
+        "next": "survey_eatool_q20_adapting"
+      },
+      {
+        "name": "survey_eatool_q19_a04",
+        "text": "$(survey_eatool_a_4_often)",
+        "value": "4",
+        "next": "survey_eatool_q20_adapting"
+      },
+      {
+        "name": "survey_eatool_q19_a05",
+        "text": "$(survey_eatool_a_5_always)",
+        "value": "5",
+        "next": "survey_eatool_q20_adapting"
+      },
+      {
+        "name": "survey_eatool_q19_skip",
+        "text": "$(survey_common_skip)",
+        "value": "999",
+        "next": "survey_eatool_q20_adapting"
+      }
+    ]
+  },
+
+
+
+  {
+    "name": "survey_eatool_q20_adapting",
+    "type": "text",
+    "text": "$(survey_eatool_q20_adapting)",
+    "answers": [
+      {
+        "name": "survey_eatool_q20_a01",
+        "text": "$(survey_eatool_a_1_never)",
+        "value": "1",
+        "next": "survey_eatool_q21_interview"
+      },
+      {
+        "name": "survey_eatool_q20_a02",
+        "text": "$(survey_eatool_a_2_seldom)",
+        "value": "2",
+        "next": "survey_eatool_q21_interview"
+      },
+      {
+        "name": "survey_eatool_q20_a03",
+        "text": "$(survey_eatool_a_3_sometimes)",
+        "value": "3",
+        "next": "survey_eatool_q21_interview"
+      },
+      {
+        "name": "survey_eatool_q20_a04",
+        "text": "$(survey_eatool_a_4_often)",
+        "value": "4",
+        "next": "survey_eatool_q21_interview"
+      },
+      {
+        "name": "survey_eatool_q20_a05",
+        "text": "$(survey_eatool_a_5_always)",
+        "value": "5",
+        "next": "survey_eatool_q21_interview"
+      },
+      {
+        "name": "survey_eatool_q20_skip",
+        "text": "$(survey_common_skip)",
+        "value": "999",
+        "next": "survey_eatool_q21_interview"
+      }
+    ]
+  },
+
+
+
+  {
+    "name": "survey_eatool_q21_interview",
+    "type": "text",
+    "text": "$(survey_eatool_q21_interview)",
+    "answers": [
+      {
+        "name": "survey_eatool_q21_a01",
+        "text": "$(survey_eatool_a_1_none)",
+        "value": "1",
+        "next": "survey_eatool_q22_cv"
+      },
+      {
+        "name": "survey_eatool_q21_a02",
+        "text": "$(survey_eatool_a_2_very_little)",
+        "value": "2",
+        "next": "survey_eatool_q22_cv"
+      },
+      {
+        "name": "survey_eatool_q21_a03",
+        "text": "$(survey_eatool_a_3_some)",
+        "value": "3",
+        "next": "survey_eatool_q22_cv"
+      },
+      {
+        "name": "survey_eatool_q21_a04",
+        "text": "$(survey_eatool_a_4_quite_a_bit)",
+        "value": "4",
+        "next": "survey_eatool_q22_cv"
+      },
+      {
+        "name": "survey_eatool_q21_a05",
+        "text": "$(survey_eatool_a_5_very_much)",
+        "value": "5",
+        "next": "survey_eatool_q22_cv"
+      },
+      {
+        "name": "survey_eatool_q21_skip",
+        "text": "$(survey_common_skip)",
+        "value": "999",
+        "next": "survey_eatool_q22_cv"
+      }
+    ]
+  },
+
+
+
+  {
+    "name": "survey_eatool_q22_cv",
+    "type": "text",
+    "text": "$(survey_eatool_q22_cv)",
+    "answers": [
+      {
+        "name": "survey_eatool_q22_a01",
+        "text": "$(survey_eatool_a_1_none)",
+        "value": "1",
+        "next": "survey_eatool_q23_cover"
+      },
+      {
+        "name": "survey_eatool_q22_a02",
+        "text": "$(survey_eatool_a_2_very_little)",
+        "value": "2",
+        "next": "survey_eatool_q23_cover"
+      },
+      {
+        "name": "survey_eatool_q22_a03",
+        "text": "$(survey_eatool_a_3_some)",
+        "value": "3",
+        "next": "survey_eatool_q23_cover"
+      },
+      {
+        "name": "survey_eatool_q22_a04",
+        "text": "$(survey_eatool_a_4_quite_a_bit)",
+        "value": "4",
+        "next": "survey_eatool_q23_cover"
+      },
+      {
+        "name": "survey_eatool_q22_a05",
+        "text": "$(survey_eatool_a_5_very_much)",
+        "value": "5",
+        "next": "survey_eatool_q23_cover"
+      },
+      {
+        "name": "survey_eatool_q22_skip",
+        "text": "$(survey_common_skip)",
+        "value": "999",
+        "next": "survey_eatool_q23_cover"
+      }
+    ]
+  },
+
+
+
+  {
+    "name": "survey_eatool_q23_cover",
+    "type": "text",
+    "text": "$(survey_eatool_q23_cover)",
+    "answers": [
+      {
+        "name": "survey_eatool_q23_a01",
+        "text": "$(survey_eatool_a_1_none)",
+        "value": "1",
+        "next": "survey_eatool_q24_company"
+      },
+      {
+        "name": "survey_eatool_q23_a02",
+        "text": "$(survey_eatool_a_2_very_little)",
+        "value": "2",
+        "next": "survey_eatool_q24_company"
+      },
+      {
+        "name": "survey_eatool_q23_a03",
+        "text": "$(survey_eatool_a_3_some)",
+        "value": "3",
+        "next": "survey_eatool_q24_company"
+      },
+      {
+        "name": "survey_eatool_q23_a04",
+        "text": "$(survey_eatool_a_4_quite_a_bit)",
+        "value": "4",
+        "next": "survey_eatool_q24_company"
+      },
+      {
+        "name": "survey_eatool_q23_a05",
+        "text": "$(survey_eatool_a_5_very_much)",
+        "value": "5",
+        "next": "survey_eatool_q24_company"
+      },
+      {
+        "name": "survey_eatool_q23_skip",
+        "text": "$(survey_common_skip)",
+        "value": "999",
+        "next": "survey_eatool_q24_company"
+      }
+    ]
+  },
+
+
+
+  {
+    "name": "survey_eatool_q24_company",
+    "type": "text",
+    "text": "$(survey_eatool_q24_company)",
+    "answers": [
+      {
+        "name": "survey_eatool_q24_a01",
+        "text": "$(survey_eatool_a_1_none)",
+        "value": "1",
+        "next": "survey_eatool_submit"
+      },
+      {
+        "name": "survey_eatool_q24_a02",
+        "text": "$(survey_eatool_a_2_very_little)",
+        "value": "2",
+        "next": "survey_eatool_submit"
+      },
+      {
+        "name": "survey_eatool_q24_a03",
+        "text": "$(survey_eatool_a_3_some)",
+        "value": "3",
+        "next": "survey_eatool_submit"
+      },
+      {
+        "name": "survey_eatool_q24_a04",
+        "text": "$(survey_eatool_a_4_quite_a_bit)",
+        "value": "4",
+        "next": "survey_eatool_submit"
+      },
+      {
+        "name": "survey_eatool_q24_a05",
+        "text": "$(survey_eatool_a_5_very_much)",
+        "value": "5",
+        "next": "survey_eatool_submit"
+      },
+      {
+        "name": "survey_eatool_q24_skip",
+        "text": "$(survey_common_skip)",
+        "value": "999",
+        "next": "survey_eatool_submit"
+      }
+    ]
   },
   
   
@@ -124,6 +1158,14 @@
     "type": "text",
     "text": "$(survey_common_q_outro)",
     "autoNext": "survey_eatool_end"
+  },
+
+
+  {
+    "name": "survey_eatool_submit_cancel",
+    "type": "blank",
+    "asyncCall": "#do_create",
+    "autoNext": "survey_eatool_q_outro_cancel"
   },
   {
     "name": "survey_eatool_q_outro_cancel",

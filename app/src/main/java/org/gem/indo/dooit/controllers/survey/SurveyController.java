@@ -73,6 +73,29 @@ abstract public class SurveyController extends DooitBotController {
     }
 
     @Override
+    public void resolveParam(BaseBotModel model, BotParamType paramType) {
+        if (!hasSurvey()) {
+            super.resolveParam(model, paramType);
+            return;
+        }
+
+        String key = paramType.getKey();
+        switch (paramType) {
+            case SURVEY_TITLE:
+                model.values.put(key, survey.getTitle());
+                break;
+            case SURVEY_INTRO:
+                model.values.put(key, survey.getIntro());
+                break;
+            case SURVEY_OUTRO:
+                model.values.put(key, survey.getOutro());
+                break;
+            default:
+                super.resolveParam(model, paramType);
+        }
+    }
+
+    @Override
     public void onAnswer(Answer answer) {
         Map<String, String> draft = createDraft(answer);
         if (!draft.isEmpty())

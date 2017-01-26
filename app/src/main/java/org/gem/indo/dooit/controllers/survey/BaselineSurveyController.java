@@ -7,7 +7,6 @@ import org.gem.indo.dooit.api.DooitErrorHandler;
 import org.gem.indo.dooit.models.bot.Answer;
 import org.gem.indo.dooit.models.bot.BaseBotModel;
 import org.gem.indo.dooit.models.enums.BotCallType;
-import org.gem.indo.dooit.models.enums.BotParamType;
 import org.gem.indo.dooit.models.enums.BotType;
 import org.gem.indo.dooit.models.survey.CoachSurvey;
 
@@ -73,29 +72,6 @@ public class BaselineSurveyController extends SurveyController {
     }
 
     @Override
-    public void resolveParam(BaseBotModel model, BotParamType paramType) {
-        if (!hasSurvey()) {
-            super.resolveParam(model, paramType);
-            return;
-        }
-
-        String key = paramType.getKey();
-        switch (paramType) {
-            case SURVEY_TITLE:
-                model.values.put(key, survey.getTitle());
-                break;
-            case SURVEY_INTRO:
-                model.values.put(key, survey.getIntro());
-                break;
-            case SURVEY_OUTRO:
-                model.values.put(key, survey.getOutro());
-                break;
-            default:
-                super.resolveParam(model, paramType);
-        }
-    }
-
-    @Override
     public void onAsyncCall(BotCallType key, Map<String, Answer> answerLog, BaseBotModel model, OnAsyncListener listener) {
         switch (key) {
             case DO_CREATE:
@@ -107,8 +83,10 @@ public class BaselineSurveyController extends SurveyController {
     }
 
     private void submitSurvey(Map<String, Answer> answerLog, final OnAsyncListener listener) {
-        if (!hasSurvey())
+        if (!hasSurvey()) {
+            notifyDone(listener);
             return;
+        }
 
         Map<String, String> submission = new LinkedHashMap<>();
 
