@@ -2,8 +2,9 @@ package org.gem.indo.dooit.views.main;
 
 import android.content.Context;
 import android.content.Intent;
-import android.media.Image;
+import android.graphics.Color;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
@@ -13,10 +14,12 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.facebook.drawee.view.SimpleDraweeView;
+import com.github.jinatonic.confetti.CommonConfetti;
 import com.google.android.gms.analytics.Tracker;
 
 import org.gem.indo.dooit.DooitApplication;
@@ -47,13 +50,12 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.OnPageChange;
 
-import static android.view.View.GONE;
-import static org.gem.indo.dooit.views.main.MainViewPagerPositions.BOT;
-import static org.gem.indo.dooit.views.main.MainViewPagerPositions.TARGET;
-
 public class MainActivity extends DooitActivity {
 
     private static final String TAG = MainActivity.class.getName();
+
+    @BindView(R.id.activity_main)
+    ViewGroup container;
 
     @BindView(R.id.toolbar)
     Toolbar toolbar;
@@ -144,6 +146,10 @@ public class MainActivity extends DooitActivity {
                     break;
                 case SURVEY_AVAILABLE:
                     handleSurveyNotification();
+                    break;
+                case CHALLENGE_WINNER:
+                    if (persisted.hasConvoWinner(BotType.CHALLENGE_WINNER))
+                        startBot(BotType.CHALLENGE_WINNER);
                     break;
             }
         }
@@ -334,5 +340,10 @@ public class MainActivity extends DooitActivity {
         fragment.setBotType(type);
         fragment.setClearState(true);
         startPage(MainViewPagerPositions.BOT);
+    }
+
+    public void showConfetti() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
+            CommonConfetti.rainingConfetti(container, new int[]{Color.RED, Color.BLUE}).oneShot();
     }
 }

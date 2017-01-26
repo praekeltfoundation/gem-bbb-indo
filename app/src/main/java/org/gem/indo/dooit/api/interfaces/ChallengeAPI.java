@@ -1,5 +1,6 @@
 package org.gem.indo.dooit.api.interfaces;
 
+import org.gem.indo.dooit.api.responses.WinnerResponse;
 import org.gem.indo.dooit.models.challenge.BaseChallenge;
 import org.gem.indo.dooit.models.challenge.Participant;
 import org.gem.indo.dooit.models.challenge.ParticipantFreeformAnswer;
@@ -40,5 +41,8 @@ public interface ChallengeAPI {
 
     @POST("/api/participants/register/")
     Observable<Participant> registerParticipant(@Body Participant participant);
+
+    @GET("/api/challenges/winning/")
+    Observable<WinnerResponse> checkChallengeWinner();
 
 }

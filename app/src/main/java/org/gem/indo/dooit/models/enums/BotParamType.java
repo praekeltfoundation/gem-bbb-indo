@@ -55,6 +55,7 @@ public enum BotParamType {
     BADGE_IMAGE_URL("badge.image_url"),
     BADGE_SOCIAL_URL("badge.social_url"),
     BADGE_EARNED_ON("badge.earned_on"),
+    BADGE_INTRO("badge.intro"),
 
     // Survey
     SURVEY_TITLE("survey.title"),
