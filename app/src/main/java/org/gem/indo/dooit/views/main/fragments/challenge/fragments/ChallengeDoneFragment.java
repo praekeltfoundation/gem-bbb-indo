@@ -1,8 +1,11 @@
 package org.gem.indo.dooit.views.main.fragments.challenge.fragments;
 
+import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
@@ -15,6 +18,7 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.facebook.drawee.view.SimpleDraweeView;
+import com.github.jinatonic.confetti.CommonConfetti;
 
 import org.gem.indo.dooit.R;
 import org.gem.indo.dooit.helpers.SquiggleBackgroundHelper;
@@ -122,6 +126,13 @@ public class ChallengeDoneFragment extends Fragment {
     public void onStart() {
         super.onStart();
         challengeImage.setImageURI(challenge.getImageURL());
+        letItRainConfetti();
+    }
+
+    private void letItRainConfetti(){
+        final boolean isLollipop = Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP;
+        if (isLollipop)
+            CommonConfetti.rainingConfetti(((ViewGroup)this.getView().getParent()), new int[] { Color.RED, Color.YELLOW }).oneShot();
     }
 
     @OnClick(R.id.challenge_done_button)

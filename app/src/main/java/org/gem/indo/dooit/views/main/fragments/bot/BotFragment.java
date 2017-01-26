@@ -2,7 +2,6 @@ package org.gem.indo.dooit.views.main.fragments.bot;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -14,7 +13,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
-import android.widget.TextView;
 
 import com.greenfrvr.hashtagview.HashtagView;
 
@@ -39,6 +37,7 @@ import org.gem.indo.dooit.helpers.bot.BotRunner;
 import org.gem.indo.dooit.helpers.bot.param.ParamArg;
 import org.gem.indo.dooit.helpers.bot.param.ParamMatch;
 import org.gem.indo.dooit.helpers.bot.param.ParamParser;
+import org.gem.indo.dooit.helpers.crashlytics.CrashlyticsHelper;
 import org.gem.indo.dooit.models.bot.Answer;
 import org.gem.indo.dooit.models.bot.BaseBotModel;
 import org.gem.indo.dooit.models.bot.Node;
@@ -58,7 +57,6 @@ import java.util.Map;
 
 import javax.inject.Inject;
 
-import butterknife.BindString;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -398,10 +396,13 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
             model.setType(BotMessageType.TEXT);
             getBotAdapter().removeItem(model);
             getBotAdapter().addItem(model);
+            CrashlyticsHelper.log(this.getClass().getSimpleName(), "onItemClicked: ", "model changed: " + model.toString());
         }
 
-        if (shouldAdd(answer))
+        if (shouldAdd(answer)) {
             getBotAdapter().addItem(answer);
+            CrashlyticsHelper.log(this.getClass().getSimpleName(), "onItemClicked: ", "adding to conversation: " + answer.toString());
+        }
 
         if (answer.hasInputKey() && hasController())
             controller.onAnswerInput(answer.getInputKey(), answer);
@@ -510,6 +511,7 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
         } else {
             addAnswerOptions(node);
             persisted.saveConversationState(type, getBotAdapter().getDataSet());
+            CrashlyticsHelper.log(this.getClass().getSimpleName(), "checkEndOrAddAnswers: ", "data set: " + getBotAdapter().getDataSet());
         }
     }
 
@@ -582,6 +584,7 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
                 cb.resolveParam(answer, BotParamType.byKey(arg.getKey()));
         }
         answer.setProcessedText(args.process(answer.values.getRawMap()));
+        CrashlyticsHelper.log(this.getClass().getSimpleName(), "processText: ", "Processed answer : " + answer.toString());
     }
 
     private void clearAnswerView() {
