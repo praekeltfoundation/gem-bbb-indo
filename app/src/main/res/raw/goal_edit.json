@@ -76,7 +76,7 @@
   {
     "name": "goal_edit_weekly_target",
     "type": "text",
-    "text": "$(goal_edit_weekly_target)",
+    "text": "$(goal_edit_target)",
     "autoAnswer": "goal_weekly_target",
     "answers": [
       {

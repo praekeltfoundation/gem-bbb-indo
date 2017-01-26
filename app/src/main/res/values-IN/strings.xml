@@ -156,7 +156,7 @@
     <string name="infoDontKnowAmount">No problem.</string>
     <string name="askKnowGoalDate">That is a big goal. Let us get saving then. Do you have a date that you want to save this by?</string>
     <string name="askGoalDate">When would you like to have saved this much?</string>
-    <string name="askGoalWeeklySaveAmount">No problem, I can help. How much can you afford to save each week?</string>
+    <string name="askGoalWeeklySaveAmount">Gak masalah, aku bisa bantu. Berapa jumlah uang yang bisa kamu tabung per minggu?</string>
     <string name="askGoalSaveAmountOther">How much can you save?</string>
     <string name="askGoalPriorSave">Apa kamu sudah mulai menabung untuk target ini?</string>
     <string name="askPriorSavedAmount">How much have you already saved?</string>
@@ -279,6 +279,7 @@
     <string name="goal_edit_info_exit">Ok, aku sudah selesai. Bisa diakhiri?</string>
     <string name="goal_edit_delete_difficult_help">Ok! Bantu buat rencana nabung baru.</string>
     <string name="goal_edit_delete_difficult_do_delete">Oke, sudah beres. Bisa diakhiri?</string>
+    <string name="goal_change_target">I want to change the Target value</string>
 
     <!-- BOT: tip_intro -->
     <string name="tip_intro_inline_link">TODO: Show Tip</string>

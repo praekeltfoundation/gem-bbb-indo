@@ -156,7 +156,7 @@
     <string name="infoDontKnowAmount">No problem.</string>
     <string name="askKnowGoalDate">That is a big goal. Let us get saving then. Do you have a date that you want to save this by?</string>
     <string name="askGoalDate">When would you like to have saved this much?</string>
-    <string name="askGoalWeeklySaveAmount">No problem, I can help. How much can you afford to save each week?</string>
+    <string name="askGoalWeeklySaveAmount">No problem, I can help. How much can money can you afford to save each week?</string>
     <string name="askGoalSaveAmountOther">How much can you save?</string>
     <string name="askGoalPriorSave">Have you started saving money towards this goal?</string>
     <string name="askPriorSavedAmount">How much have you already saved?</string>
@@ -244,8 +244,7 @@
     <string name="goal_edit_intro">Hey, $(user.preferred_name)!</string>
     <string name="goal_edit_ask_options">What do you want to edit?</string>
     <string name="goal_edit_updated">Your goal has been updated!</string>
-    <string name="goal_edit_weekly_target">How much money do you think can you save each week?</string>
-    <string name="goal_edit_target"></string>
+    <string name="goal_edit_target">How much money do you think can you save each week?</string>
     <string name="goal_edit_target_confirm">If you save $(goal.weekly_target_currency) per week, you\’ll have enough money to get your $(goal.name) in only $(goal.weeks_left_up) weeks.</string>
     <string name="goal_edit_come_back">Come back to track your savings weekly and watch as your goal becomes a reality!</string>
     <string name="goal_edit_delete_confirm">Oh? Why do you want to delete this goal?</string>
