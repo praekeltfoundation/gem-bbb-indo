@@ -283,7 +283,7 @@
     <!-- BOT: Surveys Common -->
     <!-- Bot Barks -->
     <string name="survey_common_q_intro">$(survey.intro)</string>
-    <string name="survey_common_q_intro_a_yes">Yup, let's do it!</string>
+    <string name="survey_common_q_intro_a_yes">Yup, let\'s do it!</string>
     <string name="survey_common_q_intro_a_no">No, thank you</string>
 
     <string name="survey_common_q_outro">$(survey.outro)</string>
