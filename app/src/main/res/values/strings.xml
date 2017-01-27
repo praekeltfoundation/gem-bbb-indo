@@ -287,6 +287,9 @@
     <string name="survey_common_q_intro_a_no">No, thank you</string>
 
     <string name="survey_common_q_outro">$(survey.outro)</string>
+    <string name="survey_common_q_outro_a1_tips">I\'d like to see some savings tips!</string>
+    <string name="survey_common_q_outro_a2_savings">I\'d like to check on my own savings plan.</string>
+    <string name="survey_common_q_outro_a3_exit">Thanks, I\'m done for now!</string>
 
     <string name="survey_common_skip">Prefer not to answer</string>
 
