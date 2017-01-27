@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,10 +21,15 @@ import org.gem.indo.dooit.api.DooitErrorHandler;
 import org.gem.indo.dooit.api.managers.ChallengeManager;
 import org.gem.indo.dooit.helpers.Persisted;
 import org.gem.indo.dooit.helpers.SquiggleBackgroundHelper;
+import org.gem.indo.dooit.models.Badge;
 import org.gem.indo.dooit.models.challenge.FreeformChallenge;
 import org.gem.indo.dooit.models.challenge.FreeformChallengeQuestion;
 import org.gem.indo.dooit.models.challenge.Participant;
 import org.gem.indo.dooit.models.challenge.ParticipantFreeformAnswer;
+import org.gem.indo.dooit.models.enums.BotType;
+import org.gem.indo.dooit.views.main.MainViewPagerPositions;
+import org.gem.indo.dooit.views.main.fragments.bot.BotFragment;
+import org.gem.indo.dooit.views.main.fragments.challenge.ChallengeActivity;
 import org.gem.indo.dooit.views.main.fragments.challenge.ChallengeFragment;
 import org.gem.indo.dooit.views.main.fragments.challenge.ChallengeFragmentState;
 
@@ -205,7 +211,11 @@ public class ChallengeFreeformFragment extends Fragment {
             public void call(ParticipantFreeformAnswer answer) {
                 Log.d(TAG, "Entry submitted");
                 FragmentTransaction ft = getFragmentManager().beginTransaction();
+                Bundle args = new Bundle();
+                args.putParcelable(ChallengeActivity.ARG_PARTICIPANT_BADGE, answer.getBadge());
+
                 Fragment fragment = ChallengeDoneFragment.newInstance(challenge);
+                fragment.setArguments(args);
                 ft.replace(R.id.fragment_challenge_container, fragment, "fragment_challenge");
                 ft.commit();
 
@@ -213,13 +223,6 @@ public class ChallengeFreeformFragment extends Fragment {
         });
         persisted.clearCurrentChallenge();
     }
-
-
-   /* public void submitFreeformAnswer() {
-        Log.d(TAG, "Submitting freeform answer.");
-        submitAnswer();
-
-    }*/
 
 
     /*************************

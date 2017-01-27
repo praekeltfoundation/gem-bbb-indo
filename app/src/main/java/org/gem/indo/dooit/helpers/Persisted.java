@@ -57,7 +57,7 @@ public class Persisted {
     private static final String TAG = Persisted.class.getName();
     private static final String SURVEY_ID = "survey_id";
     private static final String SURVEY = "survey";
-    private static final String WINNING_BOT_TYPE = "winning_bot_type";
+    private static final String CHALLENGE_PARTICIPANT_BADGE = "challenge_participant_badge";
     private static final String WINNING_BADGE = "winning_badge";
     private static final String WINNING_CHALLENGE = "winning_challenge";
 
@@ -254,6 +254,18 @@ public class Persisted {
     public void clearConvoWinner(){
         dooitSharedPreferences.remove(BOT + "_" + WINNING_CHALLENGE + "_" + BotType.CHALLENGE_WINNER);
         dooitSharedPreferences.remove(BOT + "_" + WINNING_BADGE + "_" + BotType.CHALLENGE_WINNER);
+    }
+
+    public void saveConvoParticipant(BotType botType, Badge badge){
+        dooitSharedPreferences.setComplex(BOT + "_" + CHALLENGE_PARTICIPANT_BADGE + "_" + botType.name(), badge);
+    }
+
+    public Badge loadParticipantBadge(BotType botType){
+        return dooitSharedPreferences.getComplex(BOT + "_" + CHALLENGE_PARTICIPANT_BADGE + "_" + botType.name(), Badge.class);
+    }
+
+    public boolean hasConvoParticipant(BotType botType){
+        return dooitSharedPreferences.containsKey(BOT + "_" + CHALLENGE_PARTICIPANT_BADGE + "_" + botType.name());
     }
 
     /********

@@ -49,6 +49,7 @@ import rx.functions.Action0;
 import rx.functions.Action1;
 
 import static org.gem.indo.dooit.helpers.RequestCodes.RESPONSE_CAMERA_REQUEST_CHALLENGE_IMAGE;
+import static org.gem.indo.dooit.helpers.RequestCodes.RESPONSE_CHALLENGE_PARTICIPANT_BADGE;
 import static org.gem.indo.dooit.helpers.RequestCodes.RESPONSE_CHALLENGE_REQUEST_RUN;
 import static org.gem.indo.dooit.helpers.RequestCodes.RESPONSE_GALLERY_REQUEST_CHALLENGE_IMAGE;
 
@@ -335,6 +336,10 @@ public class ChallengeRegisterFragment extends Fragment implements HasChallengeF
                     ft.commit();
                 }
                 break;
+            case RESPONSE_CHALLENGE_PARTICIPANT_BADGE:
+                if (getActivity() != null){
+
+                }
         }
     }
 

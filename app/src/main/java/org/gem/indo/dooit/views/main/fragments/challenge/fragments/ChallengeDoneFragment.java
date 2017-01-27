@@ -19,6 +19,7 @@ import com.facebook.drawee.view.SimpleDraweeView;
 import com.github.jinatonic.confetti.CommonConfetti;
 
 import org.gem.indo.dooit.R;
+import org.gem.indo.dooit.models.Badge;
 import org.gem.indo.dooit.models.challenge.BaseChallenge;
 import org.gem.indo.dooit.views.main.fragments.challenge.ChallengeActivity;
 import org.gem.indo.dooit.views.main.fragments.challenge.ChallengeFragmentMainPage;
@@ -129,7 +130,20 @@ public class ChallengeDoneFragment extends Fragment {
     }
 
     private void returnToParent(ChallengeFragmentMainPage returnPage) {
+        Bundle bundleFragment = this.getArguments();
+        Badge participantBadge = bundleFragment.getParcelable(ChallengeActivity.ARG_PARTICIPANT_BADGE);
+
+
         FragmentActivity activity = getActivity();
+        if (participantBadge != null){
+            if (activity.getParent() == null) {
+                Bundle bundle = new Bundle();
+                Intent intent = new Intent();
+                bundle.putParcelable(ChallengeActivity.ARG_PARTICIPANT_BADGE,participantBadge);
+                intent.putExtras(bundle);
+                activity.setResult(Activity.RESULT_OK, intent);
+            }
+        }
         Intent intent = new Intent();
         Bundle bundle = new Bundle();
         bundle.putParcelable(ChallengeActivity.ARG_CHALLENGE,challenge);
