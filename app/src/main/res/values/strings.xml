@@ -690,7 +690,7 @@
     <string name="challenge_register">Register</string>
     <string name="challenge_freeform_submit">Submitting freeform answer</string>
     <string name="challenge_all_questions_complete">You have completed all questions</string>
-    <string name="challenge_none_available">No challenge available. Please try again soon!</string>
+    <string name="challenge_none_available">No challenge available.\nPlease try again soon!</string>
     <string name="challenge_quiz_select_option_required">You must select an answer</string>
     <string name="challenge_quiz_no_questions">No questions available</string>
     <string name="challenge_quiz_congratulate_correct">Well done!</string>

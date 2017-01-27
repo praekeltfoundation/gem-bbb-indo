@@ -27,6 +27,7 @@ import org.gem.indo.dooit.models.enums.BotType;
 import org.gem.indo.dooit.models.goal.Goal;
 import org.gem.indo.dooit.views.custom.WeekGraph;
 import org.gem.indo.dooit.views.helpers.activity.CurrencyHelper;
+import org.gem.indo.dooit.views.main.MainActivity;
 import org.gem.indo.dooit.views.main.fragments.MainFragment;
 import org.gem.indo.dooit.views.main.fragments.target.adapters.TargetPagerAdapter;
 import org.joda.time.Weeks;
@@ -105,6 +106,7 @@ public class TargetFragment extends MainFragment {
 
     @BindString(R.string.error_retrieve_goals)
     String error_retrieving_goals;
+
     @Inject
     Persisted persisted;
 
@@ -139,8 +141,6 @@ public class TargetFragment extends MainFragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_target, container, false);
         ButterKnife.bind(this, view);
-
-
         return view;
     }
 

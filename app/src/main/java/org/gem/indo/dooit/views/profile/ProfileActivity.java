@@ -29,9 +29,10 @@ import org.gem.indo.dooit.api.managers.AchievementManager;
 import org.gem.indo.dooit.api.managers.FileUploadManager;
 import org.gem.indo.dooit.api.responses.AchievementResponse;
 import org.gem.indo.dooit.api.responses.EmptyResponse;
-import org.gem.indo.dooit.helpers.images.DraweeHelper;
 import org.gem.indo.dooit.helpers.Persisted;
 import org.gem.indo.dooit.helpers.SquiggleBackgroundHelper;
+import org.gem.indo.dooit.helpers.crashlytics.CrashlyticsHelper;
+import org.gem.indo.dooit.helpers.images.DraweeHelper;
 import org.gem.indo.dooit.models.User;
 import org.gem.indo.dooit.views.ImageActivity;
 import org.gem.indo.dooit.views.helpers.activity.DooitActivityBuilder;
@@ -240,11 +241,13 @@ public class ProfileActivity extends ImageActivity {
 
     @OnClick(R.id.activity_profile_image)
     public void selectImage() {
+        CrashlyticsHelper.log(this.getClass().getSimpleName(), "OnClick select image : ", "Tap to change profile image (Settings)");
         showImageChooser();
     }
 
     @Override
     protected void onImageResult(String mediaType, Uri imageUri, String imagePath) {
+        CrashlyticsHelper.log(this.getClass().getSimpleName(), "OnImageResult : ", "successful image result (settings)");
         // Upload image to server
         User user = persisted.getCurrentUser();
         if (user == null) {
@@ -257,6 +260,7 @@ public class ProfileActivity extends ImageActivity {
         fileUploadManager.uploadProfileImage(user.getId(), mediaType, new File(imagePath), new DooitErrorHandler() {
             @Override
             public void onError(DooitAPIError error) {
+                //hardcoded string
                 Toast.makeText(ProfileActivity.this, "Unable to uploadProfileImage Image", Toast.LENGTH_SHORT).show();
             }
         }).doAfterTerminate(new Action0() {

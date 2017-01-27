@@ -13,12 +13,13 @@ import org.gem.indo.dooit.api.managers.FileUploadManager;
 import org.gem.indo.dooit.api.managers.GoalManager;
 import org.gem.indo.dooit.api.responses.EmptyResponse;
 import org.gem.indo.dooit.helpers.bot.BotRunner;
-import org.gem.indo.dooit.models.challenge.BaseChallenge;
-import org.gem.indo.dooit.models.enums.BotCallType;
+import org.gem.indo.dooit.helpers.crashlytics.CrashlyticsHelper;
 import org.gem.indo.dooit.helpers.images.MediaUriHelper;
 import org.gem.indo.dooit.models.Tip;
 import org.gem.indo.dooit.models.bot.Answer;
 import org.gem.indo.dooit.models.bot.BaseBotModel;
+import org.gem.indo.dooit.models.challenge.BaseChallenge;
+import org.gem.indo.dooit.models.enums.BotCallType;
 import org.gem.indo.dooit.models.enums.BotType;
 import org.gem.indo.dooit.models.goal.Goal;
 import org.gem.indo.dooit.views.main.MainActivity;
@@ -125,8 +126,16 @@ public class GoalEditController extends GoalBotController {
         Uri imageUri = Uri.parse(goal.getLocalImageUri());
 
         final String mimetype = context.getContentResolver().getType(imageUri);
-        final String path = MediaUriHelper.getPath(context, imageUri);
-        uploadImage(goal, mimetype, new File(path), listener);
+
+        // Crashlytics for MediaURI null check
+        try {
+            final String path = MediaUriHelper.getPath(context, imageUri);
+            uploadImage(goal, mimetype, new File(path), listener);
+            CrashlyticsHelper.log(this.getClass().getSimpleName(), "handleImage (BOT): ",
+                    "MediaURI.getPath : context: " + context + " uri: " + imageUri);
+        } catch (NullPointerException nullException) {
+            CrashlyticsHelper.logException(nullException);
+        }
     }
 
     private void uploadImage(final Goal goal, String mimetype, File file, final OnAsyncListener listener) {

@@ -38,6 +38,7 @@ import org.gem.indo.dooit.helpers.bot.BotRunner;
 import org.gem.indo.dooit.helpers.bot.param.ParamArg;
 import org.gem.indo.dooit.helpers.bot.param.ParamMatch;
 import org.gem.indo.dooit.helpers.bot.param.ParamParser;
+import org.gem.indo.dooit.helpers.crashlytics.CrashlyticsHelper;
 import org.gem.indo.dooit.models.bot.Answer;
 import org.gem.indo.dooit.models.bot.BaseBotModel;
 import org.gem.indo.dooit.models.bot.Node;
@@ -124,7 +125,7 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(org.gem.indo.dooit.R.layout.fragment_bot, container, false);
+        View view = inflater.inflate(R.layout.fragment_bot, container, false);
         ButterKnife.bind(this, view);
         SquiggleBackgroundHelper.setBackground(getContext(), R.color.grey_back, R.color.grey_fore, background);
         answerView.addOnTagClickListener(this);
@@ -420,10 +421,13 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
             model.setType(BotMessageType.TEXT);
             getBotAdapter().removeItem(model);
             getBotAdapter().addItem(model);
+            CrashlyticsHelper.log(this.getClass().getSimpleName(), "onItemClicked: ", "model changed: " + model.toString());
         }
 
-        if (shouldAdd(answer))
+        if (shouldAdd(answer)) {
             getBotAdapter().addItem(answer);
+            CrashlyticsHelper.log(this.getClass().getSimpleName(), "onItemClicked: ", "adding to conversation: " + answer.toString());
+        }
 
         if (answer.hasInputKey() && hasController())
             controller.onAnswerInput(answer.getInputKey(), answer);
@@ -535,6 +539,7 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
         } else {
             addAnswerOptions(node);
             persisted.saveConversationState(type, getBotAdapter().getDataSet());
+            CrashlyticsHelper.log(this.getClass().getSimpleName(), "checkEndOrAddAnswers: ", "data set: " + getBotAdapter().getDataSet());
         }
     }
 
@@ -607,6 +612,7 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
                 cb.resolveParam(answer, BotParamType.byKey(arg.getKey()));
         }
         answer.setProcessedText(args.process(answer.values.getRawMap()));
+        CrashlyticsHelper.log(this.getClass().getSimpleName(), "processText: ", "Processed answer : " + answer.toString());
     }
 
     private void clearAnswerView() {

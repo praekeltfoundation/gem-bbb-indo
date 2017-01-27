@@ -2,6 +2,7 @@ package org.gem.indo.dooit.views.main;
 
 import android.content.Context;
 import android.content.Intent;
+import android.media.Image;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
@@ -12,6 +13,8 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.google.android.gms.analytics.Tracker;
@@ -38,10 +41,15 @@ import java.util.Stack;
 
 import javax.inject.Inject;
 
+import butterknife.BindString;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.OnPageChange;
+
+import static android.view.View.GONE;
+import static org.gem.indo.dooit.views.main.MainViewPagerPositions.BOT;
+import static org.gem.indo.dooit.views.main.MainViewPagerPositions.TARGET;
 
 public class MainActivity extends DooitActivity {
 
@@ -58,6 +66,24 @@ public class MainActivity extends DooitActivity {
 
     @BindView(R.id.content_main_tab_layout)
     TabLayout tabLayout;
+
+    @BindView(R.id.toolbar_title)
+    TextView titleView;
+
+    @BindView(R.id.toolbar_logo_dooit_image_view)
+    ImageView dooitIcon;
+
+    @BindString(R.string.main_tab_text_0)
+    String BINA;
+
+    @BindString(R.string.main_tab_text_1)
+    String GOALS;
+
+    @BindString(R.string.main_tab_text_2)
+    String CHALLENGE;
+
+    @BindString(R.string.main_tab_text_3)
+    String TIPS;
 
     MainTabAdapter mainTabAdapter;
 
@@ -79,7 +105,7 @@ public class MainActivity extends DooitActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(org.gem.indo.dooit.R.layout.activity_main);
+        setContentView(R.layout.activity_main);
         ((DooitApplication) getApplication()).component.inject(this);
         ButterKnife.bind(this);
 
@@ -89,6 +115,7 @@ public class MainActivity extends DooitActivity {
         persisted.clearConvoTip();
 
         setSupportActionBar(toolbar);
+        dooitIcon.setVisibility(View.GONE);
         mainTabAdapter = new MainTabAdapter(getSupportFragmentManager(), this);
         viewPager.setAdapter(mainTabAdapter);
         tabLayout.setupWithViewPager(viewPager);
@@ -128,6 +155,10 @@ public class MainActivity extends DooitActivity {
         pageHistory = new Stack<>();
         currentPos = 0;
         saveToHistory = true;
+
+        /*Set the ActionBar's title for Bina here to ensure it gets set initially
+        When the app starts up for a logged in user technically no page has been selected*/
+        onMainPagerPageSelected(currentPos);
     }
 
     @OnPageChange(value = R.id.content_main_view_pager, callback = OnPageChange.Callback.PAGE_SELECTED)
@@ -137,6 +168,27 @@ public class MainActivity extends DooitActivity {
             pageHistory.push(MainViewPagerPositions.getValueOf(currentPos));
 
         currentPos = position;
+
+        switch (MainViewPagerPositions.getValueOf(position)) {
+            case BOT:
+                dooitIcon.setVisibility(View.VISIBLE);
+                setTitle("");
+                break;
+            case TARGET:
+                dooitIcon.setVisibility(View.GONE);
+                setTitle(GOALS);
+                break;
+            case CHALLENGE:
+                dooitIcon.setVisibility(View.GONE);
+                setTitle(CHALLENGE);
+                break;
+            case TIPS:
+                dooitIcon.setVisibility(View.GONE);
+                setTitle(TIPS);
+                break;
+            default:
+                dooitIcon.setVisibility(View.VISIBLE);
+        }
 
         for (int i = 0; i < tabLayout.getTabCount(); i++) {
             TabLayout.Tab tab = tabLayout.getTabAt(i);
@@ -209,6 +261,9 @@ public class MainActivity extends DooitActivity {
 
     public void refreshGoals() {
         ((TargetFragment) getFragment(MainViewPagerPositions.TARGET)).refreshGoals();
+    }
+    public void setTitle(String newTitle){
+        titleView.setText(newTitle);
     }
 
     @Override

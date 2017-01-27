@@ -693,7 +693,7 @@
     <string name="challenge_register">Daftar</string>
     <string name="challenge_freeform_submit">Kirim jawaban</string>
     <string name="challenge_all_questions_complete">Hore! Kamu telah menjawab semua pertanyaannya.</string>
-    <string name="challenge_none_available">Wah. Belum ada tantangan yang tersedia. Coba lagi nanti ya!</string>
+    <string name="challenge_none_available">Wah. Belum ada tantagan yang \n tersedia.Coba lagi nanti ya!</string>
     <string name="challenge_quiz_select_option_required">Kamu harus memilih jawaban untuk pertanyaan ini.</string>
     <string name="challenge_quiz_no_questions">No questions available</string>
     <string name="challenge_quiz_congratulate_correct">Yay! Jawabanmu benar. </string>
