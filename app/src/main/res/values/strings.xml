@@ -305,6 +305,8 @@
 
     <!-- Cancel Survey -->
     <string name="survey_common_q_outro_cancel">That\'s alright, maybe next time. Would you like to check out some savings tips?</string>
+    <string name="survey_common_q_outro_cancel_a1_tips">I want!</string>
+    <string name="survey_common_q_outro_cancel_a2_exit">No, thanks</string>
 
     <!-- BOT: survey_baseline -->
     <!-- Q1 -->
