@@ -213,6 +213,8 @@ public class ChallengeFreeformFragment extends Fragment {
                 FragmentTransaction ft = getFragmentManager().beginTransaction();
                 Bundle args = new Bundle();
                 args.putParcelable(ChallengeActivity.ARG_PARTICIPANT_BADGE, answer.getBadge());
+                args.putParcelable(ChallengeActivity.ARG_CHALLENGE,challenge);
+                args.putParcelable(ChallengeActivity.ARG_PARTICIPANT,participant);
 
                 Fragment fragment = ChallengeDoneFragment.newInstance(challenge);
                 fragment.setArguments(args);

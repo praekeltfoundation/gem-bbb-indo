@@ -135,8 +135,8 @@ public class ChallengeDoneFragment extends Fragment {
 
 
         FragmentActivity activity = getActivity();
-        if (participantBadge != null){
-            if (activity.getParent() == null) {
+        if (participantBadge == null){
+            if (activity.getParent() != null) {
                 Bundle bundle = new Bundle();
                 Intent intent = new Intent();
                 bundle.putParcelable(ChallengeActivity.ARG_PARTICIPANT_BADGE,participantBadge);
