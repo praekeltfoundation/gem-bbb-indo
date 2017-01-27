@@ -2,6 +2,9 @@ package org.gem.indo.dooit.controllers.challenge;
 
 import android.content.Context;
 
+import org.gem.indo.dooit.DooitApplication;
+import org.gem.indo.dooit.api.DooitAPIError;
+import org.gem.indo.dooit.api.DooitErrorHandler;
 import org.gem.indo.dooit.api.managers.ChallengeManager;
 import org.gem.indo.dooit.controllers.DooitBotController;
 import org.gem.indo.dooit.helpers.Persisted;
@@ -17,6 +20,10 @@ import org.gem.indo.dooit.views.main.MainActivity;
 import java.util.Map;
 
 import javax.inject.Inject;
+
+import retrofit2.Response;
+import rx.functions.Action0;
+import rx.functions.Action1;
 
 /**
  * Created by frede on 2017/01/26.
@@ -39,6 +46,7 @@ public class ChallengeWinnerController extends DooitBotController {
         this.context = context;
         this.badge = badge;
         this.challenge = challenge;
+        ((DooitApplication) context.getApplicationContext()).component.inject(this);
     }
 
     @Override
@@ -70,7 +78,7 @@ public class ChallengeWinnerController extends DooitBotController {
     public void onAsyncCall(BotCallType key, Map<String, Answer> answerLog, BaseBotModel model, OnAsyncListener listener) {
         switch (key) {
             case CONFIRM_NOTIFY:
-
+                confirmNotified(listener);
                 break;
             default:
                 super.onAsyncCall(key, answerLog, model, listener);
@@ -82,9 +90,26 @@ public class ChallengeWinnerController extends DooitBotController {
             ((MainActivity) context).showConfetti();
     }
 
-    private void confirmNotified() {
-        // TODO: Make HTTP request to /api/challenge/{id}/notification/
-        // doAfterTerminate: persisted.clearConvoWinner
+    private void confirmNotified(final OnAsyncListener listener) {
+        if(challenge != null) {
+            challengeManager.confirmChallengeWinnerNotification(challenge.getId(), new DooitErrorHandler() {
+                @Override
+                public void onError(DooitAPIError error) {
+
+                }
+            }).doAfterTerminate(new Action0() {
+                @Override
+                public void call() {
+                    persisted.clearConvoWinner();
+                    notifyDone(listener);
+                }
+            }).subscribe(new Action1<Response<Void>>() {
+                @Override
+                public void call(final Response<Void> response) {
+
+                }
+            });
+        }
     }
 
     private boolean hasBadge() {

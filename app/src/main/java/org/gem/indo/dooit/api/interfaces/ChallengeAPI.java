@@ -8,6 +8,8 @@ import org.gem.indo.dooit.models.challenge.QuizChallengeEntry;
 
 import java.util.List;
 
+import okhttp3.Challenge;
+import retrofit2.Response;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
@@ -44,5 +46,8 @@ public interface ChallengeAPI {
 
     @GET("/api/challenges/winning/")
     Observable<WinnerResponse> checkChallengeWinner();
+
+    @POST("/api/challenges/{id}/notification/")
+    Observable<Response<Void>> confirmChallengeWinnerNotification(@Path("id") Long id);
 
 }

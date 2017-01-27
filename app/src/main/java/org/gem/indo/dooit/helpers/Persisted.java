@@ -251,6 +251,11 @@ public class Persisted {
                 && dooitSharedPreferences.containsKey(BOT + "_" + WINNING_CHALLENGE + "_" + botType.name());
     }
 
+    public void clearConvoWinner(){
+        dooitSharedPreferences.remove(BOT + "_" + WINNING_CHALLENGE + "_" + BotType.CHALLENGE_WINNER);
+        dooitSharedPreferences.remove(BOT + "_" + WINNING_BADGE + "_" + BotType.CHALLENGE_WINNER);
+    }
+
     /********
      * User *
      ********/

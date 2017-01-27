@@ -14,6 +14,9 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import okhttp3.Challenge;
+import retrofit2.Response;
+import retrofit2.http.Body;
 import rx.Observable;
 
 /**
@@ -60,5 +63,9 @@ public class ChallengeManager extends DooitManager {
 
     public Observable<WinnerResponse> fetchChallengeWinner(DooitErrorHandler errorHandler){
         return useNetwork(challengeAPI.checkChallengeWinner(),errorHandler);
+    }
+
+    public Observable<Response<Void>> confirmChallengeWinnerNotification(Long id, DooitErrorHandler errorHandler){
+        return useNetwork(challengeAPI.confirmChallengeWinnerNotification(id), errorHandler);
     }
 }

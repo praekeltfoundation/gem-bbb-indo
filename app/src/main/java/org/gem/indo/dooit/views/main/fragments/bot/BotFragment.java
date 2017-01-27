@@ -272,7 +272,6 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
                 feed.parse(R.raw.challenge_winner, Node.class);
                 initializeBot();
                 break;
-            // TODO: CHALLENGE_WINNER
         }
     }
 
@@ -332,8 +331,8 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
             case SURVEY_BASELINE:
                 getAndAddNode("survey_baseline_intro");
                 break;
-            // TODO: CHALLENGE_WINNER
-            // getAndAddNode(null)
+            case CHALLENGE_WINNER:
+                getAndAddNode(null);
         }
     }
 
