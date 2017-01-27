@@ -290,6 +290,9 @@
     <string name="survey_common_q_intro_a_no">Tidak ah, makasih.</string>
 
     <string name="survey_common_q_outro">$(survey.outro)</string>
+    <string name="survey_common_q_outro_a1_tips">Aku mau lihat tips menabung!</string>
+    <string name="survey_common_q_outro_a2_savings">Aku mau lihat tabunganku.</string>
+    <string name="survey_common_q_outro_a3_exit">Terima kasih, aku sudah selesai!</string>
 
     <string name="survey_common_skip">Tidak ingin menjawab</string>
 
