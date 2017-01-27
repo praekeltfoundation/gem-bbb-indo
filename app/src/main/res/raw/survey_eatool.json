@@ -1198,17 +1198,17 @@
     "text": "$(survey_common_q_outro)",
     "answers": [
       {
-        "name": "survey_common_q_outro_a1_tips",
+        "name": "survey_eatool_q_outro_a1_tips",
         "text": "$(survey_common_q_outro_a1_tips)",
         "next": "survey_eatool_end_tips"
       },
       {
-        "name": "survey_common_q_outro_a2_savings",
+        "name": "survey_eatool_q_outro_a2_savings",
         "text": "$(survey_common_q_outro_a2_savings)",
         "next": "survey_eatool_end_savings"
       },
       {
-        "name": "survey_common_q_outro_a3_exit",
+        "name": "survey_eatool_q_outro_a3_exit",
         "text": "$(survey_common_q_outro_a3_exit)",
         "next": "survey_eatool_end"
       }
