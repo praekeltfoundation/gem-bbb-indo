@@ -90,7 +90,7 @@ public class EAToolSurveyController extends SurveyController {
                     && !submission.containsKey(questionName))
                 submission.put(questionName, answer.getValue());
             else
-                submission.put(questionName, Integer.toString(ANSWER_MISSING));
+                submission.put(questionName, Integer.toString(ANSWER_NOT_APPLICABLE));
         }
 
         if (hasSurvey())
