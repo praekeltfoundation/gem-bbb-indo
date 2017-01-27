@@ -285,10 +285,13 @@
     <!-- BOT: Surveys Common -->
     <!-- Bot Barks -->
     <string name="survey_common_q_intro">$(survey.intro)</string>
-    <string name="survey_common_q_intro_a_yes">Yeah, sure</string>
-    <string name="survey_common_q_intro_a_no">No Thanks</string>
+    <string name="survey_common_q_intro_a_yes">Yup, let\'s do it!</string>
+    <string name="survey_common_q_intro_a_no">No, thank you</string>
 
     <string name="survey_common_q_outro">$(survey.outro)</string>
+    <string name="survey_common_q_outro_a1_tips">I\'d like to see some savings tips!</string>
+    <string name="survey_common_q_outro_a2_savings">I\'d like to check on my own savings plan.</string>
+    <string name="survey_common_q_outro_a3_exit">Thanks, I\'m done for now!</string>
 
     <string name="survey_common_skip">Prefer not to answer</string>
 
@@ -303,7 +306,9 @@
     <string name="survey_common_q_consent_a_no">No</string>
 
     <!-- Cancel Survey -->
-    <string name="survey_common_q_outro_cancel">That\'s OK!</string>
+    <string name="survey_common_q_outro_cancel">That\'s alright, maybe next time. Would you like to check out some savings tips?</string>
+    <string name="survey_common_q_outro_cancel_a1_tips">I want!</string>
+    <string name="survey_common_q_outro_cancel_a2_exit">No, thanks</string>
 
     <!-- BOT: survey_baseline -->
     <!-- Q1 -->
@@ -542,6 +547,104 @@
     <string name="survey_baseline_q29_4_s02_no">No</string>
 
     <!-- END BOT: survey_baseline -->
+
+    <!-- BOT: survey_eatool -->
+
+    <!-- Instructions -->
+
+    <string name="survey_eatool_instruction">Thinking about your life right now, or in the past 3 months, circle the option that best reflects how often you feel this statement is true for you:</string>
+    <string name="survey_eatool_instruction_1">Never – You never feel this statement is true for you or applies to you.</string>
+    <string name="survey_eatool_instruction_2">Seldom – You seldom, or almost never, feel this statement is true for you or applies to you.</string>
+    <string name="survey_eatool_instruction_3">Sometimes – You sometimes feel this statement is true for you or applies to you.</string>
+    <string name="survey_eatool_instruction_4">Often – You often feel this statement is true for you or applies to you.</string>
+    <string name="survey_eatool_instruction_5">Always – You always feel this statement is true for you or applies to you.</string>
+
+    <!-- Answers -->
+    <string name="survey_eatool_a_1_never">Never</string>
+    <string name="survey_eatool_a_1_cant_understand">They can\’t understand</string>
+    <string name="survey_eatool_a_1_none">None</string>
+    <string name="survey_eatool_a_2_seldom">Seldom</string>
+    <string name="survey_eatool_a_2_very_little">Very little</string>
+    <string name="survey_eatool_a_3_sometimes">Sometimes</string>
+    <string name="survey_eatool_a_3_some">Some</string>
+    <string name="survey_eatool_a_4_often">Often</string>
+    <string name="survey_eatool_a_4_quite_a_bit">Quite a bit</string>
+    <string name="survey_eatool_a_5_always">Always</string>
+    <string name="survey_eatool_a_5_very_much">Very much</string>
+
+    <!-- Q1 -->
+    <string name="survey_eatool_q01_appreciate">I feel appreciated by other people.</string>
+
+    <!-- Q2 -->
+    <string name="survey_eatool_q02_optimistic">I’m optimistic with my future.</string>
+
+    <!-- Q3 -->
+    <string name="survey_eatool_q03_career">I do things that will make me achieve great career for my future.</string>
+
+    <!-- Q4 -->
+    <string name="survey_eatool_q04_adapt">I learn new things to adapt.</string>
+
+    <!-- Q5 -->
+    <string name="survey_eatool_q05_duties">I finish my duties on time.</string>
+
+    <!-- Q6 -->
+    <string name="survey_eatool_q06_lazy">Despite being lazy, I still go to school or work.</string>
+
+    <!-- Q7 -->
+    <string name="survey_eatool_q07_proud">I feel proud when I my work quality is good.</string>
+
+    <!-- Q8 -->
+    <string name="survey_eatool_q08_dress">I follow the dress code in my workplace or school.</string>
+
+    <!-- Q9 -->
+    <string name="survey_eatool_q09_along">I get along with many kind of people.</string>
+
+    <!-- Q10 -->
+    <string name="survey_eatool_q10_anyone">I work with anyone (with different backgrounds or social environment).</string>
+
+    <!-- Q11 -->
+    <string name="survey_eatool_q11_input">I appreciate any input or help from other people.</string>
+
+    <!-- Q12 -->
+    <string name="survey_eatool_q12_responsible">I’m responsible for what I do.</string>
+
+    <!-- Q13 -->
+    <string name="survey_eatool_q13_express">I can express what I feel and what I think clearly.</string>
+
+    <!-- Q14 -->
+    <string name="survey_eatool_q14_understand">Other people can understand my ideas and opinions.</string>
+
+    <!-- Q15 -->
+    <string name="survey_eatool_q15_read">I read to get new information (from books, internet, etc) and use that information.</string>
+
+    <!-- Q16 -->
+    <string name="survey_eatool_q16_learn">I learn new things by listening.</string>
+
+    <!-- Q17 -->
+    <string name="survey_eatool_q17_organise">I gather, learn and organize information to solve a problem.</string>
+
+    <!-- Q18 -->
+    <string name="survey_eatool_q18_sources">I seek information from various sources to solve problems in the workplace/school.</string>
+
+    <!-- Q19 -->
+    <string name="survey_eatool_q19_experience">I decide something based on experience.</string>
+
+    <!-- Q20 -->
+    <string name="survey_eatool_q20_adapting">I’m good at adapting to changes (example: workplace, school, community).</string>
+
+    <!-- Q21 -->
+    <string name="survey_eatool_q21_interview">I have the skills needed for the job interview.</string>
+
+    <!-- Q22 -->
+    <string name="survey_eatool_q22_cv">I have the ability to make an interesting CV/Resume.</string>
+
+    <!-- Q23 -->
+    <string name="survey_eatool_q23_cover">I have the ability to create an interesting cover letter for the company.</string>
+
+    <!-- Q24 -->
+    <string name="survey_eatool_q24_company">I have the ability and experience required by the company.</string>
+
+    <!-- END BOT: survey_eatool -->
 
     <!--Buttons-->
     <string name="Skip">Skip</string>

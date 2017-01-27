@@ -8,4 +8,5 @@ import org.gem.indo.dooit.models.bot.Node;
 
 public interface BotRunner {
     void addNode(Node node);
+
 }

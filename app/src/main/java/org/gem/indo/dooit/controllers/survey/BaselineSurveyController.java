@@ -7,14 +7,15 @@ import org.gem.indo.dooit.api.DooitErrorHandler;
 import org.gem.indo.dooit.models.bot.Answer;
 import org.gem.indo.dooit.models.bot.BaseBotModel;
 import org.gem.indo.dooit.models.enums.BotCallType;
-import org.gem.indo.dooit.models.enums.BotParamType;
 import org.gem.indo.dooit.models.enums.BotType;
 import org.gem.indo.dooit.models.survey.CoachSurvey;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+import retrofit2.Response;
 import rx.functions.Action0;
+import rx.functions.Action1;
 
 /**
  * Created by Wimpie Victor on 2017/01/09.
@@ -22,6 +23,7 @@ import rx.functions.Action0;
 
 public class BaselineSurveyController extends SurveyController {
 
+    private static final String BASELINE_CONSENT = "survey_baseline_q_consent";
     private static final String[] QUESTIONS = new String[]{
             "survey_baseline_q01_occupation",
             "survey_baseline_q02_grade",
@@ -65,26 +67,8 @@ public class BaselineSurveyController extends SurveyController {
     }
 
     @Override
-    public void resolveParam(BaseBotModel model, BotParamType paramType) {
-        if (!hasSurvey()) {
-            super.resolveParam(model, paramType);
-            return;
-        }
-
-        String key = paramType.getKey();
-        switch (paramType) {
-            case SURVEY_TITLE:
-                model.values.put(key, survey.getTitle());
-                break;
-            case SURVEY_INTRO:
-                model.values.put(key, survey.getIntro());
-                break;
-            case SURVEY_OUTRO:
-                model.values.put(key, survey.getOutro());
-                break;
-            default:
-                super.resolveParam(model, paramType);
-        }
+    protected String[] getQuestionKeys() {
+        return QUESTIONS;
     }
 
     @Override
@@ -99,10 +83,17 @@ public class BaselineSurveyController extends SurveyController {
     }
 
     private void submitSurvey(Map<String, Answer> answerLog, final OnAsyncListener listener) {
-        if (!hasSurvey())
+        if (!hasSurvey()) {
+            notifyDone(listener);
             return;
+        }
 
         Map<String, String> submission = new LinkedHashMap<>();
+
+        // Consent
+        handleConsent(submission, answerLog.get(BASELINE_CONSENT));
+
+        // Survey Questions
         for (String questionName : QUESTIONS) {
             Answer answer = answerLog.get(questionName);
             if (answer != null && answer.hasValue()
@@ -110,7 +101,7 @@ public class BaselineSurveyController extends SurveyController {
                     && !submission.containsKey(questionName))
                 submission.put(questionName, answer.getValue());
             else
-                submission.put(questionName, Integer.toString(ANSWER_MISSING));
+                submission.put(questionName, Integer.toString(ANSWER_NOT_APPLICABLE));
         }
 
         if (answerEquals(answerLog.get("survey_baseline_q05_job_month"), ANSWER_NO)
@@ -139,6 +130,14 @@ public class BaselineSurveyController extends SurveyController {
                 public void call() {
                     notifyDone(listener);
                 }
-            }).subscribe();
+            }).subscribe(new Action1<Response<Void>>() {
+                @Override
+                public void call(Response<Void> voidResponse) {
+                    // TODO: Remove push notification if it's still in the phone's notification drawer
+                    // After user has successfully submitted, they should not be able to take the
+                    // survey again. The server endpoint should prevent further notifications.
+                    persisted.clearConvoSurvey(botType);
+                }
+            });
     }
 }
