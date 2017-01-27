@@ -47,11 +47,41 @@
     "name": "survey_eatool_instruction",
     "type": "text",
     "text": "$(survey_eatool_instruction)",
+    "autoNext": "survey_eatool_instruction_1"
+  },
+  {
+    "name": "survey_eatool_instruction_1",
+    "type": "text",
+    "text": "$(survey_eatool_instruction_1)",
+    "autoNext": "survey_eatool_instruction_2"
+  },
+  {
+    "name": "survey_eatool_instruction_2",
+    "type": "text",
+    "text": "$(survey_eatool_instruction_2)",
+    "autoNext": "survey_eatool_instruction_3"
+  },
+  {
+    "name": "survey_eatool_instruction_3",
+    "type": "text",
+    "text": "$(survey_eatool_instruction_3)",
+    "autoNext": "survey_eatool_instruction_4"
+  },
+  {
+    "name": "survey_eatool_instruction_4",
+    "type": "text",
+    "text": "$(survey_eatool_instruction_4)",
+    "autoNext": "survey_eatool_instruction_5"
+  },
+  {
+    "name": "survey_eatool_instruction_5",
+    "type": "text",
+    "text": "$(survey_eatool_instruction_5)",
     "autoNext": "survey_eatool_q01_appreciate"
   },
 
 
-  
+
   {
     "name": "survey_eatool_q01_appreciate",
     "type": "text",
