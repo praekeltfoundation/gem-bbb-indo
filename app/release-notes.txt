@@ -23,3 +23,6 @@
 - Challenges are now contained in their own screen
 - Crashlytics across the app surrounding the use of images and the BOT
 - Confetti only works on API 21 and higher (due to performance impact)
+- Notification for user winning a challenge
+- Bot conversation with confetti
+- Notification dismissed when user opens winner notification
