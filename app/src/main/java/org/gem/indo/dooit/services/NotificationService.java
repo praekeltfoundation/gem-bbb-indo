@@ -80,13 +80,14 @@ public class NotificationService extends IntentService {
                 }
         }));
 
-        if (persisted.shouldNotify(NotificationType.CHALLENGE_WINNER))
+        if (persisted.shouldNotify(NotificationType.CHALLENGE_WINNER)) {
             requests.add(challengeManager.fetchChallengeWinner(new DooitErrorHandler() {
                 @Override
                 public void onError(DooitAPIError error) {
 
                 }
             }));
+        }
 
         if (persisted.shouldNotify(NotificationType.SAVING_REMINDER)) {
             User user = persisted.getCurrentUser();
@@ -189,11 +190,13 @@ public class NotificationService extends IntentService {
 
     protected void winnerRetrieved(WinnerResponse response){
         if (persisted.shouldNotify(NotificationType.CHALLENGE_WINNER)) {
-            new Notifier(getApplicationContext())
-                    .notify(NotificationType.CHALLENGE_WINNER, MainActivity.class,
-                            String.format(this.getApplicationContext().getString(R.string.notification_content_challenge_winner),
-                                    response.getChallenge().getName()));
-            persisted.saveConvoWinner(BotType.CHALLENGE_WINNER,response.getBadge(),response.getChallenge());
+            if (response.isAvailable()){
+                new Notifier(getApplicationContext())
+                        .notify(NotificationType.CHALLENGE_WINNER, MainActivity.class,
+                                String.format(this.getApplicationContext().getString(R.string.notification_content_challenge_winner),
+                                        response.getChallenge().getName()));
+                persisted.saveConvoWinner(BotType.CHALLENGE_WINNER, response.getBadge(), response.getChallenge());
+            }
         }
     }
 
