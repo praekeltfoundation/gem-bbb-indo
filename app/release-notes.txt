@@ -13,7 +13,7 @@
 - Confetti displays on quiz done fragment
 - Goal add conversation now allows user to change date or amount
 
-0.0.16
+0.1.1
 
 - Image no longer rotates on API 17 - 25
 - Main navigation icons updated
