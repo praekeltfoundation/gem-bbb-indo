@@ -29,3 +29,4 @@
 - Notification dismissed when user opens winner notification
 - Implemented EA Tool survey
 - Displaying user count on Goal Prototype selection
+- Restored Goal Add and Edit branch for choosing weekly target
