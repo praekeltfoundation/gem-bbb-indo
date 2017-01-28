@@ -14,6 +14,7 @@ import com.google.gson.internal.LinkedTreeMap;
 import org.gem.indo.dooit.DooitApplication;
 import org.gem.indo.dooit.helpers.bot.ListParameterizedType;
 import org.gem.indo.dooit.helpers.notifications.NotificationType;
+import org.gem.indo.dooit.models.challenge.Participant;
 import org.gem.indo.dooit.models.goal.Goal;
 import org.gem.indo.dooit.models.goal.GoalPrototype;
 import org.gem.indo.dooit.models.Tip;
@@ -56,6 +57,7 @@ public class Persisted {
     private static final String TAG = Persisted.class.getName();
     private static final String SURVEY_ID = "survey_id";
     private static final String SURVEY = "survey";
+    private static final String PARTICIPANT = "participant";
 
     @Inject
     DooitSharedPreferences dooitSharedPreferences;
@@ -338,6 +340,15 @@ public class Persisted {
 
     public void clearQuizChallengeAnswers() {
         dooitSharedPreferences.remove(QUIZ_ANSWERS);
+    }
+
+    public Participant getParticipant(){
+//        ListParameterizedType type = new ListParameterizedType(Participant.class);
+        return dooitSharedPreferences.getComplex(PARTICIPANT,Participant.class);
+    }
+
+    public void setParticipant(Participant participant){
+        dooitSharedPreferences.setComplex(PARTICIPANT,participant);
     }
 
     /********

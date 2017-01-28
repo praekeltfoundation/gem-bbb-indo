@@ -1,11 +1,13 @@
 package org.gem.indo.dooit.views.main.fragments.challenge.fragments;
 
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.ContentResolver;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
 import android.text.TextUtils;
 import android.util.Log;
@@ -13,6 +15,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -26,6 +29,7 @@ import org.gem.indo.dooit.api.managers.FileUploadManager;
 import org.gem.indo.dooit.api.responses.EmptyResponse;
 import org.gem.indo.dooit.helpers.Persisted;
 import org.gem.indo.dooit.helpers.RequestCodes;
+import org.gem.indo.dooit.helpers.SquiggleBackgroundHelper;
 import org.gem.indo.dooit.helpers.crashlytics.CrashlyticsHelper;
 import org.gem.indo.dooit.helpers.images.MediaUriHelper;
 import org.gem.indo.dooit.helpers.permissions.PermissionsHelper;
@@ -34,6 +38,7 @@ import org.gem.indo.dooit.models.challenge.PictureChallenge;
 import org.gem.indo.dooit.models.challenge.PictureChallengeQuestion;
 import org.gem.indo.dooit.views.main.fragments.challenge.ChallengeActivity;
 import org.gem.indo.dooit.views.main.fragments.challenge.ChallengeFragment;
+import org.gem.indo.dooit.views.main.fragments.challenge.ChallengeFragmentMainPage;
 import org.gem.indo.dooit.views.main.fragments.challenge.ChallengeFragmentState;
 
 import java.io.File;
@@ -86,6 +91,9 @@ public class ChallengePictureFragment extends Fragment {
     @BindView(R.id.fragment_challenge_picture_submit_button)
     Button submitButton;
 
+    @BindView(R.id.fragment_challenge_close)
+    ImageButton close;
+
     private Participant participant = null;
     private PictureChallenge challenge = null;
     private String imagePath = null;
@@ -132,6 +140,7 @@ public class ChallengePictureFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_challenge_picture, container, false);
+        SquiggleBackgroundHelper.setBackground(getContext(), R.color.grey_back, R.color.grey_fore, view);
         unbinder = ButterKnife.bind(this, view);
         PictureChallengeQuestion question = challenge.getQuestion();
         if (question == null || TextUtils.isEmpty(question.getText())) {
@@ -218,6 +227,7 @@ public class ChallengePictureFragment extends Fragment {
             public void call(EmptyResponse emptyResponse) {
                 Log.d(TAG, "Uploaded image");
                 persist.clearCurrentChallenge();
+                persist.setParticipant(null);
                 FragmentTransaction ft = getFragmentManager().beginTransaction();
                 Fragment f = ChallengeDoneFragment.newInstance(challenge);
                 ft.replace(R.id.fragment_challenge_container, f, "fragment_challenge");
@@ -262,5 +272,27 @@ public class ChallengePictureFragment extends Fragment {
             }
         }
         super.onActivityResult(requestCode, resultCode, data);
+    }
+
+    @OnClick(R.id.fragment_challenge_close)
+    public void closeQuiz(){
+        returnToParent(null);
+    }
+
+    private void returnToParent(ChallengeFragmentMainPage returnPage) {
+        FragmentActivity activity = getActivity();
+        Intent intent = new Intent();
+        Bundle bundle = new Bundle();
+        bundle.putParcelable(ChallengeActivity.ARG_CHALLENGE,challenge);
+        bundle.putInt(ChallengeActivity.ARG_RETURNPAGE, returnPage != null ? returnPage.ordinal() : -1);
+        persist.setParticipant(participant);
+        intent.putExtras(bundle);
+
+        if (activity.getParent() == null) {
+            activity.setResult(Activity.RESULT_OK, intent);
+        } else {
+            activity.getParent().setResult(Activity.RESULT_OK, intent);
+        }
+        activity.finish();
     }
 }

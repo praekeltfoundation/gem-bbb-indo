@@ -13,7 +13,7 @@
 - Confetti displays on quiz done fragment
 - Goal add conversation now allows user to change date or amount
 
-0.0.16
+0.1.1
 
 - Image no longer rotates on API 17 - 25
 - Main navigation icons updated
@@ -21,6 +21,7 @@
 - Close button on Challenge returns to Main screen
 - Main page titles displaying in toolbar
 - Challenges are now contained in their own screen
+- Challenges can be stopped and started again successfully
 - Crashlytics across the app surrounding the use of images and the BOT
 - Confetti only works on API 21 and higher (due to performance impact)
 - Implemented EA Tool survey
