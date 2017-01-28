@@ -3,8 +3,6 @@ package org.gem.indo.dooit.views.main.fragments.challenge.fragments;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
@@ -14,10 +12,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.facebook.drawee.view.SimpleDraweeView;
-import com.github.jinatonic.confetti.CommonConfetti;
 
 import org.gem.indo.dooit.R;
 import org.gem.indo.dooit.helpers.SquiggleBackgroundHelper;
@@ -32,13 +30,16 @@ import butterknife.Unbinder;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link ChallengeDoneFragment#newInstance} factory method to
+ * Use the {@link ChallengeQuizDoneFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class ChallengeDoneFragment extends Fragment {
+public class ChallengeQuizDoneFragment extends Fragment {
     private static final String ARG_CHALLENGE = "challenge";
 
     private BaseChallenge challenge;
+
+    @BindView(R.id.fragment_challenge_quiz_progressbar)
+    ProgressBar mProgressBar;
 
     @BindView(R.id.challenge_done_card)
     CardView doneCard;
@@ -60,7 +61,7 @@ public class ChallengeDoneFragment extends Fragment {
 
     Unbinder unbinder = null;
 
-    public ChallengeDoneFragment() {
+    public ChallengeQuizDoneFragment() {
         // Required empty public constructor
     }
 
@@ -72,8 +73,8 @@ public class ChallengeDoneFragment extends Fragment {
      * @return A new instance of fragment ChallengeDoneFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static ChallengeDoneFragment newInstance(BaseChallenge challenge) {
-        ChallengeDoneFragment fragment = new ChallengeDoneFragment();
+    public static ChallengeQuizDoneFragment newInstance(BaseChallenge challenge) {
+        ChallengeQuizDoneFragment fragment = new ChallengeQuizDoneFragment();
         Bundle args = new Bundle();
         args.putParcelable(ARG_CHALLENGE, challenge);
         fragment.setArguments(args);
@@ -91,7 +92,7 @@ public class ChallengeDoneFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_challenge_done, container, false);
+        View view = inflater.inflate(R.layout.fragment_challenge_quiz_done, container, false);
         SquiggleBackgroundHelper.setBackground(getContext(), R.color.grey_back, R.color.grey_fore, view);
         unbinder = ButterKnife.bind(this, view);
         title.setText(challenge.getName());
@@ -104,11 +105,6 @@ public class ChallengeDoneFragment extends Fragment {
             unbinder.unbind();
         }
         super.onDestroyView();
-    }
-
-    @OnClick(R.id.fragment_challenge_close)
-    public void closeQuiz(){
-        returnToParent(null);
     }
 
     @Override
@@ -125,13 +121,14 @@ public class ChallengeDoneFragment extends Fragment {
     public void onStart() {
         super.onStart();
         challengeImage.setImageURI(challenge.getImageURL());
-        letItRainConfetti();
+        if (mProgressBar != null){
+            mProgressBar.setProgress(100);
+        }
     }
 
-    private void letItRainConfetti(){
-        final boolean isLollipop = Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP;
-        if (isLollipop)
-            CommonConfetti.rainingConfetti(((ViewGroup)this.getView().getParent()), new int[] { Color.RED, Color.YELLOW }).oneShot();
+    @OnClick(R.id.fragment_challenge_close)
+    public void closeQuiz(){
+        returnToParent(null);
     }
 
     @OnClick(R.id.challenge_done_button)

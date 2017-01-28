@@ -27,6 +27,7 @@ import org.gem.indo.dooit.api.DooitAPIError;
 import org.gem.indo.dooit.api.DooitErrorHandler;
 import org.gem.indo.dooit.api.managers.ChallengeManager;
 import org.gem.indo.dooit.helpers.Persisted;
+import org.gem.indo.dooit.helpers.SquiggleBackgroundHelper;
 import org.gem.indo.dooit.helpers.TextSpannableHelper;
 import org.gem.indo.dooit.helpers.activity.result.ActivityForResultCallback;
 import org.gem.indo.dooit.helpers.activity.result.ActivityForResultHelper;
@@ -135,6 +136,7 @@ public class ChallengeRegisterFragment extends Fragment implements HasChallengeF
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_challenge_register, container, false);
+        SquiggleBackgroundHelper.setBackground(getContext(), R.color.grey_back, R.color.grey_fore, view);
         unbinder = ButterKnife.bind(this, view);
         if (hasActive) {
             register.setText(getText(R.string.label_continue));
@@ -209,6 +211,11 @@ public class ChallengeRegisterFragment extends Fragment implements HasChallengeF
     void registerClick() {
         Participant participant = new Participant();
         participant.setChallenge(challenge.getId());
+
+        if (persist.getParticipant() != null){
+            participant = persist.getParticipant();
+        }
+
         final ProgressDialog dialog = new ProgressDialog(getContext());
         dialog.setIndeterminate(true);
         dialog.setMessage(getString(R.string.label_loading));
@@ -225,6 +232,7 @@ public class ChallengeRegisterFragment extends Fragment implements HasChallengeF
                     //this means the persisted challenge has expired
                     //make call to server
                     persist.clearCurrentChallenge();
+                    persist.setParticipant(null);
                     Snackbar.make(getView(), R.string.challenge_persisted_challenge_thrown_out, Snackbar.LENGTH_LONG);
                     participantSubscription = challengeManager.registerParticipant(
                             participant,
@@ -243,6 +251,7 @@ public class ChallengeRegisterFragment extends Fragment implements HasChallengeF
                         @Override
                         public void call(Participant participant1) {
                             persist.setActiveChallenge(challenge);
+                            persist.setParticipant(participant1);
                             startChallenge(participant1);
                         }
                     });
@@ -250,10 +259,10 @@ public class ChallengeRegisterFragment extends Fragment implements HasChallengeF
             } catch (Exception e) {
                 Log.d(TAG, "Could not load persisted challenge");
                 persist.clearCurrentChallenge();
+                //persist.setParticipant(null);
                 Snackbar.make(getView(), R.string.challenge_persisted_challenge_thrown_out, Snackbar.LENGTH_LONG);
                 //make call to server
-                participantSubscription = challengeManager.registerParticipant(
-                        participant,
+                participantSubscription = challengeManager.registerParticipant( participant,
                         new DooitErrorHandler() {
                             @Override
                             public void onError(DooitAPIError error) {
@@ -269,14 +278,14 @@ public class ChallengeRegisterFragment extends Fragment implements HasChallengeF
                     @Override
                     public void call(Participant participant1) {
                         persist.setActiveChallenge(challenge);
+                        persist.setParticipant(participant1);
                         startChallenge(participant1);
                     }
                 });
             }
         } else {
             //make call to server
-            participantSubscription = challengeManager.registerParticipant(
-                    participant,
+            participantSubscription = challengeManager.registerParticipant( participant,
                     new DooitErrorHandler() {
                         @Override
                         public void onError(DooitAPIError error) {
@@ -292,6 +301,7 @@ public class ChallengeRegisterFragment extends Fragment implements HasChallengeF
                 @Override
                 public void call(Participant participant1) {
                     persist.setActiveChallenge(challenge);
+                    persist.setParticipant(participant1);
                     startChallenge(participant1);
                 }
             });
@@ -302,13 +312,13 @@ public class ChallengeRegisterFragment extends Fragment implements HasChallengeF
 //        Create intent here with part in a bundle and send through intent
         Bundle args = new Bundle();
         args.putParcelable(ChallengeActivity.ARG_CHALLENGE, challenge);
-        args.putParcelable(ChallengeActivity.ARG_PARTICIPANT,participant);
+        args.putParcelable(ChallengeActivity.ARG_PARTICIPANT, participant);
         ActivityForResultHelper helper = new ActivityForResultHelper();
         Intent intent = ChallengeActivity.Builder.create(getContext()).setArgs(args).getIntent();
         helper.startActivityForResult(getContext(), intent, new ActivityForResultCallback() {
             @Override
             public void onActivityResultOK(Intent data) {
-                register.setText("");
+
             }
         });
 

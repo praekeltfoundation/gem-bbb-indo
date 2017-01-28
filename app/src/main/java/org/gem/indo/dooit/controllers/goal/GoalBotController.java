@@ -133,6 +133,8 @@ public abstract class GoalBotController extends DooitBotController {
             case CURRENCY_SYMBOL:
                 model.values.put(key, CurrencyHelper.getCurrencySymbol());
                 break;
+            case GOAL_PROTO_NUM_USERS_WITH_SIMILAR_GOALS:
+                model.values.put(key, goal.getPrototype().getNumUsers());
             default:
                 super.resolveParam(model, paramType);
         }
@@ -145,8 +147,9 @@ public abstract class GoalBotController extends DooitBotController {
                 goal.setPrototype(new GoalPrototype(
                         answer.values.getLong(BotParamType.GOAL_PROTO_ID.getKey()),
                         answer.values.getString(BotParamType.GOAL_PROTO_NAME.getKey()),
-                        answer.values.getString(BotParamType.GOAL_PROTO_IMAGE_URL.getKey())
-                ));
+                        answer.values.getString(BotParamType.GOAL_PROTO_IMAGE_URL.getKey()),
+                        answer.values.getInteger(BotParamType.GOAL_PROTO_NUM_USERS_WITH_SIMILAR_GOALS.getKey()))
+                );
                 break;
             case GOAL_NAME:
                 goal.setName(answer.getValue());
@@ -155,7 +158,7 @@ public abstract class GoalBotController extends DooitBotController {
                 goal.setTarget(Double.parseDouble(answer.getValue()));
                 break;
             case GOAL_VALUE:
-                    goal.setValue(Double.parseDouble(answer.getValue()));
+                goal.setValue(Double.parseDouble(answer.getValue()));
                 break;
             case GOAL_WEEKLY_TARGET:
                 goal.setWeeklyTarget(Double.parseDouble(answer.getValue()));
@@ -215,6 +218,7 @@ public abstract class GoalBotController extends DooitBotController {
         node.values.put(BotParamType.BADGE_NAME.getKey(), badge.getName());
         node.values.put(BotParamType.BADGE_IMAGE_URL.getKey(), badge.getImageUrl());
         node.values.put(BotParamType.BADGE_SOCIAL_URL.getKey(), badge.getSocialUrl());
+        node.finish();
 
         if (badge.hasIntro()) {
             // Badge Intro Text

@@ -248,11 +248,10 @@
             <View
                 android:id="@+id/settings_notifications_c_separator"
                 style="@style/Divider"
-                android:layout_below="@id/settings_notifications_survey_available"
-                android:visibility="gone"/>
+                android:layout_below="@id/settings_notifications_survey_available" />
 
             <android.support.v7.widget.SwitchCompat
-                android:id="@+id/settings_notifications_d"
+                android:id="@+id/settings_notifications_challenge_winner"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/settings_notifications_c_separator"
@@ -260,18 +259,17 @@
                 android:maxLines="1"
                 android:paddingBottom="8dp"
                 android:paddingTop="8dp"
-                android:text="@string/placeholder_label_short"
+                android:text="@string/notification_title_challenge_winner"
                 android:textColor="@color/purple"
                 android:textStyle="bold"
-                android:textAppearance="@style/AppTheme.TextView.Settings.Item"
-                android:visibility="gone" />
+                android:textAppearance="@style/AppTheme.TextView.Settings.Item" />
 
             <TextView
                 android:id="@+id/settings_about"
                 style="@style/AppTheme.TextView.Bold.Medium"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/settings_notifications_d"
+                android:layout_below="@id/settings_notifications_challenge_winner"
                 android:layout_marginTop="16dp"
                 android:ellipsize="end"
                 android:maxLines="1"

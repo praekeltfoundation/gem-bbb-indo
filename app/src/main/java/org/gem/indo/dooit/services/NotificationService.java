@@ -12,6 +12,7 @@ import org.gem.indo.dooit.api.managers.ChallengeManager;
 import org.gem.indo.dooit.api.managers.SurveyManager;
 import org.gem.indo.dooit.api.responses.AchievementResponse;
 import org.gem.indo.dooit.api.responses.SurveyResponse;
+import org.gem.indo.dooit.api.responses.WinnerResponse;
 import org.gem.indo.dooit.helpers.DooitParamBuilder;
 import org.gem.indo.dooit.helpers.Persisted;
 import org.gem.indo.dooit.helpers.bot.param.ParamMatch;
@@ -20,6 +21,7 @@ import org.gem.indo.dooit.helpers.notifications.NotificationType;
 import org.gem.indo.dooit.helpers.notifications.Notifier;
 import org.gem.indo.dooit.models.User;
 import org.gem.indo.dooit.models.challenge.BaseChallenge;
+import org.gem.indo.dooit.models.enums.BotType;
 import org.gem.indo.dooit.models.survey.CoachSurvey;
 import org.gem.indo.dooit.views.main.MainActivity;
 
@@ -76,7 +78,16 @@ public class NotificationService extends IntentService {
                 public void onError(DooitAPIError error) {
 
                 }
+        }));
+
+        if (persisted.shouldNotify(NotificationType.CHALLENGE_WINNER)) {
+            requests.add(challengeManager.fetchChallengeWinner(new DooitErrorHandler() {
+                @Override
+                public void onError(DooitAPIError error) {
+
+                }
             }));
+        }
 
         if (persisted.shouldNotify(NotificationType.SAVING_REMINDER)) {
             User user = persisted.getCurrentUser();
@@ -96,6 +107,7 @@ public class NotificationService extends IntentService {
 
                 }
             }));
+
 
         if (requests.size() > 0)
             // Using flatmap to perform requests serially
@@ -118,6 +130,8 @@ public class NotificationService extends IntentService {
                         achievementsRetrieved((AchievementResponse) o);
                     else if (o instanceof SurveyResponse)
                         surveyRetrieved((SurveyResponse) o);
+                    else if (o instanceof WinnerResponse)
+                        winnerRetrieved((WinnerResponse) o);
                 }
             });
         else
@@ -171,6 +185,18 @@ public class NotificationService extends IntentService {
             if (survey.hasBotType())
                 // Save Survey so Bot will start quicker
                 persisted.saveConvoSurvey(survey.getBotType(), survey);
+        }
+    }
+
+    protected void winnerRetrieved(WinnerResponse response){
+        if (persisted.shouldNotify(NotificationType.CHALLENGE_WINNER)) {
+            if (response.isAvailable()){
+                new Notifier(getApplicationContext())
+                        .notify(NotificationType.CHALLENGE_WINNER, MainActivity.class,
+                                String.format(this.getApplicationContext().getString(R.string.notification_content_challenge_winner),
+                                        response.getChallenge().getName()));
+                persisted.saveConvoWinner(BotType.CHALLENGE_WINNER, response.getBadge(), response.getChallenge());
+            }
         }
     }
 

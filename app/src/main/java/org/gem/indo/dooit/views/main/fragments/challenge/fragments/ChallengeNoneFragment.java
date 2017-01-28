@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import org.gem.indo.dooit.R;
+import org.gem.indo.dooit.helpers.SquiggleBackgroundHelper;
 import org.gem.indo.dooit.views.main.fragments.challenge.ChallengeFragmentState;
 
 import butterknife.BindView;
@@ -65,6 +66,7 @@ public class ChallengeNoneFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(org.gem.indo.dooit.R.layout.fragment_challenge_none, container, false);
+        SquiggleBackgroundHelper.setBackground(getContext(), R.color.grey_back, R.color.grey_fore, view);
         unbinder = ButterKnife.bind(this, view);
         if (message != null) {
             messageText.setText(message);

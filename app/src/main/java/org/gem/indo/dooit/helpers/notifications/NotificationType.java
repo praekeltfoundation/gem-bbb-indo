@@ -13,6 +13,7 @@ public enum NotificationType {
     CHALLENGE_AVAILABLE(100, R.string.notification_title_challenge_available),
     CHALLENGE_REMINDER(101, R.string.notification_title_challenge_reminder), // TODO: Two days after a Challenge has been published, if the user has not participated, they should be reminded
     CHALLENGE_ANSWER_REMINDER(103, R.string.notification_title_challenge_answer_reminder), // TODO: Remind the user that they have an answer persisted that has not been submitted
+    CHALLENGE_WINNER(104,R.string.notification_title_challenge_winner),
     GOAL_DEADLINE_MISSED(200, R.string.notification_title_goal_deadline_missed), // TODO: Notify user that they missed one of their Goals
     SAVING_REMINDER(300, R.string.notification_title_saving_reminder),
     SURVEY_AVAILABLE(400, R.string.notification_title_survey_available), // TODO: Notify user of new survey

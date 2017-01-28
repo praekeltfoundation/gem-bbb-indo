@@ -34,6 +34,7 @@ public enum BotParamType {
     GOAL_PROTO_ID("goal_proto.id"),
     GOAL_PROTO_NAME("goal_proto.name"),
     GOAL_PROTO_IMAGE_URL("goal_proto.image_url"),
+    GOAL_PROTO_NUM_USERS_WITH_SIMILAR_GOALS("goal_proto.num_users"),
 
     // Challenge
     CHALLENGE_ID("challenge.id"),
@@ -55,6 +56,7 @@ public enum BotParamType {
     BADGE_IMAGE_URL("badge.image_url"),
     BADGE_SOCIAL_URL("badge.social_url"),
     BADGE_EARNED_ON("badge.earned_on"),
+    BADGE_INTRO("badge.intro"),
 
     // Survey
     SURVEY_TITLE("survey.title"),

@@ -2,8 +2,9 @@ package org.gem.indo.dooit.views.main;
 
 import android.content.Context;
 import android.content.Intent;
-import android.media.Image;
+import android.graphics.Color;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
@@ -13,10 +14,12 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.facebook.drawee.view.SimpleDraweeView;
+import com.github.jinatonic.confetti.CommonConfetti;
 import com.google.android.gms.analytics.Tracker;
 
 import org.gem.indo.dooit.DooitApplication;
@@ -47,13 +50,12 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.OnPageChange;
 
-import static android.view.View.GONE;
-import static org.gem.indo.dooit.views.main.MainViewPagerPositions.BOT;
-import static org.gem.indo.dooit.views.main.MainViewPagerPositions.TARGET;
-
 public class MainActivity extends DooitActivity {
 
     private static final String TAG = MainActivity.class.getName();
+
+    @BindView(R.id.activity_main)
+    ViewGroup container;
 
     @BindView(R.id.toolbar)
     Toolbar toolbar;
@@ -145,6 +147,10 @@ public class MainActivity extends DooitActivity {
                 case SURVEY_AVAILABLE:
                     handleSurveyNotification();
                     break;
+                case CHALLENGE_WINNER:
+                    if (persisted.hasConvoWinner(BotType.CHALLENGE_WINNER))
+                        startBot(BotType.CHALLENGE_WINNER);
+                    break;
             }
         }
 
@@ -155,6 +161,9 @@ public class MainActivity extends DooitActivity {
         pageHistory = new Stack<>();
         currentPos = 0;
         saveToHistory = true;
+
+        // Did the user win?
+        checkCompetitionWinner();
 
         /*Set the ActionBar's title for Bina here to ensure it gets set initially
         When the app starts up for a logged in user technically no page has been selected*/
@@ -271,6 +280,16 @@ public class MainActivity extends DooitActivity {
         return super.getScreenName() + " " + MainViewPagerPositions.getValueOf(viewPager.getCurrentItem()).name();
     }
 
+    private boolean checkCompetitionWinner(){
+        //locally check if user has participant, if so which challenge did they do
+        //Make a connection to the server
+        //pass through participant id and challenge id
+        //Retrieve winner's user id
+        //check if the persisted user id matches winner id
+        //if logged in user == winner start bot with Congratulations message + Confetti
+        return false;
+    }
+
     public static class Builder extends DooitActivityBuilder<Builder> {
         protected Builder(Context context) {
             super(context);
@@ -321,5 +340,10 @@ public class MainActivity extends DooitActivity {
         fragment.setBotType(type);
         fragment.setClearState(true);
         startPage(MainViewPagerPositions.BOT);
+    }
+
+    public void showConfetti() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
+            CommonConfetti.rainingConfetti(container, new int[]{Color.RED, Color.BLUE}).oneShot();
     }
 }

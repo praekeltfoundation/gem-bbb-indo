@@ -91,7 +91,7 @@ public class ChallengeQuizFragment extends Fragment implements OnOptionChangeLis
     @BindView(R.id.fragment_challenge_quiz_checkbutton)
     Button checkButton;
 
-    @BindView(R.id.fragment_challenge_quiz_close)
+    @BindView(R.id.fragment_challenge_close)
     ImageButton close;
 
     private boolean challengeCompleted = false;
@@ -163,15 +163,9 @@ public class ChallengeQuizFragment extends Fragment implements OnOptionChangeLis
         super.onDestroy();
     }
 
-    @OnClick(R.id.fragment_challenge_quiz_close)
-    public void closeQuiz(){
-
-        if (!challengeCompleted) {
-            saveState();
-        }
-        if (entrySubscription != null) {
-            entrySubscription.unsubscribe();
-        }
+    @OnClick(R.id.fragment_challenge_close)
+    public void closeQuiz() {
+        onStop();
         returnToParent(null);
     }
 
@@ -237,10 +231,11 @@ public class ChallengeQuizFragment extends Fragment implements OnOptionChangeLis
             public void call(QuizChallengeEntry entry) {
                 Log.d(TAG, "Entry submitted");
                 persisted.clearCurrentChallenge();
+                persisted.setParticipant(null);
                 clearState();
                 challengeCompleted = true;
                 FragmentTransaction ft = getFragmentManager().beginTransaction();
-                Fragment fragment = ChallengeDoneFragment.newInstance(challenge);
+                Fragment fragment = ChallengeQuizDoneFragment.newInstance(challenge);
                 ft.replace(R.id.fragment_challenge_container, fragment, "fragment_challenge");
                 ft.commit();
             }
@@ -264,6 +259,8 @@ public class ChallengeQuizFragment extends Fragment implements OnOptionChangeLis
         Bundle bundle = new Bundle();
         bundle.putParcelable(ChallengeActivity.ARG_CHALLENGE,challenge);
         bundle.putInt(ChallengeActivity.ARG_RETURNPAGE, returnPage != null ? returnPage.ordinal() : -1);
+//        bundle.putParcelable(ChallengeActivity.ARG_PARTICIPANT,participant);
+        persisted.setParticipant(participant);
         intent.putExtras(bundle);
 
         if (activity.getParent() == null) {
@@ -290,7 +287,6 @@ public class ChallengeQuizFragment extends Fragment implements OnOptionChangeLis
         if (mProgressBar == null) {
             return;
         }
-
         mProgressBar.setProgress(5 + (95 * numCompleted() / challenge.numQuestions()));
     }
 
@@ -299,6 +295,7 @@ public class ChallengeQuizFragment extends Fragment implements OnOptionChangeLis
         Log.d(TAG, "Quiz page change: " + String.valueOf(position));
         updateProgressCounter(position);
         if (position == mAdapter.getCount() - 1) {
+            checkButton.setText(R.string.challenge_done);
             submitParticipantEntry();
         } else {
             checkButton.setText(R.string.label_check_result);
@@ -439,7 +436,8 @@ public class ChallengeQuizFragment extends Fragment implements OnOptionChangeLis
     public void onSaveInstanceState(Bundle outState) {
         if (outState != null) {
             outState.putSerializable(ChallengeActivity.ARG_PAGE, FRAGMENT_STATE);
-            outState.putParcelable(ChallengeActivity.ARG_PARTICIPANT, participant);
+           // outState.putParcelable(ChallengeActivity.ARG_PARTICIPANT, participant);
+            persisted.setParticipant(participant);
             outState.putParcelable(ChallengeActivity.ARG_CHALLENGE, challenge);
             outState.putParcelableArray(ARG_ANSWERS, answers.toArray(new ParticipantAnswer[]{}));
             Bundle state = new Bundle();
@@ -455,7 +453,8 @@ public class ChallengeQuizFragment extends Fragment implements OnOptionChangeLis
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         if (savedInstanceState != null) {
-            participant = savedInstanceState.getParcelable(ChallengeActivity.ARG_PARTICIPANT);
+           // participant = savedInstanceState.getParcelable(ChallengeActivity.ARG_PARTICIPANT);
+            participant = persisted.getParticipant();
             challenge = savedInstanceState.getParcelable(ChallengeActivity.ARG_CHALLENGE);
             ParticipantAnswer storedAnswers[] = (ParticipantAnswer[]) savedInstanceState.getParcelableArray(ARG_ANSWERS);
             if (storedAnswers != null) {

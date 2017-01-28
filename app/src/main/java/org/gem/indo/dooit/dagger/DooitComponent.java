@@ -6,6 +6,7 @@ import org.gem.indo.dooit.api.managers.FeedbackManager;
 import org.gem.indo.dooit.api.managers.SurveyManager;
 import org.gem.indo.dooit.controllers.DooitBotController;
 import org.gem.indo.dooit.controllers.RequirementResolver;
+import org.gem.indo.dooit.controllers.challenge.ChallengeWinnerController;
 import org.gem.indo.dooit.controllers.goal.GoalAddController;
 import org.gem.indo.dooit.controllers.goal.GoalBotController;
 import org.gem.indo.dooit.controllers.goal.GoalDepositController;
@@ -89,6 +90,8 @@ public interface DooitComponent {
     void inject(ChangePasswordActivity o);
 
     void inject(ChangeSecurityQuestionActivity o);
+
+    void inject(ChallengeWinnerController o);
 
     void inject(DooitActivity o);
 

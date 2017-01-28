@@ -5,18 +5,18 @@
     android:id="@+id/fragment_challenge_inner"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="@dimen/challenge_inset_small"
+    android:padding="16dp"
     tools:context="org.gem.indo.dooit.views.main.fragments.challenge.fragments.ChallengePictureFragment">
 
     <ImageButton
-        android:id="@+id/fragment_challenge_picture_close"
+        android:id="@+id/fragment_challenge_close"
         app:srcCompat="@drawable/quiz_close"
-        android:background="@null"
-        android:layout_width="26dp"
-        android:layout_height="25dp"
         android:scaleType="fitCenter"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent" />
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:background="@null"
+        tools:layout_editor_absoluteY="0dp"
+        tools:layout_editor_absoluteX="0dp" />
 
     <TextView
         android:id="@+id/fragment_challenge_picture_question"
@@ -24,10 +24,10 @@
         android:layout_marginTop="@dimen/challenge_inset_xlarge"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        app:layout_constraintLeft_toLeftOf="@+id/fragment_challenge_picture_image"
-        app:layout_constraintRight_toRightOf="@+id/fragment_challenge_picture_image"
-        android:textAppearance="@style/AppTheme.TextView.Bold.ExtraLarge"
-        app:layout_constraintTop_toBottomOf="@+id/fragment_challenge_picture_close"
+        app:layout_constraintLeft_toLeftOf="@+id/fragment_challenge_close"
+        app:layout_constraintRight_toRightOf="parent"
+        android:textAppearance="@style/AppTheme.TextView.Regular.ExtraLarge"
+        app:layout_constraintTop_toBottomOf="@+id/fragment_challenge_close"
         android:textAlignment="center" />
 
     <ImageView
@@ -45,13 +45,13 @@
         android:id="@+id/fragment_challenge_picture_image"
         app:placeholderImage="@drawable/empty_image"
         android:scaleType="fitCenter"
-        android:layout_height="200dp"
+        android:layout_height="0dp"
         android:layout_width="0dp"
         android:padding="8dp"
         android:layout_margin="@dimen/challenge_inset_small"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintBottom_toTopOf="@+id/fragment_challenge_picture_submit_button"
+        app:layout_constraintBottom_toTopOf="@+id/fragment_challenge_picture_text"
         app:layout_constraintTop_toBottomOf="@+id/fragment_challenge_picture_question"
         app:layout_constraintVertical_bias="0.39" />
 
@@ -66,6 +66,8 @@
         app:layout_constraintRight_toRightOf="parent"
         android:layout_marginStart="16dp"
         app:layout_constraintLeft_toLeftOf="parent"
+        android:paddingBottom="10dp"
+        app:layout_constraintBottom_toTopOf="@+id/fragment_challenge_picture_submit_button"
         android:textAllCaps="true" />
 
     <Button

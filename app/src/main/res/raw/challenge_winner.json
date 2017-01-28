@@ -1,0 +1,19 @@
+[
+  {
+    "name": "challenge_winner_intro",
+    "type": "text",
+    "text": "$(challenge_winner_intro)",
+    "call": "#winning_badge",
+    "autoNext": "challenge_winner_badge"
+  },
+  {
+    "name": "challenge_winner_badge",
+    "type": "badge",
+    "autoNext": "challenge_winner_end"
+  },
+  {
+    "name": "challenge_winner_end",
+    "asyncCall": "#confirm_notify",
+    "type": "end"
+  }
+]
