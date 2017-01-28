@@ -12,6 +12,8 @@ import org.gem.indo.dooit.models.bot.Node;
 import org.gem.indo.dooit.models.goal.GoalPrototype;
 import org.gem.indo.dooit.views.main.fragments.bot.viewholders.GoalGalleryItemViewHolder;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 /**
@@ -24,8 +26,8 @@ public class GoalGalleryAdapter extends RecyclerView.Adapter<GoalGalleryItemView
     private HashtagView.TagsClickListener listener;
     private Node dataModel;
 
-    public GoalGalleryAdapter(List<GoalPrototype> prototypes, HashtagView.TagsClickListener listener) {
-        this.prototypes = prototypes;
+    public GoalGalleryAdapter(HashtagView.TagsClickListener listener) {
+        this.prototypes = new ArrayList<>();
         this.listener = listener;
     }
 
@@ -48,5 +50,11 @@ public class GoalGalleryAdapter extends RecyclerView.Adapter<GoalGalleryItemView
 
     public void setDataModel(Node dataModel) {
         this.dataModel = dataModel;
+    }
+
+    public void replace(Collection<GoalPrototype> prototypes) {
+        this.prototypes.clear();
+        this.prototypes.addAll(prototypes);
+        notifyDataSetChanged();
     }
 }

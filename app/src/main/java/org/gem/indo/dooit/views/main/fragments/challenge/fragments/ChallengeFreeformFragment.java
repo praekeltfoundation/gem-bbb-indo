@@ -1,9 +1,12 @@
 package org.gem.indo.dooit.views.main.fragments.challenge.fragments;
 
+import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -11,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import org.gem.indo.dooit.DooitApplication;
@@ -24,7 +28,9 @@ import org.gem.indo.dooit.models.challenge.FreeformChallenge;
 import org.gem.indo.dooit.models.challenge.FreeformChallengeQuestion;
 import org.gem.indo.dooit.models.challenge.Participant;
 import org.gem.indo.dooit.models.challenge.ParticipantFreeformAnswer;
+import org.gem.indo.dooit.views.main.fragments.challenge.ChallengeActivity;
 import org.gem.indo.dooit.views.main.fragments.challenge.ChallengeFragment;
+import org.gem.indo.dooit.views.main.fragments.challenge.ChallengeFragmentMainPage;
 import org.gem.indo.dooit.views.main.fragments.challenge.ChallengeFragmentState;
 
 import javax.inject.Inject;
@@ -77,6 +83,8 @@ public class ChallengeFreeformFragment extends Fragment {
     @BindView(R.id.fragment_challenge_freeform_submitbutton)
     Button submitButton;
 
+    @BindView(R.id.fragment_challenge_close)
+    ImageButton close;
 
     /****************
      * Constructors *
@@ -105,7 +113,8 @@ public class ChallengeFreeformFragment extends Fragment {
         super.onCreate(savedInstanceState);
         ((DooitApplication) getActivity().getApplication()).component.inject(this);
         if (getArguments() != null) {
-            participant = getArguments().getParcelable(ChallengeFragment.ARG_PARTICIPANT);
+            participant = persisted.getParticipant();
+            //participant = getArguments().getParcelable(ChallengeFragment.ARG_PARTICIPANT);
             challenge = getArguments().getParcelable(ChallengeFragment.ARG_CHALLENGE);
             question = challenge != null ? challenge.getQuestion() : null;
         }
@@ -115,6 +124,7 @@ public class ChallengeFreeformFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_challenge_freeform, container, false);
+        SquiggleBackgroundHelper.setBackground(getContext(), R.color.grey_back, R.color.grey_fore, view);
         unbinder = ButterKnife.bind(this, view);
         title.setText(question != null ? question.getText() : getString(R.string.challenge_no_question));
         if (savedInstanceState == null) {
@@ -142,7 +152,6 @@ public class ChallengeFreeformFragment extends Fragment {
         }
         super.onDestroyView();
     }
-
 
     /****************
      * Load helpers *
@@ -181,7 +190,8 @@ public class ChallengeFreeformFragment extends Fragment {
     @OnClick(R.id.fragment_challenge_freeform_submitbutton)
     public void submitAnswer() {
         ParticipantFreeformAnswer answer = new ParticipantFreeformAnswer();
-        answer.setParticipant(participant.getId());
+
+        answer.setParticipant(persisted.getParticipant().getId());
         answer.setQuestion(question.getId());
         answer.setText(submissionBox.getText().toString());
 
@@ -215,11 +225,29 @@ public class ChallengeFreeformFragment extends Fragment {
     }
 
 
-   /* public void submitFreeformAnswer() {
-        Log.d(TAG, "Submitting freeform answer.");
-        submitAnswer();
+    @OnClick(R.id.fragment_challenge_close)
+    public void closeQuiz(){
+        returnToParent(null);
+    }
 
-    }*/
+    private void returnToParent(ChallengeFragmentMainPage returnPage) {
+        persisted.setParticipant(participant);
+
+        FragmentActivity activity = getActivity();
+        Intent intent = new Intent();
+        Bundle bundle = new Bundle();
+        bundle.putParcelable(ChallengeActivity.ARG_CHALLENGE,challenge);
+        bundle.putInt(ChallengeActivity.ARG_RETURNPAGE, returnPage != null ? returnPage.ordinal() : -1);
+        intent.putExtras(bundle);
+        this.onSaveInstanceState(bundle);
+
+        if (activity.getParent() == null) {
+            activity.setResult(Activity.RESULT_OK, intent);
+        } else {
+            activity.getParent().setResult(Activity.RESULT_OK, intent);
+        }
+        activity.finish();
+    }
 
 
     /*************************
@@ -230,7 +258,8 @@ public class ChallengeFreeformFragment extends Fragment {
     public void onSaveInstanceState(Bundle outState) {
         if (outState != null) {
             outState.putSerializable(ChallengeFragment.ARG_PAGE, FRAGMENT_STATE);
-            outState.putParcelable(ChallengeFragment.ARG_PARTICIPANT, participant);
+            //outState.putParcelable(ChallengeFragment.ARG_PARTICIPANT, participant);
+            persisted.setParticipant(participant);
             outState.putParcelable(ChallengeFragment.ARG_CHALLENGE, challenge);
             outState.putString(ARG_ANSWER, submissionBox == null ? "" : submissionBox.toString());
         }

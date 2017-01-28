@@ -61,11 +61,9 @@ public class GoalGalleryViewHolder extends BaseBotViewHolder<Node> {
         if (!this.botAdapter.hasController())
             throw new BotCallbackRequired(String.format("%s requires adapter to have callback", TAG));
 
-        List<GoalPrototype> prototypes = (List<GoalPrototype>) this.botAdapter.getController().getObject(BotObjectType.GOAL_PROTOTYPES);
-
         LinearLayoutManager manager = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
         recyclerView.setLayoutManager(manager);
-        galleryAdapter = new GoalGalleryAdapter(prototypes, listener);
+        galleryAdapter = new GoalGalleryAdapter(listener);
         recyclerView.setAdapter(galleryAdapter);
     }
 
@@ -73,6 +71,7 @@ public class GoalGalleryViewHolder extends BaseBotViewHolder<Node> {
     public void populate(Node model) {
         super.populate(model);
         galleryAdapter.setDataModel(model);
+        galleryAdapter.replace((List<GoalPrototype>) this.botAdapter.getController().getObject(BotObjectType.GOAL_PROTOTYPES));
     }
 
     @Override
