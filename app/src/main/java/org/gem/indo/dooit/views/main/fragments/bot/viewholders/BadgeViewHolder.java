@@ -10,7 +10,9 @@ import com.facebook.drawee.view.SimpleDraweeView;
 
 import org.gem.indo.dooit.R;
 import org.gem.indo.dooit.helpers.social.SocialSharer;
+import org.gem.indo.dooit.models.Badge;
 import org.gem.indo.dooit.models.bot.Node;
+import org.gem.indo.dooit.models.enums.BotObjectType;
 import org.gem.indo.dooit.models.enums.BotParamType;
 import org.gem.indo.dooit.models.exceptions.BotCallbackRequired;
 import org.gem.indo.dooit.views.main.fragments.bot.adapters.BotAdapter;
@@ -59,7 +61,7 @@ public class BadgeViewHolder extends BaseBotViewHolder<Node> {
 
         String title = dataModel.values.getString(BotParamType.BADGE_NAME.getKey());
         Uri imageUri = null;
-        if (!TextUtils.isEmpty(dataModel.values.getString(BotParamType.BADGE_SOCIAL_URL.getKey())))
+        if (!TextUtils.isEmpty(dataModel.values.getString(BotParamType.BADGE_IMAGE_URL.getKey())))
             imageUri = Uri.parse(dataModel.values.getString(BotParamType.BADGE_IMAGE_URL.getKey()));
         String socialUrl = dataModel.values.getString(BotParamType.BADGE_SOCIAL_URL.getKey());
 
@@ -82,6 +84,13 @@ public class BadgeViewHolder extends BaseBotViewHolder<Node> {
 
     @Override
     protected void populateModel() {
-        // Done in controller
+        if (botAdapter.hasController()) {
+            Badge badge = (Badge) botAdapter.getController().getObject(BotObjectType.BADGE);
+            if (badge != null) {
+                dataModel.values.put(BotParamType.BADGE_NAME.getKey(), badge.getName());
+                dataModel.values.put(BotParamType.BADGE_IMAGE_URL.getKey(), badge.getImageUrl());
+                dataModel.values.put(BotParamType.BADGE_SOCIAL_URL.getKey(), badge.getSocialUrl());
+            }
+        }
     }
 }

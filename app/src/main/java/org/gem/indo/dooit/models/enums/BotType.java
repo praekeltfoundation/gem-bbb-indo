@@ -7,6 +7,7 @@ package org.gem.indo.dooit.models.enums;
 public enum BotType {
     DEFAULT,
     RETURNING_USER,
+    CHALLENGE_WINNER,
     GOAL_ADD,
     GOAL_DEPOSIT,
     GOAL_WITHDRAW,

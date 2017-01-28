@@ -24,6 +24,7 @@ import org.gem.indo.dooit.api.managers.GoalManager;
 import org.gem.indo.dooit.api.managers.TipManager;
 import org.gem.indo.dooit.controllers.BotController;
 import org.gem.indo.dooit.controllers.RequirementResolver;
+import org.gem.indo.dooit.controllers.challenge.ChallengeWinnerController;
 import org.gem.indo.dooit.controllers.goal.GoalAddController;
 import org.gem.indo.dooit.controllers.goal.GoalDepositController;
 import org.gem.indo.dooit.controllers.goal.GoalEditController;
@@ -286,6 +287,10 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
                         .resolve(reqCallback);
             }
             break;
+            case CHALLENGE_WINNER:
+                feed.parse(R.raw.challenge_winner, Node.class);
+                initializeBot();
+                break;
         }
     }
 
@@ -348,6 +353,8 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
             case SURVEY_EATOOL:
                 getAndAddNode(null);
                 break;
+            case CHALLENGE_WINNER:
+                getAndAddNode(null);
         }
     }
 
@@ -390,6 +397,10 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
             case SURVEY_EATOOL:
                 return new EAToolSurveyController(getActivity(),
                         persisted.loadConvoSurvey(botType));
+            case CHALLENGE_WINNER:
+                return new ChallengeWinnerController(getActivity(),
+                        persisted.loadWinningBadge(botType),
+                        persisted.loadWinningChallenge(botType));
             default:
                 return null;
         }

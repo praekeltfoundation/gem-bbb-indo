@@ -26,6 +26,12 @@ public enum BotCallType {
     @SerializedName("#add_badge")
     ADD_BADGE,
 
+    @SerializedName("#winning_badge")
+    WINNING_BADGE,
+
     @SerializedName("#populate_goal")
-    POPULATE_GOAL
+    POPULATE_GOAL,
+
+    @SerializedName("#confirm_notify")
+    CONFIRM_NOTIFY
 }
