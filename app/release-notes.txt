@@ -24,3 +24,5 @@
 - Challenges can be stopped and started again successfully
 - Crashlytics across the app surrounding the use of images and the BOT
 - Confetti only works on API 21 and higher (due to performance impact)
+- Implemented EA Tool survey
+- Displaying user count on Goal Prototype selection

@@ -6,7 +6,6 @@ import android.os.Looper;
 
 import org.gem.indo.dooit.models.bot.Answer;
 import org.gem.indo.dooit.models.bot.BaseBotModel;
-import org.gem.indo.dooit.models.bot.Node;
 import org.gem.indo.dooit.models.enums.BotCallType;
 import org.gem.indo.dooit.models.enums.BotObjectType;
 import org.gem.indo.dooit.models.enums.BotParamType;
@@ -90,6 +89,15 @@ public abstract class BotController {
     // TODO: Currently unused. Input is retrieved by scanning conversation history. We need to
     // decide how to store values while the "Accept" or "Cancel" is outstanding.
     public abstract void onAnswerInput(BotParamType inputType, Answer answer);
+
+    /**
+     * Called after any Answer has been inputted, and before the next Node has been added.
+     *
+     * @param answer Any inputted answer.
+     */
+    public void onAnswer(Answer answer) {
+        // Override me
+    }
 
     /**
      * Provide a conversation level model object that a Node may require.

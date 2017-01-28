@@ -223,6 +223,10 @@ public class Persisted {
         return dooitSharedPreferences.containsKey(BOT + "_" + SURVEY + "_" + botType.name());
     }
 
+    public void clearConvoSurvey(BotType botType) {
+        dooitSharedPreferences.remove(BOT + "_" + SURVEY + "_" + botType.name());
+    }
+
     public boolean isNewBotUser() {
         return dooitSharedPreferences.getBoolean(NEW_BOT_USER, true);
     }
