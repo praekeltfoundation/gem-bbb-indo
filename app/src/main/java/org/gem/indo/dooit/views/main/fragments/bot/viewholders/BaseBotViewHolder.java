@@ -43,6 +43,10 @@ public abstract class BaseBotViewHolder<T extends BaseBotModel> extends Recycler
     public void populate(T model) {
         dataModel = model;
         reset();
+        /*  The dataModel object is set as immutable after the first time it is used
+            to populate the conversation so that the conversation does not change when the user
+            navigates away and back to the bot
+          */
         if (!dataModel.isImmutable()) {
             populateModel();
             // FIXME: Viewholder is populated after conversation is persisted. Immutable flag not persisted.

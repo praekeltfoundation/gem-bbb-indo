@@ -97,6 +97,8 @@ public class GoalEditController extends GoalBotController {
             handleImage(answerLog, listener);
             // Don't upload Goal
             return;
+        }else if(answerLog.containsKey("goal_edit_weekly_target_accept")){
+            goal.setWeeklyTarget(Double.parseDouble(answerLog.get("goal_weekly_target").getValue()));
         }
 
         goalManager.updateGoal(goal, new DooitErrorHandler() {

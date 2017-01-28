@@ -156,7 +156,7 @@
     <string name="infoDontKnowAmount">No problem.</string>
     <string name="askKnowGoalDate">That is a big goal. Let us get saving then. Do you have a date that you want to save this by?</string>
     <string name="askGoalDate">When would you like to have saved this much?</string>
-    <string name="askGoalWeeklySaveAmount">How much can you save each week?</string>
+    <string name="askGoalWeeklySaveAmount">Gak masalah, aku bisa bantu. Berapa jumlah uang yang bisa kamu tabung per minggu?</string>
     <string name="askGoalSaveAmountOther">How much can you save?</string>
     <string name="askGoalPriorSave">Apa kamu sudah mulai menabung untuk target ini?</string>
     <string name="askPriorSavedAmount">How much have you already saved?</string>
@@ -281,6 +281,7 @@
     <string name="goal_edit_info_exit">Ok, aku sudah selesai. Bisa diakhiri?</string>
     <string name="goal_edit_delete_difficult_help">Ok! Bantu buat rencana nabung baru.</string>
     <string name="goal_edit_delete_difficult_do_delete">Oke, sudah beres. Bisa diakhiri?</string>
+    <string name="goal_change_target">I want to change the Target value</string>
 
     <!-- BOT: tip_intro -->
     <string name="tip_intro_inline_link">TODO: Show Tip</string>
@@ -669,10 +670,10 @@
     <string name="goalCheckRT">Reduce Time</string>
     <string name="goalCheckRA">Reduce Amount</string>
     <string name="goalCheckOk">OK</string>
-    <string name="five">%1$s 500</string>
-    <string name="thousand">%1$s 1000</string>
-    <string name="thousandFive">%1$s 1500</string>
-    <string name="twoThousand">%1$s 2000</string>
+    <string name="five">$(currency.symbol) 500</string>
+    <string name="thousand">$(currency.symbol) 1000</string>
+    <string name="thousandFive">$(currency.symbol) 1500</string>
+    <string name="twoThousand">$(currency.symbol) 2000</string>
     <string name="Save">Save</string>
     <string name="WithdrawButton">Withdraw</string>
     <string name="addOwnGoal">Add own goal</string>

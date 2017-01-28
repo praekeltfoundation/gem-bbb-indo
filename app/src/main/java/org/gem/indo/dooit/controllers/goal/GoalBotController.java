@@ -130,6 +130,9 @@ public abstract class GoalBotController extends DooitBotController {
             case TIP_INTRO:
                 model.values.put(key, tip.getIntro());
                 break;
+            case CURRENCY_SYMBOL:
+                model.values.put(key, CurrencyHelper.getCurrencySymbol());
+                break;
             case GOAL_PROTO_NUM_USERS_WITH_SIMILAR_GOALS:
                 model.values.put(key, goal.getPrototype().getNumUsers());
             default:
@@ -145,7 +148,7 @@ public abstract class GoalBotController extends DooitBotController {
                         answer.values.getLong(BotParamType.GOAL_PROTO_ID.getKey()),
                         answer.values.getString(BotParamType.GOAL_PROTO_NAME.getKey()),
                         answer.values.getString(BotParamType.GOAL_PROTO_IMAGE_URL.getKey()),
-                                answer.values.getInteger(BotParamType.GOAL_PROTO_NUM_USERS_WITH_SIMILAR_GOALS.getKey()))
+                        answer.values.getInteger(BotParamType.GOAL_PROTO_NUM_USERS_WITH_SIMILAR_GOALS.getKey()))
                 );
                 break;
             case GOAL_NAME:
@@ -153,6 +156,12 @@ public abstract class GoalBotController extends DooitBotController {
                 break;
             case GOAL_TARGET:
                 goal.setTarget(Double.parseDouble(answer.getValue()));
+                break;
+            case GOAL_VALUE:
+                goal.setValue(Double.parseDouble(answer.getValue()));
+                break;
+            case GOAL_WEEKLY_TARGET:
+                goal.setWeeklyTarget(Double.parseDouble(answer.getValue()));
                 break;
             default:
                 super.onAnswerInput(inputType, answer);

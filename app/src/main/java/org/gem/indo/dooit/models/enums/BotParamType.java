@@ -61,7 +61,10 @@ public enum BotParamType {
     // Survey
     SURVEY_TITLE("survey.title"),
     SURVEY_INTRO("survey.intro"),
-    SURVEY_OUTRO("survey.outro");
+    SURVEY_OUTRO("survey.outro"),
+
+    //Currency Symbol
+    CURRENCY_SYMBOL("currency.symbol");
 
     private static Map<String, BotParamType> map = new HashMap<>();
 

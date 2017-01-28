@@ -107,6 +107,57 @@ public class Node extends BaseBotModel {
         return !TextUtils.isEmpty(autoNextScreen);
     }
 
+    public void setAnswerName(String answerName) {
+        this.answerName = answerName;
+    }
+
+    public void setAutoAnswer(String autoAnswer) {
+        this.autoAnswer = autoAnswer;
+    }
+
+
+    public String getAutoNextScreen() {
+        return autoNextScreen;
+    }
+
+    public void setAutoNextScreen(String autoNextScreen) {
+        this.autoNextScreen = autoNextScreen;
+    }
+
+    public Node copy() {
+        Node n = new Node();
+
+        //The BaseBotModel variables
+        n.text = this.text != null ? new String(this.text) : null;
+        n.processedText = this.processedText != null ? new String(this.processedText) : null;
+        n.name = this.name != null ? new String(this.name) : null;
+        n.type = this.type != null ? new String(this.type) : null;
+        n.next = this.next != null ? new String(this.next) : null;
+        n.call = this.call;
+        n.asyncCall = this.asyncCall;
+        //  Note: this.textParams is not longer used but if it becomes used again it will also need to be deep copied
+        n.values = this.values.deepCopy();
+
+
+        //The Node Local variables
+        n.setAutoNext(this.autoNext != null ? new String(this.autoNext) : null);
+        n.setAutoAnswer(this.autoAnswer != null ? new String(this.autoAnswer) : null);
+        n.setAnswerName(this.answerName != null ? new String(this.answerName) : null);
+        n.setAutoNextScreen(this.autoNextScreen != null ? new String(this.autoNextScreen): null);
+        n.setIconHidden(this.iconHidden);
+        List<Answer> newAnswers = new ArrayList<>();
+        for (int i = this.answers.size() - 1; i >= 0; --i){
+            newAnswers.add(answers.get(i).copy());
+        }
+        n.answers = newAnswers;
+        /*  Doing a shallow copy here since you dont want to call autoNextNode.copy()
+            and end up copying the entire conversation tree
+         */
+
+        n.autoNextNode = this.autoNextNode;
+        return n;
+    }
+
     @Override
     public String toString() {
         return "Node{" + name + "}";

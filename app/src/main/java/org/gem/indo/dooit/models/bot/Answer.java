@@ -127,13 +127,29 @@ public class Answer extends BaseBotModel {
     public Answer copy() {
         Answer answer = new Answer();
 
-        answer.setValue(value);
+        //The BaseBotModel variables
+        answer.text = this.text != null ? new String(this.text) : null;
+        answer.processedText = this.processedText != null ? new String(this.processedText) : null;
+        answer.name = this.name != null ? new String(this.name) : null;
+        answer.type = this.type != null ? new String(this.type) : null;
+        answer.next = this.next != null ? new String(this.next) : null;
+        answer.call = this.call;
+        answer.asyncCall = this.asyncCall;
+        //  Note: this.textParams is not longer used but if it becomes used again it will also need to be deep copied
+        answer.values = this.values.deepCopy();
+
+
+        //Copy Answer local variables
+        answer.inlineEditHint = this.inlineEditHint != null ? new String(this.inlineEditHint) : null;
+        answer.setValue(this.value != null ? new String(value) : null);
         answer.setInputKey(BotParamType.byKey(inputKey));
-        answer.setNextOnFinish(nextOnFinish);
-        answer.setRemoveOnSelect(removeOnSelect);
+        answer.setNextOnFinish(this.nextOnFinish != null ? new String(nextOnFinish) : null);
+        answer.setRemoveOnSelect(this.removeOnSelect != null ? new String(removeOnSelect) : null);
         answer.setChangeOnSelect(getChangeOnSelect());
-        answer.setTypeOnFinish(getTypeOnFinish());
-        answer.setParentName(getParentName());
+        answer.setTypeOnFinish(getTypeOnFinish() != null ? new String(getTypeOnFinish()) : null);
+        answer.setParentName(getParentName() != null ? new String(getParentName()) : null);
+
+        //copy parent atttributes
 
         return answer;
     }

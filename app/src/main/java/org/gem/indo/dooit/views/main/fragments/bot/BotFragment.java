@@ -14,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 
+import com.crashlytics.android.Crashlytics;
 import com.greenfrvr.hashtagview.HashtagView;
 
 import org.gem.indo.dooit.Constants;
@@ -93,10 +94,10 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
     @Inject
     TipManager tipManager;
 
-    BotType type = BotType.DEFAULT;
-    BotController controller;
-    BotFeed<Node> feed;
-    BaseBotModel currentModel;
+    private BotType type = BotType.DEFAULT;
+    private BotController controller;
+    private BotFeed<Node> feed;
+    private Node currentNode;
     boolean clearState = false;
 
     public BotFragment() {
@@ -474,15 +475,26 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
     }
 
     private void getAndAddNode(String name, boolean iconHidden) {
+        BaseBotModel model;
         if (TextUtils.isEmpty(name)) {
-            currentModel = feed.getFirstItem();
+            model = feed.getFirstItem();
             getBotAdapter().clear();
         } else
-            currentModel = feed.getItem(name);
+            model = feed.getItem(name);
 
-        final Node node = (Node) currentModel;
-        if (node != null)
-            addNode(node, iconHidden);
+        if (model == null) {
+            // TODO: Log to Crashlytics
+            return;
+        }
+
+        /*  We are copying the node since in BaseBotViewHolder the BaseBotModel Object is set to be
+         *  immutable after the first time it is used to populate the conversation so that the conversation
+         *  cannot be changed when the user navigates away and back to the bot. Making a deep copy of the
+         *  BaseBotModel Object and passing it through the process means that the objects in the BotFeed
+         *  are not modified directly and should solve this problem.
+         */
+        currentNode = ((Node) model).copy();
+        addNode(currentNode, iconHidden);
     }
 
     @Override
@@ -506,15 +518,15 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
             return;
         }
 
+        // Reached a Node with a call attribute
+        if (node.hasCall() && controller != null)
+            controller.onCall(node.getCall(), createAnswerLog(getBotAdapter().getDataSet()), node);
+
         if (shouldAdd(node))
             getBotAdapter().addItem(node);
 
         conversationRecyclerView.scrollToPosition(getBotAdapter().getItemCount() - 1);
         persisted.saveConversationState(type, getBotAdapter().getDataSet());
-
-        // Reached a Node with a call attribute
-        if (node.hasCall() && controller != null)
-            controller.onCall(node.getCall(), createAnswerLog(getBotAdapter().getDataSet()), node);
 
         // Reached a Node with an async attribute
         if (node.hasAsyncCall() && controller != null) {
