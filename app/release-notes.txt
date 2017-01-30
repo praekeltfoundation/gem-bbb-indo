@@ -1,17 +1,3 @@
-0.0.15
-
-- Fixed crash in Bot
-- Inserting user's preferred name into survey notification
-- Inserting user's preferred name into survey conversation
-- Notifications now use an expandable style
-- Implemented survey submission
-- Quiz has a visible scrollbar
-- Right nav arrow only shows when there is more than one Goal
-- Made margins of toolbar elements on profile screen equidistant
-- Goal add conversation now allows user ot change date or amount
-- ChallengeFragment is now a an activity and everything shows through the activity
-- Confetti displays on quiz done fragment
-- Goal add conversation now allows user to change date or amount
 
 0.1.1
 
