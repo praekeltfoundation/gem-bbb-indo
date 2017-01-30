@@ -234,11 +234,15 @@ public class ChallengeQuizFragment extends Fragment implements OnOptionChangeLis
                 persisted.setParticipant(null);
                 clearState();
                 challengeCompleted = true;
+
                 Bundle args = new Bundle();
                 args.putParcelable(ChallengeActivity.ARG_PARTICIPANT_BADGE, entry.getBadge());
                 args.putParcelable(ChallengeActivity.ARG_CHALLENGE,challenge);
+
                 FragmentTransaction ft = getFragmentManager().beginTransaction();
                 Fragment fragment = ChallengeQuizDoneFragment.newInstance(challenge);
+                fragment.setArguments(args);
+
                 ft.replace(R.id.fragment_challenge_container, fragment, "fragment_challenge");
                 ft.commit();
             }
