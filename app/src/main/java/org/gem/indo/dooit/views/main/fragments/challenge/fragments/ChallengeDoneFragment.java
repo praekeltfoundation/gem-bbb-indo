@@ -143,21 +143,27 @@ public class ChallengeDoneFragment extends Fragment {
     private void returnToParent(ChallengeFragmentMainPage returnPage) {
         Bundle bundleFragment = this.getArguments();
         Badge participantBadge = bundleFragment.getParcelable(ChallengeActivity.ARG_PARTICIPANT_BADGE);
+        Bundle bundle = new Bundle();
+        Intent intent = new Intent();
 
+        bundle.putParcelable(ChallengeActivity.ARG_CHALLENGE,challenge);
+        bundle.putInt(ChallengeActivity.ARG_RETURNPAGE, returnPage != null ? returnPage.ordinal() : -1);
 
         FragmentActivity activity = getActivity();
-        if (participantBadge == null){
-            if (activity.getParent() != null) {
-                Bundle bundle = new Bundle();
-                Intent intent = new Intent();
+
+        if (activity.getParent() != null) {
+            if (participantBadge == null){
                 bundle.putParcelable(ChallengeActivity.ARG_PARTICIPANT_BADGE,participantBadge);
                 intent.putExtras(bundle);
-                activity.setResult(Activity.RESULT_OK, intent);
+                activity.getParent().setResult(Activity.RESULT_OK, intent);
             }
         }
-        Intent intent = new Intent();
-        Bundle bundle = new Bundle();
-        bundle.putParcelable(ChallengeActivity.ARG_CHALLENGE,challenge);
+        else{
+            activity.setResult(Activity.RESULT_OK, intent);
+        }
+        activity.finish();
+
+       /* bundle.putParcelable(ChallengeActivity.ARG_CHALLENGE,challenge);
         bundle.putInt(ChallengeActivity.ARG_RETURNPAGE, returnPage != null ? returnPage.ordinal() : -1);
         intent.putExtras(bundle);
 
@@ -166,6 +172,6 @@ public class ChallengeDoneFragment extends Fragment {
         } else {
             activity.getParent().setResult(Activity.RESULT_OK, intent);
         }
-        activity.finish();
+        activity.finish();*/
     }
 }

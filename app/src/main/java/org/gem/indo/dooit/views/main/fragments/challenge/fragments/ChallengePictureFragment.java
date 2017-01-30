@@ -229,7 +229,13 @@ public class ChallengePictureFragment extends Fragment {
                 persist.clearCurrentChallenge();
                 persist.setParticipant(null);
                 FragmentTransaction ft = getFragmentManager().beginTransaction();
+
+                Bundle args = new Bundle();
+                //args.putParcelable(ChallengeActivity.ARG_PARTICIPANT_BADGE, answer.getBadge());
+                args.putParcelable(ChallengeActivity.ARG_CHALLENGE,challenge);
+
                 Fragment f = ChallengeDoneFragment.newInstance(challenge);
+                f.setArguments(args);
                 ft.replace(R.id.fragment_challenge_container, f, "fragment_challenge");
                 ft.commit();
             }

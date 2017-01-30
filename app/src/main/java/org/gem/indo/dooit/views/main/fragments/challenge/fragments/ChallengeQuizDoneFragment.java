@@ -19,6 +19,7 @@ import com.facebook.drawee.view.SimpleDraweeView;
 
 import org.gem.indo.dooit.R;
 import org.gem.indo.dooit.helpers.SquiggleBackgroundHelper;
+import org.gem.indo.dooit.models.Badge;
 import org.gem.indo.dooit.models.challenge.BaseChallenge;
 import org.gem.indo.dooit.views.main.fragments.challenge.ChallengeActivity;
 import org.gem.indo.dooit.views.main.fragments.challenge.ChallengeFragmentMainPage;
@@ -137,7 +138,30 @@ public class ChallengeQuizDoneFragment extends Fragment {
     }
 
     private void returnToParent(ChallengeFragmentMainPage returnPage) {
+
+        Bundle bundleFragment = this.getArguments();
+        Badge participantBadge = bundleFragment.getParcelable(ChallengeActivity.ARG_PARTICIPANT_BADGE);
+        Bundle bundle = new Bundle();
+        Intent intent = new Intent();
+
+        bundle.putParcelable(ChallengeActivity.ARG_CHALLENGE,challenge);
+        bundle.putInt(ChallengeActivity.ARG_RETURNPAGE, returnPage != null ? returnPage.ordinal() : -1);
+
         FragmentActivity activity = getActivity();
+
+        if (activity.getParent() != null) {
+            if (participantBadge == null){
+                bundle.putParcelable(ChallengeActivity.ARG_PARTICIPANT_BADGE,participantBadge);
+                intent.putExtras(bundle);
+                activity.getParent().setResult(Activity.RESULT_OK, intent);
+            }
+        }
+        else{
+            activity.setResult(Activity.RESULT_OK, intent);
+        }
+        activity.finish();
+
+        /*FragmentActivity activity = getActivity();
         Intent intent = new Intent();
         Bundle bundle = new Bundle();
         bundle.putParcelable(ChallengeActivity.ARG_CHALLENGE,challenge);
@@ -149,6 +173,6 @@ public class ChallengeQuizDoneFragment extends Fragment {
         } else {
             activity.getParent().setResult(Activity.RESULT_OK, intent);
         }
-        activity.finish();
+        activity.finish();*/
     }
 }

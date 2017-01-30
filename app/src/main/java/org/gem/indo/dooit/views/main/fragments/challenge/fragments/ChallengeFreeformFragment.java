@@ -261,7 +261,6 @@ public class ChallengeFreeformFragment extends Fragment {
     public void onSaveInstanceState(Bundle outState) {
         if (outState != null) {
             outState.putSerializable(ChallengeFragment.ARG_PAGE, FRAGMENT_STATE);
-            //outState.putParcelable(ChallengeFragment.ARG_PARTICIPANT, participant);
             persisted.setParticipant(participant);
             outState.putParcelable(ChallengeFragment.ARG_CHALLENGE, challenge);
             outState.putString(ARG_ANSWER, submissionBox == null ? "" : submissionBox.toString());
