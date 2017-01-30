@@ -20,12 +20,17 @@ import android.widget.TextView;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.github.jinatonic.confetti.CommonConfetti;
 
+import org.gem.indo.dooit.DooitApplication;
 import org.gem.indo.dooit.R;
+import org.gem.indo.dooit.helpers.Persisted;
 import org.gem.indo.dooit.helpers.SquiggleBackgroundHelper;
 import org.gem.indo.dooit.models.Badge;
 import org.gem.indo.dooit.models.challenge.BaseChallenge;
+import org.gem.indo.dooit.models.enums.BotType;
 import org.gem.indo.dooit.views.main.fragments.challenge.ChallengeActivity;
 import org.gem.indo.dooit.views.main.fragments.challenge.ChallengeFragmentMainPage;
+
+import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -41,6 +46,9 @@ public class ChallengeQuizDoneFragment extends Fragment {
     private static final String ARG_CHALLENGE = "challenge";
 
     private BaseChallenge challenge;
+
+    @Inject
+    Persisted persisted;
 
     @BindView(R.id.fragment_challenge_quiz_progressbar)
     ProgressBar mProgressBar;
@@ -91,6 +99,7 @@ public class ChallengeQuizDoneFragment extends Fragment {
         if (getArguments() != null) {
             challenge = getArguments().getParcelable(ARG_CHALLENGE);
         }
+        ((DooitApplication) getActivity().getApplication()).component.inject(this);
     }
 
     @Override
@@ -159,12 +168,14 @@ public class ChallengeQuizDoneFragment extends Fragment {
 
         FragmentActivity activity = getActivity();
 
+        if (participantBadge != null){
+            bundle.putParcelable(ChallengeActivity.ARG_PARTICIPANT_BADGE,participantBadge);
+            persisted.saveConvoParticipant(BotType.CHALLENGE_PARTICIPANT_BADGE,participantBadge,challenge);
+            intent.putExtras(bundle);
+        }
+
         if (activity.getParent() != null) {
-            if (participantBadge != null){
-                bundle.putParcelable(ChallengeActivity.ARG_PARTICIPANT_BADGE,participantBadge);
-                intent.putExtras(bundle);
-                activity.getParent().setResult(Activity.RESULT_OK, intent);
-            }
+            activity.getParent().setResult(Activity.RESULT_OK, intent);
         }
         else{
             activity.setResult(Activity.RESULT_OK, intent);

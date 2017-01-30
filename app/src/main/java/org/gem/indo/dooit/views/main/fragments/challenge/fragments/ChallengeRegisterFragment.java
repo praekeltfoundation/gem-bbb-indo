@@ -30,12 +30,8 @@ import org.gem.indo.dooit.helpers.Persisted;
 import org.gem.indo.dooit.helpers.RequestCodes;
 import org.gem.indo.dooit.helpers.SquiggleBackgroundHelper;
 import org.gem.indo.dooit.helpers.TextSpannableHelper;
-import org.gem.indo.dooit.helpers.activity.result.ActivityForResultCallback;
-import org.gem.indo.dooit.helpers.activity.result.ActivityForResultHelper;
 import org.gem.indo.dooit.models.challenge.BaseChallenge;
 import org.gem.indo.dooit.models.challenge.Participant;
-import org.gem.indo.dooit.models.enums.BotType;
-import org.gem.indo.dooit.views.main.MainActivity;
 import org.gem.indo.dooit.views.main.fragments.challenge.ChallengeActivity;
 import org.gem.indo.dooit.views.main.fragments.challenge.ChallengeFragmentState;
 import org.gem.indo.dooit.views.main.fragments.challenge.interfaces.HasChallengeFragmentState;
@@ -318,18 +314,6 @@ public class ChallengeRegisterFragment extends Fragment implements HasChallengeF
         args.putParcelable(ChallengeActivity.ARG_PARTICIPANT, participant);
         Intent intent = ChallengeActivity.Builder.create(getContext()).setArgs(args).getIntent();
         getActivity().startActivityForResult(intent, RequestCodes.CHALLENGE_PARTICIPANT_BADGE);
-        /*ActivityForResultHelper helper = new ActivityForResultHelper();
-        Intent intent = ChallengeActivity.Builder.create(getContext()).setArgs(args).getIntent();
-        helper.startActivityForResult(getContext(), intent, new ActivityForResultCallback() {
-            @Override
-            public void onActivityResultOK(Intent data) {
-                *//*if (data != null && data.containsKey(BotType.CHALLENGE_PARTICIPANT_BADGE.name())){
-                    if (persist.hasConvoParticipant(BotType.CHALLENGE_PARTICIPANT_BADGE))
-                        ((MainActivity) getActivity()).startBot(BotType.CHALLENGE_PARTICIPANT_BADGE);
-                }*//*
-            }
-        });*/
-
     }
 
     @Override
