@@ -232,7 +232,7 @@ public class ChallengePictureFragment extends Fragment {
                 FragmentTransaction ft = getFragmentManager().beginTransaction();
 
                 Bundle args = new Bundle();
-                //args.putParcelable(ChallengeActivity.ARG_PARTICIPANT_BADGE, answer.getBadge());
+                args.putParcelable(ChallengeActivity.ARG_PARTICIPANT_BADGE, pictureParticipationResponse.getBadge());
                 args.putParcelable(ChallengeActivity.ARG_CHALLENGE,challenge);
 
                 Fragment f = ChallengeDoneFragment.newInstance(challenge);

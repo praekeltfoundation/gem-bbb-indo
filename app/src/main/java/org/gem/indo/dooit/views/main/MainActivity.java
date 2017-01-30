@@ -166,7 +166,6 @@ public class MainActivity extends DooitActivity {
 
         /*Set the ActionBar's title for Bina here to ensure it gets set initially
         When the app starts up for a logged in user technically no page has been selected*/
-//        onMainPagerPageSelected(currentPos);
         mainTabAdapter.setAdapterListener(new MainTabAdapter.MainTabAdapterListener() {
             @Override
             public void onAdapterInstantiated() {
