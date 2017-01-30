@@ -28,6 +28,7 @@ import org.gem.indo.dooit.api.managers.TipManager;
 import org.gem.indo.dooit.helpers.SquiggleBackgroundHelper;
 import org.gem.indo.dooit.models.Tip;
 import org.gem.indo.dooit.views.DooitActivity;
+import org.gem.indo.dooit.views.main.fragments.MainFragment;
 import org.gem.indo.dooit.views.main.fragments.tip.adapters.TipsAutoCompleteAdapter;
 import org.gem.indo.dooit.views.main.fragments.tip.adapters.TipsTabAdapter;
 
@@ -43,7 +44,7 @@ import butterknife.OnEditorAction;
 import butterknife.OnPageChange;
 import butterknife.OnTouch;
 
-public class TipsFragment extends Fragment implements OnTipsAvailableListener {
+public class TipsFragment extends MainFragment implements OnTipsAvailableListener {
 
     private static final String TAG = TipsFragment.class.getName();
 
@@ -201,7 +202,7 @@ public class TipsFragment extends Fragment implements OnTipsAvailableListener {
         TipsViewPagerPositions pos = TipsViewPagerPositions.getValueOf(position);
         searchView.setHint(getString(pos.getSearchRes()));
         DooitActivity activity = (DooitActivity) getActivity();
-        if(activity != null){
+        if (activity != null) {
             tracker.setScreenName(activity.getScreenName() + " " + TipsViewPagerPositions.getValueOf(viewPager.getCurrentItem()).name());
         }
     }

@@ -19,6 +19,7 @@ import java.util.Locale;
  */
 
 public class MainFragment extends Fragment {
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -28,7 +29,7 @@ public class MainFragment extends Fragment {
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
-        onActive();
+//        onActive();
     }
 
     public void onActive() {

@@ -40,6 +40,7 @@ public class ChallengeParticipantController extends DooitBotController {
         super(context, BotType.CHALLENGE_PARTICIPANT_BADGE);
         this.badge = badge;
         this.challenge = challenge;
+        this.context = context;
         ((DooitApplication) context.getApplicationContext()).component.inject(this);
     }
 

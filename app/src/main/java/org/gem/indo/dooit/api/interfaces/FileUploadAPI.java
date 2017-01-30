@@ -1,6 +1,7 @@
 package org.gem.indo.dooit.api.interfaces;
 
 import org.gem.indo.dooit.api.responses.EmptyResponse;
+import org.gem.indo.dooit.api.responses.PictureParticipationResponse;
 
 import okhttp3.RequestBody;
 import retrofit2.Response;
@@ -19,7 +20,7 @@ public interface FileUploadAPI {
     Observable<Response<EmptyResponse>> uploadProfileImage(@Path("id") long id, @Body RequestBody requestBody, @Header("Content-Disposition") String contentDisposition);
 
     @POST("/api/participant-image/{id}/")
-    Observable<EmptyResponse> uploadParticipantPicture(@Path("id") long id, @Body RequestBody requestBody, @Header("Content-Disposition") String contentDisposition);
+    Observable<PictureParticipationResponse> uploadParticipantPicture(@Path("id") long id, @Body RequestBody requestBody, @Header("Content-Disposition") String contentDisposition);
 
     @POST("/api/goal-image/{id}/")
     Observable<EmptyResponse> uploadGoalImage(@Path("id") long goalId, @Body RequestBody requestBody, @Header("Content-Disposition") String contentDisposition);

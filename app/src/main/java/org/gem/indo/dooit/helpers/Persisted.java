@@ -59,6 +59,7 @@ public class Persisted {
     private static final String SURVEY_ID = "survey_id";
     private static final String SURVEY = "survey";
     private static final String CHALLENGE_PARTICIPANT_BADGE = "challenge_participant_badge";
+    private static final String PARTICIPANT_CHALLENGE = "participant_challenge";
     private static final String WINNING_BADGE = "winning_badge";
     private static final String WINNING_CHALLENGE = "winning_challenge";
     private static final String PARTICIPANT = "participant";
@@ -262,12 +263,17 @@ public class Persisted {
         dooitSharedPreferences.remove(BOT + "_" + WINNING_BADGE + "_" + BotType.CHALLENGE_WINNER);
     }
 
-    public void saveConvoParticipant(BotType botType, Badge badge){
+    public void saveConvoParticipant(BotType botType, Badge badge,BaseChallenge challenge){
         dooitSharedPreferences.setComplex(BOT + "_" + CHALLENGE_PARTICIPANT_BADGE + "_" + botType.name(), badge);
+        dooitSharedPreferences.setComplex(BOT + "_" + PARTICIPANT_CHALLENGE + "_" + botType.name(),challenge);
     }
 
     public Badge loadParticipantBadge(BotType botType){
         return dooitSharedPreferences.getComplex(BOT + "_" + CHALLENGE_PARTICIPANT_BADGE + "_" + botType.name(), Badge.class);
+    }
+
+    public BaseChallenge loadParticipantChallenge(BotType botType) {
+        return dooitSharedPreferences.getComplex(BOT + "_" + PARTICIPANT_CHALLENGE + "_" + botType.name(), BaseChallenge.class);
     }
 
     public boolean hasConvoParticipant(BotType botType){

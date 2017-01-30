@@ -201,6 +201,8 @@ public class ChallengeActivity extends ImageActivity {
             fragment.receiveImageDetails(mediaType,imageUri,imagePath);
     }
 
+
+
     public static class Builder extends DooitActivityBuilder<ChallengeActivity.Builder> {
         protected Builder(Context context) {
             super(context);

@@ -27,6 +27,7 @@ import org.gem.indo.dooit.api.DooitAPIError;
 import org.gem.indo.dooit.api.DooitErrorHandler;
 import org.gem.indo.dooit.api.managers.FileUploadManager;
 import org.gem.indo.dooit.api.responses.EmptyResponse;
+import org.gem.indo.dooit.api.responses.PictureParticipationResponse;
 import org.gem.indo.dooit.helpers.Persisted;
 import org.gem.indo.dooit.helpers.RequestCodes;
 import org.gem.indo.dooit.helpers.SquiggleBackgroundHelper;
@@ -222,9 +223,9 @@ public class ChallengePictureFragment extends Fragment {
             public void call() {
                 dialog.dismiss();
             }
-        }).subscribe(new Action1<EmptyResponse>() {
+        }).subscribe(new Action1<PictureParticipationResponse>() {
             @Override
-            public void call(EmptyResponse emptyResponse) {
+            public void call(PictureParticipationResponse pictureParticipationResponse) {
                 Log.d(TAG, "Uploaded image");
                 persist.clearCurrentChallenge();
                 persist.setParticipant(null);

@@ -25,6 +25,7 @@ import com.google.android.gms.analytics.Tracker;
 import org.gem.indo.dooit.DooitApplication;
 import org.gem.indo.dooit.R;
 import org.gem.indo.dooit.helpers.Persisted;
+import org.gem.indo.dooit.helpers.RequestCodes;
 import org.gem.indo.dooit.helpers.activity.result.ActivityForResultHelper;
 import org.gem.indo.dooit.helpers.images.DraweeHelper;
 import org.gem.indo.dooit.helpers.notifications.NotificationType;
@@ -165,8 +166,16 @@ public class MainActivity extends DooitActivity {
 
         /*Set the ActionBar's title for Bina here to ensure it gets set initially
         When the app starts up for a logged in user technically no page has been selected*/
-        onMainPagerPageSelected(currentPos);
+//        onMainPagerPageSelected(currentPos);
+        mainTabAdapter.setAdapterListener(new MainTabAdapter.MainTabAdapterListener() {
+            @Override
+            public void onAdapterInstantiated() {
+                onMainPagerPageSelected(currentPos);
+            }
+        });
     }
+
+
 
     @OnPageChange(value = R.id.content_main_view_pager, callback = OnPageChange.Callback.PAGE_SELECTED)
     public void onMainPagerPageSelected(int position) {
@@ -207,6 +216,10 @@ public class MainActivity extends DooitActivity {
                 MainViewPagerPositions.setInActiveState(tabView);
             }
         }
+
+        MainFragment fragment = (MainFragment) mainTabAdapter.getItem(viewPager.getCurrentItem());
+        if (fragment != null)
+            fragment.onActive();
 
         // Notify analytics of Main view navigation
         onTrack();
@@ -255,6 +268,13 @@ public class MainActivity extends DooitActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (!activityForResultHelper.onActivityResult(requestCode, resultCode, data))
             super.onActivityResult(requestCode, resultCode, data);
+        if(data != null){
+            switch (requestCode){
+                case RequestCodes.CHALLENGE_PARTICIPANT_BADGE:
+                    if(persisted.hasConvoParticipant(BotType.CHALLENGE_PARTICIPANT_BADGE))
+                        startBot(BotType.CHALLENGE_PARTICIPANT_BADGE);
+            }
+        }
     }
 
     @Override
