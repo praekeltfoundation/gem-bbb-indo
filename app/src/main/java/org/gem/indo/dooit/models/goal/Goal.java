@@ -11,8 +11,10 @@ import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collection;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -127,6 +129,7 @@ public class Goal {
 
     public void setEndDate(LocalDate endDate) {
         this.endDate = endDate;
+        updateWeeklyTarget();
     }
 
     public List<GoalTransaction> getTransactions() {
@@ -147,6 +150,7 @@ public class Goal {
 
     public void setWeeklyTarget(double weeklyTarget) {
         this.weeklyTarget = weeklyTarget;
+        updateEndDate();
     }
 
     public int getWeekCount() {
@@ -234,7 +238,14 @@ public class Goal {
     }
 
     public int getWeeksLeft(Utils.ROUNDWEEK rounding) {
-        return Utils.weekDiff(endDate.toDate().getTime(), rounding);
+        if(endDate != null) {
+            return Utils.weekDiff(endDate.toDate().getTime(), rounding);
+        }else{
+            //if endDate == null then the user chose to set die amount to save per week and not the end date
+            double stillNeeded = target - value;
+            weekCount = (int) Math.ceil(stillNeeded/weeklyTarget);
+            return weekCount;
+        }
     }
 
     public int getRemainderDaysLeft() {
@@ -274,8 +285,27 @@ public class Goal {
     }
 
     public void calculateFields() {
+        if(endDate != null) {
+            updateWeeklyTarget();
+        }else if(weeklyTarget != 0){
+            updateEndDate();
+        }
+    }
+
+    private void updateEndDate(){
+        //This will be called if the weekly target has been edited
+
+        //calculate weekcount
+        double stillNeeded = target - value;
+        weekCount = (int) Math.ceil(stillNeeded/weeklyTarget);
+
+        //calculate end date
+        endDate = startDate.plusWeeks(weekCount);
+    }
+
+    private void updateWeeklyTarget(){
         weekCount = (int) (TimeUnit.MILLISECONDS.toDays((long) Math.ceil(endDate.toDate().getTime() - startDate.toDate().getTime()) / 7));
-        weeklyTarget = target / weekCount;
+        weeklyTarget = (target-value) / weekCount;
     }
 
     public boolean isMissed() {

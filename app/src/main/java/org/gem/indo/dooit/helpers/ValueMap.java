@@ -112,4 +112,11 @@ public class ValueMap {
     public Map<String, Object> getRawMap() {
         return map;
     }
+
+    public ValueMap deepCopy(){
+        ValueMap newValueMap = new ValueMap();
+        Map<String, Object> newMap = new LinkedHashMap<>(this.map);
+        newValueMap.map = newMap;
+        return newValueMap;
+    }
 }

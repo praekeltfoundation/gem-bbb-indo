@@ -15,8 +15,6 @@ import org.gem.indo.dooit.DooitApplication;
 import org.gem.indo.dooit.helpers.bot.ListParameterizedType;
 import org.gem.indo.dooit.helpers.notifications.NotificationType;
 import org.gem.indo.dooit.models.Badge;
-import org.gem.indo.dooit.models.goal.Goal;
-import org.gem.indo.dooit.models.goal.GoalPrototype;
 import org.gem.indo.dooit.models.Tip;
 import org.gem.indo.dooit.models.Token;
 import org.gem.indo.dooit.models.User;
@@ -24,9 +22,12 @@ import org.gem.indo.dooit.models.bot.Answer;
 import org.gem.indo.dooit.models.bot.BaseBotModel;
 import org.gem.indo.dooit.models.bot.Node;
 import org.gem.indo.dooit.models.challenge.BaseChallenge;
+import org.gem.indo.dooit.models.challenge.Participant;
 import org.gem.indo.dooit.models.challenge.ParticipantAnswer;
 import org.gem.indo.dooit.models.challenge.QuizChallengeQuestionState;
 import org.gem.indo.dooit.models.enums.BotType;
+import org.gem.indo.dooit.models.goal.Goal;
+import org.gem.indo.dooit.models.goal.GoalPrototype;
 import org.gem.indo.dooit.models.survey.CoachSurvey;
 
 import java.util.ArrayList;
@@ -60,6 +61,7 @@ public class Persisted {
     private static final String CHALLENGE_PARTICIPANT_BADGE = "challenge_participant_badge";
     private static final String WINNING_BADGE = "winning_badge";
     private static final String WINNING_CHALLENGE = "winning_challenge";
+    private static final String PARTICIPANT = "participant";
 
     @Inject
     DooitSharedPreferences dooitSharedPreferences;
@@ -225,6 +227,10 @@ public class Persisted {
         return dooitSharedPreferences.containsKey(BOT + "_" + SURVEY + "_" + botType.name());
     }
 
+    public void clearConvoSurvey(BotType botType) {
+        dooitSharedPreferences.remove(BOT + "_" + SURVEY + "_" + botType.name());
+    }
+
     public boolean isNewBotUser() {
         return dooitSharedPreferences.getBoolean(NEW_BOT_USER, true);
     }
@@ -251,7 +257,7 @@ public class Persisted {
                 && dooitSharedPreferences.containsKey(BOT + "_" + WINNING_CHALLENGE + "_" + botType.name());
     }
 
-    public void clearConvoWinner(){
+    public void clearConvoWinner() {
         dooitSharedPreferences.remove(BOT + "_" + WINNING_CHALLENGE + "_" + BotType.CHALLENGE_WINNER);
         dooitSharedPreferences.remove(BOT + "_" + WINNING_BADGE + "_" + BotType.CHALLENGE_WINNER);
     }
@@ -373,6 +379,15 @@ public class Persisted {
 
     public void clearQuizChallengeAnswers() {
         dooitSharedPreferences.remove(QUIZ_ANSWERS);
+    }
+
+    public Participant getParticipant() {
+//        ListParameterizedType type = new ListParameterizedType(Participant.class);
+        return dooitSharedPreferences.getComplex(PARTICIPANT, Participant.class);
+    }
+
+    public void setParticipant(Participant participant) {
+        dooitSharedPreferences.setComplex(PARTICIPANT, participant);
     }
 
     /********

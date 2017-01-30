@@ -54,9 +54,15 @@
     "name": "goal_add_ask_goal_gallery",
     "type": "goalGallery",
     "text": "",
-    "next": "goal_add_q_goal_name"
+    "next": "numberOfOtherUsersWithSimilarGoal"
   },
 
+  {
+  "name": "numberOfOtherUsersWithSimilarGoal",
+  "autoNext": "goal_add_q_goal_name",
+  "text": "$(number_of_other_users_with_similar_goal)",
+  "type":"text"
+  },
 
   {
     "name": "goal_add_q_goal_name",
@@ -152,6 +158,11 @@
         "name": "knowDateY",
         "text": "$(addDate)",
         "next": "askGoalDateCustom"
+      },
+      {
+        "name": "UnknownDate",
+        "text": "$(unknownDate)",
+        "next": "askGoalWeeklySaveAmount"
       }
     ]
   },
@@ -220,8 +231,8 @@
         "next": "goal_add_q_change_date"
       },
       {
-        "name": "changeAmount",
-        "text": "$(changeAmount)",
+        "name": "changeTarget",
+        "text": "$(goal_change_target)",
         "next": "goal_add_q_change_target"
       },
       {
@@ -276,40 +287,28 @@
         "name": "weeklySaveAmount",
         "value": "500",
         "text": "$(five)",
-        "textParams": [
-          "LOCAL_CURRENCY"
-        ],
-        "next": "askGoalPriorSave",
+        "next": "askGoalPriorSaveFromWeeklySaveAmount",
         "type": "textCurrency"
       },
       {
         "name": "weeklySaveAmount",
         "value": "1000",
         "text": "$(thousand)",
-        "textParams": [
-          "LOCAL_CURRENCY"
-        ],
-        "next": "askGoalPriorSave",
+        "next": "askGoalPriorSaveFromWeeklySaveAmount",
         "type": "textCurrency"
       },
       {
         "name": "weeklySaveAmount",
         "value": "1500",
         "text": "$(thousandFive)",
-        "textParams": [
-          "LOCAL_CURRENCY"
-        ],
-        "next": "askGoalPriorSave",
+        "next": "askGoalPriorSaveFromWeeklySaveAmount",
         "type": "textCurrency"
       },
       {
         "name": "weeklySaveAmount",
         "value": "2000",
         "text": "$(twoThousand)",
-        "textParams": [
-          "LOCAL_CURRENCY"
-        ],
-        "next": "askGoalPriorSave",
+        "next": "askGoalPriorSaveFromWeeklySaveAmount",
         "type": "textCurrency"
       },
       {
@@ -329,7 +328,7 @@
     "answers": [
       {
         "name": "weeklySaveAmount",
-        "nextOnFinish": "askGoalPriorSave",
+        "nextOnFinish": "askGoalPriorSaveFromWeeklySaveAmount",
         "type": "inlineCurrency",
         "typeOnFinish": "textCurrency",
         "inlineEditHint": "$(type_currency_hint)"
@@ -337,6 +336,96 @@
     ]
   },
 
+  {
+    "name" : "askGoalPriorSaveFromWeeklySaveAmount",
+    "type": "text",
+    "text": "$(askGoalPriorSave)",
+    "answers": [
+      {
+        "name": "hasSavedY",
+        "text": "$(goal_add_a_has_saved_y)",
+        "next": "askPriorSavedAmountFromWeeklySaveAmount"
+      },
+      {
+        "name": "hasSavedN",
+        "text": "$(goal_add_a_has_saved_n)",
+        "next": "goal_add_q_verifyFromWeeklySaveAmount"
+      }
+    ]
+  },
+  {
+    "name": "askPriorSavedAmountFromWeeklySaveAmount",
+    "type": "blank",
+    "autoAnswer": "priorSaveAmount",
+    "answers": [
+      {
+        "name": "priorSaveAmount",
+        "nextOnFinish": "goal_add_q_verifyFromWeeklySaveAmount",
+        "type": "inlineCurrency",
+        "typeOnFinish": "textCurrency",
+        "inlineEditHint": "$(type_currency_hint)"
+      }
+    ]
+  },
+  {
+    "name": "goal_add_q_verifyFromWeeklySaveAmount",
+    "type": "text",
+    "call": "#populate_goal",
+    "text": "$(goal_add_q_verify)",
+    "answers": [
+      {
+        "name": "acceptGoal",
+        "text": "$(acceptGoal)",
+        "next": "goal_add_do_create"
+      },
+      {
+        "name": "changeWeeklyAmount",
+        "text": "$(changeAmount)",
+        "next": "goal_add_q_change_weekly_save_amountFromWeeklySaveAmount"
+      },
+      {
+        "name": "changeTarget",
+        "text": "$(goal_change_target)",
+        "next": "goal_add_q_change_targetFromWeeklySaveAmount"
+      },
+      {
+        "name": "startOver",
+        "text": "$(startOver)",
+        "next": "goal_add_q_ask_goal"
+      }
+    ]
+  },
+  {
+    "name": "goal_add_q_change_weekly_save_amountFromWeeklySaveAmount",
+    "type": "blank",
+    "autoAnswer": "weeklySaveAmount",
+    "answers": [
+      {
+        "name": "weeklySaveAmount",
+        "nextOnFinish": "goal_add_q_verifyFromWeeklySaveAmount",
+        "type": "inlineCurrency",
+        "typeOnFinish": "textCurrency",
+        "inlineEditHint": "$(type_currency_hint)"
+      }
+    ]
+  },
+
+
+
+  {
+    "name": "goal_add_q_change_targetFromWeeklySaveAmount",
+    "type": "blank",
+    "autoAnswer": "goal_amount",
+    "answers": [
+      {
+        "name": "goal_amount",
+        "nextOnFinish": "goal_add_q_verifyFromWeeklySaveAmount",
+        "type": "inlineCurrency",
+        "typeOnFinish": "textCurrency",
+        "inlineEditHint": "$(type_currency_hint)"
+      }
+    ]
+  },
 
 
   {

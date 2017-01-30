@@ -10,6 +10,7 @@ import java.util.Map;
 import retrofit2.Response;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
+import retrofit2.http.PATCH;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
@@ -32,4 +33,7 @@ public interface SurveyAPI {
 
     @POST("/api/surveys/{id}/submission/")
     Observable<Response<Void>> createSubmission(@Path("id") long id, @Body Map<String, String> submission);
+
+    @PATCH("/api/surveys/{id}/draft/")
+    Observable<Response<Void>> updateDraft(@Path("id") long id, @Body Map<String, String> submission);
 }

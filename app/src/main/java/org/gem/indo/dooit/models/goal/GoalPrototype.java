@@ -14,15 +14,22 @@ public class GoalPrototype {
     private String name;
     @SerializedName("image_url")
     private String imageUrl;
+    @SerializedName("num_users")
+    private int numUsers;
+
+    public int getNumUsers() {
+        return numUsers;
+    }
 
     public GoalPrototype() {
         // Blank Constructor
     }
 
-    public GoalPrototype(long id, String name, String imageUrl) {
+    public GoalPrototype(long id, String name, String imageUrl, int numUsers) {
         this.id = id;
         this.name = name;
         this.imageUrl = imageUrl;
+        this.numUsers = numUsers;
     }
 
     public long getId() {

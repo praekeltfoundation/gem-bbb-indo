@@ -1,19 +1,5 @@
-0.0.15
 
-- Fixed crash in Bot
-- Inserting user's preferred name into survey notification
-- Inserting user's preferred name into survey conversation
-- Notifications now use an expandable style
-- Implemented survey submission
-- Quiz has a visible scrollbar
-- Right nav arrow only shows when there is more than one Goal
-- Made margins of toolbar elements on profile screen equidistant
-- Goal add conversation now allows user ot change date or amount
-- ChallengeFragment is now a an activity and everything shows through the activity
-- Confetti displays on quiz done fragment
-- Goal add conversation now allows user to change date or amount
-
-0.0.16
+0.1.1
 
 - Image no longer rotates on API 17 - 25
 - Main navigation icons updated
@@ -21,8 +7,12 @@
 - Close button on Challenge returns to Main screen
 - Main page titles displaying in toolbar
 - Challenges are now contained in their own screen
+- Challenges can be stopped and started again successfully
 - Crashlytics across the app surrounding the use of images and the BOT
 - Confetti only works on API 21 and higher (due to performance impact)
 - Notification for user winning a challenge
 - Bot conversation with confetti
 - Notification dismissed when user opens winner notification
+- Implemented EA Tool survey
+- Displaying user count on Goal Prototype selection
+- Restored Goal Add and Edit branch for choosing weekly target

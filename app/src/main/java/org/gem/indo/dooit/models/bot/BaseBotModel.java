@@ -22,13 +22,13 @@ public abstract class BaseBotModel {
     protected String processedText; // After param parsing
     protected String name;
     protected String type;
-    private String next;
+    protected String next;
     protected BotCallType call;
     protected BotCallType asyncCall;
     protected String[] textParams = new String[0];
     protected boolean immutable = false;
 
-    public final ValueMap values = new ValueMap();
+    public ValueMap values = new ValueMap();
 
     public BaseBotModel(String classType) {
         this.classType = classType;

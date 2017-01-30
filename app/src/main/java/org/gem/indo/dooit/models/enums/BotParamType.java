@@ -34,6 +34,7 @@ public enum BotParamType {
     GOAL_PROTO_ID("goal_proto.id"),
     GOAL_PROTO_NAME("goal_proto.name"),
     GOAL_PROTO_IMAGE_URL("goal_proto.image_url"),
+    GOAL_PROTO_NUM_USERS_WITH_SIMILAR_GOALS("goal_proto.num_users"),
 
     // Challenge
     CHALLENGE_ID("challenge.id"),
@@ -60,7 +61,10 @@ public enum BotParamType {
     // Survey
     SURVEY_TITLE("survey.title"),
     SURVEY_INTRO("survey.intro"),
-    SURVEY_OUTRO("survey.outro");
+    SURVEY_OUTRO("survey.outro"),
+
+    //Currency Symbol
+    CURRENCY_SYMBOL("currency.symbol");
 
     private static Map<String, BotParamType> map = new HashMap<>();
 

@@ -10,14 +10,14 @@
     tools:context="org.gem.indo.dooit.views.main.fragments.challenge.fragments.ChallengeFreeformFragment">
 
     <ImageButton
-        android:id="@+id/imageButton"
-        android:layout_width="26dp"
+        android:id="@+id/fragment_challenge_close"
         app:srcCompat="@drawable/quiz_close"
-        android:background="@null"
+        android:scaleType="fitCenter"
+        android:layout_width="26dp"
         android:layout_height="25dp"
-        android:scaleType="fitXY"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent" />
+        android:background="@null"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/fragment_challenge_freeform_title"

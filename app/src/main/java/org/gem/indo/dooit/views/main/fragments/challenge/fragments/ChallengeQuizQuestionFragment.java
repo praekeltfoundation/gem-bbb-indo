@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import org.gem.indo.dooit.R;
+import org.gem.indo.dooit.helpers.SquiggleBackgroundHelper;
 import org.gem.indo.dooit.models.challenge.QuizChallengeOption;
 import org.gem.indo.dooit.models.challenge.QuizChallengeQuestion;
 import org.gem.indo.dooit.models.challenge.QuizChallengeQuestionState;
@@ -27,10 +28,12 @@ public class ChallengeQuizQuestionFragment extends Fragment implements OnOptionC
     private static final String ARG_QUESTION = "question";
     private static final String ARG_OPTION_ID = "option_id";
     private static final String ARG_COMPLETED = "completed";
+
     @BindView(R.id.fragment_challengequizquestion_title)
     TextView title;
     @BindView(R.id.option_recycler_view)
     RecyclerView optionList;
+
     private QuizChallengeQuestion mQuestion = null;
     private long optionId = -1;
     private boolean completed = false;
@@ -101,6 +104,7 @@ public class ChallengeQuizQuestionFragment extends Fragment implements OnOptionC
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(org.gem.indo.dooit.R.layout.fragment_challengequizquestion, container, false);
+        SquiggleBackgroundHelper.setBackground(getContext(), R.color.grey_back, R.color.grey_fore, view);
         unbinder = ButterKnife.bind(this, view);
         title.setText(mQuestion.getText());
 

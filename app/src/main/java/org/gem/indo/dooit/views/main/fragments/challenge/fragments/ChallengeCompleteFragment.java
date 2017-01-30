@@ -12,6 +12,7 @@ import android.widget.TextView;
 import com.facebook.drawee.view.SimpleDraweeView;
 
 import org.gem.indo.dooit.R;
+import org.gem.indo.dooit.helpers.SquiggleBackgroundHelper;
 import org.gem.indo.dooit.models.challenge.BaseChallenge;
 import org.gem.indo.dooit.views.main.fragments.challenge.interfaces.OnOptionChangeListener;
 
@@ -68,6 +69,7 @@ public class ChallengeCompleteFragment extends Fragment {
     @Override public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                        Bundle savedInstanceState) {
         View view = inflater.inflate(org.gem.indo.dooit.R.layout.card_challenge_end, container, false);
+        SquiggleBackgroundHelper.setBackground(getContext(), R.color.grey_back, R.color.grey_fore, view);
         ButterKnife.bind(this, view);
         if (challenge != null) {
             image.setImageURI(challenge.getImageURL());
