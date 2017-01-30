@@ -13,6 +13,7 @@ import org.gem.indo.dooit.models.bot.Answer;
 import org.gem.indo.dooit.models.bot.BaseBotModel;
 import org.gem.indo.dooit.models.challenge.BaseChallenge;
 import org.gem.indo.dooit.models.enums.BotCallType;
+import org.gem.indo.dooit.models.enums.BotObjectType;
 import org.gem.indo.dooit.models.enums.BotParamType;
 import org.gem.indo.dooit.models.enums.BotType;
 import org.gem.indo.dooit.views.main.MainActivity;
@@ -109,6 +110,16 @@ public class ChallengeWinnerController extends DooitBotController {
 
                 }
             });
+        }
+    }
+
+    @Override
+    public Object getObject(BotObjectType objType) {
+        switch (objType) {
+            case BADGE:
+                return badge;
+            default:
+                return super.getObject(objType);
         }
     }
 

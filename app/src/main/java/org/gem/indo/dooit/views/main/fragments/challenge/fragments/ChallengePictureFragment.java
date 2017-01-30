@@ -37,6 +37,7 @@ import org.gem.indo.dooit.helpers.permissions.PermissionsHelper;
 import org.gem.indo.dooit.models.challenge.Participant;
 import org.gem.indo.dooit.models.challenge.PictureChallenge;
 import org.gem.indo.dooit.models.challenge.PictureChallengeQuestion;
+import org.gem.indo.dooit.views.DooitActivity;
 import org.gem.indo.dooit.views.main.fragments.challenge.ChallengeActivity;
 import org.gem.indo.dooit.views.main.fragments.challenge.ChallengeFragment;
 import org.gem.indo.dooit.views.main.fragments.challenge.ChallengeFragmentMainPage;
@@ -206,10 +207,13 @@ public class ChallengePictureFragment extends Fragment {
             return;
         }
 
-        final ProgressDialog dialog = new ProgressDialog(getContext());
+        /*final ProgressDialog dialog = new ProgressDialog(getContext());
         dialog.setIndeterminate(true);
         dialog.setMessage(getString(R.string.label_loading));
-        dialog.show();
+        dialog.show();*/
+        DooitActivity activity = (DooitActivity) getActivity();
+        if (activity != null)
+            activity.showProgressDialog(R.string.label_loading);
 
         Log.d(TAG, "Uploading image");
         ContentResolver cR = getActivity().getContentResolver();
@@ -221,7 +225,10 @@ public class ChallengePictureFragment extends Fragment {
         }).doAfterTerminate(new Action0() {
             @Override
             public void call() {
-                dialog.dismiss();
+//                dialog.dismiss();
+                DooitActivity activity = (DooitActivity) getActivity();
+                if (activity != null)
+                    activity.dismissDialog();
             }
         }).subscribe(new Action1<PictureParticipationResponse>() {
             @Override
