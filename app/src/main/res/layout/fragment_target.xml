@@ -6,6 +6,65 @@
     android:layout_height="match_parent"
     tools:context="org.gem.indo.dooit.views.main.fragments.target.TargetFragment">
 
+
+    <RelativeLayout
+        android:id="@+id/fragment_target_loading_progress_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone">
+
+        <ProgressBar
+            android:id="@+id/fragment_target_loading_progress"
+            style="?android:attr/progressBarStyleLarge"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:indeterminate="true" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/fragment_target_loading_progress"
+            android:layout_centerHorizontal="true"
+            android:text="@string/label_loading"/>
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/fragment_target_no_goals"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/yellow"
+        android:visibility="gone"
+        tools:visibility="gone">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="400dp"
+            android:src="@drawable/no_goal"
+            android:layout_alignParentTop="true"
+            android:layout_marginTop="-20dp"
+            android:scaleType="centerInside"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/AppTheme.TextView.Bold.Large"
+            android:layout_centerHorizontal="true"
+            android:layout_above="@+id/fragment_target_add_goal_button"
+            android:text="@string/target_no_goal"/>
+
+        <Button
+            android:id="@+id/fragment_target_add_goal_button"
+            style="@style/AppTheme.Button.Big.Black"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_margin="24dp"
+            android:text="@string/target_add_goal" />
+
+    </RelativeLayout>
+
     <android.support.v4.widget.NestedScrollView
         android:id="@+id/fragment_target_nested_scroll_view"
         android:layout_width="match_parent"
@@ -226,8 +285,8 @@
                         android:layout_height="wrap_content">
 
                         <android.support.constraint.ConstraintLayout
-                            android:layout_width="150dp"
-                            android:layout_height="150dp"
+                            android:layout_width="155dp"
+                            android:layout_height="155dp"
                             android:layout_gravity="center_horizontal"
                             android:background="@drawable/target_date">
 
@@ -240,6 +299,8 @@
                                 android:textColor="@color/grey"
                                 android:textStyle="bold"
                                 android:textAllCaps="true"
+                                android:paddingStart="3dp"
+                                android:paddingEnd="3dp"
                                 app:layout_constraintBottom_toBottomOf="parent"
                                 app:layout_constraintEnd_toEndOf="parent"
                                 app:layout_constraintLeft_toLeftOf="parent"
@@ -332,65 +393,6 @@
         </RelativeLayout>
 
     </android.support.v4.widget.NestedScrollView>
-
-
-    <RelativeLayout
-        android:id="@+id/fragment_target_loading_progress_container"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:visibility="gone">
-
-        <ProgressBar
-            android:id="@+id/fragment_target_loading_progress"
-            style="?android:attr/progressBarStyleLarge"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:indeterminate="true" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/fragment_target_loading_progress"
-            android:layout_centerHorizontal="true"
-            android:text="@string/label_loading"/>
-
-    </RelativeLayout>
-
-    <RelativeLayout
-        android:id="@+id/fragment_target_no_goals"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/yellow"
-        android:visibility="gone"
-        tools:visibility="gone">
-
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="400dp"
-            android:src="@drawable/no_goal"
-            android:layout_alignParentTop="true"
-            android:layout_marginTop="-20dp"
-            android:scaleType="centerInside"/>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            style="@style/AppTheme.TextView.Bold.Large"
-            android:layout_centerHorizontal="true"
-            android:layout_above="@+id/fragment_target_add_goal_button"
-            android:text="@string/target_no_goal"/>
-
-        <Button
-            android:id="@+id/fragment_target_add_goal_button"
-            style="@style/AppTheme.Button.Big.Black"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_margin="24dp"
-            android:text="@string/target_add_goal" />
-
-    </RelativeLayout>
 
 
 </FrameLayout>
