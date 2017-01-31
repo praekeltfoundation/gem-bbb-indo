@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -21,8 +20,6 @@ import android.widget.ImageButton;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import com.github.jinatonic.confetti.CommonConfetti;
 
 import org.gem.indo.dooit.DooitApplication;
 import org.gem.indo.dooit.R;
@@ -266,7 +263,6 @@ public class ChallengeQuizFragment extends Fragment implements OnOptionChangeLis
         Bundle bundle = new Bundle();
         bundle.putParcelable(ChallengeActivity.ARG_CHALLENGE,challenge);
         bundle.putInt(ChallengeActivity.ARG_RETURNPAGE, returnPage != null ? returnPage.ordinal() : -1);
-//        bundle.putParcelable(ChallengeActivity.ARG_PARTICIPANT,participant);
         persisted.setParticipant(participant);
         intent.putExtras(bundle);
 
@@ -443,7 +439,6 @@ public class ChallengeQuizFragment extends Fragment implements OnOptionChangeLis
     public void onSaveInstanceState(Bundle outState) {
         if (outState != null) {
             outState.putSerializable(ChallengeActivity.ARG_PAGE, FRAGMENT_STATE);
-           // outState.putParcelable(ChallengeActivity.ARG_PARTICIPANT, participant);
             persisted.setParticipant(participant);
             outState.putParcelable(ChallengeActivity.ARG_CHALLENGE, challenge);
             outState.putParcelableArray(ARG_ANSWERS, answers.toArray(new ParticipantAnswer[]{}));
@@ -460,7 +455,6 @@ public class ChallengeQuizFragment extends Fragment implements OnOptionChangeLis
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         if (savedInstanceState != null) {
-           // participant = savedInstanceState.getParcelable(ChallengeActivity.ARG_PARTICIPANT);
             participant = persisted.getParticipant();
             challenge = savedInstanceState.getParcelable(ChallengeActivity.ARG_CHALLENGE);
             ParticipantAnswer storedAnswers[] = (ParticipantAnswer[]) savedInstanceState.getParcelableArray(ARG_ANSWERS);

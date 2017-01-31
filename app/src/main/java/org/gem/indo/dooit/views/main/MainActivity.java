@@ -15,6 +15,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -163,7 +164,6 @@ public class MainActivity extends DooitActivity {
         currentPos = 0;
         saveToHistory = true;
 
-
         /*Set the ActionBar's title for Bina here to ensure it gets set initially
         When the app starts up for a logged in user technically no page has been selected*/
         mainTabAdapter.setAdapterListener(new MainTabAdapter.MainTabAdapterListener() {
@@ -173,7 +173,6 @@ public class MainActivity extends DooitActivity {
             }
         });
     }
-
 
 
     @OnPageChange(value = R.id.content_main_view_pager, callback = OnPageChange.Callback.PAGE_SELECTED)
@@ -267,10 +266,10 @@ public class MainActivity extends DooitActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (!activityForResultHelper.onActivityResult(requestCode, resultCode, data))
             super.onActivityResult(requestCode, resultCode, data);
-        if(data != null){
-            switch (requestCode){
+        if (data != null) {
+            switch (requestCode) {
                 case RequestCodes.CHALLENGE_PARTICIPANT_BADGE:
-                    if(persisted.hasConvoParticipant(BotType.CHALLENGE_PARTICIPANT_BADGE))
+                    if (persisted.hasConvoParticipant(BotType.CHALLENGE_PARTICIPANT_BADGE))
                         startBot(BotType.CHALLENGE_PARTICIPANT_BADGE);
             }
         }
@@ -288,7 +287,8 @@ public class MainActivity extends DooitActivity {
     public void refreshGoals() {
         ((TargetFragment) getFragment(MainViewPagerPositions.TARGET)).refreshGoals();
     }
-    public void setTitle(String newTitle){
+
+    public void setTitle(String newTitle) {
         titleView.setText(newTitle);
     }
 
@@ -351,6 +351,15 @@ public class MainActivity extends DooitActivity {
 
     public void showConfetti() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
-            CommonConfetti.rainingConfetti(container, new int[]{Color.RED, Color.BLUE}).oneShot();
+            // The confetti is scheduled to be drawn when the layout is complete. If it is called
+            // immediately in onCreate or onResume, the confetti will be drawn to a canvas that is
+            // painted over later by the MainActivity view, hiding the confetti.
+            container.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+                @Override
+                public void onGlobalLayout() {
+                    container.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+                    CommonConfetti.rainingConfetti(container, new int[]{Color.RED, Color.BLUE}).oneShot();
+                }
+            });
     }
 }
