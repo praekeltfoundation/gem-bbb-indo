@@ -17,6 +17,10 @@ public class GoalPrototype {
     @SerializedName("num_users")
     private int numUsers;
 
+    public GoalPrototype copy(){
+        return new GoalPrototype(this.id, new String(this.name), new String(this.imageUrl), this.numUsers);
+    }
+
     public int getNumUsers() {
         return numUsers;
     }

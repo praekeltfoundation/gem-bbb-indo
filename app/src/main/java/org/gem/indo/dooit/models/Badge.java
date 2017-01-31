@@ -21,6 +21,16 @@ public class Badge {
     private String socialUrl;
     private String intro;
 
+    public Badge copy(){
+        Badge badge = new Badge();
+        badge.setName(new String(this.name));
+        badge.imageUrl = new String(this.imageUrl);
+        badge.earnedOn = new DateTime(this.earnedOn);
+        badge.socialUrl = new String(this.socialUrl);
+        badge.intro = new String(this.intro);
+        return badge;
+    }
+
     public String getName() {
         return name;
     }

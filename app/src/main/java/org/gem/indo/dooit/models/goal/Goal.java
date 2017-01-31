@@ -61,6 +61,37 @@ public class Goal {
     // Server does not allow prototype object in Goal
     transient private GoalPrototype prototype;
 
+    public Goal copy(){
+        Goal goal = new Goal();
+
+        goal.setId(this.id);
+        goal.setName(new String(this.name));
+        goal.setValue(this.value);
+        goal.setTarget(this.target);
+        goal.setImageUrl(new String(this.imageUrl));
+        goal.setStartDate(new LocalDate(this.startDate));
+        goal.setEndDate(new LocalDate(this.endDate));
+        for(GoalTransaction gt : this.transactions){
+            goal.addTransaction(gt.copy());
+        }
+        goal.setWeeklyTotals(new LinkedHashMap<>(this.getWeeklyTotals()));
+        goal.setWeeklyTarget(this.weeklyTarget);
+        goal.setWeekCount(this.weekCount);
+        goal.setWeekCountToNow(this.weekCountToNow);
+        goal.setWeeklyAverage(this.weeklyAverage);
+        goal.setUser(this.user);
+        goal.setPrototypeId(this.prototypeId);
+        List<Badge> tempBadges = new ArrayList<>();
+        for(Badge badge : this.newBadges){
+            tempBadges.add(badge.copy());
+        }
+        goal.newBadges = tempBadges;
+        goal.setLocalImageUri(new String(this.localImageUri));
+        goal.setPrototype(this.prototype.copy());
+
+        return goal;
+    }
+
     public long getId() {
         return id;
     }
