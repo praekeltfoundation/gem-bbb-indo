@@ -193,7 +193,7 @@
     <string name="goal_add_a_camera">Aku ingin mengunggah foto.</string>
     <string name="goal_add_a_gallery">Aku ingin memilih foto dari galeri.</string>
 
-    <string name="goal_add_q_ask_amount">Berapa yang kamu harus tabung untuk $(goal.name)?</string>
+    <string name="goal_add_q_ask_amount">Berapa yang harus kamu tabung untuk $(goal.name)?</string>
     <string name="goal_add_q_ask_date">Pada tanggal berapa kamu sudah harus selesai menabung untuk targetmu?</string>
 
     <string name="goal_add_q_verify">"Jika kamu tabung $(goal.weekly_target_currency) per minggu, kamu akan mencapai targetmu $(goal.name) dalam $(goal.weeks_left_up) minggu. Jika kamu ikuti rencana ini, targetmu akan tercapai pada tanggal $(goal.end_date).</string>
