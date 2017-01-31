@@ -57,6 +57,9 @@ public class ChallengeWinnerController extends DooitBotController {
                 if (hasBadge())
                     model.values.put(paramType.getKey(), badge.getIntro());
                 break;
+            case CHALLENGE_TITLE:
+                if (challenge.getName() != null)
+                    model.values.put(paramType.getKey(),challenge.getName());
         }
         super.resolveParam(model, paramType);
     }

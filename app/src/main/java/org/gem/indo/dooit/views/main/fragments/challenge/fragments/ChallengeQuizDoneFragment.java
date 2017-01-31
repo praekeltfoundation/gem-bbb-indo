@@ -164,6 +164,7 @@ public class ChallengeQuizDoneFragment extends Fragment {
         Intent intent = new Intent();
 
         bundle.putParcelable(ChallengeActivity.ARG_CHALLENGE,challenge);
+        bundle.putParcelable(ChallengeActivity.ARG_PARTICIPANT,persisted.getParticipant());
         bundle.putInt(ChallengeActivity.ARG_RETURNPAGE, returnPage != null ? returnPage.ordinal() : -1);
 
         FragmentActivity activity = getActivity();
@@ -180,6 +181,7 @@ public class ChallengeQuizDoneFragment extends Fragment {
         else{
             activity.setResult(Activity.RESULT_OK, intent);
         }
+        persisted.setParticipant(null);
         activity.finish();
     }
 }

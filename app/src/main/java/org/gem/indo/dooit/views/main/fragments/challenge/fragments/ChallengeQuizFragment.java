@@ -228,7 +228,7 @@ public class ChallengeQuizFragment extends Fragment implements OnOptionChangeLis
             public void call(QuizChallengeEntry entry) {
                 Log.d(TAG, "Entry submitted");
                 persisted.clearCurrentChallenge();
-                persisted.setParticipant(null);
+
                 clearState();
                 challengeCompleted = true;
 
