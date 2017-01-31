@@ -62,6 +62,7 @@ public class Persisted {
     private static final String WINNING_BADGE = "winning_badge";
     private static final String WINNING_CHALLENGE = "winning_challenge";
     private static final String PARTICIPANT = "participant";
+    private static final String TEMPORARY = "temporary";
 
     @Inject
     DooitSharedPreferences dooitSharedPreferences;
@@ -113,6 +114,16 @@ public class Persisted {
 
     public void saveConvoGoal(BotType type, Goal goal) {
         dooitSharedPreferences.setComplex(BOT + "_" + GOAL + "_" + type.name(), goal);
+    }
+
+    public void saveOldConvoGoal(BotType type, Goal goal) {
+        dooitSharedPreferences.setComplex(BOT + "_" + GOAL + "_" + type.name() + "_" + TEMPORARY, goal);
+    }
+
+    public Goal loadOldConvoGoal(BotType type) {
+        if (hasConvoGoal(type))
+            return dooitSharedPreferences.getComplex(BOT + "_" + GOAL + "_" + type.name() + "_" + TEMPORARY, Goal.class);
+        return null;
     }
 
     public Goal loadConvoGoal(BotType type) {

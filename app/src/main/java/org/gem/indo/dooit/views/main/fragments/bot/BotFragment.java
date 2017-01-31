@@ -391,7 +391,8 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
                 return new GoalEditController(getActivity(), this,
                         persisted.loadConvoGoal(botType),
                         persisted.loadConvoChallenge(botType),
-                        persisted.loadConvoTip());
+                        persisted.loadConvoTip(),
+                        persisted.loadOldConvoGoal(botType));
             case SURVEY_BASELINE:
                 return new BaselineSurveyController(getActivity(),
                         persisted.loadConvoSurvey(botType));
