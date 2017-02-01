@@ -4,6 +4,7 @@ import android.text.TextUtils;
 
 import com.google.gson.annotations.SerializedName;
 
+import org.gem.indo.dooit.helpers.String.StringHelper;
 import org.gem.indo.dooit.helpers.Utils;
 import org.gem.indo.dooit.models.Badge;
 import org.gem.indo.dooit.views.helpers.activity.CurrencyHelper;
@@ -65,10 +66,10 @@ public class Goal {
         Goal goal = new Goal();
 
         goal.setId(this.id);
-        goal.setName(new String(this.name));
+        goal.setName(StringHelper.newString(this.name));
         goal.setValue(this.value);
         goal.setTarget(this.target);
-        goal.setImageUrl(new String(this.imageUrl));
+        goal.setImageUrl(StringHelper.newString(this.imageUrl));
         goal.setStartDate(new LocalDate(this.startDate));
         goal.setEndDate(new LocalDate(this.endDate));
         for(GoalTransaction gt : this.transactions){
@@ -86,7 +87,7 @@ public class Goal {
             tempBadges.add(badge.copy());
         }
         goal.newBadges = tempBadges;
-        goal.setLocalImageUri(new String(this.localImageUri));
+        goal.setLocalImageUri(StringHelper.newString(this.localImageUri));
         goal.setPrototype(this.prototype.copy());
 
         return goal;
