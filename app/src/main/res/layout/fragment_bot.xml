@@ -56,5 +56,16 @@
         app:tagEllipsize="end"
         app:tagTextColor="@color/grey_fore"
         app:tagTextGravity="center"
-        app:tagTextSize="@dimen/k_font_large" />
+        app:tagTextSize="@dimen/k_font_large"
+
+        android:visibility="gone"/>
+
+    <org.gem.indo.dooit.views.custom.DesignSafeRecyclerView
+        android:id="@+id/fragment_bot_answer_quick_answers"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true"
+        android:padding="4dp"
+        />
 </RelativeLayout>

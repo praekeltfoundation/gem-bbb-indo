@@ -80,8 +80,12 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
     @BindView(R.id.fragment_bot_progress_bar_container)
     View progressBarContainer;
 
+    // TODO: Remove hashtag view library
     @BindView(R.id.fragment_bot_answer_hash_view)
     HashtagView answerView;
+
+    @BindView(R.id.fragment_bot_answer_quick_answers)
+    RecyclerView quickAnswers;
 
     @Inject
     Persisted persisted;
