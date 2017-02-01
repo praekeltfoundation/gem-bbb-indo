@@ -45,7 +45,6 @@
     "name": "goal_edit_date",
     "type": "blank",
     "autoAnswer": "goal_end_date",
-    "call": "#do_update",
     "answers": [
       {
         "name": "goal_end_date",
@@ -64,7 +63,6 @@
     "type": "text",
     "text": "$(goal_add_q_ask_amount)",
     "autoAnswer": "goal_target",
-    "call": "#update_local_goal",
     "answers": [
       {
         "name": "goal_target",
@@ -80,7 +78,6 @@
     "type": "text",
     "text": "$(goal_edit_target)",
     "autoAnswer": "goal_weekly_target",
-    "call": "#update_local_goal",
     "answers": [
       {
         "name": "goal_weekly_target",
@@ -96,12 +93,12 @@
     "name": "goal_edit_target_confirm",
     "type": "text",
     "text": "$(goal_edit_target_confirm)",
-    "call" : "#update_goal_confirm",
+    "call": "#update_local_goal",
     "answers": [
       {
         "name": "goal_edit_target_accept",
         "text": "$(goal_edit_target_accept)",
-        "next": "goal_edit_do_update"
+        "next": "goal_edit_confirm_local_update"
       },
       {
         "name": "goal_edit_target_cancel",
@@ -115,12 +112,12 @@
     "name": "goal_edit_weekly_target_confirm",
     "type": "text",
     "text": "$(goal_edit_target_confirm)",
-    "call" : "#update_goal_confirm",
+    "call": "#update_local_goal",
     "answers": [
       {
         "name": "goal_edit_weekly_target_accept",
         "text": "$(goal_edit_target_accept)",
-        "next": "goal_edit_do_update"
+        "next": "goal_edit_confirm_local_update"
       },
       {
         "name": "goal_edit_weekly_target_cancel",
@@ -128,6 +125,13 @@
         "next": "goal_edit_end"
       }
     ]
+  },
+
+  {
+    "name": "goal_edit_confirm_local_update",
+    "type": "blank",
+    "call": "#update_goal_confirm",
+    "autoNext": "goal_edit_do_update"
   },
 
 

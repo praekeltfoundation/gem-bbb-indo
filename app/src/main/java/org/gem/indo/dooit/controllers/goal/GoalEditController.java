@@ -5,6 +5,7 @@ import android.net.Uri;
 
 import com.facebook.drawee.backends.pipeline.Fresco;
 import com.facebook.imagepipeline.core.ImagePipeline;
+import com.google.android.gms.analytics.AnalyticsService;
 
 import org.gem.indo.dooit.DooitApplication;
 import org.gem.indo.dooit.api.DooitAPIError;
@@ -52,7 +53,11 @@ public class GoalEditController extends GoalBotController {
         super(activity, botRunner, BotType.GOAL_EDIT, goal, challenge, tip);
         ((DooitApplication) activity.getApplication()).component.inject(this);
         this.goal = goal;
-        this.oldGoal = oldGoal;
+        if(oldGoal == null){
+            this.oldGoal = goal.copy();
+        }else{
+            this.oldGoal = oldGoal;
+        }
     }
 
     @Override
@@ -62,7 +67,7 @@ public class GoalEditController extends GoalBotController {
                 doLocalUpdate(answerLog);
                 break;
             case UPDATE_GOAL_CONFIRM:
-                confirmLocalUpdate(model);
+                confirmLocalUpdate(answerLog);
                 break;
         }
     }
@@ -102,14 +107,14 @@ public class GoalEditController extends GoalBotController {
         if (answerLog.containsKey("goal_edit_choice_date"))
             goal.setEndDate(DateTimeFormat.forPattern("yyyy-MM-dd")
                     .parseLocalDate(answerLog.get("goal_end_date").getValue().substring(0, 10)));
-        else if (answerLog.containsKey("goal_edit_target_accept"))
+        else if (answerLog.containsKey("goal_target"))
             goal.setTarget(Double.parseDouble(answerLog.get("goal_target").getValue()));
         else if (answerLog.containsKey("goal_edit_gallery") || answerLog.containsKey("goal_edit_camera")) {
             //Note: This case will have to be handled by and async call
             //handleImage(answerLog, listener);
             // Don't upload Goal
             return;
-        }else if(answerLog.containsKey("goal_edit_weekly_target_accept")){
+        }else if(answerLog.containsKey("goal_weekly_target")){
             goal.setWeeklyTarget(Double.parseDouble(answerLog.get("goal_weekly_target").getValue()));
         }
 
@@ -117,15 +122,13 @@ public class GoalEditController extends GoalBotController {
         persisted.saveOldConvoGoal(botType, oldGoal);
     }
 
-    private void confirmLocalUpdate(BaseBotModel model) {
-        Node node = (Node) model;
-        Answer answer = node.getAnswers().get(0); //There should only be one answer
-        if (    answer.getName().equals("goal_edit_target_cancel") ||
-                answer.getName().equals("goal_edit_weekly_target_cancel")
+    private void confirmLocalUpdate(Map<String, Answer> answerLog) {
+        if (    answerLog.containsKey("goal_edit_target_cancel") ||
+                answerLog.containsKey("goal_edit_weekly_target_cancel")
                 ){
-            goal = oldGoal;
             oldGoal = goal.copy();
         }else{
+            goal = oldGoal;
             oldGoal = goal.copy();
         }
 

@@ -88,7 +88,7 @@ public class Goal {
         }
         goal.newBadges = tempBadges;
         goal.setLocalImageUri(StringHelper.newString(this.localImageUri));
-        goal.setPrototype(this.prototype.copy());
+        //goal.setPrototype(this.prototype.copy());     //Prototype will not necessarily be set
 
         return goal;
     }
