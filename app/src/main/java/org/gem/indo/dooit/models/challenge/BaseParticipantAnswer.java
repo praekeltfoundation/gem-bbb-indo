@@ -5,6 +5,7 @@ import android.os.Parcelable;
 
 import com.google.gson.annotations.SerializedName;
 
+import org.gem.indo.dooit.models.Badge;
 import org.joda.time.DateTime;
 
 /**
@@ -23,6 +24,7 @@ public abstract class BaseParticipantAnswer implements Parcelable {
     protected Long question;
     protected Long participant;
     protected Long user;
+    protected Badge badge;
 
 
     /****************
@@ -64,6 +66,7 @@ public abstract class BaseParticipantAnswer implements Parcelable {
         return user != null ? user : -1;
     }
 
+    public Badge getBadge() { return badge; }
 
     /***********
      * Setters *
@@ -89,6 +92,10 @@ public abstract class BaseParticipantAnswer implements Parcelable {
         this.user = user;
     }
 
+    public void setBadge(Badge badge) {
+        this.badge = badge;
+    }
+
     /************************
      * Parcelable interface *
      ************************/
@@ -99,6 +106,7 @@ public abstract class BaseParticipantAnswer implements Parcelable {
         question = in.readByte() == 0x00 ? null : in.readLong();
         participant = in.readByte() == 0x00 ? null : in.readLong();
         user = in.readByte() == 0x00 ? null : in.readLong();
+        badge = in.readParcelable(Badge.class.getClassLoader());
     }
 
     @Override
@@ -132,6 +140,12 @@ public abstract class BaseParticipantAnswer implements Parcelable {
         } else {
             dest.writeByte((byte) (0x01));
             dest.writeLong(user);
+        }
+        if (badge == null)
+            dest.writeValue(badge);
+        else {
+            dest.writeByte((byte) (0x01));
+            dest.writeValue(badge);
         }
     }
 }

@@ -33,5 +33,8 @@ public enum BotCallType {
     POPULATE_GOAL,
 
     @SerializedName("#confirm_notify")
-    CONFIRM_NOTIFY
+    CONFIRM_NOTIFY,
+
+    @SerializedName("#participant_badge")
+    PARTICIPANT_BADGE
 }

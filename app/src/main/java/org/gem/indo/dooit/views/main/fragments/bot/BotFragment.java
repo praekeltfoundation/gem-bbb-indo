@@ -25,6 +25,7 @@ import org.gem.indo.dooit.api.managers.GoalManager;
 import org.gem.indo.dooit.api.managers.TipManager;
 import org.gem.indo.dooit.controllers.BotController;
 import org.gem.indo.dooit.controllers.RequirementResolver;
+import org.gem.indo.dooit.controllers.challenge.ChallengeParticipantController;
 import org.gem.indo.dooit.controllers.challenge.ChallengeWinnerController;
 import org.gem.indo.dooit.controllers.goal.GoalAddController;
 import org.gem.indo.dooit.controllers.goal.GoalDepositController;
@@ -292,6 +293,10 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
                 feed.parse(R.raw.challenge_winner, Node.class);
                 initializeBot();
                 break;
+            case CHALLENGE_PARTICIPANT_BADGE:
+                feed.parse(R.raw.challenge_participant_badge, Node.class);
+                initializeBot();
+                break;
         }
     }
 
@@ -356,6 +361,10 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
                 break;
             case CHALLENGE_WINNER:
                 getAndAddNode(null);
+                break;
+            case CHALLENGE_PARTICIPANT_BADGE:
+                getAndAddNode(null);
+                break;
         }
     }
 
@@ -402,6 +411,10 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
                 return new ChallengeWinnerController(getActivity(),
                         persisted.loadWinningBadge(botType),
                         persisted.loadWinningChallenge(botType));
+            case CHALLENGE_PARTICIPANT_BADGE:
+                return new ChallengeParticipantController(getActivity(),
+                        persisted.loadParticipantBadge(botType),
+                        persisted.loadParticipantChallenge(botType));
             default:
                 return null;
         }
