@@ -5,6 +5,7 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -14,7 +15,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 
-import com.crashlytics.android.Crashlytics;
 import com.greenfrvr.hashtagview.HashtagView;
 
 import org.gem.indo.dooit.Constants;
@@ -53,7 +53,7 @@ import org.gem.indo.dooit.views.main.MainActivity;
 import org.gem.indo.dooit.views.main.MainViewPagerPositions;
 import org.gem.indo.dooit.views.main.fragments.MainFragment;
 import org.gem.indo.dooit.views.main.fragments.bot.adapters.BotAdapter;
-import org.gem.indo.dooit.views.main.fragments.bot.listeners.OnBotInputListener;
+import org.gem.indo.dooit.views.main.fragments.bot.adapters.QuickAnswerAdapter;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -71,7 +71,7 @@ import butterknife.ButterKnife;
  * create an instance of this fragment.
  */
 public class BotFragment extends MainFragment implements HashtagView.TagsClickListener,
-        OnBotInputListener, BotRunner {
+        QuickAnswerAdapter.OnBotInputListener, BotRunner {
 
     @BindView(R.id.fragment_bot)
     View background;
@@ -136,12 +136,22 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_bot, container, false);
         ButterKnife.bind(this, view);
+
         SquiggleBackgroundHelper.setBackground(getContext(), R.color.grey_back, R.color.grey_fore, background);
+
         answerView.addOnTagClickListener(this);
+
+        StaggeredGridLayoutManager layoutManager = new StaggeredGridLayoutManager(3, StaggeredGridLayoutManager.HORIZONTAL);
+        layoutManager.setReverseLayout(true);
+        quickAnswers.setLayoutManager(layoutManager);
+        quickAnswers.setItemAnimator(new DefaultItemAnimator());
+        quickAnswers.setAdapter(new QuickAnswerAdapter(getContext(), this));
+
         conversationRecyclerView.setHasFixedSize(true);
         conversationRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         conversationRecyclerView.setItemAnimator(new DefaultItemAnimator());
         conversationRecyclerView.setAdapter(new BotAdapter(getContext(), this));
+
         return view;
     }
 
@@ -433,6 +443,12 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
         return null;
     }
 
+    public QuickAnswerAdapter getAnswerAdapter() {
+        if (quickAnswers != null)
+            return (QuickAnswerAdapter) quickAnswers.getAdapter();
+        return null;
+    }
+
     @Override
     public void onItemClicked(Object item) {
         Answer answer = (Answer) item;
@@ -591,6 +607,8 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
     }
 
     private void addAnswerOptions(Node node) {
+        getAnswerAdapter().clear();
+
         answerView.setData(new ArrayList<>());
         answerView.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
             @Override
@@ -609,6 +627,8 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
 
                 for (Answer answer : answers)
                     processText(answer);
+
+                getAnswerAdapter().addAll(answers);
 
                 answerView.setData(answers, new HashtagView.DataStateTransform<Answer>() {
                     @Override
