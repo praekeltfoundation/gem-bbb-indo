@@ -53,6 +53,7 @@ import org.gem.indo.dooit.views.main.MainActivity;
 import org.gem.indo.dooit.views.main.MainViewPagerPositions;
 import org.gem.indo.dooit.views.main.fragments.MainFragment;
 import org.gem.indo.dooit.views.main.fragments.bot.adapters.BotAdapter;
+import org.gem.indo.dooit.views.main.fragments.bot.listeners.OnBotInputListener;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -69,7 +70,8 @@ import butterknife.ButterKnife;
  * Use the {@link BotFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class BotFragment extends MainFragment implements HashtagView.TagsClickListener, BotRunner {
+public class BotFragment extends MainFragment implements HashtagView.TagsClickListener,
+        OnBotInputListener, BotRunner {
 
     @BindView(R.id.fragment_bot)
     View background;
@@ -471,6 +473,11 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
             getAndAddNode(answer.getNext());
         else
             answerView.setData(new ArrayList<>());
+    }
+
+    @Override
+    public void onAnswer(Answer answer) {
+        onItemClicked(answer);
     }
 
     private Map<String, Answer> createAnswerLog(List<BaseBotModel> conversation) {
