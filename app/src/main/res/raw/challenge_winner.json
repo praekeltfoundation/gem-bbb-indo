@@ -9,6 +9,13 @@
   {
     "name": "challenge_winner_badge",
     "type": "badge",
+    "autoNext": "challenge_prize_won"
+  },
+  {
+    "name": "challenge_prize_won",
+    "type": "text",
+    "text": "$(challenge_prize_won)",
+    "call": "#winning_prize",
     "autoNext": "challenge_winner_end"
   },
   {

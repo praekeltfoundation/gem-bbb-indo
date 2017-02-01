@@ -18,25 +18,13 @@
         app:placeholderImage="@drawable/empty_image"
         app:placeholderImageScaleType="centerInside"/>
 
-    <TextView
-        android:id="@+id/item_view_bot_badge_title"
-        style="@style/AppTheme.TextView.Regular.Large"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_alignBottom="@id/item_view_bot_badge_image"
-        android:layout_marginBottom="4dp"
-        android:textAlignment="center"
-        tools:text="Badge title"/>
-
     <View
         android:id="@+id/item_view_bot_badge_separator"
         android:layout_width="match_parent"
         android:layout_height="3dp"
         android:layout_marginTop="-2dp"
         android:layout_below="@id/item_view_bot_badge_image"
-        tools:background="@drawable/bkg_carousel_separator"
-        />
+        tools:background="@drawable/bkg_carousel_separator" />
 
     <TextView
         android:id="@+id/item_view_bot_badge_share"

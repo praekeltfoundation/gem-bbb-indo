@@ -43,6 +43,7 @@ public enum BotParamType {
     CHALLENGE_IMAGE_URL("challenge.image_url"),
     CHALLENGE_INTRO("challenge.intro"),
     CHALLENGE_OUTRO("challenge.outro"),
+    CHALLENGE_PRIZE("challenge.prize"),
 
     // Tips
     TIP_ID("tip.id"),
