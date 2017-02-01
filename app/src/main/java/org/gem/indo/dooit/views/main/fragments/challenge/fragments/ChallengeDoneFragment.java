@@ -19,11 +19,17 @@ import android.widget.TextView;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.github.jinatonic.confetti.CommonConfetti;
 
+import org.gem.indo.dooit.DooitApplication;
 import org.gem.indo.dooit.R;
+import org.gem.indo.dooit.helpers.Persisted;
 import org.gem.indo.dooit.helpers.SquiggleBackgroundHelper;
+import org.gem.indo.dooit.models.Badge;
 import org.gem.indo.dooit.models.challenge.BaseChallenge;
+import org.gem.indo.dooit.models.enums.BotType;
 import org.gem.indo.dooit.views.main.fragments.challenge.ChallengeActivity;
 import org.gem.indo.dooit.views.main.fragments.challenge.ChallengeFragmentMainPage;
+
+import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -60,6 +66,9 @@ public class ChallengeDoneFragment extends Fragment {
 
     Unbinder unbinder = null;
 
+    @Inject
+    Persisted persisted;
+
     public ChallengeDoneFragment() {
         // Required empty public constructor
     }
@@ -86,6 +95,7 @@ public class ChallengeDoneFragment extends Fragment {
         if (getArguments() != null) {
             challenge = getArguments().getParcelable(ARG_CHALLENGE);
         }
+        ((DooitApplication) getActivity().getApplication()).component.inject(this);
     }
 
     @Override
@@ -95,6 +105,7 @@ public class ChallengeDoneFragment extends Fragment {
         SquiggleBackgroundHelper.setBackground(getContext(), R.color.grey_back, R.color.grey_fore, view);
         unbinder = ButterKnife.bind(this, view);
         title.setText(challenge.getName());
+
         return view;
     }
 
@@ -140,17 +151,27 @@ public class ChallengeDoneFragment extends Fragment {
     }
 
     private void returnToParent(ChallengeFragmentMainPage returnPage) {
-        FragmentActivity activity = getActivity();
-        Intent intent = new Intent();
+        Bundle bundleFragment = this.getArguments();
+        Badge participantBadge = bundleFragment.getParcelable(ChallengeActivity.ARG_PARTICIPANT_BADGE);
         Bundle bundle = new Bundle();
+        Intent intent = new Intent();
+
         bundle.putParcelable(ChallengeActivity.ARG_CHALLENGE,challenge);
         bundle.putInt(ChallengeActivity.ARG_RETURNPAGE, returnPage != null ? returnPage.ordinal() : -1);
-        intent.putExtras(bundle);
 
-        if (activity.getParent() == null) {
-            activity.setResult(Activity.RESULT_OK, intent);
-        } else {
+        FragmentActivity activity = getActivity();
+
+        if (participantBadge != null){
+            bundle.putParcelable(ChallengeActivity.ARG_PARTICIPANT_BADGE,participantBadge);
+            persisted.saveConvoParticipant(BotType.CHALLENGE_PARTICIPANT_BADGE,participantBadge,challenge);
+            intent.putExtras(bundle);
+        }
+
+        if (activity.getParent() != null) {
             activity.getParent().setResult(Activity.RESULT_OK, intent);
+        }
+        else{
+            activity.setResult(Activity.RESULT_OK, intent);
         }
         activity.finish();
     }

@@ -2,6 +2,7 @@ package org.gem.indo.dooit.models.challenge;
 
 import com.google.gson.annotations.SerializedName;
 
+import org.gem.indo.dooit.models.Badge;
 import org.joda.time.DateTime;
 
 import java.io.Serializable;
@@ -23,6 +24,7 @@ public class QuizChallengeEntry implements Serializable {
     private Long challenge = null;
     private Long participant = null;
     private Long user = null;
+    private Badge badge = null;
 
 
     /****************
@@ -71,6 +73,8 @@ public class QuizChallengeEntry implements Serializable {
         return user != null ? user : -1;
     }
 
+    public Badge getBadge(){ return badge != null ? badge : null; }
+
     /***********
      * Setters *
      ***********/
@@ -94,4 +98,6 @@ public class QuizChallengeEntry implements Serializable {
     public void setUser(long user) {
         this.user = user;
     }
+
+    public void setBadge(Badge badge){ this.badge = badge;}
 }

@@ -22,3 +22,5 @@
 - Updated Bahasa strings in the BINA and in the target fragment
 - Help is hidden
 - Target deadline in Bahasa no longer touches the edges
+- Participation Badges are awarded on all challenges
+- Winner badges are awarded and notification gets dismissed
