@@ -285,8 +285,8 @@
                         android:layout_height="wrap_content">
 
                         <android.support.constraint.ConstraintLayout
-                            android:layout_width="155dp"
-                            android:layout_height="155dp"
+                            android:layout_width="150dp"
+                            android:layout_height="150dp"
                             android:layout_gravity="center_horizontal"
                             android:background="@drawable/target_date">
 
@@ -299,8 +299,9 @@
                                 android:textColor="@color/grey"
                                 android:textStyle="bold"
                                 android:textAllCaps="true"
-                                android:paddingStart="3dp"
-                                android:paddingEnd="3dp"
+                                android:paddingStart="5dp"
+                                android:paddingEnd="5dp"
+                                android:textAlignment="center"
                                 app:layout_constraintBottom_toBottomOf="parent"
                                 app:layout_constraintEnd_toEndOf="parent"
                                 app:layout_constraintLeft_toLeftOf="parent"
