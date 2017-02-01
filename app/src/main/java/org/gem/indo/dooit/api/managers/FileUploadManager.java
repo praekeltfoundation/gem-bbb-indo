@@ -5,6 +5,7 @@ import android.app.Application;
 import org.gem.indo.dooit.api.DooitErrorHandler;
 import org.gem.indo.dooit.api.interfaces.FileUploadAPI;
 import org.gem.indo.dooit.api.responses.EmptyResponse;
+import org.gem.indo.dooit.api.responses.PictureParticipationResponse;
 
 import java.io.File;
 
@@ -37,7 +38,7 @@ public class FileUploadManager extends DooitManager {
         return useNetwork(fileUploadAPI.uploadProfileImage(userId, RequestBody.create(mediaTypeHeader, file), "attachment;filename=\"" + filename + "\""), errorHandler);
     }
 
-    public Observable<EmptyResponse> uploadParticipantPicture(long participantId, String mediaType, File file, DooitErrorHandler errorHandler) {
+    public Observable<PictureParticipationResponse> uploadParticipantPicture(long participantId, String mediaType, File file, DooitErrorHandler errorHandler) {
         MediaType mediaTypeHeader = MediaType.parse(mediaType);
         String filename = file.getName();
         return useNetwork(fileUploadAPI.uploadParticipantPicture(participantId, RequestBody.create(mediaTypeHeader, file), "attachment;filename=\"" + filename + "\""), errorHandler);

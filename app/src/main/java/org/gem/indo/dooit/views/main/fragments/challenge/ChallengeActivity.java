@@ -3,6 +3,7 @@ package org.gem.indo.dooit.views.main.fragments.challenge;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.BadParcelableException;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -15,6 +16,7 @@ import org.gem.indo.dooit.DooitApplication;
 import org.gem.indo.dooit.R;
 import org.gem.indo.dooit.api.managers.ChallengeManager;
 import org.gem.indo.dooit.helpers.Persisted;
+import org.gem.indo.dooit.models.Badge;
 import org.gem.indo.dooit.models.challenge.BaseChallenge;
 import org.gem.indo.dooit.models.challenge.FreeformChallenge;
 import org.gem.indo.dooit.models.challenge.Participant;
@@ -46,6 +48,7 @@ public class ChallengeActivity extends ImageActivity {
     public static final String ARG_PAGE = "challenge_page";
     public static final String ARG_PARTICIPANT = "participant";
     public static final String ARG_RETURNPAGE = "return_page";
+    public static final String ARG_PARTICIPANT_BADGE = "participant_badge";
 
     @Inject
     ChallengeManager challengeManager;
@@ -197,6 +200,8 @@ public class ChallengeActivity extends ImageActivity {
         if(fragment != null)
             fragment.receiveImageDetails(mediaType,imageUri,imagePath);
     }
+
+
 
     public static class Builder extends DooitActivityBuilder<ChallengeActivity.Builder> {
         protected Builder(Context context) {
