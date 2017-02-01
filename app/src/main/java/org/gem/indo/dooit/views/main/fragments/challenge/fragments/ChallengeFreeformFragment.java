@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
@@ -215,7 +214,13 @@ public class ChallengeFreeformFragment extends Fragment {
             public void call(ParticipantFreeformAnswer answer) {
                 Log.d(TAG, "Entry submitted");
                 FragmentTransaction ft = getFragmentManager().beginTransaction();
+                Bundle args = new Bundle();
+                args.putParcelable(ChallengeActivity.ARG_PARTICIPANT_BADGE, answer.getBadge());
+                args.putParcelable(ChallengeActivity.ARG_CHALLENGE,challenge);
+                args.putParcelable(ChallengeActivity.ARG_PARTICIPANT,participant);
+
                 Fragment fragment = ChallengeDoneFragment.newInstance(challenge);
+                fragment.setArguments(args);
                 ft.replace(R.id.fragment_challenge_container, fragment, "fragment_challenge");
                 ft.commit();
 
@@ -223,7 +228,6 @@ public class ChallengeFreeformFragment extends Fragment {
         });
         persisted.clearCurrentChallenge();
     }
-
 
     @OnClick(R.id.fragment_challenge_close)
     public void closeQuiz(){
@@ -249,7 +253,6 @@ public class ChallengeFreeformFragment extends Fragment {
         activity.finish();
     }
 
-
     /*************************
      * State-keeping methods *
      *************************/
@@ -258,7 +261,6 @@ public class ChallengeFreeformFragment extends Fragment {
     public void onSaveInstanceState(Bundle outState) {
         if (outState != null) {
             outState.putSerializable(ChallengeFragment.ARG_PAGE, FRAGMENT_STATE);
-            //outState.putParcelable(ChallengeFragment.ARG_PARTICIPANT, participant);
             persisted.setParticipant(participant);
             outState.putParcelable(ChallengeFragment.ARG_CHALLENGE, challenge);
             outState.putString(ARG_ANSWER, submissionBox == null ? "" : submissionBox.toString());

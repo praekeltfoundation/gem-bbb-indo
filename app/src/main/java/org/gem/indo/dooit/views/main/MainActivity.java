@@ -15,6 +15,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -25,6 +26,7 @@ import com.google.android.gms.analytics.Tracker;
 import org.gem.indo.dooit.DooitApplication;
 import org.gem.indo.dooit.R;
 import org.gem.indo.dooit.helpers.Persisted;
+import org.gem.indo.dooit.helpers.RequestCodes;
 import org.gem.indo.dooit.helpers.activity.result.ActivityForResultHelper;
 import org.gem.indo.dooit.helpers.images.DraweeHelper;
 import org.gem.indo.dooit.helpers.notifications.NotificationType;
@@ -162,13 +164,16 @@ public class MainActivity extends DooitActivity {
         currentPos = 0;
         saveToHistory = true;
 
-        // Did the user win?
-        checkCompetitionWinner();
-
         /*Set the ActionBar's title for Bina here to ensure it gets set initially
         When the app starts up for a logged in user technically no page has been selected*/
-        onMainPagerPageSelected(currentPos);
+        mainTabAdapter.setAdapterListener(new MainTabAdapter.MainTabAdapterListener() {
+            @Override
+            public void onAdapterInstantiated() {
+                onMainPagerPageSelected(currentPos);
+            }
+        });
     }
+
 
     @OnPageChange(value = R.id.content_main_view_pager, callback = OnPageChange.Callback.PAGE_SELECTED)
     public void onMainPagerPageSelected(int position) {
@@ -209,6 +214,10 @@ public class MainActivity extends DooitActivity {
                 MainViewPagerPositions.setInActiveState(tabView);
             }
         }
+
+        MainFragment fragment = (MainFragment) mainTabAdapter.getItem(viewPager.getCurrentItem());
+        if (fragment != null)
+            fragment.onActive();
 
         // Notify analytics of Main view navigation
         onTrack();
@@ -257,6 +266,13 @@ public class MainActivity extends DooitActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (!activityForResultHelper.onActivityResult(requestCode, resultCode, data))
             super.onActivityResult(requestCode, resultCode, data);
+        if (data != null) {
+            switch (requestCode) {
+                case RequestCodes.CHALLENGE_PARTICIPANT_BADGE:
+                    if (persisted.hasConvoParticipant(BotType.CHALLENGE_PARTICIPANT_BADGE))
+                        startBot(BotType.CHALLENGE_PARTICIPANT_BADGE);
+            }
+        }
     }
 
     @Override
@@ -271,23 +287,14 @@ public class MainActivity extends DooitActivity {
     public void refreshGoals() {
         ((TargetFragment) getFragment(MainViewPagerPositions.TARGET)).refreshGoals();
     }
-    public void setTitle(String newTitle){
+
+    public void setTitle(String newTitle) {
         titleView.setText(newTitle);
     }
 
     @Override
     public String getScreenName() {
         return super.getScreenName() + " " + MainViewPagerPositions.getValueOf(viewPager.getCurrentItem()).name();
-    }
-
-    private boolean checkCompetitionWinner(){
-        //locally check if user has participant, if so which challenge did they do
-        //Make a connection to the server
-        //pass through participant id and challenge id
-        //Retrieve winner's user id
-        //check if the persisted user id matches winner id
-        //if logged in user == winner start bot with Congratulations message + Confetti
-        return false;
     }
 
     public static class Builder extends DooitActivityBuilder<Builder> {
@@ -344,6 +351,15 @@ public class MainActivity extends DooitActivity {
 
     public void showConfetti() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
-            CommonConfetti.rainingConfetti(container, new int[]{Color.RED, Color.BLUE}).oneShot();
+            // The confetti is scheduled to be drawn when the layout is complete. If it is called
+            // immediately in onCreate or onResume, the confetti will be drawn to a canvas that is
+            // painted over later by the MainActivity view, hiding the confetti.
+            container.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+                @Override
+                public void onGlobalLayout() {
+                    container.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+                    CommonConfetti.rainingConfetti(container, new int[]{Color.RED, Color.BLUE}).oneShot();
+                }
+            });
     }
 }

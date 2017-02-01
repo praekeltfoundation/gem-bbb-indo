@@ -6,6 +6,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -21,15 +22,19 @@ import org.gem.indo.dooit.views.main.fragments.tip.TipsFragment;
  */
 
 public class MainTabAdapter extends FragmentStatePagerAdapter {
+
     private Context context;
     private BotFragment botFragment = BotFragment.newInstance();
     private TargetFragment targetFragment = TargetFragment.newInstance();
     private ChallengeFragment challengeFragment = ChallengeFragment.newInstance();
     private TipsFragment tipsFragment = TipsFragment.newInstance();
+    private boolean instantiated = false;
+    private MainTabAdapterListener listener;
 
     public MainTabAdapter(FragmentManager fm, Context context) {
         super(fm);
         this.context = context;
+        this.instantiated = false;
     }
 
     @Override
@@ -77,5 +82,24 @@ public class MainTabAdapter extends FragmentStatePagerAdapter {
         else
             title.setVisibility(View.GONE);
         return tabView;
+    }
+
+    @Override
+    public void finishUpdate(ViewGroup container) {
+        super.finishUpdate(container);
+        if (!instantiated) {
+            instantiated = true;
+            if (listener != null)
+                listener.onAdapterInstantiated();
+        }
+
+    }
+
+    public void setAdapterListener(MainTabAdapterListener listener) {
+        this.listener = listener;
+    }
+
+    public interface MainTabAdapterListener {
+        void onAdapterInstantiated();
     }
 }
