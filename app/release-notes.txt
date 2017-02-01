@@ -16,3 +16,8 @@
 - Implemented EA Tool survey
 - Displaying user count on Goal Prototype selection
 - Restored Goal Add and Edit branch for choosing weekly target
+
+
+0.1.2
+
+- Crash on Crashlytics TargetFragment null pointer check on getActivity
