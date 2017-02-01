@@ -71,12 +71,16 @@ public class BadgeViewHolder extends BaseBotViewHolder<Node> {
         separator.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.bkg_carousel_separator));
         background.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.bkg_carousel_card));
 
-        if(persisted.hasConvoWinner(BotType.CHALLENGE_WINNER)) {
+        if(persisted.hasConvoWinnerChallenge(BotType.CHALLENGE_WINNER)) {
             challengeTitle.setText(persisted.loadWinningChallenge(BotType.CHALLENGE_WINNER).getName() + " " + challenge);
             challengeTitle.setVisibility(View.VISIBLE);
+            separator.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.bkg_carousel_separator));
+            persisted.clearConvoWinnerChallenge();
         }
-        else
+        else {
             challengeTitle.setVisibility(View.GONE);
+            separator.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.bkg_carousel_separator));
+        }
     }
 
     @Override
