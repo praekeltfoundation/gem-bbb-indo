@@ -651,6 +651,7 @@
 
     <string name="challenge_winner_intro">$(badge.intro)</string>
     <string name="challenge_prize_won">$(challenge.prize)</string>
+    <string name="challenge">Challenge</string> <!-- so it will read Quiz Challenge instead of Quiz -->
 
     <!-- END BOT: challenge_winner -->
 

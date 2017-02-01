@@ -27,11 +27,31 @@
         tools:background="@drawable/bkg_carousel_separator" />
 
     <TextView
+        android:id="@+id/item_challenge_title"
+        style="@style/AppTheme.TextView.Bold.Large"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/item_view_bot_badge_separator"
+        android:layout_marginTop="@dimen/bot_badge_card_vertical_margin"
+        android:layout_centerHorizontal="true"
+        android:textAlignment="center"
+        android:textColor="@color/black"
+        android:text=""/>
+
+    <View
+        android:id="@+id/item_view_bot_badge_text_separator"
+        android:layout_width="match_parent"
+        android:layout_height="3dp"
+        android:layout_marginTop="-2dp"
+        android:layout_below="@id/item_challenge_title"
+        tools:background="@drawable/bkg_carousel_separator" />
+
+    <TextView
         android:id="@+id/item_view_bot_badge_share"
         style="@style/AppTheme.TextView.Bold.Large"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/item_view_bot_badge_image"
+        android:layout_below="@id/item_view_bot_badge_text_separator"
         android:layout_marginTop="@dimen/bot_badge_card_vertical_margin"
         android:layout_centerHorizontal="true"
         android:textAlignment="center"

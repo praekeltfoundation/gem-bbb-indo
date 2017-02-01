@@ -8,7 +8,7 @@
   },
   {
     "name": "challenge_winner_badge",
-    "type": "badge",
+    "type": "challengewinnerbadge",
     "autoNext": "challenge_prize_won"
   },
   {
