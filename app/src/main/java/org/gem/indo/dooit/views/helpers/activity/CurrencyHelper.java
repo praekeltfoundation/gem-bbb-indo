@@ -2,6 +2,7 @@ package org.gem.indo.dooit.views.helpers.activity;
 
 import com.crashlytics.android.Crashlytics;
 
+import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.Currency;
 import java.util.Locale;
@@ -30,5 +31,10 @@ public class CurrencyHelper {
         // Lock currency symbols to Indonesian Rupiah
         return Currency.getInstance(indonesia).getSymbol(indonesia);
         //return Currency.getInstance(Locale.getDefault()).getSymbol();
+    }
+
+    public static char getSeperator() {
+        return ((DecimalFormat) NumberFormat.getCurrencyInstance(new Locale("in", "ID"))).getDecimalFormatSymbols().getGroupingSeparator();
+        //return ((DecimalFormat) NumberFormat.getCurrencyInstance()).getDecimalFormatSymbols().getGroupingSeparator();
     }
 }
