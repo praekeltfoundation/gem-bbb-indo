@@ -1,12 +1,7 @@
 package org.gem.indo.dooit.views.helpers.activity;
 
-import android.app.Application;
-import android.content.res.Resources;
-import android.util.DisplayMetrics;
-
 import com.crashlytics.android.Crashlytics;
 
-import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.Currency;
 import java.util.Locale;
