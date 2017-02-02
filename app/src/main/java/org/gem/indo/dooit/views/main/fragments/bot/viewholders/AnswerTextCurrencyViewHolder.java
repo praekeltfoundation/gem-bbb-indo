@@ -29,7 +29,7 @@ public class AnswerTextCurrencyViewHolder extends BaseBotViewHolder<Answer> {
         this.botAdapter = botAdapter;
         ButterKnife.bind(this, itemView);
 
-        textView.setBackground(ContextCompat.getDrawable(itemView.getContext(), R.drawable.ic_d_answer_dialogue_bkg));
+        textView.setBackground(ContextCompat.getDrawable(itemView.getContext(), R.drawable.ic_d_answer_dialogue_bkg_blue));
     }
 
     @Override

@@ -29,6 +29,6 @@
         android:paddingStart="@dimen/bot_text_padding_horizontal"
         android:paddingEnd="@dimen/bot_text_padding_horizontal"
         android:textColor="@color/grey_fore"
-        tools:background="@drawable/ic_d_answer_dialogue_bkg"
+        tools:background="@drawable/ic_d_answer_dialogue_bkg_blue"
         tools:text="Blank Answer" />
 </RelativeLayout>

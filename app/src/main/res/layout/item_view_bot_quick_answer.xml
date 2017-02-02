@@ -19,7 +19,7 @@
         android:layout_height="wrap_content"
 
         tools:text="Hey Bina!"
-        tools:background="@drawable/ic_d_answer_dialogue_bkg"
+        tools:background="@drawable/ic_d_answer_dialogue_bkg_blue"
         android:paddingStart="@dimen/bot_text_padding_horizontal"
         android:paddingEnd="@dimen/bot_text_padding_horizontal"
         android:paddingTop="@dimen/bot_text_padding_vertical"

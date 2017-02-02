@@ -39,9 +39,9 @@ public class QuickAnswerViewHolder extends RecyclerView.ViewHolder {
         // Background set in code as a workaround to vector crashes on lower API levels. Setting
         // background on TextView because it's containing layout is enlarged to fill the GridLayout
         // cells.
-//        textView.setBackground(ContextCompat.getDrawable(context, R.drawable.ic_d_answer_dialogue_bkg));
+//        textView.setBackground(ContextCompat.getDrawable(context, R.drawable.ic_d_answer_dialogue_bkg_blue));
 //        textView.setBackground(ContextCompat.getDrawable(context, R.drawable.ic_d_bot_dialogue_bkg));
-        containerView.setBackground(ContextCompat.getDrawable(context, R.drawable.ic_d_answer_dialogue_bkg));
+        containerView.setBackground(ContextCompat.getDrawable(context, R.drawable.ic_d_answer_dialogue_bkg_blue));
     }
 
     ///////////////////////
