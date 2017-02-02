@@ -15,7 +15,7 @@
         android:layout_marginBottom="10dp"
         android:layout_alignParentEnd="true"
         android:layout_alignBottom="@+id/item_view_bot_answer_text"
-        app:srcCompat="@drawable/ic_d_answer_dialogue_tail"/>
+        app:srcCompat="@drawable/ic_d_answer_dialogue_tail_blue"/>
 
     <TextView
         android:id="@+id/item_view_bot_answer_text"
