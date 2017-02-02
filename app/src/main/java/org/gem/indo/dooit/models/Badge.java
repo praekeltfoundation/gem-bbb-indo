@@ -24,6 +24,8 @@ public class Badge implements Parcelable {
     private String socialUrl;
     private String intro;
 
+    public Badge(){ }
+
     public Badge copy(){
         Badge badge = new Badge();
         badge.setName(StringHelper.newString(this.name));
