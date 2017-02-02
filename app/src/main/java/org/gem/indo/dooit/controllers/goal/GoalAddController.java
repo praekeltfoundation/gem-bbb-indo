@@ -219,6 +219,16 @@ public class GoalAddController extends GoalBotController {
         saveGoal();
     }
 
+    @Override
+    public boolean filter(Answer answer) {
+        switch (answer.getName()) {
+            case "knows_amount_N":
+                return goal.hasPrototype() && (Double.compare(goal.getPrototype().getDefaultPrice(),0.0) != 0);
+            default:
+                return true;
+        }
+    }
+
     private void uploadImage(Goal goal, String mimetype, File file) {
         fileUploadManager.uploadGoalImage(goal.getId(), mimetype, file, new DooitErrorHandler() {
             @Override
