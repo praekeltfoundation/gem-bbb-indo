@@ -17,11 +17,12 @@ import java.util.Locale;
 
 public class CurrencyHelper {
     public static double DEFAULT_VALUE = 0.0f;
+    private static Locale indonesia = new Locale("in", "ID");
 
     public static String format(Object o) {
         try {
             // Lock currency symbols to Indonesian Rupiah
-            return NumberFormat.getCurrencyInstance(new Locale("in", "ID")).format(Double.valueOf(String.valueOf(o)));
+            return NumberFormat.getCurrencyInstance(indonesia).format(Double.valueOf(String.valueOf(o)));
             //return NumberFormat.getCurrencyInstance().format(Double.valueOf((String.valueOf(o))));
         } catch (Exception e) {
             Crashlytics.log("Error converting number to currency [" + String.valueOf(o) + "]");
@@ -32,7 +33,7 @@ public class CurrencyHelper {
 
     public static String getCurrencySymbol() {
         // Lock currency symbols to Indonesian Rupiah
-        return Currency.getInstance(new Locale("in", "ID")).getSymbol(new Locale("in", "ID"));
+        return Currency.getInstance(indonesia).getSymbol(indonesia);
         //return Currency.getInstance(Locale.getDefault()).getSymbol();
     }
 }
