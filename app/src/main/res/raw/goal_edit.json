@@ -33,7 +33,8 @@
       {
         "name": "goal_edit_choice_delete",
         "text": "$(goal_edit_choice_delete)",
-        "next": "goal_edit_delete_confirm"
+        "next": "goal_edit_delete_confirm",
+        "background": "DANGER"
       }
     ]
   },

@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import org.gem.indo.dooit.R;
 import org.gem.indo.dooit.models.bot.Answer;
+import org.gem.indo.dooit.models.enums.BotQuickAnswerBackground;
 import org.gem.indo.dooit.views.main.fragments.bot.adapters.QuickAnswerAdapter;
 
 import butterknife.BindView;
@@ -51,22 +52,45 @@ public class QuickAnswerViewHolder extends RecyclerView.ViewHolder {
     public void populate(Answer answer, QuickAnswerAdapter.OnBotInputListener listener) {
         reset();
 
+        if (answer == null)
+            return;
+
         this.answer = answer;
         this.listener = listener;
 
+        // Text
         if (answer.hasProcessedText())
             textView.setText(answer.getProcessedText());
+
+        // Background
+        setBackground(answer.getBackground());
     }
 
     private void reset() {
         answer = null;
         textView.setText(null);
         listener = null;
+        setBackground(BotQuickAnswerBackground.PRIMARY);
     }
 
-    /////////////////
-    // Input Event //
-    /////////////////
+    ////////////////
+    // Background //
+    ////////////////
+
+    private void setBackground(BotQuickAnswerBackground background) {
+        Context context = itemView.getContext();
+        if (containerView == null || background == null || context == null)
+            return;
+
+        // Background set in code as a workaround to vector crashes on lower API levels. Setting
+        // background on TextView because it's containing layout is enlarged to fill the GridLayout
+        // cells.
+        containerView.setBackground(ContextCompat.getDrawable(context, background.getBackgroundResource()));
+    }
+
+    //////////////////
+    // Input Events //
+    //////////////////
 
     @OnClick(R.id.item_view_bot_quick_answer)
     void onBackgroundClick(View view) {
