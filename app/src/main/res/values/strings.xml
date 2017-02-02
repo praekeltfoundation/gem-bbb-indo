@@ -204,6 +204,16 @@
 
     <string name="number_of_other_users_with_similar_goal">Fantastic! Did you know that $(goal_proto.num_users) users are also saving for this goal?</string>
 
+    <string name="goal_add_a_add_amount">Add Amount</string>
+    <string name="goal_add_a_not_sure">I\'m not sure.</string>
+    <string name="goal_add_q_recommend_target_amount">Typically, $(goal.name) costs Rp. $(goal_proto.default_price). Is that the price of yours?</string>
+    <string name="goal_add_a_too_expencive">No, that\’s too expensive.</string>
+    <string name="goal_add_a_too_cheap">No, that\'s not enough.</string>
+    <string name="goal_add_a_price_correct">Yes, that\'s the price. What\'s next?</string>
+    <string name="goal_add_q_dont_worry_input_own_amount">No problem! Go ahead and select your own amount for your savings goal.</string>
+    <string name="goal_add_q_can_change_amount_later">Don\'t worry, you can always change it later.</string>
+
+
     <!-- Answers -->
     <string name="goal_add_greeting_response">Hola!</string>
 

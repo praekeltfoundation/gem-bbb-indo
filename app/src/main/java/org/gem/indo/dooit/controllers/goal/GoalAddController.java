@@ -68,6 +68,9 @@ public class GoalAddController extends GoalBotController {
             case POPULATE_GOAL:
                 doPopulate(answerLog);
                 break;
+            case SET_TARGET_TO_DEFAULT:
+                setTargetAsDefault();
+                break;
             default:
                 super.onCall(key, answerLog, model);
         }
@@ -112,7 +115,9 @@ public class GoalAddController extends GoalBotController {
         else
             goal.setName(name);
 
-        goal.setTarget(Float.parseFloat(answerLog.get("goal_amount").getValue()));
+        if(answerLog.containsKey("goal_amount")) {
+            goal.setTarget(Float.parseFloat(answerLog.get("goal_amount").getValue()));
+        }
         goal.setStartDate(LocalDate.now());
         if(answerLog.containsKey("goalDate")) {
             goal.setEndDate(DateTimeFormat.forPattern("yyyy-MM-dd")
@@ -231,5 +236,13 @@ public class GoalAddController extends GoalBotController {
 
     private void saveGoal() {
         persisted.saveConvoGoal(botType, goal);
+    }
+
+    private void setTargetAsDefault(){
+        if(goal.hasPrototype()){
+            goal.setTarget(goal.getPrototype().getDefaultPrice());
+        }else{
+            goal.setTarget(0);
+        }
     }
 }
