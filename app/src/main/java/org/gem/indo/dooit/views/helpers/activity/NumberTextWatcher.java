@@ -7,6 +7,7 @@ import android.widget.EditText;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 import java.text.ParseException;
+import java.util.Currency;
 import java.util.Locale;
 
 /**
@@ -24,7 +25,6 @@ public class NumberTextWatcher implements TextWatcher {
 
     public NumberTextWatcher(EditText et) {
         df = new DecimalFormat("#,###.##");
-        df.setDecimalFormatSymbols(DecimalFormatSymbols.getInstance(new Locale("in", "ID")));
         df.setDecimalSeparatorAlwaysShown(true);
         dfnd = new DecimalFormat("#,###");
         this.et = et;
@@ -37,6 +37,8 @@ public class NumberTextWatcher implements TextWatcher {
     public void afterTextChanged(Editable s) {
         et.removeTextChangedListener(this);
 
+        df.setCurrency(Currency.getInstance(indonesia));
+        dfnd.setCurrency(Currency.getInstance(indonesia));
         df.setDecimalFormatSymbols(DecimalFormatSymbols.getInstance(indonesia));
         dfnd.setDecimalFormatSymbols(DecimalFormatSymbols.getInstance(indonesia));
 
