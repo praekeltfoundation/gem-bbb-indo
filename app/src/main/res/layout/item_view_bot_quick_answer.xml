@@ -4,14 +4,22 @@
     android:id="@+id/item_view_bot_quick_answer"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    tools:background="@drawable/ic_d_answer_dialogue_bkg"
+
+    android:layout_marginStart="@dimen/bot_quick_answer_margin"
+    android:layout_marginEnd="@dimen/bot_quick_answer_margin"
+    android:layout_marginTop="@dimen/bot_quick_answer_margin"
+    android:layout_marginBottom="@dimen/bot_quick_answer_margin"
+
+    android:maxWidth="50dp"
     tools:context=".views.main.MainActivity">
 
     <TextView
         android:id="@+id/item_view_bot_quick_answer_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        tools:text="Not sure"
+
+        tools:text="Hey Bina!"
+        tools:background="@drawable/ic_d_answer_dialogue_bkg"
         android:paddingStart="@dimen/bot_text_padding_horizontal"
         android:paddingEnd="@dimen/bot_text_padding_horizontal"
         android:paddingTop="@dimen/bot_text_padding_vertical"

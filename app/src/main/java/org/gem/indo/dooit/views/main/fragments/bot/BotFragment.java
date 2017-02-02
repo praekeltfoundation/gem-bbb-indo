@@ -3,7 +3,9 @@ package org.gem.indo.dooit.views.main.fragments.bot;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.OrientationHelper;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.text.TextUtils;
@@ -73,6 +75,12 @@ import butterknife.ButterKnife;
 public class BotFragment extends MainFragment implements HashtagView.TagsClickListener,
         QuickAnswerAdapter.OnBotInputListener, BotRunner {
 
+    private static final int ANSWER_SPAN_SIGLE = 1;
+    private static final int ANSWER_SPAN_NARROW = 2;
+    private static final int ANSWER_SPAN_DEFAULT = 3;
+    private static final int ANSWER_SPAN_WIDE = 4;
+    private static final int ANSWER_SPAN_SUPER_WIDE = 5;
+
     @BindView(R.id.fragment_bot)
     View background;
 
@@ -141,11 +149,16 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
 
         answerView.addOnTagClickListener(this);
 
-        StaggeredGridLayoutManager layoutManager = new StaggeredGridLayoutManager(3, StaggeredGridLayoutManager.HORIZONTAL);
-        layoutManager.setReverseLayout(true);
+        StaggeredGridLayoutManager layoutManager = new StaggeredGridLayoutManager(
+                ANSWER_SPAN_DEFAULT, StaggeredGridLayoutManager.HORIZONTAL);
+//        layoutManager.setGapStrategy(StaggeredGridLayoutManager.GAP_HANDLING_NONE);
+        layoutManager.setReverseLayout(false);
+//        GridLayoutManager layoutManager = new GridLayoutManager(getContext(), ANSWER_SPAN_DEFAULT,
+//                OrientationHelper.HORIZONTAL, false);
         quickAnswers.setLayoutManager(layoutManager);
-        quickAnswers.setItemAnimator(new DefaultItemAnimator());
+        quickAnswers.setItemAnimator(null);
         quickAnswers.setAdapter(new QuickAnswerAdapter(getContext(), this));
+//        layoutManager.setSpanSizeLookup(new QuickAnswerSpan((QuickAnswerAdapter) quickAnswers.getAdapter()));
 
         conversationRecyclerView.setHasFixedSize(true);
         conversationRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -443,12 +456,6 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
         return null;
     }
 
-    public QuickAnswerAdapter getAnswerAdapter() {
-        if (quickAnswers != null)
-            return (QuickAnswerAdapter) quickAnswers.getAdapter();
-        return null;
-    }
-
     @Override
     public void onItemClicked(Object item) {
         Answer answer = (Answer) item;
@@ -509,6 +516,10 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
         }
         return answerLog;
     }
+
+    ///////////
+    // Nodes //
+    ///////////
 
     private void getAndAddNode(String name) {
         getAndAddNode(name, false);
@@ -589,6 +600,10 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
         }
     }
 
+    /////////////
+    // Answers //
+    /////////////
+
     private void checkEndOrAddAnswers(Node node) {
         // Reached explicit end of current conversation
         if (BotMessageType.getValueOf(node.getType()) == BotMessageType.END) {
@@ -607,9 +622,7 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
     }
 
     private void addAnswerOptions(Node node) {
-        getAnswerAdapter().clear();
-
-        answerView.setData(new ArrayList<>());
+        clearAnswerView();
         answerView.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
             @Override
             public void onGlobalLayout() {
@@ -628,7 +641,7 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
                 for (Answer answer : answers)
                     processText(answer);
 
-                getAnswerAdapter().addAll(answers);
+                setAnswers(answers);
 
                 answerView.setData(answers, new HashtagView.DataStateTransform<Answer>() {
                     @Override
@@ -683,8 +696,70 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
     }
 
     private void clearAnswerView() {
+        QuickAnswerAdapter adapter = getAnswerAdapter();
+        if (adapter != null)
+            adapter.clear();
         answerView.setData(new ArrayList<>());
+        scrollToBottom();
     }
+
+    private QuickAnswerAdapter getAnswerAdapter() {
+        if (quickAnswers != null)
+            return (QuickAnswerAdapter) quickAnswers.getAdapter();
+        return null;
+    }
+
+    private void setAnswers(List<Answer> answers) {
+//        GridLayoutManager layout = (GridLayoutManager) quickAnswers.getLayoutManager();
+        StaggeredGridLayoutManager layout = (StaggeredGridLayoutManager) quickAnswers.getLayoutManager();
+
+        if (layout != null)
+            if (answers.size() <= 2)
+                layout.setSpanCount(ANSWER_SPAN_SIGLE);
+            else if (answers.size() <= 4)
+                layout.setSpanCount(ANSWER_SPAN_NARROW);
+            else if (answers.size() >= 9)
+                layout.setSpanCount(ANSWER_SPAN_SUPER_WIDE);
+            else if (answers.size() >= 7)
+                layout.setSpanCount(ANSWER_SPAN_WIDE);
+            else
+                layout.setSpanCount(ANSWER_SPAN_DEFAULT);
+
+        QuickAnswerAdapter adapter = getAnswerAdapter();
+        if (adapter != null) {
+            adapter.replace(answers);
+        }
+
+        scrollToBottom();
+    }
+
+    /**
+     * Schedules the conversation recycler view to scroll to the bottom.
+     */
+    private void scrollToBottom() {
+        quickAnswers.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+            @Override
+            public void onGlobalLayout() {
+                if (quickAnswers == null)
+                    return;
+
+                quickAnswers.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+
+                if (conversationRecyclerView == null || getBotAdapter() == null)
+                    return;
+
+                // Conversation must allow space for answers, but scroll indicator must be at the
+                // bottom of the screen. The recycler view's bottom is aligned with the parent
+                // container rather than the top of the quick answers.
+                conversationRecyclerView.setPadding(0, 0, 0, quickAnswers.getHeight());
+                conversationRecyclerView.scrollToPosition(getBotAdapter().getItemCount() - 1);
+            }
+        });
+    }
+
+    //////////////////
+    // Conversation //
+    //////////////////
 
     private void finishConversation() {
         if (controller != null)
@@ -731,7 +806,8 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
 
     private void showConversation() {
         conversationRecyclerView.setVisibility(View.VISIBLE);
-        answerView.setVisibility(View.VISIBLE);
+//        answerView.setVisibility(View.VISIBLE);
+        answerView.setVisibility(View.GONE);
         progressBarContainer.setVisibility(View.GONE);
     }
 }

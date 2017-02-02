@@ -12,6 +12,7 @@
         android:layout_height="match_parent"
         android:layout_above="@+id/fragment_bot_answer_hash_view"
         android:layout_marginBottom="4dp"
+        android:clipToPadding="false"
         app:stackFromEnd="true" />
 
     <RelativeLayout
@@ -52,7 +53,7 @@
         app:tagPaddingRight="@dimen/bot_text_padding_horizontal"
         app:tagPaddingTop="@dimen/bot_text_padding_vertical"
         app:tagPaddingBottom="@dimen/bot_text_padding_vertical"
-        app:tagBackground="@drawable/ic_d_answer_dialogue_bkg"
+        app:tagBackground="@drawable/ic_d_bot_dialogue_bkg"
         app:tagEllipsize="end"
         app:tagTextColor="@color/grey_fore"
         app:tagTextGravity="center"
@@ -62,10 +63,11 @@
 
     <org.gem.indo.dooit.views.custom.DesignSafeRecyclerView
         android:id="@+id/fragment_bot_answer_quick_answers"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
         android:padding="4dp"
+        android:scrollbars="horizontal"
         />
 </RelativeLayout>

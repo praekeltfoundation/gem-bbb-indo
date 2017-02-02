@@ -53,6 +53,10 @@ public class QuickAnswerAdapter extends RecyclerView.Adapter<QuickAnswerViewHold
     // Container Management //
     //////////////////////////
 
+    public Answer getAnswer(int position) {
+        return answers.get(position);
+    }
+
     public void clear() {
         answers.clear();
         notifyDataSetChanged();

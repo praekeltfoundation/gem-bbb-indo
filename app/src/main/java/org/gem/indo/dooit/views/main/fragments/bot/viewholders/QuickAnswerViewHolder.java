@@ -36,9 +36,12 @@ public class QuickAnswerViewHolder extends RecyclerView.ViewHolder {
         super(itemView);
         ButterKnife.bind(this, itemView);
 
-        // Background set in code as a workaround to vector crashes on lower API levels
-//        containerView.setBackground(ContextCompat.getDrawable(context, R.drawable.ic_d_answer_dialogue_bkg));
-        containerView.setBackground(ContextCompat.getDrawable(context, R.drawable.ic_d_bot_dialogue_bkg));
+        // Background set in code as a workaround to vector crashes on lower API levels. Setting
+        // background on TextView because it's containing layout is enlarged to fill the GridLayout
+        // cells.
+//        textView.setBackground(ContextCompat.getDrawable(context, R.drawable.ic_d_answer_dialogue_bkg));
+//        textView.setBackground(ContextCompat.getDrawable(context, R.drawable.ic_d_bot_dialogue_bkg));
+        containerView.setBackground(ContextCompat.getDrawable(context, R.drawable.ic_d_answer_dialogue_bkg));
     }
 
     ///////////////////////
@@ -65,9 +68,15 @@ public class QuickAnswerViewHolder extends RecyclerView.ViewHolder {
     // Input Event //
     /////////////////
 
-//    @OnClick(R.id.item_view_bot_quick_answer)
+    @OnClick(R.id.item_view_bot_quick_answer)
+    void onBackgroundClick(View view) {
+        // Both background and text is clickable for when the text does not fill the rectangle
+        // completely
+        notifyInput(answer);
+    }
+
     @OnClick(R.id.item_view_bot_quick_answer_text)
-    void onViewClick(View view) {
+    void OnTextClick(View view) {
         notifyInput(answer);
     }
 
