@@ -46,7 +46,7 @@ public class QuickAnswerViewHolder extends RecyclerView.ViewHolder {
     }
 
     ///////////////////////
-    // View holder state //
+    // View Holder State //
     ///////////////////////
 
     public void populate(Answer answer, QuickAnswerAdapter.OnBotInputListener listener) {
