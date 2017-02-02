@@ -39,35 +39,17 @@
 
     </RelativeLayout>
 
-
-    <com.greenfrvr.hashtagview.HashtagView
-        android:id="@+id/fragment_bot_answer_hash_view"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentStart="true"
-        android:padding="4dp"
-        app:selectionMode="false"
-        app:rowGravity="right"
-        app:tagPaddingLeft="@dimen/bot_text_padding_horizontal"
-        app:tagPaddingRight="@dimen/bot_text_padding_horizontal"
-        app:tagPaddingTop="@dimen/bot_text_padding_vertical"
-        app:tagPaddingBottom="@dimen/bot_text_padding_vertical"
-        app:tagBackground="@drawable/ic_d_bot_dialogue_bkg"
-        app:tagEllipsize="end"
-        app:tagTextColor="@color/grey_fore"
-        app:tagTextGravity="center"
-        app:tagTextSize="@dimen/k_font_large"
-
-        android:visibility="gone"/>
-
     <org.gem.indo.dooit.views.custom.DesignSafeRecyclerView
         android:id="@+id/fragment_bot_answer_quick_answers"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true"
-        android:padding="4dp"
+        android:padding="0dp"
+        android:layout_marginStart="0dp"
+        android:layout_marginEnd="0dp"
+        android:layout_marginTop="0dp"
+        android:layout_marginBottom="4dp"
         android:scrollbars="horizontal"
         />
 </RelativeLayout>

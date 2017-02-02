@@ -7,8 +7,8 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.OrientationHelper;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.text.TextUtils;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -78,6 +78,12 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
     private static final int ANSWER_SPAN_NARROW = 2;
     private static final int ANSWER_SPAN_WIDE = 3;
 
+    /**
+     * The number of `dp` to the right that the quick answer view should peek when it has to
+     * scroll horizontally.
+     */
+    private static final int ANSWER_PEEK_DISTANCE = 48;
+
     @BindView(R.id.fragment_bot)
     View background;
 
@@ -107,6 +113,11 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
     private BotFeed<Node> feed;
     private Node currentNode;
     boolean clearState = false;
+
+    /**
+     * The number of pixels that the quick answers should peek to the right.
+     */
+    private int answerPeekDistance = 0;
 
     public BotFragment() {
         // Required empty public constructor
@@ -150,6 +161,10 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
         conversationRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         conversationRecyclerView.setItemAnimator(new DefaultItemAnimator());
         conversationRecyclerView.setAdapter(new BotAdapter(getContext(), this));
+
+        // Get pixels to avoid having to do it on each peek animation
+        answerPeekDistance = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP,
+                (float) ANSWER_PEEK_DISTANCE, getResources().getDisplayMetrics());
 
         return view;
     }
@@ -685,11 +700,56 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
                 layout.setSpanCount(ANSWER_SPAN_WIDE);
 
         QuickAnswerAdapter adapter = getAnswerAdapter();
-        
+
         if (adapter != null)
             adapter.replace(answers);
 
         scrollToBottom();
+        animateQuickAnswers();
+    }
+
+    /**
+     * Runs a peek animation to notify users that they can scroll right.
+     */
+    private void animateQuickAnswers() {
+        if (quickAnswers == null)
+            return;
+
+        // Scheduled to scroll later, because scrolling the recycler view before it has been
+        // calculated causes its items to be incorrectly rendered.
+        quickAnswers.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+            @Override
+            public void onGlobalLayout() {
+                if (quickAnswers == null)
+                    return;
+
+                if (!quickAnswers.canScrollHorizontally(answerPeekDistance))
+                    return;
+
+                GridLayoutManager layout = (GridLayoutManager) quickAnswers.getLayoutManager();
+                if (layout == null)
+                    return;
+
+                QuickAnswerAdapter adapter = getAnswerAdapter();
+                if (adapter == null
+                        // Division by zero
+                        || layout.getSpanCount() == 0
+                        // Don't scroll if there is only 1 column. Casting to double because integer
+                        // division rounds down.
+                        || Math.ceil((double) adapter.getItemCount() / (double) layout.getSpanCount()) <= 1.0)
+                    return;
+
+                quickAnswers.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+                quickAnswers.smoothScrollBy(answerPeekDistance, 0);
+                quickAnswers.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        if (quickAnswers != null)
+                            quickAnswers.smoothScrollBy(-answerPeekDistance, 0);
+                    }
+                }, 500);
+            }
+        });
     }
 
     /**
