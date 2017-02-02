@@ -27,10 +27,9 @@ import org.gem.indo.dooit.api.DooitAPIError;
 import org.gem.indo.dooit.api.DooitErrorHandler;
 import org.gem.indo.dooit.api.managers.ChallengeManager;
 import org.gem.indo.dooit.helpers.Persisted;
+import org.gem.indo.dooit.helpers.RequestCodes;
 import org.gem.indo.dooit.helpers.SquiggleBackgroundHelper;
 import org.gem.indo.dooit.helpers.TextSpannableHelper;
-import org.gem.indo.dooit.helpers.activity.result.ActivityForResultCallback;
-import org.gem.indo.dooit.helpers.activity.result.ActivityForResultHelper;
 import org.gem.indo.dooit.models.challenge.BaseChallenge;
 import org.gem.indo.dooit.models.challenge.Participant;
 import org.gem.indo.dooit.views.main.fragments.challenge.ChallengeActivity;
@@ -313,15 +312,8 @@ public class ChallengeRegisterFragment extends Fragment implements HasChallengeF
         Bundle args = new Bundle();
         args.putParcelable(ChallengeActivity.ARG_CHALLENGE, challenge);
         args.putParcelable(ChallengeActivity.ARG_PARTICIPANT, participant);
-        ActivityForResultHelper helper = new ActivityForResultHelper();
         Intent intent = ChallengeActivity.Builder.create(getContext()).setArgs(args).getIntent();
-        helper.startActivityForResult(getContext(), intent, new ActivityForResultCallback() {
-            @Override
-            public void onActivityResultOK(Intent data) {
-
-            }
-        });
-
+        getActivity().startActivityForResult(intent, RequestCodes.CHALLENGE_PARTICIPANT_BADGE);
     }
 
     @Override

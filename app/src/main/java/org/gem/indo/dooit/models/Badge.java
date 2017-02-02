@@ -1,5 +1,7 @@
 package org.gem.indo.dooit.models;
 
+import android.os.Parcel;
+import android.os.Parcelable;
 import android.text.TextUtils;
 
 import com.google.gson.annotations.SerializedName;
@@ -11,7 +13,7 @@ import org.joda.time.DateTime;
  * Created by Wimpie Victor on 2016/12/04.
  */
 
-public class Badge {
+public class Badge implements Parcelable {
 
     private String name;
     @SerializedName("image_url")
@@ -72,4 +74,41 @@ public class Badge {
     public boolean hasIntro() {
         return !TextUtils.isEmpty(intro);
     }
+
+    protected Badge(Parcel in) {
+        name = in.readString();
+        imageUrl = in.readString();
+        earnedOn = (DateTime) in.readValue(DateTime.class.getClassLoader());
+        socialUrl = in.readString();
+        intro = in.readString();
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(name);
+        dest.writeString(imageUrl);
+        dest.writeValue(earnedOn);
+        dest.writeString(socialUrl);
+        dest.writeString(intro);
+    }
+
+    @SuppressWarnings("unused")
+    public static final Parcelable.Creator<Badge> CREATOR = new Parcelable.Creator<Badge>() {
+        @Override
+        public Badge createFromParcel(Parcel in) {
+            return new Badge(in);
+        }
+
+        @Override
+        public Badge[] newArray(int size) {
+            return new Badge[size];
+        }
+    };
+
+
 }

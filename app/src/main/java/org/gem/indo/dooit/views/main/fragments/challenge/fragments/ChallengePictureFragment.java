@@ -27,6 +27,7 @@ import org.gem.indo.dooit.api.DooitAPIError;
 import org.gem.indo.dooit.api.DooitErrorHandler;
 import org.gem.indo.dooit.api.managers.FileUploadManager;
 import org.gem.indo.dooit.api.responses.EmptyResponse;
+import org.gem.indo.dooit.api.responses.PictureParticipationResponse;
 import org.gem.indo.dooit.helpers.Persisted;
 import org.gem.indo.dooit.helpers.RequestCodes;
 import org.gem.indo.dooit.helpers.SquiggleBackgroundHelper;
@@ -36,6 +37,7 @@ import org.gem.indo.dooit.helpers.permissions.PermissionsHelper;
 import org.gem.indo.dooit.models.challenge.Participant;
 import org.gem.indo.dooit.models.challenge.PictureChallenge;
 import org.gem.indo.dooit.models.challenge.PictureChallengeQuestion;
+import org.gem.indo.dooit.views.DooitActivity;
 import org.gem.indo.dooit.views.main.fragments.challenge.ChallengeActivity;
 import org.gem.indo.dooit.views.main.fragments.challenge.ChallengeFragment;
 import org.gem.indo.dooit.views.main.fragments.challenge.ChallengeFragmentMainPage;
@@ -205,10 +207,13 @@ public class ChallengePictureFragment extends Fragment {
             return;
         }
 
-        final ProgressDialog dialog = new ProgressDialog(getContext());
+        /*final ProgressDialog dialog = new ProgressDialog(getContext());
         dialog.setIndeterminate(true);
         dialog.setMessage(getString(R.string.label_loading));
-        dialog.show();
+        dialog.show();*/
+        DooitActivity activity = (DooitActivity) getActivity();
+        if (activity != null)
+            activity.showProgressDialog(R.string.label_loading);
 
         Log.d(TAG, "Uploading image");
         ContentResolver cR = getActivity().getContentResolver();
@@ -220,16 +225,25 @@ public class ChallengePictureFragment extends Fragment {
         }).doAfterTerminate(new Action0() {
             @Override
             public void call() {
-                dialog.dismiss();
+//                dialog.dismiss();
+                DooitActivity activity = (DooitActivity) getActivity();
+                if (activity != null)
+                    activity.dismissDialog();
             }
-        }).subscribe(new Action1<EmptyResponse>() {
+        }).subscribe(new Action1<PictureParticipationResponse>() {
             @Override
-            public void call(EmptyResponse emptyResponse) {
+            public void call(PictureParticipationResponse pictureParticipationResponse) {
                 Log.d(TAG, "Uploaded image");
                 persist.clearCurrentChallenge();
                 persist.setParticipant(null);
                 FragmentTransaction ft = getFragmentManager().beginTransaction();
+
+                Bundle args = new Bundle();
+                args.putParcelable(ChallengeActivity.ARG_PARTICIPANT_BADGE, pictureParticipationResponse.getBadge());
+                args.putParcelable(ChallengeActivity.ARG_CHALLENGE,challenge);
+
                 Fragment f = ChallengeDoneFragment.newInstance(challenge);
+                f.setArguments(args);
                 ft.replace(R.id.fragment_challenge_container, f, "fragment_challenge");
                 ft.commit();
             }

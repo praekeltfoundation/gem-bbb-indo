@@ -656,6 +656,12 @@
 
     <!-- END BOT: challenge_winner -->
 
+    <!-- BOT: challenge_participation -->
+
+    <string name="challenge_participant_intro">$(badge.intro)</string>
+
+    <!-- END BOT: challenge_participation -->
+
     <!--Buttons-->
     <string name="Skip">Skip</string>
     <string name="Capture">Add photo</string>

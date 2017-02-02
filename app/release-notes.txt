@@ -16,3 +16,8 @@
 - Implemented EA Tool survey
 - Displaying user count on Goal Prototype selection
 - Restored Goal Add and Edit branch for choosing weekly target
+
+0.1.2
+
+- Participation Badges are awarded on all challenges
+- Winner badges are awarded and notification gets dismissed
