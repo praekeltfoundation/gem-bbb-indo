@@ -1,8 +1,12 @@
 package org.gem.indo.dooit.views.main.fragments.bot.viewholders;
 
 import android.content.Context;
+import android.support.annotation.NonNull;
+import android.support.graphics.drawable.VectorDrawableCompat;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.content.res.ResourcesCompat;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -22,6 +26,11 @@ public class AnswerViewHolder extends BaseBotViewHolder<Answer> {
 
     @BindView(R.id.item_view_bot_answer_text)
     TextView textView;
+
+    @BindView(R.id.item_view_bot_answer_tail)
+    ImageView tailView;
+
+    private BotQuickAnswerBackground background;
 
     public AnswerViewHolder(View itemView) {
         super(itemView);
@@ -65,12 +74,23 @@ public class AnswerViewHolder extends BaseBotViewHolder<Answer> {
     // Background //
     ////////////////
 
-    private void setBackground(BotQuickAnswerBackground background) {
+    private void setBackground(@NonNull BotQuickAnswerBackground background) {
         Context context = itemView.getContext();
-        if (context == null || background == null)
+        if (context == null)
             return;
+
+        // Keep the vectors from being rasterised again
+        if (this.background == background)
+            return;
+
+        this.background = background;
 
         // Must assign programmatically for Support Library to wrap before API 21
         textView.setBackground(ContextCompat.getDrawable(context, background.getBackgroundResource()));
+
+        // Vector needs to be rasterised into a bitmap
+//        VectorDrawableCompat drawable = VectorDrawableCompat.create(context.getResources(),
+//                background.getTailRes(), null);
+        tailView.setImageDrawable(ContextCompat.getDrawable(context, background.getTailRes()));
     }
 }

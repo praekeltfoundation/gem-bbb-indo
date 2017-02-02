@@ -75,11 +75,8 @@ import butterknife.ButterKnife;
 public class BotFragment extends MainFragment implements HashtagView.TagsClickListener,
         QuickAnswerAdapter.OnBotInputListener, BotRunner {
 
-    private static final int ANSWER_SPAN_SIGLE = 1;
     private static final int ANSWER_SPAN_NARROW = 2;
-    private static final int ANSWER_SPAN_DEFAULT = 3;
-    private static final int ANSWER_SPAN_WIDE = 4;
-    private static final int ANSWER_SPAN_SUPER_WIDE = 5;
+    private static final int ANSWER_SPAN_WIDE = 3;
 
     @BindView(R.id.fragment_bot)
     View background;
@@ -89,10 +86,6 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
 
     @BindView(R.id.fragment_bot_progress_bar_container)
     View progressBarContainer;
-
-    // TODO: Remove hashtag view library
-//    @BindView(R.id.fragment_bot_answer_hash_view)
-//    HashtagView answerView;
 
     @BindView(R.id.fragment_bot_answer_quick_answers)
     RecyclerView quickAnswers;
@@ -147,18 +140,11 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
 
         SquiggleBackgroundHelper.setBackground(getContext(), R.color.grey_back, R.color.grey_fore, background);
 
-//        answerView.addOnTagClickListener(this);
-
-        StaggeredGridLayoutManager layoutManager = new StaggeredGridLayoutManager(
-                ANSWER_SPAN_DEFAULT, StaggeredGridLayoutManager.HORIZONTAL);
-//        layoutManager.setGapStrategy(StaggeredGridLayoutManager.GAP_HANDLING_NONE);
-        layoutManager.setReverseLayout(false);
-//        GridLayoutManager layoutManager = new GridLayoutManager(getContext(), ANSWER_SPAN_DEFAULT,
-//                OrientationHelper.HORIZONTAL, false);
+        GridLayoutManager layoutManager = new GridLayoutManager(getContext(), ANSWER_SPAN_WIDE,
+                OrientationHelper.HORIZONTAL, false);
         quickAnswers.setLayoutManager(layoutManager);
         quickAnswers.setItemAnimator(null);
         quickAnswers.setAdapter(new QuickAnswerAdapter(getContext(), this));
-//        layoutManager.setSpanSizeLookup(new QuickAnswerSpan((QuickAnswerAdapter) quickAnswers.getAdapter()));
 
         conversationRecyclerView.setHasFixedSize(true);
         conversationRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -495,7 +481,6 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
         if (answer.hasNext())
             getAndAddNode(answer.getNext());
         else
-//            answerView.setData(new ArrayList<>());
             clearAnswerView();
     }
 
@@ -624,14 +609,6 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
 
     private void addAnswerOptions(Node node) {
         clearAnswerView();
-//        answerView.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
-//            @Override
-//            public void onGlobalLayout() {
-//                // Scroll the recycler after the answer view is layed out
-//                answerView.getViewTreeObserver().removeOnGlobalLayoutListener(this);
-//                conversationRecyclerView.scrollToPosition(getBotAdapter().getItemCount() - 1);
-//            }
-//        });
 
         if (node.getAnswers().size() > 0) {
             if (TextUtils.isEmpty(node.getAutoAnswer())) {
@@ -644,17 +621,6 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
 
                 setAnswers(answers);
 
-//                answerView.setData(answers, new HashtagView.DataStateTransform<Answer>() {
-//                    @Override
-//                    public CharSequence prepareSelected(Answer item) {
-//                        return item.getProcessedText();
-//                    }
-//
-//                    @Override
-//                    public CharSequence prepare(Answer item) {
-//                        return item.getProcessedText();
-//                    }
-//                });
             } else {
                 for (Answer answer : node.getAnswers()) {
                     if (node.getAutoAnswer().equals(answer.getName())) {
@@ -700,7 +666,6 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
         QuickAnswerAdapter adapter = getAnswerAdapter();
         if (adapter != null)
             adapter.clear();
-//        answerView.setData(new ArrayList<>());
         scrollToBottom();
     }
 
@@ -711,25 +676,18 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
     }
 
     private void setAnswers(List<Answer> answers) {
-//        GridLayoutManager layout = (GridLayoutManager) quickAnswers.getLayoutManager();
-        StaggeredGridLayoutManager layout = (StaggeredGridLayoutManager) quickAnswers.getLayoutManager();
+        GridLayoutManager layout = (GridLayoutManager) quickAnswers.getLayoutManager();
 
         if (layout != null)
-            if (answers.size() <= 2)
-                layout.setSpanCount(ANSWER_SPAN_SIGLE);
-            else if (answers.size() <= 4)
+            if (answers.size() <= 4)
                 layout.setSpanCount(ANSWER_SPAN_NARROW);
-            else if (answers.size() >= 9)
-                layout.setSpanCount(ANSWER_SPAN_SUPER_WIDE);
-            else if (answers.size() >= 7)
-                layout.setSpanCount(ANSWER_SPAN_WIDE);
             else
-                layout.setSpanCount(ANSWER_SPAN_DEFAULT);
+                layout.setSpanCount(ANSWER_SPAN_WIDE);
 
         QuickAnswerAdapter adapter = getAnswerAdapter();
-        if (adapter != null) {
+        
+        if (adapter != null)
             adapter.replace(answers);
-        }
 
         scrollToBottom();
     }
@@ -765,7 +723,6 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
     private void finishConversation() {
         if (controller != null)
             controller.onDone(createAnswerLog(getBotAdapter().getDataSet()));
-//        answerView.setData(new ArrayList<>());
         clearAnswerView();
         persisted.clearConversation();
         persisted.clearConvoGoals();
@@ -806,15 +763,12 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
     private void showProgressBar() {
         conversationRecyclerView.setVisibility(View.GONE);
         quickAnswers.setVisibility(View.GONE);
-//        answerView.setVisibility(View.GONE);
         progressBarContainer.setVisibility(View.VISIBLE);
     }
 
     private void showConversation() {
         conversationRecyclerView.setVisibility(View.VISIBLE);
         quickAnswers.setVisibility(View.VISIBLE);
-//        answerView.setVisibility(View.VISIBLE);
-//        answerView.setVisibility(View.GONE);
         progressBarContainer.setVisibility(View.GONE);
     }
 }
