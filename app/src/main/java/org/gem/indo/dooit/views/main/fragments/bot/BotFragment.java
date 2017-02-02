@@ -91,8 +91,8 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
     View progressBarContainer;
 
     // TODO: Remove hashtag view library
-    @BindView(R.id.fragment_bot_answer_hash_view)
-    HashtagView answerView;
+//    @BindView(R.id.fragment_bot_answer_hash_view)
+//    HashtagView answerView;
 
     @BindView(R.id.fragment_bot_answer_quick_answers)
     RecyclerView quickAnswers;
@@ -147,7 +147,7 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
 
         SquiggleBackgroundHelper.setBackground(getContext(), R.color.grey_back, R.color.grey_fore, background);
 
-        answerView.addOnTagClickListener(this);
+//        answerView.addOnTagClickListener(this);
 
         StaggeredGridLayoutManager layoutManager = new StaggeredGridLayoutManager(
                 ANSWER_SPAN_DEFAULT, StaggeredGridLayoutManager.HORIZONTAL);
@@ -495,7 +495,8 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
         if (answer.hasNext())
             getAndAddNode(answer.getNext());
         else
-            answerView.setData(new ArrayList<>());
+//            answerView.setData(new ArrayList<>());
+            clearAnswerView();
     }
 
     @Override
@@ -623,14 +624,14 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
 
     private void addAnswerOptions(Node node) {
         clearAnswerView();
-        answerView.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
-            @Override
-            public void onGlobalLayout() {
-                // Scroll the recycler after the answer view is layed out
-                answerView.getViewTreeObserver().removeOnGlobalLayoutListener(this);
-                conversationRecyclerView.scrollToPosition(getBotAdapter().getItemCount() - 1);
-            }
-        });
+//        answerView.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+//            @Override
+//            public void onGlobalLayout() {
+//                // Scroll the recycler after the answer view is layed out
+//                answerView.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+//                conversationRecyclerView.scrollToPosition(getBotAdapter().getItemCount() - 1);
+//            }
+//        });
 
         if (node.getAnswers().size() > 0) {
             if (TextUtils.isEmpty(node.getAutoAnswer())) {
@@ -643,17 +644,17 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
 
                 setAnswers(answers);
 
-                answerView.setData(answers, new HashtagView.DataStateTransform<Answer>() {
-                    @Override
-                    public CharSequence prepareSelected(Answer item) {
-                        return item.getProcessedText();
-                    }
-
-                    @Override
-                    public CharSequence prepare(Answer item) {
-                        return item.getProcessedText();
-                    }
-                });
+//                answerView.setData(answers, new HashtagView.DataStateTransform<Answer>() {
+//                    @Override
+//                    public CharSequence prepareSelected(Answer item) {
+//                        return item.getProcessedText();
+//                    }
+//
+//                    @Override
+//                    public CharSequence prepare(Answer item) {
+//                        return item.getProcessedText();
+//                    }
+//                });
             } else {
                 for (Answer answer : node.getAnswers()) {
                     if (node.getAutoAnswer().equals(answer.getName())) {
@@ -699,7 +700,7 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
         QuickAnswerAdapter adapter = getAnswerAdapter();
         if (adapter != null)
             adapter.clear();
-        answerView.setData(new ArrayList<>());
+//        answerView.setData(new ArrayList<>());
         scrollToBottom();
     }
 
@@ -764,8 +765,8 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
     private void finishConversation() {
         if (controller != null)
             controller.onDone(createAnswerLog(getBotAdapter().getDataSet()));
-        // Clear answers
-        answerView.setData(new ArrayList<>());
+//        answerView.setData(new ArrayList<>());
+        clearAnswerView();
         persisted.clearConversation();
         persisted.clearConvoGoals();
         controller = null;
@@ -798,16 +799,22 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
         clearState = value;
     }
 
+    //////////////////
+    // Progress Bar //
+    //////////////////
+
     private void showProgressBar() {
         conversationRecyclerView.setVisibility(View.GONE);
-        answerView.setVisibility(View.GONE);
+        quickAnswers.setVisibility(View.GONE);
+//        answerView.setVisibility(View.GONE);
         progressBarContainer.setVisibility(View.VISIBLE);
     }
 
     private void showConversation() {
         conversationRecyclerView.setVisibility(View.VISIBLE);
+        quickAnswers.setVisibility(View.VISIBLE);
 //        answerView.setVisibility(View.VISIBLE);
-        answerView.setVisibility(View.GONE);
+//        answerView.setVisibility(View.GONE);
         progressBarContainer.setVisibility(View.GONE);
     }
 }
