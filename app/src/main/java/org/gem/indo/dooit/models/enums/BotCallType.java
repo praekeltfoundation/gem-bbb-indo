@@ -34,7 +34,7 @@ public enum BotCallType {
 
     @SerializedName("#confirm_notify")
     CONFIRM_NOTIFY,
-    
+
     @SerializedName("#update_local_goal")
     UPDATE_LOCAL_GOAL,
 
