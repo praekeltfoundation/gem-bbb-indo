@@ -1,7 +1,12 @@
 package org.gem.indo.dooit.views.helpers.activity;
 
+import android.app.Application;
+import android.content.res.Resources;
+import android.util.DisplayMetrics;
+
 import com.crashlytics.android.Crashlytics;
 
+import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.Currency;
 import java.util.Locale;
@@ -15,7 +20,9 @@ public class CurrencyHelper {
 
     public static String format(Object o) {
         try {
-            return NumberFormat.getCurrencyInstance().format(Double.valueOf((String.valueOf(o))));
+            // Lock currency symbols to Indonesian Rupiah
+            return NumberFormat.getCurrencyInstance(new Locale("in", "ID")).format(Double.valueOf(String.valueOf(o)));
+            //return NumberFormat.getCurrencyInstance().format(Double.valueOf((String.valueOf(o))));
         } catch (Exception e) {
             Crashlytics.log("Error converting number to currency [" + String.valueOf(o) + "]");
             Crashlytics.logException(e);
@@ -24,6 +31,8 @@ public class CurrencyHelper {
     }
 
     public static String getCurrencySymbol() {
-        return Currency.getInstance(Locale.getDefault()).getSymbol();
+        // Lock currency symbols to Indonesian Rupiah
+        return Currency.getInstance(new Locale("in", "ID")).getSymbol(new Locale("in", "ID"));
+        //return Currency.getInstance(Locale.getDefault()).getSymbol();
     }
 }
