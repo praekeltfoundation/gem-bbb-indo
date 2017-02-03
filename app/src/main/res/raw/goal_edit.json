@@ -33,7 +33,8 @@
       {
         "name": "goal_edit_choice_delete",
         "text": "$(goal_edit_choice_delete)",
-        "next": "goal_edit_delete_confirm"
+        "next": "goal_edit_delete_confirm",
+        "background": "DANGER"
       }
     ]
   },
@@ -184,12 +185,14 @@
       {
         "name": "goal_edit_delete_reason_do_not_want",
         "text": "$(goal_edit_delete_reason_do_not_want)",
-        "next": "goal_edit_do_delete"
+        "next": "goal_edit_do_delete",
+        "background": "DANGER"
       },
       {
         "name": "goal_edit_delete_reason_misc",
         "text": "$(goal_edit_delete_reason_misc)",
-        "next": "goal_edit_do_delete"
+        "next": "goal_edit_do_delete",
+        "background": "DANGER"
       },
       {
         "name": "goal_edit_delete_reason_cancel",

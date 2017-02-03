@@ -37,7 +37,7 @@ public class AnswerInlineTextEditViewHolder extends BaseBotViewHolder<Answer> {
         this.tagsClickListener = tagsClickListener;
         ButterKnife.bind(this, itemView);
 
-        editText.setBackground(ContextCompat.getDrawable(itemView.getContext(), R.drawable.ic_d_answer_dialogue_bkg));
+        editText.setBackground(ContextCompat.getDrawable(itemView.getContext(), R.drawable.ic_d_answer_dialogue_bkg_blue));
     }
 
     @Override
