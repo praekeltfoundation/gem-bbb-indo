@@ -9,11 +9,31 @@
   {
     "name": "challenge_winner_badge",
     "type": "badge",
+    "autoNext": "challenge_prize_won"
+  },
+  {
+    "name": "challenge_prize_won",
+    "type": "text",
+    "text": "$(challenge_prize_won)",
+    "call": "#winning_prize",
     "autoNext": "challenge_winner_end"
   },
   {
     "name": "challenge_winner_end",
     "asyncCall": "#confirm_notify",
-    "type": "end"
+    "answers": [
+      {
+        "name": "convo_default_thank_you",
+        "text": "$(thank_you)",
+        "next": "thank_you"
+      }
+
+    ]
+  },
+
+  {
+    "name": "thank_you",
+    "type": "end",
+    "autoNextScreen": "BOT"
   }
 ]
