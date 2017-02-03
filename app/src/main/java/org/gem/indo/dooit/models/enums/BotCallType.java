@@ -42,6 +42,9 @@ public enum BotCallType {
     UPDATE_GOAL_CONFIRM,
 
     @SerializedName("#participant_badge")
-    PARTICIPANT_BADGE
+    PARTICIPANT_BADGE,
+
+    @SerializedName("#set_target_to_default")
+    SET_TARGET_TO_DEFAULT
 
 }

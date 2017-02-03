@@ -74,6 +74,7 @@ public class GoalGalleryItemViewHolder extends RecyclerView.ViewHolder {
                 answer.values.put(BotParamType.GOAL_PROTO_NAME.getKey(), prototype.getName());
                 answer.values.put(BotParamType.GOAL_PROTO_IMAGE_URL.getKey(), prototype.getImageUrl());
                 answer.values.put(BotParamType.GOAL_PROTO_NUM_USERS_WITH_SIMILAR_GOALS.getKey(), prototype.getNumUsers());
+                answer.values.put(BotParamType.GOAL_PROTO_DEFAULT_PRICE.getKey(), prototype.getDefaultPrice());
                 answer.setNext(dataModel.getNext());
                 answer.setRemoveOnSelect(dataModel.getName());
                 answer.setText(null);

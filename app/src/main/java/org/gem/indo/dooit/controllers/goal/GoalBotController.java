@@ -135,6 +135,12 @@ public abstract class GoalBotController extends DooitBotController {
                 break;
             case GOAL_PROTO_NUM_USERS_WITH_SIMILAR_GOALS:
                 model.values.put(key, goal.getPrototype().getNumUsers());
+                break;
+            case GOAL_PROTO_DEFAULT_PRICE:
+                if(goal.hasPrototype()) {
+                    model.values.put(key, goal.getPrototype().getDefaultPrice());
+                }
+                break;
             default:
                 super.resolveParam(model, paramType);
         }
@@ -148,7 +154,8 @@ public abstract class GoalBotController extends DooitBotController {
                         answer.values.getLong(BotParamType.GOAL_PROTO_ID.getKey()),
                         answer.values.getString(BotParamType.GOAL_PROTO_NAME.getKey()),
                         answer.values.getString(BotParamType.GOAL_PROTO_IMAGE_URL.getKey()),
-                        answer.values.getInteger(BotParamType.GOAL_PROTO_NUM_USERS_WITH_SIMILAR_GOALS.getKey()))
+                        answer.values.getInteger(BotParamType.GOAL_PROTO_NUM_USERS_WITH_SIMILAR_GOALS.getKey()),
+                        answer.values.getDouble(BotParamType.GOAL_PROTO_DEFAULT_PRICE.getKey()))
                 );
                 break;
             case GOAL_NAME:

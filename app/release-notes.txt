@@ -28,3 +28,7 @@
 - Winner badges displays Challenge's name
 - Winner badge bot conversation gives Thank You option
 - Fixed Bot quick answer layout issues
+- Fixed the edit goal conversation so that the bot no longer uses outdated values
+  when populating the conversation
+- Added the conversation when adding a goal that the user can say they are "not sure" what the
+  target amount should be

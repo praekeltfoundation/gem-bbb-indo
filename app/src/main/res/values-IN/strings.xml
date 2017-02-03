@@ -205,7 +205,17 @@
 
     <string name="number_of_other_users_with_similar_goal">Hebat! Apa kamu tau $(goal_proto.num_users) pengguna lain juga menabung untuk tujuan yang sama?</string>
 
+    <string name="goal_add_a_add_amount">Masukkan jumlah.</string>
+    <string name="goal_add_a_not_sure">Aku kurang tau.</string>
+    <string name="goal_add_q_recommend_target_amount">Umumnya, $(goal.name) senilai Rp. $(goal_proto.default_price). Apakah itu sesuai dengan target kamu?</string>
+    <string name="goal_add_a_too_expencive">Gak, itu terlalu mahal.</string>
+    <string name="goal_add_a_too_cheap">Gak, itu belum mencukupi.</string>
+    <string name="goal_add_a_price_correct">Iya, tepat sekali. Selanjutnya?</string>
+    <string name="goal_add_q_dont_worry_input_own_amount">Gak masalah! Teruskan dan tentukan target jumlah tabungan kamu.</string>
+    <string name="goal_add_q_can_change_amount_later">Jangan kuatir, kamu akan selalu bisa menggantinya.</string>
+
     <string name="goal_add_number_of_weeks">minggu</string>
+
     <!-- Answers -->
     <string name="goal_add_greeting_response">Hola!</string>
 

@@ -18,9 +18,20 @@ public class GoalPrototype {
     private String imageUrl;
     @SerializedName("num_users")
     private int numUsers;
+    @SerializedName("default_price")
+    private double defaultPrice;
+
+    public double getDefaultPrice() {
+        return defaultPrice;
+    }
+
+    public void setDefaultPrice(double defaultPrice) {
+        this.defaultPrice = defaultPrice;
+    }
 
     public GoalPrototype copy(){
-        return new GoalPrototype(this.id, StringHelper.newString(this.name), StringHelper.newString(this.imageUrl), this.numUsers);
+        return new GoalPrototype(this.id, StringHelper.newString(this.name),
+                StringHelper.newString(this.imageUrl), this.numUsers, this.defaultPrice);
     }
 
     public int getNumUsers() {
@@ -31,11 +42,12 @@ public class GoalPrototype {
         // Blank Constructor
     }
 
-    public GoalPrototype(long id, String name, String imageUrl, int numUsers) {
+    public GoalPrototype(long id, String name, String imageUrl, int numUsers, double averagePrice) {
         this.id = id;
         this.name = name;
         this.imageUrl = imageUrl;
         this.numUsers = numUsers;
+        this.defaultPrice = averagePrice;
     }
 
     public long getId() {
