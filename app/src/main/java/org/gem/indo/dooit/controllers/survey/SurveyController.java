@@ -144,11 +144,15 @@ abstract public class SurveyController extends DooitBotController {
     /**
      * Helper to check whether the user has given consent to take the survey.
      *
-     * @param submission The submission that the controller is building up. The consent answer will
-     *                   be added to the submission under CONSENT_KEY.
-     * @param answer     The answer that holds the consent answer value.
+     * @param submission   The submission that the controller is building up. The consent answer
+     *                     will be added to the submission under CONSENT_KEY.
+     * @param ageAnswer    The answer of whether the user is old enough to give consent. If it is
+     *                     null then no consent was given.
+     * @param parentAnswer The answer of whether the user's parent gave consent. If it is
+     *                     null then the user is old enough to consent themselves.
      */
-    protected void handleConsent(@NonNull Map<String, String> submission, @Nullable Answer answer) {
-        submission.put(CONSENT_KEY, answer == null ? Long.toString(ANSWER_NO) : answer.getValue());
+    protected void handleConsent(@NonNull Map<String, String> submission,
+                                 @Nullable Answer ageAnswer, @Nullable Answer parentAnswer) {
+        submission.put(CONSENT_KEY, ageAnswer == null ? Long.toString(ANSWER_NO) : ageAnswer.getValue());
     }
 }

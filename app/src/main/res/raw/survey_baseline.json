@@ -22,28 +22,6 @@
 
 
   {
-    "name": "survey_baseline_q_consent",
-    "type": "text",
-    "text": "$(survey_common_q_consent)",
-    "answers": [
-      {
-        "name": "survey_baseline_q_consent_a_yes",
-        "text": "$(survey_common_q_consent_a_yes)",
-        "value": "1",
-        "next": "survey_baseline_q01_occupation"
-      },
-      {
-        "name": "survey_baseline_q_consent_a_no",
-        "text": "$(survey_common_q_consent_a_no)",
-        "value": "0",
-        "next": "survey_baseline_submit_cancel"
-      }
-    ]
-  },
-
-
-
-  {
     "name": "survey_baseline_q1_consent",
     "type": "text",
     "text": "$(survey_common_q1_consent)",

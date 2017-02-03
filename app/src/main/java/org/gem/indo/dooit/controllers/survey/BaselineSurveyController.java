@@ -23,7 +23,9 @@ import rx.functions.Action1;
 
 public class BaselineSurveyController extends SurveyController {
 
-    private static final String BASELINE_CONSENT = "survey_baseline_q_consent";
+    private static final String BASELINE_CONSENT_1 = "survey_baseline_q1_consent";
+    private static final String BASELINE_CONSENT_2 = "survey_baseline_q2_consent";
+
     private static final String[] QUESTIONS = new String[]{
             "survey_baseline_q01_occupation",
             "survey_baseline_q02_grade",
@@ -91,7 +93,7 @@ public class BaselineSurveyController extends SurveyController {
         Map<String, String> submission = new LinkedHashMap<>();
 
         // Consent
-        handleConsent(submission, answerLog.get(BASELINE_CONSENT));
+        handleConsent(submission, answerLog.get(BASELINE_CONSENT_1), answerLog.get(BASELINE_CONSENT_2));
 
         // Survey Questions
         for (String questionName : QUESTIONS) {
