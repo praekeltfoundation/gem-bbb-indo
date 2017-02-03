@@ -18,7 +18,6 @@ import org.gem.indo.dooit.models.enums.BotObjectType;
 import org.gem.indo.dooit.models.enums.BotParamType;
 import org.gem.indo.dooit.models.enums.BotType;
 import org.gem.indo.dooit.models.exceptions.BotCallbackRequired;
-import org.gem.indo.dooit.views.DooitActivity;
 import org.gem.indo.dooit.views.main.fragments.bot.adapters.BotAdapter;
 
 import javax.inject.Inject;
@@ -72,13 +71,12 @@ public class BadgeViewHolder extends BaseBotViewHolder<Node> {
         background.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.bkg_carousel_card));
 
         // TODO: This needs to move to the controller
-        if(persisted.hasConvoWinnerChallenge(BotType.CHALLENGE_WINNER)) {
+        if (persisted.hasConvoWinnerChallenge(BotType.CHALLENGE_WINNER)) {
             challengeTitle.setText(persisted.loadWinningChallenge(BotType.CHALLENGE_WINNER).getName() + " " + challenge);
             challengeTitle.setVisibility(View.VISIBLE);
             separator.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.bkg_carousel_separator));
             persisted.clearConvoWinnerChallenge();
-        }
-        else {
+        } else {
             challengeTitle.setVisibility(View.GONE);
             separator.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.bkg_carousel_separator));
         }
