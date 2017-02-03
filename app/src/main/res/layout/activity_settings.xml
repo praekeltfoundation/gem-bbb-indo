@@ -281,7 +281,8 @@
             <View
                 android:id="@+id/settings_about_help_separator"
                 style="@style/Divider"
-                android:layout_below="@+id/settings_about_help" />
+                android:layout_below="@+id/settings_about_help"
+                android:visibility="gone"/>
 
             <TextView
                 android:id="@+id/settings_about_report"
@@ -372,6 +373,7 @@
                 android:textColor="@color/purple"
                 android:textStyle="bold"
                 android:layout_below="@+id/settings_about"
+                android:visibility="gone"
                 android:layout_alignParentStart="true" />
 
             <View

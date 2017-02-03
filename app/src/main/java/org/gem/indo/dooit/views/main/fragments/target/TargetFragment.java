@@ -2,6 +2,7 @@ package org.gem.indo.dooit.views.main.fragments.target;
 
 import android.graphics.Point;
 import android.os.Bundle;
+import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.NestedScrollView;
 import android.view.LayoutInflater;
@@ -230,7 +231,7 @@ public class TargetFragment extends MainFragment {
         double toSavePerWeek = goal.getTarget() / weeks;
         bars.setGoal(goal);
         bars.requestLayout();
-        goalMessage.setText(String.format(savingsMessage, CurrencyHelper.format(goal.getWeeklyTarget()), goal.getTarget(), weeks));
+        goalMessage.setText(String.format(savingsMessage, CurrencyHelper.format(goal.getWeeklyTarget()), CurrencyHelper.format(goal.getTarget()), weeks));
         endDate.setText(Utils.formatDate(goal.getEndDate().toDate()));
         endOfGoalDate = goal.getEndDate().toDate();
 
@@ -299,12 +300,15 @@ public class TargetFragment extends MainFragment {
     }
 
     public void refreshGoals() {
-        getActivity().runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                retrieveGoals();
-            }
-        });
+        FragmentActivity activity = getActivity();
+        if (activity != null) {
+            getActivity().runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    retrieveGoals();
+                }
+            });
+        }
     }
 
     private void updateNavCarets() {

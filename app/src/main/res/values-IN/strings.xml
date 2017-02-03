@@ -193,7 +193,7 @@
     <string name="goal_add_a_camera">Aku ingin mengunggah foto.</string>
     <string name="goal_add_a_gallery">Aku ingin memilih foto dari galeri.</string>
 
-    <string name="goal_add_q_ask_amount">Berapa yang kamu harus tabung untuk $(goal.name)?</string>
+    <string name="goal_add_q_ask_amount">Berapa yang harus kamu tabung untuk $(goal.name)?</string>
     <string name="goal_add_q_ask_date">Pada tanggal berapa kamu sudah harus selesai menabung untuk targetmu?</string>
 
     <string name="goal_add_q_verify">"Jika kamu tabung $(goal.weekly_target_currency) per minggu, kamu akan mencapai targetmu $(goal.name) dalam $(goal.weeks_left_up) minggu. Jika kamu ikuti rencana ini, targetmu akan tercapai pada tanggal $(goal.end_date).</string>
@@ -205,6 +205,7 @@
 
     <string name="number_of_other_users_with_similar_goal">Hebat! Apa kamu tau $(goal_proto.num_users) pengguna lain juga menabung untuk tujuan yang sama?</string>
 
+    <string name="goal_add_number_of_weeks">minggu</string>
     <!-- Answers -->
     <string name="goal_add_greeting_response">Hola!</string>
 
@@ -695,7 +696,7 @@
     <string name="type_number_hint">Type number…</string>
     <string name="type_currency_hint">Ketik jumlah…</string>
     <string name="type_date_hint">Type date…</string>
-    <string name="yay_me">Yay me!</string>
+    <string name="yay_me">Hore!</string>
 
     <string name="ToneY">Yes</string>
     <string name="ToneN">No</string>

@@ -204,6 +204,7 @@
 
     <string name="number_of_other_users_with_similar_goal">Fantastic! Did you know that $(goal_proto.num_users) users are also saving for this goal?</string>
 
+    <string name="goal_add_number_of_weeks">weeks</string>
     <!-- Answers -->
     <string name="goal_add_greeting_response">Hola!</string>
 
