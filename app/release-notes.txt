@@ -21,3 +21,4 @@
 
 - Participation Badges are awarded on all challenges
 - Winner badges are awarded and notification gets dismissed
+- Currency symbols and format is now locked to Indonesian locale
