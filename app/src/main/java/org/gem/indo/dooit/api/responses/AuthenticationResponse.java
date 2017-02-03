@@ -1,5 +1,7 @@
 package org.gem.indo.dooit.api.responses;
 
+import com.google.gson.annotations.SerializedName;
+
 import org.gem.indo.dooit.models.Token;
 import org.gem.indo.dooit.models.User;
 import org.gem.indo.dooit.models.UserUUID;
@@ -12,6 +14,7 @@ public class AuthenticationResponse {
 
     private Token token;
     private User user;
+    @SerializedName("user_uuid")
     private UserUUID userUUID;
 
     public UserUUID getUserUUID() {
