@@ -8,7 +8,7 @@
         "name": "survey_baseline_q_intro_a_yes",
         "text": "$(survey_common_q_intro_a_yes)",
         "value": "1",
-        "next": "survey_baseline_q_consent"
+        "next": "survey_baseline_q1_consent"
       },
       {
         "name": "survey_baseline_q_intro_a_no",
@@ -34,6 +34,50 @@
       },
       {
         "name": "survey_baseline_q_consent_a_no",
+        "text": "$(survey_common_q_consent_a_no)",
+        "value": "0",
+        "next": "survey_baseline_submit_cancel"
+      }
+    ]
+  },
+
+
+
+  {
+    "name": "survey_baseline_q1_consent",
+    "type": "text",
+    "text": "$(survey_common_q1_consent)",
+    "answers": [
+      {
+        "name": "survey_baseline_q1_consent_a_yes",
+        "text": "$(survey_common_q_consent_a_yes)",
+        "value": "1",
+        "next": "survey_baseline_q2_consent"
+      },
+      {
+        "name": "survey_baseline_q1_consent_a_no",
+        "text": "$(survey_common_q_consent_a_no)",
+        "value": "0",
+        "next": "survey_baseline_q01_occupation"
+      }
+    ]
+  },
+
+
+
+  {
+    "name": "survey_baseline_q2_consent",
+    "type": "text",
+    "text": "$(survey_common_q2_consent)",
+    "answers": [
+      {
+        "name": "survey_baseline_q2_consent_a_yes",
+        "text": "$(survey_common_q_consent_a_yes)",
+        "value": "1",
+        "next": "survey_baseline_q01_occupation"
+      },
+      {
+        "name": "survey_baseline_q2_consent_a_no",
         "text": "$(survey_common_q_consent_a_no)",
         "value": "0",
         "next": "survey_baseline_submit_cancel"

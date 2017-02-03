@@ -306,6 +306,8 @@
 
     <!-- Consent -->
     <string name="survey_common_q_consent">If you are 17 years of age or younger: Does a parent or guardian agree to you completing this survey?</string>
+    <string name="survey_common_q1_consent">Are you 17 years or younger?</string>
+    <string name="survey_common_q2_consent">Does a parent consent to you completing this survey?</string>
     <string name="survey_common_q_consent_a_yes">Yes</string>
     <string name="survey_common_q_consent_a_no">No</string>
 
