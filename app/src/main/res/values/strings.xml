@@ -213,7 +213,8 @@
     <string name="goal_add_q_dont_worry_input_own_amount">No problem! Go ahead and select your own amount for your savings goal.</string>
     <string name="goal_add_q_can_change_amount_later">Don\'t worry, you can always change it later.</string>
 
-
+    <string name="goal_add_number_of_weeks">weeks</string>
+    
     <!-- Answers -->
     <string name="goal_add_greeting_response">Hola!</string>
 
@@ -660,7 +661,9 @@
     <!-- BOT: challenge_winner -->
 
     <string name="challenge_winner_intro">$(badge.intro)</string>
-
+    <string name="challenge_prize_won">$(challenge.prize)</string>
+    <string name="challenge">Challenge</string> <!-- so it will read Quiz Challenge instead of Quiz -->
+    <string name="thank_you">Thank you</string>
     <!-- END BOT: challenge_winner -->
 
     <!-- BOT: challenge_participation -->

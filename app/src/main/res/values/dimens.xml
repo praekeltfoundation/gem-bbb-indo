@@ -47,6 +47,7 @@
     <dimen name="bot_text_padding_vertical">6dp</dimen>
     <dimen name="bot_text_padding_horizontal">16dp</dimen>
     <dimen name="bot_answer_right_margin">16dp</dimen>
+    <dimen name="bot_quick_answer_margin">2dp</dimen>
 
     <dimen name="bot_carousel_card_width">250dp</dimen>
     <dimen name="bot_carousel_card_image_height">150dp</dimen>

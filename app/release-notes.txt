@@ -19,5 +19,12 @@
 
 0.1.2
 
+- Crash on Crashlytics TargetFragment null pointer check on getActivity
+- Updated Bahasa strings in the BINA and in the target fragment
+- Help on Settings screen is hidden
+- Target deadline in Bahasa no longer touches the edges
 - Participation Badges are awarded on all challenges
 - Winner badges are awarded and notification gets dismissed
+- Winner badges displays Challenge's name
+- Winner badge bot conversation gives Thank You option
+- Fixed Bot quick answer layout issues
