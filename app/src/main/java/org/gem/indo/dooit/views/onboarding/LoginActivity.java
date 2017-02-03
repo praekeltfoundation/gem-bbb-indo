@@ -144,6 +144,7 @@ public class LoginActivity extends DooitActivity {
                 persisted.setCurrentUser(authenticationResponse.getUser());
                 persisted.saveToken(authenticationResponse.getToken());
                 persisted.setNewBotUser(false);
+                persisted.saveUserUUID(authenticationResponse.getUserUUID());
                 NotificationAlarm.setAlarm(LoginActivity.this);
                 MainActivity.Builder.create(LoginActivity.this).startActivityClearTop();
             }
