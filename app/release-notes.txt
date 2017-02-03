@@ -27,3 +27,4 @@
 - Winner badges are awarded and notification gets dismissed
 - Winner badges displays Challenge's name
 - Winner badge bot conversation gives Thank You option
+- Fixed Bot quick answer layout issues
