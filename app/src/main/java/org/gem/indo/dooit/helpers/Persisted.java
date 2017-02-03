@@ -18,6 +18,7 @@ import org.gem.indo.dooit.models.Badge;
 import org.gem.indo.dooit.models.Tip;
 import org.gem.indo.dooit.models.Token;
 import org.gem.indo.dooit.models.User;
+import org.gem.indo.dooit.models.UserUUID;
 import org.gem.indo.dooit.models.bot.Answer;
 import org.gem.indo.dooit.models.bot.BaseBotModel;
 import org.gem.indo.dooit.models.bot.Node;
@@ -41,6 +42,7 @@ import javax.inject.Inject;
  */
 public class Persisted {
     private static final String TOKEN = "token";
+    private static final String UserUUID = "user_uuid";
     private static final String USER = "user";
     private static final String CHALLENGE = "challenge";
     private static final String QUIZ_INDEX = "quiz_index";
@@ -341,6 +343,26 @@ public class Persisted {
     public void saveToken(Token token) {
         dooitSharedPreferences.setComplex(TOKEN, token);
         Log.d(TAG, String.format("Saving: %s", token));
+    }
+
+    public boolean hasUserUUID() {
+        UserUUID gaid = loadUserUUID();
+        return gaid != null && !TextUtils.isEmpty(gaid.getGaid());
+    }
+
+    private UserUUID loadUserUUID() {
+        UserUUID gaid = dooitSharedPreferences.getComplex(UserUUID, UserUUID.class);
+        Log.d(TAG, String.format("Loadings: %s", gaid));
+        return gaid;
+    }
+
+    public String getUserUUID() {
+        return loadUserUUID().getGaid();
+    }
+
+    public void saveUserUUID(UserUUID gaid) {
+        dooitSharedPreferences.setComplex(UserUUID, gaid);
+        Log.d(TAG, String.format("Saving: %s", gaid));
     }
 
     public void clearToken() {
