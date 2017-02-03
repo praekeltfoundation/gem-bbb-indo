@@ -5,6 +5,7 @@ import android.net.Uri;
 
 import com.facebook.drawee.backends.pipeline.Fresco;
 import com.facebook.imagepipeline.core.ImagePipeline;
+import com.google.android.gms.analytics.AnalyticsService;
 
 import org.gem.indo.dooit.DooitApplication;
 import org.gem.indo.dooit.api.DooitAPIError;
@@ -18,6 +19,7 @@ import org.gem.indo.dooit.helpers.images.MediaUriHelper;
 import org.gem.indo.dooit.models.Tip;
 import org.gem.indo.dooit.models.bot.Answer;
 import org.gem.indo.dooit.models.bot.BaseBotModel;
+import org.gem.indo.dooit.models.bot.Node;
 import org.gem.indo.dooit.models.challenge.BaseChallenge;
 import org.gem.indo.dooit.models.enums.BotCallType;
 import org.gem.indo.dooit.models.enums.BotType;
@@ -45,15 +47,29 @@ public class GoalEditController extends GoalBotController {
     @Inject
     transient FileUploadManager fileUploadManager;
 
-    public GoalEditController(Activity activity, BotRunner botRunner, Goal goal, BaseChallenge challenge, Tip tip) {
+    Goal oldGoal;
+
+    public GoalEditController(Activity activity, BotRunner botRunner, Goal goal, BaseChallenge challenge, Tip tip, Goal oldGoal) {
         super(activity, botRunner, BotType.GOAL_EDIT, goal, challenge, tip);
         ((DooitApplication) activity.getApplication()).component.inject(this);
         this.goal = goal;
+        if(oldGoal == null){
+            this.oldGoal = goal.copy();
+        }else{
+            this.oldGoal = oldGoal;
+        }
     }
 
     @Override
     public void onCall(BotCallType key, Map<String, Answer> answerLog, BaseBotModel model) {
-
+        switch (key) {
+            case UPDATE_LOCAL_GOAL:
+                doLocalUpdate(answerLog);
+                break;
+            case UPDATE_GOAL_CONFIRM:
+                confirmLocalUpdate(answerLog);
+                break;
+        }
     }
 
     @Override
@@ -85,6 +101,40 @@ public class GoalEditController extends GoalBotController {
             default:
                 return true;
         }
+    }
+
+    private void doLocalUpdate(Map<String, Answer> answerLog) {
+        if (answerLog.containsKey("goal_edit_choice_date"))
+            goal.setEndDate(DateTimeFormat.forPattern("yyyy-MM-dd")
+                    .parseLocalDate(answerLog.get("goal_end_date").getValue().substring(0, 10)));
+        else if (answerLog.containsKey("goal_target"))
+            goal.setTarget(Double.parseDouble(answerLog.get("goal_target").getValue()));
+        else if (answerLog.containsKey("goal_edit_gallery") || answerLog.containsKey("goal_edit_camera")) {
+            //Note: This case will have to be handled by and async call
+            //handleImage(answerLog, listener);
+            // Don't upload Goal
+            return;
+        }else if(answerLog.containsKey("goal_weekly_target")){
+            goal.setWeeklyTarget(Double.parseDouble(answerLog.get("goal_weekly_target").getValue()));
+        }
+
+        persisted.saveConvoGoal(botType, goal);
+        persisted.saveOldConvoGoal(botType, oldGoal);
+    }
+
+    private void confirmLocalUpdate(Map<String, Answer> answerLog) {
+        if (    answerLog.containsKey("goal_edit_target_cancel") ||
+                answerLog.containsKey("goal_edit_weekly_target_cancel")
+                ){
+            oldGoal = goal.copy();
+        }else{
+            goal = oldGoal;
+            oldGoal = goal.copy();
+        }
+
+
+        persisted.saveConvoGoal(botType, goal);
+        persisted.saveOldConvoGoal(botType, oldGoal);
     }
 
     private void doUpdate(Map<String, Answer> answerLog, final OnAsyncListener listener) {

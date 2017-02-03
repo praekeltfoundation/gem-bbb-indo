@@ -4,6 +4,7 @@ import android.text.TextUtils;
 
 import com.google.gson.annotations.SerializedName;
 
+import org.gem.indo.dooit.helpers.String.StringHelper;
 import org.gem.indo.dooit.helpers.Utils;
 import org.gem.indo.dooit.models.Badge;
 import org.gem.indo.dooit.views.helpers.activity.CurrencyHelper;
@@ -60,6 +61,37 @@ public class Goal {
     private boolean imageFromProto = false;
     // Server does not allow prototype object in Goal
     transient private GoalPrototype prototype;
+
+    public Goal copy(){
+        Goal goal = new Goal();
+
+        goal.setId(this.id);
+        goal.setName(StringHelper.newString(this.name));
+        goal.setValue(this.value);
+        goal.setTarget(this.target);
+        goal.setImageUrl(StringHelper.newString(this.imageUrl));
+        goal.setStartDate(new LocalDate(this.startDate));
+        goal.setEndDate(new LocalDate(this.endDate));
+        for(GoalTransaction gt : this.transactions){
+            goal.addTransaction(gt.copy());
+        }
+        goal.setWeeklyTotals(new LinkedHashMap<>(this.getWeeklyTotals()));
+        goal.setWeeklyTarget(this.weeklyTarget);
+        goal.setWeekCount(this.weekCount);
+        goal.setWeekCountToNow(this.weekCountToNow);
+        goal.setWeeklyAverage(this.weeklyAverage);
+        goal.setUser(this.user);
+        goal.setPrototypeId(this.prototypeId);
+        List<Badge> tempBadges = new ArrayList<>();
+        for(Badge badge : this.newBadges){
+            tempBadges.add(badge.copy());
+        }
+        goal.newBadges = tempBadges;
+        goal.setLocalImageUri(StringHelper.newString(this.localImageUri));
+        //goal.setPrototype(this.prototype.copy());     //Prototype will not necessarily be set
+
+        return goal;
+    }
 
     public long getId() {
         return id;
