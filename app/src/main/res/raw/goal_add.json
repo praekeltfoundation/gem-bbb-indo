@@ -106,7 +106,7 @@
       {
         "name": "goal_add_a_skip",
         "text": "$(label_skip)",
-        "next": "goal_add_q_ask_amount"
+        "next": "goal_add_check_if_user_knows_amount"
       }
     ]
   },
@@ -122,18 +122,71 @@
       {
         "name": "Accept",
         "text": "$(Accept)",
-        "next": "goal_add_q_ask_amount"
+        "next": "goal_add_check_if_user_knows_amount"
       }
     ]
   },
 
+  {
+    "name": "goal_add_check_if_user_knows_amount",
+    "type": "text",
+    "text": "$(goal_add_q_ask_amount)",
+    "answers": [
+      {
+        "name": "knows_amount_Y",
+        "next": "goal_add_q_ask_amount",
+        "text" : "$(goal_add_a_add_amount)"
+      },
+      {
+        "name": "knows_amount_N",
+        "next": "goal_add_user_not_know_amount",
+        "text" : "$(goal_add_a_not_sure)"
+      }
+    ]
+  },
 
+  {
+    "name": "goal_add_user_not_know_amount",
+    "type": "text",
+    "text": "$(goal_add_q_recommend_target_amount)",
+    "answers": [
+      {
+        "name": "goal_add_a_too_expencive",
+        "next": "goal_add_q_dont_worry_input_own_amount",
+        "text" : "$(goal_add_a_too_expencive)"
+      },
+      {
+        "name": "goal_add_a_too_cheap",
+        "next": "goal_add_q_dont_worry_input_own_amount",
+        "text" : "$(goal_add_a_too_cheap)"
+      },
+      {
+        "name": "goal_add_a_price_correct",
+        "next": "set_goal_target_to_default_blank_node",
+        "text" : "$(goal_add_a_price_correct)"
+      }
+    ]
+  },
+
+  {
+    "name" : "set_goal_target_to_default_blank_node",
+    "type" : "blank",
+    "autoNext" : "goal_add_q_ask_date",
+    "call" : "#set_target_to_default"
+  },
+
+  {
+    "name" : "goal_add_q_dont_worry_input_own_amount",
+    "type" : "text",
+    "text": "$(goal_add_q_dont_worry_input_own_amount)",
+    "autoNext": "goal_add_q_ask_amount"
+  },
 
 
   {
     "name": "goal_add_q_ask_amount",
     "type": "text",
-    "text": "$(goal_add_q_ask_amount)",
+    "text" : "$(goal_add_q_can_change_amount_later)",
     "autoAnswer": "goal_amount",
     "answers": [
       {
@@ -145,7 +198,6 @@
       }
     ]
   },
-
 
 
 
