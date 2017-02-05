@@ -1,6 +1,7 @@
 package org.gem.indo.dooit.views.main.fragments.bot;
 
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
@@ -675,7 +676,8 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
                 cb.resolveParam(answer, BotParamType.byKey(arg.getKey()));
         }
         answer.setProcessedText(args.process(answer.values.getRawMap()));
-        CrashlyticsHelper.log(this.getClass().getSimpleName(), "processText: ", "Processed answer : " + answer.toString());
+        CrashlyticsHelper.log(this.getClass().getSimpleName(),
+                "processText: ", "Processed answer : " + answer.toString());
     }
 
     private void clearAnswerView() {
@@ -685,6 +687,7 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
         scrollToBottom();
     }
 
+    @Nullable
     private QuickAnswerAdapter getAnswerAdapter() {
         if (quickAnswers != null)
             return (QuickAnswerAdapter) quickAnswers.getAdapter();
