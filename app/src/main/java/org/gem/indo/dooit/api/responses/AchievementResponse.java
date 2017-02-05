@@ -34,6 +34,9 @@ public class AchievementResponse {
     @SerializedName("weeks_since_saved")
     private int weeksSinceSaved;
 
+    /**
+     * All Badges that the user has earned
+     */
     private List<Badge> badges = new ArrayList<>();
 
     /////////////
