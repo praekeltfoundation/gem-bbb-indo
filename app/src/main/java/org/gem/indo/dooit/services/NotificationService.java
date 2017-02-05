@@ -37,6 +37,8 @@ import rx.functions.Action0;
 import rx.functions.Action1;
 import rx.functions.Func1;
 
+import static org.gem.indo.dooit.helpers.notifications.NotificationType.SURVEY_AVAILABLE;
+
 /**
  * Created by Wimpie Victor on 2016/12/06.
  */
@@ -78,7 +80,7 @@ public class NotificationService extends IntentService {
                 public void onError(DooitAPIError error) {
 
                 }
-        }));
+            }));
 
         if (persisted.shouldNotify(NotificationType.CHALLENGE_WINNER)) {
             requests.add(challengeManager.fetchChallengeWinner(new DooitErrorHandler() {
@@ -176,16 +178,29 @@ public class NotificationService extends IntentService {
                     .setUser(persisted.getCurrentUser())
                     .build();
 
-            ParamMatch match = ParamParser.parse(response.getSurvey().getNotificationBody());
+            NotificationType notifyType = response.getNotificationType();
+            ParamMatch match = null;
+            switch (notifyType) {
+                case SURVEY_AVAILABLE:
+                    match = ParamParser.parse(getString(R.string.notification_content_survey_available));
+                    break;
+                case SURVEY_REMINDER_1:
+                    match = ParamParser.parse(getString(R.string.notification_content_survey_reminder_1));
+                    break;
+                case SURVEY_REMINDER_2:
+                    match = ParamParser.parse(getString(R.string.notification_content_survey_reminder_2));
+            }
+
+            String content = match != null ? match.process(params) : getString(notifyType.getTitleRes());
 
             // Specifically for BASELINE and EATOOL types so bot knows what conversation to start
             if (survey.hasBotType())
                 extras.put(NotificationArgs.SURVEY_TYPE, survey.getBotType().name());
 
             new Notifier(getApplicationContext()).notify(
-                    NotificationType.SURVEY_AVAILABLE,
+                    notifyType,
                     MainActivity.class,
-                    match.process(params),
+                    content,
                     extras
             );
 
@@ -195,9 +210,9 @@ public class NotificationService extends IntentService {
         }
     }
 
-    protected void winnerRetrieved(WinnerResponse response){
+    protected void winnerRetrieved(WinnerResponse response) {
         if (persisted.shouldNotify(NotificationType.CHALLENGE_WINNER)) {
-            if (response.isAvailable()){
+            if (response.isAvailable()) {
                 new Notifier(getApplicationContext())
                         .notify(NotificationType.CHALLENGE_WINNER, MainActivity.class,
                                 String.format(this.getApplicationContext().getString(R.string.notification_content_challenge_winner),
