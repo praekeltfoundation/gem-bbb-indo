@@ -147,15 +147,22 @@ public class NotificationService extends IntentService {
     }
 
     protected void achievementsRetrieved(AchievementResponse response) {
-        if (persisted.shouldNotify(NotificationType.SAVING_REMINDER) && response.shouldRemindSavings())
+        if (persisted.shouldNotify(NotificationType.SAVING_REMINDER) && response.shouldRemindSavings()) {
+
+            Map<String, Object> params = DooitParamBuilder.create(this)
+                    .setAchievements(response)
+                    .setUser(persisted.getCurrentUser())
+                    .build();
+
+            ParamMatch match = ParamParser.parse(getApplicationContext()
+                    .getString(R.string.notification_content_saving_reminder));
+
             new Notifier(getApplicationContext()).notify(
                     NotificationType.SAVING_REMINDER,
                     MainActivity.class,
-                    String.format(
-                            getApplicationContext().getString(R.string.notification_content_saving_reminder),
-                            response.getWeeksSinceSaved()
-                    )
+                    match.process(params)
             );
+        }
     }
 
     protected void surveyRetrieved(SurveyResponse response) {
