@@ -52,7 +52,7 @@ public class AnswerInlineNumberEditViewHolder extends BaseBotViewHolder<Answer> 
         this.tagsClickListener = tagsClickListener;
         ButterKnife.bind(this, itemView);
 
-        background.setBackground(ContextCompat.getDrawable(itemView.getContext(), R.drawable.ic_d_answer_dialogue_bkg));
+        background.setBackground(ContextCompat.getDrawable(itemView.getContext(), R.drawable.ic_d_answer_dialogue_bkg_blue));
     }
 
     @Override

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/item_view_bot_quick_answer"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+
+    android:layout_marginStart="@dimen/bot_quick_answer_margin"
+    android:layout_marginEnd="@dimen/bot_quick_answer_margin"
+    android:layout_marginTop="@dimen/bot_quick_answer_margin"
+    android:layout_marginBottom="@dimen/bot_quick_answer_margin"
+
+    android:maxWidth="50dp"
+    tools:context=".views.main.MainActivity">
+
+    <TextView
+        android:id="@+id/item_view_bot_quick_answer_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        tools:text="Hey Bina!"
+        tools:background="@drawable/ic_d_answer_dialogue_bkg_blue"
+        android:paddingStart="@dimen/bot_text_padding_horizontal"
+        android:paddingEnd="@dimen/bot_text_padding_horizontal"
+        android:paddingTop="@dimen/bot_text_padding_vertical"
+        android:paddingBottom="@dimen/bot_text_padding_vertical"
+        android:textColor="@color/grey_fore"
+        android:textAlignment="center"
+        android:textSize="@dimen/k_font_large"
+        />
+
+</FrameLayout>

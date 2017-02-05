@@ -60,6 +60,10 @@ public class ChallengeWinnerController extends DooitBotController {
             case CHALLENGE_TITLE:
                 if (challenge.getName() != null)
                     model.values.put(paramType.getKey(),challenge.getName());
+                break;
+            case CHALLENGE_PRIZE:
+                if (challenge.getPrize() != null)
+                    model.values.put(paramType.getKey(),challenge.getPrize());
         }
         super.resolveParam(model, paramType);
     }

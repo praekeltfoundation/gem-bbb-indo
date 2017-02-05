@@ -21,6 +21,7 @@ import org.gem.indo.dooit.views.RootActivity;
 import org.gem.indo.dooit.views.main.MainActivity;
 import org.gem.indo.dooit.views.main.fragments.bot.BotFragment;
 import org.gem.indo.dooit.views.main.fragments.bot.viewholders.AnswerImageSelectViewHolder;
+import org.gem.indo.dooit.views.main.fragments.bot.viewholders.BadgeViewHolder;
 import org.gem.indo.dooit.views.main.fragments.bot.viewholders.GoalGalleryViewHolder;
 import org.gem.indo.dooit.views.main.fragments.bot.viewholders.GoalInfoViewHolder;
 import org.gem.indo.dooit.views.main.fragments.bot.viewholders.GoalVerificationViewHolder;
@@ -72,6 +73,8 @@ public interface DooitComponent {
     void inject(GoalGalleryViewHolder o);
 
     void inject(BotFragment o);
+
+    void inject(BadgeViewHolder o);
 
     void inject(ChallengeActivity o);
 

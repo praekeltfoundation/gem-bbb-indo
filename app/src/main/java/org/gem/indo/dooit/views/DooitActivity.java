@@ -141,6 +141,10 @@ public abstract class DooitActivity extends AppCompatActivity implements Network
         Crashlytics.setUserIdentifier(Long.toString(user.getId()));
         Crashlytics.setUserName(user.getUsername());
         Crashlytics.setUserEmail(email);
+
+        // User ID and Session tracking in Google Analytics
+        if (user.hasId())
+            tracker.set("&uid", Long.toString(user.getId()));
     }
 
     @Override

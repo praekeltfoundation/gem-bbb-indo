@@ -35,6 +35,7 @@ public enum BotParamType {
     GOAL_PROTO_NAME("goal_proto.name"),
     GOAL_PROTO_IMAGE_URL("goal_proto.image_url"),
     GOAL_PROTO_NUM_USERS_WITH_SIMILAR_GOALS("goal_proto.num_users"),
+    GOAL_PROTO_DEFAULT_PRICE("goal_proto.default_price"),
 
     // Challenge
     CHALLENGE_ID("challenge.id"),
@@ -43,6 +44,7 @@ public enum BotParamType {
     CHALLENGE_IMAGE_URL("challenge.image_url"),
     CHALLENGE_INTRO("challenge.intro"),
     CHALLENGE_OUTRO("challenge.outro"),
+    CHALLENGE_PRIZE("challenge.prize"),
 
     // Tips
     TIP_ID("tip.id"),

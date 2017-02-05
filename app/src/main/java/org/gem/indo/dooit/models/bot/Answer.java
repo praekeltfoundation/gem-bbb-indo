@@ -8,6 +8,7 @@ import com.google.gson.annotations.SerializedName;
 
 import org.gem.indo.dooit.models.enums.BotMessageType;
 import org.gem.indo.dooit.models.enums.BotParamType;
+import org.gem.indo.dooit.models.enums.BotQuickAnswerBackground;
 
 /**
  * Created by Bernhard Müller on 11/7/2016.
@@ -24,6 +25,7 @@ public class Answer extends BaseBotModel {
     private String[] changeOnSelect;
     private String typeOnFinish;
     private String parentName;
+    private BotQuickAnswerBackground background = BotQuickAnswerBackground.PRIMARY;
 
     public Answer() {
         super(Answer.class.toString());
@@ -124,6 +126,18 @@ public class Answer extends BaseBotModel {
         return !TextUtils.isEmpty(parentName);
     }
 
+    public BotQuickAnswerBackground getBackground() {
+        return background;
+    }
+
+    public void setBackground(BotQuickAnswerBackground background) {
+        this.background = background;
+    }
+
+    public boolean hasBackground() {
+        return background != null;
+    }
+
     public Answer copy() {
         Answer answer = new Answer();
 
@@ -148,6 +162,7 @@ public class Answer extends BaseBotModel {
         answer.setChangeOnSelect(getChangeOnSelect());
         answer.setTypeOnFinish(getTypeOnFinish() != null ? new String(getTypeOnFinish()) : null);
         answer.setParentName(getParentName() != null ? new String(getParentName()) : null);
+        answer.setBackground(this.background);
 
         //copy parent atttributes
 
