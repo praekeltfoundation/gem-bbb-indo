@@ -76,6 +76,7 @@ import butterknife.ButterKnife;
 public class BotFragment extends MainFragment implements HashtagView.TagsClickListener,
         QuickAnswerAdapter.OnBotInputListener, BotRunner {
 
+    private static final int ANSWER_SPAN_SINGLE = 1;
     private static final int ANSWER_SPAN_NARROW = 2;
     private static final int ANSWER_SPAN_WIDE = 3;
 
@@ -150,14 +151,17 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
         View view = inflater.inflate(R.layout.fragment_bot, container, false);
         ButterKnife.bind(this, view);
 
+        // Avoid crash on lower API levels
         SquiggleBackgroundHelper.setBackground(getContext(), R.color.grey_back, R.color.grey_fore, background);
 
+        // Quick Answers
         GridLayoutManager layoutManager = new GridLayoutManager(getContext(), ANSWER_SPAN_WIDE,
                 OrientationHelper.HORIZONTAL, false);
         quickAnswers.setLayoutManager(layoutManager);
         quickAnswers.setItemAnimator(null);
         quickAnswers.setAdapter(new QuickAnswerAdapter(getContext(), this));
 
+        // Conversation History View
         conversationRecyclerView.setHasFixedSize(true);
         conversationRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         conversationRecyclerView.setItemAnimator(new DefaultItemAnimator());
@@ -698,7 +702,9 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
         GridLayoutManager layout = (GridLayoutManager) quickAnswers.getLayoutManager();
 
         if (layout != null)
-            if (answers.size() <= 4)
+            if (answers.size() <= 1)
+                layout.setSpanCount(ANSWER_SPAN_SINGLE);
+            else if (answers.size() <= 4)
                 layout.setSpanCount(ANSWER_SPAN_NARROW);
             else
                 layout.setSpanCount(ANSWER_SPAN_WIDE);
