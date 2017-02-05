@@ -826,6 +826,7 @@
     <string name="notification_title_saving_reminder">Savings Reminder</string>
 
     <string name="notification_content_saving_reminder">Hi, $(user.preferred_name)! How are you? I noticed that it\'s been $(achievements.weeks_since_saved) weeks since your last savings. Do you have anything to update? Come on, let\'s go!</string>
+    <string name="notification_content_challenge_available">Hi, $(user.preferred_name)! I just posted a new challenge. Want to check it out?</string>
     <string name="notification_content_challenge_winner">You have won the %s challenge! Congratulations</string>
     <string name="notification_content_survey_available">Hi, $(user.preferred_name)! I\'d love to get to know you better. Care to answer a few questions?</string>
     <string name="notification_content_survey_reminder_1">Hi, $(user.preferred_name). Do you have a few minutes to answer some questions for me? Your answers will help me to make Dooit even better!</string>
