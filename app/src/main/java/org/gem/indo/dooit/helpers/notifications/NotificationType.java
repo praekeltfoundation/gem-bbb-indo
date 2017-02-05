@@ -16,8 +16,9 @@ public enum NotificationType {
     CHALLENGE_WINNER(104,R.string.notification_title_challenge_winner),
     GOAL_DEADLINE_MISSED(200, R.string.notification_title_goal_deadline_missed), // TODO: Notify user that they missed one of their Goals
     SAVING_REMINDER(300, R.string.notification_title_saving_reminder),
-    SURVEY_AVAILABLE(400, R.string.notification_title_survey_available), // TODO: Notify user of new survey
-    SURVEY_REMINDER(401, R.string.notification_title_survey_reminder), // TODO: Remind the user that a survey is waiting
+    SURVEY_AVAILABLE(400, R.string.notification_title_survey_available),
+    SURVEY_REMINDER_1(401, R.string.notification_title_survey_reminder),
+    SURVEY_REMINDER_2(402, R.string.notification_title_survey_reminder),
     AD_HOC(500, R.string.notification_title_ad_hoc); // TODO: Ad Hoc Notifications from CMS
 
     // Argument key used in Intent extra for directing the MainFragment's viewpager
