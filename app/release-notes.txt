@@ -25,6 +25,7 @@
 - Target deadline in Bahasa no longer touches the edges
 - Participation Badges are awarded on all challenges
 - Winner badges are awarded and notification gets dismissed
+- Currency symbols and format is now locked to Indonesian locale
 - Winner badges displays Challenge's name
 - Winner badge bot conversation gives Thank You option
 - Fixed Bot quick answer layout issues

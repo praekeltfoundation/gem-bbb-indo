@@ -21,6 +21,7 @@ import org.gem.indo.dooit.views.main.fragments.bot.adapters.BotAdapter;
 
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
+import java.util.Locale;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -75,7 +76,8 @@ public class AnswerInlineNumberEditViewHolder extends BaseBotViewHolder<Answer> 
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                 if (EditorInfo.IME_ACTION_DONE == actionId) {
                     dismissKeyboard(editText);
-                    char separator = ((DecimalFormat) NumberFormat.getCurrencyInstance()).getDecimalFormatSymbols().getGroupingSeparator();
+                    char separator = CurrencyHelper.getSeperator();
+                    //char separator = ((DecimalFormat) NumberFormat.getCurrencyInstance()).getDecimalFormatSymbols().getGroupingSeparator();
                     String stringSeparator = String.valueOf(separator);
 
                     String input = (v.getText().toString()).replace(stringSeparator, "");

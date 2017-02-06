@@ -5,7 +5,10 @@ import android.text.TextWatcher;
 import android.widget.EditText;
 
 import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
 import java.text.ParseException;
+import java.util.Currency;
+import java.util.Locale;
 
 /**
  * Created by frede on 2017/01/03.
@@ -16,6 +19,7 @@ public class NumberTextWatcher implements TextWatcher {
     private DecimalFormat df;
     private DecimalFormat dfnd;
     private boolean hasFractionalPart;
+    private static Locale indonesia = new Locale("in", "ID");
 
     private EditText et;
 
@@ -32,6 +36,11 @@ public class NumberTextWatcher implements TextWatcher {
 
     public void afterTextChanged(Editable s) {
         et.removeTextChangedListener(this);
+
+        df.setCurrency(Currency.getInstance(indonesia));
+        dfnd.setCurrency(Currency.getInstance(indonesia));
+        df.setDecimalFormatSymbols(DecimalFormatSymbols.getInstance(indonesia));
+        dfnd.setDecimalFormatSymbols(DecimalFormatSymbols.getInstance(indonesia));
 
         try {
             int inilen, endlen;

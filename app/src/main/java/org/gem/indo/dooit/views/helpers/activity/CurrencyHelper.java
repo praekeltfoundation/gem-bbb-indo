@@ -2,6 +2,7 @@ package org.gem.indo.dooit.views.helpers.activity;
 
 import com.crashlytics.android.Crashlytics;
 
+import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.Currency;
 import java.util.Locale;
@@ -12,10 +13,13 @@ import java.util.Locale;
 
 public class CurrencyHelper {
     public static double DEFAULT_VALUE = 0.0f;
+    private static Locale indonesia = new Locale("in", "ID");
 
     public static String format(Object o) {
         try {
-            return NumberFormat.getCurrencyInstance().format(Double.valueOf((String.valueOf(o))));
+            // Lock currency symbols to Indonesian Rupiah
+            return NumberFormat.getCurrencyInstance(indonesia).format(Double.valueOf(String.valueOf(o)));
+            //return NumberFormat.getCurrencyInstance().format(Double.valueOf((String.valueOf(o))));
         } catch (Exception e) {
             Crashlytics.log("Error converting number to currency [" + String.valueOf(o) + "]");
             Crashlytics.logException(e);
@@ -24,6 +28,13 @@ public class CurrencyHelper {
     }
 
     public static String getCurrencySymbol() {
-        return Currency.getInstance(Locale.getDefault()).getSymbol();
+        // Lock currency symbols to Indonesian Rupiah
+        return Currency.getInstance(indonesia).getSymbol(indonesia);
+        //return Currency.getInstance(Locale.getDefault()).getSymbol();
+    }
+
+    public static char getSeperator() {
+        return ((DecimalFormat) NumberFormat.getCurrencyInstance(new Locale("in", "ID"))).getDecimalFormatSymbols().getGroupingSeparator();
+        //return ((DecimalFormat) NumberFormat.getCurrencyInstance()).getDecimalFormatSymbols().getGroupingSeparator();
     }
 }
