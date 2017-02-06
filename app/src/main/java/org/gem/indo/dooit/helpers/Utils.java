@@ -16,9 +16,6 @@ import org.gem.indo.dooit.models.bot.BaseBotModel;
 import org.gem.indo.dooit.models.enums.BotType;
 import org.gem.indo.dooit.views.helpers.activity.CurrencyHelper;
 import org.gem.indo.dooit.views.main.fragments.bot.adapters.BotAdapter;
-import org.joda.time.DateTime;
-import org.joda.time.format.DateTimeFormat;
-import org.joda.time.format.DateTimeFormatter;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;

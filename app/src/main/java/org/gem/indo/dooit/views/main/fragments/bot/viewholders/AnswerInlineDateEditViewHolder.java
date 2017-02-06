@@ -18,7 +18,6 @@ import org.gem.indo.dooit.views.main.fragments.bot.adapters.BotAdapter;
 
 import java.text.DateFormat;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.Locale;
 
 import butterknife.BindString;
