@@ -3,6 +3,7 @@ package org.gem.indo.dooit.controllers.survey;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.text.TextUtils;
 
 import org.gem.indo.dooit.DooitApplication;
 import org.gem.indo.dooit.api.DooitAPIError;
@@ -144,11 +145,30 @@ abstract public class SurveyController extends DooitBotController {
     /**
      * Helper to check whether the user has given consent to take the survey.
      *
-     * @param submission The submission that the controller is building up. The consent answer will
-     *                   be added to the submission under CONSENT_KEY.
-     * @param answer     The answer that holds the consent answer value.
+     * @param submission   The submission that the controller is building up. The consent answer
+     *                     will be added to the submission under CONSENT_KEY.
+     * @param ageAnswer    The answer of whether the user is old enough to give consent. If it is
+     *                     null then no consent was given.
+     * @param parentAnswer The answer of whether the user's parent gave consent. If it is
+     *                     null then the user is old enough to consent themselves.
      */
-    protected void handleConsent(@NonNull Map<String, String> submission, @Nullable Answer answer) {
-        submission.put(CONSENT_KEY, answer == null ? Long.toString(ANSWER_NO) : answer.getValue());
+    static void handleConsent(@NonNull Map<String, String> submission,
+                              @Nullable Answer ageAnswer, @Nullable Answer parentAnswer) {
+
+        if (ageAnswer == null) {
+            // If no age answer is present, no consent was given
+            submission.put(CONSENT_KEY, Long.toString(ANSWER_NO));
+            return;
+        }
+
+        String ageVal = !TextUtils.isEmpty(ageAnswer.getValue()) ? ageAnswer.getValue() : Long.toString(ANSWER_NO);
+        String parentVal = parentAnswer != null ? parentAnswer.getValue() : Long.toString(ANSWER_NO);
+
+        if (ageVal.equals(Long.toString(ANSWER_NO)))
+            // Users above age 17 consented via the app level Terms & Conditions
+            submission.put(CONSENT_KEY, Long.toString(ANSWER_YES));
+        else
+            // Use parent's consent when users are below age 17
+            submission.put(CONSENT_KEY, parentVal);
     }
 }

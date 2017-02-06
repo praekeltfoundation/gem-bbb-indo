@@ -23,8 +23,13 @@ import rx.functions.Action1;
 
 public class EAToolSurveyController extends SurveyController {
 
-    private static final String EATOOL_CONSENT = "survey_eatool_q_consent";
+    private static final String EATOOL_CONSENT_1 = "survey_eatool_q1_consent";
+    private static final String EATOOL_CONSENT_2 = "survey_eatool_q2_consent";
+
     private static final String[] QUESTIONS = new String[]{
+            EATOOL_CONSENT_1,
+            EATOOL_CONSENT_2,
+
             "survey_eatool_q01_appreciate",
             "survey_eatool_q02_optimistic",
             "survey_eatool_q03_career",
@@ -80,7 +85,7 @@ public class EAToolSurveyController extends SurveyController {
         Map<String, String> submission = new HashMap<>();
 
         // Consent
-        handleConsent(submission, answerLog.get(EATOOL_CONSENT));
+        handleConsent(submission, answerLog.get(EATOOL_CONSENT_1), answerLog.get(EATOOL_CONSENT_2));
 
         // Survey Questions
         for (String questionName : QUESTIONS) {

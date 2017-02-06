@@ -1,6 +1,7 @@
 package org.gem.indo.dooit.views.main.fragments.bot;
 
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
@@ -75,6 +76,7 @@ import butterknife.ButterKnife;
 public class BotFragment extends MainFragment implements HashtagView.TagsClickListener,
         QuickAnswerAdapter.OnBotInputListener, BotRunner {
 
+    private static final int ANSWER_SPAN_SINGLE = 1;
     private static final int ANSWER_SPAN_NARROW = 2;
     private static final int ANSWER_SPAN_WIDE = 3;
 
@@ -149,14 +151,17 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
         View view = inflater.inflate(R.layout.fragment_bot, container, false);
         ButterKnife.bind(this, view);
 
+        // Avoid crash on lower API levels
         SquiggleBackgroundHelper.setBackground(getContext(), R.color.grey_back, R.color.grey_fore, background);
 
+        // Quick Answers
         GridLayoutManager layoutManager = new GridLayoutManager(getContext(), ANSWER_SPAN_WIDE,
                 OrientationHelper.HORIZONTAL, false);
         quickAnswers.setLayoutManager(layoutManager);
         quickAnswers.setItemAnimator(null);
         quickAnswers.setAdapter(new QuickAnswerAdapter(getContext(), this));
 
+        // Conversation History View
         conversationRecyclerView.setHasFixedSize(true);
         conversationRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         conversationRecyclerView.setItemAnimator(new DefaultItemAnimator());
@@ -675,7 +680,8 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
                 cb.resolveParam(answer, BotParamType.byKey(arg.getKey()));
         }
         answer.setProcessedText(args.process(answer.values.getRawMap()));
-        CrashlyticsHelper.log(this.getClass().getSimpleName(), "processText: ", "Processed answer : " + answer.toString());
+        CrashlyticsHelper.log(this.getClass().getSimpleName(),
+                "processText: ", "Processed answer : " + answer.toString());
     }
 
     private void clearAnswerView() {
@@ -685,6 +691,7 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
         scrollToBottom();
     }
 
+    @Nullable
     private QuickAnswerAdapter getAnswerAdapter() {
         if (quickAnswers != null)
             return (QuickAnswerAdapter) quickAnswers.getAdapter();
@@ -695,7 +702,9 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
         GridLayoutManager layout = (GridLayoutManager) quickAnswers.getLayoutManager();
 
         if (layout != null)
-            if (answers.size() <= 4)
+            if (answers.size() <= 1)
+                layout.setSpanCount(ANSWER_SPAN_SINGLE);
+            else if (answers.size() <= 4)
                 layout.setSpanCount(ANSWER_SPAN_NARROW);
             else
                 layout.setSpanCount(ANSWER_SPAN_WIDE);
