@@ -827,8 +827,12 @@
     <string name="notification_title_ad_hoc">Ad Hoc</string>
     <string name="notification_title_saving_reminder">Savings Reminder</string>
 
-    <string name="notification_content_saving_reminder">It\'s been %d weeks since you saved.</string>
+    <string name="notification_content_saving_reminder">Hei, $(user.preferred_name)! Sudah $(achievements.weeks_since_saved) minggu kamu nggak menabung. Ke mana aja? Perbarui jumlah tabunganmu yuk!</string>
+    <string name="notification_content_challenge_available">Hai, $(user.preferred_name)! Tantangan baru sudah tersedia! Mau ikutan?</string>
     <string name="notification_content_challenge_winner">You have won the %s challenge! Congratulations</string>
+    <string name="notification_content_survey_available">Hei, $(user.preferred_name)! Saya ingin mengenal kamu lebih jauh. Apakah kamu mau menjawab beberapa pertanyaan?</string>
+    <string name="notification_content_survey_reminder_1">Hei, $(user.preferred_name). Apakah kamu mau menjawab survei ini? Survei terbaru sudah tersedia. Jawabanmu akan membuat Dooit jadi lebih baik lagi!</string>
+    <string name="notification_content_survey_reminder_2">Hei, $(user.preferred_name). Jangan lupa isi surveinya ya! Mau ikutan surveinya sekarang?</string>
 
     <!-- Sharing -->
     <string name="share_chooser_tip_title">Share Tip on&#8230;</string>

@@ -8,6 +8,11 @@ import java.util.Map;
  */
 
 public enum BotParamType {
+    // User Stats
+    ACHIEVEMENTS_WEEKLY_STREAK("achievements.weekly_streak"),
+    ACHIEVEMENTS_LAST_SAVING_DATETIME("achievements.last_saving_datetime"),
+    ACHIEVEMENTS_WEEKS_SINCE_SAVED("achievements.weeks_since_saved"),
+
     // User
     USER_USERNAME("user.username"),
     USER_FIRST_NAME("user.first_name"),

@@ -17,7 +17,7 @@ import java.util.List;
 public class AchievementResponse {
 
     // TODO: Weeks by which the users should be notified are to be decided
-    public static final int WEEKS_SINCE_THRESHOLD = 2;
+    private static final int WEEKS_SINCE_THRESHOLD = 2;
 
     @SerializedName("weekly_streak")
     private int weeklyStreak;
@@ -34,6 +34,9 @@ public class AchievementResponse {
     @SerializedName("weeks_since_saved")
     private int weeksSinceSaved;
 
+    /**
+     * All Badges that the user has earned
+     */
     private List<Badge> badges = new ArrayList<>();
 
     /////////////

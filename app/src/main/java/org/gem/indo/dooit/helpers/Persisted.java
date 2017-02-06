@@ -1,6 +1,7 @@
 package org.gem.indo.dooit.helpers;
 
 import android.app.Application;
+import android.support.annotation.Nullable;
 import android.support.v4.util.LongSparseArray;
 import android.text.TextUtils;
 import android.util.Log;
@@ -307,6 +308,7 @@ public class Persisted {
      * User *
      ********/
 
+    @Nullable
     public User getCurrentUser() {
         User user = dooitSharedPreferences.getComplex(USER, User.class);
         Log.d(TAG, String.format("Loading: %s", user));

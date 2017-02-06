@@ -147,6 +147,8 @@ public class MainActivity extends DooitActivity {
                     startPage(MainViewPagerPositions.TARGET);
                     break;
                 case SURVEY_AVAILABLE:
+                case SURVEY_REMINDER_1:
+                case SURVEY_REMINDER_2:
                     handleSurveyNotification();
                     break;
                 case CHALLENGE_WINNER:

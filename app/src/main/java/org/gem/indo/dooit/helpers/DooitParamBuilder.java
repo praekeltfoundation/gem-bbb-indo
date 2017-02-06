@@ -3,6 +3,7 @@ package org.gem.indo.dooit.helpers;
 import android.content.Context;
 
 import org.gem.indo.dooit.DooitApplication;
+import org.gem.indo.dooit.api.responses.AchievementResponse;
 import org.gem.indo.dooit.models.User;
 import org.gem.indo.dooit.models.enums.BotParamType;
 import org.gem.indo.dooit.models.goal.Goal;
@@ -26,6 +27,7 @@ public class DooitParamBuilder {
     @Inject
     Persisted persisted;
 
+    private AchievementResponse achievements;
     private User user;
     private Goal goal;
 
@@ -35,6 +37,11 @@ public class DooitParamBuilder {
 
     public static DooitParamBuilder create(Context context) {
         return new DooitParamBuilder(context);
+    }
+
+    public DooitParamBuilder setAchievements(AchievementResponse response) {
+        this.achievements = response;
+        return this;
     }
 
     public DooitParamBuilder setUser(User user) {
@@ -50,6 +57,17 @@ public class DooitParamBuilder {
     public Map<String, Object> build() {
         Map<String, Object> map = new HashMap<>();
 
+        // Achievement Stats
+        if (achievements != null) {
+            map.put(BotParamType.ACHIEVEMENTS_WEEKLY_STREAK.getKey(), achievements.getWeeklyStreak());
+            map.put(BotParamType.ACHIEVEMENTS_LAST_SAVING_DATETIME.getKey(), achievements.getLastSavingDateTime());
+            map.put(BotParamType.ACHIEVEMENTS_WEEKS_SINCE_SAVED.getKey(), achievements.getWeeksSinceSaved());
+        }
+
+        // User
+
+        // If no user is set on builder, use the persisted user. Persisted can still return a null
+        // user.
         if (user == null)
             user = persisted.getCurrentUser();
 
