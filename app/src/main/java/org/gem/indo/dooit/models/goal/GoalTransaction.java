@@ -11,6 +11,10 @@ public class GoalTransaction {
     private DateTime date;
     private double value;
 
+    public GoalTransaction copy(){
+        return new GoalTransaction(new DateTime(this.date), this.value);
+    }
+
     public GoalTransaction(double value) {
         this(DateTime.now(), value);
     }

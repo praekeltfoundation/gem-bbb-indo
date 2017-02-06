@@ -145,14 +145,14 @@ public class Node extends BaseBotModel {
         n.setAnswerName(this.answerName != null ? new String(this.answerName) : null);
         n.setAutoNextScreen(this.autoNextScreen != null ? new String(this.autoNextScreen): null);
         n.setIconHidden(this.iconHidden);
-        List<Answer> newAnswers = new ArrayList<>();
-        for (int i = this.answers.size() - 1; i >= 0; --i){
-            newAnswers.add(answers.get(i).copy());
-        }
-        n.answers = newAnswers;
-        /*  Doing a shallow copy here since you dont want to call autoNextNode.copy()
-            and end up copying the entire conversation tree
-         */
+
+        for (int i = 0; i < this.answers.size(); i++)
+//            newAnswers.add(answers.get(i).copy());
+             n.addAnswer(answers.get(i).copy());
+
+//        n.answers = newAnswers;
+        // Doing a shallow copy here since you don't want to call autoNextNode.copy()
+        // and end up copying the entire conversation tree.
 
         n.autoNextNode = this.autoNextNode;
         return n;

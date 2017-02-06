@@ -20,6 +20,9 @@ public abstract class BaseChallenge implements Parcelable, Serializable {
     private long id;
     private String name;
     private String subtitle;
+    private String intro;
+    private String outro;
+
     @SerializedName("image_url")
     private String imageURL;
     @SerializedName("terms_url")
@@ -33,9 +36,8 @@ public abstract class BaseChallenge implements Parcelable, Serializable {
     private String instruction;
     @SerializedName("call_to_action")
     private String callToAction;
-    private String intro;
-    private String outro;
-
+    @SerializedName("prize")
+    private String prize;
 
     /*** Constructors ***/
     BaseChallenge() {
@@ -50,6 +52,7 @@ public abstract class BaseChallenge implements Parcelable, Serializable {
         activationDate = (DateTime) in.readValue(DateTime.class.getClassLoader());
         deactivationDate = (DateTime) in.readValue(DateTime.class.getClassLoader());
         type = (ChallengeType) in.readValue(ChallengeType.class.getClassLoader());
+        prize = in.readString();
     }
 
     /*** Getters/Setters ***/
@@ -125,6 +128,14 @@ public abstract class BaseChallenge implements Parcelable, Serializable {
         return outro;
     }
 
+    public String getPrize() {
+        return prize;
+    }
+
+    public void setPrize(String prize) {
+        this.prize = prize;
+    }
+
     @Override
     public int describeContents() {
         return 0;
@@ -137,5 +148,6 @@ public abstract class BaseChallenge implements Parcelable, Serializable {
         dest.writeValue(activationDate);
         dest.writeValue(deactivationDate);
         dest.writeValue(type);
+        dest.writeString(prize);
     }
 }

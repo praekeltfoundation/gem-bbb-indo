@@ -8,7 +8,10 @@ import com.google.gson.annotations.SerializedName;
  * Created by herman on 2016/11/05.
  */
 public class User {
-    private long id;
+
+    private static final long NO_ID = -1;
+
+    private long id = NO_ID;
     private String username;
     private String password;
     private String email;
@@ -24,6 +27,10 @@ public class User {
 
     public void setId(long id) {
         this.id = id;
+    }
+
+    public boolean hasId() {
+        return id != NO_ID;
     }
 
     public String getUsername() {

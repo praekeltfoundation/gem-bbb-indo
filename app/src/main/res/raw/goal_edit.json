@@ -33,7 +33,8 @@
       {
         "name": "goal_edit_choice_delete",
         "text": "$(goal_edit_choice_delete)",
-        "next": "goal_edit_delete_confirm"
+        "next": "goal_edit_delete_confirm",
+        "background": "DANGER"
       }
     ]
   },
@@ -93,11 +94,12 @@
     "name": "goal_edit_target_confirm",
     "type": "text",
     "text": "$(goal_edit_target_confirm)",
+    "call": "#update_local_goal",
     "answers": [
       {
         "name": "goal_edit_target_accept",
         "text": "$(goal_edit_target_accept)",
-        "next": "goal_edit_do_update"
+        "next": "goal_edit_confirm_local_update"
       },
       {
         "name": "goal_edit_target_cancel",
@@ -111,11 +113,12 @@
     "name": "goal_edit_weekly_target_confirm",
     "type": "text",
     "text": "$(goal_edit_target_confirm)",
+    "call": "#update_local_goal",
     "answers": [
       {
         "name": "goal_edit_weekly_target_accept",
         "text": "$(goal_edit_target_accept)",
-        "next": "goal_edit_do_update"
+        "next": "goal_edit_confirm_local_update"
       },
       {
         "name": "goal_edit_weekly_target_cancel",
@@ -123,6 +126,13 @@
         "next": "goal_edit_end"
       }
     ]
+  },
+
+  {
+    "name": "goal_edit_confirm_local_update",
+    "type": "blank",
+    "call": "#update_goal_confirm",
+    "autoNext": "goal_edit_do_update"
   },
 
 
@@ -175,12 +185,14 @@
       {
         "name": "goal_edit_delete_reason_do_not_want",
         "text": "$(goal_edit_delete_reason_do_not_want)",
-        "next": "goal_edit_do_delete"
+        "next": "goal_edit_do_delete",
+        "background": "DANGER"
       },
       {
         "name": "goal_edit_delete_reason_misc",
         "text": "$(goal_edit_delete_reason_misc)",
-        "next": "goal_edit_do_delete"
+        "next": "goal_edit_do_delete",
+        "background": "DANGER"
       },
       {
         "name": "goal_edit_delete_reason_cancel",
