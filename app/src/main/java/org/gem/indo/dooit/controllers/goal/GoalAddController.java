@@ -115,28 +115,20 @@ public class GoalAddController extends GoalBotController {
         else
             goal.setName(name);
 
-        if(answerLog.containsKey("goal_amount")) {
+        if (answerLog.containsKey("goal_amount")) {
             goal.setTarget(Float.parseFloat(answerLog.get("goal_amount").getValue()));
         }
         goal.setStartDate(LocalDate.now());
-        if(answerLog.containsKey("goalDate")) {
+        if (answerLog.containsKey("goalDate")) {
+//            goal.setEndDate(DateTimeFormat.forPattern("yyyy-MM-dd")
+//                    .parseLocalDate(answerLog.get("goalDate").getValue().substring(0, 10)));
             goal.setEndDate(DateTimeFormat.forPattern("yyyy-MM-dd")
-                    .parseLocalDate(answerLog.get("goalDate").getValue().substring(0, 10)));
-        }else if(answerLog.containsKey("weeklySaveAmount")){
+                    .parseLocalDate(answerLog.get("goalDate").values.getString("date")));
+        } else if (answerLog.containsKey("weeklySaveAmount")) {
             goal.setWeeklyTarget(Float.parseFloat(answerLog.get("weeklySaveAmount").getValue()));
         }
         CrashlyticsHelper.log(this.getClass().getSimpleName(), "do Populate (addGoal): ", "goal start date: " + goal.getStartDate() +
                 " Target amount: " + goal.getTarget() + " Goal name: " + goal.getName());
-
-        try {
-            goal.setEndDate(DateTimeFormat.forPattern("yyyy-MM-dd")
-                    .parseLocalDate(answerLog.get("goalDate").getValue().substring(0, 10)));
-        } catch (NullPointerException nullException) {
-            CrashlyticsHelper.logException(nullException);
-        }
-
-
-        //the statement above was null and therefore when it was used later for calculations it crashed
 
         // User has existing savings
         if (answerLog.containsKey("hasSavedY"))
@@ -223,7 +215,7 @@ public class GoalAddController extends GoalBotController {
     public boolean filter(Answer answer) {
         switch (answer.getName()) {
             case "knows_amount_N":
-                return goal.hasPrototype() && (Double.compare(goal.getPrototype().getDefaultPrice(),0.0) != 0);
+                return goal.hasPrototype() && (Double.compare(goal.getPrototype().getDefaultPrice(), 0.0) != 0);
             default:
                 return true;
         }
@@ -248,10 +240,10 @@ public class GoalAddController extends GoalBotController {
         persisted.saveConvoGoal(botType, goal);
     }
 
-    private void setTargetAsDefault(){
-        if(goal.hasPrototype()){
+    private void setTargetAsDefault() {
+        if (goal.hasPrototype()) {
             goal.setTarget(goal.getPrototype().getDefaultPrice());
-        }else{
+        } else {
             goal.setTarget(0);
         }
     }

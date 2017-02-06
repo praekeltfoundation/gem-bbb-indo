@@ -53,9 +53,9 @@ public class GoalEditController extends GoalBotController {
         super(activity, botRunner, BotType.GOAL_EDIT, goal, challenge, tip);
         ((DooitApplication) activity.getApplication()).component.inject(this);
         this.goal = goal;
-        if(oldGoal == null){
+        if (oldGoal == null) {
             this.oldGoal = goal.copy();
-        }else{
+        } else {
             this.oldGoal = oldGoal;
         }
     }
@@ -114,7 +114,7 @@ public class GoalEditController extends GoalBotController {
             //handleImage(answerLog, listener);
             // Don't upload Goal
             return;
-        }else if(answerLog.containsKey("goal_weekly_target")){
+        } else if (answerLog.containsKey("goal_weekly_target")) {
             goal.setWeeklyTarget(Double.parseDouble(answerLog.get("goal_weekly_target").getValue()));
         }
 
@@ -123,11 +123,11 @@ public class GoalEditController extends GoalBotController {
     }
 
     private void confirmLocalUpdate(Map<String, Answer> answerLog) {
-        if (    answerLog.containsKey("goal_edit_target_cancel") ||
+        if (answerLog.containsKey("goal_edit_target_cancel") ||
                 answerLog.containsKey("goal_edit_weekly_target_cancel")
-                ){
+                ) {
             oldGoal = goal.copy();
-        }else{
+        } else {
             goal = oldGoal;
             oldGoal = goal.copy();
         }
@@ -139,15 +139,17 @@ public class GoalEditController extends GoalBotController {
 
     private void doUpdate(Map<String, Answer> answerLog, final OnAsyncListener listener) {
         if (answerLog.containsKey("goal_edit_choice_date"))
+//            goal.setEndDate(DateTimeFormat.forPattern("yyyy-MM-dd")
+//                    .parseLocalDate(answerLog.get("goal_end_date").getValue().substring(0, 10)));
             goal.setEndDate(DateTimeFormat.forPattern("yyyy-MM-dd")
-                    .parseLocalDate(answerLog.get("goal_end_date").getValue().substring(0, 10)));
+                    .parseLocalDate(answerLog.get("goal_end_date").values.getString("date")));
         else if (answerLog.containsKey("goal_edit_target_accept"))
             goal.setTarget(Double.parseDouble(answerLog.get("goal_target").getValue()));
         else if (answerLog.containsKey("goal_edit_gallery") || answerLog.containsKey("goal_edit_camera")) {
             handleImage(answerLog, listener);
             // Don't upload Goal
             return;
-        }else if(answerLog.containsKey("goal_edit_weekly_target_accept")){
+        } else if (answerLog.containsKey("goal_edit_weekly_target_accept")) {
             goal.setWeeklyTarget(Double.parseDouble(answerLog.get("goal_weekly_target").getValue()));
         }
 

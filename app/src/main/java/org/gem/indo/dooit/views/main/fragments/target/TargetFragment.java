@@ -232,7 +232,8 @@ public class TargetFragment extends MainFragment {
         bars.setGoal(goal);
         bars.requestLayout();
         goalMessage.setText(String.format(savingsMessage, CurrencyHelper.format(goal.getWeeklyTarget()), CurrencyHelper.format(goal.getTarget()), weeks));
-        endDate.setText(Utils.formatDate(goal.getEndDate().toDate()));
+        //endDate.setText(Utils.formatDate(goal.getEndDate().toDate()));
+        endDate.setText(Utils.formatDateToLocal(goal.getEndDate().toDate()));
         endOfGoalDate = goal.getEndDate().toDate();
 
         if(goal.isMissed())

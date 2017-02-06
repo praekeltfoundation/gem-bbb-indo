@@ -16,6 +16,7 @@ import org.gem.indo.dooit.models.enums.BotMessageType;
 import org.gem.indo.dooit.views.custom.DatePickerFragment;
 import org.gem.indo.dooit.views.main.fragments.bot.adapters.BotAdapter;
 
+import java.text.DateFormat;
 import java.util.Calendar;
 import java.util.Locale;
 
@@ -63,7 +64,10 @@ public class AnswerInlineDateEditViewHolder extends BaseBotViewHolder<Answer> {
                         Answer inputAnswer = new Answer();
                         Calendar cal = Calendar.getInstance(Locale.getDefault());
                         cal.set(year, month, day);
-                        inputAnswer.setValue(Utils.formatDate(cal.getTime()) + " - " + Utils.weekDiff(cal.getTime().getTime(), Utils.ROUNDWEEK.UP) + " " + weeks);
+                        inputAnswer.setValue((DateFormat.getInstance().format(cal.getTime())).substring(0, (DateFormat.getInstance().format(cal.getTime())).indexOf(" "))
+                                + " - " + Utils.weekDiff(cal.getTime().getTime(), Utils.ROUNDWEEK.UP) + " " + weeks);
+                        //inputAnswer.setValue(DateFormat.getInstance().format(cal.getTime()) + " - " + Utils.weekDiff(cal.getTime().getTime(), Utils.ROUNDWEEK.UP) + " " + weeks);
+                        inputAnswer.values.put("date", Utils.formatDate(cal.getTime()));
                         inputAnswer.setText(null);
                         inputAnswer.setName(dataModel.getName());
                         inputAnswer.setRemoveOnSelect(dataModel.getName());

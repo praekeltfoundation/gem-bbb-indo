@@ -34,3 +34,4 @@
 - Added the conversation when adding a goal that the user can say they are "not sure" what the
   target amount should be
 - Change consent question to separate age and parent consent
+- Localised date shows when adding/editting a goal, viewing goals and challenge deadlines

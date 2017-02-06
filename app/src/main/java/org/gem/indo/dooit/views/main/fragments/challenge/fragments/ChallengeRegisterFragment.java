@@ -30,6 +30,7 @@ import org.gem.indo.dooit.helpers.Persisted;
 import org.gem.indo.dooit.helpers.RequestCodes;
 import org.gem.indo.dooit.helpers.SquiggleBackgroundHelper;
 import org.gem.indo.dooit.helpers.TextSpannableHelper;
+import org.gem.indo.dooit.helpers.Utils;
 import org.gem.indo.dooit.models.challenge.BaseChallenge;
 import org.gem.indo.dooit.models.challenge.Participant;
 import org.gem.indo.dooit.views.main.fragments.challenge.ChallengeActivity;
@@ -160,7 +161,8 @@ public class ChallengeRegisterFragment extends Fragment implements HasChallengeF
     public void onStart() {
         super.onStart();
         name.setText(challenge.getName());
-        date.setText(deadlineMessage + " " + challenge.getDeactivationDate().toLocalDateTime().toString("yyyy-MM-dd HH:mm"));
+        //date.setText(deadlineMessage + " " + challenge.getDeactivationDate().toLocalDateTime().toString("yyyy-MM-dd HH:mm"));
+        date.setText(deadlineMessage + " " + Utils.formatDateToLocal(challenge.getDeactivationDate().toDate()) + " " + challenge.getDeactivationDate().toLocalTime().toString("HH:mm"));
         instruction.setText(challenge.getInstruction());
 
         if (TextUtils.isEmpty(instruction.getText())) {
