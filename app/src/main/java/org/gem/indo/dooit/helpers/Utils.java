@@ -16,7 +16,11 @@ import org.gem.indo.dooit.models.bot.BaseBotModel;
 import org.gem.indo.dooit.models.enums.BotType;
 import org.gem.indo.dooit.views.helpers.activity.CurrencyHelper;
 import org.gem.indo.dooit.views.main.fragments.bot.adapters.BotAdapter;
+import org.joda.time.DateTime;
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
 
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
@@ -88,6 +92,16 @@ public class Utils {
 
     public static String formatDate(Date date) {
         return new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(date);
+    }
+
+    public static String formatDateToLocal(Date date) {
+        Locale locale = Locale.getDefault();
+        return DateFormat.getDateInstance(DateFormat.SHORT, locale).format(date);
+    }
+
+    public static String formatDateTimeToLocal(Date date) {
+        Locale locale = Locale.getDefault();
+        return DateFormat.getDateInstance(DateFormat.FULL, locale).format(date);
     }
 
     public static String populateFromPersisted(Persisted persisted, BotAdapter botAdapter, String text, String[] params) {
