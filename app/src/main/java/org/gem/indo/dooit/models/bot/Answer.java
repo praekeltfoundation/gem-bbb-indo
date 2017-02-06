@@ -156,7 +156,7 @@ public class Answer extends BaseBotModel {
         //Copy Answer local variables
         answer.inlineEditHint = this.inlineEditHint != null ? new String(this.inlineEditHint) : null;
         answer.setValue(this.value != null ? new String(value) : null);
-        answer.setInputKey(BotParamType.byKey(inputKey));
+        answer.setInputKey(getInputKey());
         answer.setNextOnFinish(this.nextOnFinish != null ? new String(nextOnFinish) : null);
         answer.setRemoveOnSelect(this.removeOnSelect != null ? new String(removeOnSelect) : null);
         answer.setChangeOnSelect(getChangeOnSelect());
