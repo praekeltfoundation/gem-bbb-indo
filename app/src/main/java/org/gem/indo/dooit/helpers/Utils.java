@@ -99,11 +99,6 @@ public class Utils {
         return DateFormat.getDateInstance(DateFormat.SHORT, locale).format(date);
     }
 
-    public static String formatDateTimeToLocal(Date date) {
-        Locale locale = Locale.getDefault();
-        return DateFormat.getDateInstance(DateFormat.FULL, locale).format(date);
-    }
-
     public static String populateFromPersisted(Persisted persisted, BotAdapter botAdapter, String text, String[] params) {
         if (!text.contains("%"))
             return text;
