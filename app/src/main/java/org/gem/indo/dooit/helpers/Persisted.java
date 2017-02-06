@@ -369,6 +369,10 @@ public class Persisted {
         dooitSharedPreferences.remove(TOKEN);
     }
 
+    public void clearUserUUID(){
+        dooitSharedPreferences.remove(UserUUID);
+    }
+
     /*************
      * Challenge *
      *************/

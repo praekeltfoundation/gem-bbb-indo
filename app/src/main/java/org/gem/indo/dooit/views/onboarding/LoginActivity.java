@@ -12,8 +12,10 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.google.android.gms.analytics.HitBuilders;
 import com.google.android.gms.analytics.Tracker;
 
+import org.gem.indo.dooit.BuildConfig;
 import org.gem.indo.dooit.DooitApplication;
 import org.gem.indo.dooit.R;
 import org.gem.indo.dooit.api.DooitAPIError;
@@ -151,7 +153,12 @@ public class LoginActivity extends DooitActivity {
                 persisted.saveToken(authenticationResponse.getToken());
                 persisted.setNewBotUser(false);
                 persisted.saveUserUUID(authenticationResponse.getUserUUID());
-                tracker.set("&uid", persisted.getUserUUID());
+                if (tracker != null && !(BuildConfig.DEBUG)) {
+                    tracker.set("&uid", persisted.getUserUUID());
+                    tracker.send(new HitBuilders.ScreenViewBuilder()
+                            .setCustomDimension(1, persisted.getUserUUID())
+                            .build());
+                }
                 NotificationAlarm.setAlarm(LoginActivity.this);
                 MainActivity.Builder.create(LoginActivity.this).startActivityClearTop();
             }

@@ -11,6 +11,10 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.google.android.gms.analytics.HitBuilders;
+import com.google.android.gms.analytics.Tracker;
+
+import org.gem.indo.dooit.BuildConfig;
 import org.gem.indo.dooit.DooitApplication;
 import org.gem.indo.dooit.R;
 import org.gem.indo.dooit.api.DooitAPIError;
@@ -59,6 +63,9 @@ public class ChangePasswordActivity extends DooitActivity {
 
     @Inject
     Persisted persisted;
+
+    @Inject
+    Tracker tracker;
 
     private Handler handler;
 
@@ -125,6 +132,13 @@ public class ChangePasswordActivity extends DooitActivity {
             public void call(AuthenticationResponse response) {
                 persisted.setCurrentUser(response.getUser());
                 persisted.saveToken(response.getToken());
+                persisted.saveUserUUID(response.getUserUUID());
+                if (tracker != null && !(BuildConfig.DEBUG)) {
+                    tracker.set("&uid", persisted.getUserUUID());
+                    tracker.send(new HitBuilders.ScreenViewBuilder()
+                            .setCustomDimension(1, persisted.getUserUUID())
+                            .build());
+                }
                 handler.postDelayed(new Runnable() {
                     @Override
                     public void run() {

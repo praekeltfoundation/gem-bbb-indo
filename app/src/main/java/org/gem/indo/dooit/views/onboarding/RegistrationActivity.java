@@ -16,6 +16,10 @@ import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.google.android.gms.analytics.HitBuilders;
+import com.google.android.gms.analytics.Tracker;
+
+import org.gem.indo.dooit.BuildConfig;
 import org.gem.indo.dooit.Constants;
 import org.gem.indo.dooit.DooitApplication;
 import org.gem.indo.dooit.R;
@@ -105,6 +109,9 @@ public class RegistrationActivity extends DooitActivity {
 
     @Inject
     AuthenticationManager authenticationManager;
+
+    @Inject
+    Tracker tracker;
 
     @Inject
     Persisted persisted;
@@ -228,6 +235,13 @@ public class RegistrationActivity extends DooitActivity {
                         persisted.setCurrentUser(authenticationResponse.getUser());
                         persisted.saveToken(authenticationResponse.getToken());
                         persisted.setNewBotUser(true);
+                        persisted.saveUserUUID(authenticationResponse.getUserUUID());
+                        if (tracker != null && !(BuildConfig.DEBUG)) {
+                            tracker.set("&uid", persisted.getUserUUID());
+                            tracker.send(new HitBuilders.ScreenViewBuilder()
+                                    .setCustomDimension(1, persisted.getUserUUID())
+                                    .build());
+                        }
                         NotificationAlarm.setAlarm(RegistrationActivity.this);
                         ProfileImageActivity.Builder.create(RegistrationActivity.this).startActivityClearTop();
                     }
