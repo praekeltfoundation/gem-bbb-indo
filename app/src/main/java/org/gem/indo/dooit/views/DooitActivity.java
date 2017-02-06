@@ -114,6 +114,7 @@ public abstract class DooitActivity extends AppCompatActivity implements Network
 
         if (tracker != null) {
             tracker.setScreenName(getScreenName());
+            tracker.send(new HitBuilders.ScreenViewBuilder().build());
         } else
             Log.w(this.getClass().getName(), "Analytics tracker not instantiated");
     }
