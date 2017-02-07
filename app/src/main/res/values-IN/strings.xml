@@ -317,10 +317,10 @@
 
     <!-- Consent -->
     <string name="survey_common_q_consent">If you are 17 years of age or younger: Does a parent or guardian agree to you completing this survey?</string>
-    <string name="survey_common_q1_consent">Are you 17 years or younger?</string>
-    <string name="survey_common_q2_consent">Does a parent consent to you completing this survey?</string>
-    <string name="survey_common_q_consent_a_yes">Yes</string>
-    <string name="survey_common_q_consent_a_no">No</string>
+    <string name="survey_common_q1_consent">Apakah kamu dibawah 17 tahun?</string>
+    <string name="survey_common_q2_consent">Apakah orangtuamu sudah menyetujui survei ini?</string>
+    <string name="survey_common_q_consent_a_yes">iya</string>
+    <string name="survey_common_q_consent_a_no">tidak</string>
 
     <!-- Cancel Survey -->
     <string name="survey_common_q_outro_cancel">Tidak masalah, lain kali saja. Apakah kamu ingin membaca tips menabung?</string>
