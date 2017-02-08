@@ -280,8 +280,11 @@ public class ArcProgressBar extends View {
         paint.setColor(unfinishedStrokeColor);
         canvas.drawArc(rectF, startAngle, arcAngle, false, paint);
         paint.setColor(finishedStrokeColor);
-        canvas.drawArc(rectF, finishedStartAngle, finishedSweepAngle, false, paint);
 
+        // On some devices, irrespective of API level, drawing the arc with a sweep angle of 0f
+        // causes it to wrap around to 360 degrees.
+        if (finishedSweepAngle == 0f) finishedSweepAngle = 0.0001f;
+        canvas.drawArc(rectF, finishedStartAngle, finishedSweepAngle, false, paint);
 
         if (arcBottomHeight == 0) {
             float radius = getWidth() / 2f;
