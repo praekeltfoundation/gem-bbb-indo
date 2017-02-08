@@ -37,8 +37,6 @@ import rx.functions.Action0;
 import rx.functions.Action1;
 import rx.functions.Func1;
 
-import static org.gem.indo.dooit.helpers.notifications.NotificationType.SURVEY_AVAILABLE;
-
 /**
  * Created by Wimpie Victor on 2016/12/06.
  */
@@ -143,9 +141,19 @@ public class NotificationService extends IntentService {
 
     protected void currentChallengeRetrieved(BaseChallenge challenge) {
         // TODO: Logic to distinguish between a new Challenge available, and reminding the user to take a Challenge
-        if (persisted.shouldNotify(NotificationType.CHALLENGE_AVAILABLE))
+        if (persisted.shouldNotify(NotificationType.CHALLENGE_AVAILABLE)
+                && persisted.getCurrentUser() != null) {
+
+            Map<String, Object> params = DooitParamBuilder.create(this)
+                    .setUser(persisted.getCurrentUser())
+                    .build();
+
+            ParamMatch match = ParamParser.parse(getString(R.string.notification_content_challenge_available));
+
             new Notifier(getApplicationContext())
-                    .notify(NotificationType.CHALLENGE_AVAILABLE, MainActivity.class, challenge.getName());
+                    .notify(NotificationType.CHALLENGE_AVAILABLE, MainActivity.class,
+                            match.process(params));
+        }
     }
 
     protected void achievementsRetrieved(AchievementResponse response) {
@@ -211,12 +219,19 @@ public class NotificationService extends IntentService {
     }
 
     protected void winnerRetrieved(WinnerResponse response) {
-        if (persisted.shouldNotify(NotificationType.CHALLENGE_WINNER)) {
+        if (persisted.shouldNotify(NotificationType.CHALLENGE_WINNER)
+                && persisted.getCurrentUser() != null) {
             if (response.isAvailable()) {
+
+                Map<String, Object> params = DooitParamBuilder.create(this)
+                        .setUser(persisted.getCurrentUser())
+                        .build();
+
+                ParamMatch match = ParamParser.parse(getString(R.string.notification_content_challenge_winner));
+
                 new Notifier(getApplicationContext())
                         .notify(NotificationType.CHALLENGE_WINNER, MainActivity.class,
-                                String.format(this.getApplicationContext().getString(R.string.notification_content_challenge_winner),
-                                        response.getChallenge().getName()));
+                                match.process(params));
                 persisted.saveConvoWinner(BotType.CHALLENGE_WINNER, response.getBadge(), response.getChallenge());
             }
         }
