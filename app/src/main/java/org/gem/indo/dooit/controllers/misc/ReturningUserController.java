@@ -77,7 +77,7 @@ public class ReturningUserController extends DooitBotController {
     }
 
     @Override
-    public boolean filter(Answer answer) {
+    public boolean filterQuickAnswer(Answer answer) {
         switch (answer.getName()) {
             case "convo_default_return_a_progress_intro_tip":
                 return tip != null;

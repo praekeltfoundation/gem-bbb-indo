@@ -55,7 +55,7 @@ public class GoalDepositController extends GoalBotController {
     }
 
     @Override
-    public boolean filter(Answer answer) {
+    public boolean filterQuickAnswer(Answer answer) {
         switch (answer.getName()) {
             case "goal_deposit_tip":
                 return tip != null;

@@ -42,12 +42,12 @@ import rx.functions.Action1;
 public class GoalEditController extends GoalBotController {
 
     @Inject
-    transient GoalManager goalManager;
+    GoalManager goalManager;
 
     @Inject
-    transient FileUploadManager fileUploadManager;
+    FileUploadManager fileUploadManager;
 
-    Goal oldGoal;
+    private Goal oldGoal;
 
     public GoalEditController(Activity activity, BotRunner botRunner, Goal goal, BaseChallenge challenge, Tip tip, Goal oldGoal) {
         super(activity, botRunner, BotType.GOAL_EDIT, goal, challenge, tip);
@@ -90,7 +90,7 @@ public class GoalEditController extends GoalBotController {
     }
 
     @Override
-    public boolean filter(Answer answer) {
+    public boolean filterQuickAnswer(Answer answer) {
         switch (answer.getName()) {
             case "goal_edit_delete_tip":
             case "goal_edit_info_tip":

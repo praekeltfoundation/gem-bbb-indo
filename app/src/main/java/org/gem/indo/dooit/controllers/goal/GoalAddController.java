@@ -212,7 +212,7 @@ public class GoalAddController extends GoalBotController {
     }
 
     @Override
-    public boolean filter(Answer answer) {
+    public boolean filterQuickAnswer(Answer answer) {
         switch (answer.getName()) {
             case "knows_amount_N":
                 return goal.hasPrototype() && (Double.compare(goal.getPrototype().getDefaultPrice(), 0.0) != 0);

@@ -22,10 +22,10 @@ import java.util.Map;
 public abstract class BotController {
 
     protected Context context;
-    protected Handler handler;
+    private Handler handler;
     final protected BotType botType;
 
-    protected BotController(Context context, BotType botType) {
+    BotController(Context context, BotType botType) {
         this.context = context;
         this.botType = botType;
         handler = new Handler(Looper.getMainLooper());
@@ -123,21 +123,20 @@ public abstract class BotController {
     }
 
     /**
-     * Allows the controller to filter out multiple choice answers that should not be shown to the
-     * user.
+     * Allows the controller to filter out quick answers that should not be shown to the user.
      *
-     * @param models
-     * @return
+     * @param models The list of models used for creating the quick answers
+     * @return A new list with unwanted answers filtered out
      */
-    public final List<Answer> filter(List<Answer> models) {
+    public final List<Answer> filterQuickAnswers(List<Answer> models) {
         List<Answer> answers = new ArrayList<>();
         for (Answer answer : models)
-            if (filter(answer))
+            if (filterQuickAnswer(answer))
                 answers.add(answer);
         return answers;
     }
 
-    public boolean filter(Answer answer) {
+    public boolean filterQuickAnswer(Answer answer) {
         return true;
     }
 
