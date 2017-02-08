@@ -2,11 +2,11 @@
 
     <!-- General -->
     <string name="app_name">Dooit</string>
-    <string name="connection_timed_out">The connection timed out, please try again later</string>
-    <string name="connection_error">A connection error occured, please try again later</string>
+    <string name="connection_timed_out">Waktu telah habis, coba lagi</string>
+    <string name="connection_error">Tidak dapat tersambung, silakan coba lagi</string>
     <string name="no_internet_connection">No internet connection</string>
     <string name="waiting_for_internet_connection">Waiting for internet connection</string>
-    <string name="general_error">An error occurred</string>
+    <string name="general_error">Error</string>
 
     <!-- Activity Titles  -->
     <string name="title_activity_main"></string>
@@ -14,11 +14,11 @@
     <string name="title_activity_profile">Profil</string>
     <string name="title_activity_profile_image">Upload Foto</string>
     <string name="title_activity_settings">Pengaturan</string>
-    <string name="title_activity_build_info">Build Info</string>
+    <string name="title_activity_build_info">Informasi Aplikasi</string>
     <string name="title_activity_terms_and_conditions">Syarat &amp; Ketentuan</string>
     <string name="title_activity_privacy_policy">Kebijakan</string>
     <string name="action_settings">Pengaturan</string>
-    <string name="action_share">Share</string>
+    <string name="action_share">Bagikan</string>
     <string name="action_favourite">@string/tips_tab_favourites</string>
 
     <!-- Bottom Navigation -->
@@ -29,11 +29,11 @@
 
     <!-- Common labels -->
     <string name="label_accept">Terima</string>
-    <string name="label_cancel">Batal</string>
+    <string name="label_cancel">Batalkan</string>
     <string name="label_image_chooser_title">Add Profile Photo!</string>
     <string name="label_take_picture">Take photo using camera</string>
-    <string name="label_select_gallery">Select gallery</string>
-    <string name="label_select_picture">Select picture</string>
+    <string name="label_select_gallery">Pilih dari galeri</string>
+    <string name="label_select_picture">Pilih foto</string>
     <string name="label_check_result">Cek</string>
     <string name="label_clear_content">Bersihkan</string>
     <string name="label_continue">Lanjutkan</string>
@@ -42,7 +42,7 @@
     <string name="label_log_in">Masuk</string>
     <string name="label_mobile_number">Nomer telepon</string>
     <string name="label_name">Nama</string>
-    <string name="label_email">Email address</string>
+    <string name="label_email">Alamat email</string>
     <string name="label_next">Selanjutnya</string>
     <string name="label_new_password">Kata Sandi Baru</string>
     <string name="label_old_password">Kata Sandi Lama</string>
@@ -52,7 +52,7 @@
 
     <string name="label_change_name">Ubah Nama</string>
     <string name="label_change_password">Ubah Kata Sandi</string>
-    <string name="label_change_email">Change Email</string>
+    <string name="label_change_email">Ubah alamat email</string>
     <string name="label_settings">Pengaturan</string>
     <string name="label_build_info">@string/title_activity_build_info</string>
     <string name="label_share">Bagikan</string>
@@ -63,8 +63,8 @@
     <string name="label_uploading">Sedang Mengupload</string>
 
     <!-- Permissions -->
-    <string name="label_camera_permission_denied">Permission required to take camera using camera</string>
-    <string name="label_gallery_permission_denied">Permission required to access phone storage</string>
+    <string name="label_camera_permission_denied">Izin untuk mengambil foto melalui kamera</string>
+    <string name="label_gallery_permission_denied">Izin untuk mengakses penyimpanan telepon</string>
 
     <!-- Welcome -->
     <string name="welcome_page_empty">Selamat datang!</string>
@@ -76,15 +76,15 @@
     <!-- Tips -->
     <string name="tips_tab_favourites">Favorit</string>
     <string name="tips_tab_all">Semua</string>
-    <string name="tips_card_read_more">Baca selengkapnya...</string>
-    <string name="tips_search_hint">Cari: Topik, judul, tag, dll...</string>
+    <string name="tips_card_read_more">Baca selengkapnya&#8230;</string>
+    <string name="tips_search_hint">Cari: Topik, judul, tag, dll&#8230;</string>
     <string name="tips_search_placeholder_fav">Cari tips favorit</string>
     <string name="tips_search_placeholder_all">Cari semua tips</string>
     <string name="tips_article_opening">Membuka \'%s\'</string>
     <string name="tips_article_add_fav">Menambahkan \'%s\' ke favorit</string>
     <string name="tips_article_remove_fav">Menghapus \'%s\' dari favorit</string>
     <string name="tips_list_filter">Menyaring \'%s\'</string>
-    <string name="tips_no_tips_on_filter">No tips were found for the current search</string>
+    <string name="tips_no_tips_on_filter">Tidak ada tips yang tersedia untuk pencarian ini</string>
     <string name="error_retrieve_tips">Error retrieving tips.</string>
 
     <!-- Registration -->
@@ -94,12 +94,12 @@
     <string name="reg_example_name_error_2">Nama tidak boleh ada spasi</string>
     <string name="reg_example_name_error_3">Nama hanya boleh ada huruf dan angka</string>
     <string name="reg_example_name_error_4">Nama tidak boleh lebih panjang dari 150 karakter</string>
-    <string name="reg_options">Please provide us with either your phone number or email address, or both</string>
+    <string name="reg_options">Sediakan nomer HP-mu, alamat email, ata keduanya</string>
     <string name="reg_example_email">@string/login_example_email</string>
-    <string name="reg_example_email_error_1">Email can\'t be blank</string>
-    <string name="reg_example_email_error_2">Email can\'t contain spaces</string>
-    <string name="reg_example_email_error_3">Not a valid email address</string>
-    <string name="reg_example_email_error_4">Email can\'t be longer than 150 characters</string>
+    <string name="reg_example_email_error_1">Email tidak boleh kosonh</string>
+    <string name="reg_example_email_error_2">Email tidak boleh mengandung spasi</string>
+    <string name="reg_example_email_error_3">Alamat email tidak tersedia</string>
+    <string name="reg_example_email_error_4">Email tidak bisa lebih panjang dari 150 karakter</string>
     <string name="reg_age">Berapa umur kamu?</string>
     <string name="reg_example_age">Contoh: 16</string>
     <string name="reg_example_age_error_1">Maaf, kolom umur harus terisi.</string>
@@ -117,8 +117,8 @@
 
     <string name="already_registered_log_in">Sudah daftar? *Log in disini*!</string>
     <string name="forgot_password">Ups! Lupa kata sandimu?</string>
-    <string name="reg_progress_dialog_message">Registering</string>
-    <string name="reg_duplicate_username_error">A user with the username already exists</string>
+    <string name="reg_progress_dialog_message">Mendaftarkan</string>
+    <string name="reg_duplicate_username_error">Pengguna dengan nama pengguna ini sudah ada</string>
 
     <!--LOGIN-->
     <string name="login_title">Log In</string>
@@ -139,7 +139,7 @@
     <string name="bot_tip_intro">$(tip.intro)</string>
     <string name="bot_challenge_intro">$(challenge.intro)</string>
     <string name="bot_challenge_outro">$(challenge.outro)</string>
-    <string name="of_target_amount">of %s</string>
+    <string name="of_target_amount">dari %s</string>
 
     <!--JSON GOALS-->
     <string name="greeting">Hola!</string>
@@ -317,10 +317,10 @@
 
     <!-- Consent -->
     <string name="survey_common_q_consent">If you are 17 years of age or younger: Does a parent or guardian agree to you completing this survey?</string>
-    <string name="survey_common_q1_consent">Are you 17 years or younger?</string>
-    <string name="survey_common_q2_consent">Does a parent consent to you completing this survey?</string>
-    <string name="survey_common_q_consent_a_yes">Yes</string>
-    <string name="survey_common_q_consent_a_no">No</string>
+    <string name="survey_common_q1_consent">Apakah kamu dibawah 17 tahun?</string>
+    <string name="survey_common_q2_consent">Apakah orangtuamu sudah menyetujui survei ini?</string>
+    <string name="survey_common_q_consent_a_yes">Iya</string>
+    <string name="survey_common_q_consent_a_no">Tidak</string>
 
     <!-- Cancel Survey -->
     <string name="survey_common_q_outro_cancel">Tidak masalah, lain kali saja. Apakah kamu ingin membaca tips menabung?</string>
@@ -829,7 +829,7 @@
 
     <string name="notification_content_saving_reminder">Hei, $(user.preferred_name)! Sudah $(achievements.weeks_since_saved) minggu kamu nggak menabung. Ke mana aja? Perbarui jumlah tabunganmu yuk!</string>
     <string name="notification_content_challenge_available">Hai, $(user.preferred_name)! Tantangan baru sudah tersedia! Mau ikutan?</string>
-    <string name="notification_content_challenge_winner">You have won the %s challenge! Congratulations</string>
+    <string name="notification_content_challenge_winner">Yay! Tau gak, $(user.preferred_name)?! Kamu pemenang tantangan kami! Selamat!</string>
     <string name="notification_content_survey_available">Hei, $(user.preferred_name)! Saya ingin mengenal kamu lebih jauh. Apakah kamu mau menjawab beberapa pertanyaan?</string>
     <string name="notification_content_survey_reminder_1">Hei, $(user.preferred_name). Apakah kamu mau menjawab survei ini? Survei terbaru sudah tersedia. Jawabanmu akan membuat Dooit jadi lebih baik lagi!</string>
     <string name="notification_content_survey_reminder_2">Hei, $(user.preferred_name). Jangan lupa isi surveinya ya! Mau ikutan surveinya sekarang?</string>
