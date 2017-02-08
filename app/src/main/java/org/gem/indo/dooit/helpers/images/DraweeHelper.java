@@ -5,6 +5,7 @@ import android.net.Uri;
 import com.facebook.drawee.backends.pipeline.Fresco;
 import com.facebook.drawee.interfaces.DraweeController;
 import com.facebook.drawee.view.SimpleDraweeView;
+import com.facebook.imagepipeline.core.ImagePipeline;
 import com.facebook.imagepipeline.request.ImageRequest;
 import com.facebook.imagepipeline.request.ImageRequestBuilder;
 
@@ -15,6 +16,7 @@ import com.facebook.imagepipeline.request.ImageRequestBuilder;
 public class DraweeHelper {
 
     public static void setProgressiveUri(SimpleDraweeView imageView, Uri uri) {
+        ImagePipeline imagePipeline = Fresco.getImagePipeline();
         ImageRequest request = ImageRequestBuilder.newBuilderWithSource(uri)
                 .setProgressiveRenderingEnabled(true)
                 .build();
@@ -23,5 +25,15 @@ public class DraweeHelper {
                 .setImageRequest(request)
                 .build();
         imageView.setController(controller);
+    }
+
+    public static void cacheImage(Uri uri){
+        ImagePipeline imagePipeline = Fresco.getImagePipeline();
+        if(!imagePipeline.isInBitmapMemoryCache(uri)) {
+            ImageRequest request = ImageRequestBuilder.newBuilderWithSource(uri)
+                    .setProgressiveRenderingEnabled(true)
+                    .build();
+            imagePipeline.prefetchToBitmapCache(request, null);
+        }
     }
 }
