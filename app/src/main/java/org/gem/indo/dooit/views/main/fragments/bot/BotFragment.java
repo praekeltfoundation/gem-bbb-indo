@@ -635,7 +635,7 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
             if (TextUtils.isEmpty(node.getAutoAnswer())) {
                 List<Answer> answers = node.getAnswers();
                 if (hasController())
-                    answers = controller.filter(answers);
+                    answers = controller.filterQuickAnswers(answers);
 
                 for (Answer answer : answers)
                     processText(answer);

@@ -32,7 +32,7 @@ import rx.functions.Action1;
 public class GoalWithdrawController extends GoalBotController {
 
     @Inject
-    transient GoalManager goalManager;
+    GoalManager goalManager;
 
     public GoalWithdrawController(Activity activity, BotRunner botRunner, Goal goal, BaseChallenge challenge, Tip tip) {
         super(activity, botRunner, BotType.GOAL_WITHDRAW, goal, challenge, tip);
@@ -60,7 +60,7 @@ public class GoalWithdrawController extends GoalBotController {
     }
 
     @Override
-    public boolean filter(Answer answer) {
+    public boolean filterQuickAnswer(Answer answer) {
         switch (answer.getName()) {
             case "goal_withdraw_tip":
                 return tip != null;
