@@ -53,6 +53,7 @@ public class BotFeed<T extends BaseBotModel> {
             try {
                 is.close();
             } catch (Exception e) {
+                // Do nothing
             }
         }
     }
