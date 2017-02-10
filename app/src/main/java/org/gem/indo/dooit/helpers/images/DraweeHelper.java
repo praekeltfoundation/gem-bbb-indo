@@ -20,7 +20,6 @@ import com.facebook.imagepipeline.request.ImageRequestBuilder;
 public class DraweeHelper {
 
     public static void setProgressiveUri(SimpleDraweeView imageView, Uri uri) {
-        ImagePipeline imagePipeline = Fresco.getImagePipeline();
         ImageRequest request = ImageRequestBuilder.newBuilderWithSource(uri)
                 .setRequestPriority(Priority.HIGH)
                 .setLowestPermittedRequestLevel(ImageRequest.RequestLevel.FULL_FETCH)
