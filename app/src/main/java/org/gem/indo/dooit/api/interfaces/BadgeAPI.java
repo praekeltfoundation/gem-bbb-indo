@@ -1,6 +1,6 @@
 package org.gem.indo.dooit.api.interfaces;
 
-import java.util.List;
+import org.gem.indo.dooit.api.responses.BadgeImageUrlsResponse;
 
 import retrofit2.http.GET;
 import rx.Observable;
@@ -11,5 +11,5 @@ import rx.Observable;
 
 public interface BadgeAPI  {
     @GET("/api/badge-urls/")
-    Observable<List<String>> getBadgeUrls();
+    Observable<BadgeImageUrlsResponse> getBadgeUrls();
 }

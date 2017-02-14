@@ -4,8 +4,7 @@ import android.app.Application;
 
 import org.gem.indo.dooit.api.DooitErrorHandler;
 import org.gem.indo.dooit.api.interfaces.BadgeAPI;
-
-import java.util.List;
+import org.gem.indo.dooit.api.responses.BadgeImageUrlsResponse;
 
 import javax.inject.Inject;
 
@@ -24,7 +23,7 @@ public class BadgeManager extends DooitManager {
         badgeAPI = retrofit.create(BadgeAPI.class);
     }
 
-    public Observable<List<String>> getBadgeUrls(DooitErrorHandler errorHandler){
+    public Observable<BadgeImageUrlsResponse> getBadgeUrls(DooitErrorHandler errorHandler){
         return useNetwork(badgeAPI.getBadgeUrls(), errorHandler);
     }
 }
