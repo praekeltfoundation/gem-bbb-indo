@@ -2,6 +2,7 @@ package org.gem.indo.dooit.views.settings;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
@@ -123,26 +124,13 @@ public class BuildInfoActivity extends DooitActivity {
         SquiggleBackgroundHelper.setBackground(this, R.color.grey_back, R.color.grey_fore, background);
 
         // Social
-        facebookFlag.setText(notFoundText);
-        twitterFlag.setText(notFoundText);
-        lineFlag.setText(notFoundText);
-        whatsappFlag.setText(notFoundText);
-        instagramFlag.setText(notFoundText);
-
         SocialSharer sharer = new SocialSharer(this);
-        for (String packageName : sharer.query(SocialSharer.TYPE_TEXT))
-            if (packageName.equals(SocialApps.FACEBOOK))
-                facebookFlag.setText(installedText);
-            else if (packageName.equals(SocialApps.TWITTER))
-                twitterFlag.setText(installedText);
-            else if (packageName.equals(SocialApps.LINE))
-                lineFlag.setText(installedText);
-            else if (packageName.equals(SocialApps.WHATSAPP))
-                whatsappFlag.setText(installedText);
 
-        for (String packageName : sharer.query(SocialSharer.TYPE_IMAGE_ANY))
-            if (packageName.equals(SocialApps.INSTAGRAM))
-                instagramFlag.setText(installedText);
+        facebookFlag.setText(sharer.isInstalled(SocialApps.FACEBOOK) ? installedText : notFoundText);
+        twitterFlag.setText(sharer.isInstalled(SocialApps.TWITTER) ? installedText : notFoundText);
+        lineFlag.setText(sharer.isInstalled(SocialApps.LINE) ? installedText : notFoundText);
+        whatsappFlag.setText(sharer.isInstalled(SocialApps.WHATSAPP) ? installedText : notFoundText);
+        instagramFlag.setText(sharer.isInstalled(SocialApps.INSTAGRAM) ? installedText : notFoundText);
     }
 
     @Override

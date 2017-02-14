@@ -53,4 +53,19 @@ public class SocialSharer {
 
         return results;
     }
+
+    /**
+     * Checks whether an app is installed.
+     *
+     * @param packageName
+     * @return
+     */
+    public boolean isInstalled(String packageName) {
+        try {
+            context.getPackageManager().getPackageInfo(packageName, PackageManager.GET_ACTIVITIES);
+            return true;
+        } catch (PackageManager.NameNotFoundException e) {
+            return false;
+        }
+    }
 }
