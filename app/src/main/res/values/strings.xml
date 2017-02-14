@@ -819,7 +819,7 @@
     <!-- Push Notifications -->
     <string name="notification_title_challenge_available">Challenge Available</string>
     <string name="notification_title_challenge_reminder">Challenge Reminder</string>
-    <string name="notification_title_challenge_answer_reminder">Challenge Answer Reminder</string>
+    <string name="notification_title_challenge_completion_reminder">Challenge Answer Reminder</string>
     <string name="notification_title_challenge_winner">Challenge Winner Notification</string>
     <string name="notification_title_goal_deadline_missed">Target Missed</string>
     <string name="notification_title_survey_available">Survey Available</string>
@@ -829,7 +829,10 @@
 
     <string name="notification_content_saving_reminder">Hi, $(user.preferred_name)! How are you? I noticed that it\'s been $(achievements.weeks_since_saved) weeks since your last savings. Do you have anything to update? Come on, let\'s go!</string>
     <string name="notification_content_challenge_available">Hi, $(user.preferred_name)! I just posted a new challenge. Want to check it out?</string>
+    <string name="notification_content_challenge_reminder">Hey, $(user.preferred_name)! Don't forget about the challenge! Want to take it now?</string>
+    <string name="notification_content_completion_reminder">Hello again, $(user.preferred_name)! I noticed that you started the challenge but haven't finished yet. The deadline is approaching quickly… Complete the challenge and submit it today!</string>
     <string name="notification_content_challenge_winner">Woohoo! Guess what, $(user.preferred_name)?! You\'re the winner of our challenge! Congrats!</string>
+    <string name="notification_content_goal_deadline_missed">Uh-oh! $(user.preferred_name), I noticed that it's already [DATE] and you haven't reached your savings goals for $(goal.name) yet. Don't worry — I can help you adjust your timelines and savings goals. Let's do this!</string>
     <string name="notification_content_survey_available">Hi, $(user.preferred_name)! I\'d love to get to know you better. Care to answer a few questions?</string>
     <string name="notification_content_survey_reminder_1">Hi, $(user.preferred_name). Do you have a few minutes to answer some questions for me? Your answers will help me to make Dooit even better!</string>
     <string name="notification_content_survey_reminder_2">Hi, $(user.preferred_name). Don\'t forget about the survey! Would you like to take it now?</string>
