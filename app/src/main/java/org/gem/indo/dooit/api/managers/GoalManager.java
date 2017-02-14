@@ -5,6 +5,7 @@ import android.app.Application;
 import org.gem.indo.dooit.api.DooitErrorHandler;
 import org.gem.indo.dooit.api.interfaces.GoalAPI;
 import org.gem.indo.dooit.api.responses.EmptyResponse;
+import org.gem.indo.dooit.api.responses.GoalResponse;
 import org.gem.indo.dooit.api.responses.TransactionResponse;
 import org.gem.indo.dooit.models.goal.Goal;
 import org.gem.indo.dooit.models.goal.GoalPrototype;
@@ -56,5 +57,9 @@ public class GoalManager extends DooitManager {
 
     public Observable<EmptyResponse> deleteGoal(Goal goal, DooitErrorHandler errorHandler) {
         return useNetwork(goalAPI.deleteGoal(goal.getId()), errorHandler);
+    }
+
+    public Observable<GoalResponse> checkGoalDeadlineMissed(DooitErrorHandler errorHandler) {
+        return useNetwork(goalAPI.checkGoalDeadlineMissed(), errorHandler);
     }
 }
