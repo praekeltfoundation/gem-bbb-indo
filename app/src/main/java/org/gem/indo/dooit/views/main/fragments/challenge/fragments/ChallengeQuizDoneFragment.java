@@ -134,20 +134,20 @@ public class ChallengeQuizDoneFragment extends Fragment {
     public void onStart() {
         super.onStart();
         challengeImage.setImageURI(challenge.getImageURL());
-        if (mProgressBar != null){
+        if (mProgressBar != null) {
             mProgressBar.setProgress(100);
         }
         letItRainConfetti();
     }
 
-    private void letItRainConfetti(){
+    private void letItRainConfetti() {
         final boolean isLollipop = Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP;
         if (isLollipop)
-            CommonConfetti.rainingConfetti(((ViewGroup)this.getView().getParent()), new int[] { Color.RED, Color.YELLOW }).oneShot();
+            CommonConfetti.rainingConfetti(((ViewGroup) this.getView().getParent()), new int[]{Color.RED, Color.YELLOW}).oneShot();
     }
 
     @OnClick(R.id.fragment_challenge_close)
-    public void closeQuiz(){
+    public void closeQuiz() {
         returnToParent(null);
     }
 
@@ -163,22 +163,21 @@ public class ChallengeQuizDoneFragment extends Fragment {
         Bundle bundle = new Bundle();
         Intent intent = new Intent();
 
-        bundle.putParcelable(ChallengeActivity.ARG_CHALLENGE,challenge);
-        bundle.putParcelable(ChallengeActivity.ARG_PARTICIPANT,persisted.getParticipant());
+        bundle.putParcelable(ChallengeActivity.ARG_CHALLENGE, challenge);
+        bundle.putParcelable(ChallengeActivity.ARG_PARTICIPANT, persisted.getParticipant());
         bundle.putInt(ChallengeActivity.ARG_RETURNPAGE, returnPage != null ? returnPage.ordinal() : -1);
 
         FragmentActivity activity = getActivity();
 
-        if (participantBadge != null){
-            bundle.putParcelable(ChallengeActivity.ARG_PARTICIPANT_BADGE,participantBadge);
-            persisted.saveConvoParticipant(BotType.CHALLENGE_PARTICIPANT_BADGE,participantBadge,challenge);
+        if (participantBadge != null) {
+            bundle.putParcelable(ChallengeActivity.ARG_PARTICIPANT_BADGE, participantBadge);
+            persisted.saveConvoParticipant(BotType.CHALLENGE_PARTICIPANT_BADGE, participantBadge, challenge);
             intent.putExtras(bundle);
         }
 
         if (activity.getParent() != null) {
             activity.getParent().setResult(Activity.RESULT_OK, intent);
-        }
-        else{
+        } else {
             activity.setResult(Activity.RESULT_OK, intent);
         }
         persisted.setParticipant(null);
