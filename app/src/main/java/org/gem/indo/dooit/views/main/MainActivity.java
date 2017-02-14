@@ -144,6 +144,7 @@ public class MainActivity extends DooitActivity {
                     startPage(MainViewPagerPositions.CHALLENGE);
                     break;
                 case SAVING_REMINDER:
+                case GOAL_DEADLINE_MISSED:
                     startPage(MainViewPagerPositions.TARGET);
                     break;
                 case SURVEY_AVAILABLE:
