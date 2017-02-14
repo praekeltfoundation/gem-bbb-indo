@@ -117,11 +117,18 @@ public class BuildInfoActivity extends DooitActivity {
                 .replace("http://", "")
                 .replace("https://", ""));
 
-        // Language
-        languageTextView.setText(LanguageCodeHelper.getLanguage());
-
         // Background
         SquiggleBackgroundHelper.setBackground(this, R.color.grey_back, R.color.grey_fore, background);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        // These fields can change while the app is minimised
+
+        // Language
+        languageTextView.setText(LanguageCodeHelper.getLanguage());
 
         // Social
         SocialSharer sharer = new SocialSharer(this);
