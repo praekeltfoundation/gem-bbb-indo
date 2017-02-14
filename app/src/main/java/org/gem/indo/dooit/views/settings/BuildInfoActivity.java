@@ -13,6 +13,8 @@ import org.gem.indo.dooit.Constants;
 import org.gem.indo.dooit.R;
 import org.gem.indo.dooit.helpers.LanguageCodeHelper;
 import org.gem.indo.dooit.helpers.SquiggleBackgroundHelper;
+import org.gem.indo.dooit.helpers.social.SocialApps;
+import org.gem.indo.dooit.helpers.social.SocialSharer;
 import org.gem.indo.dooit.views.DooitActivity;
 import org.gem.indo.dooit.views.helpers.activity.DooitActivityBuilder;
 
@@ -20,6 +22,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
+import butterknife.BindString;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -48,6 +51,27 @@ public class BuildInfoActivity extends DooitActivity {
 
     @BindView(R.id.activity_build_info_language)
     TextView languageTextView;
+
+    @BindView(R.id.activity_build_info_social_facebook_flag)
+    TextView facebookFlag;
+
+    @BindView(R.id.activity_build_info_social_twitter_flag)
+    TextView twitterFlag;
+
+    @BindView(R.id.activity_build_info_social_line_flag)
+    TextView lineFlag;
+
+    @BindView(R.id.activity_build_info_social_whatsapp_flag)
+    TextView whatsappFlag;
+
+    @BindView(R.id.activity_build_info_social_instagram_flag)
+    TextView instagramFlag;
+
+    @BindString(R.string.profile_build_info_social_apps_installed)
+    String installedText;
+
+    @BindString(R.string.profile_build_info_social_apps_not_found)
+    String notFoundText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -97,6 +121,28 @@ public class BuildInfoActivity extends DooitActivity {
 
         // Background
         SquiggleBackgroundHelper.setBackground(this, R.color.grey_back, R.color.grey_fore, background);
+
+        // Social
+        facebookFlag.setText(notFoundText);
+        twitterFlag.setText(notFoundText);
+        lineFlag.setText(notFoundText);
+        whatsappFlag.setText(notFoundText);
+        instagramFlag.setText(notFoundText);
+
+        SocialSharer sharer = new SocialSharer(this);
+        for (String packageName : sharer.query(SocialSharer.TYPE_TEXT))
+            if (packageName.equals(SocialApps.FACEBOOK))
+                facebookFlag.setText(installedText);
+            else if (packageName.equals(SocialApps.TWITTER))
+                twitterFlag.setText(installedText);
+            else if (packageName.equals(SocialApps.LINE))
+                lineFlag.setText(installedText);
+            else if (packageName.equals(SocialApps.WHATSAPP))
+                whatsappFlag.setText(installedText);
+
+        for (String packageName : sharer.query(SocialSharer.TYPE_IMAGE_ANY))
+            if (packageName.equals(SocialApps.INSTAGRAM))
+                instagramFlag.setText(installedText);
     }
 
     @Override
