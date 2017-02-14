@@ -9,8 +9,10 @@ import org.gem.indo.dooit.api.DooitAPIError;
 import org.gem.indo.dooit.api.DooitErrorHandler;
 import org.gem.indo.dooit.api.managers.AchievementManager;
 import org.gem.indo.dooit.api.managers.ChallengeManager;
+import org.gem.indo.dooit.api.managers.GoalManager;
 import org.gem.indo.dooit.api.managers.SurveyManager;
 import org.gem.indo.dooit.api.responses.AchievementResponse;
+import org.gem.indo.dooit.api.responses.GoalResponse;
 import org.gem.indo.dooit.api.responses.SurveyResponse;
 import org.gem.indo.dooit.api.responses.WinnerResponse;
 import org.gem.indo.dooit.helpers.DooitParamBuilder;
@@ -53,6 +55,9 @@ public class NotificationService extends IntentService {
 
     @Inject
     SurveyManager surveyManager;
+
+    @Inject
+    GoalManager goalManager;
 
     @Inject
     Persisted persisted;
@@ -100,6 +105,15 @@ public class NotificationService extends IntentService {
                 }));
         }
 
+        if (persisted.shouldNotify(NotificationType.GOAL_DEADLINE_MISSED)) {
+            requests.add(goalManager.checkGoalDeadlineMissed(new DooitErrorHandler() {
+                @Override
+                public void onError(DooitAPIError error) {
+
+                }
+            }));
+        }
+
         if (persisted.shouldNotify(NotificationType.SURVEY_AVAILABLE))
             requests.add(surveyManager.retrieveCurrentSurvey(new DooitErrorHandler() {
                 @Override
@@ -130,6 +144,8 @@ public class NotificationService extends IntentService {
                         achievementsRetrieved((AchievementResponse) o);
                     else if (o instanceof SurveyResponse)
                         surveyRetrieved((SurveyResponse) o);
+                    else if (o instanceof GoalResponse)
+                        goalRetrieved((GoalResponse) o);
                     else if (o instanceof WinnerResponse)
                         winnerRetrieved((WinnerResponse) o);
                 }
@@ -215,6 +231,24 @@ public class NotificationService extends IntentService {
             if (survey.hasBotType())
                 // Save Survey so Bot will start quicker
                 persisted.saveConvoSurvey(survey.getBotType(), survey);
+        }
+    }
+
+    protected void goalRetrieved(GoalResponse response) {
+        if (persisted.shouldNotify(NotificationType.GOAL_DEADLINE_MISSED)
+                && persisted.getCurrentUser() != null) {
+            if (response.isGoalOverdue()) {
+                Map<String, Object> params = DooitParamBuilder.create(this)
+                        .setUser(persisted.getCurrentUser())
+                        .setGoal(response.getGoal())
+                        .build();
+
+                ParamMatch match = ParamParser.parse(getString(R.string.notification_content_goal_deadline_missed));
+
+                new Notifier(getApplicationContext())
+                        .notify(NotificationType.GOAL_DEADLINE_MISSED, MainActivity.class,
+                                match.process(params));
+            }
         }
     }
 
