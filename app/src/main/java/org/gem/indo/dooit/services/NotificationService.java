@@ -9,8 +9,10 @@ import org.gem.indo.dooit.api.DooitAPIError;
 import org.gem.indo.dooit.api.DooitErrorHandler;
 import org.gem.indo.dooit.api.managers.AchievementManager;
 import org.gem.indo.dooit.api.managers.ChallengeManager;
+import org.gem.indo.dooit.api.managers.CustomNotificationManager;
 import org.gem.indo.dooit.api.managers.SurveyManager;
 import org.gem.indo.dooit.api.responses.AchievementResponse;
+import org.gem.indo.dooit.api.responses.CustomNotificationResponse;
 import org.gem.indo.dooit.api.responses.SurveyResponse;
 import org.gem.indo.dooit.api.responses.WinnerResponse;
 import org.gem.indo.dooit.helpers.DooitParamBuilder;
@@ -53,6 +55,9 @@ public class NotificationService extends IntentService {
 
     @Inject
     SurveyManager surveyManager;
+
+    @Inject
+    CustomNotificationManager customNotificationManager;
 
     @Inject
     Persisted persisted;
@@ -108,6 +113,14 @@ public class NotificationService extends IntentService {
                 }
             }));
 
+        if (persisted.shouldNotify(NotificationType.AD_HOC))
+            requests.add(customNotificationManager.fetchCustomNotification(new DooitErrorHandler() {
+                @Override
+                public void onError(DooitAPIError error) {
+
+                }
+            }));
+
 
         if (requests.size() > 0)
             // Using flatmap to perform requests serially
@@ -132,6 +145,8 @@ public class NotificationService extends IntentService {
                         surveyRetrieved((SurveyResponse) o);
                     else if (o instanceof WinnerResponse)
                         winnerRetrieved((WinnerResponse) o);
+                    else if (o instanceof CustomNotificationResponse)
+                        customNotificationRetrieved((CustomNotificationResponse) o);
                 }
             });
         else
@@ -233,6 +248,26 @@ public class NotificationService extends IntentService {
                         .notify(NotificationType.CHALLENGE_WINNER, MainActivity.class,
                                 match.process(params));
                 persisted.saveConvoWinner(BotType.CHALLENGE_WINNER, response.getBadge(), response.getChallenge());
+            }
+        }
+    }
+
+    protected void customNotificationRetrieved(CustomNotificationResponse response) {
+        // TODO: shouldNotify for custom notifications
+        if (persisted.shouldNotify(NotificationType.AD_HOC)
+                && persisted.getCurrentUser() != null) {
+            if (response.isNotificationActive()) {
+
+                Map<String, Object> params = DooitParamBuilder.create(this)
+                        .setUser(persisted.getCurrentUser())
+                        .build();
+
+                String message = response.getNotificationMessage();
+
+
+
+                new Notifier(getApplicationContext())
+                        .notify(NotificationType.AD_HOC, MainActivity.class, message, null);
             }
         }
     }
