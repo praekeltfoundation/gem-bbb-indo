@@ -21,7 +21,9 @@ import org.gem.indo.dooit.views.helpers.activity.DooitActivityBuilder;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.Locale;
+import java.util.Set;
 
 import butterknife.BindString;
 import butterknife.BindView;
@@ -73,6 +75,12 @@ public class BuildInfoActivity extends DooitActivity {
 
     @BindString(R.string.profile_build_info_social_apps_not_found)
     String notFoundText;
+
+    @BindString(R.string.profile_build_info_social_apps_share_text)
+    String shareTypeText;
+
+    @BindString(R.string.profile_build_info_social_apps_share_image)
+    String shareTypeImage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -138,6 +146,30 @@ public class BuildInfoActivity extends DooitActivity {
         lineFlag.setText(sharer.isInstalled(SocialApps.LINE) ? installedText : notFoundText);
         whatsappFlag.setText(sharer.isInstalled(SocialApps.WHATSAPP) ? installedText : notFoundText);
         instagramFlag.setText(sharer.isInstalled(SocialApps.INSTAGRAM) ? installedText : notFoundText);
+
+        // Using sets to get rid of duplicates
+        Set<String> textApps = new HashSet<>(sharer.query(SocialSharer.TYPE_TEXT));
+        Set<String> imageApps = new HashSet<>(sharer.query(SocialSharer.TYPE_IMAGE_ANY));
+
+        for (String packageName : textApps)
+            switch (packageName) {
+                case SocialApps.FACEBOOK:
+                    facebookFlag.setText(facebookFlag.getText() + ", " + shareTypeText);
+                    break;
+                case SocialApps.TWITTER:
+                    twitterFlag.setText(twitterFlag.getText() + ", " + shareTypeText);
+                    break;
+                case SocialApps.LINE:
+                    lineFlag.setText(lineFlag.getText() + ", " + shareTypeText);
+                    break;
+                case SocialApps.WHATSAPP:
+                    whatsappFlag.setText(whatsappFlag.getText() + ", " + shareTypeText);
+                    break;
+            }
+
+        for (String packageName : imageApps)
+            if (packageName.equals(SocialApps.INSTAGRAM))
+                instagramFlag.setText(instagramFlag.getText() + ", " + shareTypeImage);
     }
 
     @Override

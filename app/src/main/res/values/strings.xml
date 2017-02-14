@@ -813,6 +813,8 @@
     <string name="profile_build_info_social_apps">Social Apps</string>
     <string name="profile_build_info_social_apps_installed">Installed</string>
     <string name="profile_build_info_social_apps_not_found">Not Found</string>
+    <string name="profile_build_info_social_apps_share_text">Share Links</string>
+    <string name="profile_build_info_social_apps_share_image">Share Images</string>
 
     <string name="profile_build_info_social_apps_facebook">Facebook</string>
     <string name="profile_build_info_social_apps_twitter">Twitter</string>
