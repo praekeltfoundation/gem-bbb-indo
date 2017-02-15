@@ -72,6 +72,7 @@ public class Utils {
         }
     }
 
+    // TODO: Remove
     public static int weekDiff(long time, ROUNDWEEK round) {
         switch (round) {
             case UP:
@@ -83,6 +84,7 @@ public class Utils {
         }
     }
 
+    // TODO: Remove
     public static int dayDiff(long time) {
         return (int) Math.ceil(TimeUnit.MILLISECONDS.toDays(time - System.currentTimeMillis()));
     }
