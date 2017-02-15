@@ -9,6 +9,7 @@ import org.gem.indo.dooit.views.helpers.activity.CurrencyHelper;
 import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
@@ -167,6 +168,11 @@ public class Goal {
     public void setWeeklyTarget(double weeklyTarget) {
         this.weeklyTarget = weeklyTarget;
         updateEndDate();
+    }
+
+    public static Date endDateFromWeeklyTarget(double weeklyTarget) {
+        // TODO: Calculate end date using provided weekly target
+        return new Date();
     }
 
     ////////////////
