@@ -45,4 +45,12 @@ public class WeekCalcUnitTest {
 
         assertEquals(16, WeekCalc.dayDiff(startDate, endDate));
     }
+
+    @Test
+    public void remainder_basic() throws Exception {
+        Date startDate = new GregorianCalendar(2017, 2, 1).getTime();
+        Date endDate = new GregorianCalendar(2017, 2, 18).getTime();
+
+        assertEquals(3, WeekCalc.remainder(startDate, endDate));
+    }
 }

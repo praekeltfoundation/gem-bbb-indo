@@ -1,7 +1,5 @@
 package org.gem.indo.dooit.models.date;
 
-import org.gem.indo.dooit.helpers.Utils;
-
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
@@ -11,19 +9,12 @@ import java.util.concurrent.TimeUnit;
 
 public class WeekCalc {
 
-    public static int weekDiff(long time, Utils.ROUNDWEEK round) {
-        switch (round) {
-            case UP:
-                return (int) Math.ceil(TimeUnit.MILLISECONDS.toDays(time - System.currentTimeMillis()) / 7.0f);
-            case DOWN:
-            default:
-                return (int) Math.floor(TimeUnit.MILLISECONDS.toDays(time - System.currentTimeMillis()) / 7.0f);
-
-        }
-    }
-
     /**
-     * @return The number of weeks difference
+     * @param fromDate The starting date
+     * @param toDate   The ending date
+     * @param round    Indicates whether the weeks should be rounded up or down. The remainder days
+     *                 can be found using {@link WeekCalc#remainder(Date, Date)}
+     * @return The difference between the two dates measured in weeks.
      */
     public static int weekDiff(Date fromDate, Date toDate, Rounding round) {
         switch (round) {
@@ -35,8 +26,23 @@ public class WeekCalc {
         }
     }
 
+    /**
+     * @param fromDate The starting date
+     * @param toDate   The ending date
+     * @return The difference between the two dates in days.
+     */
     public static int dayDiff(Date fromDate, Date toDate) {
         return (int) Math.ceil(TimeUnit.MILLISECONDS.toDays(toDate.getTime() - fromDate.getTime()));
+    }
+
+    /**
+     * @param fromDate The starting date
+     * @param toDate   The ending date
+     * @return The number of days remaining after a the week difference has been calculated and
+     * round down.
+     */
+    public static int remainder(Date fromDate, Date toDate) {
+        return dayDiff(fromDate, toDate) - weekDiff(fromDate, toDate, Rounding.DOWN) * 7;
     }
 
     public enum Rounding {
