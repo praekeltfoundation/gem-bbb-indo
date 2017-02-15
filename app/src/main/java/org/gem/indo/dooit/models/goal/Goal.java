@@ -1,11 +1,9 @@
 package org.gem.indo.dooit.models.goal;
 
-import android.text.TextUtils;
-
 import com.google.gson.annotations.SerializedName;
 
-import org.gem.indo.dooit.helpers.strings.StringHelper;
 import org.gem.indo.dooit.helpers.Utils;
+import org.gem.indo.dooit.helpers.strings.StringHelper;
 import org.gem.indo.dooit.models.Badge;
 import org.gem.indo.dooit.views.helpers.activity.CurrencyHelper;
 import org.joda.time.DateTime;
@@ -60,7 +58,7 @@ public class Goal {
     // Server does not allow prototype object in Goal
     transient private GoalPrototype prototype;
 
-    public Goal copy(){
+    public Goal copy() {
         Goal goal = new Goal();
 
         goal.setId(this.id);
@@ -70,7 +68,7 @@ public class Goal {
         goal.setImageUrl(StringHelper.newString(this.imageUrl));
         goal.setStartDate(new LocalDate(this.startDate));
         goal.setEndDate(new LocalDate(this.endDate));
-        for(GoalTransaction gt : this.transactions){
+        for (GoalTransaction gt : this.transactions) {
             goal.addTransaction(gt.copy());
         }
         goal.setWeeklyTotals(new LinkedHashMap<>(this.getWeeklyTotals()));
@@ -81,7 +79,7 @@ public class Goal {
         goal.setUser(this.user);
         goal.setPrototypeId(this.prototypeId);
         List<Badge> tempBadges = new ArrayList<>();
-        for(Badge badge : this.newBadges){
+        for (Badge badge : this.newBadges) {
             tempBadges.add(badge.copy());
         }
         goal.newBadges = tempBadges;
@@ -108,7 +106,7 @@ public class Goal {
     }
 
     public boolean hasName() {
-        return !TextUtils.isEmpty(name);
+        return !StringHelper.isEmpty(name);
     }
 
     public double getValue() {
@@ -268,12 +266,12 @@ public class Goal {
     }
 
     public int getWeeksLeft(Utils.ROUNDWEEK rounding) {
-        if(endDate != null) {
+        if (endDate != null) {
             return Utils.weekDiff(endDate.toDate().getTime(), rounding);
-        }else{
+        } else {
             //if endDate == null then the user chose to set die amount to save per week and not the end date
             double stillNeeded = target - value;
-            weekCount = (int) Math.ceil(stillNeeded/weeklyTarget);
+            weekCount = (int) Math.ceil(stillNeeded / weeklyTarget);
             return weekCount;
         }
     }
@@ -303,7 +301,7 @@ public class Goal {
     }
 
     public boolean hasLocalImageUri() {
-        return !TextUtils.isEmpty(localImageUri);
+        return !StringHelper.isEmpty(localImageUri);
     }
 
     public void setImageFromProto(boolean setImageFromProto) {
@@ -315,27 +313,27 @@ public class Goal {
     }
 
     public void calculateFields() {
-        if(endDate != null) {
+        if (endDate != null) {
             updateWeeklyTarget();
-        }else if(weeklyTarget != 0){
+        } else if (weeklyTarget != 0) {
             updateEndDate();
         }
     }
 
-    private void updateEndDate(){
+    private void updateEndDate() {
         //This will be called if the weekly target has been edited
 
         //calculate weekcount
         double stillNeeded = target - value;
-        weekCount = (int) Math.ceil(stillNeeded/weeklyTarget);
+        weekCount = (int) Math.ceil(stillNeeded / weeklyTarget);
 
         //calculate end date
         endDate = startDate.plusWeeks(weekCount);
     }
 
-    private void updateWeeklyTarget(){
+    private void updateWeeklyTarget() {
         weekCount = (int) (TimeUnit.MILLISECONDS.toDays((long) Math.ceil(endDate.toDate().getTime() - startDate.toDate().getTime()) / 7));
-        weeklyTarget = (target-value) / weekCount;
+        weeklyTarget = (target - value) / weekCount;
     }
 
     public boolean isMissed() {
