@@ -237,7 +237,7 @@ public class NotificationService extends IntentService {
     protected void goalRetrieved(GoalResponse response) {
         if (persisted.shouldNotify(NotificationType.GOAL_DEADLINE_MISSED)
                 && persisted.getCurrentUser() != null) {
-            if (response.isGoalOverdue()) {
+            if (response.isThereAnOverdueGoal()) {
                 Map<String, Object> params = DooitParamBuilder.create(this)
                         .setUser(persisted.getCurrentUser())
                         .setGoal(response.getGoal())

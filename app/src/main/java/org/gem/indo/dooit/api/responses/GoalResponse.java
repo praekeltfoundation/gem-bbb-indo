@@ -10,12 +10,19 @@ import org.gem.indo.dooit.models.goal.Goal;
 
 public class GoalResponse {
 
-    @SerializedName("overdue_goals")
+    @SerializedName("available")
+    private boolean available;
+
+    @SerializedName("overdue_goal")
     private Goal goal;
+
+    public boolean isThereAnOverdueGoal() { return available; }
 
     public Goal getGoal() {
         return goal;
     }
+
+    public String getGoalName() { return goal.getName(); }
 
     public boolean isGoalOverdue() {
         return goal == null;
