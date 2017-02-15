@@ -5,6 +5,7 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Build;
 import android.support.v4.app.NotificationCompat;
@@ -14,7 +15,6 @@ import android.support.v4.content.ContextCompat;
 import org.gem.indo.dooit.R;
 import org.gem.indo.dooit.views.main.MainActivity;
 
-import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -34,10 +34,10 @@ public class Notifier {
      * @param cls        The Activity type to open when the notification is clicked.
      */
     public <T extends Activity> void notify(NotificationType notifyType, Class<T> cls,
-                                            String contentText, Map<String, String> extras) {
+                                            String contentText, Map<String, String> extras, Bitmap largeIcon) {
         // TODO: Activity class argument might have to be replaced with a DooitActivityBuilder
         NotificationCompat.Builder builder = new NotificationCompat.Builder(context)
-                .setLargeIcon(((BitmapDrawable) ContextCompat.getDrawable(context, R.mipmap.ic_launcher)).getBitmap())
+                .setLargeIcon(largeIcon)
                 .setContentTitle(context.getString(R.string.app_name))
                 .setContentText(contentText)
                 // Big text is displayed when the user pinches outward
@@ -70,7 +70,16 @@ public class Notifier {
         notificationManager.notify(notifyType.getMessageId(), builder.build());
     }
 
+    public <T extends Activity> void notify(NotificationType notifyType, Class<T> cls,
+                                            String contentText, Map<String, String> extras) {
+        notify(notifyType, cls, contentText, extras, getLauncherIconBitmap());
+    }
+
     public <T extends Activity> void notify(NotificationType notifyType, Class<T> cls, String contentText) {
-        notify(notifyType, cls, contentText, null);
+        notify(notifyType, cls, contentText, null, getLauncherIconBitmap());
+    }
+
+    private Bitmap getLauncherIconBitmap() {
+        return ((BitmapDrawable) ContextCompat.getDrawable(context, R.mipmap.ic_launcher)).getBitmap();
     }
 }

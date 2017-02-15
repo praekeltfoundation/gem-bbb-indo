@@ -2,6 +2,7 @@ package org.gem.indo.dooit.views.main;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Build;
@@ -19,7 +20,14 @@ import android.view.ViewTreeObserver;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.facebook.common.executors.CallerThreadExecutor;
+import com.facebook.datasource.DataSource;
+import com.facebook.drawee.backends.pipeline.Fresco;
 import com.facebook.drawee.view.SimpleDraweeView;
+import com.facebook.imagepipeline.core.ImagePipeline;
+import com.facebook.imagepipeline.datasource.BaseBitmapDataSubscriber;
+import com.facebook.imagepipeline.request.ImageRequest;
+import com.facebook.imagepipeline.request.ImageRequestBuilder;
 import com.github.jinatonic.confetti.CommonConfetti;
 import com.google.android.gms.analytics.Tracker;
 
@@ -30,6 +38,7 @@ import org.gem.indo.dooit.helpers.RequestCodes;
 import org.gem.indo.dooit.helpers.activity.result.ActivityForResultHelper;
 import org.gem.indo.dooit.helpers.images.DraweeHelper;
 import org.gem.indo.dooit.helpers.notifications.NotificationType;
+import org.gem.indo.dooit.helpers.notifications.Notifier;
 import org.gem.indo.dooit.models.User;
 import org.gem.indo.dooit.models.enums.BotType;
 import org.gem.indo.dooit.services.NotificationAlarm;
@@ -174,6 +183,30 @@ public class MainActivity extends DooitActivity {
                 onMainPagerPageSelected(currentPos);
             }
         });
+
+        fetchImage();
+    }
+
+    public void fetchImage() {
+        ImageRequest request = ImageRequestBuilder
+                .newBuilderWithSource(Uri.parse("http://10.0.2.2:8000/media/images/First_Saving.original.jpg"))
+                .build();
+        ImagePipeline pl = Fresco.getImagePipeline();
+        DataSource ds = pl.fetchDecodedImage(request, null);
+        ds.subscribe(new BaseBitmapDataSubscriber() {
+            @Override
+            protected void onNewResultImpl(Bitmap bitmap) {
+                if (bitmap != null) {
+                    new Notifier(MainActivity.this).notify(NotificationType.AD_HOC, MainActivity.class,
+                            "Ad Hoc Notification", null, bitmap);
+                }
+            }
+
+            @Override
+            protected void onFailureImpl(DataSource dataSource) {
+                Log.e("Fresco test", "Failed", dataSource.getFailureCause());
+            }
+        }, CallerThreadExecutor.getInstance());
     }
 
 
