@@ -71,7 +71,10 @@ public enum BotParamType {
     SURVEY_OUTRO("survey.outro"),
 
     //Currency Symbol
-    CURRENCY_SYMBOL("currency.symbol");
+    CURRENCY_SYMBOL("currency.symbol"),
+
+    //Date
+    DATE_TODAY("date.today");
 
     private static Map<String, BotParamType> map = new HashMap<>();
 

@@ -96,6 +96,10 @@ public class Utils {
         return DateFormat.getDateInstance(DateFormat.SHORT, locale).format(date);
     }
 
+    public static String getCurrentDate() {
+        return DateFormat.getDateTimeInstance().format(new Date());
+    }
+
     public static String populateFromPersisted(Persisted persisted, BotAdapter botAdapter, String text, String[] params) {
         if (!text.contains("%"))
             return text;

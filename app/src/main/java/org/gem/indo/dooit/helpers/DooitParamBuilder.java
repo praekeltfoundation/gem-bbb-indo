@@ -8,6 +8,9 @@ import org.gem.indo.dooit.models.User;
 import org.gem.indo.dooit.models.enums.BotParamType;
 import org.gem.indo.dooit.models.goal.Goal;
 
+import java.text.DateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -76,6 +79,12 @@ public class DooitParamBuilder {
             map.put(BotParamType.USER_FIRST_NAME.getKey(), user.getFirstName());
             map.put(BotParamType.USER_PREFERRED_NAME.getKey(), user.getPreferredName());
         }
+
+        if (goal != null) {
+            map.put(BotParamType.GOAL_NAME.getKey(), goal.getName());
+        }
+
+        map.put(BotParamType.DATE_TODAY.getKey(), Utils.formatDateToLocal(new Date()));
 
         return map;
     }
