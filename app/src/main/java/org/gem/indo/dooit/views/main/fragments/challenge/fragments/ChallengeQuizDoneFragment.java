@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -24,6 +25,8 @@ import org.gem.indo.dooit.DooitApplication;
 import org.gem.indo.dooit.R;
 import org.gem.indo.dooit.helpers.Persisted;
 import org.gem.indo.dooit.helpers.SquiggleBackgroundHelper;
+import org.gem.indo.dooit.helpers.crashlytics.CrashlyticsHelper;
+import org.gem.indo.dooit.helpers.social.SocialSharer;
 import org.gem.indo.dooit.models.Badge;
 import org.gem.indo.dooit.models.challenge.BaseChallenge;
 import org.gem.indo.dooit.models.enums.BotType;
@@ -43,6 +46,8 @@ import butterknife.Unbinder;
  * create an instance of this fragment.
  */
 public class ChallengeQuizDoneFragment extends Fragment {
+
+    private static final String TAG = ChallengeQuizDoneFragment.class.getName();
     private static final String ARG_CHALLENGE = "challenge";
 
     private BaseChallenge challenge;
@@ -144,6 +149,25 @@ public class ChallengeQuizDoneFragment extends Fragment {
         final boolean isLollipop = Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP;
         if (isLollipop)
             CommonConfetti.rainingConfetti(((ViewGroup) this.getView().getParent()), new int[]{Color.RED, Color.YELLOW}).oneShot();
+    }
+
+    @OnClick(R.id.card_challenge_share)
+    public void shareChallenge() {
+        Context context = getContext();
+        Bundle args = getArguments();
+        if (context != null && args != null
+                && args.containsKey(ChallengeActivity.ARG_PARTICIPANT_BADGE)) {
+            Badge badge = args.getParcelable(ChallengeActivity.ARG_PARTICIPANT_BADGE);
+            try {
+                new SocialSharer(context).share(
+                        getString(R.string.share_chooser_challenge_title), Uri.parse(badge.getSocialUrl()));
+            } catch (NullPointerException e) {
+                CrashlyticsHelper.log(TAG, "shareChallenge", String.format("Badge: %s", badge));
+                if (badge != null)
+                    CrashlyticsHelper.log(TAG, "shareChallenge", String.format("Badge.socialUrl: %s", badge.getSocialUrl()));
+                CrashlyticsHelper.logException(e);
+            }
+        }
     }
 
     @OnClick(R.id.fragment_challenge_close)
