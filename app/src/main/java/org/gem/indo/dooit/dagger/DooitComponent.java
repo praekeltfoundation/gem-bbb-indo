@@ -15,6 +15,7 @@ import org.gem.indo.dooit.controllers.goal.GoalWithdrawController;
 import org.gem.indo.dooit.controllers.survey.SurveyController;
 import org.gem.indo.dooit.helpers.DooitParamBuilder;
 import org.gem.indo.dooit.helpers.Persisted;
+import org.gem.indo.dooit.helpers.prefetching.PrefetchAlarmReceiver;
 import org.gem.indo.dooit.services.NotificationService;
 import org.gem.indo.dooit.views.DooitActivity;
 import org.gem.indo.dooit.views.RootActivity;
@@ -177,4 +178,6 @@ public interface DooitComponent {
     void inject(TipsListAdapter o);
 
     void inject(TipsListFragment o);
+
+    void inject(PrefetchAlarmReceiver o);
 }

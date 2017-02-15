@@ -1,6 +1,7 @@
 package org.gem.indo.dooit.controllers;
 
 import android.content.Context;
+import android.net.Uri;
 import android.os.Handler;
 import android.os.Looper;
 
@@ -12,6 +13,7 @@ import org.gem.indo.dooit.api.managers.GoalManager;
 import org.gem.indo.dooit.api.managers.SurveyManager;
 import org.gem.indo.dooit.api.managers.TipManager;
 import org.gem.indo.dooit.helpers.Persisted;
+import org.gem.indo.dooit.helpers.images.DraweeHelper;
 import org.gem.indo.dooit.models.Tip;
 import org.gem.indo.dooit.models.challenge.BaseChallenge;
 import org.gem.indo.dooit.models.enums.BotObjectType;
@@ -79,6 +81,7 @@ public class RequirementResolver {
                     break;
                 case GOAL_PROTOTYPES:
                     retrieveGoalPrototypes();
+                    retrieveGoalPrototypeImagesIfProtorypesArePersisted();
                     break;
                 case TIP:
                     retrieveTip();
@@ -111,8 +114,10 @@ public class RequirementResolver {
                             persisted.saveConvoGoals(botType, (List<Goal>) o);
                         else if (((List) o).get(0) instanceof Tip)
                             persisted.saveConvoTip((Tip) ((List) o).get(0));
-                        else if (((List) o).get(0) instanceof GoalPrototype)
+                        else if (((List) o).get(0) instanceof GoalPrototype) {
                             persisted.saveGoalProtos((List<GoalPrototype>) o);
+                            retrieveGoalPrototypeImagesIfProtorypesArePersisted();
+                        }
                         else if (((List) o).get(0) instanceof CoachSurvey)
                             // Survey was retrieved by bot type
                             persisted.saveConvoSurvey(botType, ((List<CoachSurvey>) o).get(0));
@@ -187,6 +192,15 @@ public class RequirementResolver {
             });
         else
             sync.add(protos);
+    }
+
+    private void retrieveGoalPrototypeImagesIfProtorypesArePersisted(){
+        if (persisted.hasGoalProtos()){
+            List<GoalPrototype> goalPrototypes = persisted.loadGoalProtos();
+            for(GoalPrototype prototype : goalPrototypes){
+                DraweeHelper.cacheImage(Uri.parse(prototype.getImageUrl()));
+            }
+        }
     }
 
     private void retrieveGoals() {

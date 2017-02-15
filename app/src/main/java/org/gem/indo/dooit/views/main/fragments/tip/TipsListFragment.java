@@ -1,5 +1,6 @@
 package org.gem.indo.dooit.views.main.fragments.tip;
 
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
@@ -20,6 +21,7 @@ import org.gem.indo.dooit.DooitApplication;
 import org.gem.indo.dooit.R;
 import org.gem.indo.dooit.api.DooitAPIError;
 import org.gem.indo.dooit.api.DooitErrorHandler;
+import org.gem.indo.dooit.helpers.images.DraweeHelper;
 import org.gem.indo.dooit.models.Tip;
 import org.gem.indo.dooit.views.main.fragments.tip.adapters.TipsListAdapter;
 import org.gem.indo.dooit.views.main.fragments.tip.filters.TipsListFilter;
@@ -210,6 +212,15 @@ public class TipsListFragment extends Fragment implements TipsListFilter.OnFilte
         }).subscribe(new Action1<List<Tip>>() {
             @Override
             public void call(final List<Tip> tips) {
+                getView().post(new Runnable() {
+                    @Override
+                    public void run() {
+                        for(Tip tip : tips){
+                            DraweeHelper.cacheImage(Uri.parse(tip.getCoverImageUrl()));
+                        }
+                    }
+                });
+
                 if (getActivity() != null) {
                     getActivity().runOnUiThread(new Runnable() {
                         @Override

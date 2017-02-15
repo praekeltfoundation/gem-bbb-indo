@@ -137,6 +137,7 @@
         <service android:name="com.google.android.gms.analytics.CampaignTrackingService"
             android:enabled="true"
             android:exported="false" />
+        <receiver android:name=".helpers.prefetching.PrefetchAlarmReceiver"/>
 
     </application>
 
