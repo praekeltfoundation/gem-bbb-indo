@@ -58,37 +58,6 @@ public class Goal {
     // Server does not allow prototype object in Goal
     transient private GoalPrototype prototype;
 
-    public Goal copy() {
-        Goal goal = new Goal();
-
-        goal.setId(this.id);
-        goal.setName(StringHelper.newString(this.name));
-        goal.setValue(this.value);
-        goal.setTarget(this.target);
-        goal.setImageUrl(StringHelper.newString(this.imageUrl));
-        goal.setStartDate(new LocalDate(this.startDate));
-        goal.setEndDate(new LocalDate(this.endDate));
-        for (GoalTransaction gt : this.transactions) {
-            goal.addTransaction(gt.copy());
-        }
-        goal.setWeeklyTotals(new LinkedHashMap<>(this.getWeeklyTotals()));
-        goal.setWeeklyTarget(this.weeklyTarget);
-        goal.setWeekCount(this.weekCount);
-        goal.setWeekCountToNow(this.weekCountToNow);
-        goal.setWeeklyAverage(this.weeklyAverage);
-        goal.setUser(this.user);
-        goal.setPrototypeId(this.prototypeId);
-        List<Badge> tempBadges = new ArrayList<>();
-        for (Badge badge : this.newBadges) {
-            tempBadges.add(badge.copy());
-        }
-        goal.newBadges = tempBadges;
-        goal.setLocalImageUri(StringHelper.newString(this.localImageUri));
-        //goal.setPrototype(this.prototype.copy());     //Prototype will not necessarily be set
-
-        return goal;
-    }
-
     public long getId() {
         return id;
     }
@@ -143,6 +112,10 @@ public class Goal {
         this.imageUrl = imageUrl;
     }
 
+    ///////////
+    // Dates //
+    ///////////
+
     public LocalDate getStartDate() {
         return startDate;
     }
@@ -160,9 +133,20 @@ public class Goal {
         updateWeeklyTarget();
     }
 
-    public List<GoalTransaction> getTransactions() {
-        return transactions;
+    private void updateEndDate() {
+        // This will be called if the weekly target has been edited
+
+        // calculate weekcount
+        double stillNeeded = target - value;
+        weekCount = (int) Math.ceil(stillNeeded / weeklyTarget);
+
+        // calculate end date
+        endDate = startDate.plusWeeks(weekCount);
     }
+
+    ////////////////////////////
+    // Weekly Total Aggregate //
+    ////////////////////////////
 
     public LinkedHashMap<String, Float> getWeeklyTotals() {
         return weeklyTotals;
@@ -171,6 +155,10 @@ public class Goal {
     public void setWeeklyTotals(LinkedHashMap<String, Float> weeklyTotals) {
         this.weeklyTotals = weeklyTotals;
     }
+
+    ///////////////////
+    // Weekly Target //
+    ///////////////////
 
     public double getWeeklyTarget() {
         return weeklyTarget;
@@ -181,6 +169,10 @@ public class Goal {
         updateEndDate();
     }
 
+    ////////////////
+    // Week Count //
+    ////////////////
+
     public int getWeekCount() {
         return weekCount;
     }
@@ -189,6 +181,14 @@ public class Goal {
         this.weekCount = weekCount;
     }
 
+    ///////////////////////
+    // Week Count to Now //
+    ///////////////////////
+
+    /**
+     * @return The number of weeks since the Goal start to the current date. Used for determining
+     * the average saved since the start of the Goal.
+     */
     public int getWeekCountToNow() {
         return weekCountToNow;
     }
@@ -196,6 +196,10 @@ public class Goal {
     public void setWeekCountToNow(int weekCountToNow) {
         this.weekCountToNow = weekCountToNow;
     }
+
+    ////////////////////
+    // Weekly Average //
+    ////////////////////
 
     public double getWeeklyAverage() {
         return weeklyAverage;
@@ -213,6 +217,10 @@ public class Goal {
         this.user = user;
     }
 
+    ////////////////////
+    // Goal Prototype //
+    ////////////////////
+
     public Long getPrototypeId() {
         return prototypeId;
     }
@@ -223,6 +231,26 @@ public class Goal {
 
     public boolean isCustom() {
         return prototypeId == null;
+    }
+
+    public GoalPrototype getPrototype() {
+        return prototype;
+    }
+
+    public void setPrototype(GoalPrototype prototype) {
+        this.prototype = prototype;
+    }
+
+    public boolean hasPrototype() {
+        return prototype != null;
+    }
+
+    //////////////////
+    // Transactions //
+    //////////////////
+
+    public List<GoalTransaction> getTransactions() {
+        return transactions;
     }
 
     public void setTransactions(List<GoalTransaction> transactions) {
@@ -265,6 +293,10 @@ public class Goal {
         return value >= target;
     }
 
+    ///////////////
+    // Time Left //
+    ///////////////
+
     public int getWeeksLeft(Utils.ROUNDWEEK rounding) {
         if (endDate != null) {
             return Utils.weekDiff(endDate.toDate().getTime(), rounding);
@@ -280,6 +312,14 @@ public class Goal {
         return Utils.dayDiff(endDate.toDate().getTime()) - getWeeksLeft(Utils.ROUNDWEEK.DOWN) * 7;
     }
 
+    public boolean isMissed() {
+        return new Date().after(endDate.toDate());
+    }
+
+    ////////////
+    // Badges //
+    ////////////
+
     public List<Badge> getNewBadges() {
         return newBadges;
     }
@@ -291,6 +331,10 @@ public class Goal {
     public void addNewBadges(Collection<Badge> badges) {
         newBadges.addAll(badges);
     }
+
+    ///////////////
+    // Image Uri //
+    ///////////////
 
     public String getLocalImageUri() {
         return localImageUri;
@@ -312,6 +356,7 @@ public class Goal {
         return imageFromProto;
     }
 
+    // TODO: Remove after all fields have been turned into properties
     public void calculateFields() {
         if (endDate != null) {
             updateWeeklyTarget();
@@ -320,35 +365,40 @@ public class Goal {
         }
     }
 
-    private void updateEndDate() {
-        //This will be called if the weekly target has been edited
-
-        //calculate weekcount
-        double stillNeeded = target - value;
-        weekCount = (int) Math.ceil(stillNeeded / weeklyTarget);
-
-        //calculate end date
-        endDate = startDate.plusWeeks(weekCount);
-    }
-
     private void updateWeeklyTarget() {
         weekCount = (int) (TimeUnit.MILLISECONDS.toDays((long) Math.ceil(endDate.toDate().getTime() - startDate.toDate().getTime()) / 7));
         weeklyTarget = (target - value) / weekCount;
     }
 
-    public boolean isMissed() {
-        return new Date().after(endDate.toDate());
-    }
 
-    public GoalPrototype getPrototype() {
-        return prototype;
-    }
+    public Goal copy() {
+        Goal goal = new Goal();
 
-    public void setPrototype(GoalPrototype prototype) {
-        this.prototype = prototype;
-    }
+        goal.setId(this.id);
+        goal.setName(StringHelper.newString(this.name));
+        goal.setValue(this.value);
+        goal.setTarget(this.target);
+        goal.setImageUrl(StringHelper.newString(this.imageUrl));
+        goal.setStartDate(new LocalDate(this.startDate));
+        goal.setEndDate(new LocalDate(this.endDate));
+        for (GoalTransaction gt : this.transactions) {
+            goal.addTransaction(gt.copy());
+        }
+        goal.setWeeklyTotals(new LinkedHashMap<>(this.getWeeklyTotals()));
+        goal.setWeeklyTarget(this.weeklyTarget);
+        goal.setWeekCount(this.weekCount);
+        goal.setWeekCountToNow(this.weekCountToNow);
+        goal.setWeeklyAverage(this.weeklyAverage);
+        goal.setUser(this.user);
+        goal.setPrototypeId(this.prototypeId);
+        List<Badge> tempBadges = new ArrayList<>();
+        for (Badge badge : this.newBadges) {
+            tempBadges.add(badge.copy());
+        }
+        goal.newBadges = tempBadges;
+        goal.setLocalImageUri(StringHelper.newString(this.localImageUri));
+        //goal.setPrototype(this.prototype.copy());     //Prototype will not necessarily be set
 
-    public boolean hasPrototype() {
-        return prototype != null;
+        return goal;
     }
 }
