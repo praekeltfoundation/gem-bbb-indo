@@ -4,7 +4,7 @@ import android.text.TextUtils;
 
 import com.google.gson.annotations.SerializedName;
 
-import org.gem.indo.dooit.helpers.String.StringHelper;
+import org.gem.indo.dooit.helpers.strings.StringHelper;
 import org.gem.indo.dooit.helpers.Utils;
 import org.gem.indo.dooit.models.Badge;
 import org.gem.indo.dooit.views.helpers.activity.CurrencyHelper;
@@ -12,10 +12,8 @@ import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Collection;
 import java.util.Date;
-import java.util.GregorianCalendar;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.concurrent.TimeUnit;

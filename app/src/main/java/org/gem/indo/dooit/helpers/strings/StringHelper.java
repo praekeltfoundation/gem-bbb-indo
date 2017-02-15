@@ -1,4 +1,4 @@
-package org.gem.indo.dooit.helpers.String;
+package org.gem.indo.dooit.helpers.strings;
 
 
 import android.support.annotation.Nullable;

@@ -4,7 +4,7 @@ import android.text.TextUtils;
 
 import com.google.gson.annotations.SerializedName;
 
-import org.gem.indo.dooit.helpers.String.StringHelper;
+import org.gem.indo.dooit.helpers.strings.StringHelper;
 
 /**
  * Created by Wimpie Victor on 2016/11/28.

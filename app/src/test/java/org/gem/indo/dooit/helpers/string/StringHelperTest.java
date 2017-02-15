@@ -1,6 +1,6 @@
 package org.gem.indo.dooit.helpers.string;
 
-import org.gem.indo.dooit.helpers.String.StringHelper;
+import org.gem.indo.dooit.helpers.strings.StringHelper;
 import org.junit.Test;
 
 import static junit.framework.Assert.assertFalse;
