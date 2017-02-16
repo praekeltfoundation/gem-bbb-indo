@@ -1,5 +1,6 @@
 package org.gem.indo.dooit.api.interfaces;
 
+import org.gem.indo.dooit.api.responses.EmptyResponse;
 import org.gem.indo.dooit.api.responses.WinnerResponse;
 import org.gem.indo.dooit.models.challenge.BaseChallenge;
 import org.gem.indo.dooit.models.challenge.Participant;
@@ -50,4 +51,6 @@ public interface ChallengeAPI {
     @POST("/api/challenges/{id}/notification/")
     Observable<Response<Void>> confirmChallengeWinnerNotification(@Path("id") Long id);
 
+    @GET("/api/challenges/participation")
+    Observable<EmptyResponse> getUserParticipatedWithinTwoDays();
 }

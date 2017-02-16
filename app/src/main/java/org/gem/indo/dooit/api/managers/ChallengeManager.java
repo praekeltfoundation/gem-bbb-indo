@@ -4,6 +4,7 @@ import android.app.Application;
 
 import org.gem.indo.dooit.api.DooitErrorHandler;
 import org.gem.indo.dooit.api.interfaces.ChallengeAPI;
+import org.gem.indo.dooit.api.responses.EmptyResponse;
 import org.gem.indo.dooit.api.responses.WinnerResponse;
 import org.gem.indo.dooit.models.challenge.BaseChallenge;
 import org.gem.indo.dooit.models.challenge.Participant;
@@ -67,5 +68,9 @@ public class ChallengeManager extends DooitManager {
 
     public Observable<Response<Void>> confirmChallengeWinnerNotification(Long id, DooitErrorHandler errorHandler){
         return useNetwork(challengeAPI.confirmChallengeWinnerNotification(id), errorHandler);
+    }
+
+    public Observable<EmptyResponse> getUserParticipatedWithinTwoDays(DooitErrorHandler errorHandler) {
+        return useNetwork(challengeAPI.getUserParticipatedWithinTwoDays(), errorHandler);
     }
 }
