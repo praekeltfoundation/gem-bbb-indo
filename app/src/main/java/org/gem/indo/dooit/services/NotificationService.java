@@ -13,7 +13,8 @@ import org.gem.indo.dooit.api.managers.GoalManager;
 import org.gem.indo.dooit.api.managers.SurveyManager;
 import org.gem.indo.dooit.api.responses.AchievementResponse;
 import org.gem.indo.dooit.api.responses.ChallengeAvailableReminderResponse;
-import org.gem.indo.dooit.api.responses.GoalResponse;
+import org.gem.indo.dooit.api.responses.ChallengeCompletionReminderResponse;
+import org.gem.indo.dooit.api.responses.GoalOverdueResponse;
 import org.gem.indo.dooit.api.responses.SurveyResponse;
 import org.gem.indo.dooit.api.responses.WinnerResponse;
 import org.gem.indo.dooit.helpers.DooitParamBuilder;
@@ -95,6 +96,15 @@ public class NotificationService extends IntentService {
             }));
         }
 
+        if (persisted.shouldNotify(NotificationType.CHALLENGE_COMPLETION_REMINDER)) {
+            requests.add(challengeManager.hasUserNotSubmitted(new DooitErrorHandler() {
+                @Override
+                public void onError(DooitAPIError error) {
+
+                }
+            }));
+        }
+
         if (persisted.shouldNotify(NotificationType.CHALLENGE_WINNER)) {
             requests.add(challengeManager.fetchChallengeWinner(new DooitErrorHandler() {
                 @Override
@@ -150,14 +160,16 @@ public class NotificationService extends IntentService {
                 public void call(Object o) {
                     if (o instanceof BaseChallenge)
                         currentChallengeRetrieved((BaseChallenge) o);
-                    if (o instanceof ChallengeAvailableReminderResponse)
+                    else if (o instanceof ChallengeAvailableReminderResponse)
                         challengeAvailableReminderReceived((ChallengeAvailableReminderResponse) o);
+                    else if (o instanceof ChallengeCompletionReminderResponse)
+                        challengeCompletionReminderReceived((ChallengeCompletionReminderResponse) o);
                     else if (o instanceof AchievementResponse)
                         achievementsRetrieved((AchievementResponse) o);
                     else if (o instanceof SurveyResponse)
                         surveyRetrieved((SurveyResponse) o);
-                    else if (o instanceof GoalResponse)
-                        goalRetrieved((GoalResponse) o);
+                    else if (o instanceof GoalOverdueResponse)
+                        goalRetrieved((GoalOverdueResponse) o);
                     else if (o instanceof WinnerResponse)
                         winnerRetrieved((WinnerResponse) o);
                 }
@@ -195,6 +207,22 @@ public class NotificationService extends IntentService {
 
             new Notifier(getApplicationContext())
                     .notify(NotificationType.CHALLENGE_REMINDER, MainActivity.class,
+                            match.process(params));
+        }
+    }
+
+    protected void challengeCompletionReminderReceived(ChallengeCompletionReminderResponse response) {
+        if (persisted.shouldNotify(NotificationType.CHALLENGE_COMPLETION_REMINDER)
+                && persisted.getCurrentUser() != null
+                && response.isChallengeIncomplete()) {
+            Map<String, Object> params = DooitParamBuilder.create(this)
+                    .setUser(persisted.getCurrentUser())
+                    .build();
+
+            ParamMatch match = ParamParser.parse(getString(R.string.notification_content_challenge_completion_reminder));
+
+            new Notifier(getApplicationContext())
+                    .notify(NotificationType.CHALLENGE_COMPLETION_REMINDER, MainActivity.class,
                             match.process(params));
         }
     }
@@ -261,7 +289,7 @@ public class NotificationService extends IntentService {
         }
     }
 
-    protected void goalRetrieved(GoalResponse response) {
+    protected void goalRetrieved(GoalOverdueResponse response) {
         if (persisted.shouldNotify(NotificationType.GOAL_DEADLINE_MISSED)
                 && persisted.getCurrentUser() != null) {
             if (response.isThereAnOverdueGoal()) {

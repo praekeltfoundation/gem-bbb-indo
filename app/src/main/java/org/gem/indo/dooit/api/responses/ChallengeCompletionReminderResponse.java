@@ -11,7 +11,7 @@ public class ChallengeCompletionReminderResponse {
     @SerializedName("available")
     private boolean available;
 
-    public boolean isThereAnUnsubmittedEntry() {
+    public boolean isChallengeIncomplete() {
         return available;
     }
 }

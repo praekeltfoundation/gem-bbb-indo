@@ -1,6 +1,7 @@
 package org.gem.indo.dooit.api.interfaces;
 
 import org.gem.indo.dooit.api.responses.ChallengeAvailableReminderResponse;
+import org.gem.indo.dooit.api.responses.ChallengeCompletionReminderResponse;
 import org.gem.indo.dooit.api.responses.WinnerResponse;
 import org.gem.indo.dooit.models.challenge.BaseChallenge;
 import org.gem.indo.dooit.models.challenge.Participant;
@@ -52,4 +53,7 @@ public interface ChallengeAPI {
 
     @GET("/api/challenges/participation")
     Observable<ChallengeAvailableReminderResponse> getUserParticipatedWithinTwoDays();
+
+    @GET("/api/challenges/challenge_incomplete")
+    Observable<ChallengeCompletionReminderResponse> getHasUserNotSubmitted();
 }
