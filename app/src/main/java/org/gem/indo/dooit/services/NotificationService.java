@@ -169,7 +169,7 @@ public class NotificationService extends IntentService {
                     else if (o instanceof SurveyResponse)
                         surveyRetrieved((SurveyResponse) o);
                     else if (o instanceof GoalOverdueResponse)
-                        goalRetrieved((GoalOverdueResponse) o);
+                        goalOverdueRetrieved((GoalOverdueResponse) o);
                     else if (o instanceof WinnerResponse)
                         winnerRetrieved((WinnerResponse) o);
                 }
@@ -289,7 +289,7 @@ public class NotificationService extends IntentService {
         }
     }
 
-    protected void goalRetrieved(GoalOverdueResponse response) {
+    protected void goalOverdueRetrieved(GoalOverdueResponse response) {
         if (persisted.shouldNotify(NotificationType.GOAL_DEADLINE_MISSED)
                 && persisted.getCurrentUser() != null) {
             if (response.isThereAnOverdueGoal()) {
