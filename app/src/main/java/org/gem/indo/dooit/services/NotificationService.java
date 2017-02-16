@@ -28,9 +28,12 @@ import org.gem.indo.dooit.models.survey.CoachSurvey;
 import org.gem.indo.dooit.views.main.MainActivity;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 import javax.inject.Inject;
 
@@ -84,6 +87,15 @@ public class NotificationService extends IntentService {
 
                 }
             }));
+
+        if (persisted.shouldNotify(NotificationType.CHALLENGE_REMINDER)) {
+            requests.add(challengeManager.getUserParticipatedWithinTwoDays(new DooitErrorHandler() {
+                @Override
+                public void onError(DooitAPIError error) {
+
+                }
+            }));
+        }
 
         if (persisted.shouldNotify(NotificationType.CHALLENGE_WINNER)) {
             requests.add(challengeManager.fetchChallengeWinner(new DooitErrorHandler() {
@@ -156,6 +168,28 @@ public class NotificationService extends IntentService {
     }
 
     protected void currentChallengeRetrieved(BaseChallenge challenge) {
+
+        Calendar cal = Calendar.getInstance();
+        cal.add(Calendar.DATE, - 1);
+        Date dateBefore2Days = cal.getTime();
+
+        // TODO: Don't show if the user has already entered the challenge
+        if (challenge.getActivationDate().isAfter(dateBefore2Days.getTime())) {
+            challenge.isActive();
+            if (persisted.shouldNotify(NotificationType.CHALLENGE_REMINDER)
+                    && persisted.getCurrentUser() != null) {
+                Map<String, Object> params = DooitParamBuilder.create(this)
+                        .setUser(persisted.getCurrentUser())
+                        .build();
+
+                ParamMatch match = ParamParser.parse(getString(R.string.notification_content_challenge_reminder));
+
+                new Notifier(getApplicationContext())
+                        .notify(NotificationType.CHALLENGE_REMINDER, MainActivity.class,
+                                match.process(params));
+            }
+        }
+
         // TODO: Logic to distinguish between a new Challenge available, and reminding the user to take a Challenge
         if (persisted.shouldNotify(NotificationType.CHALLENGE_AVAILABLE)
                 && persisted.getCurrentUser() != null) {
