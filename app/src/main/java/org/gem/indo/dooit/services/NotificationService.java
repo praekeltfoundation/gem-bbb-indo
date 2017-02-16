@@ -185,7 +185,8 @@ public class NotificationService extends IntentService {
 
     protected void challengeAvailableReminderReceived(ChallengeAvailableReminderResponse response) {
         if (persisted.shouldNotify(NotificationType.CHALLENGE_REMINDER)
-                && persisted.getCurrentUser() != null) {
+                && persisted.getCurrentUser() != null
+                & response.showChallengeAvailableReminder()) {
             Map<String, Object> params = DooitParamBuilder.create(this)
                     .setUser(persisted.getCurrentUser())
                     .build();
