@@ -12,6 +12,7 @@ import org.gem.indo.dooit.api.managers.ChallengeManager;
 import org.gem.indo.dooit.api.managers.GoalManager;
 import org.gem.indo.dooit.api.managers.SurveyManager;
 import org.gem.indo.dooit.api.responses.AchievementResponse;
+import org.gem.indo.dooit.api.responses.ChallengeAvailableReminderResponse;
 import org.gem.indo.dooit.api.responses.GoalResponse;
 import org.gem.indo.dooit.api.responses.SurveyResponse;
 import org.gem.indo.dooit.api.responses.WinnerResponse;
@@ -28,12 +29,9 @@ import org.gem.indo.dooit.models.survey.CoachSurvey;
 import org.gem.indo.dooit.views.main.MainActivity;
 
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.TimeUnit;
 
 import javax.inject.Inject;
 
@@ -152,6 +150,8 @@ public class NotificationService extends IntentService {
                 public void call(Object o) {
                     if (o instanceof BaseChallenge)
                         currentChallengeRetrieved((BaseChallenge) o);
+                    if (o instanceof ChallengeAvailableReminderResponse)
+                        challengeAvailableReminderReceived((ChallengeAvailableReminderResponse) o);
                     else if (o instanceof AchievementResponse)
                         achievementsRetrieved((AchievementResponse) o);
                     else if (o instanceof SurveyResponse)
@@ -168,29 +168,6 @@ public class NotificationService extends IntentService {
     }
 
     protected void currentChallengeRetrieved(BaseChallenge challenge) {
-
-        Calendar cal = Calendar.getInstance();
-        cal.add(Calendar.DATE, - 1);
-        Date dateBefore2Days = cal.getTime();
-
-        // TODO: Don't show if the user has already entered the challenge
-        if (challenge.getActivationDate().isAfter(dateBefore2Days.getTime())) {
-            challenge.isActive();
-            if (persisted.shouldNotify(NotificationType.CHALLENGE_REMINDER)
-                    && persisted.getCurrentUser() != null) {
-                Map<String, Object> params = DooitParamBuilder.create(this)
-                        .setUser(persisted.getCurrentUser())
-                        .build();
-
-                ParamMatch match = ParamParser.parse(getString(R.string.notification_content_challenge_reminder));
-
-                new Notifier(getApplicationContext())
-                        .notify(NotificationType.CHALLENGE_REMINDER, MainActivity.class,
-                                match.process(params));
-            }
-        }
-
-        // TODO: Logic to distinguish between a new Challenge available, and reminding the user to take a Challenge
         if (persisted.shouldNotify(NotificationType.CHALLENGE_AVAILABLE)
                 && persisted.getCurrentUser() != null) {
 
@@ -202,6 +179,21 @@ public class NotificationService extends IntentService {
 
             new Notifier(getApplicationContext())
                     .notify(NotificationType.CHALLENGE_AVAILABLE, MainActivity.class,
+                            match.process(params));
+        }
+    }
+
+    protected void challengeAvailableReminderReceived(ChallengeAvailableReminderResponse response) {
+        if (persisted.shouldNotify(NotificationType.CHALLENGE_REMINDER)
+                && persisted.getCurrentUser() != null) {
+            Map<String, Object> params = DooitParamBuilder.create(this)
+                    .setUser(persisted.getCurrentUser())
+                    .build();
+
+            ParamMatch match = ParamParser.parse(getString(R.string.notification_content_challenge_reminder));
+
+            new Notifier(getApplicationContext())
+                    .notify(NotificationType.CHALLENGE_REMINDER, MainActivity.class,
                             match.process(params));
         }
     }
