@@ -11,15 +11,15 @@ import java.util.Map;
 
 public enum NotificationType {
     CHALLENGE_AVAILABLE(100, R.string.notification_title_challenge_available),
-    CHALLENGE_REMINDER(101, R.string.notification_title_challenge_reminder), // TODO: Two days after a Challenge has been published, if the user has not participated, they should be reminded
-    CHALLENGE_COMPLETION_REMINDER(103, R.string.notification_title_challenge_completion_reminder), // TODO: Remind the user that they have an answer persisted that has not been submitted
+    CHALLENGE_REMINDER(101, R.string.notification_title_challenge_reminder),
+    CHALLENGE_COMPLETION_REMINDER(103, R.string.notification_title_challenge_completion_reminder),
     CHALLENGE_WINNER(104,R.string.notification_title_challenge_winner),
-    GOAL_DEADLINE_MISSED(200, R.string.notification_title_goal_deadline_missed), // TODO: Notify user that they missed one of their Goals
+    GOAL_DEADLINE_MISSED(200, R.string.notification_title_goal_deadline_missed),
     SAVING_REMINDER(300, R.string.notification_title_saving_reminder),
     SURVEY_AVAILABLE(400, R.string.notification_title_survey_available),
     SURVEY_REMINDER_1(401, R.string.notification_title_survey_reminder),
     SURVEY_REMINDER_2(402, R.string.notification_title_survey_reminder),
-    AD_HOC(500, R.string.notification_title_ad_hoc); // TODO: Ad Hoc Notifications from CMS
+    AD_HOC(500, R.string.notification_title_ad_hoc);
 
     // Argument key used in Intent extra for directing the MainFragment's viewpager
     public static final String NOTIFICATION_TYPE = "notification_type";

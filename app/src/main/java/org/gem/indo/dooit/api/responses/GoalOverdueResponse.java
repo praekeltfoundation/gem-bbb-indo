@@ -8,7 +8,7 @@ import org.gem.indo.dooit.models.goal.Goal;
  * Created by Chad Garrett on 2017/02/14.
  */
 
-public class GoalResponse {
+public class GoalOverdueResponse {
 
     @SerializedName("available")
     private boolean available;
