@@ -16,6 +16,10 @@ public class ChallengeAvailableReminderResponse {
     @SerializedName("challenge_name")
     private String challengeName;
 
+    public boolean showChallengeAvailableReminder() {
+        return available;
+    }
+
     public String getChallengeName() {
         return challengeName;
     }
