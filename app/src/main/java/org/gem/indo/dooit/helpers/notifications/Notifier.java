@@ -61,6 +61,13 @@ public class Notifier {
             for (String key : extras.keySet())
                 intent.putExtra(key, extras.get(key));
 
+        // It's messy but when we get direction on limiting feedback I can look at changing
+        if (notifyType == NotificationType.AD_HOC && extras.get("CustomNotificationId") != null) {
+            NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+            notificationManager.notify(notifyType.getMessageId() + Integer.parseInt(extras.get("CustomNotificationId")), builder.build());
+            return;
+        }
+
         stackBuilder.addNextIntent(intent);
         PendingIntent pendingIntent = stackBuilder.getPendingIntent(notifyType.getMessageId(),
                 PendingIntent.FLAG_UPDATE_CURRENT);

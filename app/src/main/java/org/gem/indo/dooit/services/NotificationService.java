@@ -270,8 +270,11 @@ public class NotificationService extends IntentService {
 
                     String message = response.getNotifcations().get(i).getNotificationMessage();
 
+                    Map<String, String> extras = new HashMap<>();
+                    extras.put("CustomNotificationId", String.valueOf(i + 1));
+
                     new Notifier(getApplicationContext())
-                            .notify(NotificationType.AD_HOC, MainActivity.class, message, null);
+                            .notify(NotificationType.AD_HOC, MainActivity.class, message, extras);
                 }
             }
 
