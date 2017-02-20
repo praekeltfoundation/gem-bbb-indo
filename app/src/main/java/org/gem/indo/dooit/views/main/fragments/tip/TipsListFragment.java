@@ -216,7 +216,9 @@ public class TipsListFragment extends Fragment implements TipsListFilter.OnFilte
                     @Override
                     public void run() {
                         for(Tip tip : tips){
-                            DraweeHelper.cacheImage(Uri.parse(tip.getCoverImageUrl()));
+                            if(tip.hasCoverImageUrl()) {
+                                DraweeHelper.cacheImage(Uri.parse(tip.getCoverImageUrl()));
+                            }
                         }
                     }
                 });
