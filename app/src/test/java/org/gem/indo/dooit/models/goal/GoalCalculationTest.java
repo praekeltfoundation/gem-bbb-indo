@@ -51,8 +51,18 @@ public class GoalCalculationTest {
     }
 
     @Test
-    @Ignore("Todo")
-    public void endDateFromWeeklyTarget() throws Exception {
+    public void getWeeklyTarget_basic() throws Exception {
+        Goal goal = new Goal();
+        goal.setStartDate(new LocalDate(2017, 2, 1));
+        goal.setEndDate(new LocalDate(2017, 3, 1));
+        goal.setTarget(1000.0);
+
+        Assert.assertEquals(250.0, goal.getWeeklyTarget());
+    }
+
+    @Test
+    @Ignore("TODO")
+    public void getWeeklyAverage_basic() throws Exception {
 
     }
 }

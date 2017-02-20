@@ -196,9 +196,7 @@ public class Goal {
 
     public double getWeeklyTarget() {
         int weeks = getWeeks();
-        if (weeks == 0)
-            return value;
-        return value / weeks;
+        return weeks == 0 ? target : target / weeks;
     }
 
     public void setWeeklyTarget(double weeklyTarget) {
