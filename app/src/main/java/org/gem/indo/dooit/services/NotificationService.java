@@ -21,6 +21,7 @@ import org.gem.indo.dooit.helpers.bot.param.ParamMatch;
 import org.gem.indo.dooit.helpers.bot.param.ParamParser;
 import org.gem.indo.dooit.helpers.notifications.NotificationType;
 import org.gem.indo.dooit.helpers.notifications.Notifier;
+import org.gem.indo.dooit.models.CustomNotification;
 import org.gem.indo.dooit.models.User;
 import org.gem.indo.dooit.models.challenge.BaseChallenge;
 import org.gem.indo.dooit.models.enums.BotType;
@@ -256,19 +257,37 @@ public class NotificationService extends IntentService {
         // TODO: shouldNotify for custom notifications
         if (persisted.shouldNotify(NotificationType.AD_HOC)
                 && persisted.getCurrentUser() != null) {
-            if (response.isNotificationActive()) {
 
-                Map<String, Object> params = DooitParamBuilder.create(this)
-                        .setUser(persisted.getCurrentUser())
-                        .build();
-
-                String message = response.getNotificationMessage();
-
-
-
-                new Notifier(getApplicationContext())
-                        .notify(NotificationType.AD_HOC, MainActivity.class, message, null);
+            if (response.getNotifcations() == null) {
+                return;
             }
+
+            for (int i = 0; i < response.getNotifcations().size(); i++) {
+                if (response.getNotifcations().get(i) != null && response.getNotifcations().get(i).isNotificationActive()) {
+                    Map<String, Object> params = DooitParamBuilder.create(this)
+                            .setUser(persisted.getCurrentUser())
+                            .build();
+
+                    String message = response.getNotifcations().get(i).getNotificationMessage();
+
+                    new Notifier(getApplicationContext())
+                            .notify(NotificationType.AD_HOC, MainActivity.class, message, null);
+                }
+            }
+
+//            if (response.isNotificationActive()) {
+//
+//                Map<String, Object> params = DooitParamBuilder.create(this)
+//                        .setUser(persisted.getCurrentUser())
+//                        .build();
+//
+//                String message = response.getNotificationMessage();
+//
+//
+//
+//                new Notifier(getApplicationContext())
+//                        .notify(NotificationType.AD_HOC, MainActivity.class, message, null);
+//            }
         }
     }
 
