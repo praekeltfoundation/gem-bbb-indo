@@ -27,9 +27,15 @@ public class GoalCalculationTest {
     }
 
     @Test
-    @Ignore("Todo")
     public void getWeeksToNow_basic() throws Exception {
+        final Today today = Mockito.mock(Today.class);
+        Mockito.when(today.now()).thenReturn(new LocalDate(2017, 2, 8).toDate());
 
+        Goal goal = new Goal(today);
+        goal.setStartDate(new LocalDate(2017, 2, 1));
+        goal.setEndDate(new LocalDate(2017, 2, 16));
+
+        Assert.assertEquals(1, goal.getWeekCountToNow(WeekCalc.Rounding.UP));
     }
 
     @Test

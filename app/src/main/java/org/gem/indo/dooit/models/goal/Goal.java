@@ -237,8 +237,10 @@ public class Goal {
      * @return The number of weeks since the Goal start to the current date. Used for determining
      * the average saved since the start of the Goal.
      */
-    public int getWeekCountToNow() {
-        return weekCountToNow;
+    public int getWeekCountToNow(WeekCalc.Rounding rounding) {
+        if (startDate == null)
+            return 0;
+        return WeekCalc.weekDiff(startDate.toDate(), today.now(), rounding);
     }
 
     public void setWeekCountToNow(int weekCountToNow) {
