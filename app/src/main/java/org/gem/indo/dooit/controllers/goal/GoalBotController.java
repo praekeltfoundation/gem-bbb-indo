@@ -18,6 +18,7 @@ import org.gem.indo.dooit.models.bot.Answer;
 import org.gem.indo.dooit.models.bot.BaseBotModel;
 import org.gem.indo.dooit.models.bot.Node;
 import org.gem.indo.dooit.models.challenge.BaseChallenge;
+import org.gem.indo.dooit.models.date.WeekCalc;
 import org.gem.indo.dooit.models.enums.BotCallType;
 import org.gem.indo.dooit.models.enums.BotMessageType;
 import org.gem.indo.dooit.models.enums.BotObjectType;
@@ -107,10 +108,10 @@ public abstract class GoalBotController extends DooitBotController {
                 model.values.put(key, CurrencyHelper.format(goal.getWeeklyTarget()));
                 break;
             case GOAL_WEEKS_LEFT_UP:
-                model.values.put(key, goal.getWeeksLeft(Utils.ROUNDWEEK.UP));
+                model.values.put(key, goal.getWeeksLeft(WeekCalc.Rounding.UP));
                 break;
             case GOAL_WEEKS_LEFT_DOWN:
-                model.values.put(key, goal.getWeeksLeft(Utils.ROUNDWEEK.DOWN));
+                model.values.put(key, goal.getWeeksLeft(WeekCalc.Rounding.DOWN));
                 break;
             case GOAL_REMAINDER_DAYS_LEFT:
                 model.values.put(key, goal.getRemainderDaysLeft());

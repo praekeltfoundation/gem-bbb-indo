@@ -24,14 +24,13 @@ import org.gem.indo.dooit.api.DooitErrorHandler;
 import org.gem.indo.dooit.api.managers.GoalManager;
 import org.gem.indo.dooit.helpers.Persisted;
 import org.gem.indo.dooit.helpers.Utils;
+import org.gem.indo.dooit.models.date.WeekCalc;
 import org.gem.indo.dooit.models.enums.BotType;
 import org.gem.indo.dooit.models.goal.Goal;
 import org.gem.indo.dooit.views.custom.WeekGraph;
 import org.gem.indo.dooit.views.helpers.activity.CurrencyHelper;
-import org.gem.indo.dooit.views.main.MainActivity;
 import org.gem.indo.dooit.views.main.fragments.MainFragment;
 import org.gem.indo.dooit.views.main.fragments.target.adapters.TargetPagerAdapter;
-import org.joda.time.Weeks;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -226,17 +225,21 @@ public class TargetFragment extends MainFragment {
     private void populateGoal(Goal goal) {
         goalName.setText(goal.getName());
         saved.setText(CurrencyHelper.format(goal.getValue()));
-        total.setText(String.format(of_goal_total +" %s", CurrencyHelper.format(goal.getTarget())));
-        int weeks = Weeks.weeksBetween(goal.getStartDate(), goal.getEndDate()).getWeeks();
-        double toSavePerWeek = goal.getTarget() / weeks;
+        total.setText(String.format(of_goal_total + " %s", CurrencyHelper.format(goal.getTarget())));
+        int weeks = WeekCalc.weekDiff(
+                goal.getStartDate().toDate(),
+                goal.getEndDate().toDate(),
+                WeekCalc.Rounding.UP
+        );
         bars.setGoal(goal);
         bars.requestLayout();
-        goalMessage.setText(String.format(savingsMessage, CurrencyHelper.format(goal.getWeeklyTarget()), CurrencyHelper.format(goal.getTarget()), weeks));
+        goalMessage.setText(String.format(savingsMessage,
+                CurrencyHelper.format(goal.getWeeklyTarget()), CurrencyHelper.format(goal.getTarget()), weeks));
         //endDate.setText(Utils.formatDate(goal.getEndDate().toDate()));
         endDate.setText(Utils.formatDateToLocal(goal.getEndDate().toDate()));
         endOfGoalDate = goal.getEndDate().toDate();
 
-        if(goal.isMissed())
+        if (goal.isMissed())
             missedMessage.setVisibility(View.VISIBLE);
         else
             missedMessage.setVisibility(View.INVISIBLE);

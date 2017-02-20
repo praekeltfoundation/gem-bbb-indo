@@ -5,6 +5,9 @@ import com.google.gson.annotations.SerializedName;
 import org.gem.indo.dooit.helpers.Utils;
 import org.gem.indo.dooit.helpers.strings.StringHelper;
 import org.gem.indo.dooit.models.Badge;
+import org.gem.indo.dooit.models.date.DefaultToday;
+import org.gem.indo.dooit.models.date.Today;
+import org.gem.indo.dooit.models.date.WeekCalc;
 import org.gem.indo.dooit.views.helpers.activity.CurrencyHelper;
 import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
@@ -22,6 +25,8 @@ import java.util.concurrent.TimeUnit;
  */
 
 public class Goal {
+
+    private Today today = new DefaultToday();
 
     // Remote properties
     private long id;
@@ -59,6 +64,22 @@ public class Goal {
     // Server does not allow prototype object in Goal
     transient private GoalPrototype prototype;
 
+    //////////////////
+    // Constructors //
+    //////////////////
+
+    public Goal() {
+        // Empty Constructor
+    }
+
+    public Goal(Today today) {
+        this.today = today;
+    }
+
+    ////////
+    // ID //
+    ////////
+
     public long getId() {
         return id;
     }
@@ -66,6 +87,10 @@ public class Goal {
     public void setId(long id) {
         this.id = id;
     }
+
+    //////////
+    // Name //
+    //////////
 
     public String getName() {
         return name;
@@ -78,6 +103,10 @@ public class Goal {
     public boolean hasName() {
         return !StringHelper.isEmpty(name);
     }
+
+    ///////////////////
+    // Current Value //
+    ///////////////////
 
     public double getValue() {
         return value;
@@ -96,6 +125,10 @@ public class Goal {
     public String getValueFormatted() {
         return CurrencyHelper.format(value);
     }
+
+    //////////////////
+    // Target Value //
+    //////////////////
 
     public double getTarget() {
         return target;
@@ -162,7 +195,10 @@ public class Goal {
     ///////////////////
 
     public double getWeeklyTarget() {
-        return weeklyTarget;
+        int weeks = getWeeks();
+        if (weeks == 0)
+            return value;
+        return value / weeks;
     }
 
     public void setWeeklyTarget(double weeklyTarget) {
@@ -179,8 +215,14 @@ public class Goal {
     // Week Count //
     ////////////////
 
-    public int getWeekCount() {
-        return weekCount;
+    public int getWeeks() {
+        if (startDate == null || endDate == null)
+            return 0;
+        int weeks = WeekCalc.weekDiff(startDate.toDate(), endDate.toDate(), WeekCalc.Rounding.UP);
+        if (weeks == 0)
+            return 1;
+        else
+            return weeks;
     }
 
     public void setWeekCount(int weekCount) {
@@ -214,6 +256,10 @@ public class Goal {
     public void setWeeklyAverage(double weeklyAverage) {
         this.weeklyAverage = weeklyAverage;
     }
+
+    //////////
+    // User //
+    //////////
 
     public long getUser() {
         return user;
@@ -303,19 +349,15 @@ public class Goal {
     // Time Left //
     ///////////////
 
-    public int getWeeksLeft(Utils.ROUNDWEEK rounding) {
-        if (endDate != null) {
-            return Utils.weekDiff(endDate.toDate().getTime(), rounding);
-        } else {
-            //if endDate == null then the user chose to set die amount to save per week and not the end date
-            double stillNeeded = target - value;
-            weekCount = (int) Math.ceil(stillNeeded / weeklyTarget);
-            return weekCount;
-        }
+    public int getWeeksLeft(WeekCalc.Rounding rounding) {
+        if (endDate != null)
+            return WeekCalc.weekDiff(today.now(), endDate.toDate(), rounding);
+        else
+            return 0;
     }
 
     public int getRemainderDaysLeft() {
-        return Utils.dayDiff(endDate.toDate().getTime()) - getWeeksLeft(Utils.ROUNDWEEK.DOWN) * 7;
+        return WeekCalc.dayDiff(today.now(), endDate.toDate()) - getWeeksLeft(WeekCalc.Rounding.DOWN) * 7;
     }
 
     public boolean isMissed() {
