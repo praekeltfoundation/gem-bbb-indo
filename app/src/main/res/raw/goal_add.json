@@ -514,14 +514,7 @@
     "name": "goal_add_badges",
     "type": "blank",
     "call": "#add_badge",
-    "next": "infoGoalEnd",
-    "answers": [
-      {
-        "name": "goal_add_badge_continue",
-        "text": "$(yay_me)",
-        "next": "infoGoalEnd"
-      }
-    ]
+    "next": "infoGoalEnd"
   },
 
 

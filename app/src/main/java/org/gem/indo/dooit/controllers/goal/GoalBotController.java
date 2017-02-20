@@ -72,7 +72,7 @@ public abstract class GoalBotController extends DooitBotController {
     public void onCall(BotCallType key, Map<String, Answer> answerLog, BaseBotModel model) {
         switch (key) {
             case ADD_BADGE:
-                doAddBadge();
+                doAddBadge(model.getNext());
                 break;
         }
     }
@@ -137,7 +137,7 @@ public abstract class GoalBotController extends DooitBotController {
                 model.values.put(key, goal.getPrototype().getNumUsers());
                 break;
             case GOAL_PROTO_DEFAULT_PRICE:
-                if(goal.hasPrototype()) {
+                if (goal.hasPrototype()) {
                     model.values.put(key, goal.getPrototype().getDefaultPrice());
                 }
                 break;
@@ -206,12 +206,32 @@ public abstract class GoalBotController extends DooitBotController {
         }
     }
 
-    private void doAddBadge() {
-        for (Badge badge : goal.getNewBadges())
-            botRunner.addNode(nodeFromBadge(badge));
+    /**
+     * @param nextNode This parameter is to set the nextNode on the Answer that is added to the last badge that is earned.
+     *                 <p>
+     *                 The answer is now set on the badge so that the answer is also persisted and can be reloaded when the user navigates away
+     *                 and back to the bot.
+     */
+    private void doAddBadge(String nextNode) {
+        List<Badge> newBadges = goal.getNewBadges();
+        for (int i = 0; i < newBadges.size(); ++i) {
+            if (i == (newBadges.size() - 1)) {
+                botRunner.addNode(nodeFromBadge(newBadges.get(i), nextNode));
+            } else {
+                botRunner.addNode(nodeFromBadge(newBadges.get(i), null));
+            }
+        }
     }
 
-    private Node nodeFromBadge(Badge badge) {
+    /**
+     * If nextNode is null that this Badge is not the last badge that is to be displayed and the answer should not be
+     * added to this badge.
+     *
+     * @param badge    The badge that is earned
+     * @param nextNode The String of the next Node in the conversation flow
+     * @return The newly created node
+     */
+    private Node nodeFromBadge(Badge badge, String nextNode) {
         // TODO: Think of a unified way to construct Nodes programmatically. Should it be done in the view holders? Factories?
 
         String badgeName = botType.name().toLowerCase() + "_" + badge.getGraphName();
@@ -225,6 +245,15 @@ public abstract class GoalBotController extends DooitBotController {
         node.values.put(BotParamType.BADGE_NAME.getKey(), badge.getName());
         node.values.put(BotParamType.BADGE_IMAGE_URL.getKey(), badge.getImageUrl());
         node.values.put(BotParamType.BADGE_SOCIAL_URL.getKey(), badge.getSocialUrl());
+        if (nextNode != null) {
+            Answer answer = new Answer();
+            answer.setName("goal_add_badge_continue");
+            answer.setNext(nextNode);
+            answer.setText("$(yay_me)");
+
+            node.setNext(nextNode);
+            node.addAnswer(answer);
+        }
         node.finish();
 
         if (badge.hasIntro()) {
