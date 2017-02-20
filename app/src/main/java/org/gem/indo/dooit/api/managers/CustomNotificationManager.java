@@ -24,7 +24,7 @@ public class CustomNotificationManager extends DooitManager {
         customNotificationAPI = retrofit.create(CustomNotificationAPI.class);
     }
 
-    public Observable<CustomNotificationResponse> fetchCustomNotification(DooitErrorHandler errorHandler){
+    public Observable<CustomNotificationResponse> fetchCustomNotification(DooitErrorHandler errorHandler) {
         return useNetwork(customNotificationAPI.getCurrentCustomNotification(), errorHandler);
     }
 }
