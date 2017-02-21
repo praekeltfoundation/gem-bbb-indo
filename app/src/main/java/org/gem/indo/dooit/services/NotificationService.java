@@ -2,6 +2,17 @@ package org.gem.indo.dooit.services;
 
 import android.app.IntentService;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.net.Uri;
+import android.util.Log;
+
+import com.facebook.common.executors.CallerThreadExecutor;
+import com.facebook.datasource.DataSource;
+import com.facebook.drawee.backends.pipeline.Fresco;
+import com.facebook.imagepipeline.core.ImagePipeline;
+import com.facebook.imagepipeline.datasource.BaseBitmapDataSubscriber;
+import com.facebook.imagepipeline.request.ImageRequest;
+import com.facebook.imagepipeline.request.ImageRequestBuilder;
 
 import org.gem.indo.dooit.DooitApplication;
 import org.gem.indo.dooit.R;
@@ -268,13 +279,38 @@ public class NotificationService extends IntentService {
                             .setUser(persisted.getCurrentUser())
                             .build();
 
-                    String message = response.getNotifcations().get(i).getNotificationMessage();
+                    final String message = response.getNotifcations().get(i).getNotificationMessage();
 
-                    Map<String, String> extras = new HashMap<>();
+                    final Map<String, String> extras = new HashMap<>();
                     extras.put("CustomNotificationId", String.valueOf(i + 1));
 
-                    new Notifier(getApplicationContext())
-                            .notify(NotificationType.AD_HOC, MainActivity.class, message, extras);
+                    // If no icon is available, just display notification
+                    if (response.getNotifcations().get(i).getNotificationIcon() != null) {
+                        ImageRequest request = ImageRequestBuilder
+                                .newBuilderWithSource(Uri.parse(response.getNotifcations().get(i).getNotificationIcon()))
+                                .build();
+                        ImagePipeline pl = Fresco.getImagePipeline();
+                        DataSource ds = pl.fetchDecodedImage(request, null);
+
+                        ds.subscribe(new BaseBitmapDataSubscriber() {
+                            @Override
+                            protected void onNewResultImpl(Bitmap bitmap) {
+                                if (bitmap != null) {
+                                    new Notifier(getApplicationContext())
+                                            .notify(NotificationType.AD_HOC, MainActivity.class,
+                                                    message, extras, bitmap);
+                                }
+                            }
+
+                            @Override
+                            protected void onFailureImpl(DataSource dataSource) {
+                                Log.e("Fresco notification", "Failed", dataSource.getFailureCause());
+                            }
+                        }, CallerThreadExecutor.getInstance());
+                    } else {
+                        new Notifier(getApplicationContext())
+                                .notify(NotificationType.AD_HOC, MainActivity.class, message, extras);
+                    }
                 }
             }
 

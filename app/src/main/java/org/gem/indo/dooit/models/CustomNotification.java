@@ -32,9 +32,6 @@ public class CustomNotification {
     }
 
     public String getNotificationIcon() {
-        if (!icon_url.equals(null) || icon_url != "") {
-            return icon_url;
-        }
-        return "";
+        return icon_url;
     }
 }
