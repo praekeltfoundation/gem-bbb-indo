@@ -115,19 +115,25 @@ public class GoalAddController extends GoalBotController {
         else
             goal.setName(name);
 
-        if (answerLog.containsKey("goal_amount")) {
+        // Goal Target
+        if (answerLog.containsKey("goal_amount"))
             goal.setTarget(Float.parseFloat(answerLog.get("goal_amount").getValue()));
-        }
+
+        // Start Date
         goal.setStartDate(LocalDate.now());
+
+        // End date
         if (answerLog.containsKey("goalDate")) {
-//            goal.setEndDate(DateTimeFormat.forPattern("yyyy-MM-dd")
-//                    .parseLocalDate(answerLog.get("goalDate").getValue().substring(0, 10)));
+            CrashlyticsHelper.log(TAG, "doPopulate", "User inputted an end date using the calendar");
             goal.setEndDate(DateTimeFormat.forPattern("yyyy-MM-dd")
                     .parseLocalDate(answerLog.get("goalDate").values.getString("date")));
         } else if (answerLog.containsKey("weeklySaveAmount")) {
-            goal.setWeeklyTarget(Float.parseFloat(answerLog.get("weeklySaveAmount").getValue()));
+            CrashlyticsHelper.log(TAG, "doPopulate", "User inputted a weekly target");
+            LocalDate endDate = new LocalDate(Goal.endDateFromTarget(goal.getStartDate().toDate(),
+                    goal.getTarget(), goal.getWeeklyTarget()));
+            goal.setEndDate(endDate);
         }
-        CrashlyticsHelper.log(this.getClass().getSimpleName(), "do Populate (addGoal): ", "goal start date: " + goal.getStartDate() +
+        CrashlyticsHelper.log(TAG, "do Populate (addGoal): ", "goal start date: " + goal.getStartDate() +
                 " Target amount: " + goal.getTarget() + " Goal name: " + goal.getName());
 
         // User has existing savings
@@ -149,6 +155,7 @@ public class GoalAddController extends GoalBotController {
 
         goal.calculateFields();
 
+        // Goal is stored in case the view is destroyed during the conversation
         persisted.saveConvoGoal(botType, goal);
     }
 
