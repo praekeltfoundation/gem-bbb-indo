@@ -40,6 +40,7 @@ import org.gem.indo.dooit.services.NotificationArgs;
 import org.gem.indo.dooit.views.DooitActivity;
 import org.gem.indo.dooit.views.helpers.activity.DooitActivityBuilder;
 import org.gem.indo.dooit.views.main.adapters.MainTabAdapter;
+import org.gem.indo.dooit.views.main.fragments.ChallengeLightboxFragment;
 import org.gem.indo.dooit.views.main.fragments.MainFragment;
 import org.gem.indo.dooit.views.main.fragments.bot.BotFragment;
 import org.gem.indo.dooit.views.main.fragments.target.TargetFragment;
@@ -119,6 +120,9 @@ public class MainActivity extends DooitActivity {
         setContentView(R.layout.activity_main);
         ((DooitApplication) getApplication()).component.inject(this);
         ButterKnife.bind(this);
+
+        ChallengeLightboxFragment challengeLightboxFragment = ChallengeLightboxFragment.newInstance();
+        challengeLightboxFragment.show(getFragmentManager(), "challenge_available_lightbox");
 
         if(!prefetchAlarmHasBeenSet) {
             //set alarm for pre fetching
