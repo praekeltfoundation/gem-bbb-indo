@@ -12,10 +12,8 @@ import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Collection;
 import java.util.Date;
-import java.util.GregorianCalendar;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -26,7 +24,7 @@ import java.util.concurrent.TimeUnit;
 
 public class Goal {
 
-    private Today today = new DefaultToday();
+    transient private Today today = new DefaultToday();
 
     // TODO: Remove
     private double weeklyTarget;
@@ -170,7 +168,6 @@ public class Goal {
 
     public void setEndDate(LocalDate endDate) {
         this.endDate = endDate;
-        updateWeeklyTarget();
     }
 
     /**
