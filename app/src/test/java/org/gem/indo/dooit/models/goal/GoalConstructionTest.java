@@ -5,8 +5,6 @@ import junit.framework.Assert;
 import org.joda.time.LocalDate;
 import org.junit.Test;
 
-import java.util.Date;
-
 /**
  * Tests to ensure the integrity of the Goal's Weekly Target and End Date when constructed in
  * different ways.
@@ -45,5 +43,92 @@ public class GoalConstructionTest {
 
         // Ensure that the calculated weekly target is the same as supplied
         Assert.assertEquals(weeklyTarget, goal.getWeeklyTarget());
+    }
+
+    /**
+     * Ensure that a Goal can be created using {@link org.gem.indo.dooit.models.goal.Goal.Builder}
+     * when an end date is provided.
+     *
+     * @throws Exception
+     */
+    @Test
+    public void builder_fromEndDate() throws Exception {
+        String name = "Goal 1";
+        double target = 1000.0;
+        LocalDate startDate = new LocalDate(2017, 2, 1);
+
+        // User inputs an end date
+        LocalDate endDate = new LocalDate(2017, 2, 28);
+
+        Goal goal = new Goal.Builder()
+                .setName(name)
+                .setTarget(target)
+                .setStartDate(startDate)
+                .setEndDate(endDate)
+                .build();
+
+        Assert.assertEquals(name, goal.getName());
+        Assert.assertEquals(target, goal.getTarget());
+        Assert.assertEquals(startDate, goal.getStartDate());
+        Assert.assertEquals(endDate, goal.getEndDate());
+
+        // Calculated
+        Assert.assertEquals(4, goal.getWeeks());
+        Assert.assertEquals(250.0, goal.getWeeklyTarget());
+    }
+
+    /**
+     * Ensure that a Goal can ben created using {@link org.gem.indo.dooit.models.goal.Goal.Builder}
+     * when a weekly target is supplied.
+     *
+     * @throws Exception
+     */
+    @Test
+    public void builder_fromWeeklyTarget() throws Exception {
+        String name = "Goal 1";
+        double target = 1000.0;
+        LocalDate startDate = new LocalDate(2017, 2, 1);
+
+        // User inputs a weekly target
+        double weeklyTarget = 250.0;
+
+        Goal goal = new Goal.Builder()
+                .setName(name)
+                .setTarget(target)
+                .setStartDate(startDate)
+                .setWeeklyTarget(weeklyTarget)
+                .build();
+
+        // Expected end date
+        LocalDate endDate = new LocalDate(2017, 3, 1);
+
+        Assert.assertEquals(name, goal.getName());
+        Assert.assertEquals(target, goal.getTarget());
+        Assert.assertEquals(startDate, goal.getStartDate());
+        Assert.assertEquals(endDate, goal.getEndDate());
+
+        // Calculated
+        Assert.assertEquals(4, goal.getWeeks());
+        Assert.assertEquals(250.0, goal.getWeeklyTarget());
+    }
+
+    ////////////////////
+    // Negative Tests //
+    ////////////////////
+
+    /**
+     * Ensure that when no End Date or Weekly Target is supplied, Goal creation will fail.
+     *
+     * @throws Exception
+     */
+    @Test(expected = Goal.GoalCreationError.class)
+    public void builder_noEndDateOrWeeklyTarget() throws Exception {
+        Goal goal = new Goal.Builder()
+                .setName("Goal 1")
+                .setTarget(1000.0)
+                .setStartDate(new LocalDate(2017, 2, 1))
+
+                // Except exception here
+                .build();
     }
 }

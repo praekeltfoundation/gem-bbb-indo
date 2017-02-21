@@ -129,8 +129,9 @@ public class GoalAddController extends GoalBotController {
                     .parseLocalDate(answerLog.get("goalDate").values.getString("date")));
         } else if (answerLog.containsKey("weeklySaveAmount")) {
             CrashlyticsHelper.log(TAG, "doPopulate", "User inputted a weekly target");
+            double weeklyTarget = Double.parseDouble(answerLog.get("weeklySaveAmount").getValue());
             LocalDate endDate = new LocalDate(Goal.endDateFromTarget(goal.getStartDate().toDate(),
-                    goal.getTarget(), goal.getWeeklyTarget()));
+                    goal.getTarget(), weeklyTarget));
             goal.setEndDate(endDate);
         }
         CrashlyticsHelper.log(TAG, "do Populate (addGoal): ", "goal start date: " + goal.getStartDate() +
@@ -152,8 +153,6 @@ public class GoalAddController extends GoalBotController {
             goal.setLocalImageUri(protoAnswer.values.getString(BotParamType.GOAL_PROTO_IMAGE_URL.getKey()));
             goal.setImageFromProto(true);
         }
-
-        goal.calculateFields();
 
         // Goal is stored in case the view is destroyed during the conversation
         persisted.saveConvoGoal(botType, goal);

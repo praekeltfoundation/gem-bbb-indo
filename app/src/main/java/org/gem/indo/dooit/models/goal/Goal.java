@@ -1,7 +1,10 @@
 package org.gem.indo.dooit.models.goal;
 
+import android.support.annotation.NonNull;
+
 import com.google.gson.annotations.SerializedName;
 
+import org.gem.indo.dooit.helpers.crashlytics.CrashlyticsHelper;
 import org.gem.indo.dooit.helpers.strings.StringHelper;
 import org.gem.indo.dooit.models.Badge;
 import org.gem.indo.dooit.models.date.DefaultToday;
@@ -150,6 +153,10 @@ public class Goal {
 
     public void setStartDate(LocalDate startDate) {
         this.startDate = startDate;
+    }
+
+    public boolean hasStartDate() {
+        return startDate != null;
     }
 
     public LocalDate getEndDate() {
@@ -416,5 +423,131 @@ public class Goal {
         //goal.setPrototype(this.prototype.copy());     //Prototype will not necessarily be set
 
         return goal;
+    }
+
+    public void setWeeklyTarget(double target) {
+        // TODO: Remove
+    }
+
+    /////////////
+    // Builder //
+    /////////////
+
+    public static class GoalCreationError extends RuntimeException {
+        public GoalCreationError(String message) {
+            super(message);
+        }
+    }
+
+    /**
+     * A Builder to help with the creation of Goals, so that the idiosyncrasies of Goal creation can
+     * be handled safely and explicitly.
+     */
+    public static class Builder {
+
+        public static final String TAG = Goal.Builder.class.getName();
+
+        transient private Today today = new DefaultToday();
+        private String name;
+        private LocalDate startDate;
+        private LocalDate endDate;
+        private double target;
+        private Double weeklyTarget;
+
+        public Builder() {
+
+        }
+
+        public Goal build() {
+            Goal goal = new Goal(today);
+
+            // Name
+            goal.setName(name);
+
+            // Target
+            goal.setTarget(target);
+
+            // Start Date
+            if (startDate == null)
+                startDate = new LocalDate(today.now());
+            goal.setStartDate(startDate);
+
+            // End Date
+            if (endDate != null) {
+                CrashlyticsHelper.log(TAG, "build", "Creating Goal from End Date");
+                goal.setEndDate(endDate);
+            } else if (weeklyTarget != null) {
+                CrashlyticsHelper.log(TAG, "build", "Creating Goal from Weekly Target");
+                goal.setEndDate(new LocalDate(Goal.endDateFromTarget(startDate.toDate(), target, weeklyTarget)));
+            } else {
+                throw new GoalCreationError("Unable to build Goal. Neither End Date nor Weekly Target was set.");
+            }
+
+            return goal;
+        }
+
+        ///////////
+        // Today //
+        ///////////
+
+        public Goal.Builder setToday(@NonNull Today today) {
+            this.today = today;
+            return this;
+        }
+
+        //////////
+        // Name //
+        //////////
+
+        public Goal.Builder setName(String name) {
+            this.name = name;
+            return this;
+        }
+
+        ////////////////
+        // Start Date //
+        ////////////////
+
+        public Goal.Builder setStartDate(@NonNull LocalDate startDate) {
+            this.startDate = startDate;
+            return this;
+        }
+
+        //////////////
+        // End Date //
+        //////////////
+
+        public Goal.Builder setEndDate(@NonNull LocalDate endDate) {
+            this.endDate = endDate;
+            return this;
+        }
+
+        public Goal.Builder clearEndDate() {
+            this.endDate = null;
+            return this;
+        }
+
+        ////////////
+        // Target //
+        ////////////
+
+        public Goal.Builder setTarget(double target) {
+            this.target = target;
+            return this;
+        }
+
+        ///////////////////
+        // Weekly Target //
+        ///////////////////
+
+        public Goal.Builder setWeeklyTarget(double weeklyTarget) {
+            this.weeklyTarget = weeklyTarget;
+            return this;
+        }
+
+        public Goal.Builder clearWeeklyTarget() {
+            this.weeklyTarget = null;
+            return this;
+        }
     }
 }

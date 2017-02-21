@@ -27,6 +27,7 @@ import org.gem.indo.dooit.models.enums.BotType;
 import org.gem.indo.dooit.models.goal.Goal;
 import org.gem.indo.dooit.models.goal.GoalPrototype;
 import org.gem.indo.dooit.views.helpers.activity.CurrencyHelper;
+import org.joda.time.LocalDate;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -168,9 +169,12 @@ public abstract class GoalBotController extends DooitBotController {
             case GOAL_VALUE:
                 goal.setValue(Double.parseDouble(answer.getValue()));
                 break;
-            case GOAL_WEEKLY_TARGET:
-                goal.setWeeklyTarget(Double.parseDouble(answer.getValue()));
+            case GOAL_WEEKLY_TARGET: {
+                LocalDate startDate = goal.hasStartDate() ? goal.getStartDate() : LocalDate.now();
+                goal.setEndDate(new LocalDate(Goal.endDateFromTarget(
+                        startDate.toDate(), goal.getTarget(), Double.parseDouble(answer.getValue()))));
                 break;
+            }
             default:
                 super.onAnswerInput(inputType, answer);
         }
