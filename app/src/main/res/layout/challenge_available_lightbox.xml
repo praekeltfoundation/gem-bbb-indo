@@ -5,7 +5,8 @@
     android:layout_height="fill_parent"
     android:orientation="horizontal"
     android:background="#808c8f91"
-    xmlns:tools="http://schemas.android.com/tools">
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <!-- Horizontal padding left -->
     <RelativeLayout
@@ -35,9 +36,10 @@
             <!-- INSERT ACTUAL CONTENT HERE -->
 
             <RelativeLayout
+                android:id="@+id/centre_box"
                 android:layout_width="fill_parent"
                 android:layout_height="0dip"
-                android:layout_weight="0.7"
+                android:layout_weight="0.6"
                 android:background="@drawable/pattern_01_grey">
 
                 <RelativeLayout
@@ -47,13 +49,14 @@
                     android:layout_alignParentTop="true"
                     android:layout_alignParentStart="true">
 
-                    <ImageView
+                    <com.facebook.drawee.view.SimpleDraweeView
                         android:id="@+id/challenge_image"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:src="@drawable/bkg_pattern_01_purple"
-                        android:layout_alignParentTop="true"
-                        android:layout_alignParentStart="true" />
+                        android:layout_width="fill_parent"
+                        android:layout_height="150dp"
+                        android:background="@color/purple"
+                        app:layout_constraintBottom_toTopOf="@+id/fragment_challenge_sub_title_text_view"
+                        app:placeholderImage="@drawable/empty_image"
+                        android:layout_marginBottom="15dp"/>
 
                     <TextView
                         android:id="@+id/fragment_challenge_sub_title_text_view"
@@ -65,7 +68,8 @@
                         android:textAllCaps="true"
                         android:textAppearance="@style/AppTheme.TextView.Regular.Medium"
                         android:textColor="@color/black"
-                        tools:text="Very Short Sub-Title" />
+                        tools:text="Very Short Sub-Title"
+                        android:layout_marginBottom="15dp"/>
 
                     <TextView
                         android:id="@+id/fragment_challenge_name_text_view"
@@ -76,7 +80,8 @@
                         android:layout_centerHorizontal="true"
                         android:textAppearance="@style/AppTheme.TextView.Regular.ExtraLarge"
                         android:textColor="@color/black"
-                        tools:text="Quiz Challenge Name" />
+                        tools:text="Quiz Challenge Name"
+                        android:layout_marginBottom="15dp"/>
 
                     <TextView
                         android:id="@+id/fragment_challenge_expire_date_text_view"
@@ -88,16 +93,18 @@
                         android:textAppearance="@style/AppTheme.TextView.Regular.Medium"
                         android:textColor="@color/black"
                         android:textStyle="normal|bold"
-                        tools:text="Ends Month, dd, time" />
+                        tools:text="Ends Month, dd, time"
+                        android:layout_marginBottom="15dp"/>
 
                     <Button
                         android:id="@+id/fragment_challenge_register_button"
-                        android:layout_below="@+id/fragment_challenge_expire_date_text_view"
                         style="@style/AppTheme.Button.Big.Purple"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/label_start"
-                        android:layout_centerInParent="true"/>
+                        android:layout_centerInParent="true"
+                        android:layout_alignParentBottom="true"
+                        android:layout_marginBottom="8dp"/>
 
                 </RelativeLayout>
 
@@ -108,7 +115,22 @@
             <RelativeLayout
                 android:layout_width="fill_parent"
                 android:layout_height="0dip"
-                android:layout_weight="0.15" />
+                android:layout_weight="0.25" >
+
+                <ImageButton
+                    android:id="@+id/challenge_available_dialog_close"
+                    app:srcCompat="@drawable/dialog_close"
+                    android:background="@null"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="16dp"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="8dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    android:layout_centerInParent="true"
+                    android:layout_marginBottom="16dp" />
+
+            </RelativeLayout>
 
         </LinearLayout>
 
