@@ -9,6 +9,8 @@ import org.junit.Ignore;
 import org.junit.Test;
 import org.mockito.Mockito;
 
+import java.util.Date;
+
 /**
  * Tests to ensure that Goal weekly targets are calculated as expected.
  * <p>
@@ -89,5 +91,15 @@ public class GoalCalculationTest {
         double weeklyTarget = 250.0;
 
         Assert.assertEquals(4, Goal.weeksFromWeeklyTarget(target, weeklyTarget));
+    }
+
+    @Test
+    public void endDateFromTarget_basic() throws Exception {
+        Date startDate = new LocalDate(2017, 2, 1).toDate();
+        double target = 1000.0;
+        double weeklyTarget = 250.0;
+
+        Date expected = new LocalDate(2017, 3, 1).toDate();
+        Assert.assertEquals(expected, Goal.endDateFromTarget(startDate, target, weeklyTarget));
     }
 }
