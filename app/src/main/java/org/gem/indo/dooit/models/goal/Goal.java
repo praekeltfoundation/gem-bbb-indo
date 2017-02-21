@@ -2,7 +2,6 @@ package org.gem.indo.dooit.models.goal;
 
 import com.google.gson.annotations.SerializedName;
 
-import org.gem.indo.dooit.helpers.Utils;
 import org.gem.indo.dooit.helpers.strings.StringHelper;
 import org.gem.indo.dooit.models.Badge;
 import org.gem.indo.dooit.models.date.DefaultToday;
@@ -12,10 +11,11 @@ import org.gem.indo.dooit.views.helpers.activity.CurrencyHelper;
 import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 
-import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collection;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -27,6 +27,15 @@ import java.util.concurrent.TimeUnit;
 public class Goal {
 
     private Today today = new DefaultToday();
+
+    // TODO: Remove
+    private double weeklyTarget;
+    @SerializedName("week_count")
+    private int weekCount;
+    @SerializedName("week_count_to_now")
+    private int weekCountToNow;
+    @SerializedName("weekly_average")
+    private double weeklyAverage;
 
     // Remote properties
     private long id;
@@ -40,16 +49,13 @@ public class Goal {
     @SerializedName("end_date")
     private LocalDate endDate;
     private List<GoalTransaction> transactions = new ArrayList<>();
+
+    /**
+     * Weekly totals are calculated on backend.
+     */
     @SerializedName("weekly_totals")
     private LinkedHashMap<String, Float> weeklyTotals;
-    @SerializedName("weekly_target")
-    private double weeklyTarget;
-    @SerializedName("week_count")
-    private int weekCount;
-    @SerializedName("week_count_to_now")
-    private int weekCountToNow;
-    @SerializedName("weekly_average")
-    private double weeklyAverage;
+
     private long user;
     // The id of the predefined Goal. null means custom.
     @SerializedName("prototype")
@@ -167,6 +173,14 @@ public class Goal {
         updateWeeklyTarget();
     }
 
+    /**
+     * Given a starting date, target and weekly target, calculate the end date.
+     */
+    public static Date endDateFromTarget(Date startDate, double target, double weeklyTarget) {
+        int days = weeksFromWeeklyTarget(target, weeklyTarget) * 7;
+        return new Date(startDate.getTime() + TimeUnit.DAYS.toMillis(days));
+    }
+
     private void updateEndDate() {
         // This will be called if the weekly target has been edited
 
@@ -200,13 +214,12 @@ public class Goal {
     }
 
     public void setWeeklyTarget(double weeklyTarget) {
-        this.weeklyTarget = weeklyTarget;
-        updateEndDate();
+        throw new RuntimeException("Unused");
     }
 
-    public static Date endDateFromWeeklyTarget(double weeklyTarget) {
-        // TODO: Calculate end date using provided weekly target
-        return new Date();
+    public static int weeksFromWeeklyTarget(double target, double weeklyTarget) {
+        // TODO: Division by zero
+        return (int) Math.ceil(target / weeklyTarget);
     }
 
     ////////////////
@@ -217,10 +230,7 @@ public class Goal {
         if (startDate == null || endDate == null)
             return 0;
         int weeks = WeekCalc.weekDiff(startDate.toDate(), endDate.toDate(), WeekCalc.Rounding.UP);
-        if (weeks == 0)
-            return 1;
-        else
-            return weeks;
+        return weeks == 0 ? 1 : weeks;
     }
 
     public void setWeekCount(int weekCount) {
@@ -236,9 +246,7 @@ public class Goal {
      * the average saved since the start of the Goal.
      */
     public int getWeekCountToNow(WeekCalc.Rounding rounding) {
-        if (startDate == null)
-            return 0;
-        return WeekCalc.weekDiff(startDate.toDate(), today.now(), rounding);
+        return startDate == null ? 0 : WeekCalc.weekDiff(startDate.toDate(), today.now(), rounding);
     }
 
     public void setWeekCountToNow(int weekCountToNow) {
@@ -250,7 +258,8 @@ public class Goal {
     ////////////////////
 
     public double getWeeklyAverage() {
-        return weeklyAverage;
+        int weeksPast = getWeekCountToNow(WeekCalc.Rounding.UP);
+        return weeksPast == 0 ? getValue() : getValue() / weeksPast;
     }
 
     public void setWeeklyAverage(double weeklyAverage) {
@@ -315,18 +324,23 @@ public class Goal {
     }
 
     /**
-     * @param value The monetary value of the transaction
-     * @param clamp When true, and the transaction withdraws enough to put the Goal in the negative,
-     *              the value of the transaction will be clamped so the Goal value will be 0.
+     * @param dateTime The datetime on which the transaction occurred.
+     * @param value    The monetary value of the transaction
+     * @param clamp    When true, and the transaction withdraws enough to put the Goal in the negative,
+     *                 the value of the transaction will be clamped so the Goal value will be 0.
      * @return The created transaction.
      */
-    public GoalTransaction createTransaction(double value, boolean clamp) {
+    public GoalTransaction createTransaction(DateTime dateTime, double value, boolean clamp) {
         if (clamp && this.value + value < 0)
             value = -this.value;
 
-        GoalTransaction trans = new GoalTransaction(DateTime.now(), value);
+        GoalTransaction trans = new GoalTransaction(dateTime, value);
         addTransaction(trans);
         return trans;
+    }
+
+    public GoalTransaction createTransaction(double value, boolean clamp) {
+        return createTransaction(DateTime.now(), value, clamp);
     }
 
     public GoalTransaction createTransaction(double value) {

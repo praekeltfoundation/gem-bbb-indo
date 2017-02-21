@@ -61,8 +61,33 @@ public class GoalCalculationTest {
     }
 
     @Test
-    @Ignore("TODO")
     public void getWeeklyAverage_basic() throws Exception {
+        final Today today = Mockito.mock(Today.class);
+        Mockito.when(today.now()).thenReturn(new LocalDate(2017, 2, 15).toDate());
 
+        Goal goal = new Goal(today);
+        goal.setTarget(10000);
+        goal.setStartDate(new LocalDate(2017, 2, 1));
+        goal.setEndDate(new LocalDate(2017, 2, 28));
+
+        // Week 1
+        goal.createTransaction(new LocalDate(2017, 2, 2).toDateTimeAtCurrentTime(), 200.0, true);
+
+        // Week 2
+        goal.createTransaction(new LocalDate(2017, 2, 9).toDateTimeAtCurrentTime(), 200.0, true);
+        goal.createTransaction(new LocalDate(2017, 2, 10).toDateTimeAtCurrentTime(), 200.0, true);
+
+        Assert.assertEquals(300.0, goal.getWeeklyAverage());
+    }
+
+    @Test
+    public void weeksFromWeeklyTarget_basic() throws Exception {
+        Goal goal = new Goal();
+        goal.setStartDate(new LocalDate(2017, 2, 1));
+
+        double target = 1000.0;
+        double weeklyTarget = 250.0;
+
+        Assert.assertEquals(4, Goal.weeksFromWeeklyTarget(target, weeklyTarget));
     }
 }
