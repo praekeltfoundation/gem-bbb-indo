@@ -5,7 +5,6 @@ import junit.framework.Assert;
 import org.gem.indo.dooit.models.date.Today;
 import org.gem.indo.dooit.models.date.WeekCalc;
 import org.joda.time.LocalDate;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.mockito.Mockito;
 
@@ -37,7 +36,7 @@ public class GoalCalculationTest {
         goal.setStartDate(new LocalDate(2017, 2, 1));
         goal.setEndDate(new LocalDate(2017, 2, 16));
 
-        Assert.assertEquals(1, goal.getWeekCountToNow(WeekCalc.Rounding.UP));
+        Assert.assertEquals(1, goal.getWeeksToNow(WeekCalc.Rounding.UP));
     }
 
     @Test
