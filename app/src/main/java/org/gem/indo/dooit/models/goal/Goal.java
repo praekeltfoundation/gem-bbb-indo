@@ -313,6 +313,10 @@ public class Goal {
         return trans;
     }
 
+    public GoalTransaction createTransaction(DateTime dateTime, double value) {
+        return createTransaction(dateTime, value, true);
+    }
+
     public GoalTransaction createTransaction(double value, boolean clamp) {
         return createTransaction(DateTime.now(), value, clamp);
     }

@@ -19,6 +19,20 @@ import java.util.Date;
 public class GoalCalculationTest {
 
     @Test
+    public void getValue_basic() throws Exception {
+        Goal goal = new Goal();
+        goal.setStartDate(new LocalDate(2017, 2, 1));
+        goal.setEndDate(new LocalDate(2017, 2, 28));
+
+        goal.createTransaction(new LocalDate(2017, 2, 2).toDateTimeAtCurrentTime(), 100);
+        goal.createTransaction(new LocalDate(2017, 2, 2).toDateTimeAtCurrentTime(), -90, true);
+        goal.createTransaction(new LocalDate(2017, 2, 2).toDateTimeAtCurrentTime(), 300, true);
+        goal.createTransaction(new LocalDate(2017, 2, 2).toDateTimeAtCurrentTime(), -50, true);
+
+        Assert.assertEquals(260.0, goal.getValue());
+    }
+
+    @Test
     public void getWeeks_basic() throws Exception {
         Goal goal = new Goal();
         goal.setStartDate(new LocalDate(2017, 2, 1));
