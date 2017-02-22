@@ -12,12 +12,14 @@ import org.gem.indo.dooit.R;
 import org.gem.indo.dooit.helpers.Utils;
 import org.gem.indo.dooit.helpers.crashlytics.CrashlyticsHelper;
 import org.gem.indo.dooit.models.bot.Answer;
+import org.gem.indo.dooit.models.date.WeekCalc;
 import org.gem.indo.dooit.models.enums.BotMessageType;
 import org.gem.indo.dooit.views.custom.DatePickerFragment;
 import org.gem.indo.dooit.views.main.fragments.bot.adapters.BotAdapter;
 
 import java.text.DateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.Locale;
 
 import butterknife.BindString;
@@ -34,7 +36,7 @@ public class AnswerInlineDateEditViewHolder extends BaseBotViewHolder<Answer> {
     EditText editText;
 
     @BindString(R.string.goal_add_number_of_weeks)
-    String weeks;
+    String weekText;
 
     BotAdapter botAdapter;
     HashtagView.TagsClickListener tagsClickListener;
@@ -62,10 +64,20 @@ public class AnswerInlineDateEditViewHolder extends BaseBotViewHolder<Answer> {
                     @Override
                     public void onComplete(int year, int month, int day) {
                         Answer inputAnswer = new Answer();
+
+                        Date startDate = WeekCalc.removeTime(new Date());
                         Calendar cal = Calendar.getInstance(Locale.getDefault());
                         cal.set(year, month, day);
-                        inputAnswer.setValue((DateFormat.getInstance().format(cal.getTime())).substring(0, (DateFormat.getInstance().format(cal.getTime())).indexOf(" "))
-                                + " - " + Utils.weekDiff(cal.getTime().getTime(), Utils.ROUNDWEEK.UP) + " " + weeks);
+                        Date endDate = WeekCalc.removeTime(cal.getTime());
+
+                        int weeks = (int) WeekCalc.weekDiff(startDate, endDate, WeekCalc.Rounding.DOWN);
+                        int days = WeekCalc.remainder(startDate, endDate);
+                        String weekMsg = String.format(weekText, weeks, days);
+
+                        inputAnswer.setValue(
+                                (DateFormat.getInstance().format(cal.getTime()))
+                                        .substring(0, (DateFormat.getInstance().format(endDate)).indexOf(" "))
+                                + " - " + weekMsg);
                         //inputAnswer.setValue(DateFormat.getInstance().format(cal.getTime()) + " - " + Utils.weekDiff(cal.getTime().getTime(), Utils.ROUNDWEEK.UP) + " " + weeks);
                         inputAnswer.values.put("date", Utils.formatDate(cal.getTime()));
                         inputAnswer.setText(null);

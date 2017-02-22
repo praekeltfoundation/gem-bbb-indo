@@ -18,6 +18,7 @@ import org.gem.indo.dooit.models.bot.Answer;
 import org.gem.indo.dooit.models.bot.BaseBotModel;
 import org.gem.indo.dooit.models.bot.Node;
 import org.gem.indo.dooit.models.challenge.BaseChallenge;
+import org.gem.indo.dooit.models.date.WeekCalc;
 import org.gem.indo.dooit.models.enums.BotCallType;
 import org.gem.indo.dooit.models.enums.BotMessageType;
 import org.gem.indo.dooit.models.enums.BotObjectType;
@@ -26,6 +27,7 @@ import org.gem.indo.dooit.models.enums.BotType;
 import org.gem.indo.dooit.models.goal.Goal;
 import org.gem.indo.dooit.models.goal.GoalPrototype;
 import org.gem.indo.dooit.views.helpers.activity.CurrencyHelper;
+import org.joda.time.LocalDate;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -106,11 +108,20 @@ public abstract class GoalBotController extends DooitBotController {
             case GOAL_WEEKLY_TARGET_CURRENCY:
                 model.values.put(key, CurrencyHelper.format(goal.getWeeklyTarget()));
                 break;
+            case GOAL_WEEKS_UP:
+                model.values.put(key, (int) goal.getWeeks(WeekCalc.Rounding.UP));
+                break;
+            case GOAL_WEEKS_DOWN:
+                model.values.put(key, (int) goal.getWeeks(WeekCalc.Rounding.DOWN));
+                break;
+            case GOAL_REMAINDER_DAYS:
+                model.values.put(key, goal.getRemainderDays());
+                break;
             case GOAL_WEEKS_LEFT_UP:
-                model.values.put(key, goal.getWeeksLeft(Utils.ROUNDWEEK.UP));
+                model.values.put(key, (int) goal.getWeeksLeft(WeekCalc.Rounding.UP));
                 break;
             case GOAL_WEEKS_LEFT_DOWN:
-                model.values.put(key, goal.getWeeksLeft(Utils.ROUNDWEEK.DOWN));
+                model.values.put(key, (int) goal.getWeeksLeft(WeekCalc.Rounding.DOWN));
                 break;
             case GOAL_REMAINDER_DAYS_LEFT:
                 model.values.put(key, goal.getRemainderDaysLeft());
@@ -134,12 +145,12 @@ public abstract class GoalBotController extends DooitBotController {
                 model.values.put(key, CurrencyHelper.getCurrencySymbol());
                 break;
             case GOAL_PROTO_NUM_USERS_WITH_SIMILAR_GOALS:
-                model.values.put(key, goal.getPrototype().getNumUsers());
+                if (goal.hasPrototype())
+                    model.values.put(key, goal.getPrototype().getNumUsers());
                 break;
             case GOAL_PROTO_DEFAULT_PRICE:
-                if(goal.hasPrototype()) {
+                if(goal.hasPrototype())
                     model.values.put(key, goal.getPrototype().getDefaultPrice());
-                }
                 break;
             default:
                 super.resolveParam(model, paramType);
@@ -167,9 +178,12 @@ public abstract class GoalBotController extends DooitBotController {
             case GOAL_VALUE:
                 goal.setValue(Double.parseDouble(answer.getValue()));
                 break;
-            case GOAL_WEEKLY_TARGET:
-                goal.setWeeklyTarget(Double.parseDouble(answer.getValue()));
+            case GOAL_WEEKLY_TARGET: {
+                LocalDate startDate = goal.hasStartDate() ? goal.getStartDate() : LocalDate.now();
+                goal.setEndDate(new LocalDate(Goal.endDateFromTarget(
+                        startDate.toDate(), goal.getTarget(), Double.parseDouble(answer.getValue()))));
                 break;
+            }
             default:
                 super.onAnswerInput(inputType, answer);
         }
