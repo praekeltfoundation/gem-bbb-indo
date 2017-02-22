@@ -19,6 +19,8 @@ import org.gem.indo.dooit.R;
 import org.gem.indo.dooit.helpers.Utils;
 import org.gem.indo.dooit.helpers.images.DraweeHelper;
 import org.gem.indo.dooit.models.challenge.BaseChallenge;
+import org.gem.indo.dooit.views.main.MainActivity;
+import org.gem.indo.dooit.views.main.MainViewPagerPositions;
 
 import butterknife.BindString;
 import butterknife.BindView;
@@ -71,8 +73,8 @@ public class ChallengeLightboxFragment extends DialogFragment {
         super.onCreate(savedInstanceState);
         ((DooitApplication) getActivity().getApplication()).component.inject(this);
         setStyle(android.support.v4.app.DialogFragment.STYLE_NO_FRAME, org.gem.indo.dooit.R.style.AppTheme_PopupOverlay_Semitransparent_Dark);
-
-        challenge = savedInstanceState.getParcelable(CHALLENGE);
+        Bundle args = this.getArguments();
+        challenge = args.getParcelable(CHALLENGE);
     }
 
     @Override
@@ -102,6 +104,7 @@ public class ChallengeLightboxFragment extends DialogFragment {
 
     @OnClick(R.id.fragment_challenge_register_button)
     public void startChallenge(View v) {
-        
+        ((MainActivity) getActivity()).startPage(MainViewPagerPositions.CHALLENGE);
+        this.dismiss();
     }
 }
