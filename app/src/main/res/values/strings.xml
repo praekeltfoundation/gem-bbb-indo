@@ -736,6 +736,7 @@
     <string name="challenge_could_not_confirm_registration">Could not confirm registration</string>
     <string name="challenge_persisted_challenge_thrown_out">The persisted challenge is no longer valid and will be replaced by one from the server</string>
     <string name="challenge_deadline_message">Deadline: </string>
+    <string name="challenge_picture_caption">Image Caption</string>
 
     <!--JSON CHALLENGES-->
     <string name="toes">Can you touch your toes?</string>
