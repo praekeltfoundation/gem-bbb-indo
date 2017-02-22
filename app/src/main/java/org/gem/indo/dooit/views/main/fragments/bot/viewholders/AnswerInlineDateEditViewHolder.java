@@ -64,17 +64,19 @@ public class AnswerInlineDateEditViewHolder extends BaseBotViewHolder<Answer> {
                     @Override
                     public void onComplete(int year, int month, int day) {
                         Answer inputAnswer = new Answer();
+
+                        Date startDate = WeekCalc.removeTime(new Date());
                         Calendar cal = Calendar.getInstance(Locale.getDefault());
                         cal.set(year, month, day);
-                        Date now = new Date();
+                        Date endDate = WeekCalc.removeTime(cal.getTime());
 
-                        int weeks = (int) WeekCalc.weekDiff(now, cal.getTime(), WeekCalc.Rounding.DOWN);
-                        int days = WeekCalc.remainder(now, cal.getTime());
+                        int weeks = (int) WeekCalc.weekDiff(startDate, endDate, WeekCalc.Rounding.DOWN);
+                        int days = WeekCalc.remainder(startDate, endDate);
                         String weekMsg = String.format(weekText, weeks, days);
 
                         inputAnswer.setValue(
                                 (DateFormat.getInstance().format(cal.getTime()))
-                                        .substring(0, (DateFormat.getInstance().format(cal.getTime())).indexOf(" "))
+                                        .substring(0, (DateFormat.getInstance().format(endDate)).indexOf(" "))
                                 + " - " + weekMsg);
                         //inputAnswer.setValue(DateFormat.getInstance().format(cal.getTime()) + " - " + Utils.weekDiff(cal.getTime().getTime(), Utils.ROUNDWEEK.UP) + " " + weeks);
                         inputAnswer.values.put("date", Utils.formatDate(cal.getTime()));
