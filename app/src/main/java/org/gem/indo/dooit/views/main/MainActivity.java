@@ -27,6 +27,9 @@ import com.google.android.gms.analytics.Tracker;
 
 import org.gem.indo.dooit.DooitApplication;
 import org.gem.indo.dooit.R;
+import org.gem.indo.dooit.api.DooitAPIError;
+import org.gem.indo.dooit.api.DooitErrorHandler;
+import org.gem.indo.dooit.api.managers.ChallengeManager;
 import org.gem.indo.dooit.helpers.Persisted;
 import org.gem.indo.dooit.helpers.RequestCodes;
 import org.gem.indo.dooit.helpers.activity.result.ActivityForResultHelper;
@@ -34,6 +37,7 @@ import org.gem.indo.dooit.helpers.images.DraweeHelper;
 import org.gem.indo.dooit.helpers.notifications.NotificationType;
 import org.gem.indo.dooit.helpers.prefetching.PrefetchAlarmReceiver;
 import org.gem.indo.dooit.models.User;
+import org.gem.indo.dooit.models.challenge.BaseChallenge;
 import org.gem.indo.dooit.models.enums.BotType;
 import org.gem.indo.dooit.services.NotificationAlarm;
 import org.gem.indo.dooit.services.NotificationArgs;
@@ -55,11 +59,15 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.OnPageChange;
+import rx.Subscription;
+import rx.functions.Action1;
 
 public class MainActivity extends DooitActivity {
 
     private static final String TAG = MainActivity.class.getName();
     private static final int REQUEST_CODE = 0;
+
+    private Subscription challengeSubscription;
 
 
     @BindView(R.id.activity_main)
@@ -106,6 +114,9 @@ public class MainActivity extends DooitActivity {
     @Inject
     Tracker tracker;
 
+    @Inject
+    ChallengeManager challengeManager;
+
     private Stack<MainViewPagerPositions> pageHistory;
     private int currentPos;
     // Guard flag to prevent pushing to history when pressing back
@@ -121,8 +132,22 @@ public class MainActivity extends DooitActivity {
         ((DooitApplication) getApplication()).component.inject(this);
         ButterKnife.bind(this);
 
-        ChallengeLightboxFragment challengeLightboxFragment = ChallengeLightboxFragment.newInstance();
-        challengeLightboxFragment.show(getFragmentManager(), "challenge_available_lightbox");
+        challengeSubscription = challengeManager.retrieveCurrentChallenge(true, new DooitErrorHandler() {
+            @Override
+            public void onError(final DooitAPIError error) {
+                //The challenge could not be retried so do nothing
+            }
+        }).subscribe(new Action1<BaseChallenge>() {
+            @Override
+            public void call(BaseChallenge challenge) {
+                if(challenge != null){
+                    if(challenge.isActive()){
+                        ChallengeLightboxFragment challengeLightboxFragment = ChallengeLightboxFragment.newInstance();
+                        challengeLightboxFragment.show(getFragmentManager(), "challenge_available_lightbox");
+                    }
+                }
+            }
+        });
 
         if(!prefetchAlarmHasBeenSet) {
             //set alarm for pre fetching
