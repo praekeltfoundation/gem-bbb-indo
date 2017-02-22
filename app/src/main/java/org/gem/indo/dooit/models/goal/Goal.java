@@ -171,8 +171,8 @@ public class Goal {
      * Given a starting date, target and weekly target, calculate the end date.
      */
     public static Date endDateFromTarget(Date startDate, double target, double weeklyTarget) {
-        int days = weeksFromWeeklyTarget(target, weeklyTarget) * 7;
-        return new Date(startDate.getTime() + TimeUnit.DAYS.toMillis(days));
+        double days = weeksFromWeeklyTarget(target, weeklyTarget) * 7.0;
+        return new Date(startDate.getTime() + WeekCalc.daysToMillis(days));
     }
 
     ////////////////////////////
@@ -192,24 +192,27 @@ public class Goal {
     ///////////////////
 
     public double getWeeklyTarget() {
-        int weeks = getWeeks();
-        return weeks == 0 ? target : target / weeks;
+        double weeks = getWeeks();
+        return weeks == 0.0 ? target : target / weeks;
     }
 
-    public static int weeksFromWeeklyTarget(double target, double weeklyTarget) {
-        // TODO: Division by zero
-        return (int) Math.ceil(target / weeklyTarget);
+    public static double weeksFromWeeklyTarget(double target, double weeklyTarget) {
+        return weeklyTarget != 0.0 ? target / weeklyTarget : target;
     }
 
     ////////////////
     // Week Count //
     ////////////////
 
-    public int getWeeks() {
+    public double getWeeks(WeekCalc.Rounding rounding) {
         if (startDate == null || endDate == null)
-            return 0;
-        int weeks = WeekCalc.weekDiff(startDate.toDate(), endDate.toDate(), WeekCalc.Rounding.UP);
-        return weeks == 0 ? 1 : weeks;
+            return 0.0;
+        double weeks = WeekCalc.weekDiff(startDate.toDate(), endDate.toDate(), rounding);
+        return weeks == 0.0 ? 1.0 : weeks;
+    }
+
+    public double getWeeks() {
+        return getWeeks(WeekCalc.Rounding.NONE);
     }
 
     ///////////////////////
@@ -220,7 +223,7 @@ public class Goal {
      * @return The number of weeks since the Goal start to the current date. Used for determining
      * the average saved since the start of the Goal.
      */
-    public int getWeeksToNow(WeekCalc.Rounding rounding) {
+    public double getWeeksToNow(WeekCalc.Rounding rounding) {
         return startDate == null ? 0 : WeekCalc.weekDiff(startDate.toDate(), today.now(), rounding);
     }
 
@@ -229,7 +232,7 @@ public class Goal {
     ////////////////////
 
     public double getWeeklyAverage() {
-        int weeksPast = getWeeksToNow(WeekCalc.Rounding.UP);
+        double weeksPast = getWeeksToNow(WeekCalc.Rounding.NONE);
         return weeksPast == 0 ? getValue() : getValue() / weeksPast;
     }
 
@@ -330,7 +333,7 @@ public class Goal {
     // Time Left //
     ///////////////
 
-    public int getWeeksLeft(WeekCalc.Rounding rounding) {
+    public double getWeeksLeft(WeekCalc.Rounding rounding) {
         if (endDate != null)
             return WeekCalc.weekDiff(today.now(), endDate.toDate(), rounding);
         else
@@ -338,7 +341,7 @@ public class Goal {
     }
 
     public int getRemainderDaysLeft() {
-        return WeekCalc.dayDiff(today.now(), endDate.toDate()) - getWeeksLeft(WeekCalc.Rounding.DOWN) * 7;
+        return WeekCalc.remainder(startDate.toDate(), endDate.toDate());
     }
 
     public boolean isMissed() {

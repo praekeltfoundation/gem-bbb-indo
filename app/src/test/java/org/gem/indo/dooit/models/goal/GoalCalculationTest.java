@@ -24,7 +24,7 @@ public class GoalCalculationTest {
         goal.setStartDate(new LocalDate(2017, 2, 1));
         goal.setEndDate(new LocalDate(2017, 2, 16));
 
-        Assert.assertEquals(3, goal.getWeeks());
+        Assert.assertEquals(3.0, goal.getWeeks(WeekCalc.Rounding.UP));
     }
 
     @Test
@@ -36,7 +36,7 @@ public class GoalCalculationTest {
         goal.setStartDate(new LocalDate(2017, 2, 1));
         goal.setEndDate(new LocalDate(2017, 2, 16));
 
-        Assert.assertEquals(1, goal.getWeeksToNow(WeekCalc.Rounding.UP));
+        Assert.assertEquals(1.0, goal.getWeeksToNow(WeekCalc.Rounding.UP));
     }
 
     @Test
@@ -48,7 +48,7 @@ public class GoalCalculationTest {
         goal.setStartDate(new LocalDate(2017, 2, 1));
         goal.setEndDate(new LocalDate(2017, 2, 16));
 
-        Assert.assertEquals(2, goal.getWeeksLeft(WeekCalc.Rounding.UP));
+        Assert.assertEquals(2.0, goal.getWeeksLeft(WeekCalc.Rounding.UP));
     }
 
     @Test
@@ -89,7 +89,7 @@ public class GoalCalculationTest {
         double target = 1000.0;
         double weeklyTarget = 250.0;
 
-        Assert.assertEquals(4, Goal.weeksFromWeeklyTarget(target, weeklyTarget));
+        Assert.assertEquals(4.0, Goal.weeksFromWeeklyTarget(target, weeklyTarget));
     }
 
     @Test

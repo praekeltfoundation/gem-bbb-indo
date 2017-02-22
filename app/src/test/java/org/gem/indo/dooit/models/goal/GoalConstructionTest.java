@@ -2,8 +2,11 @@ package org.gem.indo.dooit.models.goal;
 
 import junit.framework.Assert;
 
+import org.gem.indo.dooit.models.date.WeekCalc;
 import org.joda.time.LocalDate;
 import org.junit.Test;
+
+import java.util.Date;
 
 /**
  * Tests to ensure the integrity of the Goal's Weekly Target and End Date when constructed in
@@ -46,6 +49,32 @@ public class GoalConstructionTest {
     }
 
     /**
+     * A known case where the weekly target is calculated incorrectly.
+     *
+     * @throws Exception
+     */
+    @Test
+    public void endDateFromTarget_roundingIncorrectWeeklyTarget() throws Exception {
+        LocalDate startDate = new LocalDate(2017, 2, 21);
+        double target = 2500.0;
+        double weeklyTarget = 336.0;
+
+        LocalDate endDate = new LocalDate(2017, 4, 14);
+
+        // Is the end date being calculated correctly?
+        Assert.assertEquals(endDate.toDate(), WeekCalc.removeTime(
+                Goal.endDateFromTarget(startDate.toDate(), target, weeklyTarget)));
+
+        Goal goal = new Goal();
+        goal.setStartDate(startDate);
+        goal.setEndDate(endDate);
+        goal.setTarget(target);
+
+        // Are we getting the same weekly target back?
+        Assert.assertEquals(weeklyTarget, Math.floor(goal.getWeeklyTarget()));
+    }
+
+    /**
      * Ensure that a Goal can be created using {@link org.gem.indo.dooit.models.goal.Goal.Builder}
      * when an end date is provided.
      *
@@ -73,12 +102,12 @@ public class GoalConstructionTest {
         Assert.assertEquals(endDate, goal.getEndDate());
 
         // Calculated
-        Assert.assertEquals(4, goal.getWeeks());
-        Assert.assertEquals(250.0, goal.getWeeklyTarget());
+        Assert.assertEquals(4.0, goal.getWeeks(WeekCalc.Rounding.UP));
+        Assert.assertEquals(259, Math.round(goal.getWeeklyTarget()));
     }
 
     /**
-     * Ensure that a Goal can ben created using {@link org.gem.indo.dooit.models.goal.Goal.Builder}
+     * Ensure that a Goal can be created using {@link org.gem.indo.dooit.models.goal.Goal.Builder}
      * when a weekly target is supplied.
      *
      * @throws Exception
@@ -108,7 +137,7 @@ public class GoalConstructionTest {
         Assert.assertEquals(endDate, goal.getEndDate());
 
         // Calculated
-        Assert.assertEquals(4, goal.getWeeks());
+        Assert.assertEquals(4.0, goal.getWeeks());
         Assert.assertEquals(250.0, goal.getWeeklyTarget());
     }
 

@@ -1,5 +1,6 @@
 package org.gem.indo.dooit.models.date;
 
+import java.util.Calendar;
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
@@ -10,19 +11,26 @@ import java.util.concurrent.TimeUnit;
 public class WeekCalc {
 
     /**
+     * The number of milliseconds in a day.
+     */
+    private static final double MILLIS_PER_DAY = 86400000.0;
+
+    /**
      * @param fromDate The starting date
      * @param toDate   The ending date
      * @param round    Indicates whether the weeks should be rounded up or down. The remainder days
      *                 can be found using {@link WeekCalc#remainder(Date, Date)}
      * @return The difference between the two dates measured in weeks.
      */
-    public static int weekDiff(Date fromDate, Date toDate, Rounding round) {
+    public static double weekDiff(Date fromDate, Date toDate, Rounding round) {
         switch (round) {
             case UP:
-                return (int) Math.ceil(TimeUnit.MILLISECONDS.toDays(toDate.getTime() - fromDate.getTime()) / 7f);
+                return Math.ceil(TimeUnit.MILLISECONDS.toDays(toDate.getTime() - fromDate.getTime()) / 7.0);
             case DOWN:
+                return Math.floor(TimeUnit.MILLISECONDS.toDays(toDate.getTime() - fromDate.getTime()) / 7.0);
+            case NONE:
             default:
-                return (int) Math.floor(TimeUnit.MILLISECONDS.toDays(toDate.getTime() - fromDate.getTime()) / 7f);
+                return TimeUnit.MILLISECONDS.toDays(toDate.getTime() - fromDate.getTime()) / 7.0;
         }
     }
 
@@ -42,11 +50,33 @@ public class WeekCalc {
      * round down.
      */
     public static int remainder(Date fromDate, Date toDate) {
-        return dayDiff(fromDate, toDate) - weekDiff(fromDate, toDate, Rounding.DOWN) * 7;
+        return dayDiff(fromDate, toDate) - (int) (weekDiff(fromDate, toDate, Rounding.DOWN) * 7.0);
+    }
+
+    public static long daysToMillis(double days) {
+        return Math.round(days * MILLIS_PER_DAY);
+    }
+
+    /**
+     * Helper to Set the time part (hours, minutes, seconds, milliseconds) of a {@link Date} object
+     * to 0.
+     *
+     * @param datetime A date object that's not on midnight.
+     * @return A new date object which contains only the date part.
+     */
+    public static Date removeTime(Date datetime) {
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(datetime);
+        cal.set(Calendar.HOUR_OF_DAY, 0);
+        cal.set(Calendar.MINUTE, 0);
+        cal.set(Calendar.SECOND, 0);
+        cal.set(Calendar.MILLISECOND, 0);
+        return cal.getTime();
     }
 
     public enum Rounding {
         UP,
-        DOWN
+        DOWN,
+        NONE // Not rounded
     }
 }

@@ -214,7 +214,7 @@
     <string name="goal_add_q_dont_worry_input_own_amount">Gak masalah! Teruskan dan tentukan target jumlah tabungan kamu.</string>
     <string name="goal_add_q_can_change_amount_later">Jangan kuatir, kamu akan selalu bisa menggantinya.</string>
 
-    <string name="goal_add_number_of_weeks">minggu</string>
+    <string name="goal_add_number_of_weeks">%1$d minggu, %2$d hari</string>
 
     <!-- Answers -->
     <string name="goal_add_greeting_response">Hola!</string>
@@ -754,7 +754,7 @@
     <string name="target_savings_history">Grafik Tabungan</string>
     <string name="target_weeks">Waktu</string>
     <string name="target_add_goal">TUJUAN BARU</string>
-    <string name="target_savings_message" formatted="false">Tabung %s per minggu untuk dapat %s dalam waktu %s minggu.</string>
+    <string name="target_savings_message" formatted="false">Tabung %s per minggu untuk dapat %s dalam waktu %s minggu %s.</string>
     <string name="target_edit_savings_plan">Edit Rencana Tabungan</string>
     <string name="target_savings_plan">Rencana Tabungan</string>
     <string name="target_date">Deadline Menabung</string>

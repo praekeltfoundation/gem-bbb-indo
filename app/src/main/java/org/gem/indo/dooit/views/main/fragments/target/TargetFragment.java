@@ -115,7 +115,6 @@ public class TargetFragment extends MainFragment {
 
     private List<Goal> goals;
     private TargetPagerAdapter adapter;
-    private Date endOfGoalDate;
 
     public TargetFragment() {
         // Required empty public constructor
@@ -226,18 +225,17 @@ public class TargetFragment extends MainFragment {
         goalName.setText(goal.getName());
         saved.setText(CurrencyHelper.format(goal.getValue()));
         total.setText(String.format(of_goal_total + " %s", CurrencyHelper.format(goal.getTarget())));
-        int weeks = WeekCalc.weekDiff(
+        int weeks = (int) WeekCalc.weekDiff(
                 goal.getStartDate().toDate(),
                 goal.getEndDate().toDate(),
-                WeekCalc.Rounding.UP
+                WeekCalc.Rounding.DOWN
         );
+        int days = WeekCalc.remainder(goal.getStartDate().toDate(), goal.getEndDate().toDate());
         bars.setGoal(goal);
         bars.requestLayout();
         goalMessage.setText(String.format(savingsMessage,
-                CurrencyHelper.format(goal.getWeeklyTarget()), CurrencyHelper.format(goal.getTarget()), weeks));
-        //endDate.setText(Utils.formatDate(goal.getEndDate().toDate()));
+                CurrencyHelper.format(goal.getWeeklyTarget()), CurrencyHelper.format(goal.getTarget()), weeks, days));
         endDate.setText(Utils.formatDateToLocal(goal.getEndDate().toDate()));
-        endOfGoalDate = goal.getEndDate().toDate();
 
         if (goal.isMissed())
             missedMessage.setVisibility(View.VISIBLE);
@@ -273,7 +271,6 @@ public class TargetFragment extends MainFragment {
                             if (goals.size() > 0) {
                                 viewPager.setCurrentItem(0);
                                 populateGoal(goals.get(0));
-//                                rightTarget.setVisibility(View.VISIBLE);
                                 updateNavCarets();
                                 showGoals();
                             } else {
