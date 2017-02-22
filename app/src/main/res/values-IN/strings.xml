@@ -196,7 +196,7 @@
     <string name="goal_add_q_ask_amount">Berapa yang harus kamu tabung untuk $(goal.name)?</string>
     <string name="goal_add_q_ask_date">Pada tanggal berapa kamu sudah harus selesai menabung untuk targetmu?</string>
 
-    <string name="goal_add_q_verify">"Jika kamu tabung $(goal.weekly_target_currency) per minggu, kamu akan mencapai targetmu $(goal.name) dalam $(goal.weeks_left_up) minggu. Jika kamu ikuti rencana ini, targetmu akan tercapai pada tanggal $(goal.end_date).</string>
+    <string name="goal_add_q_verify">"Jika kamu tabung $(goal.weekly_target_currency) per minggu, kamu akan mencapai targetmu $(goal.name) dalam $(goal.weeks_up) minggu, $(goal.remainder_days). Jika kamu ikuti rencana ini, targetmu akan tercapai pada tanggal $(goal.end_date).</string>
 
     <string name="goal_add_a_has_saved_y">Ya! Aku sudah nabung sebanyak</string>
     <string name="goal_add_a_has_saved_n">Belum</string>
@@ -260,7 +260,7 @@
     <string name="goal_edit_ask_options">Apa yang ingin kamu ubah?</string>
     <string name="goal_edit_updated">Target kamu telah diperbarui!</string>
     <string name="goal_edit_target">Menurut kamu berapa uang yang bisa ditabung per minggu?</string>
-    <string name="goal_edit_target_confirm">Bila kamu menabung Rp. $(goal.weekly_target_currency) per minggu, kamu akan mencapai $(goal.name) dalam $(goal.weeks_left_down) minggu, $(goal.remainder_days_left) hari.</string>
+    <string name="goal_edit_target_confirm">Bila kamu menabung Rp. $(goal.weekly_target_currency) per minggu, kamu akan mencapai $(goal.name) dalam $(goal.weeks_down) minggu, $(goal.remainder_days) hari.</string>
     <!--<string name="goal_edit_target_confirm">If you save $(goal.weekly_target_currency) per week, you\’ll have enough money to get your $(goal.name) in only $(goal.weeks_left_up) weeks.</string>-->
     <string name="goal_edit_come_back">Jangan lupa untuk kembali setiap minggunya untuk memantau tabungan kamu dan lihat target kamu menjadi kenyataan!</string>
     <string name="goal_edit_delete_confirm">Oh? Kenapa kamu ingin menghapus target ini?</string>

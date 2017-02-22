@@ -200,9 +200,9 @@ public class Goal {
         return weeklyTarget != 0.0 ? target / weeklyTarget : target;
     }
 
-    ////////////////
-    // Week Count //
-    ////////////////
+    ///////////////////////////////////////////////
+    // Weekly Period from Start Date to End Date //
+    ///////////////////////////////////////////////
 
     public double getWeeks(WeekCalc.Rounding rounding) {
         if (startDate == null || endDate == null)
@@ -213,6 +213,10 @@ public class Goal {
 
     public double getWeeks() {
         return getWeeks(WeekCalc.Rounding.NONE);
+    }
+
+    public int getRemainderDays() {
+        return WeekCalc.remainder(startDate.toDate(), endDate.toDate());
     }
 
     ///////////////////////
@@ -341,7 +345,7 @@ public class Goal {
     }
 
     public int getRemainderDaysLeft() {
-        return WeekCalc.remainder(startDate.toDate(), endDate.toDate());
+        return WeekCalc.remainder(today.now(), endDate.toDate());
     }
 
     public boolean isMissed() {

@@ -195,7 +195,7 @@
     <string name="goal_add_q_ask_amount">How much will you need to save for $(goal.name)?</string>
     <string name="goal_add_q_ask_date">By what date do you want to have saved for your goal?</string>
 
-    <string name="goal_add_q_verify">If you save $(goal.weekly_target_currency) each week you will save enough to get your $(goal.name) in $(goal.weeks_left_down) weeks, $(goal.remainder_days_left) days.</string>
+    <string name="goal_add_q_verify">If you save $(goal.weekly_target_currency) each week you will save enough to get your $(goal.name) in $(goal.weeks_down) weeks, $(goal.remainder_days) days.</string>
 
     <string name="goal_add_a_has_saved_y">Yes! I already have this much money saved:</string>
     <string name="goal_add_a_has_saved_n">Not yet.</string>
@@ -258,7 +258,7 @@
     <string name="goal_edit_ask_options">What do you want to edit?</string>
     <string name="goal_edit_updated">Your goal has been updated!</string>
     <string name="goal_edit_target">How much money do you think can you save each week?</string>
-    <string name="goal_edit_target_confirm">If you save $(goal.weekly_target_currency) per week, you\’ll have enough money to get your $(goal.name) in only $(goal.weeks_left_down) weeks, $(goal.remainder_days_left) days.</string>
+    <string name="goal_edit_target_confirm">If you save $(goal.weekly_target_currency) per week, you\’ll have enough money to get your $(goal.name) in only $(goal.weeks_down) weeks, $(goal.remainder_days) days.</string>
     <string name="goal_edit_come_back">Come back to track your savings weekly and watch as your goal becomes a reality!</string>
     <string name="goal_edit_delete_confirm">Oh? Why do you want to delete this goal?</string>
     <string name="goal_edit_delete_reached">Congratulations! That is great news. I\'ll update this now.</string>
