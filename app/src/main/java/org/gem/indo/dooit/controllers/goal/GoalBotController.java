@@ -136,12 +136,12 @@ public abstract class GoalBotController extends DooitBotController {
                 model.values.put(key, CurrencyHelper.getCurrencySymbol());
                 break;
             case GOAL_PROTO_NUM_USERS_WITH_SIMILAR_GOALS:
-                model.values.put(key, goal.getPrototype().getNumUsers());
+                if (goal.hasPrototype())
+                    model.values.put(key, goal.getPrototype().getNumUsers());
                 break;
             case GOAL_PROTO_DEFAULT_PRICE:
-                if(goal.hasPrototype()) {
+                if(goal.hasPrototype())
                     model.values.put(key, goal.getPrototype().getDefaultPrice());
-                }
                 break;
             default:
                 super.resolveParam(model, paramType);

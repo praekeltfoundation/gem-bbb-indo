@@ -428,10 +428,6 @@ public class Goal {
         return goal;
     }
 
-    public void setWeeklyTarget(double target) {
-        // TODO: Remove
-    }
-
     /////////////
     // Builder //
     /////////////
