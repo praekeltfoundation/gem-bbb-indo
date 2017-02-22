@@ -142,7 +142,7 @@ public class MainActivity extends DooitActivity {
             public void call(BaseChallenge challenge) {
                 if(challenge != null){
                     if(challenge.isActive()){
-                        ChallengeLightboxFragment challengeLightboxFragment = ChallengeLightboxFragment.newInstance();
+                        ChallengeLightboxFragment challengeLightboxFragment = ChallengeLightboxFragment.newInstance(challenge);
                         challengeLightboxFragment.show(getFragmentManager(), "challenge_available_lightbox");
                     }
                 }
