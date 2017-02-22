@@ -17,6 +17,7 @@ import org.gem.indo.dooit.models.challenge.BaseChallenge;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import butterknife.Unbinder;
 
 /**
@@ -25,7 +26,9 @@ import butterknife.Unbinder;
 
 public class ChallengeLightboxFragment extends DialogFragment {
 
+    static final String CHALLENGE = "challenge";
     Unbinder unbinder = null;
+    BaseChallenge challenge;
 
 
     @BindView(R.id.challenge_image)
@@ -45,7 +48,9 @@ public class ChallengeLightboxFragment extends DialogFragment {
 
     public static ChallengeLightboxFragment newInstance(BaseChallenge challenge){
         ChallengeLightboxFragment fragment = new ChallengeLightboxFragment();
-
+        Bundle args = new Bundle();
+        args.putParcelable(CHALLENGE, challenge);
+        fragment.setArguments(args);
         return fragment;
     }
 
@@ -54,15 +59,21 @@ public class ChallengeLightboxFragment extends DialogFragment {
         super.onCreate(savedInstanceState);
         ((DooitApplication) getActivity().getApplication()).component.inject(this);
         setStyle(android.support.v4.app.DialogFragment.STYLE_NO_FRAME, org.gem.indo.dooit.R.style.AppTheme_PopupOverlay_Semitransparent_Dark);
+
+        challenge = savedInstanceState.getParcelable(CHALLENGE);
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.challenge_available_lightbox, null);
-        unbinder = ButterKnife.bind(this, view);
+        ButterKnife.bind(this, view);
+        //unbinder = ButterKnife.bind(this, view);
 
         return view;
     }
 
-
+    @OnClick(R.id.challenge_available_dialog_close)
+    public void closePopup(View v){
+        getActivity().getFragmentManager().popBackStack();
+    }
 }
