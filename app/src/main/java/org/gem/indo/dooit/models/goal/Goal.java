@@ -40,6 +40,9 @@ public class Goal {
     private LocalDate startDate;
     @SerializedName("end_date")
     private LocalDate endDate;
+    @SerializedName("weekly_target")
+    private double weeklyTarget;
+
     private List<GoalTransaction> transactions = new ArrayList<>();
 
     /**
@@ -193,7 +196,9 @@ public class Goal {
 
     public double getWeeklyTarget() {
         double weeks = getWeeks();
-        return weeks == 0.0 ? target : target / weeks;
+        double weeklyTarget = weeks == 0.0 ? target : target / weeks;
+        // Round weekly target to closest Rp100
+        return Math.ceil(weeklyTarget / 100.0) * 100.0;
     }
 
     public static double weeksFromWeeklyTarget(double target, double weeklyTarget) {
