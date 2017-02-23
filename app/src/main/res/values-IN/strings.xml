@@ -833,6 +833,7 @@
     <string name="notification_title_challenge_reminder">Challenge Reminder</string>
     <string name="notification_title_challenge_answer_reminder">Challenge Answer Reminder</string>
     <string name="notification_title_challenge_winner">Challenge Winner Notification</string>
+    <string name="notification_title_custom_notification">Ad-hoc notifications</string>
     <string name="notification_title_goal_deadline_missed">Target Missed</string>
     <string name="notification_title_survey_available">Survey Available</string>
     <string name="notification_title_survey_reminder">Survey Reminder</string>

@@ -192,7 +192,6 @@ public class MainActivity extends DooitActivity {
         });
     }
 
-
     @OnPageChange(value = R.id.content_main_view_pager, callback = OnPageChange.Callback.PAGE_SELECTED)
     public void onMainPagerPageSelected(int position) {
 

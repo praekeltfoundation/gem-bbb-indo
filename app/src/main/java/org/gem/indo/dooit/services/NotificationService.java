@@ -2,6 +2,17 @@ package org.gem.indo.dooit.services;
 
 import android.app.IntentService;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.net.Uri;
+import android.util.Log;
+
+import com.facebook.common.executors.CallerThreadExecutor;
+import com.facebook.datasource.DataSource;
+import com.facebook.drawee.backends.pipeline.Fresco;
+import com.facebook.imagepipeline.core.ImagePipeline;
+import com.facebook.imagepipeline.datasource.BaseBitmapDataSubscriber;
+import com.facebook.imagepipeline.request.ImageRequest;
+import com.facebook.imagepipeline.request.ImageRequestBuilder;
 
 import org.gem.indo.dooit.DooitApplication;
 import org.gem.indo.dooit.R;
@@ -9,8 +20,10 @@ import org.gem.indo.dooit.api.DooitAPIError;
 import org.gem.indo.dooit.api.DooitErrorHandler;
 import org.gem.indo.dooit.api.managers.AchievementManager;
 import org.gem.indo.dooit.api.managers.ChallengeManager;
+import org.gem.indo.dooit.api.managers.CustomNotificationManager;
 import org.gem.indo.dooit.api.managers.SurveyManager;
 import org.gem.indo.dooit.api.responses.AchievementResponse;
+import org.gem.indo.dooit.api.responses.CustomNotificationResponse;
 import org.gem.indo.dooit.api.responses.SurveyResponse;
 import org.gem.indo.dooit.api.responses.WinnerResponse;
 import org.gem.indo.dooit.helpers.DooitParamBuilder;
@@ -19,6 +32,7 @@ import org.gem.indo.dooit.helpers.bot.param.ParamMatch;
 import org.gem.indo.dooit.helpers.bot.param.ParamParser;
 import org.gem.indo.dooit.helpers.notifications.NotificationType;
 import org.gem.indo.dooit.helpers.notifications.Notifier;
+import org.gem.indo.dooit.models.CustomNotification;
 import org.gem.indo.dooit.models.User;
 import org.gem.indo.dooit.models.challenge.BaseChallenge;
 import org.gem.indo.dooit.models.enums.BotType;
@@ -53,6 +67,9 @@ public class NotificationService extends IntentService {
 
     @Inject
     SurveyManager surveyManager;
+
+    @Inject
+    CustomNotificationManager customNotificationManager;
 
     @Inject
     Persisted persisted;
@@ -108,6 +125,14 @@ public class NotificationService extends IntentService {
                 }
             }));
 
+        if (persisted.shouldNotify(NotificationType.AD_HOC))
+            requests.add(customNotificationManager.fetchCustomNotification(new DooitErrorHandler() {
+                @Override
+                public void onError(DooitAPIError error) {
+
+                }
+            }));
+
 
         if (requests.size() > 0)
             // Using flatmap to perform requests serially
@@ -132,6 +157,8 @@ public class NotificationService extends IntentService {
                         surveyRetrieved((SurveyResponse) o);
                     else if (o instanceof WinnerResponse)
                         winnerRetrieved((WinnerResponse) o);
+                    else if (o instanceof CustomNotificationResponse)
+                        customNotificationRetrieved((CustomNotificationResponse) o);
                 }
             });
         else
@@ -234,6 +261,72 @@ public class NotificationService extends IntentService {
                                 match.process(params));
                 persisted.saveConvoWinner(BotType.CHALLENGE_WINNER, response.getBadge(), response.getChallenge());
             }
+        }
+    }
+
+    protected void customNotificationRetrieved(CustomNotificationResponse response) {
+        // TODO: shouldNotify for custom notifications
+        if (persisted.shouldNotify(NotificationType.AD_HOC)
+                && persisted.getCurrentUser() != null) {
+
+            if (response.getNotifcations() == null) {
+                return;
+            }
+
+            for (int i = 0; i < response.getNotifcations().size(); i++) {
+                if (response.getNotifcations().get(i) != null && response.getNotifcations().get(i).isNotificationActive()) {
+                    Map<String, Object> params = DooitParamBuilder.create(this)
+                            .setUser(persisted.getCurrentUser())
+                            .build();
+
+                    final String message = response.getNotifcations().get(i).getNotificationMessage();
+
+                    final Map<String, String> extras = new HashMap<>();
+                    extras.put("CustomNotificationId", String.valueOf(i + 1));
+
+                    // If no icon is available, just display notification
+                    if (response.getNotifcations().get(i).getNotificationIcon() != null) {
+                        ImageRequest request = ImageRequestBuilder
+                                .newBuilderWithSource(Uri.parse(response.getNotifcations().get(i).getNotificationIcon()))
+                                .build();
+                        ImagePipeline pl = Fresco.getImagePipeline();
+                        DataSource ds = pl.fetchDecodedImage(request, null);
+
+                        ds.subscribe(new BaseBitmapDataSubscriber() {
+                            @Override
+                            protected void onNewResultImpl(Bitmap bitmap) {
+                                if (bitmap != null) {
+                                    new Notifier(getApplicationContext())
+                                            .notify(NotificationType.AD_HOC, MainActivity.class,
+                                                    message, extras, bitmap);
+                                }
+                            }
+
+                            @Override
+                            protected void onFailureImpl(DataSource dataSource) {
+                                Log.e("Fresco notification", "Failed", dataSource.getFailureCause());
+                            }
+                        }, CallerThreadExecutor.getInstance());
+                    } else {
+                        new Notifier(getApplicationContext())
+                                .notify(NotificationType.AD_HOC, MainActivity.class, message, extras);
+                    }
+                }
+            }
+
+//            if (response.isNotificationActive()) {
+//
+//                Map<String, Object> params = DooitParamBuilder.create(this)
+//                        .setUser(persisted.getCurrentUser())
+//                        .build();
+//
+//                String message = response.getNotificationMessage();
+//
+//
+//
+//                new Notifier(getApplicationContext())
+//                        .notify(NotificationType.AD_HOC, MainActivity.class, message, null);
+//            }
         }
     }
 
