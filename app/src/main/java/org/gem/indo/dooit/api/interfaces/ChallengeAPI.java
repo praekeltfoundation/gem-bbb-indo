@@ -1,5 +1,7 @@
 package org.gem.indo.dooit.api.interfaces;
 
+import org.gem.indo.dooit.api.responses.ChallengeAvailableReminderResponse;
+import org.gem.indo.dooit.api.responses.ChallengeCompletionReminderResponse;
 import org.gem.indo.dooit.api.responses.WinnerResponse;
 import org.gem.indo.dooit.models.challenge.BaseChallenge;
 import org.gem.indo.dooit.models.challenge.Participant;
@@ -8,7 +10,6 @@ import org.gem.indo.dooit.models.challenge.QuizChallengeEntry;
 
 import java.util.List;
 
-import okhttp3.Challenge;
 import retrofit2.Response;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
@@ -50,4 +51,9 @@ public interface ChallengeAPI {
     @POST("/api/challenges/{id}/notification/")
     Observable<Response<Void>> confirmChallengeWinnerNotification(@Path("id") Long id);
 
+    @GET("/api/challenges/participation")
+    Observable<ChallengeAvailableReminderResponse> getUserParticipatedWithinTwoDays();
+
+    @GET("/api/challenges/challenge_incomplete")
+    Observable<ChallengeCompletionReminderResponse> getHasUserNotSubmitted();
 }

@@ -1,6 +1,7 @@
 package org.gem.indo.dooit.api.interfaces;
 
 import org.gem.indo.dooit.api.responses.EmptyResponse;
+import org.gem.indo.dooit.api.responses.GoalOverdueResponse;
 import org.gem.indo.dooit.api.responses.TransactionResponse;
 import org.gem.indo.dooit.models.goal.Goal;
 import org.gem.indo.dooit.models.goal.GoalPrototype;
@@ -40,4 +41,7 @@ public interface GoalAPI {
 
     @DELETE("/api/goals/{id}/")
     Observable<EmptyResponse> deleteGoal(@Path("id") long goalId);
+
+    @GET("/api/goals/deadline/")
+    Observable<GoalOverdueResponse> checkGoalDeadlineMissed();
 }

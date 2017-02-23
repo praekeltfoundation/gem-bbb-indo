@@ -156,10 +156,13 @@ public class MainActivity extends DooitActivity {
         Bundle extras = getIntent().getExtras();
         if (extras != null && extras.containsKey(NotificationType.NOTIFICATION_TYPE)) {
             switch (NotificationType.getValueOf(extras.getInt(NotificationType.NOTIFICATION_TYPE))) {
+                case CHALLENGE_REMINDER:
+                case CHALLENGE_COMPLETION_REMINDER:
                 case CHALLENGE_AVAILABLE:
                     startPage(MainViewPagerPositions.CHALLENGE);
                     break;
                 case SAVING_REMINDER:
+                case GOAL_DEADLINE_MISSED:
                     startPage(MainViewPagerPositions.TARGET);
                     break;
                 case SURVEY_AVAILABLE:
