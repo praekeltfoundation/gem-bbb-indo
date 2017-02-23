@@ -197,7 +197,7 @@ public class Goal {
     public double getWeeklyTarget() {
         double weeks = getWeeks();
         double weeklyTarget = weeks == 0.0 ? target : target / weeks;
-        // Round weekly target to closest Rp100
+        // Round weekly target to the upper Rp100
         return Math.ceil(weeklyTarget / 100.0) * 100.0;
     }
 
@@ -213,7 +213,8 @@ public class Goal {
         if (startDate == null || endDate == null)
             return 0.0;
         double weeks = WeekCalc.weekDiff(startDate.toDate(), endDate.toDate(), rounding);
-        return weeks == 0.0 ? 1.0 : weeks;
+        // Weeks are rounded down to the first decimal
+        return weeks == 0.0 ? 1.0 : Math.floor(weeks * 10.0) / 10.0;
     }
 
     public double getWeeks() {
