@@ -28,6 +28,8 @@ import javax.inject.Inject;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
+// TODO: remove. functionality moved to controllers.
+
 /**
  * Created by Bernhard Müller on 11/7/2016.
  */

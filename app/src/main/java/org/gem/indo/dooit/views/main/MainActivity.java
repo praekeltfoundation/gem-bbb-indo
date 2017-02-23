@@ -1,5 +1,7 @@
 package org.gem.indo.dooit.views.main;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
@@ -30,6 +32,7 @@ import org.gem.indo.dooit.helpers.RequestCodes;
 import org.gem.indo.dooit.helpers.activity.result.ActivityForResultHelper;
 import org.gem.indo.dooit.helpers.images.DraweeHelper;
 import org.gem.indo.dooit.helpers.notifications.NotificationType;
+import org.gem.indo.dooit.helpers.prefetching.PrefetchAlarmReceiver;
 import org.gem.indo.dooit.models.User;
 import org.gem.indo.dooit.models.enums.BotType;
 import org.gem.indo.dooit.services.NotificationAlarm;
@@ -55,6 +58,8 @@ import butterknife.OnPageChange;
 public class MainActivity extends DooitActivity {
 
     private static final String TAG = MainActivity.class.getName();
+    private static final int REQUEST_CODE = 0;
+
 
     @BindView(R.id.activity_main)
     ViewGroup container;
@@ -105,6 +110,8 @@ public class MainActivity extends DooitActivity {
     // Guard flag to prevent pushing to history when pressing back
     private boolean saveToHistory;
 
+    static boolean prefetchAlarmHasBeenSet = false;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -112,6 +119,15 @@ public class MainActivity extends DooitActivity {
         setContentView(R.layout.activity_main);
         ((DooitApplication) getApplication()).component.inject(this);
         ButterKnife.bind(this);
+
+        if(!prefetchAlarmHasBeenSet) {
+            //set alarm for pre fetching
+            Intent intent = new Intent(MainActivity.this, PrefetchAlarmReceiver.class);
+            PendingIntent pendingIntent = PendingIntent.getBroadcast(MainActivity.this, REQUEST_CODE, intent, 0);
+            AlarmManager am = (AlarmManager) getSystemService(ALARM_SERVICE);
+            am.setInexactRepeating(AlarmManager.RTC_WAKEUP, System.currentTimeMillis(), AlarmManager.INTERVAL_DAY * 7, pendingIntent);
+            prefetchAlarmHasBeenSet = true;
+        }
 
         // Clear bot state
         persisted.clearConversation();
@@ -178,7 +194,6 @@ public class MainActivity extends DooitActivity {
             }
         });
     }
-
 
     @OnPageChange(value = R.id.content_main_view_pager, callback = OnPageChange.Callback.PAGE_SELECTED)
     public void onMainPagerPageSelected(int position) {

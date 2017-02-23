@@ -10,7 +10,9 @@ import org.gem.indo.dooit.DooitApplication;
 import org.gem.indo.dooit.R;
 import org.gem.indo.dooit.api.managers.AchievementManager;
 import org.gem.indo.dooit.api.managers.AuthenticationManager;
+import org.gem.indo.dooit.api.managers.BadgeManager;
 import org.gem.indo.dooit.api.managers.ChallengeManager;
+import org.gem.indo.dooit.api.managers.CustomNotificationManager;
 import org.gem.indo.dooit.api.managers.FeedbackManager;
 import org.gem.indo.dooit.api.managers.FileUploadManager;
 import org.gem.indo.dooit.api.managers.GoalManager;
@@ -73,6 +75,12 @@ public class DooitModule {
     @Singleton
     ChallengeManager provideChallengeManager() {
         return new ChallengeManager(application);
+    }
+
+    @Provides
+    @Singleton
+    CustomNotificationManager provideCustomNotificationManager() {
+        return new CustomNotificationManager(application);
     }
 
     @Provides
@@ -151,5 +159,11 @@ public class DooitModule {
     @Singleton
     InvalidTokenRedirectHelper provideGlobalClass() {
         return new InvalidTokenRedirectHelper();
+    }
+
+    @Provides
+    @Singleton
+    BadgeManager provideBadgeManager() {
+        return new BadgeManager(application);
     }
 }

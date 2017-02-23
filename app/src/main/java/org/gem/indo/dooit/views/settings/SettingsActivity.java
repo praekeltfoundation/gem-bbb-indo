@@ -74,6 +74,9 @@ public class SettingsActivity extends DooitActivity {
     @BindView(R.id.settings_notifications_challenge_winner)
     CompoundButton checkChallengeWinnerSwitch;
 
+    @BindView(R.id.settings_notifications_custom_notification)
+    CompoundButton customNotificationSwitch;
+
     @Inject
     DooitSharedPreferences dooitSharedPreferences;
 
@@ -125,6 +128,7 @@ public class SettingsActivity extends DooitActivity {
         deadlineMissedSwitch.setChecked(persisted.shouldNotify(NotificationType.GOAL_DEADLINE_MISSED));
         surveyAvailableSwitch.setChecked(persisted.shouldNotify(NotificationType.SURVEY_AVAILABLE));
         checkChallengeWinnerSwitch.setChecked(persisted.shouldNotify(NotificationType.CHALLENGE_WINNER));
+        customNotificationSwitch.setChecked(persisted.shouldNotify(NotificationType.AD_HOC));
         /*
         if(!NetworkChangeReceiver.isOnline(getBaseContext())){
             disableUI();
@@ -197,6 +201,11 @@ public class SettingsActivity extends DooitActivity {
     @OnCheckedChanged({R.id.settings_notifications_challenge_winner})
     public void checkChallengeWinner(CompoundButton button, boolean checked) {
         persisted.setNotify(NotificationType.CHALLENGE_WINNER, checked);
+    }
+
+    @OnCheckedChanged({R.id.settings_notifications_custom_notification})
+    public void checkCustomNotification(CompoundButton buttons, boolean checked) {
+        persisted.setNotify(NotificationType.AD_HOC, checked);
     }
 
     @OnClick({R.id.settings_about_terms})

@@ -150,4 +150,8 @@ public class DooitManager {
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(Schedulers.newThread());
     }
+
+    protected Context getContext() {
+        return context;
+    }
 }

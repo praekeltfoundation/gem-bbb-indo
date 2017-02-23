@@ -52,6 +52,7 @@ public class Persisted {
     private static final String NEW_BOT_USER = "new_user";
     private static final String BOT = "bot";
     private static final String GOAL = "goal";
+    private static final String GOAL_BUILDER = "goal_builder";
     private static final String GOALS = "goals";
     private static final String GOAL_PROTOTYPE = "goal_prototype";
     private static final String BOT_TIP = "bot_tip";
@@ -120,6 +121,30 @@ public class Persisted {
         dooitSharedPreferences.setComplex(BOT + "_" + GOAL + "_" + type.name(), goal);
     }
 
+    public Goal loadConvoGoal(BotType type) {
+        if (hasConvoGoal(type))
+            return dooitSharedPreferences.getComplex(BOT + "_" + GOAL + "_" + type.name(), Goal.class);
+        return null;
+    }
+
+    public void saveConvoGoalBuilder(BotType type, Goal.Builder builder) {
+        dooitSharedPreferences.setComplex(BOT + "_" + GOAL_BUILDER + "_" + type.name(), builder);
+    }
+
+    public Goal.Builder loadConvoGoalBuilder(BotType type) {
+        if (hasConvoGoalBuilder(type))
+            return dooitSharedPreferences.getComplex(BOT + "_" + GOAL_BUILDER + "_" + type.name(), Goal.Builder.class);
+        return null;
+    }
+
+    public boolean hasConvoGoalBuilder(BotType type) {
+        return dooitSharedPreferences.containsKey(BOT + "_" + GOAL_BUILDER + "_" + type.name());
+    }
+
+    public boolean hasConvoGoal(BotType type) {
+        return dooitSharedPreferences.containsKey(BOT + "_" + GOAL + "_" + type.name());
+    }
+
     public void saveOldConvoGoal(BotType type, Goal goal) {
         dooitSharedPreferences.setComplex(BOT + "_" + GOAL + "_" + type.name() + "_" + TEMPORARY, goal);
     }
@@ -128,16 +153,6 @@ public class Persisted {
         if (hasConvoGoal(type))
             return dooitSharedPreferences.getComplex(BOT + "_" + GOAL + "_" + type.name() + "_" + TEMPORARY, Goal.class);
         return null;
-    }
-
-    public Goal loadConvoGoal(BotType type) {
-        if (hasConvoGoal(type))
-            return dooitSharedPreferences.getComplex(BOT + "_" + GOAL + "_" + type.name(), Goal.class);
-        return null;
-    }
-
-    public boolean hasConvoGoal(BotType type) {
-        return dooitSharedPreferences.containsKey(BOT + "_" + GOAL + "_" + type.name());
     }
 
     public void saveConvoGoals(BotType type, List<Goal> goals) {

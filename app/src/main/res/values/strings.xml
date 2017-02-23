@@ -195,7 +195,7 @@
     <string name="goal_add_q_ask_amount">How much will you need to save for $(goal.name)?</string>
     <string name="goal_add_q_ask_date">By what date do you want to have saved for your goal?</string>
 
-    <string name="goal_add_q_verify">If you save $(goal.weekly_target_currency) each week you will save enough to get your $(goal.name) in $(goal.weeks_left_up) weeks.</string>
+    <string name="goal_add_q_verify">If you save $(goal.weekly_target_currency) each week you will save enough to get your $(goal.name) in $(goal.weeks_down) weeks, $(goal.remainder_days) days.</string>
 
     <string name="goal_add_a_has_saved_y">Yes! I already have this much money saved:</string>
     <string name="goal_add_a_has_saved_n">Not yet.</string>
@@ -213,7 +213,7 @@
     <string name="goal_add_q_dont_worry_input_own_amount">No problem! Go ahead and select your own amount for your savings goal.</string>
     <string name="goal_add_q_can_change_amount_later">Don\'t worry, you can always change it later.</string>
 
-    <string name="goal_add_number_of_weeks">weeks</string>
+    <string name="goal_add_number_of_weeks">%1$d weeks, %2$d days</string>
 
     <!-- Answers -->
     <string name="goal_add_greeting_response">Hola!</string>
@@ -258,7 +258,7 @@
     <string name="goal_edit_ask_options">What do you want to edit?</string>
     <string name="goal_edit_updated">Your goal has been updated!</string>
     <string name="goal_edit_target">How much money do you think can you save each week?</string>
-    <string name="goal_edit_target_confirm">If you save $(goal.weekly_target_currency) per week, you\’ll have enough money to get your $(goal.name) in only $(goal.weeks_left_up) weeks.</string>
+    <string name="goal_edit_target_confirm">If you save $(goal.weekly_target_currency) per week, you\’ll have enough money to get your $(goal.name) in only $(goal.weeks_down) weeks, $(goal.remainder_days) days.</string>
     <string name="goal_edit_come_back">Come back to track your savings weekly and watch as your goal becomes a reality!</string>
     <string name="goal_edit_delete_confirm">Oh? Why do you want to delete this goal?</string>
     <string name="goal_edit_delete_reached">Congratulations! That is great news. I\'ll update this now.</string>
@@ -755,7 +755,7 @@
     <string name="target_savings_history">Savings History</string>
     <string name="target_weeks">Weeks</string>
     <string name="target_add_goal">ADD GOAL</string>
-    <string name="target_savings_message" formatted="false">Save %s each week to get your %s in %s weeks.</string>
+    <string name="target_savings_message" formatted="false">Save %s each week to get your %s in %s weeks, %s days.</string>
     <string name="target_edit_savings_plan">Edit Savings Plan</string>
     <string name="target_savings_plan">Savings Plan</string>
     <string name="target_date">Target Date</string>
@@ -810,6 +810,19 @@
     <string name="profile_build_info_server">Server Domain</string>
     <string name="profile_build_info_language">Phone Language</string>
 
+    <string name="profile_build_info_social_apps">Social Apps</string>
+    <string name="profile_build_info_social_apps_installed">Installed</string>
+    <string name="profile_build_info_social_apps_not_found">Not Found</string>
+    <string name="profile_build_info_social_apps_share_text">Share Links</string>
+    <string name="profile_build_info_social_apps_share_image">Share Images</string>
+
+    <string name="profile_build_info_social_apps_facebook">Facebook</string>
+    <string name="profile_build_info_social_apps_twitter">Twitter</string>
+    <string name="profile_build_info_social_apps_line">LINE</string>
+    <string name="profile_build_info_social_apps_whatsapp">WhatsApp</string>
+    <string name="profile_build_info_social_apps_instagram">Instagram</string>
+
+
     <!-- Legends -->
     <string name="legend_label_average">Average</string>
     <string name="legend_label_goals">Goals</string>
@@ -821,6 +834,7 @@
     <string name="notification_title_challenge_reminder">Challenge Reminder</string>
     <string name="notification_title_challenge_completion_reminder">Challenge Answer Reminder</string>
     <string name="notification_title_challenge_winner">Challenge Winner Notification</string>
+    <string name="notification_title_custom_notification">Ad-hoc notifications</string>
     <string name="notification_title_goal_deadline_missed">Target Missed</string>
     <string name="notification_title_survey_available">Survey Available</string>
     <string name="notification_title_survey_reminder">Survey Reminder</string>
@@ -840,6 +854,7 @@
     <!-- Sharing -->
     <string name="share_chooser_tip_title">Share Tip on&#8230;</string>
     <string name="share_chooser_badge_title">Share Badge on&#8230;</string>
+    <string name="share_chooser_challenge_title">Share Challenge on&#8230;</string>
 
     <!-- Surveys -->
     <string name="survey_baseline_title">Baseline Survey</string>

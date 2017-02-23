@@ -1,19 +1,5 @@
 
-0.1.2
+0.1.3
 
-- Crash on Crashlytics TargetFragment null pointer check on getActivity
-- Updated Bahasa strings in the BINA and in the target fragment
-- Help on Settings screen is hidden
-- Target deadline in Bahasa no longer touches the edges
-- Participation Badges are awarded on all challenges
-- Winner badges are awarded and notification gets dismissed
-- Currency symbols and format is now locked to Indonesian locale
-- Winner badges displays Challenge's name
-- Winner badge bot conversation gives Thank You option
-- Fixed Bot quick answer layout issues
-- Fixed the edit goal conversation so that the bot no longer uses outdated values
-  when populating the conversation
-- Added the conversation when adding a goal that the user can say they are "not sure" what the
-  target amount should be
-- Change consent question to separate age and parent consent
-- Localised date shows when adding/editting a goal, viewing goals and challenge deadlines
+- Pre-fetching Goal Category, Badge and Tip images
+- Changes to Goal week and weekly target calculations
