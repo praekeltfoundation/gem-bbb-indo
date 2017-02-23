@@ -835,8 +835,9 @@
     <string name="notification_content_survey_reminder_2">Hei, $(user.preferred_name). Jangan lupa isi surveinya ya! Mau ikutan surveinya sekarang?</string>
 
     <!-- Sharing -->
-    <string name="share_chooser_tip_title">Share Tip on&#8230;</string>
-    <string name="share_chooser_badge_title">Share Badge on&#8230;</string>
+    <string name="share_chooser_tip_title">Bagikan Tip di&#8230;</string>
+    <string name="share_chooser_badge_title">Bagikan Pencapaian di&#8230;</string>
+    <string name="share_chooser_challenge_title">Share Challenge on&#8230;</string>
 
     <!-- Surveys -->
     <string name="survey_baseline_title">Baseline Survey</string>

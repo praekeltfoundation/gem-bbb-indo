@@ -837,6 +837,7 @@
     <!-- Sharing -->
     <string name="share_chooser_tip_title">Share Tip on&#8230;</string>
     <string name="share_chooser_badge_title">Share Badge on&#8230;</string>
+    <string name="share_chooser_challenge_title">Share Challenge on&#8230;</string>
 
     <!-- Surveys -->
     <string name="survey_baseline_title">Baseline Survey</string>
