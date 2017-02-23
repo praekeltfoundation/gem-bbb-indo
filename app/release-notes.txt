@@ -3,3 +3,12 @@
 
 - Pre-fetching Goal Category, Badge and Tip images
 - Changes to Goal week and weekly target calculations
+
+0.1.4
+
+- Implemented Ad Hoc Notifications
+- Implemented Challenge Reminder Notification
+- Implemented Challenge Complete Reminder Notification
+- Implemented Challenge Lightbox Popup
+- Fixed Goal Prototype title alignment bug
+- Fixed Coach Badge answer disappearing bug
