@@ -810,6 +810,19 @@
     <string name="profile_build_info_server">Server Domain</string>
     <string name="profile_build_info_language">Phone Language</string>
 
+    <string name="profile_build_info_social_apps">Social Apps</string>
+    <string name="profile_build_info_social_apps_installed">Installed</string>
+    <string name="profile_build_info_social_apps_not_found">Not Found</string>
+    <string name="profile_build_info_social_apps_share_text">Share Links</string>
+    <string name="profile_build_info_social_apps_share_image">Share Images</string>
+
+    <string name="profile_build_info_social_apps_facebook">Facebook</string>
+    <string name="profile_build_info_social_apps_twitter">Twitter</string>
+    <string name="profile_build_info_social_apps_line">LINE</string>
+    <string name="profile_build_info_social_apps_whatsapp">WhatsApp</string>
+    <string name="profile_build_info_social_apps_instagram">Instagram</string>
+
+
     <!-- Legends -->
     <string name="legend_label_average">Average</string>
     <string name="legend_label_goals">Goals</string>
