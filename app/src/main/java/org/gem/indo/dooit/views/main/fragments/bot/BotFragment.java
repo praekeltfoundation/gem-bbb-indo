@@ -590,6 +590,14 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
         if (node.hasAsyncCall() && controller != null) {
             // Show loader
             clearAnswerView();
+
+            //if the node has an async call we want to display the delay view
+            Node delayNode = new Node();
+            delayNode.setType(BotMessageType.DELAY);
+            delayNode.setNext(node.getName());
+            getBotAdapter().addItem(delayNode);
+            persisted.saveConversationState(type, getBotAdapter().getDataSet());
+
             controller.onAsyncCall(
                     node.getAsyncCall(),
                     createAnswerLog(getBotAdapter().getDataSet()),
@@ -597,6 +605,12 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
                     new BotController.OnAsyncListener() {
                         @Override
                         public void onDone() {
+                            ArrayList<BaseBotModel> conversation = getBotAdapter().getDataSet();
+                            for(BaseBotModel model : conversation){
+                                if(BotMessageType.getValueOf(model.getType()) == BotMessageType.DELAY){
+                                    getBotAdapter().removeItem(model);
+                                }
+                            }
                             checkEndOrAddAnswers(node);
                         }
                     }
@@ -815,6 +829,13 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
             default:
                 return true;
         }
+    }
+
+    /**
+     * Helper to decide if the delay conversation view should be displayed on a specific node
+     */
+    public static boolean shouldDelay(Node model) {
+        return true;
     }
 
     protected boolean hasController() {

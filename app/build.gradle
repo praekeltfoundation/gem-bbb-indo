@@ -124,6 +124,7 @@ dependencies {
         transitive = true;
     }
     compile 'com.google.android.gms:play-services-analytics:10.0.1'
+    compile 'com.github.channguyen:adv:1.0.0'
 }
 
 // Analytics plugin has to be applied last, else a version conflict error is thrown

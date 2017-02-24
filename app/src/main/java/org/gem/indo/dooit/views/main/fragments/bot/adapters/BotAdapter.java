@@ -22,6 +22,7 @@ import org.gem.indo.dooit.views.main.fragments.bot.viewholders.AnswerViewHolder;
 import org.gem.indo.dooit.views.main.fragments.bot.viewholders.BadgeViewHolder;
 import org.gem.indo.dooit.views.main.fragments.bot.viewholders.BaseBotViewHolder;
 import org.gem.indo.dooit.views.main.fragments.bot.viewholders.ChallengeBotViewHolder;
+import org.gem.indo.dooit.views.main.fragments.bot.viewholders.DelayResponseViewholder;
 import org.gem.indo.dooit.views.main.fragments.bot.viewholders.GoalGalleryViewHolder;
 import org.gem.indo.dooit.views.main.fragments.bot.viewholders.GoalInfoViewHolder;
 import org.gem.indo.dooit.views.main.fragments.bot.viewholders.GoalListSummaryViewHolder;
@@ -88,6 +89,8 @@ public class BotAdapter extends RecyclerView.Adapter<BaseBotViewHolder> {
                 return new GoalListSummaryViewHolder(LayoutInflater.from(context).inflate(R.layout.item_view_bot_text, parent, false), this);
             case CHALLENGE:
                 return new ChallengeBotViewHolder(LayoutInflater.from(context).inflate(R.layout.item_view_bot_challenge, parent, false), this, tagsClickListener);
+            case DELAY:
+                return new DelayResponseViewholder(LayoutInflater.from(context).inflate(R.layout.item_view_bot_delay_repsonse, parent, false));
             case UNDEFINED:
             default:
                 return new TextViewHolder(LayoutInflater.from(context).inflate(R.layout.item_view_bot_text, parent, false), this);
