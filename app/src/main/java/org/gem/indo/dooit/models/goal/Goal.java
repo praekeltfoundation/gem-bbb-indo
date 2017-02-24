@@ -157,6 +157,17 @@ public class Goal {
         this.target = target;
     }
 
+    /**
+     * Because the weekly target is rounded, the total of each week's savings might exceed the Goal
+     * target. The user will be informed of this.
+     *
+     * @return The remaining savings, rounded down
+     */
+    public double getSavingRemainder() {
+        double targetSavings = weeklyTarget * getWeeks(WeekCalc.Rounding.NONE);
+        return targetSavings > target ? currency.floor(targetSavings - target) : 0.0;
+    }
+
     ///////////
     // Dates //
     ///////////

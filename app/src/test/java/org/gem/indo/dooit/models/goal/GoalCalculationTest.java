@@ -116,4 +116,24 @@ public class GoalCalculationTest {
         Date expected = new LocalDate(2017, 3, 1).toDate();
         Assert.assertEquals(expected, Goal.endDateFromTarget(startDate, target, weeklyTarget));
     }
+
+    @Test
+    public void getSavingRemainder_fromEndDate() throws Exception {
+        Goal goal = new Goal();
+        goal.setTarget(70000.0);
+        goal.setStartDate(new LocalDate(2017, 2, 1));
+        goal.setEndDate(new LocalDate(2017, 2, 16)); // 2 Weeks, 2 Days
+
+        Assert.assertEquals(100.0, goal.getSavingRemainder());
+    }
+
+    @Test
+    public void getSavingRemainder_fromWeeklyTarget() throws Exception {
+        Goal goal = new Goal();
+        goal.setTarget(70000.0);
+        goal.setStartDate(new LocalDate(2017, 2, 1));
+        goal.setWeeklyTarget(30000.0);
+
+        Assert.assertEquals(100.0, goal.getSavingRemainder());
+    }
 }
