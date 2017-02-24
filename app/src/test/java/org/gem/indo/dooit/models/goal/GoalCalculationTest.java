@@ -68,11 +68,12 @@ public class GoalCalculationTest {
     @Test
     public void getWeeklyTarget_basic() throws Exception {
         Goal goal = new Goal();
+        goal.setTarget(1000.0);
         goal.setStartDate(new LocalDate(2017, 2, 1));
         goal.setEndDate(new LocalDate(2017, 3, 1));
-        goal.setTarget(1000.0);
 
-        Assert.assertEquals(250.0, goal.getWeeklyTarget());
+        // Rp250 is rounded up to Rp300
+        Assert.assertEquals(300.0, goal.getWeeklyTarget());
     }
 
     @Test

@@ -127,20 +127,6 @@ public class Persisted {
         return null;
     }
 
-    public void saveConvoGoalBuilder(BotType type, Goal.Builder builder) {
-        dooitSharedPreferences.setComplex(BOT + "_" + GOAL_BUILDER + "_" + type.name(), builder);
-    }
-
-    public Goal.Builder loadConvoGoalBuilder(BotType type) {
-        if (hasConvoGoalBuilder(type))
-            return dooitSharedPreferences.getComplex(BOT + "_" + GOAL_BUILDER + "_" + type.name(), Goal.Builder.class);
-        return null;
-    }
-
-    public boolean hasConvoGoalBuilder(BotType type) {
-        return dooitSharedPreferences.containsKey(BOT + "_" + GOAL_BUILDER + "_" + type.name());
-    }
-
     public boolean hasConvoGoal(BotType type) {
         return dooitSharedPreferences.containsKey(BOT + "_" + GOAL + "_" + type.name());
     }
