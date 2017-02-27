@@ -137,7 +137,7 @@ public class AnswerImageSelectViewHolder extends BaseBotViewHolder<Answer>
             }
         }
         */
-        
+
         selectView.setImageURI(imageUri);
         File file = new File(imagePath);
         if (file.length() > 0) {
