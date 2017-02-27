@@ -198,7 +198,9 @@ public class RequirementResolver {
         if (persisted.hasGoalProtos()){
             List<GoalPrototype> goalPrototypes = persisted.loadGoalProtos();
             for(GoalPrototype prototype : goalPrototypes){
-                DraweeHelper.cacheImage(Uri.parse(prototype.getImageUrl()));
+                if(prototype.hasImageUrl()) {
+                    DraweeHelper.cacheImage(Uri.parse(prototype.getImageUrl()));
+                }
             }
         }
     }

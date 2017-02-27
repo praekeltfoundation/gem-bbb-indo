@@ -25,6 +25,7 @@ import org.gem.indo.dooit.models.enums.BotCallType;
 import org.gem.indo.dooit.models.enums.BotType;
 import org.gem.indo.dooit.models.goal.Goal;
 import org.gem.indo.dooit.views.main.MainActivity;
+import org.joda.time.LocalDate;
 import org.joda.time.format.DateTimeFormat;
 
 import java.io.File;
@@ -110,12 +111,14 @@ public class GoalEditController extends GoalBotController {
         else if (answerLog.containsKey("goal_target"))
             goal.setTarget(Double.parseDouble(answerLog.get("goal_target").getValue()));
         else if (answerLog.containsKey("goal_edit_gallery") || answerLog.containsKey("goal_edit_camera")) {
-            //Note: This case will have to be handled by and async call
-            //handleImage(answerLog, listener);
+            // Note: This case will have to be handled by and async call
+            // handleImage(answerLog, listener);
             // Don't upload Goal
             return;
         } else if (answerLog.containsKey("goal_weekly_target")) {
-            goal.setWeeklyTarget(Double.parseDouble(answerLog.get("goal_weekly_target").getValue()));
+            double weeklyTarget = Double.parseDouble(answerLog.get("goal_weekly_target").getValue());
+            goal.setEndDate(new LocalDate(Goal.endDateFromTarget(goal.getStartDate().toDate(),
+                    goal.getTarget(), weeklyTarget)));
         }
 
         persisted.saveConvoGoal(botType, goal);
@@ -139,8 +142,6 @@ public class GoalEditController extends GoalBotController {
 
     private void doUpdate(Map<String, Answer> answerLog, final OnAsyncListener listener) {
         if (answerLog.containsKey("goal_edit_choice_date"))
-//            goal.setEndDate(DateTimeFormat.forPattern("yyyy-MM-dd")
-//                    .parseLocalDate(answerLog.get("goal_end_date").getValue().substring(0, 10)));
             goal.setEndDate(DateTimeFormat.forPattern("yyyy-MM-dd")
                     .parseLocalDate(answerLog.get("goal_end_date").values.getString("date")));
         else if (answerLog.containsKey("goal_edit_target_accept"))
@@ -150,7 +151,9 @@ public class GoalEditController extends GoalBotController {
             // Don't upload Goal
             return;
         } else if (answerLog.containsKey("goal_edit_weekly_target_accept")) {
-            goal.setWeeklyTarget(Double.parseDouble(answerLog.get("goal_weekly_target").getValue()));
+            double weeklyTarget = Double.parseDouble(answerLog.get("goal_weekly_target").getValue());
+            goal.setEndDate(new LocalDate(Goal.endDateFromTarget(goal.getStartDate().toDate(),
+                    goal.getTarget(), weeklyTarget)));
         }
 
         goalManager.updateGoal(goal, new DooitErrorHandler() {

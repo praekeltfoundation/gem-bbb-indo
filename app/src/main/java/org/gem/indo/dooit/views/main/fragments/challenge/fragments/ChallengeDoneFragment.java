@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -23,6 +24,8 @@ import org.gem.indo.dooit.DooitApplication;
 import org.gem.indo.dooit.R;
 import org.gem.indo.dooit.helpers.Persisted;
 import org.gem.indo.dooit.helpers.SquiggleBackgroundHelper;
+import org.gem.indo.dooit.helpers.crashlytics.CrashlyticsHelper;
+import org.gem.indo.dooit.helpers.social.SocialSharer;
 import org.gem.indo.dooit.models.Badge;
 import org.gem.indo.dooit.models.challenge.BaseChallenge;
 import org.gem.indo.dooit.models.enums.BotType;
@@ -42,6 +45,8 @@ import butterknife.Unbinder;
  * create an instance of this fragment.
  */
 public class ChallengeDoneFragment extends Fragment {
+
+    private static final String TAG = ChallengeDoneFragment.class.getName();
     private static final String ARG_CHALLENGE = "challenge";
 
     private BaseChallenge challenge;
@@ -118,7 +123,7 @@ public class ChallengeDoneFragment extends Fragment {
     }
 
     @OnClick(R.id.fragment_challenge_close)
-    public void closeQuiz(){
+    public void closeQuiz() {
         returnToParent(null);
     }
 
@@ -139,10 +144,29 @@ public class ChallengeDoneFragment extends Fragment {
         letItRainConfetti();
     }
 
-    private void letItRainConfetti(){
+    private void letItRainConfetti() {
         final boolean isLollipop = Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP;
         if (isLollipop)
-            CommonConfetti.rainingConfetti(((ViewGroup)this.getView().getParent()), new int[] { Color.RED, Color.YELLOW }).oneShot();
+            CommonConfetti.rainingConfetti(((ViewGroup) this.getView().getParent()), new int[]{Color.RED, Color.YELLOW}).oneShot();
+    }
+
+    @OnClick(R.id.card_challenge_share)
+    public void shareChallenge() {
+        Context context = getContext();
+        Bundle args = getArguments();
+        if (context != null && args != null
+                && args.containsKey(ChallengeActivity.ARG_PARTICIPANT_BADGE)) {
+            Badge badge = args.getParcelable(ChallengeActivity.ARG_PARTICIPANT_BADGE);
+            try {
+                new SocialSharer(context).share(
+                        getString(R.string.share_chooser_challenge_title), Uri.parse(badge.getSocialUrl()));
+            } catch (NullPointerException e) {
+                CrashlyticsHelper.log(TAG, "shareChallenge", String.format("Badge: %s", badge));
+                if (badge != null)
+                    CrashlyticsHelper.log(TAG, "shareChallenge", String.format("Badge.socialUrl: %s", badge.getSocialUrl()));
+                CrashlyticsHelper.logException(e);
+            }
+        }
     }
 
     @OnClick(R.id.challenge_done_button)
@@ -156,21 +180,20 @@ public class ChallengeDoneFragment extends Fragment {
         Bundle bundle = new Bundle();
         Intent intent = new Intent();
 
-        bundle.putParcelable(ChallengeActivity.ARG_CHALLENGE,challenge);
+        bundle.putParcelable(ChallengeActivity.ARG_CHALLENGE, challenge);
         bundle.putInt(ChallengeActivity.ARG_RETURNPAGE, returnPage != null ? returnPage.ordinal() : -1);
 
         FragmentActivity activity = getActivity();
 
-        if (participantBadge != null){
-            bundle.putParcelable(ChallengeActivity.ARG_PARTICIPANT_BADGE,participantBadge);
-            persisted.saveConvoParticipant(BotType.CHALLENGE_PARTICIPANT_BADGE,participantBadge,challenge);
+        if (participantBadge != null) {
+            bundle.putParcelable(ChallengeActivity.ARG_PARTICIPANT_BADGE, participantBadge);
+            persisted.saveConvoParticipant(BotType.CHALLENGE_PARTICIPANT_BADGE, participantBadge, challenge);
             intent.putExtras(bundle);
         }
 
         if (activity.getParent() != null) {
             activity.getParent().setResult(Activity.RESULT_OK, intent);
-        }
-        else{
+        } else {
             activity.setResult(Activity.RESULT_OK, intent);
         }
         activity.finish();

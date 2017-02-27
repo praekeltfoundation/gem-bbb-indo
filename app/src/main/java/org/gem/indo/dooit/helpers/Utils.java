@@ -72,6 +72,7 @@ public class Utils {
         }
     }
 
+    // TODO: Remove
     public static int weekDiff(long time, ROUNDWEEK round) {
         switch (round) {
             case UP:
@@ -83,6 +84,7 @@ public class Utils {
         }
     }
 
+    // TODO: Remove
     public static int dayDiff(long time) {
         return (int) Math.ceil(TimeUnit.MILLISECONDS.toDays(time - System.currentTimeMillis()));
     }
@@ -94,6 +96,10 @@ public class Utils {
     public static String formatDateToLocal(Date date) {
         Locale locale = Locale.getDefault();
         return DateFormat.getDateInstance(DateFormat.SHORT, locale).format(date);
+    }
+
+    public static String getCurrentDate() {
+        return DateFormat.getDateTimeInstance().format(new Date());
     }
 
     public static String populateFromPersisted(Persisted persisted, BotAdapter botAdapter, String text, String[] params) {

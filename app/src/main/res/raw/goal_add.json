@@ -512,7 +512,7 @@
 
   {
     "name": "goal_add_badges",
-    "type": "blank",
+    "type": "dummy",
     "call": "#add_badge",
     "next": "infoGoalEnd",
     "answers": [

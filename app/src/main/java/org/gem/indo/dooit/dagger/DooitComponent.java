@@ -1,6 +1,7 @@
 package org.gem.indo.dooit.dagger;
 
 import org.gem.indo.dooit.DooitApplication;
+import org.gem.indo.dooit.api.managers.CustomNotificationManager;
 import org.gem.indo.dooit.api.managers.DooitManager;
 import org.gem.indo.dooit.api.managers.FeedbackManager;
 import org.gem.indo.dooit.api.managers.SurveyManager;
@@ -20,6 +21,7 @@ import org.gem.indo.dooit.services.NotificationService;
 import org.gem.indo.dooit.views.DooitActivity;
 import org.gem.indo.dooit.views.RootActivity;
 import org.gem.indo.dooit.views.main.MainActivity;
+import org.gem.indo.dooit.views.main.fragments.ChallengeLightboxFragment;
 import org.gem.indo.dooit.views.main.fragments.bot.BotFragment;
 import org.gem.indo.dooit.views.main.fragments.bot.viewholders.AnswerImageSelectViewHolder;
 import org.gem.indo.dooit.views.main.fragments.bot.viewholders.BadgeViewHolder;
@@ -103,6 +105,8 @@ public interface DooitComponent {
 
     void inject(ChallengeWinnerController o);
 
+    void inject(CustomNotificationManager o);
+
     void inject(DooitActivity o);
 
     void inject(DooitApplication o);
@@ -180,4 +184,6 @@ public interface DooitComponent {
     void inject(TipsListFragment o);
 
     void inject(PrefetchAlarmReceiver o);
+
+    void inject(ChallengeLightboxFragment o);
 }

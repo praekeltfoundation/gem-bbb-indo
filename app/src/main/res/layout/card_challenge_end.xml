@@ -51,8 +51,8 @@
             tools:text="Quiz challenge name" />
 
         <TextView
-            android:id="@+id/card_challenge_link"
-            style="@style/AppTheme.TextView.Regular.Large"
+            android:id="@+id/card_challenge_share"
+            style="@style/AppTheme.TextView.Bold.Large"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="8dp"

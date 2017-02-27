@@ -69,6 +69,7 @@
         "name": "goal_target",
         "nextOnFinish": "goal_edit_target_confirm",
         "type": "inlineCurrency",
+        "typeOnFinish": "textCurrency",
         "inlineEditHint": "$(type_currency_hint)"
       }
     ]
@@ -84,6 +85,7 @@
         "name": "goal_weekly_target",
         "nextOnFinish": "goal_edit_weekly_target_confirm",
         "type": "inlineCurrency",
+        "typeOnFinish": "textCurrency",
         "inlineEditHint": "$(type_currency_hint)"
       }
     ]

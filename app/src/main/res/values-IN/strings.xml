@@ -196,7 +196,7 @@
     <string name="goal_add_q_ask_amount">Berapa yang harus kamu tabung untuk $(goal.name)?</string>
     <string name="goal_add_q_ask_date">Pada tanggal berapa kamu sudah harus selesai menabung untuk targetmu?</string>
 
-    <string name="goal_add_q_verify">"Jika kamu tabung $(goal.weekly_target_currency) per minggu, kamu akan mencapai targetmu $(goal.name) dalam $(goal.weeks_left_up) minggu. Jika kamu ikuti rencana ini, targetmu akan tercapai pada tanggal $(goal.end_date).</string>
+    <string name="goal_add_q_verify">"Jika kamu tabung $(goal.weekly_target_currency) per minggu, kamu akan mencapai targetmu $(goal.name) dalam $(goal.weeks_up) minggu, $(goal.remainder_days). Jika kamu ikuti rencana ini, targetmu akan tercapai pada tanggal $(goal.end_date).</string>
 
     <string name="goal_add_a_has_saved_y">Ya! Aku sudah nabung sebanyak</string>
     <string name="goal_add_a_has_saved_n">Belum</string>
@@ -214,7 +214,7 @@
     <string name="goal_add_q_dont_worry_input_own_amount">Gak masalah! Teruskan dan tentukan target jumlah tabungan kamu.</string>
     <string name="goal_add_q_can_change_amount_later">Jangan kuatir, kamu akan selalu bisa menggantinya.</string>
 
-    <string name="goal_add_number_of_weeks">minggu</string>
+    <string name="goal_add_number_of_weeks">%1$d minggu, %2$d hari</string>
 
     <!-- Answers -->
     <string name="goal_add_greeting_response">Hola!</string>
@@ -260,7 +260,7 @@
     <string name="goal_edit_ask_options">Apa yang ingin kamu ubah?</string>
     <string name="goal_edit_updated">Target kamu telah diperbarui!</string>
     <string name="goal_edit_target">Menurut kamu berapa uang yang bisa ditabung per minggu?</string>
-    <string name="goal_edit_target_confirm">Bila kamu menabung Rp. $(goal.weekly_target_currency) per minggu, kamu akan mencapai $(goal.name) dalam $(goal.weeks_left_up) minggu.</string>
+    <string name="goal_edit_target_confirm">Bila kamu menabung Rp. $(goal.weekly_target_currency) per minggu, kamu akan mencapai $(goal.name) dalam $(goal.weeks_down) minggu, $(goal.remainder_days) hari.</string>
     <!--<string name="goal_edit_target_confirm">If you save $(goal.weekly_target_currency) per week, you\’ll have enough money to get your $(goal.name) in only $(goal.weeks_left_up) weeks.</string>-->
     <string name="goal_edit_come_back">Jangan lupa untuk kembali setiap minggunya untuk memantau tabungan kamu dan lihat target kamu menjadi kenyataan!</string>
     <string name="goal_edit_delete_confirm">Oh? Kenapa kamu ingin menghapus target ini?</string>
@@ -755,7 +755,7 @@
     <string name="target_savings_history">Grafik Tabungan</string>
     <string name="target_weeks">Waktu</string>
     <string name="target_add_goal">TUJUAN BARU</string>
-    <string name="target_savings_message" formatted="false">Tabung %s per minggu untuk dapat %s dalam waktu %s minggu.</string>
+    <string name="target_savings_message" formatted="false">Tabung %s per minggu untuk dapat %s dalam waktu %s minggu %s.</string>
     <string name="target_edit_savings_plan">Edit Rencana Tabungan</string>
     <string name="target_savings_plan">Rencana Tabungan</string>
     <string name="target_date">Deadline Menabung</string>
@@ -811,6 +811,18 @@
     <string name="profile_build_info_server">Server Domain</string>
     <string name="profile_build_info_language">Phone Language</string>
 
+    <string name="profile_build_info_social_apps">Social Apps</string>
+    <string name="profile_build_info_social_apps_installed">Installed</string>
+    <string name="profile_build_info_social_apps_not_found">Not Found</string>
+    <string name="profile_build_info_social_apps_share_text">Share Links</string>
+    <string name="profile_build_info_social_apps_share_image">Share Images</string>
+
+    <string name="profile_build_info_social_apps_facebook">Facebook</string>
+    <string name="profile_build_info_social_apps_twitter">Twitter</string>
+    <string name="profile_build_info_social_apps_line">LINE</string>
+    <string name="profile_build_info_social_apps_whatsapp">WhatsApp</string>
+    <string name="profile_build_info_social_apps_instagram">Instagram</string>
+
     <!-- Legends -->
     <string name="legend_label_average">Rata-rata</string>
     <string name="legend_label_goals">Tujuan</string>
@@ -820,8 +832,9 @@
     <!-- Push Notifications -->
     <string name="notification_title_challenge_available">Challenge Available</string>
     <string name="notification_title_challenge_reminder">Challenge Reminder</string>
-    <string name="notification_title_challenge_answer_reminder">Challenge Answer Reminder</string>
+    <string name="notification_title_challenge_completion_reminder">Challenge Answer Reminder</string>
     <string name="notification_title_challenge_winner">Challenge Winner Notification</string>
+    <string name="notification_title_custom_notification">Ad-hoc notifications</string>
     <string name="notification_title_goal_deadline_missed">Target Missed</string>
     <string name="notification_title_survey_available">Survey Available</string>
     <string name="notification_title_survey_reminder">Survey Reminder</string>
@@ -830,14 +843,18 @@
 
     <string name="notification_content_saving_reminder">Hei, $(user.preferred_name)! Sudah $(achievements.weeks_since_saved) minggu kamu nggak menabung. Ke mana aja? Perbarui jumlah tabunganmu yuk!</string>
     <string name="notification_content_challenge_available">Hai, $(user.preferred_name)! Tantangan baru sudah tersedia! Mau ikutan?</string>
+    <string name="notification_content_challenge_reminder">Hei, $(user.preferred_name)! Sudah berpartisipasi di tantangan yang terbaru? Yuk ikutan!</string>
+    <string name="notification_content_challenge_completion_reminder">Hei, $(user.preferred_name)! Saya lihat, kamu sudah membuka tantangan Dooit yang terbaru. Tunggu apa lagi! Segera kirim jawabannya ya, karena batas waktunya sebentar lagi!</string>
     <string name="notification_content_challenge_winner">Yay! Tau gak, $(user.preferred_name)?! Kamu pemenang tantangan kami! Selamat!</string>
+    <string name="notification_content_goal_deadline_missed">Wah! $(user.preferred_name), ini sudah lewat dari tanggal [DATE] dan kamu belum mencapai target menabungmu untuk bisa membeli $(goal.name)! Nggak perlu khawatir — saya bisa membantumu menyesuaikan jadwal dan target menabungmu. Kamu pasti bisa!</string>
     <string name="notification_content_survey_available">Hei, $(user.preferred_name)! Saya ingin mengenal kamu lebih jauh. Apakah kamu mau menjawab beberapa pertanyaan?</string>
     <string name="notification_content_survey_reminder_1">Hei, $(user.preferred_name). Apakah kamu mau menjawab survei ini? Survei terbaru sudah tersedia. Jawabanmu akan membuat Dooit jadi lebih baik lagi!</string>
     <string name="notification_content_survey_reminder_2">Hei, $(user.preferred_name). Jangan lupa isi surveinya ya! Mau ikutan surveinya sekarang?</string>
 
     <!-- Sharing -->
-    <string name="share_chooser_tip_title">Share Tip on&#8230;</string>
-    <string name="share_chooser_badge_title">Share Badge on&#8230;</string>
+    <string name="share_chooser_tip_title">Bagikan Tip di&#8230;</string>
+    <string name="share_chooser_badge_title">Bagikan Pencapaian di&#8230;</string>
+    <string name="share_chooser_challenge_title">Share Challenge on&#8230;</string>
 
     <!-- Surveys -->
     <string name="survey_baseline_title">Baseline Survey</string>

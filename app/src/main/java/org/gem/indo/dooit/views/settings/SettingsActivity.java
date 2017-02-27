@@ -56,14 +56,26 @@ public class SettingsActivity extends DooitActivity {
     @BindView(R.id.settings_notifications_challenge_available)
     CompoundButton challengeAvailableSwitch;
 
+    @BindView(R.id.settings_notifications_challenge_available_reminder)
+    CompoundButton challengeReminderSwitch;
+
+    @BindView(R.id.settings_notifications_challenge_completion_reminder)
+    CompoundButton challengeCompletionSwitch;
+
     @BindView(R.id.settings_notifications_saving_reminder)
     CompoundButton savingReminderSwitch;
+
+    @BindView(R.id.settings_notifications_goal_deadline_missed)
+    CompoundButton deadlineMissedSwitch;
 
     @BindView(R.id.settings_notifications_survey_available)
     CompoundButton surveyAvailableSwitch;
 
     @BindView(R.id.settings_notifications_challenge_winner)
     CompoundButton checkChallengeWinnerSwitch;
+
+    @BindView(R.id.settings_notifications_custom_notification)
+    CompoundButton customNotificationSwitch;
 
     @Inject
     DooitSharedPreferences dooitSharedPreferences;
@@ -110,9 +122,13 @@ public class SettingsActivity extends DooitActivity {
     protected void onResume() {
         super.onResume();
         challengeAvailableSwitch.setChecked(persisted.shouldNotify(NotificationType.CHALLENGE_AVAILABLE));
+        challengeReminderSwitch.setChecked(persisted.shouldNotify(NotificationType.CHALLENGE_REMINDER));
+        challengeCompletionSwitch.setChecked(persisted.shouldNotify(NotificationType.CHALLENGE_COMPLETION_REMINDER));
         savingReminderSwitch.setChecked(persisted.shouldNotify(NotificationType.SAVING_REMINDER));
+        deadlineMissedSwitch.setChecked(persisted.shouldNotify(NotificationType.GOAL_DEADLINE_MISSED));
         surveyAvailableSwitch.setChecked(persisted.shouldNotify(NotificationType.SURVEY_AVAILABLE));
         checkChallengeWinnerSwitch.setChecked(persisted.shouldNotify(NotificationType.CHALLENGE_WINNER));
+        customNotificationSwitch.setChecked(persisted.shouldNotify(NotificationType.AD_HOC));
         /*
         if(!NetworkChangeReceiver.isOnline(getBaseContext())){
             disableUI();
@@ -157,9 +173,24 @@ public class SettingsActivity extends DooitActivity {
         persisted.setNotify(NotificationType.CHALLENGE_AVAILABLE, checked);
     }
 
+    @OnCheckedChanged({R.id.settings_notifications_challenge_available_reminder})
+    public void checkChallengeReminder(CompoundButton button, boolean checked) {
+        persisted.setNotify(NotificationType.CHALLENGE_REMINDER, checked);
+    }
+
+    @OnCheckedChanged({R.id.settings_notifications_challenge_completion_reminder})
+    public void checkCHallengeCompletion(CompoundButton button, boolean checked) {
+        persisted.setNotify(NotificationType.CHALLENGE_COMPLETION_REMINDER, checked);
+    }
+
     @OnCheckedChanged({R.id.settings_notifications_saving_reminder})
     public void checkSavingReminder(CompoundButton button, boolean checked) {
         persisted.setNotify(NotificationType.SAVING_REMINDER, checked);
+    }
+
+    @OnCheckedChanged({R.id.settings_notifications_goal_deadline_missed})
+    public void checkDeadlineMissedReminder(CompoundButton button, boolean checked) {
+        persisted.setNotify(NotificationType.GOAL_DEADLINE_MISSED, checked);
     }
 
     @OnCheckedChanged({R.id.settings_notifications_survey_available})
@@ -170,6 +201,11 @@ public class SettingsActivity extends DooitActivity {
     @OnCheckedChanged({R.id.settings_notifications_challenge_winner})
     public void checkChallengeWinner(CompoundButton button, boolean checked) {
         persisted.setNotify(NotificationType.CHALLENGE_WINNER, checked);
+    }
+
+    @OnCheckedChanged({R.id.settings_notifications_custom_notification})
+    public void checkCustomNotification(CompoundButton buttons, boolean checked) {
+        persisted.setNotify(NotificationType.AD_HOC, checked);
     }
 
     @OnClick({R.id.settings_about_terms})

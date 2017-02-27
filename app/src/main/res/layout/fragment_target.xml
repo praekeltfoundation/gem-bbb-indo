@@ -367,6 +367,8 @@
                 android:layout_below="@+id/fragment_target_savings_plan"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="4dp"
+                android:layout_marginStart="24dp"
+                android:layout_marginEnd="24dp"
                 android:text="@string/target_savings_message"
                 android:textAlignment="center" />
 

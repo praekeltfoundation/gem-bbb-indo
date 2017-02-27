@@ -27,6 +27,9 @@ public enum BotParamType {
     GOAL_END_DATE("goal.end_date"),
     GOAL_WEEKLY_TARGET("goal.weekly_target"),
     GOAL_WEEKLY_TARGET_CURRENCY("goal.weekly_target_currency"),
+    GOAL_WEEKS_UP("goal.weeks_up"),
+    GOAL_WEEKS_DOWN("goal.weeks_down"),
+    GOAL_REMAINDER_DAYS("goal.remainder_days"),
     GOAL_WEEKS_LEFT_UP("goal.weeks_left_up"),
     GOAL_WEEKS_LEFT_DOWN("goal.weeks_left_down"),
     GOAL_REMAINDER_DAYS_LEFT("goal.remainder_days_left"),
@@ -71,7 +74,10 @@ public enum BotParamType {
     SURVEY_OUTRO("survey.outro"),
 
     //Currency Symbol
-    CURRENCY_SYMBOL("currency.symbol");
+    CURRENCY_SYMBOL("currency.symbol"),
+
+    //Date
+    DATE_TODAY("date.today");
 
     private static Map<String, BotParamType> map = new HashMap<>();
 

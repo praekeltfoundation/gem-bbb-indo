@@ -211,10 +211,51 @@
                 style="@style/Divider"/>
 
             <android.support.v7.widget.SwitchCompat
-                android:id="@+id/settings_notifications_saving_reminder"
+                android:id="@+id/settings_notifications_challenge_available_reminder"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/settings_notifications_a_separator"
+                android:background="?attr/selectableItemBackground"
+                android:maxLines="1"
+                android:paddingBottom="8dp"
+                android:paddingTop="8dp"
+                android:text="@string/notification_title_challenge_reminder"
+                android:textColor="@color/purple"
+                android:textStyle="bold"
+                android:textAppearance="@style/AppTheme.TextView.Settings.Item"/>
+
+            <View
+                android:id="@+id/settings_notifications_b_separator"
+                android:layout_width="match_parent"
+                android:layout_below="@+id/settings_notifications_challenge_available_reminder"
+                style="@style/Divider"/>
+
+            <android.support.v7.widget.SwitchCompat
+                android:id="@+id/settings_notifications_challenge_completion_reminder"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/settings_notifications_b_separator"
+                android:background="?attr/selectableItemBackground"
+                android:maxLines="1"
+                android:paddingBottom="8dp"
+                android:paddingTop="8dp"
+                android:text="@string/notification_title_challenge_completion_reminder"
+                android:textColor="@color/purple"
+                android:textStyle="bold"
+                android:textAppearance="@style/AppTheme.TextView.Settings.Item"
+                />
+
+            <View
+                android:id="@+id/settings_notifications_c_separator"
+                android:layout_width="match_parent"
+                android:layout_below="@+id/settings_notifications_challenge_completion_reminder"
+                style="@style/Divider"/>
+
+            <android.support.v7.widget.SwitchCompat
+                android:id="@+id/settings_notifications_saving_reminder"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/settings_notifications_c_separator"
                 android:background="?attr/selectableItemBackground"
                 android:maxLines="1"
                 android:paddingBottom="8dp"
@@ -226,16 +267,37 @@
                 />
 
             <View
-                android:id="@+id/settings_notifications_b_separator"
+                android:id="@+id/settings_notifications_d_separator"
                 android:layout_width="match_parent"
                 android:layout_below="@+id/settings_notifications_saving_reminder"
+                style="@style/Divider"/>
+
+            <android.support.v7.widget.SwitchCompat
+                android:id="@+id/settings_notifications_goal_deadline_missed"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/settings_notifications_d_separator"
+                android:background="?attr/selectableItemBackground"
+                android:maxLines="1"
+                android:paddingBottom="8dp"
+                android:paddingTop="8dp"
+                android:text="@string/notification_title_goal_deadline_missed"
+                android:textColor="@color/purple"
+                android:textStyle="bold"
+                android:textAppearance="@style/AppTheme.TextView.Settings.Item"
+                />
+
+            <View
+                android:id="@+id/settings_notifications_e_separator"
+                android:layout_width="match_parent"
+                android:layout_below="@+id/settings_notifications_goal_deadline_missed"
                 style="@style/Divider" />
 
             <android.support.v7.widget.SwitchCompat
                 android:id="@+id/settings_notifications_survey_available"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/settings_notifications_b_separator"
+                android:layout_below="@id/settings_notifications_e_separator"
                 android:background="?attr/selectableItemBackground"
                 android:maxLines="1"
                 android:paddingBottom="8dp"
@@ -246,7 +308,7 @@
                 android:textAppearance="@style/AppTheme.TextView.Settings.Item" />
 
             <View
-                android:id="@+id/settings_notifications_c_separator"
+                android:id="@+id/settings_notifications_f_separator"
                 style="@style/Divider"
                 android:layout_below="@id/settings_notifications_survey_available" />
 
@@ -254,7 +316,7 @@
                 android:id="@+id/settings_notifications_challenge_winner"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/settings_notifications_c_separator"
+                android:layout_below="@id/settings_notifications_f_separator"
                 android:background="?attr/selectableItemBackground"
                 android:maxLines="1"
                 android:paddingBottom="8dp"
@@ -264,12 +326,31 @@
                 android:textStyle="bold"
                 android:textAppearance="@style/AppTheme.TextView.Settings.Item" />
 
+            <View
+                android:id="@+id/settings_notifications_d_separator"
+                style="@style/Divider"
+                android:layout_below="@id/settings_notifications_challenge_winner" />
+
+            <android.support.v7.widget.SwitchCompat
+                android:id="@+id/settings_notifications_custom_notification"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/settings_notifications_d_separator"
+                android:background="?attr/selectableItemBackground"
+                android:maxLines="1"
+                android:paddingBottom="8dp"
+                android:paddingTop="8dp"
+                android:text="@string/notification_title_custom_notification"
+                android:textColor="@color/purple"
+                android:textStyle="bold"
+                android:textAppearance="@style/AppTheme.TextView.Settings.Item" />
+
             <TextView
                 android:id="@+id/settings_about"
                 style="@style/AppTheme.TextView.Bold.Medium"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/settings_notifications_challenge_winner"
+                android:layout_below="@id/settings_notifications_custom_notification"
                 android:layout_marginTop="16dp"
                 android:ellipsize="end"
                 android:maxLines="1"

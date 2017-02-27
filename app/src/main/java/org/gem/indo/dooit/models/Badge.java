@@ -6,7 +6,7 @@ import android.text.TextUtils;
 
 import com.google.gson.annotations.SerializedName;
 
-import org.gem.indo.dooit.helpers.String.StringHelper;
+import org.gem.indo.dooit.helpers.strings.StringHelper;
 import org.joda.time.DateTime;
 
 /**
