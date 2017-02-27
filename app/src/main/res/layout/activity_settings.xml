@@ -327,7 +327,7 @@
                 android:textAppearance="@style/AppTheme.TextView.Settings.Item" />
 
             <View
-                android:id="@+id/settings_notifications_d_separator"
+                android:id="@+id/settings_notifications_g_separator"
                 style="@style/Divider"
                 android:layout_below="@id/settings_notifications_challenge_winner" />
 
@@ -335,7 +335,7 @@
                 android:id="@+id/settings_notifications_custom_notification"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/settings_notifications_d_separator"
+                android:layout_below="@id/settings_notifications_g_separator"
                 android:background="?attr/selectableItemBackground"
                 android:maxLines="1"
                 android:paddingBottom="8dp"
