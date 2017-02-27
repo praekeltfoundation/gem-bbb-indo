@@ -25,6 +25,7 @@ import org.gem.indo.dooit.views.main.fragments.bot.viewholders.ChallengeBotViewH
 import org.gem.indo.dooit.views.main.fragments.bot.viewholders.DummyViewHolder;
 import org.gem.indo.dooit.views.main.fragments.bot.viewholders.GoalGalleryViewHolder;
 import org.gem.indo.dooit.views.main.fragments.bot.viewholders.GoalInfoViewHolder;
+import org.gem.indo.dooit.views.main.fragments.bot.viewholders.GoalInformationGalleryViewHolder;
 import org.gem.indo.dooit.views.main.fragments.bot.viewholders.GoalListSummaryViewHolder;
 import org.gem.indo.dooit.views.main.fragments.bot.viewholders.GoalVerificationViewHolder;
 import org.gem.indo.dooit.views.main.fragments.bot.viewholders.TextViewHolder;
@@ -76,6 +77,8 @@ public class BotAdapter extends RecyclerView.Adapter<BaseBotViewHolder> {
                 return new AnswerTextCurrencyViewHolder(LayoutInflater.from(context).inflate(R.layout.item_view_bot_answer, parent, false), this);
             case GOALGALLERY:
                 return new GoalGalleryViewHolder(LayoutInflater.from(context).inflate(R.layout.item_view_bot_carousel, parent, false), this, tagsClickListener);
+            case GOALINFORMATIONGALLERY:
+                return new GoalInformationGalleryViewHolder(LayoutInflater.from(context).inflate(R.layout.item_view_bot_carousel, parent, false), this);
             case GOALVERIFICATION:
                 return new GoalVerificationViewHolder(LayoutInflater.from(context).inflate(R.layout.item_view_bot_text, parent, false), this);
             case TIP:

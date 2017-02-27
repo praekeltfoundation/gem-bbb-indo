@@ -27,6 +27,7 @@ import org.gem.indo.dooit.views.main.fragments.bot.viewholders.AnswerImageSelect
 import org.gem.indo.dooit.views.main.fragments.bot.viewholders.BadgeViewHolder;
 import org.gem.indo.dooit.views.main.fragments.bot.viewholders.GoalGalleryViewHolder;
 import org.gem.indo.dooit.views.main.fragments.bot.viewholders.GoalInfoViewHolder;
+import org.gem.indo.dooit.views.main.fragments.bot.viewholders.GoalInformationGalleryViewHolder;
 import org.gem.indo.dooit.views.main.fragments.bot.viewholders.GoalVerificationViewHolder;
 import org.gem.indo.dooit.views.main.fragments.bot.viewholders.TextViewHolder;
 import org.gem.indo.dooit.views.main.fragments.bot.viewholders.TipBotViewHolder;
@@ -186,4 +187,6 @@ public interface DooitComponent {
     void inject(PrefetchAlarmReceiver o);
 
     void inject(ChallengeLightboxFragment o);
+
+    void inject(GoalInformationGalleryViewHolder o);
 }
