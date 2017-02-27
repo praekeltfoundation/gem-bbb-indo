@@ -1,15 +1,13 @@
 package org.gem.indo.dooit.models.goal;
 
-import android.support.annotation.NonNull;
-
 import com.google.gson.annotations.SerializedName;
 
-import org.gem.indo.dooit.helpers.crashlytics.CrashlyticsHelper;
 import org.gem.indo.dooit.helpers.strings.StringHelper;
 import org.gem.indo.dooit.models.Badge;
 import org.gem.indo.dooit.models.date.DefaultToday;
 import org.gem.indo.dooit.models.date.Today;
 import org.gem.indo.dooit.models.date.WeekCalc;
+import org.gem.indo.dooit.models.enums.CurrencyCalc;
 import org.gem.indo.dooit.views.helpers.activity.CurrencyHelper;
 import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
@@ -19,7 +17,6 @@ import java.util.Collection;
 import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 /**
  * Created by herman on 2016/11/05.
@@ -28,6 +25,7 @@ import java.util.concurrent.TimeUnit;
 public class Goal {
 
     transient private Today today = new DefaultToday();
+    transient private CurrencyCalc currency = CurrencyCalc.IDR;
 
     // Remote Fields //
     private long id;
@@ -40,21 +38,37 @@ public class Goal {
     private LocalDate startDate;
     @SerializedName("end_date")
     private LocalDate endDate;
+
+    /**
+     * The target value the user must save per week. It can be calculated using the the start and
+     * end dates, or inputted by the user directly. When the user inputs the weekly target, it is
+     * preferable not to change it. However, when calculating the weekly target using date
+     * measurements, it should be rounded in such a manner that the user will comfortably achieve
+     * their Goal target by the time the end date is reached.
+     */
+    @SerializedName("weekly_target")
+    private double weeklyTarget;
+
     private List<GoalTransaction> transactions = new ArrayList<>();
 
     /**
-     * Weekly totals are calculated on backend.
+     * Weekly totals are calculated on backend. They are counted from 1, and it is assumed that the
+     * backend provides the map ordered, even though the JSON standard doesn't guarantee it.
      */
     @SerializedName("weekly_totals")
     private LinkedHashMap<String, Float> weeklyTotals;
 
     private long user;
 
-    // The id of the predefined Goal. null means custom.
+    /**
+     * The ID of the predefined Goal Prototype. `null` means the user created a custom Goal.
+     */
     @SerializedName("prototype")
     private Long prototypeId;
 
-    // New badges are awarded on responses
+    /**
+     * New badges are awarded on responses
+     */
     @SerializedName("new_badges")
     private List<Badge> newBadges = new ArrayList<>();
 
@@ -143,6 +157,17 @@ public class Goal {
         this.target = target;
     }
 
+    /**
+     * Because the weekly target is rounded, the total of each week's savings might exceed the Goal
+     * target. The user will be informed of this.
+     *
+     * @return The remaining savings, rounded down
+     */
+    public double getSavingRemainder() {
+        double targetSavings = weeklyTarget * getWeeks(WeekCalc.Rounding.NONE);
+        return targetSavings > target ? currency.floor(targetSavings - target) : 0.0;
+    }
+
     ///////////
     // Dates //
     ///////////
@@ -163,15 +188,26 @@ public class Goal {
         return endDate;
     }
 
-    public void setEndDate(LocalDate endDate) {
+    /**
+     * @param endDate The new end date
+     * @param recalc  When true, dependant fields such as the weekly target will be recalculated
+     */
+    public void setEndDate(LocalDate endDate, boolean recalc) {
         this.endDate = endDate;
+
+        if (recalc)
+            calculateWeeklyTarget();
+    }
+
+    public void setEndDate(LocalDate endDate) {
+        setEndDate(endDate, true);
     }
 
     /**
-     * Given a starting date, target and weekly target, calculate the end date.
+     * Given a starting date, target and weekly target, calculate the end date. Days are rounded up.
      */
     public static Date endDateFromTarget(Date startDate, double target, double weeklyTarget) {
-        double days = weeksFromWeeklyTarget(target, weeklyTarget) * 7.0;
+        double days = Math.ceil(weeksFromWeeklyTarget(target, weeklyTarget) * 7.0);
         return new Date(startDate.getTime() + WeekCalc.daysToMillis(days));
     }
 
@@ -192,8 +228,33 @@ public class Goal {
     ///////////////////
 
     public double getWeeklyTarget() {
+        return weeklyTarget;
+    }
+
+    /**
+     * @param weeklyTarget New weekly target
+     * @param recalc       When true, dependant fields such as the end date will be recalculated
+     */
+    public void setWeeklyTarget(double weeklyTarget, boolean recalc) {
+        this.weeklyTarget = weeklyTarget;
+
+        // Update End date according ot weekly target
+        if (recalc)
+            this.endDate = new LocalDate(endDateFromTarget(startDate.toDate(), target, weeklyTarget));
+    }
+
+    public void setWeeklyTarget(double weeklyTarget) {
+        setWeeklyTarget(weeklyTarget, true);
+    }
+
+    /**
+     * Calculates and updates the {@link Goal#weeklyTarget} field
+     */
+    private void calculateWeeklyTarget() {
         double weeks = getWeeks();
-        return weeks == 0.0 ? target : target / weeks;
+        double weeklyTarget = weeks == 0.0 ? target : target / weeks;
+        // Round weekly target to the upper Rp100
+        this.weeklyTarget = currency.ceil(weeklyTarget);
     }
 
     public static double weeksFromWeeklyTarget(double target, double weeklyTarget) {
@@ -204,11 +265,12 @@ public class Goal {
     // Weekly Period from Start Date to End Date //
     ///////////////////////////////////////////////
 
-    public double getWeeks(WeekCalc.Rounding rounding) {
+    public double getWeeks(WeekCalc.Rounding weekRounding) {
         if (startDate == null || endDate == null)
             return 0.0;
-        double weeks = WeekCalc.weekDiff(startDate.toDate(), endDate.toDate(), rounding);
-        return weeks == 0.0 ? 1.0 : weeks;
+        double weeks = WeekCalc.weekDiff(startDate.toDate(), endDate.toDate(), weekRounding);
+        // Weeks are rounded down to the first decimal
+        return weeks == 0.0 ? 1.0 : Math.floor(weeks * 10.0) / 10.0;
     }
 
     public double getWeeks() {
@@ -415,9 +477,10 @@ public class Goal {
         goal.setName(StringHelper.newString(this.name));
         goal.setValue(this.value);
         goal.setTarget(this.target);
+        goal.setWeeklyTarget(this.weeklyTarget, false);
         goal.setImageUrl(StringHelper.newString(this.imageUrl));
         goal.setStartDate(new LocalDate(this.startDate));
-        goal.setEndDate(new LocalDate(this.endDate));
+        goal.setEndDate(new LocalDate(this.endDate), false);
         for (GoalTransaction gt : this.transactions)
             goal.addTransaction(gt.copy());
 
@@ -434,127 +497,5 @@ public class Goal {
         //goal.setPrototype(this.prototype.copy());     //Prototype will not necessarily be set
 
         return goal;
-    }
-
-    /////////////
-    // Builder //
-    /////////////
-
-    public static class GoalCreationError extends RuntimeException {
-        public GoalCreationError(String message) {
-            super(message);
-        }
-    }
-
-    /**
-     * A Builder to help with the creation of Goals, so that the idiosyncrasies of Goal creation can
-     * be handled safely and explicitly.
-     */
-    public static class Builder {
-
-        public static final String TAG = Goal.Builder.class.getName();
-
-        transient private Today today = new DefaultToday();
-        private String name;
-        private LocalDate startDate;
-        private LocalDate endDate;
-        private double target;
-        private Double weeklyTarget;
-
-        public Builder() {
-
-        }
-
-        public Goal build() {
-            Goal goal = new Goal(today);
-
-            // Name
-            goal.setName(name);
-
-            // Target
-            goal.setTarget(target);
-
-            // Start Date
-            if (startDate == null)
-                startDate = new LocalDate(today.now());
-            goal.setStartDate(startDate);
-
-            // End Date
-            if (endDate != null) {
-                CrashlyticsHelper.log(TAG, "build", "Creating Goal from End Date");
-                goal.setEndDate(endDate);
-            } else if (weeklyTarget != null) {
-                CrashlyticsHelper.log(TAG, "build", "Creating Goal from Weekly Target");
-                goal.setEndDate(new LocalDate(Goal.endDateFromTarget(startDate.toDate(), target, weeklyTarget)));
-            } else {
-                throw new GoalCreationError("Unable to build Goal. Neither End Date nor Weekly Target was set.");
-            }
-
-            return goal;
-        }
-
-        ///////////
-        // Today //
-        ///////////
-
-        public Goal.Builder setToday(@NonNull Today today) {
-            this.today = today;
-            return this;
-        }
-
-        //////////
-        // Name //
-        //////////
-
-        public Goal.Builder setName(String name) {
-            this.name = name;
-            return this;
-        }
-
-        ////////////////
-        // Start Date //
-        ////////////////
-
-        public Goal.Builder setStartDate(@NonNull LocalDate startDate) {
-            this.startDate = startDate;
-            return this;
-        }
-
-        //////////////
-        // End Date //
-        //////////////
-
-        public Goal.Builder setEndDate(@NonNull LocalDate endDate) {
-            this.endDate = endDate;
-            return this;
-        }
-
-        public Goal.Builder clearEndDate() {
-            this.endDate = null;
-            return this;
-        }
-
-        ////////////
-        // Target //
-        ////////////
-
-        public Goal.Builder setTarget(double target) {
-            this.target = target;
-            return this;
-        }
-
-        ///////////////////
-        // Weekly Target //
-        ///////////////////
-
-        public Goal.Builder setWeeklyTarget(double weeklyTarget) {
-            this.weeklyTarget = weeklyTarget;
-            return this;
-        }
-
-        public Goal.Builder clearWeeklyTarget() {
-            this.weeklyTarget = null;
-            return this;
-        }
     }
 }

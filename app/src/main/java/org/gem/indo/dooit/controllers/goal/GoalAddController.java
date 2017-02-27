@@ -129,10 +129,11 @@ public class GoalAddController extends GoalBotController {
                     .parseLocalDate(answerLog.get("goalDate").values.getString("date")));
         } else if (answerLog.containsKey("weeklySaveAmount")) {
             CrashlyticsHelper.log(TAG, "doPopulate", "User inputted a weekly target");
-            double weeklyTarget = Double.parseDouble(answerLog.get("weeklySaveAmount").getValue());
-            LocalDate endDate = new LocalDate(Goal.endDateFromTarget(goal.getStartDate().toDate(),
-                    goal.getTarget(), weeklyTarget));
-            goal.setEndDate(endDate);
+            goal.setWeeklyTarget(Double.parseDouble(answerLog.get("weeklySaveAmount").getValue()));
+//            double weeklyTarget = Double.parseDouble(answerLog.get("weeklySaveAmount").getValue());
+//            LocalDate endDate = new LocalDate(Goal.endDateFromTarget(goal.getStartDate().toDate(),
+//                    goal.getTarget(), weeklyTarget));
+//            goal.setEndDate(endDate);
         }
         CrashlyticsHelper.log(TAG, "do Populate (addGoal): ", "goal start date: " + goal.getStartDate() +
                 " Target amount: " + goal.getTarget() + " Goal name: " + goal.getName());
