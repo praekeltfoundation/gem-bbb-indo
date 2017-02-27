@@ -125,7 +125,7 @@ public class AnswerImageSelectViewHolder extends BaseBotViewHolder<Answer>
 
     }
 
-    private void uploadImage(Uri uri) {
+    private void uploadImage(Uri uri, String imagePath) {
         imageUri = uri;
         //imageUri = data.getData();
         /*
@@ -137,9 +137,9 @@ public class AnswerImageSelectViewHolder extends BaseBotViewHolder<Answer>
             }
         }
         */
-        Uri pathUri = getRealPathFromURI(imageUri);
+        
         selectView.setImageURI(imageUri);
-        File file = new File(pathUri.getPath());
+        File file = new File(imagePath);
         if (file.length() > 0) {
             dismissDialog();
             Answer answer = new Answer();
@@ -163,6 +163,6 @@ public class AnswerImageSelectViewHolder extends BaseBotViewHolder<Answer>
     public void handleSelectedImage(String mediaType, Uri imageUri, String imagePath) {
         //when the image has actually been selected clear the listener
         ((MainActivity)getContext()).clearImageSelectedListener();
-        uploadImage(imageUri);
+        uploadImage(imageUri, imagePath);
     }
 }
