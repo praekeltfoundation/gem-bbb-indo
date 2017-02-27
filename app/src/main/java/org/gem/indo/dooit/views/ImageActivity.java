@@ -83,7 +83,7 @@ public abstract class ImageActivity extends DooitActivity {
         imageChooser = builder.show();
     }
 
-    private void startCamera() {
+    public void startCamera() {
         permissionsHelper.askForPermission(this, new String[]{PermissionsHelper.D_WRITE_EXTERNAL_STORAGE, PermissionsHelper.D_CAMERA}, new PermissionCallback() {
             @Override
             public void permissionGranted() {
@@ -119,7 +119,7 @@ public abstract class ImageActivity extends DooitActivity {
         });
     }
 
-    private void startGallery() {
+    public void startGallery() {
         permissionsHelper.askForPermission(this, PermissionsHelper.D_WRITE_EXTERNAL_STORAGE, new PermissionCallback() {
             @Override
             public void permissionGranted() {

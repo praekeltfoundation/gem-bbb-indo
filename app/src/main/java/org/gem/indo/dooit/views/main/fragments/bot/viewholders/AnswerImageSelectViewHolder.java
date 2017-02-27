@@ -2,10 +2,7 @@ package org.gem.indo.dooit.views.main.fragments.bot.viewholders;
 
 import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
-import android.graphics.Bitmap;
 import android.net.Uri;
-import android.provider.MediaStore;
 import android.view.View;
 
 import com.facebook.drawee.view.SimpleDraweeView;
@@ -15,13 +12,14 @@ import org.gem.indo.dooit.DooitApplication;
 import org.gem.indo.dooit.R;
 import org.gem.indo.dooit.api.managers.FileUploadManager;
 import org.gem.indo.dooit.helpers.Persisted;
-import org.gem.indo.dooit.helpers.activity.result.ActivityForResultCallback;
 import org.gem.indo.dooit.helpers.activity.result.ActivityForResultHelper;
 import org.gem.indo.dooit.helpers.crashlytics.CrashlyticsHelper;
+import org.gem.indo.dooit.helpers.images.ImageSelectedListener;
 import org.gem.indo.dooit.helpers.permissions.PermissionCallback;
 import org.gem.indo.dooit.helpers.permissions.PermissionsHelper;
 import org.gem.indo.dooit.models.bot.Answer;
 import org.gem.indo.dooit.models.enums.BotMessageType;
+import org.gem.indo.dooit.views.main.MainActivity;
 import org.gem.indo.dooit.views.main.fragments.bot.adapters.BotAdapter;
 
 import java.io.File;
@@ -35,7 +33,8 @@ import butterknife.ButterKnife;
  * Created by Bernhard Müller on 11/7/2016.
  */
 
-public class AnswerImageSelectViewHolder extends BaseBotViewHolder<Answer> {
+public class AnswerImageSelectViewHolder extends BaseBotViewHolder<Answer>
+        implements ImageSelectedListener {
     @BindView(R.id.item_view_bot_image)
     SimpleDraweeView selectView;
     BotAdapter botAdapter;
@@ -56,6 +55,7 @@ public class AnswerImageSelectViewHolder extends BaseBotViewHolder<Answer> {
         this.botAdapter = botAdapter;
         this.tagsClickListener = tagsClickListener;
         ButterKnife.bind(this, itemView);
+        ((MainActivity)getContext()).setImageSelectedListener(this);
     }
 
     @Override
@@ -64,8 +64,13 @@ public class AnswerImageSelectViewHolder extends BaseBotViewHolder<Answer> {
         selectView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                MainActivity activity = ((MainActivity)getContext());
                 switch (BotMessageType.getValueOf(dataModel.getType())) {
                     case GALLERYUPLOAD:
+                        activity.startGallery();
+                        //after this the image data will be stored in variables in the Activity
+
+                        /*
                         activityForResultHelper.startActivityForResult(getContext(), new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI), new ActivityForResultCallback() {
                             @Override
                             public void onActivityResultOK(Intent data) {
@@ -77,7 +82,13 @@ public class AnswerImageSelectViewHolder extends BaseBotViewHolder<Answer> {
                             }
                         });
                         break;
+                        */
+                        break;
                     case CAMERAUPLOAD:
+                        activity.startCamera();
+                        //after this the image data will be stored in variables in the Activity
+
+                        /*
                         activityForResultHelper.startActivityForResult(getContext(), new Intent(MediaStore.ACTION_IMAGE_CAPTURE), new ActivityForResultCallback() {
                             @Override
                             public void onActivityResultOK(Intent data) {
@@ -89,7 +100,9 @@ public class AnswerImageSelectViewHolder extends BaseBotViewHolder<Answer> {
                             }
                         });
                         break;
-                }
+                        */
+                        break;
+                };
             }
         });
         if (botAdapter.getItemCount() - 1 == getAdapterPosition()) {
@@ -112,8 +125,10 @@ public class AnswerImageSelectViewHolder extends BaseBotViewHolder<Answer> {
 
     }
 
-    private void uploadImage(Intent data) {
-        imageUri = data.getData();
+    private void uploadImage(Uri uri) {
+        imageUri = uri;
+        //imageUri = data.getData();
+        /*
         if (imageUri == null) {
             try {
                 imageUri = Uri.parse(MediaStore.Images.Media.insertImage(getContext().getContentResolver(), (Bitmap) data.getExtras().get("data"), "", ""));
@@ -121,6 +136,7 @@ public class AnswerImageSelectViewHolder extends BaseBotViewHolder<Answer> {
 
             }
         }
+        */
         Uri pathUri = getRealPathFromURI(imageUri);
         selectView.setImageURI(imageUri);
         File file = new File(pathUri.getPath());
@@ -141,5 +157,12 @@ public class AnswerImageSelectViewHolder extends BaseBotViewHolder<Answer> {
 
     public Context getContext() {
         return itemView.getContext();
+    }
+
+    @Override
+    public void handleSelectedImage(String mediaType, Uri imageUri, String imagePath) {
+        //when the image has actually been selected clear the listener
+        ((MainActivity)getContext()).clearImageSelectedListener();
+        uploadImage(imageUri);
     }
 }
