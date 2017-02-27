@@ -742,6 +742,7 @@
     <string name="challenge_done">Challenge done!</string>
     <string name="challenge_completed">Challenge complete</string>
     <string name="challenge_deadline_message">Deadline: </string>
+    <string name="challenge_picture_caption">Image Caption</string>
 
 
     <!--JSON CHALLENGES-->

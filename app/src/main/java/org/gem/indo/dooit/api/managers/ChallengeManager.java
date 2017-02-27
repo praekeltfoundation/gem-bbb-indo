@@ -4,6 +4,7 @@ import android.app.Application;
 
 import org.gem.indo.dooit.api.DooitErrorHandler;
 import org.gem.indo.dooit.api.interfaces.ChallengeAPI;
+import org.gem.indo.dooit.api.requests.AddCaptionRequest;
 import org.gem.indo.dooit.api.responses.ChallengeAvailableReminderResponse;
 import org.gem.indo.dooit.api.responses.ChallengeCompletionReminderResponse;
 import org.gem.indo.dooit.api.responses.WinnerResponse;
@@ -69,6 +70,10 @@ public class ChallengeManager extends DooitManager {
         return useNetwork(challengeAPI.confirmChallengeWinnerNotification(id), errorHandler);
     }
 
+    public Observable<Response<Void>> addPictureChallengeCaption(Long id, AddCaptionRequest request, DooitErrorHandler errorHandler){
+        return useNetwork(challengeAPI.addPictureChallengeCaption(id, request), errorHandler);
+    }
+  
     public Observable<ChallengeAvailableReminderResponse> getUserParticipatedWithinTwoDays(DooitErrorHandler errorHandler) {
         return useNetwork(challengeAPI.getUserParticipatedWithinTwoDays(), errorHandler);
     }

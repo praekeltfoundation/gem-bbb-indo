@@ -1,7 +1,6 @@
 package org.gem.indo.dooit.views.main.fragments.challenge.fragments;
 
 import android.app.Activity;
-import android.app.ProgressDialog;
 import android.content.ContentResolver;
 import android.content.Intent;
 import android.net.Uri;
@@ -15,6 +14,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -25,8 +25,9 @@ import org.gem.indo.dooit.DooitApplication;
 import org.gem.indo.dooit.R;
 import org.gem.indo.dooit.api.DooitAPIError;
 import org.gem.indo.dooit.api.DooitErrorHandler;
+import org.gem.indo.dooit.api.managers.ChallengeManager;
 import org.gem.indo.dooit.api.managers.FileUploadManager;
-import org.gem.indo.dooit.api.responses.EmptyResponse;
+import org.gem.indo.dooit.api.requests.AddCaptionRequest;
 import org.gem.indo.dooit.api.responses.PictureParticipationResponse;
 import org.gem.indo.dooit.helpers.Persisted;
 import org.gem.indo.dooit.helpers.RequestCodes;
@@ -51,6 +52,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
+import retrofit2.Response;
 import rx.Subscription;
 import rx.functions.Action0;
 import rx.functions.Action1;
@@ -76,6 +78,9 @@ public class ChallengePictureFragment extends Fragment {
     FileUploadManager fileUploadManager;
 
     @Inject
+    ChallengeManager challengeManager;
+
+    @Inject
     PermissionsHelper permissionsHelper;
 
     @Inject
@@ -92,6 +97,9 @@ public class ChallengePictureFragment extends Fragment {
 
     @BindView(R.id.fragment_challenge_picture_submit_button)
     Button submitButton;
+
+    @BindView(R.id.fragment_challenge_picture_caption)
+    EditText captionField;
 
     @BindView(R.id.fragment_challenge_close)
     ImageButton close;
@@ -240,7 +248,7 @@ public class ChallengePictureFragment extends Fragment {
 
                 Bundle args = new Bundle();
                 args.putParcelable(ChallengeActivity.ARG_PARTICIPANT_BADGE, pictureParticipationResponse.getBadge());
-                args.putParcelable(ChallengeActivity.ARG_CHALLENGE,challenge);
+                args.putParcelable(ChallengeActivity.ARG_CHALLENGE, challenge);
 
                 Fragment f = ChallengeDoneFragment.newInstance(challenge);
                 f.setArguments(args);
@@ -248,7 +256,22 @@ public class ChallengePictureFragment extends Fragment {
                 ft.commit();
             }
         });
+        String caption = captionField.getText().toString();
+        if (!caption.equals("")) {
+            challengeManager.addPictureChallengeCaption(participant.getId(), new AddCaptionRequest(caption), new DooitErrorHandler() {
+                @Override
+                public void onError(DooitAPIError error) {
+                    //if the caption failed to send to do nothing
+                }
+            }).subscribe(new Action1<Response<Void>>() {
+                @Override
+                public void call(final Response<Void> response) {
+                    //nothing to do with the Void response
+                }
+            });
+        }
     }
+
 
     /*************************
      * State-keeping methods *
@@ -289,7 +312,7 @@ public class ChallengePictureFragment extends Fragment {
     }
 
     @OnClick(R.id.fragment_challenge_close)
-    public void closeQuiz(){
+    public void closeQuiz() {
         returnToParent(null);
     }
 
@@ -297,7 +320,7 @@ public class ChallengePictureFragment extends Fragment {
         FragmentActivity activity = getActivity();
         Intent intent = new Intent();
         Bundle bundle = new Bundle();
-        bundle.putParcelable(ChallengeActivity.ARG_CHALLENGE,challenge);
+        bundle.putParcelable(ChallengeActivity.ARG_CHALLENGE, challenge);
         bundle.putInt(ChallengeActivity.ARG_RETURNPAGE, returnPage != null ? returnPage.ordinal() : -1);
         persist.setParticipant(participant);
         intent.putExtras(bundle);
