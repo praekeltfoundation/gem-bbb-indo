@@ -1,9 +1,4 @@
 
-0.1.3
-
-- Pre-fetching Goal Category, Badge and Tip images
-- Changes to Goal week and weekly target calculations
-
 0.1.4
 
 - Implemented Ad Hoc Notifications
