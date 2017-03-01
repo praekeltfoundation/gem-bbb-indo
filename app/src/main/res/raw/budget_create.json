@@ -2,6 +2,50 @@
   {
     "name": "budget_create_intro",
     "type": "text",
-    "text": "$(budget_create_intro)"
+    "text": "$(budget_create_intro)",
+    "autoNext": "budget_create_q_income"
+  },
+
+
+  {
+    "name": "budget_create_q_income",
+    "type": "text",
+    "text": "$(budget_create_q_income)",
+    "answers": [
+      {
+        "name": "budget_create_a_income_amount",
+        "text": "$(budget_create_a_income_amount)",
+        "next": "budget_create_q_income_amount"
+      },
+      {
+        "name": "budget_create_a_help",
+        "text": "$(budget_create_a_help)",
+        "next": "budget_create_end"
+      }
+    ]
+  },
+
+
+
+  {
+    "name": "budget_create_q_income_amount",
+    "type": "blank",
+    "autoAnswer": "income_amount",
+    "answers": [
+      {
+        "name": "income_amount",
+        "type": "inlineCurrency",
+        "nextOnFinish": "budget_create_end",
+        "typeOnFinish": "textCurrency",
+        "inlineEditHint": "$(type_currency_hint)"
+      }
+    ]
+  },
+
+
+
+  {
+    "name": "budget_create_end",
+    "type": "end"
   }
 ]

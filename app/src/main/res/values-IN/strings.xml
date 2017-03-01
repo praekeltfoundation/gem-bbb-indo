@@ -692,6 +692,10 @@
 
     <string name="budget_create_intro">Budget Create</string>
 
+    <string name="budget_create_q_income">"Let's get started! How much money do you get each week?"</string>
+    <string name="budget_create_a_income_amount">Add amount</string>
+    <string name="budget_create_a_help">Help me calculate</string>
+
     <!-- END: BOT -->
 
     <!--Buttons-->
