@@ -692,6 +692,14 @@
     <string name="budget_create_a_income_amount">Add amount</string>
     <string name="budget_create_a_help">Help me calculate</string>
 
+    <string name="budget_create_q_income_frequency_01">"Let's calculate your income together."</string>
+    <string name="budget_create_q_income_frequency_02">How often do you get income?</string>
+    <string name="budget_create_a_income_once_week">Once a week</string>
+    <string name="budget_create_a_income_every_day">7 days a week</string>
+    <string name="budget_create_a_income_few_days">A few days a week</string>
+    <string name="budget_create_a_income_once_month">Once a month</string>
+    <string name="budget_create_a_income_less_month">Less than once a month</string>
+
     <!-- END: BOT -->
 
     <!--Buttons-->

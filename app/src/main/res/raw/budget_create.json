@@ -20,7 +20,7 @@
       {
         "name": "budget_create_a_help",
         "text": "$(budget_create_a_help)",
-        "next": "budget_create_end"
+        "next": "budget_create_q_income_frequency_01"
       }
     ]
   },
@@ -38,6 +38,37 @@
         "nextOnFinish": "budget_create_end",
         "typeOnFinish": "textCurrency",
         "inlineEditHint": "$(type_currency_hint)"
+      }
+    ]
+  },
+
+
+
+  {
+    "name": "budget_create_q_income_frequency_01",
+    "type": "text",
+    "text": "$(budget_create_q_income_frequency_01)"
+  },
+  {
+    "name": "budget_create_q_income_frequency_02",
+    "type": "text",
+    "text": "$(budget_create_q_income_frequency_02)",
+    "answers": [
+      {
+        "name": "budget_create_a_income_once_week",
+        "text": "$(budget_create_a_income_once_week)"
+      },
+      {
+        "name": "budget_create_a_income_every_day",
+        "text": "$(budget_create_a_income_every_day)"
+      },
+      {
+        "name": "budget_create_a_income_few_days",
+        "text": "$(budget_create_a_income_few_days)"
+      },
+      {
+        "name": "budget_create_a_income_once_month",
+        "text": "$(budget_create_a_income_less_month)"
       }
     ]
   },
