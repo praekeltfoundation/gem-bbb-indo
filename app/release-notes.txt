@@ -1,9 +1,4 @@
 
-0.1.3
-
-- Pre-fetching Goal Category, Badge and Tip images
-- Changes to Goal week and weekly target calculations
-
 0.1.4
 
 - Implemented Ad Hoc Notifications
@@ -12,3 +7,4 @@
 - Implemented Challenge Lightbox Popup
 - Fixed Goal Prototype title alignment bug
 - Fixed Coach Badge answer disappearing bug
+- Goal week and weekly target calculation now rounds currency up to next Rp100

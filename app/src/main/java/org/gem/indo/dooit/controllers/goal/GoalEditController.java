@@ -116,9 +116,7 @@ public class GoalEditController extends GoalBotController {
             // Don't upload Goal
             return;
         } else if (answerLog.containsKey("goal_weekly_target")) {
-            double weeklyTarget = Double.parseDouble(answerLog.get("goal_weekly_target").getValue());
-            goal.setEndDate(new LocalDate(Goal.endDateFromTarget(goal.getStartDate().toDate(),
-                    goal.getTarget(), weeklyTarget)));
+            goal.setWeeklyTarget(Double.parseDouble(answerLog.get("goal_weekly_target").getValue()));
         }
 
         persisted.saveConvoGoal(botType, goal);
@@ -151,9 +149,7 @@ public class GoalEditController extends GoalBotController {
             // Don't upload Goal
             return;
         } else if (answerLog.containsKey("goal_edit_weekly_target_accept")) {
-            double weeklyTarget = Double.parseDouble(answerLog.get("goal_weekly_target").getValue());
-            goal.setEndDate(new LocalDate(Goal.endDateFromTarget(goal.getStartDate().toDate(),
-                    goal.getTarget(), weeklyTarget)));
+            goal.setWeeklyTarget(Double.parseDouble(answerLog.get("goal_weekly_target").getValue()));
         }
 
         goalManager.updateGoal(goal, new DooitErrorHandler() {

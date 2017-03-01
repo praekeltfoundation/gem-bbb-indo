@@ -16,7 +16,9 @@
         android:layout_height="25dp"
         android:background="@null"
         tools:layout_editor_absoluteY="0dp"
-        tools:layout_editor_absoluteX="0dp" />
+        tools:layout_editor_absoluteX="0dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"/>
 
     <TextView
         android:id="@+id/fragment_challenge_picture_question"
@@ -67,8 +69,22 @@
         android:layout_marginStart="16dp"
         app:layout_constraintLeft_toLeftOf="parent"
         android:paddingBottom="10dp"
-        app:layout_constraintBottom_toTopOf="@+id/fragment_challenge_picture_submit_button"
+        app:layout_constraintBottom_toTopOf="@+id/fragment_challenge_picture_caption"
         android:textAllCaps="true" />
+
+    <EditText
+        android:id="@+id/fragment_challenge_picture_caption"
+        android:hint="@string/challenge_picture_caption"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        app:layout_constraintTop_toBottomOf="@+id/fragment_challenge_picture_text"
+        app:layout_constraintBottom_toTopOf="@+id/fragment_challenge_picture_submit_button"
+        android:layout_marginEnd="16dp"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginStart="16dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:textAllCaps="false" />
 
     <Button
         android:id="@+id/fragment_challenge_picture_submit_button"

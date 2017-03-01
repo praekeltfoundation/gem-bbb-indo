@@ -1,5 +1,6 @@
 package org.gem.indo.dooit.api.interfaces;
 
+import org.gem.indo.dooit.api.requests.AddCaptionRequest;
 import org.gem.indo.dooit.api.responses.ChallengeAvailableReminderResponse;
 import org.gem.indo.dooit.api.responses.ChallengeCompletionReminderResponse;
 import org.gem.indo.dooit.api.responses.WinnerResponse;
@@ -50,6 +51,9 @@ public interface ChallengeAPI {
 
     @POST("/api/challenges/{id}/notification/")
     Observable<Response<Void>> confirmChallengeWinnerNotification(@Path("id") Long id);
+
+    @POST("/api/participantpicture/{id}/caption/")
+    Observable<Response<Void>> addPictureChallengeCaption(@Path("id") Long id, @Body AddCaptionRequest request);
 
     @GET("/api/challenges/participation")
     Observable<ChallengeAvailableReminderResponse> getUserParticipatedWithinTwoDays();
