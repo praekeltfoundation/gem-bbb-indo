@@ -413,7 +413,8 @@
     "answers": [
       {
         "name": "goal_add_a_budget_start_create",
-        "text": "$(goal_add_a_budget_start_create)"
+        "text": "$(goal_add_a_budget_start_create)",
+        "next": "goal_add_start_budget"
       },
       {
         "name": "goal_add_a_budget_return",
@@ -421,6 +422,13 @@
         "next": "askGoalWeeklySaveAmount"
       }
     ]
+  },
+
+
+  {
+    "name": "goal_add_start_budget",
+    "type": "startConvo",
+    "autoNext": "GOAL_EDIT"
   },
 
 
