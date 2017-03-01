@@ -154,7 +154,7 @@ public class AnswerImageSelectViewHolder extends BaseBotViewHolder<Answer>
             answer.values.put(Answer.IMAGEPATH, imagePath);
             answer.values.put(Answer.IMAGEMEDIATYPE, mediaType);
             answer.setNext(dataModel.getNextOnFinish());
-            answer.setRemoveOnSelect(dataModel.getName());
+            answer.setRemoveOnSelect(dataModel.getRemoveOnSelect());
             answer.setText(null);
             tagsClickListener.onItemClicked(answer);
         }
