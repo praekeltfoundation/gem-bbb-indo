@@ -156,7 +156,7 @@
     <string name="infoDontKnowAmount">No problem.</string>
     <string name="askKnowGoalDate">That is a big goal. Let us get saving then. Do you have a date that you want to save this by?</string>
     <string name="askGoalDate">When would you like to have saved this much?</string>
-    <string name="askGoalWeeklySaveAmount">No problem, I can help. How much can money can you afford to save each week?</string>
+    <string name="askGoalWeeklySaveAmount">No problem, I can help. How much money can you afford to save each week?</string>
     <string name="askGoalSaveAmountOther">How much can you save?</string>
     <string name="askGoalPriorSave">Have you started saving money towards this goal?</string>
     <string name="askPriorSavedAmount">How much have you already saved?</string>
