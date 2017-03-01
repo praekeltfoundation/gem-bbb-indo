@@ -185,13 +185,21 @@ public class GoalAddController extends GoalBotController {
 
             // Crashlytics for MediaURI null check
             try {
-                final String path = MediaUriHelper.getPath(context, uri);
+                /*
+                TODO: This line is causing an ILLEGALARGUMENTSEXCEPTION in the MediaUriHelper class. It needs investigation on how to solve that issue. Storing the valid image path in the Answer.values map is a temporary solution.
+                    final String path = MediaUriHelper.getPath(context, uri);
+                */
+                final Map<String, Answer> answerLogTemp = answerLog;
                 observe.subscribe(new Action1<Goal>() {
                     @Override
                     public void call(final Goal newGoal) {
                         // New Achievements is what we care about
                         goal.addNewBadges(newGoal.getNewBadges());
                         saveGoal();
+                        //the path is now extracted form the Answer.values map as explained int the comment above "final String path = MediaUriHelper.getPath(context, uri);"
+                        Answer imageAnswer = answerLogTemp.get("goal_add_a_gallery");
+                        String path = imageAnswer.values.getString(Answer.IMAGEPATH);
+
                         uploadImage(newGoal, mimetype, new File(path));
                     }
                 });

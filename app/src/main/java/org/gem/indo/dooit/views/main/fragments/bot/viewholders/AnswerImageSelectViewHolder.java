@@ -18,6 +18,7 @@ import org.gem.indo.dooit.helpers.images.ImageSelectedListener;
 import org.gem.indo.dooit.helpers.permissions.PermissionCallback;
 import org.gem.indo.dooit.helpers.permissions.PermissionsHelper;
 import org.gem.indo.dooit.models.bot.Answer;
+import org.gem.indo.dooit.models.bot.BaseBotModel;
 import org.gem.indo.dooit.models.enums.BotMessageType;
 import org.gem.indo.dooit.views.main.MainActivity;
 import org.gem.indo.dooit.views.main.fragments.bot.adapters.BotAdapter;
@@ -125,7 +126,7 @@ public class AnswerImageSelectViewHolder extends BaseBotViewHolder<Answer>
 
     }
 
-    private void uploadImage(Uri uri, String imagePath) {
+    private void uploadImage(Uri uri, String imagePath, String mediaType) {
         imageUri = uri;
         //imageUri = data.getData();
         /*
@@ -138,14 +139,20 @@ public class AnswerImageSelectViewHolder extends BaseBotViewHolder<Answer>
         }
         */
 
+//        Uri pathUri = getRealPathFromURI(imageUri);
+//        selectView.setImageURI(imageUri);
+//        File file1 = new File(pathUri.getPath());
+
         selectView.setImageURI(imageUri);
-        File file = new File(imagePath);
-        if (file.length() > 0) {
+        File file2 = new File(imagePath);
+        if (file2.length() > 0) {
             dismissDialog();
             Answer answer = new Answer();
             answer.setName(dataModel.getName());
             answer.setType(BotMessageType.IMAGE);
             answer.setValue(imageUri.toString());
+            answer.values.put(Answer.IMAGEPATH, imagePath);
+            answer.values.put(Answer.IMAGEMEDIATYPE, mediaType);
             answer.setNext(dataModel.getNextOnFinish());
             answer.setRemoveOnSelect(dataModel.getName());
             answer.setText(null);
@@ -162,7 +169,8 @@ public class AnswerImageSelectViewHolder extends BaseBotViewHolder<Answer>
     @Override
     public void handleSelectedImage(String mediaType, Uri imageUri, String imagePath) {
         //when the image has actually been selected clear the listener
-        ((MainActivity)getContext()).clearImageSelectedListener();
-        uploadImage(imageUri, imagePath);
+
+        //((MainActivity)getContext()).clearImageSelectedListener();
+        uploadImage(imageUri, imagePath, mediaType);
     }
 }
