@@ -195,6 +195,16 @@
 
     <string name="goal_add_q_ask_amount">Berapa yang harus kamu tabung untuk $(goal.name)?</string>
     <string name="goal_add_q_ask_date">Pada tanggal berapa kamu sudah harus selesai menabung untuk targetmu?</string>
+    <string name="goal_add_a_budget_intro">"I'm not sure. Help!"</string>
+
+    <string name="goal_add_q_budget_intro_01">"Sure. Let's work out how much you can save by setting up a budget."</string>
+    <string name="goal_add_q_budget_intro_02">A budget is an estimate of your income, savings, expenses and balance for a set period of time.</string>
+    <string name="goal_add_q_budget_intro_03">Setting a budget is an important step towards learning to manage your money better.</string>
+    <string name="goal_add_a_budget_start_create">Great! I want one!</string>
+    <string name="goal_add_a_budget_return">"Hmm, I don't want one now."</string>
+
+    <string name="goal_add_q_budget_return_01">"That's okay. You can create the budget after you've created your savings goal."</string>
+    <string name="goal_add_q_budget_return_02">"I suggest you start by saving Rpxxxx per week. What do you think?"</string>
 
     <string name="goal_add_q_verify">"Jika kamu tabung $(goal.weekly_target_currency) per minggu, kamu akan mencapai targetmu $(goal.name) dalam $(goal.weeks_up) minggu, $(goal.remainder_days). Jika kamu ikuti rencana ini, targetmu akan tercapai pada tanggal $(goal.end_date).</string>
 

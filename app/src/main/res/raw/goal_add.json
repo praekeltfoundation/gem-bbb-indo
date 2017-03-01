@@ -369,6 +369,11 @@
         "text": "$(otherSaveAmount)",
         "type": "blankAnswer",
         "next": "askGoalSaveAmountOther"
+      },
+      {
+        "name": "goal_add_a_budget_intro",
+        "text": "$(goal_add_a_budget_intro)",
+        "next": "goal_add_q_budget_intro_01"
       }
     ]
   },
@@ -387,6 +392,37 @@
       }
     ]
   },
+
+
+  {
+    "name": "goal_add_q_budget_intro_01",
+    "type": "text",
+    "text": "$(goal_add_q_budget_intro_01)",
+    "autoNext": "goal_add_q_budget_intro_02"
+  },
+  {
+    "name": "goal_add_q_budget_intro_02",
+    "type": "text",
+    "text": "$(goal_add_q_budget_intro_02)",
+    "autoNext": "goal_add_q_budget_intro_03"
+  },
+  {
+    "name": "goal_add_q_budget_intro_03",
+    "type": "text",
+    "text": "$(goal_add_q_budget_intro_03)",
+    "answers": [
+      {
+        "name": "goal_add_a_budget_start_create",
+        "text": "$(goal_add_a_budget_start_create)"
+      },
+      {
+        "name": "goal_add_a_budget_return",
+        "text": "$(goal_add_a_budget_return)",
+        "next": "askGoalWeeklySaveAmount"
+      }
+    ]
+  },
+
 
   {
     "name" : "askGoalPriorSaveFromWeeklySaveAmount",
