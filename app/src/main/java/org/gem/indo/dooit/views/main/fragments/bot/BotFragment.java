@@ -28,6 +28,7 @@ import org.gem.indo.dooit.api.managers.GoalManager;
 import org.gem.indo.dooit.api.managers.TipManager;
 import org.gem.indo.dooit.controllers.BotController;
 import org.gem.indo.dooit.controllers.RequirementResolver;
+import org.gem.indo.dooit.controllers.budget.BudgetCreateController;
 import org.gem.indo.dooit.controllers.challenge.ChallengeParticipantController;
 import org.gem.indo.dooit.controllers.challenge.ChallengeWinnerController;
 import org.gem.indo.dooit.controllers.goal.GoalAddController;
@@ -332,6 +333,10 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
                 feed.parse(R.raw.challenge_participant_badge, Node.class);
                 initializeBot();
                 break;
+            case BUDGET_CREATE:
+                feed.parse(R.raw.budget_create, Node.class);
+                initializeBot();
+                break;
         }
     }
 
@@ -400,6 +405,9 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
             case CHALLENGE_PARTICIPANT_BADGE:
                 getAndAddNode(null);
                 break;
+            case BUDGET_CREATE:
+                getAndAddNode(null);
+                break;
         }
     }
 
@@ -451,6 +459,8 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
                 return new ChallengeParticipantController(getActivity(),
                         persisted.loadParticipantBadge(botType),
                         persisted.loadParticipantChallenge(botType));
+            case BUDGET_CREATE:
+                return new BudgetCreateController(getActivity());
             default:
                 return null;
         }

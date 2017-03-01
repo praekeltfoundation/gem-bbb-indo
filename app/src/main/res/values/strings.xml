@@ -684,6 +684,12 @@
 
     <!-- END BOT: challenge_participation -->
 
+    <!-- BOT: budget_create -->
+
+    <string name="budget_create_intro">Budget Create</string>
+
+    <!-- END: BOT -->
+
     <!--Buttons-->
     <string name="Skip">Skip</string>
     <string name="Capture">Add photo</string>

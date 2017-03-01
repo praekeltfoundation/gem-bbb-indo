@@ -1,0 +1,7 @@
+[
+  {
+    "name": "budget_create_intro",
+    "type": "text",
+    "text": "$(budget_create_intro)"
+  }
+]

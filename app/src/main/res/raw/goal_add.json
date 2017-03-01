@@ -425,11 +425,13 @@
   },
 
 
+
   {
     "name": "goal_add_start_budget",
     "type": "startConvo",
-    "autoNext": "GOAL_EDIT"
+    "autoNext": "BUDGET_CREATE"
   },
+
 
 
   {
