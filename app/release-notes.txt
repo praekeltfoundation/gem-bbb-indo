@@ -8,3 +8,7 @@
 - Fixed Goal Prototype title alignment bug
 - Fixed Coach Badge answer disappearing bug
 - Goal week and weekly target calculation now rounds currency up to next Rp100
+
+0.1.5
+
+- Fix duplicate transactions in Goal Create conversation
