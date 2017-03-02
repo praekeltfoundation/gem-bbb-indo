@@ -61,7 +61,7 @@ public class AnswerImageSelectViewHolder extends BaseBotViewHolder<Answer>
 
     @Override
     public void populate(Answer model) {
-        this.dataModel = model;
+        super.populate(model);
         selectView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -70,38 +70,10 @@ public class AnswerImageSelectViewHolder extends BaseBotViewHolder<Answer>
                     case GALLERYUPLOAD:
                         activity.startGallery();
                         //after this the image data will be stored in variables in the Activity
-
-                        /*
-                        activityForResultHelper.startActivityForResult(getContext(), new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI), new ActivityForResultCallback() {
-                            @Override
-                            public void onActivityResultOK(Intent data) {
-                                uploadImage(data);
-                            }
-
-                            @Override
-                            public void onActivityResultCanceled(Intent data) {
-                            }
-                        });
-                        break;
-                        */
                         break;
                     case CAMERAUPLOAD:
                         activity.startCamera();
                         //after this the image data will be stored in variables in the Activity
-
-                        /*
-                        activityForResultHelper.startActivityForResult(getContext(), new Intent(MediaStore.ACTION_IMAGE_CAPTURE), new ActivityForResultCallback() {
-                            @Override
-                            public void onActivityResultOK(Intent data) {
-                                uploadImage(data);
-                            }
-
-                            @Override
-                            public void onActivityResultCanceled(Intent data) {
-                            }
-                        });
-                        break;
-                        */
                         break;
                 };
             }
@@ -128,20 +100,6 @@ public class AnswerImageSelectViewHolder extends BaseBotViewHolder<Answer>
 
     private void uploadImage(Uri uri, String imagePath, String mediaType) {
         imageUri = uri;
-        //imageUri = data.getData();
-        /*
-        if (imageUri == null) {
-            try {
-                imageUri = Uri.parse(MediaStore.Images.Media.insertImage(getContext().getContentResolver(), (Bitmap) data.getExtras().get("data"), "", ""));
-            } catch (Throwable ex) {
-
-            }
-        }
-        */
-
-//        Uri pathUri = getRealPathFromURI(imageUri);
-//        selectView.setImageURI(imageUri);
-//        File file1 = new File(pathUri.getPath());
 
         selectView.setImageURI(imageUri);
         File file2 = new File(imagePath);
