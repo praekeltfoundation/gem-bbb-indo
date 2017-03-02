@@ -13,6 +13,7 @@ import android.media.ExifInterface;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Environment;
+import android.os.Looper;
 import android.provider.MediaStore;
 import android.support.v4.content.FileProvider;
 import android.support.v7.app.AlertDialog;
@@ -51,6 +52,12 @@ public abstract class ImageActivity extends DooitActivity {
     private Uri imageUri;
     private String imagePath;
 
+    final Runtime runtime = Runtime.getRuntime();
+    long usedMemInMB=(runtime.totalMemory() - runtime.freeMemory()) / 1048576L;
+    long maxHeapSizeInMB=runtime.maxMemory() / 1048576L;
+    long availHeapSizeInMB = maxHeapSizeInMB - usedMemInMB;
+    final int SCALE_FACTOR_FOR_BITMAP_SIZE = 3;
+
     private void resetImageState() {
         imageUri = null;
         imagePath = null;
@@ -84,6 +91,8 @@ public abstract class ImageActivity extends DooitActivity {
     }
 
     public void startCamera() {
+        resetImageState();
+
         permissionsHelper.askForPermission(this, new String[]{PermissionsHelper.D_WRITE_EXTERNAL_STORAGE, PermissionsHelper.D_CAMERA}, new PermissionCallback() {
             @Override
             public void permissionGranted() {
@@ -120,6 +129,8 @@ public abstract class ImageActivity extends DooitActivity {
     }
 
     public void startGallery() {
+        resetImageState();
+
         permissionsHelper.askForPermission(this, PermissionsHelper.D_WRITE_EXTERNAL_STORAGE, new PermissionCallback() {
             @Override
             public void permissionGranted() {
@@ -169,6 +180,11 @@ public abstract class ImageActivity extends DooitActivity {
                     ContentResolver cR = this.getContentResolver();
                     Bitmap bitmap = (Bitmap) data.getExtras().get("data");
 
+                    boolean isUIThread = Looper.myLooper() == Looper.getMainLooper();
+
+                    //Note:  System.gc() is simply a hint to the garbage collector that you want it to do a collection.
+                    System.gc();
+
                     bitmap = checkScreenOrientation(imagePath, bitmap, requestCodes);
 
                     Log.d("IMAGE_TESTS", "Bitmap size : " + bitmap.getByteCount());
@@ -215,8 +231,25 @@ public abstract class ImageActivity extends DooitActivity {
                 Log.e(TAG, "Failed to load existing bitmap during downscale");
                 return;
             }
+            /*
+            updateHeapValues();
+            if(availHeapSizeInMB < SCALE_FACTOR_FOR_BITMAP_SIZE * ((bitmap.getByteCount()/1024)/1024)){
+                //Note:  System.gc() is simply a hint to the garbage collector that you want it to do a collection.
+                System.gc();
+            }
+            */
+            boolean isUIThread = Looper.myLooper() == Looper.getMainLooper();
+
+
+            //Note:  System.gc() is simply a hint to the garbage collector that you want it to do a collection.
+            System.gc();
+
             //Here the orientation is checked and corrected if needed
             bitmap = checkScreenOrientation(imagePath, bitmap, requestCodes);
+
+            //Note:  System.gc() is simply a hint to the garbage collector that you want it to do a collection.
+            System.gc();
+
             //Here the image is scaled to an acceptable size
             bitmap = ImageScaler.scale(bitmap, maxImageWidth, maxImageHeight);
             //file is written out
@@ -342,4 +375,14 @@ public abstract class ImageActivity extends DooitActivity {
      * @param imagePath the file system path to the image
      */
     protected abstract void onImageResult(String mediaType, Uri imageUri, String imagePath);
+
+    /**
+     * This function is used to check the available heap space for the app
+     */
+    private void updateHeapValues(){
+        usedMemInMB=(runtime.totalMemory() - runtime.freeMemory()) / 1048576L;
+        maxHeapSizeInMB=runtime.maxMemory() / 1048576L;
+        availHeapSizeInMB = maxHeapSizeInMB - usedMemInMB;
+    }
+
 }
