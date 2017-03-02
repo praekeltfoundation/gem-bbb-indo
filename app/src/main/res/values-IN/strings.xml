@@ -204,6 +204,7 @@
     <string name="goal_add_a_done_exit">Terima Kasih! Aku sudah selesai.</string>
 
     <string name="number_of_other_users_with_similar_goal">Hebat! Apa kamu tau $(goal_proto.num_users) pengguna lain juga menabung untuk tujuan yang sama?</string>
+    <string name="goal_add_q_goal_name">Silahkan berikan nama untuk tujuan menabungmu</string>
 
     <string name="goal_add_a_add_amount">Masukkan jumlah.</string>
     <string name="goal_add_a_not_sure">Aku kurang tau.</string>
