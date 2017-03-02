@@ -831,16 +831,16 @@
     <string name="legend_label_total">Total</string>
 
     <!-- Push Notifications -->
-    <string name="notification_title_challenge_available">Challenge Available</string>
-    <string name="notification_title_challenge_reminder">Challenge Reminder</string>
+    <string name="notification_title_challenge_available">Tantangan yang tersedia</string>
+    <string name="notification_title_challenge_reminder">Pengingat tantangan</string>
     <string name="notification_title_challenge_completion_reminder">Challenge Answer Reminder</string>
     <string name="notification_title_challenge_winner">Challenge Winner</string>
     <string name="notification_title_custom_notification">Ad Hoc</string>
-    <string name="notification_title_goal_deadline_missed">Target Missed</string>
-    <string name="notification_title_survey_available">Survey Available</string>
+    <string name="notification_title_goal_deadline_missed">Target yang lewat</string>
+    <string name="notification_title_survey_available">Survey yang tersedia</string>
     <string name="notification_title_survey_reminder">Survey Reminder</string>
     <string name="notification_title_ad_hoc">Ad Hoc</string>
-    <string name="notification_title_saving_reminder">Savings Reminder</string>
+    <string name="notification_title_saving_reminder">Pengingat tabungan</string>
 
     <string name="notification_content_saving_reminder">Hei, $(user.preferred_name)! Sudah $(achievements.weeks_since_saved) minggu kamu nggak menabung. Ke mana aja? Perbarui jumlah tabunganmu yuk!</string>
     <string name="notification_content_challenge_available">Hai, $(user.preferred_name)! Tantangan baru sudah tersedia! Mau ikutan?</string>
