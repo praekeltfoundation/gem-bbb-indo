@@ -1,10 +1,12 @@
 package org.gem.indo.dooit.controllers.budget;
 
 import android.content.Context;
+import android.support.annotation.Nullable;
 
 import org.gem.indo.dooit.controllers.DooitBotController;
 import org.gem.indo.dooit.models.bot.Answer;
 import org.gem.indo.dooit.models.bot.BaseBotModel;
+import org.gem.indo.dooit.models.budget.Budget;
 import org.gem.indo.dooit.models.enums.BotCallType;
 import org.gem.indo.dooit.models.enums.BotType;
 
@@ -16,8 +18,12 @@ import java.util.Map;
 
 public class BudgetCreateController extends DooitBotController {
 
-    public BudgetCreateController(Context context) {
+    private Budget budget;
+
+    public BudgetCreateController(Context context, @Nullable Budget budget) {
         super(context, BotType.BUDGET_CREATE);
+        if (budget == null)
+            this.budget = budget;
     }
 
     @Override
