@@ -387,6 +387,10 @@ public class Goal {
         return createTransaction(value, true);
     }
 
+    public void clearTransactions() {
+        transactions.clear();
+    }
+
     public boolean canDeposit() {
         return value < target;
     }
