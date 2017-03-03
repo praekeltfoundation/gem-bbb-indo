@@ -185,7 +185,7 @@ public class GoalAddController extends GoalBotController {
             try {
                 /*
                 TODO: This line is causing an ILLEGALARGUMENTSEXCEPTION in the MediaUriHelper class. It needs investigation on how to solve that issue. Storing the valid image path in the Answer.values map is a temporary solution.
-                    final String path = MediaUriHelper.getPath(context, uri);
+                final String path = MediaUriHelper.getPath(context, uri);
                 */
                 final Map<String, Answer> answerLogTemp = answerLog;
                 observe.subscribe(new Action1<Goal>() {
