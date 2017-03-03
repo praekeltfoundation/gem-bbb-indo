@@ -329,68 +329,6 @@ public abstract class ImageActivity extends DooitActivity {
      */
     protected abstract void onImageResult(String mediaType, Uri imageUri, String imagePath);
 
-
-    private class ProcessImage extends AsyncTask<Integer, Integer, Long> {
-        @Override
-        protected Long doInBackground(Integer... id) {
-            int requestCodes = id[0];
-
-            FileOutputStream outStream = null;
-            BitmapFactory.Options options = new BitmapFactory.Options();
-            options.inPreferredConfig = Bitmap.Config.ARGB_8888;
-
-            try {
-                File downscaledFile = createImageFile();
-                outStream = new FileOutputStream(downscaledFile);
-                Bitmap bitmap = BitmapFactory.decodeFile(imagePath, options);
-
-                if (bitmap == null) {
-                    Log.e(TAG, "Failed to load existing bitmap during downscale");
-                    return Long.valueOf(0);
-                }
-
-                System.gc();
-
-                //Here the orientation is checked and corrected if needed
-                bitmap = checkScreenOrientation(imagePath, bitmap, requestCodes);
-
-                System.gc();
-
-                //Here the image is scaled to an acceptable size
-                bitmap = ImageScaler.scale(bitmap, maxImageWidth, maxImageHeight);
-                //file is written out
-                bitmap.compress(Bitmap.CompressFormat.JPEG, 80, outStream);
-
-                Log.d(TAG, String.format("Downscaled image dimensions: (%d, %d) %dKB",
-                        bitmap.getWidth(), bitmap.getHeight(), bitmap.getByteCount() / 1024));
-
-                // Set uri and filepath to new downscaled image
-                imagePath = downscaledFile.getAbsolutePath();
-                imageUri = FileProvider.getUriForFile(ImageActivity.this, Constants.FILE_PROVIDER, downscaledFile);
-            } catch (IOException e) {
-                Toast.makeText(ImageActivity.this, "Unable to do image rotation", Toast.LENGTH_LONG).show();
-                Log.e(TAG, "Unable to create temporary downscaled image file", e);
-                CrashlyticsHelper.log(this.getClass().getSimpleName(), " processImage : ", "an IOException");
-            } finally {
-                try {
-                    if (outStream != null)
-                        outStream.close();
-                } catch (IOException e) {
-                    Log.e(TAG, "Failed to close outstream", e);
-                }
-            }
-            return Long.valueOf(0);
-        }
-
-        protected void onProgressUpdate(Integer... progress) {
-
-        }
-
-        protected void onPostExecute(Long result) {
-
-        }
-    }
-
     private class HandleImage extends AsyncTask<Object, Integer, ImageActivityAsyncTaskResult> {
 
         @Override
