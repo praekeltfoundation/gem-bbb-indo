@@ -26,6 +26,7 @@ import org.gem.indo.dooit.Constants;
 import org.gem.indo.dooit.R;
 import org.gem.indo.dooit.helpers.RequestCodes;
 import org.gem.indo.dooit.helpers.crashlytics.CrashlyticsHelper;
+import org.gem.indo.dooit.helpers.images.ImageActivityAsyncTaskResult;
 import org.gem.indo.dooit.helpers.images.ImageChooserOptions;
 import org.gem.indo.dooit.helpers.images.ImageScaler;
 import org.gem.indo.dooit.helpers.images.MediaUriHelper;
@@ -38,6 +39,7 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 /**
  * Created by Wimpie Victor on 2016/12/19.
@@ -48,16 +50,21 @@ public abstract class ImageActivity extends DooitActivity {
     private static final String TAG = ImageActivity.class.getName();
     private static final int maxImageWidth = 1024;
     private static final int maxImageHeight = 1024;
-
+    final Runtime runtime = Runtime.getRuntime();
+    final int SCALE_FACTOR_FOR_BITMAP_SIZE = 3;
+    long usedMemInMB = (runtime.totalMemory() - runtime.freeMemory()) / 1048576L;
+    long maxHeapSizeInMB = runtime.maxMemory() / 1048576L;
+    long availHeapSizeInMB = maxHeapSizeInMB - usedMemInMB;
     private AlertDialog imageChooser;
     private Uri imageUri;
     private String imagePath;
 
-    final Runtime runtime = Runtime.getRuntime();
-    long usedMemInMB=(runtime.totalMemory() - runtime.freeMemory()) / 1048576L;
-    long maxHeapSizeInMB=runtime.maxMemory() / 1048576L;
-    long availHeapSizeInMB = maxHeapSizeInMB - usedMemInMB;
-    final int SCALE_FACTOR_FOR_BITMAP_SIZE = 3;
+    public static Bitmap rotateImage(Bitmap source, float angle) {
+        Matrix matrix = new Matrix();
+        matrix.postRotate(angle);
+        return Bitmap.createBitmap(source, 0, 0, source.getWidth(), source.getHeight(),
+                matrix, true);
+    }
 
     private void resetImageState() {
         imageUri = null;
@@ -182,14 +189,50 @@ public abstract class ImageActivity extends DooitActivity {
      */
 
     private void processImage(int requestCodes) {
-        new ProcessImage().execute(requestCodes);
-    }
+        FileOutputStream outStream = null;
+        BitmapFactory.Options options = new BitmapFactory.Options();
+        options.inPreferredConfig = Bitmap.Config.ARGB_8888;
 
-    public static Bitmap rotateImage(Bitmap source, float angle) {
-        Matrix matrix = new Matrix();
-        matrix.postRotate(angle);
-        return Bitmap.createBitmap(source, 0, 0, source.getWidth(), source.getHeight(),
-                matrix, true);
+        try {
+            File downscaledFile = createImageFile();
+            outStream = new FileOutputStream(downscaledFile);
+            Bitmap bitmap = BitmapFactory.decodeFile(imagePath, options);
+
+            if (bitmap == null) {
+                Log.e(TAG, "Failed to load existing bitmap during downscale");
+                return;
+            }
+
+            System.gc();
+
+            //Here the orientation is checked and corrected if needed
+            bitmap = checkScreenOrientation(imagePath, bitmap, requestCodes);
+
+            System.gc();
+
+            //Here the image is scaled to an acceptable size
+            bitmap = ImageScaler.scale(bitmap, maxImageWidth, maxImageHeight);
+            //file is written out
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 80, outStream);
+
+            Log.d(TAG, String.format("Downscaled image dimensions: (%d, %d) %dKB",
+                    bitmap.getWidth(), bitmap.getHeight(), bitmap.getByteCount() / 1024));
+
+            // Set uri and filepath to new downscaled image
+            imagePath = downscaledFile.getAbsolutePath();
+            imageUri = FileProvider.getUriForFile(ImageActivity.this, Constants.FILE_PROVIDER, downscaledFile);
+        } catch (IOException e) {
+            Toast.makeText(ImageActivity.this, "Unable to do image rotation", Toast.LENGTH_LONG).show();
+            Log.e(TAG, "Unable to create temporary downscaled image file", e);
+            CrashlyticsHelper.log(this.getClass().getSimpleName(), " processImage : ", "an IOException");
+        } finally {
+            try {
+                if (outStream != null)
+                    outStream.close();
+            } catch (IOException e) {
+                Log.e(TAG, "Failed to close outstream", e);
+            }
+        }
     }
 
     private File createImageFile() throws IOException {
@@ -289,7 +332,7 @@ public abstract class ImageActivity extends DooitActivity {
 
     private class ProcessImage extends AsyncTask<Integer, Integer, Long> {
         @Override
-        protected Long doInBackground(Integer...id) {
+        protected Long doInBackground(Integer... id) {
             int requestCodes = id[0];
 
             FileOutputStream outStream = null;
@@ -306,16 +349,11 @@ public abstract class ImageActivity extends DooitActivity {
                     return Long.valueOf(0);
                 }
 
-                boolean isUIThread = Looper.myLooper() == Looper.getMainLooper();
-
-
-                //Note:  System.gc() is simply a hint to the garbage collector that you want it to do a collection.
                 System.gc();
 
                 //Here the orientation is checked and corrected if needed
                 bitmap = checkScreenOrientation(imagePath, bitmap, requestCodes);
 
-                //Note:  System.gc() is simply a hint to the garbage collector that you want it to do a collection.
                 System.gc();
 
                 //Here the image is scaled to an acceptable size
@@ -347,15 +385,25 @@ public abstract class ImageActivity extends DooitActivity {
         protected void onProgressUpdate(Integer... progress) {
 
         }
+
         protected void onPostExecute(Long result) {
 
         }
     }
 
-    private class HandleImage extends AsyncTask<Object, Integer, Long> {
+    private class HandleImage extends AsyncTask<Object, Integer, ImageActivityAsyncTaskResult> {
+
         @Override
-        protected Long doInBackground(Object...params) {
-            Intent data = (Intent)params[0];
+        protected void onPostExecute(ImageActivityAsyncTaskResult imageActivityAsyncTaskResult) {
+            ContentResolver cR = ImageActivity.this.getContentResolver();
+            ImageActivity.this.onImageResult(cR.getType(imageActivityAsyncTaskResult.getImageUri()),
+                    imageActivityAsyncTaskResult.getImageUri(),
+                    imageActivityAsyncTaskResult.getImagePath());
+        }
+
+        @Override
+        protected ImageActivityAsyncTaskResult doInBackground(Object... params) {
+            Intent data = (Intent) params[0];
             int requestCodes = (Integer) params[1];
             // When the camera is provided with an existing file beforehand, the intent is null. The
             // pre-created image can be found via `imageUri`.
@@ -368,9 +416,6 @@ public abstract class ImageActivity extends DooitActivity {
                         ContentResolver cR = ImageActivity.this.getContentResolver();
                         Bitmap bitmap = (Bitmap) data.getExtras().get("data");
 
-                        boolean isUIThread = Looper.myLooper() == Looper.getMainLooper();
-
-                        //Note:  System.gc() is simply a hint to the garbage collector that you want it to do a collection.
                         System.gc();
 
                         bitmap = checkScreenOrientation(imagePath, bitmap, requestCodes);
@@ -396,17 +441,11 @@ public abstract class ImageActivity extends DooitActivity {
 
             processImage(requestCodes);
 
-            ContentResolver cR = ImageActivity.this.getContentResolver();
-            onImageResult(cR.getType(imageUri), imageUri, imagePath);
-            return Long.valueOf(0);
+            return new ImageActivityAsyncTaskResult(imageUri, imagePath);
         }
 
         protected void onProgressUpdate(Integer... progress) {
 
         }
-        protected void onPostExecute(Long result) {
-
-        }
     }
-
 }
