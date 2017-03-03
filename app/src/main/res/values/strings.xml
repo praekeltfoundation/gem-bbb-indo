@@ -701,6 +701,10 @@
     <string name="budget_create_a_income_once_month">Once a month</string>
     <string name="budget_create_a_income_less_month">Less than once a month</string>
 
+    <string name="budget_create_q_savings_default">"Try saving at least 10% of your income as soon as you receive it. This would be $(budget.default_savings_formatted) per week. Do you want to save this much each week?"</string>
+    <string name="budget_create_a_savings_default_accept">Yes</string>
+    <string name="budget_create_a_savings_default_deny">No, I want to save a different amount</string>
+
     <!-- END: BOT -->
 
     <!--Buttons-->

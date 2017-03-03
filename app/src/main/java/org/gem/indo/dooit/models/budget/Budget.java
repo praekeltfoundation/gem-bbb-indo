@@ -9,6 +9,8 @@ import java.util.List;
 
 public class Budget {
 
+    private static double DEFAULT_SAVING_PERCENT = 10.0;
+
     /**
      * The user's monthly income.
      */
@@ -29,11 +31,40 @@ public class Budget {
     // Income //
     ////////////
 
+    public double getIncome() {
+        return income;
+    }
+
+    public void setIncome(double income) {
+        this.income = income;
+    }
+
+
     /////////////
     // Savings //
     /////////////
 
+
+    public double getSavings() {
+        return savings;
+    }
+
+    public void setSavings(double savings) {
+        this.savings = savings;
+    }
+
+    /**
+     * @return The default savings using the Budget's set income.
+     */
+    public double getDefaultSavings() {
+        return (income / 100.0) * DEFAULT_SAVING_PERCENT;
+    }
+
     //////////////
     // Expenses //
     //////////////
+
+    public List<Expense> getExpenses() {
+        return expenses;
+    }
 }

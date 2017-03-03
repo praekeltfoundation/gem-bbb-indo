@@ -35,7 +35,7 @@
       {
         "name": "income_amount",
         "type": "inlineCurrency",
-        "nextOnFinish": "budget_create_end",
+        "nextOnFinish": "budget_create_q_savings_default",
         "typeOnFinish": "textCurrency",
         "inlineEditHint": "$(type_currency_hint)"
       }
@@ -69,6 +69,43 @@
       {
         "name": "budget_create_a_income_once_month",
         "text": "$(budget_create_a_income_less_month)"
+      }
+    ]
+  },
+
+
+
+  {
+    "name": "budget_create_q_savings_default",
+    "type": "text",
+    "text": "$(budget_create_q_savings_default)",
+    "answers": [
+      {
+        "name": "budget_create_a_savings_default_accept",
+        "text": "$(budget_create_a_savings_default_accept)",
+        "next": "budget_create_end"
+      },
+      {
+        "name": "budget_create_a_savings_default_deny",
+        "text": "$(budget_create_a_savings_default_deny)",
+        "next": "budget_create_q_savings_custom"
+      }
+    ]
+  },
+
+
+
+  {
+    "name": "budget_create_q_savings_custom",
+    "type": "blank",
+    "autoAnswer": "budget_create_a_savings",
+    "answers": [
+      {
+        "name": "budget_create_a_savings",
+        "type": "inlineCurrency",
+        "typeOnFinish": "textCurrency",
+        "inlineEditHint": "$(type_currency_hint)",
+        "nextOnFinish": "budget_create_end"
       }
     ]
   },
