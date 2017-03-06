@@ -11,6 +11,7 @@ import org.gem.indo.dooit.R;
 import org.gem.indo.dooit.api.managers.AchievementManager;
 import org.gem.indo.dooit.api.managers.AuthenticationManager;
 import org.gem.indo.dooit.api.managers.BadgeManager;
+import org.gem.indo.dooit.api.managers.BudgetManager;
 import org.gem.indo.dooit.api.managers.ChallengeManager;
 import org.gem.indo.dooit.api.managers.CustomNotificationManager;
 import org.gem.indo.dooit.api.managers.FeedbackManager;
@@ -32,6 +33,7 @@ import javax.inject.Singleton;
 
 import dagger.Module;
 import dagger.Provides;
+import io.realm.Realm;
 
 /**
  * Created by herman on 2016/11/05.
@@ -69,6 +71,12 @@ public class DooitModule {
     @Singleton
     AchievementManager provideAchievementManager() {
         return new AchievementManager(application);
+    }
+
+    @Provides
+    @Singleton
+    BudgetManager provideBudgetManager() {
+        return new BudgetManager(application);
     }
 
     @Provides

@@ -56,10 +56,9 @@ public class DooitApplication extends Application {
 
         // Realm
         Realm.init(this);
-        RealmConfiguration realmConfig = new RealmConfiguration.Builder()
+        Realm.setDefaultConfiguration(new RealmConfiguration.Builder()
                 .deleteRealmIfMigrationNeeded()
-                .build();
-        Realm.setDefaultConfiguration(realmConfig);
+                .build());
 
         // OkHttp
         OkHttpClient.Builder httpClient = new OkHttpClient.Builder();

@@ -11,5 +11,6 @@ public enum BotObjectType {
     GOALS,
     GOAL_PROTOTYPES,
     TIP,
-    SURVEY
+    SURVEY,
+    EXPENSE_CATEGORIES
 }

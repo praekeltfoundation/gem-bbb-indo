@@ -335,7 +335,10 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
                 break;
             case BUDGET_CREATE:
                 feed.parse(R.raw.budget_create, Node.class);
-                initializeBot();
+                new RequirementResolver.Builder(getContext(), BotType.BUDGET_CREATE)
+                        .require(BotObjectType.EXPENSE_CATEGORIES)
+                        .build()
+                        .resolve(reqCallback);
                 break;
         }
     }
@@ -633,7 +636,7 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
             finishConversation();
         } else {
             addAnswerOptions(node);
-            persisted.saveConversationState(type, getBotAdapter().getDataSet());
+//            persisted.saveConversationState(type, getBotAdapter().getDataSet());
             CrashlyticsHelper.log(this.getClass().getSimpleName(), "checkEndOrAddAnswers: ", "data set: " + getBotAdapter().getDataSet());
         }
     }
@@ -660,6 +663,9 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
                     }
                 }
             }
+
+            // End of recursion
+            persisted.saveConversationState(type, getBotAdapter().getDataSet());
         } else if (node.hasAutoNext()) {
             // Auto next set from JSON
             if (BotMessageType.getValueOf(node.getType()) == BotMessageType.STARTCONVO) {
@@ -675,6 +681,10 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
         } else if (node.hasAutoNextNode()) {
             // Auto next set from Java code
             addNode(node.getAutoNextNode());
+        } else {
+
+            // End of recursion
+            persisted.saveConversationState(type, getBotAdapter().getDataSet());
         }
     }
 
