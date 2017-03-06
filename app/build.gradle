@@ -117,7 +117,7 @@ dependencies {
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.4.0'
     compile 'com.github.JakeWharton:ViewPagerIndicator:2.4.1'
     compile 'com.facebook.fresco:imagepipeline-okhttp3:0.14.1'
-    compile 'com.android.support.constraint:constraint-layout:1.0.0-beta4'
+    compile 'com.android.support.constraint:constraint-layout:1.0.1'
     compile 'com.facebook.fresco:animated-gif:0.14.1'
     compile 'com.github.jinatonic:confetti:1.1.0@aar'
     compile('com.crashlytics.sdk.android:crashlytics:2.6.5@aar') {
