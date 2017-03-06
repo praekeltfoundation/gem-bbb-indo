@@ -23,6 +23,8 @@ import java.util.concurrent.TimeUnit;
 import javax.inject.Inject;
 
 import io.fabric.sdk.android.Fabric;
+import io.realm.Realm;
+import io.realm.RealmConfiguration;
 import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -46,11 +48,20 @@ public class DooitApplication extends Application {
         if (!BuildConfig.DEBUG)
             Fabric.with(this, new Crashlytics());
 
+        // Dagger
         component = DaggerDooitComponent.builder()
                 .dooitModule(new DooitModule(this))
                 .build();
         component.inject(this);
 
+        // Realm
+        Realm.init(this);
+        RealmConfiguration realmConfig = new RealmConfiguration.Builder()
+                .deleteRealmIfMigrationNeeded()
+                .build();
+        Realm.setDefaultConfiguration(realmConfig);
+
+        // OkHttp
         OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
         httpClient.addInterceptor(new Interceptor() {
             @Override
@@ -74,6 +85,7 @@ public class DooitApplication extends Application {
                 .writeTimeout(10, TimeUnit.SECONDS)
                 .readTimeout(30, TimeUnit.SECONDS);
 
+        // Fresco
         Set<RequestListener> requestListeners = new HashSet<>();
         requestListeners.add(new RequestLoggingListener());
         ImagePipelineConfig config = OkHttpImagePipelineConfigFactory
@@ -85,7 +97,7 @@ public class DooitApplication extends Application {
         if (Constants.DEBUG)
             FLog.setMinimumLoggingLevel(FLog.DEBUG);
 
-
+        // Calligraphy
         CalligraphyConfig.initDefault(new CalligraphyConfig.Builder()
                 .setDefaultFontPath("fonts/Lato-Regular.ttf")
                 .setFontAttrId(R.attr.fontPath)

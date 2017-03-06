@@ -3,13 +3,20 @@ package org.gem.indo.dooit.models.budget;
 import java.util.ArrayList;
 import java.util.List;
 
+import io.realm.RealmList;
+import io.realm.RealmObject;
+import io.realm.annotations.PrimaryKey;
+
 /**
  * Created by Wimpie Victor on 2017/03/03.
  */
 
-public class Budget {
+public class Budget extends RealmObject {
 
     private static double DEFAULT_SAVING_PERCENT = 10.0;
+
+    @PrimaryKey
+    private long id;
 
     /**
      * The user's monthly income.
@@ -21,10 +28,18 @@ public class Budget {
      */
     private double savings;
 
-    private List<Expense> expenses = new ArrayList<>();
+    private RealmList<Expense> expenses = new RealmList<>();
 
     public Budget() {
 
+    }
+
+    ////////
+    // ID //
+    ////////
+
+    public long getId() {
+        return id;
     }
 
     ////////////
