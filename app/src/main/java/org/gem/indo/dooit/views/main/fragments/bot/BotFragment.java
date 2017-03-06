@@ -295,10 +295,6 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
                         .build()
                         .resolve(reqCallback);
                 break;
-            case TIP_INTRO:
-                feed.parse(R.raw.tip_intro, Node.class);
-                initializeBot();
-                break;
             case SURVEY_BASELINE: {
                 feed.parse(R.raw.survey_baseline, Node.class);
                 RequirementResolver.Builder builder = new RequirementResolver.Builder(
@@ -392,9 +388,6 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
                 break;
             case GOAL_EDIT:
                 getAndAddNode("goal_edit_intro");
-                break;
-            case TIP_INTRO:
-                getAndAddNode("tip_intro_inline_link");
                 break;
             case SURVEY_BASELINE:
                 getAndAddNode(null);
@@ -636,7 +629,6 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
             finishConversation();
         } else {
             addAnswerOptions(node);
-//            persisted.saveConversationState(type, getBotAdapter().getDataSet());
             CrashlyticsHelper.log(this.getClass().getSimpleName(), "checkEndOrAddAnswers: ", "data set: " + getBotAdapter().getDataSet());
         }
     }

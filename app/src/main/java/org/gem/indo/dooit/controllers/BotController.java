@@ -36,7 +36,9 @@ public abstract class BotController {
      *
      * @param answerLog
      */
-    public abstract void onDone(Map<String, Answer> answerLog);
+    public void onDone(Map<String, Answer> answerLog) {
+
+    }
 
     /**
      * Called when the `callback` field is set on a Node.
@@ -45,7 +47,9 @@ public abstract class BotController {
      * @param answerLog The Answer Log up to the point of the calling Node
      * @param model     The calling Node or Answer
      */
-    public abstract void onCall(BotCallType key, Map<String, Answer> answerLog, BaseBotModel model);
+    public void onCall(BotCallType key, Map<String, Answer> answerLog, BaseBotModel model) {
+
+    }
 
     /**
      * Called by viewholders trigger behaviour in the controller.
