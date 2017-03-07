@@ -78,7 +78,7 @@ public class BotAdapter extends RecyclerView.Adapter<BaseBotViewHolder> {
             case GOALGALLERY:
                 return new GoalGalleryViewHolder(LayoutInflater.from(context).inflate(R.layout.item_view_bot_carousel, parent, false), this, tagsClickListener);
             case GOALINFORMATIONGALLERY:
-                return new GoalInformationGalleryViewHolder(LayoutInflater.from(context).inflate(R.layout.item_view_bot_carousel, parent, false), this);
+                return new GoalInformationGalleryViewHolder(LayoutInflater.from(context).inflate(R.layout.item_view_bot_carousel, parent, false), this, tagsClickListener);
             case GOALVERIFICATION:
                 return new GoalVerificationViewHolder(LayoutInflater.from(context).inflate(R.layout.item_view_bot_text, parent, false), this);
             case TIP:
