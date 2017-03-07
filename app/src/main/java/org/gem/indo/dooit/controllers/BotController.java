@@ -52,16 +52,6 @@ public abstract class BotController {
     }
 
     /**
-     * Called by viewholders trigger behaviour in the controller.
-     *
-     * @param model
-     * @param key
-     */
-    public void call(BaseBotModel model, String key) {
-        // Override me
-    }
-
-    /**
      * Called when the `asyncCall` field is set on a Node.
      *
      * @param key       The value of the `callback` field
