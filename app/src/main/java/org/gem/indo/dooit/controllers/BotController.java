@@ -94,6 +94,19 @@ public abstract class BotController {
     }
 
     /**
+     * Validates user input against business rules. If the input is valid, this method should return
+     * a null {@link String} to instruct the Bot to continue with it's next Node. If the input is
+     * invalid, it should return the name of a {@link org.gem.indo.dooit.models.bot.Node} in the
+     * conversation that will inform the user that their input is incorrect.
+     *
+     * @return Name of the {@link org.gem.indo.dooit.models.bot.Node} to display to the user to
+     * inform them that their input is incorrect.
+     */
+    public String validate(Answer answer) {
+        return null;
+    }
+
+    /**
      * Provide a conversation level model object that a Node may require.
      *
      * @return

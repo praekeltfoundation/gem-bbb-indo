@@ -498,6 +498,16 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
             CrashlyticsHelper.log(this.getClass().getSimpleName(), "onItemClicked: ", "adding to conversation: " + answer.toString());
         }
 
+        // Validation
+        if (hasController()) {
+            String nodeName = controller.validate(answer);
+            if (!TextUtils.isEmpty(nodeName)) {
+                // If the validate method returned a string, then the user's input was not valid on
+                // a business logic level. The bot will be directed to an error message Node.
+                // TODO: Direct to an error Node instead of continuing with with th
+            }
+        }
+
         if (answer.hasInputKey() && hasController())
             controller.onAnswerInput(answer.getInputKey(), answer);
 
@@ -510,6 +520,7 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
         if (answer.hasNext())
             getAndAddNode(answer.getNext());
         else
+            // Answer did not point anywhere
             clearAnswerView();
     }
 
