@@ -12,9 +12,14 @@ import org.gem.indo.dooit.DooitApplication;
 import org.gem.indo.dooit.R;
 import org.gem.indo.dooit.api.managers.GoalManager;
 import org.gem.indo.dooit.models.bot.Node;
+import org.gem.indo.dooit.models.enums.BotObjectType;
 import org.gem.indo.dooit.models.exceptions.BotCallbackRequired;
+import org.gem.indo.dooit.models.goal.Goal;
 import org.gem.indo.dooit.views.main.fragments.bot.adapters.BotAdapter;
 import org.gem.indo.dooit.views.main.fragments.bot.adapters.GoalGalleryAdapter;
+import org.gem.indo.dooit.views.main.fragments.bot.adapters.GoalInformationGalleryAdapter;
+
+import java.util.List;
 
 import javax.inject.Inject;
 
@@ -35,7 +40,7 @@ public class GoalInformationGalleryViewHolder extends BaseBotViewHolder<Node> {
     GoalManager goalManager;
 
     private Handler handler;
-    private GoalGalleryAdapter galleryAdapter;
+    private GoalInformationGalleryAdapter galleryAdapter;
     private BotAdapter botAdapter;
     private HashtagView.TagsClickListener listener;
 
@@ -53,13 +58,15 @@ public class GoalInformationGalleryViewHolder extends BaseBotViewHolder<Node> {
 
         LinearLayoutManager manager = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
         recyclerView.setLayoutManager(manager);
-        galleryAdapter = new GoalGalleryAdapter(listener);
+        galleryAdapter = new GoalInformationGalleryAdapter(listener);
         recyclerView.setAdapter(galleryAdapter);
     }
 
     @Override
     public void populate(Node model) {
         super.populate(model);
+        galleryAdapter.setDataModel(model);
+        galleryAdapter.replace((List<Goal>) this.botAdapter.getController().getObject(BotObjectType.GOALS));
     }
 
     @Override

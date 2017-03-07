@@ -19,7 +19,7 @@
   },
   {
     "name": "convo_default_return_q_summary",
-    "type": "goalListSummary",
+    "type": "goalInformationGallery",
     "autoNext": "convo_default_return_q_options"
   },
   {

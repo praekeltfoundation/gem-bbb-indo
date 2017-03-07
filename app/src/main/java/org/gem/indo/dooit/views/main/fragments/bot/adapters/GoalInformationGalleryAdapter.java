@@ -10,8 +10,6 @@ import com.greenfrvr.hashtagview.HashtagView;
 import org.gem.indo.dooit.R;
 import org.gem.indo.dooit.models.bot.Node;
 import org.gem.indo.dooit.models.goal.Goal;
-import org.gem.indo.dooit.models.goal.GoalPrototype;
-import org.gem.indo.dooit.views.main.fragments.bot.viewholders.GoalGalleryItemViewHolder;
 import org.gem.indo.dooit.views.main.fragments.bot.viewholders.GoalInformationGalleryItemViewHolder;
 
 import java.util.ArrayList;
@@ -40,7 +38,7 @@ public class GoalInformationGalleryAdapter extends RecyclerView.Adapter<GoalInfo
     @Override
     public GoalInformationGalleryItemViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.item_view_bot_carousel_card, parent, false);
+                .inflate(R.layout.item_goal_information_view_bot_carousel_card, parent, false);
         return new GoalInformationGalleryItemViewHolder(view);
     }
 
