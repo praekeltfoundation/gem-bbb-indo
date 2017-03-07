@@ -1,5 +1,6 @@
 package org.gem.indo.dooit.views.main.fragments.tip;
 
+import android.app.Activity;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
@@ -13,7 +14,6 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
@@ -201,8 +201,9 @@ public class TipsListFragment extends Fragment implements TipsListFilter.OnFilte
         }).doAfterTerminate(new Action0() {
             @Override
             public void call() {
-                if (getActivity() != null)
-                    getActivity().runOnUiThread(new Runnable() {
+                Activity activity = getActivity();
+                if (activity != null)
+                    activity.runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
                             hideLoadingProgress();
@@ -212,21 +213,17 @@ public class TipsListFragment extends Fragment implements TipsListFilter.OnFilte
         }).subscribe(new Action1<List<Tip>>() {
             @Override
             public void call(final List<Tip> tips) {
-                getView().post(new Runnable() {
-                    @Override
-                    public void run() {
-                        for(Tip tip : tips){
-                            if(tip.hasCoverImageUrl()) {
-                                DraweeHelper.cacheImage(Uri.parse(tip.getCoverImageUrl()));
-                            }
-                        }
-                    }
-                });
-
-                if (getActivity() != null) {
-                    getActivity().runOnUiThread(new Runnable() {
+                Activity activity = getActivity();
+                if (activity != null) {
+                    activity.runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
+                            for (Tip tip : tips) {
+                                if (tip.hasCoverImageUrl()) {
+                                    DraweeHelper.cacheImage(Uri.parse(tip.getCoverImageUrl()));
+                                }
+                            }
+
                             adapter.updateAllTips(tips);
                             adapter.resetFiltered();
                             notifyTipsLoaded(tips);
@@ -239,13 +236,13 @@ public class TipsListFragment extends Fragment implements TipsListFilter.OnFilte
 
     private void hideLoadingProgress() {
         View view = progressContainer;
-        if(view != null)
-        progressContainer.setVisibility(View.GONE);
+        if (view != null)
+            progressContainer.setVisibility(View.GONE);
     }
 
-    private void showLoadingProgress(){
+    private void showLoadingProgress() {
         View view = progressContainer;
-        if(view != null)
+        if (view != null)
             progressContainer.setVisibility(View.VISIBLE);
     }
 

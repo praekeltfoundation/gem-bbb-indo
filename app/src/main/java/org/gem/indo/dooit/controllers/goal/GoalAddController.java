@@ -129,15 +129,15 @@ public class GoalAddController extends GoalBotController {
                     .parseLocalDate(answerLog.get("goalDate").values.getString("date")));
         } else if (answerLog.containsKey("weeklySaveAmount")) {
             CrashlyticsHelper.log(TAG, "doPopulate", "User inputted a weekly target");
-            double weeklyTarget = Double.parseDouble(answerLog.get("weeklySaveAmount").getValue());
-            LocalDate endDate = new LocalDate(Goal.endDateFromTarget(goal.getStartDate().toDate(),
-                    goal.getTarget(), weeklyTarget));
-            goal.setEndDate(endDate);
+            goal.setWeeklyTarget(Double.parseDouble(answerLog.get("weeklySaveAmount").getValue()));
         }
         CrashlyticsHelper.log(TAG, "do Populate (addGoal): ", "goal start date: " + goal.getStartDate() +
                 " Target amount: " + goal.getTarget() + " Goal name: " + goal.getName());
 
         // User has existing savings
+        // Populate can be called multiple times in the conversation. We clear the transactions
+        // to avoid creating duplicates. This conversation only creates one transaction.
+        goal.clearTransactions();
         if (answerLog.containsKey("hasSavedY"))
             goal.createTransaction(Double.parseDouble(answerLog.get("priorSaveAmount").getValue()));
 
