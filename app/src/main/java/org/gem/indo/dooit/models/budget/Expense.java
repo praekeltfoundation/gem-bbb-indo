@@ -31,6 +31,15 @@ public class Expense extends RealmObject {
     @SerializedName("expense_category_id")
     private Long expenseCategoryId;
 
+    public Expense() {
+        // Required empty constructor
+    }
+
+    public Expense(String name, double value) {
+        this.name = name;
+        this.value = value;
+    }
+
     ////////
     // ID //
     ////////

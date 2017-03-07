@@ -82,4 +82,15 @@ public class Budget extends RealmObject {
     public List<Expense> getExpenses() {
         return expenses;
     }
+
+    public void addExpense(Expense expense) {
+        expenses.add(expense);
+    }
+
+    public double getExpense() {
+        double expense = 0.0;
+        for (Expense e : expenses)
+            expense += e.getValue();
+        return expense;
+    }
 }
