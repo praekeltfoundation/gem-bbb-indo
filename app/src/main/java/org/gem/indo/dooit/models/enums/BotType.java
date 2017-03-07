@@ -36,7 +36,7 @@ public enum BotType {
         for (BotType type : BotType.values())
             map.put(type.id, type);
     }
-    
+
     int id;
 
     BotType(int id) {

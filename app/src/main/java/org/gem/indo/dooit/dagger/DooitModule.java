@@ -21,11 +21,11 @@ import org.gem.indo.dooit.api.managers.SurveyManager;
 import org.gem.indo.dooit.api.managers.TipManager;
 import org.gem.indo.dooit.api.managers.UserManager;
 import org.gem.indo.dooit.helpers.DooitSharedPreferences;
-import org.gem.indo.dooit.helpers.auth.InvalidTokenRedirectHelper;
-import org.gem.indo.dooit.helpers.auth.InvalidTokenHandler;
-import org.gem.indo.dooit.helpers.auth.OpenLoginHandler;
 import org.gem.indo.dooit.helpers.Persisted;
 import org.gem.indo.dooit.helpers.activity.result.ActivityForResultHelper;
+import org.gem.indo.dooit.helpers.auth.InvalidTokenHandler;
+import org.gem.indo.dooit.helpers.auth.InvalidTokenRedirectHelper;
+import org.gem.indo.dooit.helpers.auth.OpenLoginHandler;
 import org.gem.indo.dooit.helpers.bot.BotFeed;
 import org.gem.indo.dooit.helpers.permissions.PermissionsHelper;
 
@@ -33,7 +33,6 @@ import javax.inject.Singleton;
 
 import dagger.Module;
 import dagger.Provides;
-import io.realm.Realm;
 
 /**
  * Created by herman on 2016/11/05.

@@ -1,6 +1,6 @@
 package org.gem.indo.dooit;
 
-import android.app.Application;
+import android.support.multidex.MultiDexApplication;
 
 import com.crashlytics.android.Crashlytics;
 import com.facebook.common.logging.FLog;
@@ -35,7 +35,7 @@ import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
  * Created by herman on 2016/11/05.
  */
 
-public class DooitApplication extends Application {
+public class DooitApplication extends MultiDexApplication {
 
     public DooitComponent component;
 
