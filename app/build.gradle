@@ -44,7 +44,9 @@ android {
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
         buildConfigField "long", "TIMESTAMP", System.currentTimeMillis() + "L"
+        multiDexEnabled true
     }
+
     buildTypes {
         debug {
             minifyEnabled false
@@ -57,6 +59,7 @@ android {
             ext.betaDistributionReleaseNotesFilePath = "app/release-notes.txt"
         }
     }
+
     productFlavors {
         staging {
             applicationId "org.gem.indo.dooit.staging"
@@ -67,6 +70,10 @@ android {
         automation {
             applicationId "org.gem.indo.dooit.automation"
         }
+    }
+
+    dexOptions {
+        javaMaxHeapSize "4g"
     }
 }
 
@@ -125,6 +132,7 @@ dependencies {
         transitive = true;
     }
     compile 'com.google.android.gms:play-services-analytics:10.2.0'
+    compile 'com.android.support:multidex:1.0.1'
 }
 
 // Analytics plugin has to be applied last, else a version conflict error is thrown

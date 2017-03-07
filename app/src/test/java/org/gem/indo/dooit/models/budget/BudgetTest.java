@@ -22,4 +22,14 @@ public class BudgetTest {
 
         Assert.assertEquals(7000.0, budget.getDefaultSavings());
     }
+
+    @Test
+    public void getExpense_basic() throws Exception {
+        Budget budget = new Budget();
+        budget.setIncome(70000.0);
+        budget.addExpense(new Expense("Snacks", 1000.0));
+        budget.addExpense(new Expense("Clothes", 2000.0));
+
+        Assert.assertEquals(budget.getExpense(), 3000.0);
+    }
 }

@@ -13,6 +13,7 @@ import org.gem.indo.dooit.api.managers.ChallengeManager;
 import org.gem.indo.dooit.api.managers.GoalManager;
 import org.gem.indo.dooit.api.managers.SurveyManager;
 import org.gem.indo.dooit.api.managers.TipManager;
+import org.gem.indo.dooit.dao.budget.ExpenseCategoryBotDAO;
 import org.gem.indo.dooit.helpers.Persisted;
 import org.gem.indo.dooit.helpers.images.DraweeHelper;
 import org.gem.indo.dooit.models.Tip;
@@ -132,19 +133,7 @@ public class RequirementResolver {
                             // Survey was retrieved by bot type
                             persisted.saveConvoSurvey(botType, ((List<CoachSurvey>) o).get(0));
                         else if (((List) o).get(0) instanceof ExpenseCategory) {
-                            Realm realm = null;
-                            try {
-                                realm = Realm.getDefaultInstance();
-                                realm.beginTransaction();
-                                realm.copyToRealmOrUpdate((List<ExpenseCategory>) o);
-                                realm.commitTransaction();
-                            } catch (Throwable e) {
-                                if (realm != null && realm.isInTransaction())
-                                    realm.cancelTransaction();
-                            } finally {
-                                if (realm != null)
-                                    realm.close();
-                            }
+                            new ExpenseCategoryBotDAO().update(botType, (List<ExpenseCategory>) o);
                         }
                     } else if (o instanceof BaseChallenge) {
                         persisted.saveConvoChallenge(botType, (BaseChallenge) o);
@@ -328,19 +317,7 @@ public class RequirementResolver {
             observable.subscribe(new Action1<List<ExpenseCategory>>() {
                 @Override
                 public void call(final List<ExpenseCategory> expenseCategories) {
-                    Realm realm = null;
-                    try {
-                        realm = Realm.getDefaultInstance();
-                        realm.beginTransaction();
-                        realm.copyToRealmOrUpdate(expenseCategories);
-                        realm.commitTransaction();
-                    } catch (Throwable e) {
-                        if (realm != null && realm.isInTransaction())
-                            realm.cancelTransaction();
-                    } finally {
-                        if (realm != null)
-                            realm.close();
-                    }
+                    new ExpenseCategoryBotDAO().update(botType, expenseCategories);
                 }
             });
         else
