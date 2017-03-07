@@ -58,7 +58,7 @@ public class GoalInformationGalleryViewHolder extends BaseBotViewHolder<Node> {
 
         LinearLayoutManager manager = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
         recyclerView.setLayoutManager(manager);
-        galleryAdapter = new GoalInformationGalleryAdapter(listener);
+        galleryAdapter = new GoalInformationGalleryAdapter(listener, getContext());
         recyclerView.setAdapter(galleryAdapter);
     }
 
