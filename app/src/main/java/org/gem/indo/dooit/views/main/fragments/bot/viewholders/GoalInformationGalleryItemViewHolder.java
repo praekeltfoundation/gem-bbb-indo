@@ -32,13 +32,17 @@ public class GoalInformationGalleryItemViewHolder extends RecyclerView.ViewHolde
     @BindView(R.id.item_view_bot_carousel_card_title_goal)
     TextView title;
 
-    @BindView(R.id.item_view_bot_carousel_card_separator_goal)
-    View separator;
+    @BindView(R.id.item_view_bot_carousel_card_title_amount)
+    TextView amount;
+
+    @BindView(R.id.item_view_bot_carousel_card_separator1_goal)
+    View separator1;
+
+    @BindView(R.id.item_view_bot_carousel_card_separator2_goal)
+    View separator2;
 
     @BindView(R.id.item_view_bot_carousel_card_select_goal)
     TextView select;
-
-    private Node dataModel;
 
     public GoalInformationGalleryItemViewHolder(View itemView) {
         super(itemView);
@@ -46,17 +50,17 @@ public class GoalInformationGalleryItemViewHolder extends RecyclerView.ViewHolde
 
         // Must assign programmatically for Support Library to wrap before API 21
         background.setBackground(ContextCompat.getDrawable(itemView.getContext(), R.drawable.bkg_carousel_card));
-        separator.setBackground(ContextCompat.getDrawable(itemView.getContext(), R.drawable.bkg_carousel_separator));
+        separator1.setBackground(ContextCompat.getDrawable(itemView.getContext(), R.drawable.bkg_carousel_separator));
+        separator2.setBackground(ContextCompat.getDrawable(itemView.getContext(), R.drawable.bkg_carousel_separator));
     }
 
-    public void populate(final Goal goal, Node model, final HashtagView.TagsClickListener listener) {
+    public void populate(final Goal goal, final HashtagView.TagsClickListener listener) {
         reset();
-
-        dataModel = model;
 
         if (goal.hasImageUrl())
             DraweeHelper.setProgressiveUri(image, Uri.parse(goal.getImageUrl()));
         title.setText(goal.getName());
+        amount.setText(goal.getValueFormatted());
         itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -67,7 +71,6 @@ public class GoalInformationGalleryItemViewHolder extends RecyclerView.ViewHolde
 
     private void reset() {
         title.setText("");
-        dataModel = null;
         itemView.setOnClickListener(null);
     }
 }

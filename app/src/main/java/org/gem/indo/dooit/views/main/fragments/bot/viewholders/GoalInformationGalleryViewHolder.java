@@ -65,7 +65,6 @@ public class GoalInformationGalleryViewHolder extends BaseBotViewHolder<Node> {
     @Override
     public void populate(Node model) {
         super.populate(model);
-        galleryAdapter.setDataModel(model);
         galleryAdapter.replace((List<Goal>) this.botAdapter.getController().getObject(BotObjectType.GOALS));
     }
 

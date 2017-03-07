@@ -23,7 +23,6 @@ import java.util.List;
 public class GoalInformationGalleryAdapter extends RecyclerView.Adapter<GoalInformationGalleryItemViewHolder> {
     private List<Goal> prototypes;
     private HashtagView.TagsClickListener listener;
-    private Node dataModel;
 
     public GoalInformationGalleryAdapter(HashtagView.TagsClickListener listener) {
         this.prototypes = new ArrayList<>();
@@ -44,11 +43,7 @@ public class GoalInformationGalleryAdapter extends RecyclerView.Adapter<GoalInfo
 
     @Override
     public void onBindViewHolder(GoalInformationGalleryItemViewHolder holder, int position) {
-        holder.populate(prototypes.get(position), dataModel, listener);
-    }
-
-    public void setDataModel(Node dataModel) {
-        this.dataModel = dataModel;
+        holder.populate(prototypes.get(position), listener);
     }
 
     public void replace(Collection<Goal> prototypes) {

@@ -29,10 +29,30 @@
         tools:text="Goal"/>
 
     <View
-        android:id="@+id/item_view_bot_carousel_card_separator_goal"
+        android:id="@+id/item_view_bot_carousel_card_separator1_goal"
         android:layout_width="match_parent"
         android:layout_height="1.5dp"
         android:layout_below="@id/item_view_bot_carousel_card_title_goal"
+        android:layout_marginTop="4dp"
+        tools:background="@drawable/bkg_carousel_separator"
+        />
+
+    <TextView
+        android:id="@+id/item_view_bot_carousel_card_title_amount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        style="@style/AppTheme.TextView.Regular.Large"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/item_view_bot_carousel_card_separator1_goal"
+        android:layout_marginTop="4dp"
+        android:textColor="@color/black"
+        tools:text="Amount"/>
+
+    <View
+        android:id="@+id/item_view_bot_carousel_card_separator2_goal"
+        android:layout_width="match_parent"
+        android:layout_height="1.5dp"
+        android:layout_below="@id/item_view_bot_carousel_card_title_amount"
         android:layout_marginTop="4dp"
         tools:background="@drawable/bkg_carousel_separator"
         />
@@ -43,7 +63,7 @@
         android:layout_height="wrap_content"
         style="@style/AppTheme.TextView.Bold.Large"
         android:layout_centerHorizontal="true"
-        android:layout_below="@id/item_view_bot_carousel_card_separator_goal"
+        android:layout_below="@id/item_view_bot_carousel_card_separator2_goal"
         android:layout_marginTop="4dp"
         android:layout_marginBottom="4dp"
         android:textColor="@color/light_blue"
