@@ -4,6 +4,8 @@ import android.app.Application;
 
 import org.gem.indo.dooit.api.DooitErrorHandler;
 import org.gem.indo.dooit.api.interfaces.BudgetAPI;
+import org.gem.indo.dooit.api.responses.BudgetCreateResponse;
+import org.gem.indo.dooit.models.budget.Budget;
 import org.gem.indo.dooit.models.budget.ExpenseCategory;
 
 import java.util.List;
@@ -26,5 +28,9 @@ public class BudgetManager extends DooitManager {
 
     public Observable<List<ExpenseCategory>> retrieveExpenseCategories(DooitErrorHandler errorHandler) {
         return useNetwork(budgetAPI.getExpenseCategories(), errorHandler);
+    }
+
+    public Observable<BudgetCreateResponse> upsertBudget(Budget budget, DooitErrorHandler errorHandler) {
+        return useNetwork(budgetAPI.upsertBudget(budget), errorHandler);
     }
 }

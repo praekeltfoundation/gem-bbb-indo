@@ -1,6 +1,7 @@
 package org.gem.indo.dooit.views.main.fragments.bot;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -60,6 +61,7 @@ import org.gem.indo.dooit.views.main.fragments.bot.adapters.BotAdapter;
 import org.gem.indo.dooit.views.main.fragments.bot.adapters.QuickAnswerAdapter;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -456,7 +458,7 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
                         persisted.loadParticipantBadge(botType),
                         persisted.loadParticipantChallenge(botType));
             case BUDGET_CREATE:
-                return new BudgetCreateController(getActivity(), null);
+                return new BudgetCreateController(getActivity(), this, null);
             default:
                 return null;
         }
@@ -528,6 +530,18 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
             }
         }
         return answerLog;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @NonNull
+    @Override
+    public Map<String, Answer> getAnswerLog() {
+        BotAdapter adapter = getBotAdapter();
+        if (adapter == null)
+            return new LinkedHashMap<>();
+        return createAnswerLog(adapter.getDataSet());
     }
 
     ///////////

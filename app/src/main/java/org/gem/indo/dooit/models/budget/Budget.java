@@ -1,6 +1,5 @@
 package org.gem.indo.dooit.models.budget;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import io.realm.RealmList;
@@ -72,6 +71,10 @@ public class Budget extends RealmObject {
      * @return The default savings using the Budget's set income.
      */
     public double getDefaultSavings() {
+        return calcDefaultSavings(income);
+    }
+
+    public static double calcDefaultSavings(double income) {
         return (income / 100.0) * DEFAULT_SAVING_PERCENT;
     }
 
