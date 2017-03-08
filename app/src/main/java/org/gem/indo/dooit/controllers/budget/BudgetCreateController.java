@@ -113,6 +113,30 @@ public class BudgetCreateController extends DooitBotController {
     }
 
     @Override
+    public boolean validate(String name, String input) {
+        switch (name) {
+            case "income_amount":
+                return validateIncome(input);
+            default:
+                return super.validate(name, input);
+        }
+    }
+
+    private boolean validateIncome(String input) {
+        try {
+            double income = Double.parseDouble(input);
+            if (income <= 0.0) {
+                toast("Income cannot be Rp0");
+                return false;
+            }
+            return true;
+        } catch (NumberFormatException e) {
+            toast("Invalid number");
+            return false;
+        }
+    }
+
+    @Override
     public void onAsyncCall(BotCallType key, Map<String, Answer> answerLog, BaseBotModel model, OnAsyncListener listener) {
         switch (key) {
             case DO_CREATE:

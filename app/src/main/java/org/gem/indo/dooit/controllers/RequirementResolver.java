@@ -13,6 +13,7 @@ import org.gem.indo.dooit.api.managers.ChallengeManager;
 import org.gem.indo.dooit.api.managers.GoalManager;
 import org.gem.indo.dooit.api.managers.SurveyManager;
 import org.gem.indo.dooit.api.managers.TipManager;
+import org.gem.indo.dooit.dao.budget.BudgetDAO;
 import org.gem.indo.dooit.dao.budget.ExpenseCategoryBotDAO;
 import org.gem.indo.dooit.helpers.Persisted;
 import org.gem.indo.dooit.helpers.images.DraweeHelper;

@@ -229,6 +229,20 @@
     <!-- Answers -->
     <string name="goal_add_greeting_response">Hola!</string>
 
+    <!-- goal_add Validation -->
+
+    <string name="goal_add_err__invalid_number">Invalid number</string>
+    <string name="goal_add_err_user_firstname__empty">Name cannot be empty</string>
+    <string name="goal_add_err_goal_target__empty">Goal target cannot be empty</string>
+    <string name="goal_add_err_goal_target__zero">Goal target cannot be Rp0</string>
+    <string name="goal_add_err_transaction__empty">Savings cannot be empty</string>
+    <string name="goal_add_err_transaction__zero">Savings cannot be Rp0</string>
+    <string name="goal_add_err_weekly_target__empty">Weekly target cannot be empty</string>
+    <string name="goal_add_err_weekly_target__zero">Weekly target cannot be Rp0</string>
+    <string name="goal_add_err_weekly_target__goal_target">Weekly target cannot be more than your total Goal target</string>
+
+    <!-- END BOT: goal_add -->
+
     <!-- BOT: goal_deposit -->
     <!-- User clicks on add savings (+ Deposit) on Goal saving page  -->
     <string name="goal_deposit_intro">Let\'s add your savings!</string>

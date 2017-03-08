@@ -15,7 +15,7 @@ public interface BotRunner {
     void addNode(Node node);
 
     /**
-     * Returns the converastion history as a mapping from Answer names to actual Answers.
+     * Returns the conversation history as a mapping from Answer names to actual Answers.
      * <p>
      * Also includes a mapping from associated Node names to their related Answers.
      *

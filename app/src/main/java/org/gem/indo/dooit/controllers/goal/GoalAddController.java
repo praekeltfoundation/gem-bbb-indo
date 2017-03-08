@@ -5,6 +5,7 @@ import android.net.Uri;
 import android.text.TextUtils;
 
 import org.gem.indo.dooit.DooitApplication;
+import org.gem.indo.dooit.R;
 import org.gem.indo.dooit.api.DooitAPIError;
 import org.gem.indo.dooit.api.DooitErrorHandler;
 import org.gem.indo.dooit.api.managers.FileUploadManager;
@@ -251,6 +252,106 @@ public class GoalAddController extends GoalBotController {
             goal.setTarget(goal.getPrototype().getDefaultPrice());
         } else {
             goal.setTarget(0);
+        }
+    }
+
+    ////////////////
+    // Validation //
+    ////////////////
+
+    @Override
+    public boolean validate(String name, String input) {
+        switch (name) {
+            case "goal_add_user_firstname":
+            case "goal_name":
+                return validateName(input);
+            case "goal_amount":
+            case "goal_add_q_change_target":
+                // Goal Target
+                return validateTarget(input);
+            case "priorSaveAmount":
+                // Existing savings
+                return validateTransaction(input);
+            case "weeklySaveAmount":
+                // Weekly target
+                return validateWeeklyTarget(input);
+            default:
+                return super.validate(name, input);
+        }
+    }
+
+    private boolean validateName(String input) {
+        if (TextUtils.isEmpty(input)) {
+            toast(R.string.goal_add_err_user_firstname__empty);
+            return false;
+        }
+        return true;
+    }
+
+    private boolean validateTarget(String input) {
+        if (TextUtils.isEmpty(input)) {
+            toast(R.string.goal_add_err_goal_target__empty);
+            return false;
+        }
+
+        try {
+            double value = Double.parseDouble(input);
+            if (value <= 0.0) {
+                toast(R.string.goal_add_err_goal_target__zero);
+                return false;
+            }
+            return true;
+        } catch (NumberFormatException e) {
+            toast(R.string.goal_add_err__invalid_number);
+            return false;
+        }
+    }
+
+    private boolean validateTransaction(String input) {
+        if (TextUtils.isEmpty(input)) {
+            toast(R.string.goal_add_err_transaction__empty);
+            return false;
+        }
+
+        try {
+            double value = Double.parseDouble(input);
+            if (value <= 0.0) {
+                toast(R.string.goal_add_err_transaction__zero);
+                return false;
+            }
+            return true;
+        } catch (NumberFormatException e) {
+            toast(R.string.goal_add_err__invalid_number);
+            return false;
+        }
+    }
+
+    private boolean validateWeeklyTarget(String input) {
+        if (TextUtils.isEmpty(input)) {
+            toast(R.string.goal_add_err_weekly_target__empty);
+            return false;
+        }
+
+        try {
+            double value = Double.parseDouble(input);
+
+            // Search for Goal Target entry
+            Map<String, Answer> answerLog = botRunner.getAnswerLog();
+            Double goalTarget = null;
+            if (answerLog.containsKey("goal_amount"))
+                goalTarget = Double.parseDouble(answerLog.get("goal_amount").getValue());
+
+            if (value <= 0.0) {
+                toast(R.string.goal_add_err_weekly_target__zero);
+                return false;
+            } else if (goalTarget != null && value > goalTarget) {
+                toast(R.string.goal_add_err_weekly_target__goal_target);
+                return false;
+            }
+            return true;
+        } catch (NumberFormatException e) {
+            toast(R.string.goal_add_err__invalid_number);
+            return false;
         }
     }
 }

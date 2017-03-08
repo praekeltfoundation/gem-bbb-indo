@@ -14,6 +14,7 @@ import org.gem.indo.dooit.models.enums.BotType;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * Created by Wimpie Victor on 2016/11/20.
@@ -107,6 +108,15 @@ public abstract class BotController {
     }
 
     /**
+     * @param name The name of the Answer that received the input.
+     * @param input The actual user's input.
+     * @return true if valid, false if invalid
+     */
+    public boolean validate(String name, String input) {
+        return true;
+    }
+
+    /**
      * Provide a conversation level model object that a Node may require.
      *
      * @return
@@ -160,5 +170,9 @@ public abstract class BotController {
 
     public interface OnAsyncListener {
         void onDone();
+    }
+
+    protected Context getContext() {
+        return context;
     }
 }

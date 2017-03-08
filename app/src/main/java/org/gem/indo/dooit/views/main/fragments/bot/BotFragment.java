@@ -39,6 +39,7 @@ import org.gem.indo.dooit.controllers.goal.GoalWithdrawController;
 import org.gem.indo.dooit.controllers.misc.ReturningUserController;
 import org.gem.indo.dooit.controllers.survey.BaselineSurveyController;
 import org.gem.indo.dooit.controllers.survey.EAToolSurveyController;
+import org.gem.indo.dooit.dao.budget.BudgetDAO;
 import org.gem.indo.dooit.helpers.Persisted;
 import org.gem.indo.dooit.helpers.SquiggleBackgroundHelper;
 import org.gem.indo.dooit.helpers.bot.BotFeed;
@@ -496,16 +497,6 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
         if (shouldAdd(answer)) {
             getBotAdapter().addItem(answer);
             CrashlyticsHelper.log(this.getClass().getSimpleName(), "onItemClicked: ", "adding to conversation: " + answer.toString());
-        }
-
-        // Validation
-        if (hasController()) {
-            String nodeName = controller.validate(answer);
-            if (!TextUtils.isEmpty(nodeName)) {
-                // If the validate method returned a string, then the user's input was not valid on
-                // a business logic level. The bot will be directed to an error message Node.
-                // TODO: Direct to an error Node instead of continuing with with th
-            }
         }
 
         if (answer.hasInputKey() && hasController())
