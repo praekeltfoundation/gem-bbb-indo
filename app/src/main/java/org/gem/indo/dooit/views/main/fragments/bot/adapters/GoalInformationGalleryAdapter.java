@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import com.greenfrvr.hashtagview.HashtagView;
 
 import org.gem.indo.dooit.R;
+import org.gem.indo.dooit.models.bot.Node;
 import org.gem.indo.dooit.models.goal.Goal;
 import org.gem.indo.dooit.views.main.fragments.bot.viewholders.GoalInformationGalleryItemViewHolder;
 
@@ -21,19 +22,20 @@ import java.util.List;
  */
 
 public class GoalInformationGalleryAdapter extends RecyclerView.Adapter<GoalInformationGalleryItemViewHolder> {
-    private List<Goal> prototypes;
+    private List<Goal> goals;
     private HashtagView.TagsClickListener listener;
     private Context context;
+    private Node dataModel;
 
     public GoalInformationGalleryAdapter(HashtagView.TagsClickListener listener, Context context) {
-        this.prototypes = new ArrayList<>();
+        this.goals = new ArrayList<>();
         this.listener = listener;
         this.context = context;
     }
 
     @Override
     public int getItemCount() {
-        return prototypes == null ? 0 : prototypes.size();
+        return goals == null ? 0 : goals.size();
     }
 
     @Override
@@ -45,12 +47,18 @@ public class GoalInformationGalleryAdapter extends RecyclerView.Adapter<GoalInfo
 
     @Override
     public void onBindViewHolder(GoalInformationGalleryItemViewHolder holder, int position) {
-        holder.populate(prototypes.get(position), listener);
+        holder.populate(goals.get(position), dataModel, listener);
     }
 
-    public void replace(Collection<Goal> prototypes) {
-        this.prototypes.clear();
-        this.prototypes.addAll(prototypes);
-        notifyDataSetChanged();
+    public void setDataModel(Node dataModel) {
+        this.dataModel = dataModel;
+    }
+
+    public void replace(Collection<Goal> goals) {
+        this.goals.clear();
+        if(goals != null) {
+            this.goals.addAll(goals);
+            notifyDataSetChanged();
+        }
     }
 }

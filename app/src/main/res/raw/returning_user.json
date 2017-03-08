@@ -73,5 +73,11 @@
   {
     "name": "convo_default_return_end",
     "type": "end"
+  },
+
+  {
+    "name": "start_deposit_conversation",
+    "type": "startConvo",
+    "autoNext": "GOAL_DEPOSIT"
   }
 ]

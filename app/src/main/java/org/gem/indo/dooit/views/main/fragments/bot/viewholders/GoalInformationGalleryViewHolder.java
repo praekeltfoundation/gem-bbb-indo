@@ -15,6 +15,7 @@ import org.gem.indo.dooit.models.bot.Node;
 import org.gem.indo.dooit.models.enums.BotObjectType;
 import org.gem.indo.dooit.models.exceptions.BotCallbackRequired;
 import org.gem.indo.dooit.models.goal.Goal;
+import org.gem.indo.dooit.views.main.fragments.bot.BotFragment;
 import org.gem.indo.dooit.views.main.fragments.bot.adapters.BotAdapter;
 import org.gem.indo.dooit.views.main.fragments.bot.adapters.GoalGalleryAdapter;
 import org.gem.indo.dooit.views.main.fragments.bot.adapters.GoalInformationGalleryAdapter;
@@ -65,6 +66,7 @@ public class GoalInformationGalleryViewHolder extends BaseBotViewHolder<Node> {
     @Override
     public void populate(Node model) {
         super.populate(model);
+        galleryAdapter.setDataModel(model);
         galleryAdapter.replace((List<Goal>) this.botAdapter.getController().getObject(BotObjectType.GOALS));
     }
 

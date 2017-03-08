@@ -52,6 +52,7 @@ import org.gem.indo.dooit.models.enums.BotMessageType;
 import org.gem.indo.dooit.models.enums.BotObjectType;
 import org.gem.indo.dooit.models.enums.BotParamType;
 import org.gem.indo.dooit.models.enums.BotType;
+import org.gem.indo.dooit.models.goal.Goal;
 import org.gem.indo.dooit.views.main.MainActivity;
 import org.gem.indo.dooit.views.main.MainViewPagerPositions;
 import org.gem.indo.dooit.views.main.fragments.MainFragment;
@@ -654,9 +655,16 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
             // Auto next set from JSON
             if (BotMessageType.getValueOf(node.getType()) == BotMessageType.STARTCONVO) {
                 // Auto load next conversation
-                finishConversation();
                 BotType botType = BotType.valueOf(node.getAutoNext().toUpperCase());
+                Goal goal = null;
+                if(botType == BotType.GOAL_DEPOSIT){
+                    goal = persisted.loadConvoGoal(BotType.GOAL_DEPOSIT);
+                }
+                finishConversation();
                 setBotType(botType);
+                if(botType == BotType.GOAL_DEPOSIT){
+                    persisted.saveConvoGoal(BotType.GOAL_DEPOSIT, goal);
+                }
                 createFeed();
             } else {
                 // Auto load next node in current conversation

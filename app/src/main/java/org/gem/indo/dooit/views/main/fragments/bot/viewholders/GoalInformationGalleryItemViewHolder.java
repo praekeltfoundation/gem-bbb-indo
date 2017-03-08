@@ -1,5 +1,6 @@
 package org.gem.indo.dooit.views.main.fragments.bot.viewholders;
 
+import android.app.Activity;
 import android.content.Context;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
@@ -9,10 +10,20 @@ import android.widget.TextView;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.greenfrvr.hashtagview.HashtagView;
 
+import org.gem.indo.dooit.DooitApplication;
 import org.gem.indo.dooit.R;
+import org.gem.indo.dooit.helpers.Persisted;
+import org.gem.indo.dooit.models.bot.Answer;
+import org.gem.indo.dooit.models.bot.Node;
+import org.gem.indo.dooit.models.enums.BotMessageType;
+import org.gem.indo.dooit.models.enums.BotParamType;
+import org.gem.indo.dooit.models.enums.BotType;
 import org.gem.indo.dooit.models.goal.Goal;
 import org.gem.indo.dooit.views.custom.ArcProgressBar;
 import org.gem.indo.dooit.views.helpers.activity.CurrencyHelper;
+import org.gem.indo.dooit.views.main.fragments.bot.BotFragment;
+
+import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -34,23 +45,30 @@ public class GoalInformationGalleryItemViewHolder extends RecyclerView.ViewHolde
     @BindView(R.id.progress_arc)
     ArcProgressBar arcProgressBar;
 
+    @Inject
+    Persisted persisted;
+
     private Context context;
+
+    private Node dataModel;
 
     public GoalInformationGalleryItemViewHolder(View itemView, Context context) {
         super(itemView);
         ButterKnife.bind(this, itemView);
+
         this.context = context;
 
-        itemView.setBackground(ContextCompat.getDrawable(context, R.drawable.bkg_carousel_card));
+        Activity activity = (Activity) context;
+        ((DooitApplication) activity.getApplication()).component.inject(this);
 
-//        // Must assign programmatically for Support Library to wrap before API 21
-//        background.setBackground(ContextCompat.getDrawable(itemView.getContext(), R.drawable.bkg_carousel_card));
-//        separator1.setBackground(ContextCompat.getDrawable(itemView.getContext(), R.drawable.bkg_carousel_separator));
-//        separator2.setBackground(ContextCompat.getDrawable(itemView.getContext(), R.drawable.bkg_carousel_separator));
+        itemView.setBackground(ContextCompat.getDrawable(context, R.drawable.bkg_carousel_card));
     }
 
-    public void populate(final Goal goal, final HashtagView.TagsClickListener listener) {
+    public void populate(final Goal goal, Node model,  final HashtagView.TagsClickListener listener) {
         reset();
+
+        dataModel = model;
+
         String name = goal.getName();
         double value = goal.getValue();
         double target = goal.getTarget();
@@ -77,7 +95,21 @@ public class GoalInformationGalleryItemViewHolder extends RecyclerView.ViewHolde
         itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //Todo When an item is clicked the app should navigate to that goal
+                //Todo When an item is clicked the app should navigate to the deposit conversation
+
+                Answer answer = new Answer();
+                answer.setName(dataModel.getAnswerName());
+                answer.setType(BotMessageType.BLANK);
+//                answer.setInputKey(BotParamType.GOAL);
+//                answer.values.put(BotParamType.GOAL_NAME.getKey(), goal.getName());
+//                answer.values.put(BotParamType.GOAL_VALUE.getKey(), goal.getValue());
+//                answer.values.put(BotParamType.GOAL_TARGET.getKey(), goal.getTarget());
+//                answer.values.put(BotParamType.GOAL_END_DATE.getKey(), goal.getEndDate().toString());
+//                answer.values.put(BotParamType.GOAL_WEEKLY_TARGET.getKey(),goal.getWeeklyTarget());
+                answer.setNext("start_deposit_conversation");
+                answer.setText(null);
+                persisted.saveConvoGoal(BotType.GOAL_DEPOSIT, goal);
+                listener.onItemClicked(answer);
             }
         });
     }
@@ -89,6 +121,5 @@ public class GoalInformationGalleryItemViewHolder extends RecyclerView.ViewHolde
         totalTextView.setText("");
         image.clearAnimation();
         itemView.setOnClickListener(null);
-
     }
 }

@@ -1,5 +1,7 @@
 package org.gem.indo.dooit.models.enums;
 
+import org.gem.indo.dooit.models.goal.Goal;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -20,6 +22,7 @@ public enum BotParamType {
     USER_GOALS("user.goals"),
 
     // Goal
+    GOAL("goal"),
     GOAL_NAME("goal.name"),
     GOAL_VALUE("goal.value"),
     GOAL_TARGET("goal.target"),
