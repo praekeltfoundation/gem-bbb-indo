@@ -15,11 +15,18 @@
     "name": "convo_default_return_q_progress_intro",
     "type": "text",
     "text": "$(convo_default_return_q_progress_intro)",
-    "autoNext": "convo_default_return_q_summary"
+    "autoNext": "convo_default_return_q_you_have_saved_words"
   },
   {
+    "name": "convo_default_return_q_you_have_saved_words",
+    "type": "text",
+    "text": "$(convo_default_return_q_you_have_saved_words)",
+    "autoNext": "convo_default_return_q_summary"
+  },
+
+  {
     "name": "convo_default_return_q_summary",
-    "type": "goalInformationGallery",
+    "type": "goalListSummary",
     "autoNext": "convo_default_return_q_options"
   },
   {
@@ -39,7 +46,7 @@
       {
         "name": "convo_default_return_a_progress_intro_target",
         "text": "$(convo_default_return_a_progress_intro_target)",
-        "next": "convo_default_return_q_target_show"
+        "next": "convo_default_return_q_which_goal"
       }
     ]
   },
@@ -66,9 +73,14 @@
     "autoNext": "convo_default_return_end"
   },
   {
-    "name": "convo_default_return_q_target_show",
-    "type": "end",
-    "autoNextScreen": "TARGET"
+    "name": "convo_default_return_q_which_goal",
+    "type": "text",
+    "text": "$(convo_default_return_q_which_goal)",
+    "autoNext": "convo_default_return_q_goal_carousel"
+  },
+  {
+    "name": "convo_default_return_q_goal_carousel",
+    "type": "goalInformationGallery"
   },
   {
     "name": "convo_default_return_end",

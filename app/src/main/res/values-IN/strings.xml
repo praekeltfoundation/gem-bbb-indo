@@ -172,9 +172,11 @@
     <string name="convo_default_return_q_greeting_1">Halo, $(user.preferred_name)!</string>
     <string name="convo_default_return_q_greeting_2">Senang bertemu denganmu lagi!</string>
     <string name="convo_default_return_q_progress_intro">Mari kita lihat perkembangan tabunganmu&#8230;</string>
+    <string name="convo_default_return_q_you_have_saved_words">Tabungan kamu:</string>
+    <string name="convo_default_return_q_which_goal">Kamu ingin menambah jumlah tabungan ke target yang mana?</string>
     <string name="convo_default_return_a_progress_intro_tip">Tolong berikan aku tips.</string>
     <string name="convo_default_return_a_progress_intro_challenge">Tunjukkan tantangan minggu ini.</string>
-    <string name="convo_default_return_a_progress_intro_target">Track Savings</string>
+    <string name="convo_default_return_a_progress_intro_target">Add Savings</string>
 
     <!-- BOT: goal_add -->
     <!-- Questions -->
