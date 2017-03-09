@@ -176,7 +176,7 @@
     <string name="convo_default_return_q_which_goal">Kamu ingin menambah jumlah tabungan ke target yang mana?</string>
     <string name="convo_default_return_a_progress_intro_tip">Tolong berikan aku tips.</string>
     <string name="convo_default_return_a_progress_intro_challenge">Tunjukkan tantangan minggu ini.</string>
-    <string name="convo_default_return_a_progress_intro_target">Add Savings</string>
+    <string name="convo_default_return_a_progress_intro_target">Tambahkan tabungan kamu.</string>
 
     <!-- BOT: goal_add -->
     <!-- Questions -->
