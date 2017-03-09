@@ -5,7 +5,8 @@
     android:layout_height="wrap_content"
     android:layout_marginStart="@dimen/bot_left_margin"
     android:padding="4dp"
-    tools:context=".views.main.MainActivity">
+    tools:context=".views.main.MainActivity"
+    android:id="@+id/item_view_bot_goal_info_badge">
 
     <TextView
         android:id="@+id/item_view_bot_goal_info_title"

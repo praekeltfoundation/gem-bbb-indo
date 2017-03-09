@@ -5,6 +5,7 @@ import android.content.Context;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.facebook.drawee.view.SimpleDraweeView;
@@ -34,6 +35,8 @@ import butterknife.ButterKnife;
 
 public class GoalInformationGalleryItemViewHolder extends RecyclerView.ViewHolder {
 
+    @BindView(R.id.item_view_bot_goal_info_badge)
+    RelativeLayout relativeLayout;
     @BindView(R.id.item_view_bot_goal_info_current)
     TextView currentTextView;
     @BindView(R.id.item_view_bot_goal_info_title)
@@ -62,6 +65,9 @@ public class GoalInformationGalleryItemViewHolder extends RecyclerView.ViewHolde
         ((DooitApplication) activity.getApplication()).component.inject(this);
 
         itemView.setBackground(ContextCompat.getDrawable(context, R.drawable.bkg_carousel_card));
+        RelativeLayout.LayoutParams relativeParams = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);;
+        relativeParams.setMargins(10, 10, 10, 10);  // left, top, right, bottom
+        relativeLayout.setLayoutParams(relativeParams);
     }
 
     public void populate(final Goal goal, Node model,  final HashtagView.TagsClickListener listener) {
