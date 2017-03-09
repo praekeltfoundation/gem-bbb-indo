@@ -100,12 +100,6 @@ public class GoalInformationGalleryItemViewHolder extends RecyclerView.ViewHolde
                 Answer answer = new Answer();
                 answer.setName(dataModel.getAnswerName());
                 answer.setType(BotMessageType.BLANK);
-//                answer.setInputKey(BotParamType.GOAL);
-//                answer.values.put(BotParamType.GOAL_NAME.getKey(), goal.getName());
-//                answer.values.put(BotParamType.GOAL_VALUE.getKey(), goal.getValue());
-//                answer.values.put(BotParamType.GOAL_TARGET.getKey(), goal.getTarget());
-//                answer.values.put(BotParamType.GOAL_END_DATE.getKey(), goal.getEndDate().toString());
-//                answer.values.put(BotParamType.GOAL_WEEKLY_TARGET.getKey(),goal.getWeeklyTarget());
                 answer.setNext("start_deposit_conversation");
                 answer.setText(null);
                 persisted.saveConvoGoal(BotType.GOAL_DEPOSIT, goal);

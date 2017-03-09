@@ -657,14 +657,16 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
                 // Auto load next conversation
                 BotType botType = BotType.valueOf(node.getAutoNext().toUpperCase());
                 Goal goal = null;
-                if(botType == BotType.GOAL_DEPOSIT){
+                if(botType == BotType.GOAL_DEPOSIT) {
                     goal = persisted.loadConvoGoal(BotType.GOAL_DEPOSIT);
                 }
                 finishConversation();
-                setBotType(botType);
-                if(botType == BotType.GOAL_DEPOSIT){
+                if(botType == BotType.GOAL_DEPOSIT) {
                     persisted.saveConvoGoal(BotType.GOAL_DEPOSIT, goal);
+                    clearState = true;
                 }
+
+                setBotType(botType);
                 createFeed();
             } else {
                 // Auto load next node in current conversation
