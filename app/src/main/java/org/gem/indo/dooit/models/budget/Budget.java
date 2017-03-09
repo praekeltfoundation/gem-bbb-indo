@@ -60,6 +60,9 @@ public class Budget extends RealmObject {
         return weeklyIncome * 4;
     }
 
+    public static double incomeFromPerDay(double dailyIncome) {
+        return dailyIncome * 7 * 4;
+    }
 
     /////////////
     // Savings //

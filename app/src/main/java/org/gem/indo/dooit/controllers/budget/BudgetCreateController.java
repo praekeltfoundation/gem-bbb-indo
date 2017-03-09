@@ -40,6 +40,7 @@ public class BudgetCreateController extends DooitBotController {
 
     private static String INCOME = "income_amount";
     private static String INCOME_PER_WEEK = "income_per_week";
+    private static String INCOME_PER_DAY = "income_per_day";
     private static String SAVING_DEFAULT_ACCEPT = "budget_create_a_savings_default_accept";
     private static String SAVINGS = "savings_amount";
 
@@ -201,6 +202,9 @@ public class BudgetCreateController extends DooitBotController {
         else if (answerLog.containsKey(INCOME_PER_WEEK))
             return Budget.incomeFromPerWeek(
                     Double.parseDouble(answerLog.get(INCOME_PER_WEEK).getValue()));
+        else if (answerLog.containsKey(INCOME_PER_DAY))
+            return Budget.incomeFromPerDay(
+                    Double.parseDouble(answerLog.get(INCOME_PER_DAY).getValue()));
         else {
             CrashlyticsHelper.log(TAG, "monthlyIncome",
                     "Unexpected attempt te get monthly income with no income input in conversation");
@@ -217,6 +221,7 @@ public class BudgetCreateController extends DooitBotController {
         switch (name) {
             case "income_amount":
             case "income_per_week":
+            case "income_per_day":
                 return validateIncome(input);
             case "savings_amount":
                 return validateSavings(input);
