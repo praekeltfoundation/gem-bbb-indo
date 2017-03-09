@@ -47,7 +47,8 @@
   {
     "name": "budget_create_q_income_frequency_01",
     "type": "text",
-    "text": "$(budget_create_q_income_frequency_01)"
+    "text": "$(budget_create_q_income_frequency_01)",
+    "autoNext": "budget_create_q_income_frequency_02"
   },
   {
     "name": "budget_create_q_income_frequency_02",
@@ -56,11 +57,13 @@
     "answers": [
       {
         "name": "budget_create_a_income_once_week",
-        "text": "$(budget_create_a_income_once_week)"
+        "text": "$(budget_create_a_income_once_week)",
+        "next": "budget_create_q_income_once_week"
       },
       {
         "name": "budget_create_a_income_every_day",
-        "text": "$(budget_create_a_income_every_day)"
+        "text": "$(budget_create_a_income_every_day)",
+        "next": "budget_create_q_income_every_day"
       },
       {
         "name": "budget_create_a_income_few_days",
@@ -69,6 +72,42 @@
       {
         "name": "budget_create_a_income_once_month",
         "text": "$(budget_create_a_income_less_month)"
+      }
+    ]
+  },
+
+
+
+  {
+    "name": "budget_create_q_income_once_week",
+    "type": "text",
+    "text": "$(budget_create_q_income_once_week)",
+    "autoAnswer": "income_per_week",
+    "answers": [
+      {
+        "name": "income_per_week",
+        "type": "inlineCurrency",
+        "typeOnFinish": "textCurrency",
+        "inlineEditHint": "$(type_currency_hint)",
+        "nextOnFinish": "budget_create_q_savings_default"
+      }
+    ]
+  },
+
+
+
+  {
+    "name": "budget_create_q_income_every_day",
+    "type": "text",
+    "text": "$(budget_create_q_income_every_day)",
+    "autoAnswer": "income_per_day",
+    "answers": [
+      {
+        "name": "income_per_day",
+        "type": "inlineCurrency",
+        "typeOnFinish": "textCurrency",
+        "inlineEditHint": "$(type_currency_hint)",
+        "nextOnFinish": "budget_create_q_savings_default"
       }
     ]
   },
@@ -98,10 +137,10 @@
   {
     "name": "budget_create_q_savings_custom",
     "type": "blank",
-    "autoAnswer": "budget_create_a_savings",
+    "autoAnswer": "savings_amount",
     "answers": [
       {
-        "name": "budget_create_a_savings",
+        "name": "savings_amount",
         "type": "inlineCurrency",
         "typeOnFinish": "textCurrency",
         "inlineEditHint": "$(type_currency_hint)",

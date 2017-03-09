@@ -3,8 +3,10 @@ package org.gem.indo.dooit.controllers.budget;
 import android.app.Activity;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.text.TextUtils;
 
 import org.gem.indo.dooit.DooitApplication;
+import org.gem.indo.dooit.R;
 import org.gem.indo.dooit.api.DooitAPIError;
 import org.gem.indo.dooit.api.DooitErrorHandler;
 import org.gem.indo.dooit.api.managers.BudgetManager;
@@ -37,8 +39,9 @@ public class BudgetCreateController extends DooitBotController {
     private static String TAG = BudgetCreateController.class.getName();
 
     private static String INCOME = "income_amount";
+    private static String INCOME_PER_WEEK = "income_per_week";
     private static String SAVING_DEFAULT_ACCEPT = "budget_create_a_savings_default_accept";
-    private static String SAVINGS = "budget_create_a_savings";
+    private static String SAVINGS = "savings_amount";
 
     @Inject
     BudgetManager budgetManager;
@@ -69,12 +72,13 @@ public class BudgetCreateController extends DooitBotController {
 
                 Map<String, Answer> answers = botRunner.getAnswerLog();
                 switch (paramType) {
-                    case BUDGET_DEFAULT_SAVINGS:
-                        if (answers.containsKey(INCOME))
+                    case BUDGET_DEFAULT_SAVINGS: {
+                        Double income = monthlyIncome(answers);
+                        if (income != null) {
                             // Retrieve entered income
                             model.values.put(key, CurrencyHelper.format(Budget.calcDefaultSavings(
-                                    Double.parseDouble(answers.get(INCOME).getValue()))));
-                        else {
+                                    income)));
+                        } else {
                             // A Node requested the default savings before the income was input.
                             // Unexpected behaviour.
                             model.values.put(key, CurrencyHelper.format(0.0));
@@ -82,6 +86,7 @@ public class BudgetCreateController extends DooitBotController {
                                     "Default savings requested before income entry");
                         }
                         break;
+                    }
                 }
                 break;
             }
@@ -113,30 +118,6 @@ public class BudgetCreateController extends DooitBotController {
     }
 
     @Override
-    public boolean validate(String name, String input) {
-        switch (name) {
-            case "income_amount":
-                return validateIncome(input);
-            default:
-                return super.validate(name, input);
-        }
-    }
-
-    private boolean validateIncome(String input) {
-        try {
-            double income = Double.parseDouble(input);
-            if (income <= 0.0) {
-                toast("Income cannot be Rp0");
-                return false;
-            }
-            return true;
-        } catch (NumberFormatException e) {
-            toast("Invalid number");
-            return false;
-        }
-    }
-
-    @Override
     public void onAsyncCall(BotCallType key, Map<String, Answer> answerLog, BaseBotModel model, OnAsyncListener listener) {
         switch (key) {
             case DO_CREATE:
@@ -157,8 +138,13 @@ public class BudgetCreateController extends DooitBotController {
         Budget budget = new Budget();
 
         // Income
-        if (answerLog.containsKey(INCOME))
-            budget.setIncome(Double.parseDouble(answerLog.get(INCOME).getValue()));
+        Double income = monthlyIncome(answerLog);
+        if (income == null) {
+            income = 0.0;
+            CrashlyticsHelper.log(TAG, "doCreate",
+                    "Attempt to create Budget with no income input found");
+        }
+        budget.setIncome(income);
 
         // Savings
         if (answerLog.containsKey(SAVING_DEFAULT_ACCEPT))
@@ -184,12 +170,104 @@ public class BudgetCreateController extends DooitBotController {
             }
         }).subscribe(new Action1<BudgetCreateResponse>() {
             @Override
-            public void call(BudgetCreateResponse budgetCreateResponse) {
+            public void call(BudgetCreateResponse response) {
                 // Budget Primary Key is from server
-                new BudgetDAO().update(budgetCreateResponse.getBudget());
+                new BudgetDAO().update(response.getBudget());
+
+                // Store a reference to the Budget as it was received
+                BudgetCreateController.this.budget = response.getBudget();
 
                 // TODO: Badges from budget create
             }
         });
+    }
+
+    ////////////////////
+    // Income Helpers //
+    ////////////////////
+
+    /**
+     * Get the monthly income from the conversation, calculating it from other income fields (daily,
+     * weekly) if necessary.
+     *
+     * @param answerLog The answer log, which must contain at least one of the income branches.
+     * @return The calculated monthly income. Will be null when no income input is found in
+     * conversation.
+     */
+    @Nullable
+    private Double monthlyIncome(Map<String, Answer> answerLog) {
+        if (answerLog.containsKey(INCOME))
+            return Double.parseDouble(answerLog.get(INCOME).getValue());
+        else if (answerLog.containsKey(INCOME_PER_WEEK))
+            return Budget.incomeFromPerWeek(
+                    Double.parseDouble(answerLog.get(INCOME_PER_WEEK).getValue()));
+        else {
+            CrashlyticsHelper.log(TAG, "monthlyIncome",
+                    "Unexpected attempt te get monthly income with no income input in conversation");
+            return null;
+        }
+    }
+
+    ////////////////
+    // Validation //
+    ////////////////
+
+    @Override
+    public boolean validate(String name, String input) {
+        switch (name) {
+            case "income_amount":
+            case "income_per_week":
+                return validateIncome(input);
+            case "savings_amount":
+                return validateSavings(input);
+            default:
+                return super.validate(name, input);
+        }
+    }
+
+    private boolean validateIncome(String input) {
+        if (TextUtils.isEmpty(input)) {
+            toast(R.string.budget_create_err_income__empty);
+            return false;
+        }
+        try {
+            double income = Double.parseDouble(input);
+            if (income <= 0.0) {
+                toast(R.string.budget_create_err_income__zero);
+                return false;
+            }
+            return true;
+        } catch (NumberFormatException e) {
+            toast("Invalid number");
+            return false;
+        }
+    }
+
+    private boolean validateSavings(String input) {
+        if (TextUtils.isEmpty(input)) {
+            toast(R.string.budget_create_err_savings__empty);
+            return false;
+        }
+        try {
+            double value = Double.parseDouble(input);
+
+            // Find income defined earlier
+            Map<String, Answer> answerLog = botRunner.getAnswerLog();
+            Double income = null;
+            if (answerLog.containsKey(INCOME))
+                income = Double.parseDouble(answerLog.get(INCOME).getValue());
+
+            if (value <= 0.0) {
+                toast(R.string.budget_create_err_savings__zero);
+                return false;
+            } else if (income != null && value > income) {
+                toast(R.string.budget_create_err_savings__gt_income);
+                return false;
+            }
+            return true;
+        } catch (NumberFormatException e) {
+            toast(R.string.budget_create_err__invalid_number);
+            return false;
+        }
     }
 }
