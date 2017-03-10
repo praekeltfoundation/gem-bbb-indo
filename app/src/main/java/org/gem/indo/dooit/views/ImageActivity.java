@@ -11,8 +11,10 @@ import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
 import android.media.ExifInterface;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Environment;
+import android.os.Looper;
 import android.provider.MediaStore;
 import android.support.v4.content.FileProvider;
 import android.support.v7.app.AlertDialog;
@@ -24,6 +26,7 @@ import org.gem.indo.dooit.Constants;
 import org.gem.indo.dooit.R;
 import org.gem.indo.dooit.helpers.RequestCodes;
 import org.gem.indo.dooit.helpers.crashlytics.CrashlyticsHelper;
+import org.gem.indo.dooit.helpers.images.ImageActivityAsyncTaskResult;
 import org.gem.indo.dooit.helpers.images.ImageChooserOptions;
 import org.gem.indo.dooit.helpers.images.ImageScaler;
 import org.gem.indo.dooit.helpers.images.MediaUriHelper;
@@ -36,6 +39,7 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 /**
  * Created by Wimpie Victor on 2016/12/19.
@@ -46,10 +50,21 @@ public abstract class ImageActivity extends DooitActivity {
     private static final String TAG = ImageActivity.class.getName();
     private static final int maxImageWidth = 1024;
     private static final int maxImageHeight = 1024;
-
+    final Runtime runtime = Runtime.getRuntime();
+    final int SCALE_FACTOR_FOR_BITMAP_SIZE = 3;
+    long usedMemInMB = (runtime.totalMemory() - runtime.freeMemory()) / 1048576L;
+    long maxHeapSizeInMB = runtime.maxMemory() / 1048576L;
+    long availHeapSizeInMB = maxHeapSizeInMB - usedMemInMB;
     private AlertDialog imageChooser;
     private Uri imageUri;
     private String imagePath;
+
+    public static Bitmap rotateImage(Bitmap source, float angle) {
+        Matrix matrix = new Matrix();
+        matrix.postRotate(angle);
+        return Bitmap.createBitmap(source, 0, 0, source.getWidth(), source.getHeight(),
+                matrix, true);
+    }
 
     private void resetImageState() {
         imageUri = null;
@@ -83,7 +98,9 @@ public abstract class ImageActivity extends DooitActivity {
         imageChooser = builder.show();
     }
 
-    private void startCamera() {
+    public void startCamera() {
+        resetImageState();
+
         permissionsHelper.askForPermission(this, new String[]{PermissionsHelper.D_WRITE_EXTERNAL_STORAGE, PermissionsHelper.D_CAMERA}, new PermissionCallback() {
             @Override
             public void permissionGranted() {
@@ -119,7 +136,9 @@ public abstract class ImageActivity extends DooitActivity {
         });
     }
 
-    private void startGallery() {
+    public void startGallery() {
+        resetImageState();
+
         permissionsHelper.askForPermission(this, PermissionsHelper.D_WRITE_EXTERNAL_STORAGE, new PermissionCallback() {
             @Override
             public void permissionGranted() {
@@ -158,42 +177,10 @@ public abstract class ImageActivity extends DooitActivity {
     }
 
     private void handleImageResult(Intent data, int requestCodes) {
-        // When the camera is provided with an existing file beforehand, the intent is null. The
-        // pre-created image can be found via `imageUri`.
-        if (data != null) {
-            // No predefined image file was created
-            imageUri = data.getData();
-            if (imageUri == null) {
-                try {
-                    // This is the case where the camera only returns a thumbnail
-                    ContentResolver cR = this.getContentResolver();
-                    Bitmap bitmap = (Bitmap) data.getExtras().get("data");
-
-                    bitmap = checkScreenOrientation(imagePath, bitmap, requestCodes);
-
-                    Log.d("IMAGE_TESTS", "Bitmap size : " + bitmap.getByteCount());
-                    imageUri = Uri.parse(MediaStore.Images.Media.insertImage(cR, bitmap, "", ""));
-                } catch (Throwable ex) {
-
-                }
-            }
-        }
-
-        if (TextUtils.isEmpty(imagePath)) {
-            // MediaUriHelper does not work when uri points to temp image file
-            try {
-                imagePath = MediaUriHelper.getPath(this, imageUri);
-                CrashlyticsHelper.log(this.getClass().getSimpleName(), "handleImageResult : ",
-                        "Context: " + this + " imageUri :" + imageUri);
-            } catch (NullPointerException nullException) {
-                CrashlyticsHelper.logException(nullException);
-            }
-        }
-
-        processImage(requestCodes);
-
-        ContentResolver cR = this.getContentResolver();
-        onImageResult(cR.getType(imageUri), imageUri, imagePath);
+        Object[] params = new Object[2];
+        params[0] = data;
+        params[1] = requestCodes;
+        new HandleImage().execute(params);
     }
 
     /**
@@ -215,8 +202,14 @@ public abstract class ImageActivity extends DooitActivity {
                 Log.e(TAG, "Failed to load existing bitmap during downscale");
                 return;
             }
+
+            System.gc();
+
             //Here the orientation is checked and corrected if needed
             bitmap = checkScreenOrientation(imagePath, bitmap, requestCodes);
+
+            System.gc();
+
             //Here the image is scaled to an acceptable size
             bitmap = ImageScaler.scale(bitmap, maxImageWidth, maxImageHeight);
             //file is written out
@@ -227,9 +220,9 @@ public abstract class ImageActivity extends DooitActivity {
 
             // Set uri and filepath to new downscaled image
             imagePath = downscaledFile.getAbsolutePath();
-            imageUri = FileProvider.getUriForFile(this, Constants.FILE_PROVIDER, downscaledFile);
+            imageUri = FileProvider.getUriForFile(ImageActivity.this, Constants.FILE_PROVIDER, downscaledFile);
         } catch (IOException e) {
-            Toast.makeText(this, "Unable to do image rotation", Toast.LENGTH_LONG).show();
+            Toast.makeText(ImageActivity.this, "Unable to do image rotation", Toast.LENGTH_LONG).show();
             Log.e(TAG, "Unable to create temporary downscaled image file", e);
             CrashlyticsHelper.log(this.getClass().getSimpleName(), " processImage : ", "an IOException");
         } finally {
@@ -240,13 +233,6 @@ public abstract class ImageActivity extends DooitActivity {
                 Log.e(TAG, "Failed to close outstream", e);
             }
         }
-    }
-
-    public static Bitmap rotateImage(Bitmap source, float angle) {
-        Matrix matrix = new Matrix();
-        matrix.postRotate(angle);
-        return Bitmap.createBitmap(source, 0, 0, source.getWidth(), source.getHeight(),
-                matrix, true);
     }
 
     private File createImageFile() throws IOException {
@@ -342,4 +328,62 @@ public abstract class ImageActivity extends DooitActivity {
      * @param imagePath the file system path to the image
      */
     protected abstract void onImageResult(String mediaType, Uri imageUri, String imagePath);
+
+    private class HandleImage extends AsyncTask<Object, Integer, ImageActivityAsyncTaskResult> {
+
+        @Override
+        protected void onPostExecute(ImageActivityAsyncTaskResult imageActivityAsyncTaskResult) {
+            ContentResolver cR = ImageActivity.this.getContentResolver();
+            ImageActivity.this.onImageResult(cR.getType(imageActivityAsyncTaskResult.getImageUri()),
+                    imageActivityAsyncTaskResult.getImageUri(),
+                    imageActivityAsyncTaskResult.getImagePath());
+        }
+
+        @Override
+        protected ImageActivityAsyncTaskResult doInBackground(Object... params) {
+            Intent data = (Intent) params[0];
+            int requestCodes = (Integer) params[1];
+            // When the camera is provided with an existing file beforehand, the intent is null. The
+            // pre-created image can be found via `imageUri`.
+            if (data != null) {
+                // No predefined image file was created
+                imageUri = data.getData();
+                if (imageUri == null) {
+                    try {
+                        // This is the case where the camera only returns a thumbnail
+                        ContentResolver cR = ImageActivity.this.getContentResolver();
+                        Bitmap bitmap = (Bitmap) data.getExtras().get("data");
+
+                        System.gc();
+
+                        bitmap = checkScreenOrientation(imagePath, bitmap, requestCodes);
+
+                        Log.d("IMAGE_TESTS", "Bitmap size : " + bitmap.getByteCount());
+                        imageUri = Uri.parse(MediaStore.Images.Media.insertImage(cR, bitmap, "", ""));
+                    } catch (Throwable ex) {
+
+                    }
+                }
+            }
+
+            if (TextUtils.isEmpty(imagePath)) {
+                // MediaUriHelper does not work when uri points to temp image file
+                try {
+                    imagePath = MediaUriHelper.getPath(ImageActivity.this, imageUri);
+                    CrashlyticsHelper.log(this.getClass().getSimpleName(), "handleImageResult : ",
+                            "Context: " + this + " imageUri :" + imageUri);
+                } catch (NullPointerException nullException) {
+                    CrashlyticsHelper.logException(nullException);
+                }
+            }
+
+            processImage(requestCodes);
+
+            return new ImageActivityAsyncTaskResult(imageUri, imagePath);
+        }
+
+        protected void onProgressUpdate(Integer... progress) {
+
+        }
+    }
 }
