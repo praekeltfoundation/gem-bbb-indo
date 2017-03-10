@@ -140,8 +140,8 @@ public class MainActivity extends DooitActivity {
         }).subscribe(new Action1<BaseChallenge>() {
             @Override
             public void call(BaseChallenge challenge) {
-                if(challenge != null){
-                    if(challenge.isActive()){
+                if (challenge != null) {
+                    if (challenge.isActive()) {
                         ChallengeLightboxFragment challengeLightboxFragment = ChallengeLightboxFragment.newInstance(challenge);
                         challengeLightboxFragment.show(getFragmentManager(), "challenge_available_lightbox");
                     }
@@ -149,7 +149,7 @@ public class MainActivity extends DooitActivity {
             }
         });
 
-        if(!prefetchAlarmHasBeenSet) {
+        if (!prefetchAlarmHasBeenSet) {
             //set alarm for pre fetching
             Intent intent = new Intent(MainActivity.this, PrefetchAlarmReceiver.class);
             PendingIntent pendingIntent = PendingIntent.getBroadcast(MainActivity.this, REQUEST_CODE, intent, 0);
@@ -214,8 +214,8 @@ public class MainActivity extends DooitActivity {
         currentPos = 0;
         saveToHistory = true;
 
-        /*Set the ActionBar's title for Bina here to ensure it gets set initially
-        When the app starts up for a logged in user technically no page has been selected*/
+        // Set the ActionBar's title for Bina here to ensure it gets set initially
+        // When the app starts up for a logged in user technically no page has been selected
         mainTabAdapter.setAdapterListener(new MainTabAdapter.MainTabAdapterListener() {
             @Override
             public void onAdapterInstantiated() {
@@ -264,7 +264,7 @@ public class MainActivity extends DooitActivity {
             }
         }
 
-        MainFragment fragment = (MainFragment) mainTabAdapter.getItem(viewPager.getCurrentItem());
+        MainFragment fragment = (MainFragment) mainTabAdapter.instantiateItem(container, viewPager.getCurrentItem());
         if (fragment != null)
             fragment.onActive();
 
