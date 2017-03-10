@@ -142,11 +142,8 @@ public class GoalAddController extends GoalBotController {
             goal.createTransaction(Double.parseDouble(answerLog.get("priorSaveAmount").getValue()));
 
         // Goal Image
-        if (answerLog.containsKey("goal_add_a_camera")) {
-            goal.setLocalImageUri(answerLog.get("goal_add_a_camera").getValue());
-            goal.setImageFromProto(false);
-        } else if (answerLog.containsKey("goal_add_a_gallery")) {
-            goal.setLocalImageUri(answerLog.get("goal_add_a_gallery").getValue());
+        if (answerLog.containsKey("goal_add_a_goal_image")) {
+            goal.setLocalImageUri(answerLog.get("goal_add_a_goal_image").getValue());
             goal.setImageFromProto(false);
         } else if (protoAnswer != null) {
             // Skipped; use Goal Prototype image
@@ -185,13 +182,27 @@ public class GoalAddController extends GoalBotController {
 
             // Crashlytics for MediaURI null check
             try {
+                /*
+                TODO: This line is causing an ILLEGALARGUMENTSEXCEPTION in the MediaUriHelper class. It needs investigation on how to solve that issue. Storing the valid image path in the Answer.values map is a temporary solution.
                 final String path = MediaUriHelper.getPath(context, uri);
+                */
+                final Map<String, Answer> answerLogTemp = answerLog;
                 observe.subscribe(new Action1<Goal>() {
                     @Override
                     public void call(final Goal newGoal) {
                         // New Achievements is what we care about
                         goal.addNewBadges(newGoal.getNewBadges());
                         saveGoal();
+
+                        //the path is now extracted form the Answer.values map as explained int the comment above "final String path = MediaUriHelper.getPath(context, uri);"
+                        String path = null;
+                        if(answerLogTemp.containsKey("goal_add_a_goal_image")){
+                            Answer imageAnswer = answerLogTemp.get("goal_add_a_goal_image");
+                            path = imageAnswer.values.getString(Answer.IMAGEPATH);
+                        }else{
+                            path = goal.getPrototype().getImageUrl();
+                        }
+
                         uploadImage(newGoal, mimetype, new File(path));
                     }
                 });

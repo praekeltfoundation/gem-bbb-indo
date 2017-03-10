@@ -91,18 +91,18 @@
     "text": "$(askGoalImage)",
     "answers": [
       {
-        "name": "goal_add_a_camera",
+        "name": "goal_add_a_goal_image",
         "text": "$(goal_add_a_camera)",
         "type": "CameraUpload",
         "nextOnFinish": "askGoalImageConfirm",
-        "removeOnSelect": "goal_add_a_camera"
+        "removeOnSelect": "goal_add_a_goal_image"
       },
       {
-        "name": "goal_add_a_gallery",
+        "name": "goal_add_a_goal_image",
         "text": "$(goal_add_a_gallery)",
         "type": "GalleryUpload",
         "nextOnFinish": "askGoalImageConfirm",
-        "removeOnSelect": "goal_add_a_gallery"
+        "removeOnSelect": "goal_add_a_goal_image"
       },
       {
         "name": "goal_add_a_skip",
