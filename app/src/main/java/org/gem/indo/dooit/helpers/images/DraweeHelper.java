@@ -35,12 +35,15 @@ public class DraweeHelper {
     public static void cacheImage(Uri uri){
         ImagePipeline imagePipeline = Fresco.getImagePipeline();
 
-        if(!imagePipeline.isInBitmapMemoryCache(uri) &&
-                !(imagePipeline.isInDiskCache(uri).getResult() != null && !imagePipeline.isInDiskCache(uri).getResult().equals(true))) {
-            ImageRequest request = ImageRequestBuilder.newBuilderWithSource(uri)
-                    .build();
-            imagePipeline.prefetchToBitmapCache(request, null);
-            imagePipeline.prefetchToDiskCache(request, null);
+        if(!imagePipeline.isInBitmapMemoryCache(uri)){
+            if(imagePipeline.isInDiskCache(uri).getResult() != null){
+                if(!imagePipeline.isInDiskCache(uri).getResult().equals(true)){
+                    ImageRequest request = ImageRequestBuilder.newBuilderWithSource(uri)
+                            .build();
+                    imagePipeline.prefetchToBitmapCache(request, null);
+                    imagePipeline.prefetchToDiskCache(request, null);
+                }
+            }
         }
     }
 }
