@@ -203,6 +203,7 @@
     <string name="goal_add_a_done_exit">Thanks! I\'m done for now.</string>
 
     <string name="number_of_other_users_with_similar_goal">Fantastic! Did you know that $(goal_proto.num_users) users are also saving for this goal?</string>
+    <string name="goal_add_q_goal_name">Please enter a name for your goal</string>
 
     <string name="goal_add_a_add_amount">Add Amount</string>
     <string name="goal_add_a_not_sure">I\'m not sure.</string>
