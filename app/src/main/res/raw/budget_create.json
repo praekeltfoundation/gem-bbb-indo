@@ -52,7 +52,8 @@
     "answers": [
       {
         "name": "budget_create_a_no_income_show_tips",
-        "text": "$(budget_create_a_no_income_show_tips)"
+        "text": "$(budget_create_a_no_income_show_tips)",
+        "next": "budget_create_end_show_tips"
       },
       {
         "name": "budget_create_a_no_income_exit",
@@ -60,6 +61,15 @@
         "next": "budget_create_end"
       }
     ]
+  },
+
+
+
+  {
+    "name": "budget_create_end_show_tips",
+    "type": "end",
+    "call": "#set_tip_query",
+    "autoNextScreen": "TIPS"
   },
 
 

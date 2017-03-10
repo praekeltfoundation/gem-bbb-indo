@@ -1,6 +1,7 @@
 package org.gem.indo.dooit.controllers.budget;
 
 import android.app.Activity;
+import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
@@ -22,6 +23,7 @@ import org.gem.indo.dooit.models.enums.BotCallType;
 import org.gem.indo.dooit.models.enums.BotParamType;
 import org.gem.indo.dooit.models.enums.BotType;
 import org.gem.indo.dooit.views.helpers.activity.CurrencyHelper;
+import org.gem.indo.dooit.views.main.MainActivity;
 
 import java.util.Map;
 
@@ -45,6 +47,7 @@ public class BudgetCreateController extends DooitBotController {
     @Inject
     BudgetManager budgetManager;
 
+    private MainActivity activity;
     private Budget budget;
     private BotRunner botRunner;
 
@@ -53,6 +56,7 @@ public class BudgetCreateController extends DooitBotController {
         super(activity, BotType.BUDGET_CREATE);
         ((DooitApplication) activity.getApplication()).component.inject(this);
 
+        this.activity = (MainActivity) activity;
         this.botRunner = botRunner;
 
         // A new Budget can be persisted if the conversation is reloaded.
@@ -107,6 +111,24 @@ public class BudgetCreateController extends DooitBotController {
                 }
                 break;
         }
+    }
+
+    @Override
+    public void onCall(BotCallType key, Map<String, Answer> answerLog, BaseBotModel model) {
+        switch (key) {
+            case SET_TIP_QUERY:
+                tipQuery();
+                break;
+            default:
+                super.onCall(key, answerLog, model);
+        }
+    }
+
+    private void tipQuery() {
+        if (activity == null)
+            return;
+
+        activity.setTipQuery(activity.getString(R.string.budget_create_qry_tip_income));
     }
 
     @Override

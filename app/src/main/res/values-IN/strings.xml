@@ -722,6 +722,8 @@
     <string name="budget_create_q_summary">Your monthly income is $(budget.income). Of this amount, you save $(budget.savings) each month and spend $(budget.expense).</string>
     <string name="budget_create_q_final">You can access and update your budget in your profile at any time.</string>
 
+    <string name="budget_create_qry_tip_income">income</string>
+
     <!-- budget_create validation -->
 
     <string name="budget_create_err__invalid_number">Invalid number</string>
