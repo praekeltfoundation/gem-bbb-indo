@@ -7,6 +7,7 @@
   },
 
 
+
   {
     "name": "budget_create_q_income",
     "type": "text",
@@ -18,9 +19,9 @@
         "next": "budget_create_q_income_amount"
       },
       {
-        "name": "budget_create_a_help",
-        "text": "$(budget_create_a_help)",
-        "next": "budget_create_q_income_frequency_01"
+        "name": "budget_create_a_no_income",
+        "text": "$(budget_create_a_no_income)",
+        "next": "budget_create_q_no_income"
       }
     ]
   },
@@ -45,69 +46,18 @@
 
 
   {
-    "name": "budget_create_q_income_frequency_01",
+    "name": "budget_create_q_no_income",
     "type": "text",
-    "text": "$(budget_create_q_income_frequency_01)",
-    "autoNext": "budget_create_q_income_frequency_02"
-  },
-  {
-    "name": "budget_create_q_income_frequency_02",
-    "type": "text",
-    "text": "$(budget_create_q_income_frequency_02)",
+    "text": "$(budget_create_q_no_income)",
     "answers": [
       {
-        "name": "budget_create_a_income_once_week",
-        "text": "$(budget_create_a_income_once_week)",
-        "next": "budget_create_q_income_once_week"
+        "name": "budget_create_a_no_income_show_tips",
+        "text": "$(budget_create_a_no_income_show_tips)"
       },
       {
-        "name": "budget_create_a_income_every_day",
-        "text": "$(budget_create_a_income_every_day)",
-        "next": "budget_create_q_income_every_day"
-      },
-      {
-        "name": "budget_create_a_income_few_days",
-        "text": "$(budget_create_a_income_few_days)"
-      },
-      {
-        "name": "budget_create_a_income_once_month",
-        "text": "$(budget_create_a_income_less_month)"
-      }
-    ]
-  },
-
-
-
-  {
-    "name": "budget_create_q_income_once_week",
-    "type": "text",
-    "text": "$(budget_create_q_income_once_week)",
-    "autoAnswer": "income_per_week",
-    "answers": [
-      {
-        "name": "income_per_week",
-        "type": "inlineCurrency",
-        "typeOnFinish": "textCurrency",
-        "inlineEditHint": "$(type_currency_hint)",
-        "nextOnFinish": "budget_create_q_savings_default"
-      }
-    ]
-  },
-
-
-
-  {
-    "name": "budget_create_q_income_every_day",
-    "type": "text",
-    "text": "$(budget_create_q_income_every_day)",
-    "autoAnswer": "income_per_day",
-    "answers": [
-      {
-        "name": "income_per_day",
-        "type": "inlineCurrency",
-        "typeOnFinish": "textCurrency",
-        "inlineEditHint": "$(type_currency_hint)",
-        "nextOnFinish": "budget_create_q_savings_default"
+        "name": "budget_create_a_no_income_exit",
+        "text": "$(budget_create_a_no_income_exit)",
+        "next": "budget_create_end"
       }
     ]
   },

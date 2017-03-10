@@ -12,7 +12,7 @@ import io.realm.annotations.PrimaryKey;
 
 public class Budget extends RealmObject {
 
-    private static double DEFAULT_SAVING_PERCENT = 10.0;
+    public static double DEFAULT_SAVING_PERCENT = 10.0;
 
     @PrimaryKey
     private long id;

@@ -39,8 +39,6 @@ public class BudgetCreateController extends DooitBotController {
     private static String TAG = BudgetCreateController.class.getName();
 
     private static String INCOME = "income_amount";
-    private static String INCOME_PER_WEEK = "income_per_week";
-    private static String INCOME_PER_DAY = "income_per_day";
     private static String SAVING_DEFAULT_ACCEPT = "budget_create_a_savings_default_accept";
     private static String SAVINGS = "savings_amount";
 
@@ -73,21 +71,14 @@ public class BudgetCreateController extends DooitBotController {
 
                 Map<String, Answer> answers = botRunner.getAnswerLog();
                 switch (paramType) {
-                    case BUDGET_DEFAULT_SAVINGS: {
-                        Double income = monthlyIncome(answers);
-                        if (income != null) {
-                            // Retrieve entered income
-                            model.values.put(key, CurrencyHelper.format(Budget.calcDefaultSavings(
-                                    income)));
-                        } else {
-                            // A Node requested the default savings before the income was input.
-                            // Unexpected behaviour.
-                            model.values.put(key, CurrencyHelper.format(0.0));
-                            CrashlyticsHelper.log(TAG, "resolveParam",
-                                    "Default savings requested before income entry");
-                        }
+                    case BUDGET_DEFAULT_SAVINGS:
+                        // Retrieve entered income
+                        model.values.put(key, CurrencyHelper.format(Budget.calcDefaultSavings(
+                                monthlyIncome(answers))));
                         break;
-                    }
+                    case BUDGET_DEFAULT_SAVING_PERCENT:
+                        model.values.put(key, Double.toString(Math.round(Budget.DEFAULT_SAVING_PERCENT)));
+                        break;
                 }
                 break;
             }
@@ -139,13 +130,7 @@ public class BudgetCreateController extends DooitBotController {
         Budget budget = new Budget();
 
         // Income
-        Double income = monthlyIncome(answerLog);
-        if (income == null) {
-            income = 0.0;
-            CrashlyticsHelper.log(TAG, "doCreate",
-                    "Attempt to create Budget with no income input found");
-        }
-        budget.setIncome(income);
+        budget.setIncome(monthlyIncome(answerLog));
 
         // Savings
         if (answerLog.containsKey(SAVING_DEFAULT_ACCEPT))
@@ -183,32 +168,21 @@ public class BudgetCreateController extends DooitBotController {
         });
     }
 
-    ////////////////////
-    // Income Helpers //
-    ////////////////////
+    ////////////
+    // Income //
+    ////////////
 
     /**
-     * Get the monthly income from the conversation, calculating it from other income fields (daily,
-     * weekly) if necessary.
-     *
-     * @param answerLog The answer log, which must contain at least one of the income branches.
-     * @return The calculated monthly income. Will be null when no income input is found in
-     * conversation.
+     * @param answerLog The answer log, which must contain an income input.
+     * @return The calculated monthly income. Will be 0.0 if no income input was provided.
      */
-    @Nullable
-    private Double monthlyIncome(Map<String, Answer> answerLog) {
+    private double monthlyIncome(@NonNull Map<String, Answer> answerLog) {
         if (answerLog.containsKey(INCOME))
             return Double.parseDouble(answerLog.get(INCOME).getValue());
-        else if (answerLog.containsKey(INCOME_PER_WEEK))
-            return Budget.incomeFromPerWeek(
-                    Double.parseDouble(answerLog.get(INCOME_PER_WEEK).getValue()));
-        else if (answerLog.containsKey(INCOME_PER_DAY))
-            return Budget.incomeFromPerDay(
-                    Double.parseDouble(answerLog.get(INCOME_PER_DAY).getValue()));
         else {
             CrashlyticsHelper.log(TAG, "monthlyIncome",
                     "Unexpected attempt te get monthly income with no income input in conversation");
-            return null;
+            return 0.0;
         }
     }
 
@@ -220,8 +194,6 @@ public class BudgetCreateController extends DooitBotController {
     public boolean validate(String name, String input) {
         switch (name) {
             case "income_amount":
-            case "income_per_week":
-            case "income_per_day":
                 return validateIncome(input);
             case "savings_amount":
                 return validateSavings(input);

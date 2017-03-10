@@ -705,21 +705,13 @@
 
     <string name="budget_create_q_income">"Let's get started! How much money do you get each week?"</string>
     <string name="budget_create_a_income_amount">Add amount</string>
-    <string name="budget_create_a_help">Help me calculate</string>
+    <string name="budget_create_a_no_income">"I don't get a regular income"</string>
 
-    <string name="budget_create_q_income_frequency_01">"Let's calculate your income together."</string>
-    <string name="budget_create_q_income_frequency_02">How often do you get income?</string>
-    <string name="budget_create_a_income_once_week">Once a week</string>
-    <string name="budget_create_a_income_every_day">7 days a week</string>
-    <string name="budget_create_a_income_few_days">A few days a week</string>
-    <string name="budget_create_a_income_once_month">Once a month</string>
-    <string name="budget_create_a_income_less_month">Less than once a month</string>
+    <string name="budget_create_q_no_income">"That's OK! It's important to set a savings goal to your earning ability. There are plenty of ways you can increase your income."</string>
+    <string name="budget_create_a_no_income_show_tips">Show me tips to grow my income</string>
+    <string name="budget_create_a_no_income_exit">"Okay, I'm done for now. Can we exit."</string>
 
-    <string name="budget_create_q_income_once_week">How much money do you get in a week?</string>
-
-    <string name="budget_create_q_income_every_day">How much money do you get on one day of the 7 days in a week?</string>
-
-    <string name="budget_create_q_savings_default">"Try saving at least 10% of your income as soon as you receive it. This would be $(budget.default_savings) per week. Do you want to save this much each week?"</string>
+    <string name="budget_create_q_savings_default">"Try saving at least $(budget.default_savings_percentage)% of your income as soon as you receive it. This would be $(budget.default_savings) per week. Do you want to save this much each week?"</string>
     <string name="budget_create_a_savings_default_accept">Yes</string>
     <string name="budget_create_a_savings_default_deny">No, I want to save a different amount</string>
 
