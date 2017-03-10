@@ -3,3 +3,4 @@
 
 - Fix duplicate transactions in Goal Create conversation
 - Added Node to ask user for Goal name
+- Fix crash on App open after changing device language
