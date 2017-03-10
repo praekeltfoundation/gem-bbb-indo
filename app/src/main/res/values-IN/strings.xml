@@ -910,4 +910,7 @@
 
     <!-- No Uses -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <!-- Facebook Analitics -->
+    <string name="facebook_app_id">400136243686683</string>
 </resources>

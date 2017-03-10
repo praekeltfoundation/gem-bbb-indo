@@ -905,4 +905,7 @@
     <string name="msg_security_question_too_short">Question must be at least %1$d letters long.</string>
     <string name="prompt_relogin">Could not authenticate. Please log out and back in.</string>
 
+    <!-- Facebook Analitics -->
+    <string name="facebook_app_id">400136243686683</string>
+
 </resources>
