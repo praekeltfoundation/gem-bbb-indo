@@ -44,7 +44,7 @@ public class PrefetchAlarmReceiver extends BroadcastReceiver {
             @Override
             public void call(BadgeImageUrlsResponse response) {
                 imageUrls = response.urls;
-                (new FetchImagesThread()).run();
+                new Thread(new FetchImagesThread()).start();
             }
         });
     }

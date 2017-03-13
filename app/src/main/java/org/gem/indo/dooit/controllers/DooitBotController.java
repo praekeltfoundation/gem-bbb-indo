@@ -2,6 +2,7 @@ package org.gem.indo.dooit.controllers;
 
 import android.content.Context;
 import android.text.TextUtils;
+import android.widget.Toast;
 
 import org.gem.indo.dooit.DooitApplication;
 import org.gem.indo.dooit.api.DooitAPIError;
@@ -94,5 +95,21 @@ public abstract class DooitBotController extends BotController {
 
             }
         }).subscribe();
+    }
+
+    protected void toast(int messageResource) {
+        Context context = getContext();
+        if (context == null)
+            return;
+
+        toast(context.getString(messageResource));
+    }
+
+    protected void toast(String message) {
+        Context context = getContext();
+        if (context == null)
+            return;
+
+        Toast.makeText(context, message, Toast.LENGTH_LONG).show();
     }
 }

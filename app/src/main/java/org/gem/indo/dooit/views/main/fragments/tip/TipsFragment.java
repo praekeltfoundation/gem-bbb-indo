@@ -1,10 +1,8 @@
 package org.gem.indo.dooit.views.main.fragments.tip;
 
-import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
-import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.text.TextUtils;
 import android.util.Log;
@@ -47,6 +45,7 @@ import butterknife.OnTouch;
 public class TipsFragment extends MainFragment implements OnTipsAvailableListener {
 
     private static final String TAG = TipsFragment.class.getName();
+    public static final String ARG_SEARCH_QUERY = "search_query";
 
     @BindString(org.gem.indo.dooit.R.string.tips_list_filter)
     String filterText;
@@ -81,8 +80,13 @@ public class TipsFragment extends MainFragment implements OnTipsAvailableListene
     @Inject
     Tracker tracker;
 
-    TipsTabAdapter tipsTabAdapter;
-    TipsAutoCompleteAdapter searchAdapter;
+    private TipsTabAdapter tipsTabAdapter;
+    private TipsAutoCompleteAdapter searchAdapter;
+
+    /**
+     * Set to true if the Fragment was opened with an initial search query.
+     */
+    private boolean initialQuery = false;
 
     public TipsFragment() {
         // Required empty public constructor
@@ -129,7 +133,8 @@ public class TipsFragment extends MainFragment implements OnTipsAvailableListene
 
         for (int i = 0; i < tabLayout.getTabCount(); i++) {
             TabLayout.Tab tab = tabLayout.getTabAt(i);
-            tab.setCustomView(tipsTabAdapter.getTabView(i));
+            if (tab != null)
+                tab.setCustomView(tipsTabAdapter.getTabView(i));
         }
 
         // Default Tab
@@ -139,6 +144,21 @@ public class TipsFragment extends MainFragment implements OnTipsAvailableListene
         String hint = getString(TipsViewPagerPositions.getValueOf(
                 viewPager.getCurrentItem()).getSearchRes());
         searchView.setHint(hint);
+
+        // Initial Search Query
+        Bundle args = getArguments();
+        if (args != null) {
+            if (args.containsKey(ARG_SEARCH_QUERY)) {
+                final String query = args.getString(ARG_SEARCH_QUERY);
+                if (!TextUtils.isEmpty(query)) {
+                    searchView.setText(query);
+                    initialQuery = true;
+                }
+            }
+
+            // Prevent initial search for next time fragment is opened.
+            args.remove(ARG_SEARCH_QUERY);
+        }
     }
 
     @OnClick(R.id.fragment_tips_list_filter_image_button)
@@ -220,6 +240,17 @@ public class TipsFragment extends MainFragment implements OnTipsAvailableListene
             return;
         Log.d(TAG, "Updating Tips");
         searchAdapter.updateAllTips(tips);
+
+        // Filter Tips if search query is populated
+        if (initialQuery) {
+            String query = searchView.getText().toString();
+            TipsListFragment fragment = tipsTabAdapter.getPrimaryItem();
+            if (fragment != null) {
+                showFiltering(query);
+                fragment.onSearch(query);
+            }
+            initialQuery = false;
+        }
     }
 
     protected void showFiltering(String constraint) {

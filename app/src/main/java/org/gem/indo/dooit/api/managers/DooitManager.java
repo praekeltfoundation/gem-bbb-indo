@@ -9,6 +9,7 @@ import com.google.gson.GsonBuilder;
 import org.gem.indo.dooit.Constants;
 import org.gem.indo.dooit.DooitApplication;
 import org.gem.indo.dooit.api.DooitErrorHandler;
+import org.gem.indo.dooit.api.exclusions.RealmExclusion;
 import org.gem.indo.dooit.api.serializers.ChallengeSerializer;
 import org.gem.indo.dooit.api.serializers.DateTimeSerializer;
 import org.gem.indo.dooit.api.serializers.LocalDateSerializer;
@@ -42,15 +43,19 @@ import rx.schedulers.Schedulers;
  * Created by herman on 2016/11/05.
  */
 
-public class DooitManager {
+public abstract class DooitManager {
 
     protected Retrofit retrofit;
+
     @Inject
     DooitSharedPreferences sharedPreferences;
+
     @Inject
     Persisted persisted;
+
     @Inject
     InvalidTokenHandler invalidTokenHandler;
+
     @Inject
     InvalidTokenRedirectHelper invalidTokenRedirectHelper;
     private Context context;
@@ -68,7 +73,6 @@ public class DooitManager {
             }
         });
         logging.setLevel(HttpLoggingInterceptor.Level.BODY);
-
 
         httpClient.addInterceptor(new Interceptor() {
             @Override
@@ -104,6 +108,7 @@ public class DooitManager {
                                 .registerTypeAdapter(DateTime.class, new DateTimeSerializer())
                                 .registerTypeAdapter(LocalDate.class, new LocalDateSerializer())
                                 .registerTypeAdapterFactory(ChallengeSerializer.getChallengeAdapterFactory())
+                                .setExclusionStrategies(new RealmExclusion())
                                 .create())
                 )
                 .build();

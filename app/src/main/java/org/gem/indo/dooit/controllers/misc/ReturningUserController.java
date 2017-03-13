@@ -53,11 +53,6 @@ public class ReturningUserController extends DooitBotController {
     }
 
     @Override
-    public void call(BaseBotModel model, String key) {
-
-    }
-
-    @Override
     public void resolveParam(BaseBotModel model, BotParamType paramType) {
         String key = paramType.getKey();
         switch (paramType) {

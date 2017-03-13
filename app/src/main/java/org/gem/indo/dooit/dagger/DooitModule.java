@@ -11,6 +11,7 @@ import org.gem.indo.dooit.R;
 import org.gem.indo.dooit.api.managers.AchievementManager;
 import org.gem.indo.dooit.api.managers.AuthenticationManager;
 import org.gem.indo.dooit.api.managers.BadgeManager;
+import org.gem.indo.dooit.api.managers.BudgetManager;
 import org.gem.indo.dooit.api.managers.ChallengeManager;
 import org.gem.indo.dooit.api.managers.CustomNotificationManager;
 import org.gem.indo.dooit.api.managers.FeedbackManager;
@@ -20,11 +21,11 @@ import org.gem.indo.dooit.api.managers.SurveyManager;
 import org.gem.indo.dooit.api.managers.TipManager;
 import org.gem.indo.dooit.api.managers.UserManager;
 import org.gem.indo.dooit.helpers.DooitSharedPreferences;
-import org.gem.indo.dooit.helpers.auth.InvalidTokenRedirectHelper;
-import org.gem.indo.dooit.helpers.auth.InvalidTokenHandler;
-import org.gem.indo.dooit.helpers.auth.OpenLoginHandler;
 import org.gem.indo.dooit.helpers.Persisted;
 import org.gem.indo.dooit.helpers.activity.result.ActivityForResultHelper;
+import org.gem.indo.dooit.helpers.auth.InvalidTokenHandler;
+import org.gem.indo.dooit.helpers.auth.InvalidTokenRedirectHelper;
+import org.gem.indo.dooit.helpers.auth.OpenLoginHandler;
 import org.gem.indo.dooit.helpers.bot.BotFeed;
 import org.gem.indo.dooit.helpers.permissions.PermissionsHelper;
 
@@ -69,6 +70,12 @@ public class DooitModule {
     @Singleton
     AchievementManager provideAchievementManager() {
         return new AchievementManager(application);
+    }
+
+    @Provides
+    @Singleton
+    BudgetManager provideBudgetManager() {
+        return new BudgetManager(application);
     }
 
     @Provides
