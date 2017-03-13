@@ -157,12 +157,13 @@ public class GoalAddController extends GoalBotController {
         try {
             // Goal is stored in case the view is destroyed during the conversation
             persisted.saveConvoGoal(botType, goal);
-        }catch (IllegalArgumentException e){
+        } catch (IllegalArgumentException e) {
+            // Logging for infinite double error
             CrashlyticsHelper.log(TAG, "do Populate (addGoal): ", "goal start date: " + goal.getStartDate() +
                     " Target amount: " + goal.getTarget() + " Goal name: " + goal.getName() +
-            " Goal Weekly Target: " + goal.getWeeklyTarget());
+                    " Goal Weekly Target: " + goal.getWeeklyTarget());
 
-            CrashlyticsHelper.log(TAG, "do Populate (addGoal)( persisted.saveConvoGoal(botType, goal)): ", e.getMessage());
+            CrashlyticsHelper.logException(e);
         }
     }
 
