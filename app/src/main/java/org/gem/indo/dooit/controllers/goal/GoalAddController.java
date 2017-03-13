@@ -152,8 +152,17 @@ public class GoalAddController extends GoalBotController {
             goal.setImageFromProto(true);
         }
 
-        // Goal is stored in case the view is destroyed during the conversation
-        persisted.saveConvoGoal(botType, goal);
+        try {
+            // Goal is stored in case the view is destroyed during the conversation
+            persisted.saveConvoGoal(botType, goal);
+        } catch (IllegalArgumentException e) {
+            // Logging for infinite double error
+            CrashlyticsHelper.log(TAG, "do Populate (addGoal): ", "goal start date: " + goal.getStartDate() +
+                    " Target amount: " + goal.getTarget() + " Goal name: " + goal.getName() +
+                    " Goal Weekly Target: " + goal.getWeeklyTarget());
+
+            CrashlyticsHelper.logException(e);
+        }
     }
 
     private void doCreate(Map<String, Answer> answerLog, final BaseBotModel model,

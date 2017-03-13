@@ -8,3 +8,4 @@
 
 - Fixed Bot Image handling bugs
 - Fix crash on App open after changing device language
+- Added logging for infinite float error
