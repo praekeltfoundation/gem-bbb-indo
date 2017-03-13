@@ -86,7 +86,7 @@ public class TipsFragment extends MainFragment implements OnTipsAvailableListene
     /**
      * Set to true if the Fragment was opened with an initial search query.
      */
-    private boolean initialQuery = false;
+    private boolean filtering = false;
 
     public TipsFragment() {
         // Required empty public constructor
@@ -152,7 +152,7 @@ public class TipsFragment extends MainFragment implements OnTipsAvailableListene
                 final String query = args.getString(ARG_SEARCH_QUERY);
                 if (!TextUtils.isEmpty(query)) {
                     searchView.setText(query);
-                    initialQuery = true;
+                    filtering = true;
                 }
             }
 
@@ -189,11 +189,6 @@ public class TipsFragment extends MainFragment implements OnTipsAvailableListene
         if (focus != null) {
             imm.hideSoftInputFromWindow(focus.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
         }
-
-        //imm.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0);
-
-        //imm.hideSoftInputFromWindow( this.viewPager.getWindowToken(), InputMethodManager.HIDE_IMPLICIT_ONLY, null);
-
     }
 
     @OnTouch(R.id.fragment_tips_search_view)
@@ -242,14 +237,14 @@ public class TipsFragment extends MainFragment implements OnTipsAvailableListene
         searchAdapter.updateAllTips(tips);
 
         // Filter Tips if search query is populated
-        if (initialQuery) {
+        if (filtering) {
             String query = searchView.getText().toString();
             TipsListFragment fragment = tipsTabAdapter.getPrimaryItem();
             if (fragment != null) {
                 showFiltering(query);
                 fragment.onSearch(query);
             }
-            initialQuery = false;
+            filtering = false;
         }
     }
 

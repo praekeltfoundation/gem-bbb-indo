@@ -97,7 +97,7 @@ public class TipsListFragment extends Fragment implements TipsListFilter.OnFilte
         } else {
             retrieveTips();
         }
-        hideFiltering();
+//        hideFiltering();
     }
 
     @Override
@@ -117,7 +117,7 @@ public class TipsListFragment extends Fragment implements TipsListFilter.OnFilte
         } else {
             retrieveTips();
         }
-        hideFiltering();
+//        hideFiltering();
     }
 
     @Override
@@ -248,8 +248,6 @@ public class TipsListFragment extends Fragment implements TipsListFilter.OnFilte
     protected void hideFiltering() {
         if (listener != null)
             listener.hideFiltering();
-        else
-            System.out.println("filtering not set");
     }
 
     @Override
