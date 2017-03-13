@@ -24,10 +24,6 @@ import org.gem.indo.dooit.views.main.fragments.tip.TipsFragment;
 public class MainTabAdapter extends FragmentStatePagerAdapter {
 
     private Context context;
-    private BotFragment botFragment = BotFragment.newInstance();
-    private TargetFragment targetFragment = TargetFragment.newInstance();
-    private ChallengeFragment challengeFragment = ChallengeFragment.newInstance();
-    private TipsFragment tipsFragment = TipsFragment.newInstance();
     private boolean instantiated = false;
     private MainTabAdapterListener listener;
 
@@ -41,15 +37,15 @@ public class MainTabAdapter extends FragmentStatePagerAdapter {
     public Fragment getItem(int position) {
         switch (MainViewPagerPositions.getValueOf(position)) {
             case BOT:
-                return botFragment;
+                return BotFragment.newInstance();
             case TARGET:
-                return targetFragment;
+                return TargetFragment.newInstance();
             case CHALLENGE:
-                return challengeFragment;
+                return ChallengeFragment.newInstance();
             case TIPS:
-                return tipsFragment;
+                return TipsFragment.newInstance();
             default:
-                return botFragment;
+                return BotFragment.newInstance();
         }
     }
 

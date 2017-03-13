@@ -45,6 +45,8 @@ public enum BotCallType {
     PARTICIPANT_BADGE,
 
     @SerializedName("#set_target_to_default")
-    SET_TARGET_TO_DEFAULT
+    SET_TARGET_TO_DEFAULT,
 
+    @SerializedName("#set_tip_query")
+    SET_TIP_QUERY
 }
