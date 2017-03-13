@@ -153,6 +153,8 @@ public class TipsFragment extends MainFragment implements OnTipsAvailableListene
                 if (!TextUtils.isEmpty(query)) {
                     searchView.setText(query);
                     filtering = true;
+                    showFiltering(query);
+                    dismissKeyboard();
                 }
             }
 
@@ -163,7 +165,11 @@ public class TipsFragment extends MainFragment implements OnTipsAvailableListene
 
     @OnClick(R.id.fragment_tips_list_filter_image_button)
     public void clearFilter(View v) {
-        tipsTabAdapter.getPrimaryItem().clearFilter(v);
+        filtering = false;
+        hideFiltering();
+        TipsListFragment fragment = tipsTabAdapter.getPrimaryItem();
+        if (fragment != null)
+            fragment.clearFilter();
     }
 
     @OnEditorAction(R.id.fragment_tips_search_view)
@@ -172,10 +178,10 @@ public class TipsFragment extends MainFragment implements OnTipsAvailableListene
             String constraint = v.getText().toString();
             if (!TextUtils.isEmpty(constraint)) {
                 Log.d(TAG, "On Search " + constraint);
+                filtering = true;
                 showFiltering(constraint);
-
                 tipsTabAdapter.getPrimaryItem().onSearch(constraint);
-                hideKeyBoard();
+                dismissKeyboard();
             }
 
             return true;
@@ -183,7 +189,7 @@ public class TipsFragment extends MainFragment implements OnTipsAvailableListene
         return false;
     }
 
-    void hideKeyBoard() {
+    void dismissKeyboard() {
         InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
         View focus = getActivity().getCurrentFocus();
         if (focus != null) {
@@ -202,10 +208,11 @@ public class TipsFragment extends MainFragment implements OnTipsAvailableListene
             if (event.getX() >= (searchView.getRight() - searchView.getCompoundDrawables()[DRAWABLE_RIGHT].getBounds().width() - searchView.getPaddingRight())) {
                 String constraint = v.getText().toString();
                 if (!TextUtils.isEmpty(constraint)) {
+                    filtering = true;
                     showFiltering(constraint);
                     tipsTabAdapter.getPrimaryItem().onSearch(constraint);
                 }
-                hideKeyBoard();
+                dismissKeyboard();
                 return true;
             }
         }
@@ -216,10 +223,19 @@ public class TipsFragment extends MainFragment implements OnTipsAvailableListene
     public void onPageSelected(int position) {
         TipsViewPagerPositions pos = TipsViewPagerPositions.getValueOf(position);
         searchView.setHint(getString(pos.getSearchRes()));
-        DooitActivity activity = (DooitActivity) getActivity();
-        if (activity != null) {
-            tracker.setScreenName(activity.getScreenName() + " " + TipsViewPagerPositions.getValueOf(viewPager.getCurrentItem()).name());
+
+        TipsListFragment fragment = tipsTabAdapter.getPrimaryItem();
+        if (fragment != null) {
+            fragment.onActive();
+            if (filtering)
+                fragment.onSearch(searchView.getText().toString());
+            else
+                fragment.clearFilter();
         }
+
+        DooitActivity activity = (DooitActivity) getActivity();
+        if (activity != null)
+            tracker.setScreenName(activity.getScreenName() + " " + TipsViewPagerPositions.getValueOf(viewPager.getCurrentItem()).name());
     }
 
     @Override
@@ -233,10 +249,10 @@ public class TipsFragment extends MainFragment implements OnTipsAvailableListene
     public void onTipsAvailable(List<Tip> tips) {
         if (this.getActivity() == null)
             return;
-        Log.d(TAG, "Updating Tips");
+
         searchAdapter.updateAllTips(tips);
 
-        // Filter Tips if search query is populated
+        // Filter Tips if search query is already populated
         if (filtering) {
             String query = searchView.getText().toString();
             TipsListFragment fragment = tipsTabAdapter.getPrimaryItem();
@@ -244,7 +260,11 @@ public class TipsFragment extends MainFragment implements OnTipsAvailableListene
                 showFiltering(query);
                 fragment.onSearch(query);
             }
-            filtering = false;
+        } else {
+            TipsListFragment fragment = tipsTabAdapter.getPrimaryItem();
+            if (fragment != null) {
+                fragment.clearFilter();
+            }
         }
     }
 
