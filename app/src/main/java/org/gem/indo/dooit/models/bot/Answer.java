@@ -25,6 +25,7 @@ public class Answer extends BaseBotModel {
     @SerializedName("onAnswerInput")
     private String inputKey;
     private String nextOnFinish;
+    private String nextOnError;
     private String removeOnSelect;
     private String[] changeOnSelect;
     private String typeOnFinish;

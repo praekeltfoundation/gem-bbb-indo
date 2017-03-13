@@ -14,6 +14,7 @@ import org.gem.indo.dooit.models.enums.BotType;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * Created by Wimpie Victor on 2016/11/20.
@@ -36,7 +37,9 @@ public abstract class BotController {
      *
      * @param answerLog
      */
-    public abstract void onDone(Map<String, Answer> answerLog);
+    public void onDone(Map<String, Answer> answerLog) {
+
+    }
 
     /**
      * Called when the `callback` field is set on a Node.
@@ -45,16 +48,8 @@ public abstract class BotController {
      * @param answerLog The Answer Log up to the point of the calling Node
      * @param model     The calling Node or Answer
      */
-    public abstract void onCall(BotCallType key, Map<String, Answer> answerLog, BaseBotModel model);
+    public void onCall(BotCallType key, Map<String, Answer> answerLog, BaseBotModel model) {
 
-    /**
-     * Called by viewholders trigger behaviour in the controller.
-     *
-     * @param model
-     * @param key
-     */
-    public void call(BaseBotModel model, String key) {
-        // Override me
     }
 
     /**
@@ -97,6 +92,28 @@ public abstract class BotController {
      */
     public void onAnswer(Answer answer) {
         // Override me
+    }
+
+    /**
+     * Validates user input against business rules. If the input is valid, this method should return
+     * a null {@link String} to instruct the Bot to continue with it's next Node. If the input is
+     * invalid, it should return the name of a {@link org.gem.indo.dooit.models.bot.Node} in the
+     * conversation that will inform the user that their input is incorrect.
+     *
+     * @return Name of the {@link org.gem.indo.dooit.models.bot.Node} to display to the user to
+     * inform them that their input is incorrect.
+     */
+    public String validate(Answer answer) {
+        return null;
+    }
+
+    /**
+     * @param name The name of the Answer that received the input.
+     * @param input The actual user's input.
+     * @return true if valid, false if invalid
+     */
+    public boolean validate(String name, String input) {
+        return true;
     }
 
     /**
@@ -153,5 +170,9 @@ public abstract class BotController {
 
     public interface OnAsyncListener {
         void onDone();
+    }
+
+    protected Context getContext() {
+        return context;
     }
 }

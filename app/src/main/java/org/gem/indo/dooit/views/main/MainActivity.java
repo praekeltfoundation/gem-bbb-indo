@@ -50,6 +50,7 @@ import org.gem.indo.dooit.views.main.fragments.ChallengeLightboxFragment;
 import org.gem.indo.dooit.views.main.fragments.MainFragment;
 import org.gem.indo.dooit.views.main.fragments.bot.BotFragment;
 import org.gem.indo.dooit.views.main.fragments.target.TargetFragment;
+import org.gem.indo.dooit.views.main.fragments.tip.TipsFragment;
 import org.gem.indo.dooit.views.profile.ProfileActivity;
 
 import java.util.Stack;
@@ -395,6 +396,13 @@ public class MainActivity extends ImageActivity {
         } catch (IllegalArgumentException e) {
             Log.e(TAG, "Failed to parse bot type", e);
         }
+    }
+
+    public void setTipQuery(String query) {
+        TipsFragment fragment = (TipsFragment) viewPager.getAdapter().instantiateItem(viewPager, MainViewPagerPositions.TIPS.getValue());
+        Bundle args = fragment.getArguments();
+        args.putString(TipsFragment.ARG_SEARCH_QUERY, query);
+        fragment.setArguments(args);
     }
 
     private void startBot(BotType type) {
