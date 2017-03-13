@@ -145,12 +145,13 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        ((DooitApplication) getActivity().getApplication()).component.inject(this);
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        ((DooitApplication) getActivity().getApplication()).component.inject(this);
+
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_bot, container, false);
         ButterKnife.bind(this, view);
@@ -224,11 +225,20 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
     public void onActive() {
         super.onActive();
 
+        if (getActivity() == null)
+            // onActive called while fragment not completely initialised
+            return;
+
         // Choose a default conversation for returning users
         if (!persisted.isNewBotUser() && type == BotType.DEFAULT)
             setBotType(BotType.RETURNING_USER);
 
         createFeed();
+    }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
     }
 
     private void createFeed() {
