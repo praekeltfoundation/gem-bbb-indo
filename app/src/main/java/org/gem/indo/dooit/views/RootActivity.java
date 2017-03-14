@@ -25,7 +25,7 @@ public class RootActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         ((DooitApplication) getApplication()).component.inject(this);
-//
+
 //        if (persisted.hasToken())
 //            // Logged in
 //            MainActivity.Builder.create(this).startActivityClearTop();

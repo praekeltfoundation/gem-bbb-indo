@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <animation-list android:id="@+id/selected" android:oneshot="false">
+        <item android:drawable="@drawable/onboarding21" android:duration="50" />
+        <item android:drawable="@drawable/onboarding22" android:duration="50" />
+        <item android:drawable="@drawable/onboarding23" android:duration="50" />
+        <item android:drawable="@drawable/onboarding24" android:duration="50" />
+    </animation-list>
+</selector>

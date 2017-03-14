@@ -12,9 +12,9 @@ import java.util.Map;
  */
 
 public enum WelcomeViewPagerPositions {
-    ONE(0, R.drawable.onboarding_1_animation, org.gem.indo.dooit.R.color.yellow, org.gem.indo.dooit.R.string.welcome_page_1),
-    TWO(1, R.drawable.onboarding_1_animation, org.gem.indo.dooit.R.color.yellow, org.gem.indo.dooit.R.string.welcome_page_2),
-    THREE(2, R.drawable.onboarding_1_animation, org.gem.indo.dooit.R.color.yellow, org.gem.indo.dooit.R.string.welcome_page_3);
+    ONE(0, R.drawable.onboarding1animation, org.gem.indo.dooit.R.color.yellow, org.gem.indo.dooit.R.string.welcome_page_1),
+    TWO(1, R.drawable.onboarding2animation, org.gem.indo.dooit.R.color.yellow, org.gem.indo.dooit.R.string.welcome_page_2),
+    THREE(2, R.drawable.onboarding3animation, org.gem.indo.dooit.R.color.yellow, org.gem.indo.dooit.R.string.welcome_page_3);
 
     private static Map<Integer, WelcomeViewPagerPositions> map = new HashMap<Integer, WelcomeViewPagerPositions>();
 

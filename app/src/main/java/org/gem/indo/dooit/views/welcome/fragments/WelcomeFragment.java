@@ -80,6 +80,10 @@ public class WelcomeFragment extends Fragment {
         AnimationDrawable frameAnimation = (AnimationDrawable) imageView.getBackground();
         frameAnimation.start();
 
+        animView.setVisibility(View.GONE);
+
+        textView.setText(textResource);
+
 
         /*
         DraweeController controller = Fresco.newDraweeControllerBuilder()
