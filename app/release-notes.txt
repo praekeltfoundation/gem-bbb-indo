@@ -10,3 +10,4 @@
 - Fix crash on App open after changing device language
 - Added logging for infinite float error
 - Implemented User Goal carousel for returning user conversation
+- Implemented initial Budget create conversation
