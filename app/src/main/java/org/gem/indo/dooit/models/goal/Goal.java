@@ -450,6 +450,10 @@ public class Goal {
         this.imageUrl = imageUrl;
     }
 
+    public boolean hasImageUrl(){
+        return imageUrl != null;
+    }
+
     public String getLocalImageUri() {
         return localImageUri;
     }

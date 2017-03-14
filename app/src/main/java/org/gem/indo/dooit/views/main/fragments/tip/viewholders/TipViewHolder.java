@@ -136,6 +136,8 @@ public class TipViewHolder extends RecyclerView.ViewHolder {
                         @Override
                         public void run() {
                             setFavourite(false);
+                            // Clear tips so favourite button state can be updated on new Tips download
+                            persisted.clearTips();
                             persisted.clearFavourites();
                             Toast.makeText(getContext(), String.format(removeFavArticleText,
                                     titleView.getText().toString()), Toast.LENGTH_SHORT).show();
@@ -156,6 +158,8 @@ public class TipViewHolder extends RecyclerView.ViewHolder {
                         @Override
                         public void run() {
                             setFavourite(true);
+                            // Clear tips so favourite button state can be updated on new Tips download
+                            persisted.clearTips();
                             persisted.clearFavourites();
                             Toast.makeText(getContext(), String.format(addFavArticleText,
                                     titleView.getText().toString()), Toast.LENGTH_SHORT).show();
