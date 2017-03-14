@@ -197,6 +197,16 @@
 
     <string name="goal_add_q_ask_amount">Berapa yang harus kamu tabung untuk $(goal.name)?</string>
     <string name="goal_add_q_ask_date">Pada tanggal berapa kamu sudah harus selesai menabung untuk targetmu?</string>
+    <string name="goal_add_a_budget_intro">"I'm not sure. Help!"</string>
+
+    <string name="goal_add_q_budget_intro_01">"Sure. Let's work out how much you can save by setting up a budget."</string>
+    <string name="goal_add_q_budget_intro_02">A budget is an estimate of your income, savings, expenses and balance for a set period of time.</string>
+    <string name="goal_add_q_budget_intro_03">Setting a budget is an important step towards learning to manage your money better.</string>
+    <string name="goal_add_a_budget_start_create">Great! I want one!</string>
+    <string name="goal_add_a_budget_return">"Hmm, I don't want one now."</string>
+
+    <string name="goal_add_q_budget_return_01">"That's okay. You can create the budget after you've created your savings goal."</string>
+    <string name="goal_add_q_budget_return_02">"I suggest you start by saving Rpxxxx per week. What do you think?"</string>
 
     <string name="goal_add_q_verify">"Jika kamu tabung $(goal.weekly_target_currency) per minggu, kamu akan mencapai targetmu $(goal.name) dalam $(goal.weeks_up) minggu, $(goal.remainder_days). Jika kamu ikuti rencana ini, targetmu akan tercapai pada tanggal $(goal.end_date).</string>
 
@@ -221,6 +231,20 @@
 
     <!-- Answers -->
     <string name="goal_add_greeting_response">Hola!</string>
+
+    <!-- goal_add Validation -->
+
+    <string name="goal_add_err__invalid_number">Invalid number</string>
+    <string name="goal_add_err_user_firstname__empty">Name cannot be empty</string>
+    <string name="goal_add_err_goal_target__empty">Goal target cannot be empty</string>
+    <string name="goal_add_err_goal_target__zero">Goal target cannot be Rp0</string>
+    <string name="goal_add_err_transaction__empty">Savings cannot be empty</string>
+    <string name="goal_add_err_transaction__zero">Savings cannot be Rp0</string>
+    <string name="goal_add_err_weekly_target__empty">Weekly target cannot be empty</string>
+    <string name="goal_add_err_weekly_target__zero">Weekly target cannot be Rp0</string>
+    <string name="goal_add_err_weekly_target__goal_target">Weekly target cannot be more than your total Goal target</string>
+
+    <!-- END BOT: goal_add -->
 
     <!-- BOT: goal_deposit -->
     <!-- User clicks on add savings (+ Deposit) on Goal saving page  -->
@@ -680,6 +704,38 @@
     <string name="challenge_participant_intro">$(badge.intro)</string>
 
     <!-- END BOT: challenge_participation -->
+
+    <!-- BOT: budget_create -->
+
+    <string name="budget_create_intro">Budget Create</string>
+
+    <string name="budget_create_q_income">"Let's get started! How much money do you get each week?"</string>
+    <string name="budget_create_a_income_amount">Add amount</string>
+    <string name="budget_create_a_no_income">"I don't get a regular income"</string>
+
+    <string name="budget_create_q_no_income">"That's OK! It's important to set a savings goal to your earning ability. There are plenty of ways you can increase your income."</string>
+    <string name="budget_create_a_no_income_show_tips">Show me tips to grow my income</string>
+    <string name="budget_create_a_no_income_exit">"Okay, I'm done for now. Can we exit."</string>
+
+    <string name="budget_create_q_savings_default">"Try saving at least $(budget.default_savings_percentage)% of your income as soon as you receive it. This would be $(budget.default_savings) per week. Do you want to save this much each week?"</string>
+    <string name="budget_create_a_savings_default_accept">Yes</string>
+    <string name="budget_create_a_savings_default_deny">No, I want to save a different amount</string>
+
+    <string name="budget_create_q_summary">Your monthly income is $(budget.income). Of this amount, you save $(budget.savings) each month and spend $(budget.expense).</string>
+    <string name="budget_create_q_final">You can access and update your budget in your profile at any time.</string>
+
+    <string name="budget_create_qry_tip_income">income</string>
+
+    <!-- budget_create validation -->
+
+    <string name="budget_create_err__invalid_number">Invalid number</string>
+    <string name="budget_create_err_income__empty">Income cannot be empty</string>
+    <string name="budget_create_err_income__zero">Income cannot be Rp0</string>
+    <string name="budget_create_err_savings__empty">Savings cannot be empty</string>
+    <string name="budget_create_err_savings__zero">Savings cannot be Rp0</string>
+    <string name="budget_create_err_savings__gt_income">Your monthly savings cannot be more than your monthly income</string>
+
+    <!-- END: BOT -->
 
     <!--Buttons-->
     <string name="Skip">Skip</string>

@@ -1,6 +1,7 @@
 package org.gem.indo.dooit.views.main.fragments.bot;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -28,6 +29,7 @@ import org.gem.indo.dooit.api.managers.GoalManager;
 import org.gem.indo.dooit.api.managers.TipManager;
 import org.gem.indo.dooit.controllers.BotController;
 import org.gem.indo.dooit.controllers.RequirementResolver;
+import org.gem.indo.dooit.controllers.budget.BudgetCreateController;
 import org.gem.indo.dooit.controllers.challenge.ChallengeParticipantController;
 import org.gem.indo.dooit.controllers.challenge.ChallengeWinnerController;
 import org.gem.indo.dooit.controllers.goal.GoalAddController;
@@ -37,6 +39,7 @@ import org.gem.indo.dooit.controllers.goal.GoalWithdrawController;
 import org.gem.indo.dooit.controllers.misc.ReturningUserController;
 import org.gem.indo.dooit.controllers.survey.BaselineSurveyController;
 import org.gem.indo.dooit.controllers.survey.EAToolSurveyController;
+import org.gem.indo.dooit.dao.budget.BudgetDAO;
 import org.gem.indo.dooit.helpers.Persisted;
 import org.gem.indo.dooit.helpers.SquiggleBackgroundHelper;
 import org.gem.indo.dooit.helpers.bot.BotFeed;
@@ -60,6 +63,7 @@ import org.gem.indo.dooit.views.main.fragments.bot.adapters.BotAdapter;
 import org.gem.indo.dooit.views.main.fragments.bot.adapters.QuickAnswerAdapter;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -142,12 +146,13 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        ((DooitApplication) getActivity().getApplication()).component.inject(this);
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        ((DooitApplication) getActivity().getApplication()).component.inject(this);
+
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_bot, container, false);
         ButterKnife.bind(this, view);
@@ -221,11 +226,20 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
     public void onActive() {
         super.onActive();
 
+        if (getActivity() == null)
+            // onActive called while fragment not completely initialised
+            return;
+
         // Choose a default conversation for returning users
         if (!persisted.isNewBotUser() && type == BotType.DEFAULT)
             setBotType(BotType.RETURNING_USER);
 
         createFeed();
+    }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
     }
 
     private void createFeed() {
@@ -295,10 +309,6 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
                         .build()
                         .resolve(reqCallback);
                 break;
-            case TIP_INTRO:
-                feed.parse(R.raw.tip_intro, Node.class);
-                initializeBot();
-                break;
             case SURVEY_BASELINE: {
                 feed.parse(R.raw.survey_baseline, Node.class);
                 RequirementResolver.Builder builder = new RequirementResolver.Builder(
@@ -332,6 +342,13 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
             case CHALLENGE_PARTICIPANT_BADGE:
                 feed.parse(R.raw.challenge_participant_badge, Node.class);
                 initializeBot();
+                break;
+            case BUDGET_CREATE:
+                feed.parse(R.raw.budget_create, Node.class);
+                new RequirementResolver.Builder(getContext(), BotType.BUDGET_CREATE)
+                        .require(BotObjectType.EXPENSE_CATEGORIES)
+                        .build()
+                        .resolve(reqCallback);
                 break;
         }
     }
@@ -386,9 +403,6 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
             case GOAL_EDIT:
                 getAndAddNode("goal_edit_intro");
                 break;
-            case TIP_INTRO:
-                getAndAddNode("tip_intro_inline_link");
-                break;
             case SURVEY_BASELINE:
                 getAndAddNode(null);
                 break;
@@ -399,6 +413,9 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
                 getAndAddNode(null);
                 break;
             case CHALLENGE_PARTICIPANT_BADGE:
+                getAndAddNode(null);
+                break;
+            case BUDGET_CREATE:
                 getAndAddNode(null);
                 break;
         }
@@ -452,6 +469,8 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
                 return new ChallengeParticipantController(getActivity(),
                         persisted.loadParticipantBadge(botType),
                         persisted.loadParticipantChallenge(botType));
+            case BUDGET_CREATE:
+                return new BudgetCreateController(getActivity(), this, null);
             default:
                 return null;
         }
@@ -503,6 +522,7 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
         if (answer.hasNext())
             getAndAddNode(answer.getNext());
         else
+            // Answer did not point anywhere
             clearAnswerView();
     }
 
@@ -523,6 +543,18 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
             }
         }
         return answerLog;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @NonNull
+    @Override
+    public Map<String, Answer> getAnswerLog() {
+        BotAdapter adapter = getBotAdapter();
+        if (adapter == null)
+            return new LinkedHashMap<>();
+        return createAnswerLog(adapter.getDataSet());
     }
 
     ///////////
@@ -624,7 +656,6 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
             finishConversation();
         } else {
             addAnswerOptions(node);
-            persisted.saveConversationState(type, getBotAdapter().getDataSet());
             CrashlyticsHelper.log(this.getClass().getSimpleName(), "checkEndOrAddAnswers: ", "data set: " + getBotAdapter().getDataSet());
         }
     }
@@ -651,6 +682,9 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
                     }
                 }
             }
+
+            // End of recursion
+            persisted.saveConversationState(type, getBotAdapter().getDataSet());
         } else if (node.hasAutoNext()) {
             // Auto next set from JSON
             if (BotMessageType.getValueOf(node.getType()) == BotMessageType.STARTCONVO) {
@@ -675,6 +709,10 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
         } else if (node.hasAutoNextNode()) {
             // Auto next set from Java code
             addNode(node.getAutoNextNode());
+        } else {
+
+            // End of recursion
+            persisted.saveConversationState(type, getBotAdapter().getDataSet());
         }
     }
 

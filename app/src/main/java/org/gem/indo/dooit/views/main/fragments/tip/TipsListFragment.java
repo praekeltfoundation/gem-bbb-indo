@@ -55,7 +55,6 @@ public class TipsListFragment extends Fragment implements TipsListFilter.OnFilte
     TipsListAdapter adapter;
     OnTipsAvailableListener listener;
     GridLayoutManager gridManager;
-    View listView;
     Snackbar snackbar;
 
     public TipsListFragment() {

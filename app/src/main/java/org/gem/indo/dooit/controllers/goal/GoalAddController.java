@@ -5,6 +5,7 @@ import android.net.Uri;
 import android.text.TextUtils;
 
 import org.gem.indo.dooit.DooitApplication;
+import org.gem.indo.dooit.R;
 import org.gem.indo.dooit.api.DooitAPIError;
 import org.gem.indo.dooit.api.DooitErrorHandler;
 import org.gem.indo.dooit.api.managers.FileUploadManager;
@@ -142,11 +143,8 @@ public class GoalAddController extends GoalBotController {
             goal.createTransaction(Double.parseDouble(answerLog.get("priorSaveAmount").getValue()));
 
         // Goal Image
-        if (answerLog.containsKey("goal_add_a_camera")) {
-            goal.setLocalImageUri(answerLog.get("goal_add_a_camera").getValue());
-            goal.setImageFromProto(false);
-        } else if (answerLog.containsKey("goal_add_a_gallery")) {
-            goal.setLocalImageUri(answerLog.get("goal_add_a_gallery").getValue());
+        if (answerLog.containsKey("goal_add_a_goal_image")) {
+            goal.setLocalImageUri(answerLog.get("goal_add_a_goal_image").getValue());
             goal.setImageFromProto(false);
         } else if (protoAnswer != null) {
             // Skipped; use Goal Prototype image
@@ -154,8 +152,17 @@ public class GoalAddController extends GoalBotController {
             goal.setImageFromProto(true);
         }
 
-        // Goal is stored in case the view is destroyed during the conversation
-        persisted.saveConvoGoal(botType, goal);
+        try {
+            // Goal is stored in case the view is destroyed during the conversation
+            persisted.saveConvoGoal(botType, goal);
+        } catch (IllegalArgumentException e) {
+            // Logging for infinite double error
+            CrashlyticsHelper.log(TAG, "do Populate (addGoal): ", "goal start date: " + goal.getStartDate() +
+                    " Target amount: " + goal.getTarget() + " Goal name: " + goal.getName() +
+                    " Goal Weekly Target: " + goal.getWeeklyTarget());
+
+            CrashlyticsHelper.logException(e);
+        }
     }
 
     private void doCreate(Map<String, Answer> answerLog, final BaseBotModel model,
@@ -185,13 +192,27 @@ public class GoalAddController extends GoalBotController {
 
             // Crashlytics for MediaURI null check
             try {
+                /*
+                TODO: This line is causing an ILLEGALARGUMENTSEXCEPTION in the MediaUriHelper class. It needs investigation on how to solve that issue. Storing the valid image path in the Answer.values map is a temporary solution.
                 final String path = MediaUriHelper.getPath(context, uri);
+                */
+                final Map<String, Answer> answerLogTemp = answerLog;
                 observe.subscribe(new Action1<Goal>() {
                     @Override
                     public void call(final Goal newGoal) {
                         // New Achievements is what we care about
                         goal.addNewBadges(newGoal.getNewBadges());
                         saveGoal();
+
+                        //the path is now extracted form the Answer.values map as explained int the comment above "final String path = MediaUriHelper.getPath(context, uri);"
+                        String path = null;
+                        if(answerLogTemp.containsKey("goal_add_a_goal_image")){
+                            Answer imageAnswer = answerLogTemp.get("goal_add_a_goal_image");
+                            path = imageAnswer.values.getString(Answer.IMAGEPATH);
+                        }else{
+                            path = goal.getPrototype().getImageUrl();
+                        }
+
                         uploadImage(newGoal, mimetype, new File(path));
                     }
                 });
@@ -251,6 +272,106 @@ public class GoalAddController extends GoalBotController {
             goal.setTarget(goal.getPrototype().getDefaultPrice());
         } else {
             goal.setTarget(0);
+        }
+    }
+
+    ////////////////
+    // Validation //
+    ////////////////
+
+    @Override
+    public boolean validate(String name, String input) {
+        switch (name) {
+            case "goal_add_user_firstname":
+            case "goal_name":
+                return validateName(input);
+            case "goal_amount":
+            case "goal_add_q_change_target":
+                // Goal Target
+                return validateTarget(input);
+            case "priorSaveAmount":
+                // Existing savings
+                return validateTransaction(input);
+            case "weeklySaveAmount":
+                // Weekly target
+                return validateWeeklyTarget(input);
+            default:
+                return super.validate(name, input);
+        }
+    }
+
+    private boolean validateName(String input) {
+        if (TextUtils.isEmpty(input)) {
+            toast(R.string.goal_add_err_user_firstname__empty);
+            return false;
+        }
+        return true;
+    }
+
+    private boolean validateTarget(String input) {
+        if (TextUtils.isEmpty(input)) {
+            toast(R.string.goal_add_err_goal_target__empty);
+            return false;
+        }
+
+        try {
+            double value = Double.parseDouble(input);
+            if (value <= 0.0) {
+                toast(R.string.goal_add_err_goal_target__zero);
+                return false;
+            }
+            return true;
+        } catch (NumberFormatException e) {
+            toast(R.string.goal_add_err__invalid_number);
+            return false;
+        }
+    }
+
+    private boolean validateTransaction(String input) {
+        if (TextUtils.isEmpty(input)) {
+            toast(R.string.goal_add_err_transaction__empty);
+            return false;
+        }
+
+        try {
+            double value = Double.parseDouble(input);
+            if (value <= 0.0) {
+                toast(R.string.goal_add_err_transaction__zero);
+                return false;
+            }
+            return true;
+        } catch (NumberFormatException e) {
+            toast(R.string.goal_add_err__invalid_number);
+            return false;
+        }
+    }
+
+    private boolean validateWeeklyTarget(String input) {
+        if (TextUtils.isEmpty(input)) {
+            toast(R.string.goal_add_err_weekly_target__empty);
+            return false;
+        }
+
+        try {
+            double value = Double.parseDouble(input);
+
+            // Search for Goal Target entry
+            Map<String, Answer> answerLog = botRunner.getAnswerLog();
+            Double goalTarget = null;
+            if (answerLog.containsKey("goal_amount"))
+                goalTarget = Double.parseDouble(answerLog.get("goal_amount").getValue());
+
+            if (value <= 0.0) {
+                toast(R.string.goal_add_err_weekly_target__zero);
+                return false;
+            } else if (goalTarget != null && value > goalTarget) {
+                toast(R.string.goal_add_err_weekly_target__goal_target);
+                return false;
+            }
+            return true;
+        } catch (NumberFormatException e) {
+            toast(R.string.goal_add_err__invalid_number);
+            return false;
         }
     }
 }

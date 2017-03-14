@@ -16,11 +16,16 @@ import org.gem.indo.dooit.models.enums.BotQuickAnswerBackground;
 
 public class Answer extends BaseBotModel {
 
+    public static final String IMAGEURI = "IMAGEURI";
+    public static final String IMAGEPATH = "IMAGEPATH";
+    public static final String IMAGEMEDIATYPE = "IMAGEMEDIATYPE";
+
     private String inlineEditHint;
     private String value;
     @SerializedName("onAnswerInput")
     private String inputKey;
     private String nextOnFinish;
+    private String nextOnError;
     private String removeOnSelect;
     private String[] changeOnSelect;
     private String typeOnFinish;

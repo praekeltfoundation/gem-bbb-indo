@@ -76,6 +76,13 @@ public enum BotParamType {
     SURVEY_INTRO("survey.intro"),
     SURVEY_OUTRO("survey.outro"),
 
+    // Budget
+    BUDGET_INCOME("budget.income"),
+    BUDGET_SAVINGS("budget.savings"),
+    BUDGET_EXPENSE("budget.expense"),
+    BUDGET_DEFAULT_SAVINGS("budget.default_savings"),
+    BUDGET_DEFAULT_SAVING_PERCENT("budget.default_savings_percentage"),
+
     //Currency Symbol
     CURRENCY_SYMBOL("currency.symbol"),
 

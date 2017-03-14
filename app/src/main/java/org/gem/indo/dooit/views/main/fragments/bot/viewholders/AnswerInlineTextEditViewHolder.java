@@ -52,15 +52,23 @@ public class AnswerInlineTextEditViewHolder extends BaseBotViewHolder<Answer> {
         editText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-//                if (EditorInfo.IME_ACTION_DONE == actionId) {
                 // TODO: `Done` on keyboard still sends 66 (KeyEvent.KEYCODE_ENTER)
                 if (EditorInfo.IME_ACTION_DONE == actionId) {
+                    String input = v.getText().toString();
+
+                    if (!validate(dataModel.getName(), input))
+                        return true;
+
+                    // Keyboard not dismissed on invalid input
                     dismissKeyboard(editText);
+
                     Answer inputAnswer = new Answer();
-                    inputAnswer.setValue(v.getText().toString());
+                    inputAnswer.setValue(input);
                     inputAnswer.setName(dataModel.getName());
+
                     if (dataModel.hasInputKey())
                         inputAnswer.setInputKey(dataModel.getInputKey());
+
                     inputAnswer.setRemoveOnSelect(dataModel.getName());
                     inputAnswer.setNext(dataModel.getNextOnFinish());
                     inputAnswer.setType(BotMessageType.getValueOf(dataModel.getTypeOnFinish()));
@@ -72,6 +80,13 @@ public class AnswerInlineTextEditViewHolder extends BaseBotViewHolder<Answer> {
                 return false;
             }
         });
+    }
+
+    private boolean validate(String name, String input) {
+        if (botAdapter == null || !botAdapter.hasController())
+            return true;
+
+        return botAdapter.getController().validate(name, input);
     }
 
     @Override

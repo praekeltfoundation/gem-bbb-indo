@@ -75,14 +75,18 @@ public class AnswerInlineNumberEditViewHolder extends BaseBotViewHolder<Answer> 
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                 if (EditorInfo.IME_ACTION_DONE == actionId) {
-                    dismissKeyboard(editText);
                     char separator = CurrencyHelper.getSeperator();
                     //char separator = ((DecimalFormat) NumberFormat.getCurrencyInstance()).getDecimalFormatSymbols().getGroupingSeparator();
                     String stringSeparator = String.valueOf(separator);
-
                     String input = (v.getText().toString()).replace(stringSeparator, "");
-                    Answer inputAnswer = new Answer();
 
+                    if (!validate(dataModel.getName(), input))
+                        return true;
+
+                    // Keyboard not dismissed on invalid input
+                    dismissKeyboard(editText);
+
+                    Answer inputAnswer = new Answer();
                     inputAnswer.setValue(!TextUtils.isEmpty(input) ? input : DEFAULT);
                     inputAnswer.setName(dataModel.getName());
                     inputAnswer.setRemoveOnSelect(dataModel.getName());
@@ -95,6 +99,13 @@ public class AnswerInlineNumberEditViewHolder extends BaseBotViewHolder<Answer> 
                 return false;
             }
         });
+    }
+
+    private boolean validate(String name, String input) {
+        if (botAdapter == null || !botAdapter.hasController())
+            return true;
+
+        return botAdapter.getController().validate(name, input);
     }
 
     @Override
