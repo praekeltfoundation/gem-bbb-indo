@@ -194,7 +194,7 @@
     <string name="goal_add_custom">"Tambahkan tujuan baru?"</string>
     <string name="goal_add_a_camera">"Aku ingin mengunggah foto."</string>
     <string name="goal_add_a_gallery">"Aku ingin memilih foto dari galeri."</string>
-    
+
     <string name="goal_add_q_ask_amount">"Berapa yang harus kamu tabung untuk $(goal.name)?"</string>
     <string name="goal_add_q_ask_date">"Pada tanggal berapa kamu sudah harus selesai menabung untuk targetmu?"</string>
     <string name="goal_add_a_budget_intro">"I'm not sure. Help!"</string>
