@@ -134,6 +134,10 @@ public class RequirementResolver {
                             // Survey was retrieved by bot type
                             persisted.saveConvoSurvey(botType, ((List<CoachSurvey>) o).get(0));
                         else if (((List) o).get(0) instanceof ExpenseCategory) {
+                            List<ExpenseCategory> categories = (List<ExpenseCategory>) o;
+                            // Bot Conversation is frontend specific.
+                            for (ExpenseCategory category : categories)
+                                category.setBotType(botType);
                             new ExpenseCategoryBotDAO().update(botType, (List<ExpenseCategory>) o);
                         }
                     } else if (o instanceof BaseChallenge) {
@@ -197,7 +201,7 @@ public class RequirementResolver {
 
             }
         });
-        if (persisted.hasConvoGoals(botType))
+        if (persisted.hasGoalProtos())
             protos.subscribe(new Action1<List<GoalPrototype>>() {
                 @Override
                 public void call(List<GoalPrototype> goalPrototypes) {
@@ -309,19 +313,9 @@ public class RequirementResolver {
             }
         });
 
-        RealmResults<ExpenseCategory> results = Realm.getDefaultInstance()
-                .where(ExpenseCategory.class)
-                .findAll();
-
-        if (!results.isEmpty())
-            // Continue with stale Expense Categories. Download new ones in the background
-            observable.subscribe(new Action1<List<ExpenseCategory>>() {
-                @Override
-                public void call(final List<ExpenseCategory> expenseCategories) {
-                    new ExpenseCategoryBotDAO().update(botType, expenseCategories);
-                }
-            });
-        else
+        // If the conversation has any categories, we don't download new ones. They will be cleared
+        // at the end of the conversation.
+        if (!new ExpenseCategoryBotDAO().exists(botType))
             sync.add(observable);
     }
 

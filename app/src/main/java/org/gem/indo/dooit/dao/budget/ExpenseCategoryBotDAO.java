@@ -82,4 +82,20 @@ public class ExpenseCategoryBotDAO {
                 realm.close();
         }
     }
+
+    public boolean exists(@NonNull BotType botType) {
+        Realm realm = null;
+
+        try {
+            realm = Realm.getDefaultInstance();
+
+            return !realm.where(ExpenseCategory.class)
+                    .equalTo(ExpenseCategory.FIELD_BOT_TYPE, botType.getId())
+                    .findAll()
+                    .isEmpty();
+        } finally {
+            if (realm != null)
+                realm.close();
+        }
+    }
 }
