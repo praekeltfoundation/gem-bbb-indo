@@ -1,12 +1,8 @@
 
-1.0.0
-
-- Fix duplicate transactions in Goal Create conversation
-- Added Node to ask user for Goal name
-
 1.0.1
 
 - Fixed Bot Image handling bugs
 - Fix crash on App open after changing device language
 - Added logging for infinite float error
 - Implemented User Goal carousel for returning user conversation
+- Implemented initial Budget create conversation
