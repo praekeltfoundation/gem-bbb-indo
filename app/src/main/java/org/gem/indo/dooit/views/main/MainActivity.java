@@ -33,7 +33,9 @@ import org.gem.indo.dooit.api.managers.ChallengeManager;
 import org.gem.indo.dooit.helpers.Persisted;
 import org.gem.indo.dooit.helpers.RequestCodes;
 import org.gem.indo.dooit.helpers.activity.result.ActivityForResultHelper;
+import org.gem.indo.dooit.helpers.crashlytics.CrashlyticsHelper;
 import org.gem.indo.dooit.helpers.images.DraweeHelper;
+import org.gem.indo.dooit.helpers.images.ImageSelectedListener;
 import org.gem.indo.dooit.helpers.notifications.NotificationType;
 import org.gem.indo.dooit.helpers.prefetching.PrefetchAlarmReceiver;
 import org.gem.indo.dooit.models.User;
@@ -41,13 +43,14 @@ import org.gem.indo.dooit.models.challenge.BaseChallenge;
 import org.gem.indo.dooit.models.enums.BotType;
 import org.gem.indo.dooit.services.NotificationAlarm;
 import org.gem.indo.dooit.services.NotificationArgs;
-import org.gem.indo.dooit.views.DooitActivity;
+import org.gem.indo.dooit.views.ImageActivity;
 import org.gem.indo.dooit.views.helpers.activity.DooitActivityBuilder;
 import org.gem.indo.dooit.views.main.adapters.MainTabAdapter;
 import org.gem.indo.dooit.views.main.fragments.ChallengeLightboxFragment;
 import org.gem.indo.dooit.views.main.fragments.MainFragment;
 import org.gem.indo.dooit.views.main.fragments.bot.BotFragment;
 import org.gem.indo.dooit.views.main.fragments.target.TargetFragment;
+import org.gem.indo.dooit.views.main.fragments.tip.TipsFragment;
 import org.gem.indo.dooit.views.profile.ProfileActivity;
 
 import java.util.Stack;
@@ -62,10 +65,14 @@ import butterknife.OnPageChange;
 import rx.Subscription;
 import rx.functions.Action1;
 
-public class MainActivity extends DooitActivity {
+public class MainActivity extends ImageActivity {
 
     private static final String TAG = MainActivity.class.getName();
     private static final int REQUEST_CODE = 0;
+
+    public static final String IMAGE_SELECTION_BROADCAST_ID = "ImageSelected";
+
+    private ImageSelectedListener imageSelectedListener = null;
 
     private Subscription challengeSubscription;
 
@@ -140,8 +147,8 @@ public class MainActivity extends DooitActivity {
         }).subscribe(new Action1<BaseChallenge>() {
             @Override
             public void call(BaseChallenge challenge) {
-                if(challenge != null){
-                    if(challenge.isActive()){
+                if (challenge != null) {
+                    if (challenge.isActive()) {
                         ChallengeLightboxFragment challengeLightboxFragment = ChallengeLightboxFragment.newInstance(challenge);
                         challengeLightboxFragment.show(getFragmentManager(), "challenge_available_lightbox");
                     }
@@ -149,7 +156,7 @@ public class MainActivity extends DooitActivity {
             }
         });
 
-        if(!prefetchAlarmHasBeenSet) {
+        if (!prefetchAlarmHasBeenSet) {
             //set alarm for pre fetching
             Intent intent = new Intent(MainActivity.this, PrefetchAlarmReceiver.class);
             PendingIntent pendingIntent = PendingIntent.getBroadcast(MainActivity.this, REQUEST_CODE, intent, 0);
@@ -214,8 +221,8 @@ public class MainActivity extends DooitActivity {
         currentPos = 0;
         saveToHistory = true;
 
-        /*Set the ActionBar's title for Bina here to ensure it gets set initially
-        When the app starts up for a logged in user technically no page has been selected*/
+        // Set the ActionBar's title for Bina here to ensure it gets set initially
+        // When the app starts up for a logged in user technically no page has been selected
         mainTabAdapter.setAdapterListener(new MainTabAdapter.MainTabAdapterListener() {
             @Override
             public void onAdapterInstantiated() {
@@ -264,7 +271,7 @@ public class MainActivity extends DooitActivity {
             }
         }
 
-        MainFragment fragment = (MainFragment) mainTabAdapter.getItem(viewPager.getCurrentItem());
+        MainFragment fragment = (MainFragment) mainTabAdapter.instantiateItem(container, viewPager.getCurrentItem());
         if (fragment != null)
             fragment.onActive();
 
@@ -391,6 +398,13 @@ public class MainActivity extends DooitActivity {
         }
     }
 
+    public void setTipQuery(String query) {
+        TipsFragment fragment = (TipsFragment) viewPager.getAdapter().instantiateItem(viewPager, MainViewPagerPositions.TIPS.getValue());
+        Bundle args = fragment.getArguments();
+        args.putString(TipsFragment.ARG_SEARCH_QUERY, query);
+        fragment.setArguments(args);
+    }
+
     private void startBot(BotType type) {
         BotFragment fragment = (BotFragment) viewPager.getAdapter().instantiateItem(viewPager, MainViewPagerPositions.BOT.getValue());
         fragment.setBotType(type);
@@ -410,5 +424,29 @@ public class MainActivity extends DooitActivity {
                     CommonConfetti.rainingConfetti(container, new int[]{Color.RED, Color.BLUE}).oneShot();
                 }
             });
+    }
+
+    /**
+     * This implementation of the function calls mageSelectedListener.handleSelectedImage
+     * if a listener is registered. Otherwise nothing happens
+     *
+     * @param mediaType The media type of the image file
+     * @param imageUri  The uri to the content
+     * @param imagePath the file system path to the image
+     */
+    @Override
+    protected void onImageResult(String mediaType, Uri imageUri, String imagePath) {
+        CrashlyticsHelper.log(this.getClass().getSimpleName(), "OnImageResult : ", "successful image result (settings)");
+        if(imageSelectedListener != null){
+            imageSelectedListener.handleSelectedImage(mediaType, imageUri, imagePath);
+        }
+    }
+
+    public void setImageSelectedListener(ImageSelectedListener imageSelectedListener) {
+        this.imageSelectedListener = imageSelectedListener;
+    }
+
+    public void clearImageSelectedListener(){
+        imageSelectedListener = null;
     }
 }

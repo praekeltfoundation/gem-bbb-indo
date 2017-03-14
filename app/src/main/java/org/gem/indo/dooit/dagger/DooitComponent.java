@@ -7,6 +7,7 @@ import org.gem.indo.dooit.api.managers.FeedbackManager;
 import org.gem.indo.dooit.api.managers.SurveyManager;
 import org.gem.indo.dooit.controllers.DooitBotController;
 import org.gem.indo.dooit.controllers.RequirementResolver;
+import org.gem.indo.dooit.controllers.budget.BudgetCreateController;
 import org.gem.indo.dooit.controllers.challenge.ChallengeWinnerController;
 import org.gem.indo.dooit.controllers.goal.GoalAddController;
 import org.gem.indo.dooit.controllers.goal.GoalBotController;
@@ -27,6 +28,8 @@ import org.gem.indo.dooit.views.main.fragments.bot.viewholders.AnswerImageSelect
 import org.gem.indo.dooit.views.main.fragments.bot.viewholders.BadgeViewHolder;
 import org.gem.indo.dooit.views.main.fragments.bot.viewholders.GoalGalleryViewHolder;
 import org.gem.indo.dooit.views.main.fragments.bot.viewholders.GoalInfoViewHolder;
+import org.gem.indo.dooit.views.main.fragments.bot.viewholders.GoalInformationGalleryItemViewHolder;
+import org.gem.indo.dooit.views.main.fragments.bot.viewholders.GoalInformationGalleryViewHolder;
 import org.gem.indo.dooit.views.main.fragments.bot.viewholders.GoalVerificationViewHolder;
 import org.gem.indo.dooit.views.main.fragments.bot.viewholders.TextViewHolder;
 import org.gem.indo.dooit.views.main.fragments.bot.viewholders.TipBotViewHolder;
@@ -78,6 +81,8 @@ public interface DooitComponent {
     void inject(BotFragment o);
 
     void inject(BadgeViewHolder o);
+
+    void inject(BudgetCreateController o);
 
     void inject(ChallengeActivity o);
 
@@ -186,4 +191,8 @@ public interface DooitComponent {
     void inject(PrefetchAlarmReceiver o);
 
     void inject(ChallengeLightboxFragment o);
+
+    void inject(GoalInformationGalleryViewHolder o);
+
+    void inject(GoalInformationGalleryItemViewHolder o);
 }

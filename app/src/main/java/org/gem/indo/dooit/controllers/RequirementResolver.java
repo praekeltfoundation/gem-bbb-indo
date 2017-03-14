@@ -8,13 +8,17 @@ import android.os.Looper;
 import org.gem.indo.dooit.DooitApplication;
 import org.gem.indo.dooit.api.DooitAPIError;
 import org.gem.indo.dooit.api.DooitErrorHandler;
+import org.gem.indo.dooit.api.managers.BudgetManager;
 import org.gem.indo.dooit.api.managers.ChallengeManager;
 import org.gem.indo.dooit.api.managers.GoalManager;
 import org.gem.indo.dooit.api.managers.SurveyManager;
 import org.gem.indo.dooit.api.managers.TipManager;
+import org.gem.indo.dooit.dao.budget.BudgetDAO;
+import org.gem.indo.dooit.dao.budget.ExpenseCategoryBotDAO;
 import org.gem.indo.dooit.helpers.Persisted;
 import org.gem.indo.dooit.helpers.images.DraweeHelper;
 import org.gem.indo.dooit.models.Tip;
+import org.gem.indo.dooit.models.budget.ExpenseCategory;
 import org.gem.indo.dooit.models.challenge.BaseChallenge;
 import org.gem.indo.dooit.models.enums.BotObjectType;
 import org.gem.indo.dooit.models.enums.BotType;
@@ -27,6 +31,8 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import io.realm.Realm;
+import io.realm.RealmResults;
 import rx.Observable;
 import rx.functions.Action0;
 import rx.functions.Action1;
@@ -41,16 +47,19 @@ import rx.functions.Func1;
 public class RequirementResolver {
 
     @Inject
-    GoalManager goalManager;
+    BudgetManager budgetManager;
 
     @Inject
     ChallengeManager challengeManager;
 
     @Inject
-    TipManager tipManager;
+    GoalManager goalManager;
 
     @Inject
     SurveyManager surveyManager;
+
+    @Inject
+    TipManager tipManager;
 
     @Inject
     Persisted persisted;
@@ -69,6 +78,7 @@ public class RequirementResolver {
         handler = new Handler(Looper.getMainLooper());
     }
 
+    @SuppressWarnings("unchecked")
     public void resolve(final Callback callback) {
         // Retrieve requirements from persistence, or add them to the list to be downloaded.
         for (BotObjectType type : requirements)
@@ -89,6 +99,9 @@ public class RequirementResolver {
                 case SURVEY:
                     retrieveSurvey();
                     break;
+                case EXPENSE_CATEGORIES:
+                    retrieveExpenseCategories();
+                    break;
             }
 
         if (sync.size() > 0) {
@@ -107,7 +120,7 @@ public class RequirementResolver {
                 }
             }).subscribe(new Action1<Object>() {
                 @Override
-                public void call(Object o) {
+                public void call(final Object o) {
                     if (o instanceof List) {
                         if (((List) o).size() == 0) return;
                         if (((List) o).get(0) instanceof Goal)
@@ -117,10 +130,12 @@ public class RequirementResolver {
                         else if (((List) o).get(0) instanceof GoalPrototype) {
                             persisted.saveGoalProtos((List<GoalPrototype>) o);
                             retrieveGoalPrototypeImagesIfProtorypesArePersisted();
-                        }
-                        else if (((List) o).get(0) instanceof CoachSurvey)
+                        } else if (((List) o).get(0) instanceof CoachSurvey)
                             // Survey was retrieved by bot type
                             persisted.saveConvoSurvey(botType, ((List<CoachSurvey>) o).get(0));
+                        else if (((List) o).get(0) instanceof ExpenseCategory) {
+                            new ExpenseCategoryBotDAO().update(botType, (List<ExpenseCategory>) o);
+                        }
                     } else if (o instanceof BaseChallenge) {
                         persisted.saveConvoChallenge(botType, (BaseChallenge) o);
                     } else if (o instanceof CoachSurvey) {
@@ -194,11 +209,11 @@ public class RequirementResolver {
             sync.add(protos);
     }
 
-    private void retrieveGoalPrototypeImagesIfProtorypesArePersisted(){
-        if (persisted.hasGoalProtos()){
+    private void retrieveGoalPrototypeImagesIfProtorypesArePersisted() {
+        if (persisted.hasGoalProtos()) {
             List<GoalPrototype> goalPrototypes = persisted.loadGoalProtos();
-            for(GoalPrototype prototype : goalPrototypes){
-                if(prototype.hasImageUrl()) {
+            for (GoalPrototype prototype : goalPrototypes) {
+                if (prototype.hasImageUrl()) {
                     DraweeHelper.cacheImage(Uri.parse(prototype.getImageUrl()));
                 }
             }
@@ -283,9 +298,31 @@ public class RequirementResolver {
             else
                 sync.add(survey);
         }
+    }
 
+    @SuppressWarnings("unchecked")
+    public void retrieveExpenseCategories() {
+        Observable observable = budgetManager.retrieveExpenseCategories(new DooitErrorHandler() {
+            @Override
+            public void onError(DooitAPIError error) {
 
+            }
+        });
 
+        RealmResults<ExpenseCategory> results = Realm.getDefaultInstance()
+                .where(ExpenseCategory.class)
+                .findAll();
+
+        if (!results.isEmpty())
+            // Continue with stale Expense Categories. Download new ones in the background
+            observable.subscribe(new Action1<List<ExpenseCategory>>() {
+                @Override
+                public void call(final List<ExpenseCategory> expenseCategories) {
+                    new ExpenseCategoryBotDAO().update(botType, expenseCategories);
+                }
+            });
+        else
+            sync.add(observable);
     }
 
     public void setSurveyId(long surveyId) {

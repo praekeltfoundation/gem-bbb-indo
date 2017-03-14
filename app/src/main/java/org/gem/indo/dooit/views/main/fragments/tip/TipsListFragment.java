@@ -8,10 +8,7 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
@@ -55,7 +52,6 @@ public class TipsListFragment extends Fragment implements TipsListFilter.OnFilte
     TipsListAdapter adapter;
     OnTipsAvailableListener listener;
     GridLayoutManager gridManager;
-    View listView;
     Snackbar snackbar;
 
     public TipsListFragment() {
@@ -88,23 +84,8 @@ public class TipsListFragment extends Fragment implements TipsListFilter.OnFilte
     }
 
     @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        super.onCreateOptionsMenu(menu, inflater);
-        if (tipProvider.hasTips()) {
-            List<Tip> tips = tipProvider.loadTips();
-            adapter.updateAllTips(tips);
-            adapter.resetFiltered();
-            notifyTipsLoaded(tips);
-        } else {
-            retrieveTips();
-        }
-        hideFiltering();
-    }
-
-    @Override
     public void onPause() {
         super.onPause();
-        tipProvider.saveTips(adapter.getAllTips());
     }
 
     @Override
@@ -118,7 +99,17 @@ public class TipsListFragment extends Fragment implements TipsListFilter.OnFilte
         } else {
             retrieveTips();
         }
-        hideFiltering();
+    }
+
+    public void onActive() {
+        if (tipProvider.hasTips()) {
+            List<Tip> tips = tipProvider.loadTips();
+            adapter.updateAllTips(tips);
+            adapter.resetFiltered();
+            notifyTipsLoaded(tips);
+        } else {
+            retrieveTips();
+        }
     }
 
     @Override
@@ -159,8 +150,7 @@ public class TipsListFragment extends Fragment implements TipsListFilter.OnFilte
         adapter.getFilter().filter(constraint);
     }
 
-    public void clearFilter(View v) {
-        hideFiltering();
+    public void clearFilter() {
         adapter.resetFiltered();
         if (snackbar != null) {
             snackbar.dismiss();
@@ -168,17 +158,13 @@ public class TipsListFragment extends Fragment implements TipsListFilter.OnFilte
     }
 
     public void onPageSelected() {
-        if (snackbar != null) {
+        if (snackbar != null)
             snackbar.dismiss();
-        }
-        Log.d(TAG, "onPageSelected");
     }
 
     public void onPageDeselected() {
-        if (snackbar != null) {
+        if (snackbar != null)
             snackbar.dismiss();
-        }
-        Log.d(TAG, "onPageDeselected");
     }
 
     public void setOnTipsLoadedListener(OnTipsAvailableListener listener) {
@@ -225,7 +211,8 @@ public class TipsListFragment extends Fragment implements TipsListFilter.OnFilte
                             }
 
                             adapter.updateAllTips(tips);
-                            adapter.resetFiltered();
+                            if (tipProvider != null)
+                                tipProvider.saveTips(tips);
                             notifyTipsLoaded(tips);
                         }
                     });
@@ -246,17 +233,8 @@ public class TipsListFragment extends Fragment implements TipsListFilter.OnFilte
             progressContainer.setVisibility(View.VISIBLE);
     }
 
-    protected void hideFiltering() {
-        if (listener != null)
-            listener.hideFiltering();
-        else
-            System.out.println("filtering not set");
-    }
-
     @Override
     public void onFilterDone(int filterCount) {
-        Log.d(TAG, "onVariableChanged function called!!!!!!!!!");
-
         if (recyclerView != null) {
             if (snackbar == null)
                 snackbar = Snackbar.make(recyclerView, R.string.tips_no_tips_on_filter, Snackbar.LENGTH_INDEFINITE);

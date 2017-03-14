@@ -1,5 +1,7 @@
 package org.gem.indo.dooit.models.enums;
 
+import org.gem.indo.dooit.models.goal.Goal;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -20,6 +22,7 @@ public enum BotParamType {
     USER_GOALS("user.goals"),
 
     // Goal
+    GOAL("goal"),
     GOAL_NAME("goal.name"),
     GOAL_VALUE("goal.value"),
     GOAL_TARGET("goal.target"),
@@ -72,6 +75,13 @@ public enum BotParamType {
     SURVEY_TITLE("survey.title"),
     SURVEY_INTRO("survey.intro"),
     SURVEY_OUTRO("survey.outro"),
+
+    // Budget
+    BUDGET_INCOME("budget.income"),
+    BUDGET_SAVINGS("budget.savings"),
+    BUDGET_EXPENSE("budget.expense"),
+    BUDGET_DEFAULT_SAVINGS("budget.default_savings"),
+    BUDGET_DEFAULT_SAVING_PERCENT("budget.default_savings_percentage"),
 
     //Currency Symbol
     CURRENCY_SYMBOL("currency.symbol"),

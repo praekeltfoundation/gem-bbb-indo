@@ -110,7 +110,7 @@ public class GoalEditController extends GoalBotController {
                     .parseLocalDate(answerLog.get("goal_end_date").getValue().substring(0, 10)));
         else if (answerLog.containsKey("goal_target"))
             goal.setTarget(Double.parseDouble(answerLog.get("goal_target").getValue()));
-        else if (answerLog.containsKey("goal_edit_gallery") || answerLog.containsKey("goal_edit_camera")) {
+        else if (answerLog.containsKey("goal_edit_a_goal_image")) {
             // Note: This case will have to be handled by and async call
             // handleImage(answerLog, listener);
             // Don't upload Goal
@@ -144,7 +144,7 @@ public class GoalEditController extends GoalBotController {
                     .parseLocalDate(answerLog.get("goal_end_date").values.getString("date")));
         else if (answerLog.containsKey("goal_edit_target_accept"))
             goal.setTarget(Double.parseDouble(answerLog.get("goal_target").getValue()));
-        else if (answerLog.containsKey("goal_edit_gallery") || answerLog.containsKey("goal_edit_camera")) {
+        else if (answerLog.containsKey("goal_edit_a_goal_image")) {
             handleImage(answerLog, listener);
             // Don't upload Goal
             return;
@@ -171,10 +171,8 @@ public class GoalEditController extends GoalBotController {
 
     private void handleImage(Map<String, Answer> answerLog, OnAsyncListener listener) {
         // Find Image
-        if (answerLog.containsKey("goal_edit_gallery"))
-            goal.setLocalImageUri(answerLog.get("goal_edit_gallery").getValue());
-        else if (answerLog.containsKey("goal_edit_camera"))
-            goal.setLocalImageUri(answerLog.get("goal_edit_camera").getValue());
+        if (answerLog.containsKey("goal_edit_a_goal_image"))
+            goal.setLocalImageUri(answerLog.get("goal_edit_a_goal_image").getValue());
 
         Uri imageUri = Uri.parse(goal.getLocalImageUri());
 
@@ -182,7 +180,18 @@ public class GoalEditController extends GoalBotController {
 
         // Crashlytics for MediaURI null check
         try {
+             /*
+                TODO: This line is causing an ILLEGALARGUMENTSEXCEPTION in the MediaUriHelper class. It needs investigation on how to solve that issue. Storing the valid image path in the Answer.values map is a temporary solution.
             final String path = MediaUriHelper.getPath(context, imageUri);
+            */
+            //the path is now extracted form the Answer.values map as explained int the comment above "final String path = MediaUriHelper.getPath(context, uri);"
+            String path = null;
+            if(answerLog.containsKey("goal_edit_a_goal_image")){
+                Answer imageAnswer = answerLog.get("goal_edit_a_goal_image");
+                path = imageAnswer.values.getString(Answer.IMAGEPATH);
+            }else{
+                path = goal.getPrototype().getImageUrl();
+            }
             uploadImage(goal, mimetype, new File(path), listener);
             CrashlyticsHelper.log(this.getClass().getSimpleName(), "handleImage (BOT): ",
                     "MediaURI.getPath : context: " + context + " uri: " + imageUri);

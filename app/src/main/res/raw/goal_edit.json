@@ -144,18 +144,18 @@
     "type": "blank",
     "answers": [
       {
-        "name": "goal_edit_camera",
+        "name": "goal_edit_a_goal_image",
         "text": "$(goal_edit_camera)",
         "type": "cameraUpload",
         "nextOnFinish": "goal_edit_do_update",
-        "removeOnSelect": "goal_edit_camera"
+        "removeOnSelect": "goal_edit_a_goal_image"
       },
       {
-        "name": "goal_edit_gallery",
+        "name": "goal_edit_a_goal_image",
         "text": "$(goal_edit_gallery)",
         "type": "galleryUpload",
         "nextOnFinish": "goal_edit_do_update",
-        "removeOnSelect": "goal_edit_gallery"
+        "removeOnSelect": "goal_edit_a_goal_image"
       },
       {
         "name": "goal_edit_image_cancel",
@@ -164,9 +164,6 @@
       }
     ]
   },
-
-
-
 
 
   {
