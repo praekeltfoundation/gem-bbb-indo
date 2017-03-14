@@ -65,6 +65,9 @@ public class GoalInformationGalleryItemViewHolder extends RecyclerView.ViewHolde
         ((DooitApplication) activity.getApplication()).component.inject(this);
 
         itemView.setBackground(ContextCompat.getDrawable(context, R.drawable.bkg_carousel_card));
+
+        // Because we're reusing the existing Goal info layout, we're setting the margin so it will
+        // look better in a carousel.
         RelativeLayout.LayoutParams relativeParams = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);;
         relativeParams.setMargins(10, 10, 10, 10);  // left, top, right, bottom
         relativeLayout.setLayoutParams(relativeParams);
