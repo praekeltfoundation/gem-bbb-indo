@@ -1,5 +1,6 @@
 package org.gem.indo.dooit.views.welcome.fragments;
 
+import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
 import android.support.annotation.DrawableRes;
 import android.support.v4.app.Fragment;
@@ -32,7 +33,7 @@ public class WelcomeFragment extends Fragment {
     @BindView(R.id.fragment_welcome_text)
     TextView textView;
 
-    private String animUri;
+    private Integer animUri;
 
     @DrawableRes
     private int resource;
@@ -49,10 +50,10 @@ public class WelcomeFragment extends Fragment {
      *
      * @return A new instance of fragment WelcomeFragment.
      */
-    public static WelcomeFragment newInstance(String animUri, @DrawableRes int imageRes, int textRes) {
+    public static WelcomeFragment newInstance(Integer animUri, @DrawableRes int imageRes, int textRes) {
         WelcomeFragment fragment = new WelcomeFragment();
         Bundle args = new Bundle();
-        args.putString(ANIM_URI, animUri);
+        args.putInt(ANIM_URI, animUri);
         args.putInt(IMAGE_RESOURCE, imageRes);
         args.putInt(TEXT_RESOURCE, textRes);
         fragment.setArguments(args);
@@ -63,7 +64,7 @@ public class WelcomeFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            animUri = getArguments().getString(ANIM_URI);
+            animUri = getArguments().getInt(ANIM_URI);
             resource = getArguments().getInt(IMAGE_RESOURCE);
             textResource = getArguments().getInt(TEXT_RESOURCE);
         }
@@ -75,6 +76,12 @@ public class WelcomeFragment extends Fragment {
         View view = inflater.inflate(org.gem.indo.dooit.R.layout.fragment_welcome, container, false);
         ButterKnife.bind(this, view);
 
+        imageView.setBackgroundResource(animUri);
+        AnimationDrawable frameAnimation = (AnimationDrawable) imageView.getBackground();
+        frameAnimation.start();
+
+
+        /*
         DraweeController controller = Fresco.newDraweeControllerBuilder()
                 .setUri(animUri)
                 .setAutoPlayAnimations(true)
@@ -85,7 +92,7 @@ public class WelcomeFragment extends Fragment {
         imageView.setVisibility(View.GONE);
 
         textView.setText(textResource);
-
+        */
         return view;
     }
 

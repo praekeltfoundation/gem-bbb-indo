@@ -2,6 +2,8 @@ package org.gem.indo.dooit.views.welcome;
 
 import android.support.annotation.DrawableRes;
 
+import org.gem.indo.dooit.R;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -10,9 +12,9 @@ import java.util.Map;
  */
 
 public enum WelcomeViewPagerPositions {
-    ONE(0, "asset:///onboarding_01.gif", org.gem.indo.dooit.R.color.yellow, org.gem.indo.dooit.R.string.welcome_page_1),
-    TWO(1, "asset:///onboarding_02.gif", org.gem.indo.dooit.R.color.yellow, org.gem.indo.dooit.R.string.welcome_page_2),
-    THREE(2, "asset:///onboarding_03.gif", org.gem.indo.dooit.R.color.yellow, org.gem.indo.dooit.R.string.welcome_page_3);
+    ONE(0, R.drawable.onboarding_1_animation, org.gem.indo.dooit.R.color.yellow, org.gem.indo.dooit.R.string.welcome_page_1),
+    TWO(1, R.drawable.onboarding_1_animation, org.gem.indo.dooit.R.color.yellow, org.gem.indo.dooit.R.string.welcome_page_2),
+    THREE(2, R.drawable.onboarding_1_animation, org.gem.indo.dooit.R.color.yellow, org.gem.indo.dooit.R.string.welcome_page_3);
 
     private static Map<Integer, WelcomeViewPagerPositions> map = new HashMap<Integer, WelcomeViewPagerPositions>();
 
@@ -23,11 +25,11 @@ public enum WelcomeViewPagerPositions {
     }
 
     private final int value;
-    private final String animUri;
+    private final Integer animUri;
     private final Integer imageRes;
     private final Integer textRes;
 
-    WelcomeViewPagerPositions(int value, String animUri, /*@DrawableRes*/ Integer iconRes, Integer textRes) {
+    WelcomeViewPagerPositions(int value, Integer animUri, /*@DrawableRes*/ Integer iconRes, Integer textRes) {
         this.value = value;
         this.animUri = animUri;
         this.imageRes = iconRes;
@@ -42,7 +44,7 @@ public enum WelcomeViewPagerPositions {
         return value;
     }
 
-    public String getAnimUri() {
+    public Integer getAnimUri() {
         return animUri;
     }
 
