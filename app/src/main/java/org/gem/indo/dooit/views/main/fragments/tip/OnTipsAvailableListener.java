@@ -10,5 +10,4 @@ import java.util.List;
 
 public interface OnTipsAvailableListener {
     void onTipsAvailable(List<Tip> tips);
-    void hideFiltering();
 }
