@@ -103,11 +103,6 @@ public class BotAdapter extends RecyclerView.Adapter<BaseBotViewHolder> {
         }
     }
 
-    @Override
-    public void onViewRecycled(BaseBotViewHolder holder) {
-        holder.onViewRecycled();
-    }
-
     /**
      * Used for getting the controller to the view holders.
      */

@@ -132,7 +132,13 @@
   {
     "name": "budget_create_q_expense_gallery",
     "type": "expenseCategoryGallery",
-    "next": "budget_create_do_create"
+    "answers": [
+      {
+        "name": "budget_create_a_expense_continue",
+        "text": "$(budget_create_a_expense_continue)",
+        "next": "budget_create_do_create"
+      }
+    ]
   },
 
 

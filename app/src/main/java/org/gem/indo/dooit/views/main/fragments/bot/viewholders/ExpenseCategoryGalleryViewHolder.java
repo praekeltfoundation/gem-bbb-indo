@@ -7,14 +7,12 @@ import android.view.View;
 
 import org.gem.indo.dooit.R;
 import org.gem.indo.dooit.models.bot.Node;
-import org.gem.indo.dooit.models.budget.ExpenseCategory;
 import org.gem.indo.dooit.models.enums.BotType;
 import org.gem.indo.dooit.views.main.fragments.bot.adapters.BotAdapter;
 import org.gem.indo.dooit.views.main.fragments.bot.adapters.ExpenseCategoryGalleryAdapter;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import io.realm.Realm;
 
 /**
  * Created by Wimpie Victor on 2017/03/14.
@@ -52,24 +50,8 @@ public class ExpenseCategoryGalleryViewHolder extends BaseBotViewHolder<Node> {
             return;
 
         BotType botType = botAdapter.getController().getBotType();
-
-        Realm realm = null;
-
-        try {
-            realm = Realm.getDefaultInstance();
-
-            ExpenseCategoryGalleryAdapter adapter = new ExpenseCategoryGalleryAdapter(
-                    realm.copyFromRealm(realm.where(ExpenseCategory.class)
-                            .equalTo(ExpenseCategory.FIELD_BOT_TYPE, botType.getId())
-                            .findAll()),
-                    botType
-            );
-
-            recycler.setAdapter(adapter);
-        } finally {
-            if (realm != null)
-                realm.close();
-        }
+        ExpenseCategoryGalleryAdapter adapter = new ExpenseCategoryGalleryAdapter(botType);
+        recycler.setAdapter(adapter);
     }
 
     @Override

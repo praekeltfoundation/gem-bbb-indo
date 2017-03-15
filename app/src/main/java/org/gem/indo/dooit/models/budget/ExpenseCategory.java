@@ -20,6 +20,7 @@ import io.realm.annotations.PrimaryKey;
 public class ExpenseCategory extends RealmObject {
 
     public static final String FIELD_ID = "id";
+    public static final String FIELD_LOCAL_ID = "localId";
     public static final String FIELD_BOT_TYPE = "botType";
 
     /**

@@ -8,7 +8,6 @@ import org.gem.indo.dooit.models.enums.BotType;
 
 import java.util.List;
 
-import io.realm.OrderedRealmCollection;
 import io.realm.Realm;
 
 /**
@@ -51,15 +50,15 @@ public class ExpenseCategoryBotDAO {
     }
 
     @NonNull
-    public OrderedRealmCollection<ExpenseCategory> findAll(BotType botType) {
+    public List<ExpenseCategory> findAll(BotType botType) {
         Realm realm = null;
 
         try {
             realm = Realm.getDefaultInstance();
 
-            return realm.where(ExpenseCategory.class)
+            return realm.copyFromRealm(realm.where(ExpenseCategory.class)
                     .equalTo(ExpenseCategory.FIELD_BOT_TYPE, botType.getId())
-                    .findAll();
+                    .findAll());
         } finally {
             if (realm != null)
                 realm.close();
@@ -78,6 +77,48 @@ public class ExpenseCategoryBotDAO {
                     .isEmpty();
         } catch (Throwable e) {
             return false;
+        } finally {
+            if (realm != null)
+                realm.close();
+        }
+    }
+
+    public void setSelected(long localId, boolean checked) {
+        Realm realm = null;
+
+        try {
+            realm = Realm.getDefaultInstance();
+
+            realm.beginTransaction();
+            realm.where(ExpenseCategory.class)
+                    .equalTo(ExpenseCategory.FIELD_LOCAL_ID, localId)
+                    .findFirst()
+                    .setSelected(checked);
+            realm.commitTransaction();
+        } catch (Throwable e) {
+            if (realm != null && realm.isInTransaction())
+                realm.cancelTransaction();
+        } finally {
+            if (realm != null)
+                realm.close();
+        }
+    }
+
+    public void clear(@NonNull BotType botType) {
+        Realm realm = null;
+
+        try {
+            realm = Realm.getDefaultInstance();
+
+            realm.beginTransaction();
+            realm.where(ExpenseCategory.class)
+                    .equalTo(ExpenseCategory.FIELD_BOT_TYPE, botType.getId())
+                    .findAll()
+                    .deleteAllFromRealm();
+            realm.commitTransaction();
+        } catch (Throwable e) {
+            if (realm != null && realm.isInTransaction())
+                realm.cancelTransaction();
         } finally {
             if (realm != null)
                 realm.close();

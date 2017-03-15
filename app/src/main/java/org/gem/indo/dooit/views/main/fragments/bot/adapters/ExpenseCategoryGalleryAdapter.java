@@ -7,13 +7,12 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import org.gem.indo.dooit.R;
+import org.gem.indo.dooit.dao.budget.ExpenseCategoryBotDAO;
 import org.gem.indo.dooit.models.budget.ExpenseCategory;
 import org.gem.indo.dooit.models.enums.BotType;
 import org.gem.indo.dooit.views.main.fragments.bot.viewholders.ExpenseCategoryGalleryItemViewHolder;
 
 import java.util.List;
-
-import io.realm.Realm;
 
 /**
  * Created by Wimpie Victor on 2017/03/14.
@@ -28,9 +27,8 @@ public class ExpenseCategoryGalleryAdapter extends RecyclerView.Adapter<ExpenseC
     /**
      * @param botType Required to manage conversation specific DB entities.
      */
-    public ExpenseCategoryGalleryAdapter(List<ExpenseCategory> data,
-                                         @NonNull BotType botType) {
-        this.data = data;
+    public ExpenseCategoryGalleryAdapter(@NonNull BotType botType) {
+        this.data = new ExpenseCategoryBotDAO().findAll(botType);
         this.botType = botType;
     }
 
@@ -57,22 +55,6 @@ public class ExpenseCategoryGalleryAdapter extends RecyclerView.Adapter<ExpenseC
 
     @Override
     public void onCheck(long localId, boolean checked) {
-        Realm realm = null;
-        try {
-            realm = Realm.getDefaultInstance();
-
-            realm.beginTransaction();
-            realm.where(ExpenseCategory.class)
-                    .equalTo(ExpenseCategory.FIELD_ID, localId)
-                    .findFirst()
-                    .setSelected(checked);
-            realm.commitTransaction();
-        } catch (Throwable e) {
-            if (realm != null && realm.isInTransaction())
-                realm.cancelTransaction();
-        } finally {
-            if (realm != null)
-                realm.close();
-        }
+        new ExpenseCategoryBotDAO().setSelected(localId, checked);
     }
 }
