@@ -1,6 +1,8 @@
 package org.gem.indo.dooit.views.welcome.fragments;
 
 import android.graphics.drawable.AnimationDrawable;
+import android.graphics.drawable.Drawable;
+import android.graphics.drawable.StateListDrawable;
 import android.os.Bundle;
 import android.support.annotation.DrawableRes;
 import android.support.v4.app.Fragment;
@@ -23,9 +25,6 @@ public class WelcomeFragment extends Fragment {
     private static final String ANIM_URI = "anim_uri";
     private static final String IMAGE_RESOURCE = "image_resource";
     private static final String TEXT_RESOURCE = "text_resource";
-
-    @BindView(R.id.fragment_welcome_animation)
-    SimpleDraweeView animView;
 
     @BindView(R.id.fragment_welcome_image)
     ImageView imageView;
@@ -77,10 +76,9 @@ public class WelcomeFragment extends Fragment {
         ButterKnife.bind(this, view);
 
         imageView.setBackgroundResource(animUri);
-        AnimationDrawable frameAnimation = (AnimationDrawable) imageView.getBackground();
+//        imageView.setImageDrawable(getContext().getDrawable(animUri));
+        AnimationDrawable frameAnimation = (AnimationDrawable)imageView.getBackground();
         frameAnimation.start();
-
-        animView.setVisibility(View.GONE);
 
         textView.setText(textResource);
 
