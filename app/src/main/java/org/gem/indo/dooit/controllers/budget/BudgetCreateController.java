@@ -29,7 +29,6 @@ import org.gem.indo.dooit.models.enums.BotType;
 import org.gem.indo.dooit.views.helpers.activity.CurrencyHelper;
 import org.gem.indo.dooit.views.main.MainActivity;
 
-import java.util.List;
 import java.util.Map;
 
 import javax.inject.Inject;
@@ -68,6 +67,27 @@ public class BudgetCreateController extends DooitBotController {
         // A new Budget can be persisted if the conversation is reloaded.
         if (budget == null)
             this.budget = new Budget();
+    }
+
+    @Override
+    public boolean shouldSkip(BaseBotModel model) {
+        if (model.getName().equals("budget_create_add_expense")) {
+            Realm realm = null;
+
+            try {
+                realm = Realm.getDefaultInstance();
+
+                return realm.where(ExpenseCategory.class)
+                        .equalTo(ExpenseCategory.FIELD_BOT_TYPE, botType.getId())
+                        .equalTo(ExpenseCategory.FIELD_SELECTED, true)
+                        .findAll()
+                        .isEmpty();
+            } finally {
+                if (realm != null)
+                    realm.close();
+            }
+        }
+        return super.shouldSkip(model);
     }
 
     @Override
@@ -215,15 +235,18 @@ public class BudgetCreateController extends DooitBotController {
                     .findAllSorted(ExpenseCategory.FIELD_ID).first();
 
             Node node = new Node();
-            node.setName("budget_create_q_expense_value");
+            node.setName("budget_create_q_expense_value_" + Long.toString(category.getId()));
             node.setType(BotMessageType.TEXT);
             node.setProcessedText(getContext().getString(R.string.budget_create_q_expense_value));
 
             Answer answer = new Answer();
-            answer.setName("budget_create_a_expense_value");
+            answer.setName("budget_create_a_expense_value_" + Long.toString(category.getId()));
             answer.setType(BotMessageType.INLINECURRENCY);
             answer.setTypeOnFinish("textCurrency");
             answer.setInlineEditHint("$(type_currency_hint)");
+
+            // Loop back to this call
+            answer.setNextOnFinish("budget_create_add_expense");
 
             node.setAutoAnswer(answer.getName());
             node.addAnswer(answer);
