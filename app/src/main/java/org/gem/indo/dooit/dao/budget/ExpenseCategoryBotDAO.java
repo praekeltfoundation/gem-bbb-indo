@@ -58,7 +58,27 @@ public class ExpenseCategoryBotDAO {
 
             return realm.copyFromRealm(realm.where(ExpenseCategory.class)
                     .equalTo(ExpenseCategory.FIELD_BOT_TYPE, botType.getId())
-                    .findAll());
+                    .findAllSorted(ExpenseCategory.FIELD_ID));
+        } finally {
+            if (realm != null)
+                realm.close();
+        }
+    }
+
+    /**
+     * Returns the selected {@link ExpenseCategory}s for the given bot conversation type.
+     */
+    @NonNull
+    public List<ExpenseCategory> findSelected(BotType botType) {
+        Realm realm = null;
+
+        try {
+            realm = Realm.getDefaultInstance();
+
+            return realm.copyFromRealm(realm.where(ExpenseCategory.class)
+                    .equalTo(ExpenseCategory.FIELD_BOT_TYPE, botType.getId())
+                    .equalTo(ExpenseCategory.FIELD_SELECTED, true)
+                    .findAllSorted(ExpenseCategory.FIELD_ID));
         } finally {
             if (realm != null)
                 realm.close();

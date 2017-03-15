@@ -53,17 +53,6 @@ public class Budget extends RealmObject {
         this.income = income;
     }
 
-    /**
-     * Given an income per week, return the calculated income per month.
-     */
-    public static double incomeFromPerWeek(double weeklyIncome) {
-        return weeklyIncome * 4;
-    }
-
-    public static double incomeFromPerDay(double dailyIncome) {
-        return dailyIncome * 7 * 4;
-    }
-
     /////////////
     // Savings //
     /////////////

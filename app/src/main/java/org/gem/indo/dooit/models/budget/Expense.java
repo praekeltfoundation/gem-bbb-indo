@@ -35,7 +35,7 @@ public class Expense extends RealmObject {
      * The ID of the {@link ExpenseCategory}. Null means the Expense is custom.
      */
     @Nullable
-    @SerializedName("expense_category_id")
+    @SerializedName("category_id")
     private Long expenseCategoryId;
 
     public Expense() {
@@ -44,6 +44,11 @@ public class Expense extends RealmObject {
 
     public Expense(String name, double value) {
         this.name = name;
+        this.value = value;
+    }
+
+    public Expense(ExpenseCategory category, double value) {
+        this.expenseCategoryId = category.getId();
         this.value = value;
     }
 

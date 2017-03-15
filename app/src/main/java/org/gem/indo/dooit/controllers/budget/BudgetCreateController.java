@@ -1,7 +1,6 @@
 package org.gem.indo.dooit.controllers.budget;
 
 import android.app.Activity;
-import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
@@ -14,11 +13,14 @@ import org.gem.indo.dooit.api.managers.BudgetManager;
 import org.gem.indo.dooit.api.responses.BudgetCreateResponse;
 import org.gem.indo.dooit.controllers.DooitBotController;
 import org.gem.indo.dooit.dao.budget.BudgetDAO;
+import org.gem.indo.dooit.dao.budget.ExpenseCategoryBotDAO;
 import org.gem.indo.dooit.helpers.bot.BotRunner;
 import org.gem.indo.dooit.helpers.crashlytics.CrashlyticsHelper;
 import org.gem.indo.dooit.models.bot.Answer;
 import org.gem.indo.dooit.models.bot.BaseBotModel;
 import org.gem.indo.dooit.models.budget.Budget;
+import org.gem.indo.dooit.models.budget.Expense;
+import org.gem.indo.dooit.models.budget.ExpenseCategory;
 import org.gem.indo.dooit.models.enums.BotCallType;
 import org.gem.indo.dooit.models.enums.BotParamType;
 import org.gem.indo.dooit.models.enums.BotType;
@@ -163,7 +165,9 @@ public class BudgetCreateController extends DooitBotController {
             budget.setSavings(Double.parseDouble(answerLog.get(SAVINGS).getValue()));
 
         // Expenses
-        // TODO: Get expenses
+        for (ExpenseCategory category : new ExpenseCategoryBotDAO().findSelected(botType)) {
+            budget.addExpense(new Expense(category, 0.0));
+        }
 
         // Upload Budget to server
         budgetManager.upsertBudget(budget, new DooitErrorHandler() {
