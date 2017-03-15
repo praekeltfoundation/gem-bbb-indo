@@ -3,12 +3,15 @@
     android:oneshot="false"
     xmlns:android="http://schemas.android.com/apk/res/android">
     <item
-        android:drawable="@drawable/onboarding31"
-        android:duration="1000" />
+        android:drawable="@drawable/onboarding33"
+        android:duration="500" />
     <item
         android:drawable="@drawable/onboarding32"
-        android:duration="1000" />
+        android:duration="500" />
     <item
-        android:drawable="@drawable/onboarding33"
-        android:duration="1000" />
+        android:drawable="@drawable/onboarding31"
+        android:duration="500" />
+    <item
+        android:drawable="@drawable/onboarding32"
+        android:duration="500" />
 </animation-list>
