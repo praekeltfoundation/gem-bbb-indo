@@ -23,6 +23,7 @@ import org.gem.indo.dooit.views.main.fragments.bot.viewholders.BadgeViewHolder;
 import org.gem.indo.dooit.views.main.fragments.bot.viewholders.BaseBotViewHolder;
 import org.gem.indo.dooit.views.main.fragments.bot.viewholders.ChallengeBotViewHolder;
 import org.gem.indo.dooit.views.main.fragments.bot.viewholders.DummyViewHolder;
+import org.gem.indo.dooit.views.main.fragments.bot.viewholders.ExpenseCategoryGalleryViewHolder;
 import org.gem.indo.dooit.views.main.fragments.bot.viewholders.GoalGalleryViewHolder;
 import org.gem.indo.dooit.views.main.fragments.bot.viewholders.GoalInfoViewHolder;
 import org.gem.indo.dooit.views.main.fragments.bot.viewholders.GoalInformationGalleryViewHolder;
@@ -93,11 +94,18 @@ public class BotAdapter extends RecyclerView.Adapter<BaseBotViewHolder> {
             case CHALLENGE:
                 return new ChallengeBotViewHolder(LayoutInflater.from(context).inflate(R.layout.item_view_bot_challenge, parent, false), this, tagsClickListener);
             case DUMMY:
-                return new DummyViewHolder(LayoutInflater.from(context).inflate(R.layout.item_view_bot_text, parent, false),this);
+                return new DummyViewHolder(LayoutInflater.from(context).inflate(R.layout.item_view_bot_text, parent, false), this);
+            case EXPENSECATEGORYGALLERY:
+                return new ExpenseCategoryGalleryViewHolder(LayoutInflater.from(context).inflate(R.layout.item_view_bot_carousel, parent, false), this);
             case UNDEFINED:
             default:
                 return new TextViewHolder(LayoutInflater.from(context).inflate(R.layout.item_view_bot_text, parent, false), this);
         }
+    }
+
+    @Override
+    public void onViewRecycled(BaseBotViewHolder holder) {
+        holder.onViewRecycled();
     }
 
     /**

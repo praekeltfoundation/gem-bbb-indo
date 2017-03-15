@@ -5,6 +5,7 @@ import android.support.annotation.Nullable;
 
 import com.google.gson.annotations.SerializedName;
 
+import org.gem.indo.dooit.helpers.strings.StringHelper;
 import org.gem.indo.dooit.models.enums.BotType;
 
 import io.realm.RealmObject;
@@ -67,6 +68,10 @@ public class ExpenseCategory extends RealmObject {
         return localId;
     }
 
+    public void setLocalId(long localId) {
+        this.localId = localId;
+    }
+
     ////////
     // ID //
     ////////
@@ -91,6 +96,10 @@ public class ExpenseCategory extends RealmObject {
     @Nullable
     public String getImageUrl() {
         return imageUrl;
+    }
+
+    public boolean hasImageUrl() {
+        return !StringHelper.isEmpty(imageUrl);
     }
 
     //////////////

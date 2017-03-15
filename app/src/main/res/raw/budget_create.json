@@ -82,7 +82,7 @@
       {
         "name": "budget_create_a_savings_default_accept",
         "text": "$(budget_create_a_savings_default_accept)",
-        "next": "budget_create_do_create"
+        "next": "budget_create_q_expense_01"
       },
       {
         "name": "budget_create_a_savings_default_deny",
@@ -104,9 +104,35 @@
         "type": "inlineCurrency",
         "typeOnFinish": "textCurrency",
         "inlineEditHint": "$(type_currency_hint)",
-        "nextOnFinish": "budget_create_do_create"
+        "nextOnFinish": "budget_create_q_expense_01"
       }
     ]
+  },
+
+
+
+  {
+    "name": "budget_create_q_expense_01",
+    "type": "text",
+    "text": "$(budget_create_q_expense_01)",
+    "autoNext": "budget_create_q_expense_02"
+  },
+  {
+    "name": "budget_create_q_expense_02",
+    "type": "text",
+    "text": "$(budget_create_q_expense_02)",
+    "autoNext": "budget_create_q_expense_03"
+  },
+  {
+    "name": "budget_create_q_expense_03",
+    "type": "text",
+    "text": "$(budget_create_q_expense_03)",
+    "autoNext": "budget_create_q_expense_gallery"
+  },
+  {
+    "name": "budget_create_q_expense_gallery",
+    "type": "expenseCategoryGallery",
+    "next": "budget_create_do_create"
   },
 
 

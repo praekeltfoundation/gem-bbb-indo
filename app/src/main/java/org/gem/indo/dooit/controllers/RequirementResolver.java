@@ -13,7 +13,6 @@ import org.gem.indo.dooit.api.managers.ChallengeManager;
 import org.gem.indo.dooit.api.managers.GoalManager;
 import org.gem.indo.dooit.api.managers.SurveyManager;
 import org.gem.indo.dooit.api.managers.TipManager;
-import org.gem.indo.dooit.dao.budget.BudgetDAO;
 import org.gem.indo.dooit.dao.budget.ExpenseCategoryBotDAO;
 import org.gem.indo.dooit.helpers.Persisted;
 import org.gem.indo.dooit.helpers.images.DraweeHelper;
@@ -31,8 +30,6 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-import io.realm.Realm;
-import io.realm.RealmResults;
 import rx.Observable;
 import rx.functions.Action0;
 import rx.functions.Action1;
@@ -138,7 +135,7 @@ public class RequirementResolver {
                             // Bot Conversation is frontend specific.
                             for (ExpenseCategory category : categories)
                                 category.setBotType(botType);
-                            new ExpenseCategoryBotDAO().update(botType, (List<ExpenseCategory>) o);
+                            new ExpenseCategoryBotDAO().insert(botType, (List<ExpenseCategory>) o);
                         }
                     } else if (o instanceof BaseChallenge) {
                         persisted.saveConvoChallenge(botType, (BaseChallenge) o);

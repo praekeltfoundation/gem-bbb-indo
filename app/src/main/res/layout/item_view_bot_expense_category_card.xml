@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/item_view_bot_expense_category_card"
+    android:layout_width="@dimen/bot_carousel_card_width"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="4dp"
+    android:layout_marginEnd="@dimen/bot_carousel_card_horizontal_margin"
+    tools:background="@drawable/bkg_carousel_card"
+    tools:context=".views.main.MainActivity">
+
+    <com.facebook.drawee.view.SimpleDraweeView
+        android:id="@+id/item_view_bot_expense_category_card_image"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/bot_carousel_card_image_height"
+        android:background="@color/purple"
+        android:scaleType="centerCrop"
+        app:placeholderImage="@drawable/empty_image" />
+
+    <TextView
+        android:id="@+id/item_view_bot_expense_category_card_title"
+        style="@style/AppTheme.TextView.Regular.Large"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/item_view_bot_expense_category_card_image"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="4dp"
+        android:textColor="@color/black"
+        tools:text="Expense" />
+
+    <View
+        android:id="@+id/item_view_bot_expense_category_card_separator"
+        android:layout_width="match_parent"
+        android:layout_height="1.5dp"
+        android:layout_below="@id/item_view_bot_expense_category_card_title"
+        android:layout_marginTop="4dp"
+        tools:background="@drawable/bkg_carousel_separator" />
+
+    <CheckBox
+        android:id="@+id/item_view_bot_expense_category_card_check"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:clickable="false"
+        android:layout_below="@id/item_view_bot_expense_category_card_separator"
+        android:layout_centerHorizontal="true"/>
+
+</RelativeLayout>

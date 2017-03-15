@@ -717,6 +717,10 @@
     <string name="budget_create_a_savings_default_accept">Yes</string>
     <string name="budget_create_a_savings_default_deny">No, I want to save a different amount</string>
 
+    <string name="budget_create_q_expense_01">Great! That means you need to save RpXXX per month to reach your monthly savings.</string>
+    <string name="budget_create_q_expense_02">If we subtract your savings, RpXXX from your income, RpXXX, you have RXXX expenses left.</string>
+    <string name="budget_create_q_expense_03">Okay, now tell me about what you spend your money on. Select all of the categories that you spend your money on during the month.</string>
+
     <string name="budget_create_q_summary">Your monthly income is $(budget.income). Of this amount, you save $(budget.savings) each month and spend $(budget.expense).</string>
     <string name="budget_create_q_final">You can access and update your budget in your profile at any time.</string>
 
