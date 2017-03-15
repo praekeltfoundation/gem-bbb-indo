@@ -48,5 +48,8 @@ public enum BotCallType {
     SET_TARGET_TO_DEFAULT,
 
     @SerializedName("#set_tip_query")
-    SET_TIP_QUERY
+    SET_TIP_QUERY,
+
+    @SerializedName("#add_expense")
+    ADD_EXPENSE
 }

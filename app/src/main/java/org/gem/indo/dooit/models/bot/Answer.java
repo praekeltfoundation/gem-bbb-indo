@@ -143,6 +143,14 @@ public class Answer extends BaseBotModel {
         return background != null;
     }
 
+    public String getInlineEditHint() {
+        return inlineEditHint;
+    }
+
+    public void setInlineEditHint(String inlineEditHint) {
+        this.inlineEditHint = inlineEditHint;
+    }
+
     public Answer copy() {
         Answer answer = new Answer();
 

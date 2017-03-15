@@ -18,19 +18,23 @@ import org.gem.indo.dooit.helpers.bot.BotRunner;
 import org.gem.indo.dooit.helpers.crashlytics.CrashlyticsHelper;
 import org.gem.indo.dooit.models.bot.Answer;
 import org.gem.indo.dooit.models.bot.BaseBotModel;
+import org.gem.indo.dooit.models.bot.Node;
 import org.gem.indo.dooit.models.budget.Budget;
 import org.gem.indo.dooit.models.budget.Expense;
 import org.gem.indo.dooit.models.budget.ExpenseCategory;
 import org.gem.indo.dooit.models.enums.BotCallType;
+import org.gem.indo.dooit.models.enums.BotMessageType;
 import org.gem.indo.dooit.models.enums.BotParamType;
 import org.gem.indo.dooit.models.enums.BotType;
 import org.gem.indo.dooit.views.helpers.activity.CurrencyHelper;
 import org.gem.indo.dooit.views.main.MainActivity;
 
+import java.util.List;
 import java.util.Map;
 
 import javax.inject.Inject;
 
+import io.realm.Realm;
 import rx.functions.Action0;
 import rx.functions.Action1;
 
@@ -121,6 +125,9 @@ public class BudgetCreateController extends DooitBotController {
             case SET_TIP_QUERY:
                 tipQuery();
                 break;
+            case ADD_EXPENSE:
+                addNextExpense();
+                break;
             default:
                 super.onCall(key, answerLog, model);
         }
@@ -192,6 +199,46 @@ public class BudgetCreateController extends DooitBotController {
                 // TODO: Badges from budget create
             }
         });
+    }
+
+    private void addNextExpense() {
+        Realm realm = null;
+
+        try {
+            realm = Realm.getDefaultInstance();
+
+//            realm.beginTransaction();
+
+            ExpenseCategory category = realm.where(ExpenseCategory.class)
+                    .equalTo(ExpenseCategory.FIELD_BOT_TYPE, botType.getId())
+                    .equalTo(ExpenseCategory.FIELD_SELECTED, true)
+                    .findAllSorted(ExpenseCategory.FIELD_ID).first();
+
+            Node node = new Node();
+            node.setName("budget_create_q_expense_value");
+            node.setType(BotMessageType.TEXT);
+            node.setProcessedText(getContext().getString(R.string.budget_create_q_expense_value));
+
+            Answer answer = new Answer();
+            answer.setName("budget_create_a_expense_value");
+            answer.setType(BotMessageType.INLINECURRENCY);
+            answer.setTypeOnFinish("textCurrency");
+            answer.setInlineEditHint("$(type_currency_hint)");
+
+            node.setAutoAnswer(answer.getName());
+            node.addAnswer(answer);
+
+            node.finish();
+            botRunner.addNode(node);
+
+//            realm.commitTransaction();
+        } catch (Throwable e) {
+            if (realm != null && realm.isInTransaction())
+                realm.cancelTransaction();
+        } finally {
+            if (realm != null)
+                realm.close();
+        }
     }
 
     ////////////

@@ -136,9 +136,17 @@
       {
         "name": "budget_create_a_expense_continue",
         "text": "$(budget_create_a_expense_continue)",
-        "next": "budget_create_do_create"
+        "next": "budget_create_add_expense"
       }
     ]
+  },
+
+
+
+  {
+    "name": "budget_create_add_expense",
+    "type": "dummy",
+    "call": "#add_expense"
   },
 
 
