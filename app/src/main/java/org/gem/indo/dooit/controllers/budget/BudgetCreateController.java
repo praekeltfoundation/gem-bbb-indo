@@ -375,7 +375,7 @@ public class BudgetCreateController extends DooitBotController {
 
     @Override
     public boolean validate(String name, String input) {
-        if (input.startsWith(EXPENSE_ANSWER_PREFIX))
+        if (name.startsWith(EXPENSE_ANSWER_PREFIX))
             return validateExpense(input);
 
         switch (name) {
