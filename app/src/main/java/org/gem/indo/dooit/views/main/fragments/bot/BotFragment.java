@@ -61,10 +61,12 @@ import org.gem.indo.dooit.views.main.fragments.MainFragment;
 import org.gem.indo.dooit.views.main.fragments.bot.adapters.BotAdapter;
 import org.gem.indo.dooit.views.main.fragments.bot.adapters.QuickAnswerAdapter;
 
+import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Queue;
 
 import javax.inject.Inject;
 
@@ -78,6 +80,8 @@ import butterknife.ButterKnife;
  */
 public class BotFragment extends MainFragment implements HashtagView.TagsClickListener,
         QuickAnswerAdapter.OnBotInputListener, BotRunner {
+
+    private static final String TAG = BotFragment.class.getName();
 
     private static final int ANSWER_SPAN_SINGLE = 1;
     private static final int ANSWER_SPAN_NARROW = 2;
@@ -118,6 +122,12 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
     private BotFeed<Node> feed;
     private Node currentNode;
     boolean clearState = false;
+
+    /**
+     * Nodes scheduled ot be programatically added
+     */
+    private Queue<Node> nextNodes = new ArrayDeque<>();
+    private boolean processing = false;
 
     /**
      * The number of pixels that the quick answers should peek to the right.
@@ -572,7 +582,7 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
             model = feed.getItem(name);
 
         if (model == null) {
-            // TODO: Log to Crashlytics
+            CrashlyticsHelper.log(TAG, "getAndAddNode", "Bot feed unexpectedly returned null node");
             return;
         }
 
@@ -586,12 +596,22 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
         addNode(currentNode, iconHidden);
     }
 
+    /**
+     * Strictly to be used by external classes.
+     */
     @Override
-    public void addNode(Node node) {
+    public void queueNode(Node node) {
+        if (processing) {
+            nextNodes.add(node);
+            return;
+        }
+
         addNode(node, false);
     }
 
-    public void addNode(final Node node, boolean iconHidden) {
+    private void addNode(final Node node, boolean iconHidden) {
+        processing = true;
+
         node.setIconHidden(iconHidden);
 
         // Nodes can be skipped completely. They will not be added to the adapter, and thus not
@@ -603,7 +623,7 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
             else if (node.hasAutoNext())
                 getAndAddNode(node.getAutoNext());
             else if (node.hasAutoNextNode())
-                addNode(node.getAutoNextNode());
+                addNode(node.getAutoNextNode(), false);
             return;
         }
 
@@ -635,6 +655,14 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
         } else {
             // Continue synchronously
             checkEndOrAddAnswers(node);
+        }
+
+        // Nodes that are added in the middle of recursion are queued
+        processing = false;
+        while (!nextNodes.isEmpty()) {
+            Node nextNode = nextNodes.poll();
+            if (nextNode != null)
+                addNode(nextNode, false);
         }
     }
 
@@ -706,7 +734,7 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
             }
         } else if (node.hasAutoNextNode()) {
             // Auto next set from Java code
-            addNode(node.getAutoNextNode());
+            addNode(node.getAutoNextNode(), false);
         } else {
 
             // End of recursion

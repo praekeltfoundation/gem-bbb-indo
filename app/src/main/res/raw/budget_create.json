@@ -152,6 +152,26 @@
 
 
   {
+    "name": "budget_create_q_expense_summary",
+    "type": "text",
+    "text": "$(budget_create_q_expense_summary)",
+    "answers": [
+      {
+        "name": "budget_create_a_accept",
+        "text": "$(budget_create_a_accept)",
+        "next": "budget_create_do_create"
+      },
+      {
+        "name": "budget_create_a_retry",
+        "text": "$(budget_create_a_retry)",
+        "next": "budget_create_q_expense_01"
+      }
+    ]
+  },
+
+
+
+  {
     "name": "budget_create_do_create",
     "type": "blank",
     "asyncCall": "#do_create",

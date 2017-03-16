@@ -12,7 +12,7 @@ import java.util.Map;
  */
 
 public interface BotRunner {
-    void addNode(Node node);
+    void queueNode(Node node);
 
     /**
      * Returns the conversation history as a mapping from Answer names to actual Answers.

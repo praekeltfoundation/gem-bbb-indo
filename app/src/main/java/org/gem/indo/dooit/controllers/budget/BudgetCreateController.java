@@ -311,9 +311,9 @@ public class BudgetCreateController extends DooitBotController {
             Node node = new Node();
             node.setName(EXPENSE_STOP);
             node.setType(BotMessageType.DUMMY);
-            node.setAutoNext("budget_create_do_create");
+            node.setAutoNext("budget_create_q_expense_summary");
 
-            botRunner.addNode(node);
+            botRunner.queueNode(node);
             return;
         }
 
@@ -348,7 +348,7 @@ public class BudgetCreateController extends DooitBotController {
         node.addAnswer(answer);
 
         node.finish();
-        botRunner.addNode(node);
+        botRunner.queueNode(node);
     }
 
     ////////////
