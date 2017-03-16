@@ -1,6 +1,7 @@
 package org.gem.indo.dooit.controllers.budget;
 
 import android.app.Activity;
+import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
@@ -15,6 +16,9 @@ import org.gem.indo.dooit.controllers.DooitBotController;
 import org.gem.indo.dooit.dao.budget.BudgetDAO;
 import org.gem.indo.dooit.dao.budget.ExpenseCategoryBotDAO;
 import org.gem.indo.dooit.helpers.bot.BotRunner;
+import org.gem.indo.dooit.helpers.bot.param.ParamArg;
+import org.gem.indo.dooit.helpers.bot.param.ParamMatch;
+import org.gem.indo.dooit.helpers.bot.param.ParamParser;
 import org.gem.indo.dooit.helpers.crashlytics.CrashlyticsHelper;
 import org.gem.indo.dooit.models.bot.Answer;
 import org.gem.indo.dooit.models.bot.BaseBotModel;
@@ -313,10 +317,22 @@ public class BudgetCreateController extends DooitBotController {
             return;
         }
 
+        Context context = getContext();
+        if (context == null)
+            return;
+
         Node node = new Node();
         node.setName(EXPENSE_QUESTION_PREFIX + Long.toString(category.getId()));
         node.setType(BotMessageType.TEXT);
-        node.setProcessedText(getContext().getString(R.string.budget_create_q_expense_value));
+
+        ParamMatch match = ParamParser.parse(context.getString(R.string.budget_create_q_expense_value));
+        String key = BotParamType.BUDGET_NEXT_EXPENSE_NAME.getKey();
+        for (ParamArg arg : match.getArgs())
+            if (arg.getKey().equals(key))
+                node.values.put(key, category.getName());
+            else
+                resolveParam(node, BotParamType.byKey(arg.getKey()));
+        node.setProcessedText(match.process(node.values.getRawMap()));
 
         Answer answer = new Answer();
         answer.setName(EXPENSE_ANSWER_PREFIX + Long.toString(category.getId()));

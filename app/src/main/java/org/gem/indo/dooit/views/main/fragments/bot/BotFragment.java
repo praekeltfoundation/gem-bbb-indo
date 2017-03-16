@@ -39,7 +39,6 @@ import org.gem.indo.dooit.controllers.goal.GoalWithdrawController;
 import org.gem.indo.dooit.controllers.misc.ReturningUserController;
 import org.gem.indo.dooit.controllers.survey.BaselineSurveyController;
 import org.gem.indo.dooit.controllers.survey.EAToolSurveyController;
-import org.gem.indo.dooit.dao.budget.BudgetDAO;
 import org.gem.indo.dooit.helpers.Persisted;
 import org.gem.indo.dooit.helpers.SquiggleBackgroundHelper;
 import org.gem.indo.dooit.helpers.bot.BotFeed;
@@ -63,7 +62,6 @@ import org.gem.indo.dooit.views.main.fragments.bot.adapters.BotAdapter;
 import org.gem.indo.dooit.views.main.fragments.bot.adapters.QuickAnswerAdapter;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -691,11 +689,11 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
                 // Auto load next conversation
                 BotType botType = BotType.valueOf(node.getAutoNext().toUpperCase());
                 Goal goal = null;
-                if(botType == BotType.GOAL_DEPOSIT) {
+                if (botType == BotType.GOAL_DEPOSIT) {
                     goal = persisted.loadConvoGoal(BotType.GOAL_DEPOSIT);
                 }
                 finishConversation();
-                if(botType == BotType.GOAL_DEPOSIT) {
+                if (botType == BotType.GOAL_DEPOSIT) {
                     persisted.saveConvoGoal(BotType.GOAL_DEPOSIT, goal);
                     clearState = true;
                 }
