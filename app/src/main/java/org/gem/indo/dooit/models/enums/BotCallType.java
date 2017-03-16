@@ -51,5 +51,8 @@ public enum BotCallType {
     SET_TIP_QUERY,
 
     @SerializedName("#add_expense")
-    ADD_EXPENSE
+    ADD_EXPENSE,
+
+    @SerializedName("#clear_expenses")
+    CLEAR_EXPENSES
 }

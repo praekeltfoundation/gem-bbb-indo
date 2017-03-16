@@ -14,6 +14,8 @@ import java.util.Map;
 public interface BotRunner {
     void queueNode(Node node);
 
+    void addNode(Node node);
+
     /**
      * Returns the conversation history as a mapping from Answer names to actual Answers.
      * <p>

@@ -17,6 +17,9 @@ import butterknife.ButterKnife;
 
 public class DummyViewHolder extends BaseBotViewHolder<Node> {
 
+    @BindView(R.id.item_view_bot_text_container)
+    View container;
+
     @BindView(R.id.item_view_bot_text)
     TextView textView;
 
@@ -32,6 +35,7 @@ public class DummyViewHolder extends BaseBotViewHolder<Node> {
         super(itemView);
         this.botAdapter = botAdapter;
         ButterKnife.bind(this, itemView);
+        container.setVisibility(View.GONE);
         textView.setVisibility(View.GONE);
         botIcon.setVisibility(View.GONE);
         tailView.setVisibility(View.GONE);

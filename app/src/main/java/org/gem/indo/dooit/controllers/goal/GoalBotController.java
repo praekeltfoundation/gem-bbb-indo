@@ -222,7 +222,7 @@ public abstract class GoalBotController extends DooitBotController {
 
     private void doAddBadge() {
         for (Badge badge : goal.getNewBadges())
-            botRunner.queueNode(nodeFromBadge(badge));
+            botRunner.addNode(nodeFromBadge(badge));
     }
 
     private Node nodeFromBadge(Badge badge) {

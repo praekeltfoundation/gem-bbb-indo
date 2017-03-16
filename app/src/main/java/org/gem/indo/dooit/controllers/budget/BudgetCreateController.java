@@ -223,6 +223,9 @@ public class BudgetCreateController extends DooitBotController {
             case ADD_EXPENSE:
                 addNextExpense();
                 break;
+            case CLEAR_EXPENSES:
+                clearExpenseState();
+                break;
             default:
                 super.onCall(key, answerLog, model);
         }
@@ -349,6 +352,32 @@ public class BudgetCreateController extends DooitBotController {
 
         node.finish();
         botRunner.queueNode(node);
+    }
+
+    private void clearExpenseState() {
+        Realm realm = null;
+
+        try {
+            realm = Realm.getDefaultInstance();
+
+            realm.commitTransaction();
+            RealmResults<ExpenseCategory> categories = realm.where(ExpenseCategory.class)
+                    .equalTo(ExpenseCategory.FIELD_BOT_TYPE, botType.getId())
+                    .findAll();
+            for (ExpenseCategory category : categories) {
+                category.setSelected(false);
+                category.setEntered(false);
+            }
+            // FIXME: Realm exception. Can't commit non-existing write
+            if (!categories.isEmpty())
+                realm.commitTransaction();
+        } catch (Throwable e) {
+            if (realm != null && realm.isInTransaction())
+                realm.cancelTransaction();
+        } finally {
+            if (realm != null)
+                realm.close();
+        }
     }
 
     ////////////

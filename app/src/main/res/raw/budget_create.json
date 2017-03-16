@@ -164,9 +164,15 @@
       {
         "name": "budget_create_a_retry",
         "text": "$(budget_create_a_retry)",
-        "next": "budget_create_q_expense_01"
+        "next": "budget_create_clear_expense_state"
       }
     ]
+  },
+  {
+    "name": "budget_create_clear_expense_state",
+    "type": "blank",
+    "call": "#clear_expenses",
+    "autoNext": "budget_create_q_expense_01"
   },
 
 

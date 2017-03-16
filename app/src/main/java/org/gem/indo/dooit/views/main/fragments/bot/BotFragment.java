@@ -609,6 +609,11 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
         addNode(node, false);
     }
 
+    @Override
+    public void addNode(Node node) {
+        addNode(node, false);
+    }
+
     private void addNode(final Node node, boolean iconHidden) {
         processing = true;
 
