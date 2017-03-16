@@ -34,6 +34,7 @@ import java.util.Map;
 import javax.inject.Inject;
 
 import io.realm.Realm;
+import io.realm.RealmResults;
 import rx.functions.Action0;
 import rx.functions.Action1;
 
@@ -124,6 +125,32 @@ public class BudgetCreateController extends DooitBotController {
             }
             default:
                 super.onAnswerInput(inputType, answer);
+        }
+    }
+
+    @Override
+    public void onAnswer(Answer answer) {
+        if (answer.getName().equals("budget_create_a_expense_continue")) {
+            // User done with expense carousel. Clear all entered flags
+            Realm realm = null;
+
+            try {
+                realm = Realm.getDefaultInstance();
+
+                realm.beginTransaction();
+                RealmResults<ExpenseCategory> categories = realm.where(ExpenseCategory.class)
+                        .equalTo(ExpenseCategory.FIELD_BOT_TYPE, botType.getId())
+                        .findAll();
+                for (ExpenseCategory category : categories)
+                    category.setEntered(false);
+                realm.commitTransaction();
+            } catch (Throwable e) {
+                if (realm != null && realm.isInTransaction())
+                    realm.close();
+            } finally {
+                if (realm != null)
+                    realm.close();
+            }
         }
     }
 
