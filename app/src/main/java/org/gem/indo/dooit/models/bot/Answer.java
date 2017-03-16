@@ -67,11 +67,7 @@ public class Answer extends BaseBotModel {
     }
 
     public void setInputKey(BotParamType key) {
-
-        if (key != null)
-            inputKey = key.getKey();
-        else
-            inputKey = null;
+        this.inputKey = key != null ? key.getKey() : null;
     }
 
     public boolean hasInputKey() {

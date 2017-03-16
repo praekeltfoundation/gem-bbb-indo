@@ -722,7 +722,7 @@
     <string name="budget_create_q_expense_03">Okay, now tell me about what you spend your money on. Select all of the categories that you spend your money on during the month.</string>
     <string name="budget_create_a_expense_continue">"OK, I've selected my expenses"</string>
 
-    <string name="budget_create_q_expense_value">"How much do you spend on X each month?"</string>
+    <string name="budget_create_q_expense_value">"How much do you spend on $(budget.next_expense_name) each month?"</string>
 
     <string name="budget_create_q_summary">Your monthly income is $(budget.income). Of this amount, you save $(budget.savings) each month and spend $(budget.expense).</string>
     <string name="budget_create_q_final">You can access and update your budget in your profile at any time.</string>
@@ -737,6 +737,8 @@
     <string name="budget_create_err_savings__empty">Savings cannot be empty</string>
     <string name="budget_create_err_savings__zero">Savings cannot be Rp0</string>
     <string name="budget_create_err_savings__gt_income">Your monthly savings cannot be more than your monthly income</string>
+    <string name="budget_create_err_expense__empty">Expense cannot be empty</string>
+    <string name="budget_create_err_expense__zero">Expense cannot be Rp0</string>
 
     <!-- END: BOT -->
 

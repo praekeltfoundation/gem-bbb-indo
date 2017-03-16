@@ -1,6 +1,7 @@
 package org.gem.indo.dooit.dao.budget;
 
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 
 import org.gem.indo.dooit.models.budget.ExpenseCategory;
 import org.gem.indo.dooit.models.enums.BotObjectType;
@@ -9,6 +10,7 @@ import org.gem.indo.dooit.models.enums.BotType;
 import java.util.List;
 
 import io.realm.Realm;
+import io.realm.RealmResults;
 
 /**
  * Created by Wimpie Victor on 2017/03/06.
@@ -79,6 +81,47 @@ public class ExpenseCategoryBotDAO {
                     .equalTo(ExpenseCategory.FIELD_BOT_TYPE, botType.getId())
                     .equalTo(ExpenseCategory.FIELD_SELECTED, true)
                     .findAllSorted(ExpenseCategory.FIELD_ID));
+        } finally {
+            if (realm != null)
+                realm.close();
+        }
+    }
+
+    @Nullable
+    public ExpenseCategory findNext(BotType botType) {
+        Realm realm = null;
+
+        try {
+            realm = Realm.getDefaultInstance();
+
+            RealmResults<ExpenseCategory> categories = realm.where(ExpenseCategory.class)
+                    .equalTo(ExpenseCategory.FIELD_BOT_TYPE, botType.getId())
+                    .equalTo(ExpenseCategory.FIELD_SELECTED, true)
+                    .equalTo(ExpenseCategory.FIELD_ENTERED, false)
+                    .findAllSorted(ExpenseCategory.FIELD_ID);
+
+            if (categories.isEmpty())
+                return null;
+            else
+                return realm.copyFromRealm(categories.first());
+        } finally {
+            if (realm != null)
+                realm.close();
+        }
+    }
+
+    public boolean hasNext(BotType botType) {
+        Realm realm = null;
+
+        try {
+            realm = Realm.getDefaultInstance();
+
+            return realm.where(ExpenseCategory.class)
+                    .equalTo(ExpenseCategory.FIELD_BOT_TYPE, botType.getId())
+                    .equalTo(ExpenseCategory.FIELD_SELECTED, true)
+                    .equalTo(ExpenseCategory.FIELD_ENTERED, false)
+                    .findAll()
+                    .isEmpty();
         } finally {
             if (realm != null)
                 realm.close();

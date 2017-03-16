@@ -23,6 +23,7 @@ public class ExpenseCategory extends RealmObject {
     public static final String FIELD_LOCAL_ID = "localId";
     public static final String FIELD_BOT_TYPE = "botType";
     public static final String FIELD_SELECTED = "selected";
+    public static final String FIELD_ENTERED = "entered";
 
     /**
      * Because an {@link ExpenseCategory} only lives for the length of the conversation, and can't
@@ -30,6 +31,10 @@ public class ExpenseCategory extends RealmObject {
      */
     @PrimaryKey
     private long localId;
+
+    ////////////////
+    // CMS Fields //
+    ////////////////
 
     /**
      * The ID as provided by the server. A user's expense is linked to a category using this field.
@@ -43,10 +48,19 @@ public class ExpenseCategory extends RealmObject {
     @Nullable
     private String imageUrl;
 
+    /////////////////////
+    // Carousel Fields //
+    /////////////////////
+
     /**
      * A local field for use in the Expense carousel.
      */
     private boolean selected;
+
+    /**
+     * Flag to mark that this category has had a monetary value entered in the conversation.
+     */
+    private boolean entered;
 
     /**
      * A local field that links this category to a bot conversation.
@@ -114,6 +128,14 @@ public class ExpenseCategory extends RealmObject {
 
     public void setSelected(boolean selected) {
         this.selected = selected;
+    }
+
+    /////////////
+    // Entered //
+    /////////////
+
+    public void setEntered(boolean entered) {
+        this.entered = entered;
     }
 
     ///////////////////////////

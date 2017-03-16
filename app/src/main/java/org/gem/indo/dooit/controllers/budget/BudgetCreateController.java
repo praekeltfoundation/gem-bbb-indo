@@ -48,6 +48,9 @@ public class BudgetCreateController extends DooitBotController {
     private static String INCOME = "income_amount";
     private static String SAVING_DEFAULT_ACCEPT = "budget_create_a_savings_default_accept";
     private static String SAVINGS = "savings_amount";
+    private static String EXPENSE_QUESTION_PREFIX = "budget_create_q_expense_value_";
+    private static String EXPENSE_ANSWER_PREFIX = "budget_create_a_expense_value_";
+    private static String EXPENSE_STOP = "budget_create_q_expense_stop";
 
     @Inject
     BudgetManager budgetManager;
@@ -72,28 +75,69 @@ public class BudgetCreateController extends DooitBotController {
     @Override
     public boolean shouldSkip(BaseBotModel model) {
         if (model.getName().equals("budget_create_add_expense")) {
-            Realm realm = null;
-
-            try {
-                realm = Realm.getDefaultInstance();
-
-                return realm.where(ExpenseCategory.class)
-                        .equalTo(ExpenseCategory.FIELD_BOT_TYPE, botType.getId())
-                        .equalTo(ExpenseCategory.FIELD_SELECTED, true)
-                        .findAll()
-                        .isEmpty();
-            } finally {
-                if (realm != null)
-                    realm.close();
-            }
+            return new ExpenseCategoryBotDAO().hasNext(botType);
         }
         return super.shouldSkip(model);
+    }
+
+    @Override
+    public void onAnswerInput(BotParamType inputType, Answer answer) {
+        switch (inputType) {
+            case BUDGET_EXPENSE: {
+                String name = answer.getName();
+                if (name.startsWith(EXPENSE_ANSWER_PREFIX)) {
+                    if (TextUtils.isEmpty(answer.getValue()))
+                        // This was the auto answer for the inline answer type, not the text entry
+                        return;
+
+                    try {
+                        long id = Long.parseLong(name.substring(EXPENSE_ANSWER_PREFIX.length(),
+                                name.length()));
+
+                        Realm realm = null;
+
+                        try {
+                            realm = Realm.getDefaultInstance();
+
+                            realm.beginTransaction();
+                            ExpenseCategory category = realm.where(ExpenseCategory.class)
+                                    .equalTo(ExpenseCategory.FIELD_BOT_TYPE, botType.getId())
+                                    .equalTo(ExpenseCategory.FIELD_ID, id)
+                                    .findFirst();
+                            category.setEntered(true);
+                            realm.commitTransaction();
+                        } catch (Exception e) {
+                            CrashlyticsHelper.logException(e);
+                            if (realm != null && realm.isInTransaction())
+                                realm.cancelTransaction();
+                        } finally {
+                            if (realm != null)
+                                realm.close();
+                        }
+                    } catch (NumberFormatException e) {
+                        CrashlyticsHelper.log(TAG, "onAnswerInput",
+                                "Attempt to parse Expense Category ID from answer name failed");
+                        CrashlyticsHelper.logException(e);
+                    }
+                }
+                break;
+            }
+            default:
+                super.onAnswerInput(inputType, answer);
+        }
     }
 
     @Override
     public void resolveParam(BaseBotModel model, BotParamType paramType) {
         String name = model.getName();
         String key = paramType.getKey();
+
+        // Expense Loop
+        if (paramType == BotParamType.BUDGET_NEXT_EXPENSE_NAME) {
+            ExpenseCategory category = new ExpenseCategoryBotDAO().findNext(botType);
+            if (category != null)
+                model.values.put(key, category.getName());
+        }
 
         switch (name) {
             case "budget_create_q_savings_default": {
@@ -193,7 +237,12 @@ public class BudgetCreateController extends DooitBotController {
 
         // Expenses
         for (ExpenseCategory category : new ExpenseCategoryBotDAO().findSelected(botType)) {
-            budget.addExpense(new Expense(category, 0.0));
+            String key = EXPENSE_ANSWER_PREFIX + Long.toString(category.getId());
+            double expense = 0.0;
+            if (answerLog.containsKey(key))
+                expense = Double.parseDouble(answerLog.get(key).getValue());
+
+            budget.addExpense(new Expense(category, expense));
         }
 
         // Upload Budget to server
@@ -222,46 +271,41 @@ public class BudgetCreateController extends DooitBotController {
     }
 
     private void addNextExpense() {
-        Realm realm = null;
 
-        try {
-            realm = Realm.getDefaultInstance();
+        ExpenseCategory category = new ExpenseCategoryBotDAO().findNext(botType);
 
-//            realm.beginTransaction();
-
-            ExpenseCategory category = realm.where(ExpenseCategory.class)
-                    .equalTo(ExpenseCategory.FIELD_BOT_TYPE, botType.getId())
-                    .equalTo(ExpenseCategory.FIELD_SELECTED, true)
-                    .findAllSorted(ExpenseCategory.FIELD_ID).first();
-
+        // Stop Expense loop
+        if (category == null) {
+            // Special Node to stop the Expense loop and continue with the conversation
             Node node = new Node();
-            node.setName("budget_create_q_expense_value_" + Long.toString(category.getId()));
-            node.setType(BotMessageType.TEXT);
-            node.setProcessedText(getContext().getString(R.string.budget_create_q_expense_value));
+            node.setName(EXPENSE_STOP);
+            node.setType(BotMessageType.DUMMY);
+            node.setAutoNext("budget_create_do_create");
 
-            Answer answer = new Answer();
-            answer.setName("budget_create_a_expense_value_" + Long.toString(category.getId()));
-            answer.setType(BotMessageType.INLINECURRENCY);
-            answer.setTypeOnFinish("textCurrency");
-            answer.setInlineEditHint("$(type_currency_hint)");
-
-            // Loop back to this call
-            answer.setNextOnFinish("budget_create_add_expense");
-
-            node.setAutoAnswer(answer.getName());
-            node.addAnswer(answer);
-
-            node.finish();
             botRunner.addNode(node);
-
-//            realm.commitTransaction();
-        } catch (Throwable e) {
-            if (realm != null && realm.isInTransaction())
-                realm.cancelTransaction();
-        } finally {
-            if (realm != null)
-                realm.close();
+            return;
         }
+
+        Node node = new Node();
+        node.setName(EXPENSE_QUESTION_PREFIX + Long.toString(category.getId()));
+        node.setType(BotMessageType.TEXT);
+        node.setProcessedText(getContext().getString(R.string.budget_create_q_expense_value));
+
+        Answer answer = new Answer();
+        answer.setName(EXPENSE_ANSWER_PREFIX + Long.toString(category.getId()));
+        answer.setType(BotMessageType.INLINECURRENCY);
+        answer.setTypeOnFinish("textCurrency");
+        answer.setInlineEditHint("$(type_currency_hint)");
+        answer.setInputKey(BotParamType.BUDGET_EXPENSE);
+
+        // Loop back to this call
+        answer.setNextOnFinish("budget_create_add_expense");
+
+        node.setAutoAnswer(answer.getName());
+        node.addAnswer(answer);
+
+        node.finish();
+        botRunner.addNode(node);
     }
 
     ////////////
@@ -288,6 +332,9 @@ public class BudgetCreateController extends DooitBotController {
 
     @Override
     public boolean validate(String name, String input) {
+        if (input.startsWith(EXPENSE_ANSWER_PREFIX))
+            return validateExpense(input);
+
         switch (name) {
             case "income_amount":
                 return validateIncome(input);
@@ -335,6 +382,25 @@ public class BudgetCreateController extends DooitBotController {
                 return false;
             } else if (income != null && value > income) {
                 toast(R.string.budget_create_err_savings__gt_income);
+                return false;
+            }
+            return true;
+        } catch (NumberFormatException e) {
+            toast(R.string.budget_create_err__invalid_number);
+            return false;
+        }
+    }
+
+    private boolean validateExpense(String input) {
+        if (TextUtils.isEmpty(input)) {
+            toast(R.string.budget_create_err_expense__empty);
+            return false;
+        }
+        try {
+            double expense = Double.parseDouble(input);
+
+            if (expense <= 0) {
+                toast(R.string.budget_create_err_expense__zero);
                 return false;
             }
             return true;

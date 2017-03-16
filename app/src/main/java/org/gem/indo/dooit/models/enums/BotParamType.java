@@ -82,6 +82,7 @@ public enum BotParamType {
     BUDGET_EXPENSE("budget.expense"),
     BUDGET_DEFAULT_SAVINGS("budget.default_savings"),
     BUDGET_DEFAULT_SAVING_PERCENT("budget.default_savings_percentage"),
+    BUDGET_NEXT_EXPENSE_NAME("budget.next_expense_name"), // The next expense that needs a value input
 
     //Currency Symbol
     CURRENCY_SYMBOL("currency.symbol"),
