@@ -42,71 +42,90 @@
                 android:layout_weight="0.6"
                 android:background="@drawable/pattern_01_grey">
 
-                    <RelativeLayout
-                        android:layout_width="fill_parent"
-                        android:layout_height="fill_parent"
-                        android:layout_alignParentStart="true"
+                <RelativeLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentTop="true"
+                    >
+
+                    <ScrollView
+                        android:id="@+id/scrollview"
                         android:layout_alignParentTop="true"
-                        android:orientation="vertical">
+                        android:layout_above="@+id/fragment_challenge_register_button"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
 
-                        <com.facebook.drawee.view.SimpleDraweeView
-                            android:id="@+id/challenge_image"
-                            android:layout_width="fill_parent"
-                            android:layout_height="150dp"
-                            android:layout_marginBottom="15dp"
-                            android:background="@color/purple"
-                            app:layout_constraintBottom_toTopOf="@+id/fragment_challenge_sub_title_text_view"
-                            app:placeholderImage="@drawable/empty_image" />
-
-                        <TextView
-                            android:id="@+id/fragment_challenge_sub_title_text_view"
-                            android:layout_width="wrap_content"
+                        <RelativeLayout
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_below="@+id/challenge_image"
-                            android:layout_centerHorizontal="true"
-                            android:layout_marginBottom="15dp"
-                            android:textAlignment="center"
-                            android:textAllCaps="true"
-                            android:textAppearance="@style/AppTheme.TextView.Regular.Medium"
-                            android:textColor="@color/black"
-                            tools:text="Very Short Sub-Title" />
+                            android:orientation="vertical">
 
-                        <TextView
-                            android:id="@+id/fragment_challenge_name_text_view"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_below="@+id/fragment_challenge_sub_title_text_view"
-                            android:layout_centerHorizontal="true"
-                            android:layout_marginBottom="15dp"
-                            android:textAlignment="center"
-                            android:textAppearance="@style/AppTheme.TextView.Regular.ExtraLarge"
-                            android:textColor="@color/black"
-                            tools:text="Quiz Challenge Name" />
+                            <com.facebook.drawee.view.SimpleDraweeView
+                                android:id="@+id/challenge_image"
+                                android:layout_width="fill_parent"
+                                android:layout_height="150dp"
+                                android:background="@color/purple"
+                                app:layout_constraintBottom_toTopOf="@+id/fragment_challenge_sub_title_text_view"
+                                app:placeholderImage="@drawable/empty_image"
+                                android:layout_marginBottom="15dp"/>
 
-                        <TextView
-                            android:id="@+id/fragment_challenge_expire_date_text_view"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_below="@+id/fragment_challenge_name_text_view"
-                            android:layout_centerHorizontal="true"
-                            android:layout_marginBottom="15dp"
-                            android:gravity="center"
-                            android:textAppearance="@style/AppTheme.TextView.Regular.Medium"
-                            android:textColor="@color/black"
-                            android:textStyle="normal|bold"
-                            tools:text="Ends Month, dd, time" />
+                            <TextView
+                                android:id="@+id/fragment_challenge_sub_title_text_view"
+                                android:layout_below="@+id/challenge_image"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textAlignment="center"
+                                android:layout_centerHorizontal="true"
+                                android:textAllCaps="true"
+                                android:textAppearance="@style/AppTheme.TextView.Regular.Medium"
+                                android:textColor="@color/black"
+                                tools:text="Very Short Sub-Title"
+                                android:layout_marginBottom="15dp"/>
 
-                        <Button
-                            android:id="@+id/fragment_challenge_register_button"
-                            style="@style/AppTheme.Button.Big.Purple"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_below="@+id/fragment_challenge_expire_date_text_view"
-                            android:layout_centerInParent="true"
-                            android:layout_marginBottom="8dp"
-                            android:text="@string/label_start" />
+                            <TextView
+                                android:id="@+id/fragment_challenge_name_text_view"
+                                android:layout_below="@+id/fragment_challenge_sub_title_text_view"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textAlignment="center"
+                                android:layout_centerHorizontal="true"
+                                android:textAppearance="@style/AppTheme.TextView.Regular.ExtraLarge"
+                                android:textColor="@color/black"
+                                tools:text="Quiz Challenge Name"
+                                android:layout_marginBottom="15dp"
+                                android:paddingStart="5dp"
+                                android:paddingEnd="5dp"/>
 
-                    </RelativeLayout>
+                            <TextView
+                                android:id="@+id/fragment_challenge_expire_date_text_view"
+                                android:layout_below="@+id/fragment_challenge_name_text_view"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:gravity="center"
+                                android:layout_centerHorizontal="true"
+                                android:textAppearance="@style/AppTheme.TextView.Regular.Medium"
+                                android:textColor="@color/black"
+                                android:textStyle="normal|bold"
+                                tools:text="Ends Month, dd, time"
+                                android:layout_marginBottom="15dp"/>
+                        </RelativeLayout>
+                    </ScrollView>
+
+                    <Button
+                        android:id="@+id/fragment_challenge_register_button"
+                        style="@style/AppTheme.Button.Big.Purple"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="35dp"
+                        android:layout_marginEnd="35dp"
+                        android:layout_alignParentBottom="true"
+                        android:layout_centerInParent="true"
+                        android:layout_marginBottom="8dp"
+                        android:layout_marginTop="8dp"
+                        android:text="@string/label_start" />
+
+                </RelativeLayout>
 
                 <!-- vertical middle -->
             </RelativeLayout>
@@ -119,16 +138,15 @@
 
                 <ImageButton
                     android:id="@+id/challenge_available_dialog_close"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerInParent="true"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_centerHorizontal="true"
                     android:layout_marginBottom="16dp"
                     android:layout_marginEnd="16dp"
                     android:layout_marginStart="16dp"
                     android:layout_marginTop="8dp"
-                    android:background="@null"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:srcCompat="@drawable/dialog_close" />
+                    android:background="@drawable/dialog_close" />
 
             </RelativeLayout>
 
