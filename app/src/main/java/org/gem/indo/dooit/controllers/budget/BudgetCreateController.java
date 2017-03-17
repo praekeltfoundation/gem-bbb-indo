@@ -109,14 +109,6 @@ public class BudgetCreateController extends DooitBotController {
     }
 
     @Override
-    public void onAnswer(Answer answer) {
-        if (answer.getName().equals("budget_create_a_expense_continue")) {
-            // User done with expense carousel. Clear all entered flags
-            new ExpenseCategoryBotDAO().clearAllState(botType);
-        }
-    }
-
-    @Override
     public void resolveParam(BaseBotModel model, BotParamType paramType) {
         String name = model.getName();
         String key = paramType.getKey();
