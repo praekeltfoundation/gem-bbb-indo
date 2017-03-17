@@ -718,13 +718,13 @@
     <string name="budget_create_a_savings_default_deny">No, I want to save a different amount</string>
 
     <string name="budget_create_q_expense_01">Great! That means you need to save $(budget.savings) per month to reach your monthly savings.</string>
-    <string name="budget_create_q_expense_02">If we subtract your savings, RpXXX from your income, RpXXX, you have RXXX expenses left.</string>
+    <string name="budget_create_q_expense_02">If we subtract your savings, $(budget.savings) from your income, $(budget.income), you have $(budget.remaining_expenses) expenses left.</string>
     <string name="budget_create_q_expense_03">Okay, now tell me about what you spend your money on. Select all of the categories that you spend your money on during the month.</string>
     <string name="budget_create_a_expense_continue">"OK, I've selected my expenses"</string>
 
     <string name="budget_create_q_expense_value">"How much do you spend on $(budget.next_expense_name) each month?"</string>
 
-    <string name="budget_create_q_expense_summary">"In total, you spend RpXXX on expenses in a month, you have RpXXX left."</string>
+    <string name="budget_create_q_expense_summary">"In total, you spend $(budget.total_expenses) on expenses in a month, you have $(budget.total_expenses_remainder) left."</string>
     <string name="budget_create_a_accept">Yes, that looks correct</string>
     <string name="budget_create_a_retry">No, let me redo my expenses</string>
 

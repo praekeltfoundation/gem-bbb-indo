@@ -53,6 +53,9 @@ public enum BotCallType {
     @SerializedName("#add_expense")
     ADD_EXPENSE,
 
+    @SerializedName("#clear_expenses_state")
+    CLEAR_EXPENSES_STATE,
+
     @SerializedName("#clear_expenses")
     CLEAR_EXPENSES
 }

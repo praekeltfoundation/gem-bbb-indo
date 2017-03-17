@@ -80,9 +80,12 @@ public enum BotParamType {
     BUDGET_INCOME("budget.income"),
     BUDGET_SAVINGS("budget.savings"),
     BUDGET_EXPENSE("budget.expense"),
+    BUDGET_REMAINING_EXPENSES("budget.remaining_expenses"), // Savings subtracted from income
     BUDGET_DEFAULT_SAVINGS("budget.default_savings"),
     BUDGET_DEFAULT_SAVING_PERCENT("budget.default_savings_percentage"),
     BUDGET_NEXT_EXPENSE_NAME("budget.next_expense_name"), // The next expense that needs a value input
+    BUDGET_TOTAL_EXPENSES("budget.total_expenses"), // All the expenses selected from the carousel, summed
+    BUDGET_TOTAL_EXPENSES_REMAINDER("budget.total_expenses_remainder"), // (income - savings - total_expenses)
 
     //Currency Symbol
     CURRENCY_SYMBOL("currency.symbol"),

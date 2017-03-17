@@ -478,7 +478,7 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
                         persisted.loadParticipantBadge(botType),
                         persisted.loadParticipantChallenge(botType));
             case BUDGET_CREATE:
-                return new BudgetCreateController(getActivity(), this, null);
+                return new BudgetCreateController(getActivity(), this);
             default:
                 return null;
         }

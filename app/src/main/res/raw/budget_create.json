@@ -114,7 +114,7 @@
   {
     "name": "budget_create_clear_expense_state",
     "type": "blank",
-    "call": "#clear_expenses",
+    "call": "#clear_expenses_state",
     "autoNext": "budget_create_q_expense_01"
   },
   {
@@ -193,11 +193,16 @@
     "name": "budget_create_q_final",
     "type": "text",
     "text": "$(budget_create_q_final)",
-    "autoNext": "budget_create_end"
+    "autoNext": "budget_create_clear_expenses"
   },
 
 
 
+  {
+    "name": "budget_create_clear_expenses",
+    "type": "blank",
+    "autoNext": "budget_create_end"
+  },
   {
     "name": "budget_create_end",
     "type": "end"

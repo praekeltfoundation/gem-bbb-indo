@@ -37,8 +37,6 @@ import java.util.Map;
 
 import javax.inject.Inject;
 
-import io.realm.Realm;
-import io.realm.RealmResults;
 import rx.functions.Action0;
 import rx.functions.Action1;
 
@@ -64,8 +62,7 @@ public class BudgetCreateController extends DooitBotController {
     private Budget budget;
     private BotRunner botRunner;
 
-    public BudgetCreateController(Activity activity, @NonNull BotRunner botRunner,
-                                  @Nullable Budget budget) {
+    public BudgetCreateController(Activity activity, @NonNull BotRunner botRunner) {
         super(activity, BotType.BUDGET_CREATE);
         ((DooitApplication) activity.getApplication()).component.inject(this);
 
@@ -73,8 +70,7 @@ public class BudgetCreateController extends DooitBotController {
         this.botRunner = botRunner;
 
         // A new Budget can be persisted if the conversation is reloaded.
-        if (budget == null)
-            this.budget = new Budget();
+        budget = new BudgetDAO().findFirst();
     }
 
     @Override
@@ -98,27 +94,7 @@ public class BudgetCreateController extends DooitBotController {
                     try {
                         long id = Long.parseLong(name.substring(EXPENSE_ANSWER_PREFIX.length(),
                                 name.length()));
-
-                        Realm realm = null;
-
-                        try {
-                            realm = Realm.getDefaultInstance();
-
-                            realm.beginTransaction();
-                            ExpenseCategory category = realm.where(ExpenseCategory.class)
-                                    .equalTo(ExpenseCategory.FIELD_BOT_TYPE, botType.getId())
-                                    .equalTo(ExpenseCategory.FIELD_ID, id)
-                                    .findFirst();
-                            category.setEntered(true);
-                            realm.commitTransaction();
-                        } catch (Exception e) {
-                            CrashlyticsHelper.logException(e);
-                            if (realm != null && realm.isInTransaction())
-                                realm.cancelTransaction();
-                        } finally {
-                            if (realm != null)
-                                realm.close();
-                        }
+                        new ExpenseCategoryBotDAO().setEntered(botType, id, true);
                     } catch (NumberFormatException e) {
                         CrashlyticsHelper.log(TAG, "onAnswerInput",
                                 "Attempt to parse Expense Category ID from answer name failed");
@@ -136,25 +112,7 @@ public class BudgetCreateController extends DooitBotController {
     public void onAnswer(Answer answer) {
         if (answer.getName().equals("budget_create_a_expense_continue")) {
             // User done with expense carousel. Clear all entered flags
-            Realm realm = null;
-
-            try {
-                realm = Realm.getDefaultInstance();
-
-                realm.beginTransaction();
-                RealmResults<ExpenseCategory> categories = realm.where(ExpenseCategory.class)
-                        .equalTo(ExpenseCategory.FIELD_BOT_TYPE, botType.getId())
-                        .findAll();
-                for (ExpenseCategory category : categories)
-                    category.setEntered(false);
-                realm.commitTransaction();
-            } catch (Throwable e) {
-                if (realm != null && realm.isInTransaction())
-                    realm.close();
-            } finally {
-                if (realm != null)
-                    realm.close();
-            }
+            new ExpenseCategoryBotDAO().clearAllState(botType);
         }
     }
 
@@ -171,15 +129,25 @@ public class BudgetCreateController extends DooitBotController {
         }
 
         switch (name) {
-            case "budget_create_q_savings_default": {
+            case "budget_create_q_savings_default":
+            case "budget_create_q_expense_01":
+            case "budget_create_q_expense_02":
+            case "budget_create_q_expense_03":
+            case "budget_create_q_expense_summary": {
                 // Nodes before Budget exists
 
                 Map<String, Answer> answers = botRunner.getAnswerLog();
                 switch (paramType) {
-                    case BUDGET_SAVINGS: {
+                    case BUDGET_INCOME:
                         model.values.put(key, CurrencyHelper.format(monthlyIncome(answers)));
                         break;
-                    }
+                    case BUDGET_SAVINGS:
+                        model.values.put(key, CurrencyHelper.format(monthlySavings(answers)));
+                        break;
+                    case BUDGET_REMAINING_EXPENSES:
+                        model.values.put(key, CurrencyHelper
+                                .format(monthlyIncome(answers) - monthlySavings(answers)));
+                        break;
                     case BUDGET_DEFAULT_SAVINGS:
                         // Retrieve entered income
                         model.values.put(key, CurrencyHelper.format(Budget.calcDefaultSavings(
@@ -187,6 +155,13 @@ public class BudgetCreateController extends DooitBotController {
                         break;
                     case BUDGET_DEFAULT_SAVING_PERCENT:
                         model.values.put(key, Double.toString(Math.round(Budget.DEFAULT_SAVING_PERCENT)));
+                        break;
+                    case BUDGET_TOTAL_EXPENSES:
+                        model.values.put(key, CurrencyHelper.format(totalExpenseValue(answers)));
+                        break;
+                    case BUDGET_TOTAL_EXPENSES_REMAINDER:
+                        model.values.put(key, CurrencyHelper
+                                .format(monthlyIncome(answers) - monthlySavings(answers) - totalExpenseValue(answers)));
                         break;
                 }
                 break;
@@ -227,8 +202,11 @@ public class BudgetCreateController extends DooitBotController {
             case ADD_EXPENSE:
                 addNextExpense();
                 break;
-            case CLEAR_EXPENSES:
+            case CLEAR_EXPENSES_STATE:
                 clearExpenseState();
+                break;
+            case CLEAR_EXPENSES:
+                clearExpenses();
                 break;
             default:
                 super.onCall(key, answerLog, model);
@@ -357,6 +335,10 @@ public class BudgetCreateController extends DooitBotController {
         new ExpenseCategoryBotDAO().clearAllState(botType);
     }
 
+    private void clearExpenses() {
+        new ExpenseCategoryBotDAO().clear(botType);
+    }
+
     ////////////
     // Income //
     ////////////
@@ -380,14 +362,36 @@ public class BudgetCreateController extends DooitBotController {
     /////////////
 
     private double monthlySavings(@NonNull Map<String, Answer> answerLog) {
-        if (answerLog.containsKey(SAVING_DEFAULT_ACCEPT))
-            // User accepts the default suggested savings
-            return budget.getDefaultSavings();
-        else if (answerLog.containsKey(SAVINGS))
-            // User entered their own savings amount
-            return Double.parseDouble(answerLog.get(SAVINGS).getValue());
-        else
+        try {
+            if (answerLog.containsKey(SAVING_DEFAULT_ACCEPT))
+                // User accepts the default suggested savings
+                if (answerLog.containsKey(INCOME))
+                    return Budget.calcDefaultSavings(Double.parseDouble(answerLog.get(INCOME).getValue()));
+                else
+                    return 0.0;
+            else if (answerLog.containsKey(SAVINGS))
+                // User entered their own savings amount
+                return Double.parseDouble(answerLog.get(SAVINGS).getValue());
+            else
+                return 0.0;
+        } catch (NumberFormatException e) {
+            CrashlyticsHelper.logException(e);
             return 0.0;
+        }
+    }
+
+    //////////////
+    // Expenses //
+    //////////////
+
+    private double totalExpenseValue(Map<String, Answer> answerLog) {
+        double total = 0.0;
+        for (ExpenseCategory category : new ExpenseCategoryBotDAO().findSelected(botType)) {
+            String key = EXPENSE_ANSWER_PREFIX + Long.toString(category.getId());
+            if (answerLog.containsKey(key))
+                total += Double.parseDouble(answerLog.get(key).getValue());
+        }
+        return total;
     }
 
     ////////////////

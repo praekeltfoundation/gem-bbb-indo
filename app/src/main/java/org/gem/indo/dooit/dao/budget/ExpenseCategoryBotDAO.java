@@ -3,6 +3,7 @@ package org.gem.indo.dooit.dao.budget;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
+import org.gem.indo.dooit.helpers.crashlytics.CrashlyticsHelper;
 import org.gem.indo.dooit.models.budget.ExpenseCategory;
 import org.gem.indo.dooit.models.enums.BotObjectType;
 import org.gem.indo.dooit.models.enums.BotType;
@@ -192,6 +193,29 @@ public class ExpenseCategoryBotDAO {
             category.setSelected(checked);
             realm.commitTransaction();
         } catch (Throwable e) {
+            if (realm != null && realm.isInTransaction())
+                realm.cancelTransaction();
+        } finally {
+            if (realm != null)
+                realm.close();
+        }
+    }
+
+    public void setEntered(BotType botType, long categoryId, boolean entered) {
+        Realm realm = null;
+
+        try {
+            realm = Realm.getDefaultInstance();
+
+            ExpenseCategory category = realm.where(ExpenseCategory.class)
+                    .equalTo(ExpenseCategory.FIELD_BOT_TYPE, botType.getId())
+                    .equalTo(ExpenseCategory.FIELD_ID, categoryId)
+                    .findFirst();
+            realm.beginTransaction();
+            category.setEntered(entered);
+            realm.commitTransaction();
+        } catch (Exception e) {
+            CrashlyticsHelper.logException(e);
             if (realm != null && realm.isInTransaction())
                 realm.cancelTransaction();
         } finally {
