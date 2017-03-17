@@ -9,6 +9,7 @@ import org.gem.indo.dooit.models.enums.BotType;
 
 import java.util.List;
 
+import io.realm.OrderedRealmCollection;
 import io.realm.Realm;
 import io.realm.RealmResults;
 
@@ -128,6 +129,38 @@ public class ExpenseCategoryBotDAO {
         }
     }
 
+    /**
+     * Clears the selected and entered flags on {@link ExpenseCategory} instances for a given
+     * conversation.
+     *
+     * @param botType The type of the current conversation
+     */
+    public void clearAllState(BotType botType) {
+        Realm realm = null;
+
+        try {
+            realm = Realm.getDefaultInstance();
+
+            OrderedRealmCollection<ExpenseCategory> categories = realm.where(ExpenseCategory.class)
+                    .equalTo(ExpenseCategory.FIELD_BOT_TYPE, botType.getId())
+                    .findAll();
+
+            realm.beginTransaction();
+            for (ExpenseCategory category : categories) {
+                category.setSelected(false);
+                category.setEntered(false);
+            }
+            // FIXME: Realm exception. Can't commit non-existing write
+            realm.commitTransaction();
+        } catch (Throwable e) {
+            if (realm != null && realm.isInTransaction())
+                realm.cancelTransaction();
+        } finally {
+            if (realm != null)
+                realm.close();
+        }
+    }
+
     public boolean exists(@NonNull BotType botType) {
         Realm realm = null;
 
@@ -152,11 +185,11 @@ public class ExpenseCategoryBotDAO {
         try {
             realm = Realm.getDefaultInstance();
 
-            realm.beginTransaction();
-            realm.where(ExpenseCategory.class)
+            ExpenseCategory category = realm.where(ExpenseCategory.class)
                     .equalTo(ExpenseCategory.FIELD_LOCAL_ID, localId)
-                    .findFirst()
-                    .setSelected(checked);
+                    .findFirst();
+            realm.beginTransaction();
+            category.setSelected(checked);
             realm.commitTransaction();
         } catch (Throwable e) {
             if (realm != null && realm.isInTransaction())

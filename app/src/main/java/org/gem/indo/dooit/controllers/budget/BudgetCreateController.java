@@ -176,6 +176,10 @@ public class BudgetCreateController extends DooitBotController {
 
                 Map<String, Answer> answers = botRunner.getAnswerLog();
                 switch (paramType) {
+                    case BUDGET_SAVINGS: {
+                        model.values.put(key, CurrencyHelper.format(monthlyIncome(answers)));
+                        break;
+                    }
                     case BUDGET_DEFAULT_SAVINGS:
                         // Retrieve entered income
                         model.values.put(key, CurrencyHelper.format(Budget.calcDefaultSavings(
@@ -262,12 +266,7 @@ public class BudgetCreateController extends DooitBotController {
         budget.setIncome(monthlyIncome(answerLog));
 
         // Savings
-        if (answerLog.containsKey(SAVING_DEFAULT_ACCEPT))
-            // User accepts the default suggested savings
-            budget.setSavings(budget.getDefaultSavings());
-        else if (answerLog.containsKey(SAVINGS))
-            // User entered their own savings amount
-            budget.setSavings(Double.parseDouble(answerLog.get(SAVINGS).getValue()));
+        budget.setSavings(monthlySavings(answerLog));
 
         // Expenses
         for (ExpenseCategory category : new ExpenseCategoryBotDAO().findSelected(botType)) {
@@ -355,29 +354,7 @@ public class BudgetCreateController extends DooitBotController {
     }
 
     private void clearExpenseState() {
-        Realm realm = null;
-
-        try {
-            realm = Realm.getDefaultInstance();
-
-            realm.commitTransaction();
-            RealmResults<ExpenseCategory> categories = realm.where(ExpenseCategory.class)
-                    .equalTo(ExpenseCategory.FIELD_BOT_TYPE, botType.getId())
-                    .findAll();
-            for (ExpenseCategory category : categories) {
-                category.setSelected(false);
-                category.setEntered(false);
-            }
-            // FIXME: Realm exception. Can't commit non-existing write
-            if (!categories.isEmpty())
-                realm.commitTransaction();
-        } catch (Throwable e) {
-            if (realm != null && realm.isInTransaction())
-                realm.cancelTransaction();
-        } finally {
-            if (realm != null)
-                realm.close();
-        }
+        new ExpenseCategoryBotDAO().clearAllState(botType);
     }
 
     ////////////
@@ -396,6 +373,21 @@ public class BudgetCreateController extends DooitBotController {
                     "Unexpected attempt te get monthly income with no income input in conversation");
             return 0.0;
         }
+    }
+
+    /////////////
+    // Savings //
+    /////////////
+
+    private double monthlySavings(@NonNull Map<String, Answer> answerLog) {
+        if (answerLog.containsKey(SAVING_DEFAULT_ACCEPT))
+            // User accepts the default suggested savings
+            return budget.getDefaultSavings();
+        else if (answerLog.containsKey(SAVINGS))
+            // User entered their own savings amount
+            return Double.parseDouble(answerLog.get(SAVINGS).getValue());
+        else
+            return 0.0;
     }
 
     ////////////////

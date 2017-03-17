@@ -82,7 +82,7 @@
       {
         "name": "budget_create_a_savings_default_accept",
         "text": "$(budget_create_a_savings_default_accept)",
-        "next": "budget_create_q_expense_01"
+        "next": "budget_create_clear_expense_state"
       },
       {
         "name": "budget_create_a_savings_default_deny",
@@ -104,13 +104,19 @@
         "type": "inlineCurrency",
         "typeOnFinish": "textCurrency",
         "inlineEditHint": "$(type_currency_hint)",
-        "nextOnFinish": "budget_create_q_expense_01"
+        "nextOnFinish": "budget_create_clear_expense_state"
       }
     ]
   },
 
 
 
+  {
+    "name": "budget_create_clear_expense_state",
+    "type": "blank",
+    "call": "#clear_expenses",
+    "autoNext": "budget_create_q_expense_01"
+  },
   {
     "name": "budget_create_q_expense_01",
     "type": "text",
@@ -167,12 +173,6 @@
         "next": "budget_create_clear_expense_state"
       }
     ]
-  },
-  {
-    "name": "budget_create_clear_expense_state",
-    "type": "blank",
-    "call": "#clear_expenses",
-    "autoNext": "budget_create_q_expense_01"
   },
 
 
