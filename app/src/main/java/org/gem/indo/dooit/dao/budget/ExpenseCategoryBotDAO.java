@@ -13,6 +13,7 @@ import java.util.List;
 import io.realm.OrderedRealmCollection;
 import io.realm.Realm;
 import io.realm.RealmResults;
+import io.realm.Sort;
 
 /**
  * Created by Wimpie Victor on 2017/03/06.
@@ -62,7 +63,10 @@ public class ExpenseCategoryBotDAO {
 
             return realm.copyFromRealm(realm.where(ExpenseCategory.class)
                     .equalTo(ExpenseCategory.FIELD_BOT_TYPE, botType.getId())
-                    .findAllSorted(ExpenseCategory.FIELD_ID));
+                    .findAllSorted(
+                            ExpenseCategory.FIELD_ORDER, Sort.ASCENDING,
+                            ExpenseCategory.FIELD_ID, Sort.ASCENDING
+                    ));
         } finally {
             if (realm != null)
                 realm.close();
@@ -82,7 +86,10 @@ public class ExpenseCategoryBotDAO {
             return realm.copyFromRealm(realm.where(ExpenseCategory.class)
                     .equalTo(ExpenseCategory.FIELD_BOT_TYPE, botType.getId())
                     .equalTo(ExpenseCategory.FIELD_SELECTED, true)
-                    .findAllSorted(ExpenseCategory.FIELD_ID));
+                    .findAllSorted(
+                            ExpenseCategory.FIELD_ORDER, Sort.ASCENDING,
+                            ExpenseCategory.FIELD_ID, Sort.ASCENDING
+                    ));
         } finally {
             if (realm != null)
                 realm.close();
@@ -100,7 +107,10 @@ public class ExpenseCategoryBotDAO {
                     .equalTo(ExpenseCategory.FIELD_BOT_TYPE, botType.getId())
                     .equalTo(ExpenseCategory.FIELD_SELECTED, true)
                     .equalTo(ExpenseCategory.FIELD_ENTERED, false)
-                    .findAllSorted(ExpenseCategory.FIELD_ID);
+                    .findAllSorted(
+                            ExpenseCategory.FIELD_ORDER, Sort.ASCENDING,
+                            ExpenseCategory.FIELD_ID, Sort.ASCENDING
+                    );
 
             if (categories.isEmpty())
                 return null;

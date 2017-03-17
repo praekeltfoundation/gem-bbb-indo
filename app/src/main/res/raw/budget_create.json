@@ -201,6 +201,7 @@
   {
     "name": "budget_create_clear_expenses",
     "type": "blank",
+    "call": "#clear_expenses",
     "autoNext": "budget_create_end"
   },
   {

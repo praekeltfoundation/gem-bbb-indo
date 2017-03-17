@@ -21,6 +21,7 @@ public class ExpenseCategory extends RealmObject {
 
     public static final String FIELD_ID = "id";
     public static final String FIELD_LOCAL_ID = "localId";
+    public static final String FIELD_ORDER = "order";
     public static final String FIELD_BOT_TYPE = "botType";
     public static final String FIELD_SELECTED = "selected";
     public static final String FIELD_ENTERED = "entered";
@@ -47,6 +48,8 @@ public class ExpenseCategory extends RealmObject {
     @SerializedName("image_url")
     @Nullable
     private String imageUrl;
+
+    private int order;
 
     /////////////////////
     // Carousel Fields //
@@ -116,6 +119,18 @@ public class ExpenseCategory extends RealmObject {
 
     public boolean hasImageUrl() {
         return !StringHelper.isEmpty(imageUrl);
+    }
+
+    ///////////
+    // Order //
+    ///////////
+
+    public int getOrder() {
+        return order;
+    }
+
+    public void setOrder(int order) {
+        this.order = order;
     }
 
     //////////////
