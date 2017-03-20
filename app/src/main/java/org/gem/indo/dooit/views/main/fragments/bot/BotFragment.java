@@ -735,7 +735,10 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
                 createFeed();
             } else {
                 // Auto load next node in current conversation
-                getAndAddNode(node.getAutoNext(), true);
+                getAndAddNode(node.getAutoNext(),
+                        // Auto nodes following a hidden node will show their icon
+                        !(node.getType().toUpperCase().equals(BotMessageType.BLANK.name())
+                                || node.getType().toUpperCase().equals(BotMessageType.DUMMY.name())));
             }
         } else if (node.hasAutoNextNode()) {
             // Auto next set from Java code
