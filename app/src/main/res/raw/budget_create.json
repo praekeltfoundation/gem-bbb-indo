@@ -187,13 +187,57 @@
     "name": "budget_create_q_summary",
     "type": "text",
     "text": "$(budget_create_q_summary)",
-    "autoNext": "budget_create_q_final"
+    "autoNext": "budget_create_q_branch"
   },
   {
-    "name": "budget_create_q_final",
+    "name": "budget_create_q_branch",
+    "type": "blank",
+    "call": "#branch_budget_final"
+  },
+
+
+
+  {
+    "name": "budget_create_q_final_negative_01",
     "type": "text",
-    "text": "$(budget_create_q_final)",
-    "autoNext": "budget_create_clear_expenses"
+    "text": "$(budget_create_q_final_negative_01)",
+    "autoNext": "budget_create_q_final_negative_02"
+  },
+  {
+    "name": "budget_create_q_final_negative_02",
+    "type": "text",
+    "text": "$(budget_create_q_final_negative_02)",
+    "answers": [
+      {
+        "name": "budget_create_a_edit_budget",
+        "text": "$(budget_create_a_edit_budget)"
+      },
+      {
+        "name": "budget_create_a_track_savings",
+        "text": "$(budget_create_a_track_savings)"
+      },
+      {
+        "name": "budget_create_a_learn_more",
+        "text": "$(budget_create_a_learn_more)"
+      }
+    ]
+  },
+
+
+  {
+    "name": "budget_create_q_final_positive",
+    "type": "text",
+    "text": "$(budget_create_q_final_positive)",
+    "answers": [
+      {
+        "name": "budget_create_a_edit_budget",
+        "text": "$(budget_create_a_edit_budget)"
+      },
+      {
+        "name": "budget_create_a_yes",
+        "text": "$(budget_create_a_yes)"
+      }
+    ]
   },
 
 

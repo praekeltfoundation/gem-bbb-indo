@@ -30,6 +30,6 @@ public class BudgetTest {
         budget.addExpense(new Expense("Snacks", 1000.0));
         budget.addExpense(new Expense("Clothes", 2000.0));
 
-        Assert.assertEquals(budget.getExpense(), 3000.0);
+        Assert.assertEquals(budget.getExpenseTotal(), 3000.0);
     }
 }

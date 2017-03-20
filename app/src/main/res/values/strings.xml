@@ -729,7 +729,15 @@
     <string name="budget_create_a_retry">No, let me redo my expenses</string>
 
     <string name="budget_create_q_summary">Your monthly income is $(budget.income). Of this amount, you save $(budget.savings) each month and spend $(budget.expense).</string>
-    <string name="budget_create_q_final">You can access and update your budget in your profile at any time.</string>
+
+    <string name="budget_create_q_final_negative_01">"You seem to be spending more money than you make. this is a problem because it means you might go into debt."</string>
+    <string name="budget_create_q_final_negative_02">"I suggest that you edit your budget to make sure you only spend as much as you make. Try to prioritize your purchases so that you don't spend your money on unnecessary purchases."</string>
+    <string name="budget_create_a_edit_budget">Edit budget</string>
+    <string name="budget_create_a_track_savings">Track savings plan</string>
+    <string name="budget_create_a_learn_more">Learn more about budgeting</string>
+
+    <string name="budget_create_q_final_positive">You can access and update your budget in your profile at any time.</string>
+    <string name="budget_create_a_yes">Yes!</string>
 
     <string name="budget_create_qry_tip_income">income</string>
 

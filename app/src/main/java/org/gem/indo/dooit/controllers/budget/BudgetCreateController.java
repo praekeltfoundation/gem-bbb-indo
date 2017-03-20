@@ -3,7 +3,6 @@ package org.gem.indo.dooit.controllers.budget;
 import android.app.Activity;
 import android.content.Context;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.text.TextUtils;
 
 import org.gem.indo.dooit.DooitApplication;
@@ -75,10 +74,13 @@ public class BudgetCreateController extends DooitBotController {
 
     @Override
     public boolean shouldSkip(BaseBotModel model) {
-        if (model.getName().equals("budget_create_add_expense")) {
-            return new ExpenseCategoryBotDAO().hasNext(botType);
+        String name = model.getName();
+        switch (name) {
+            case "budget_create_add_expense":
+                return new ExpenseCategoryBotDAO().hasNext(botType);
+            default:
+                return super.shouldSkip(model);
         }
-        return super.shouldSkip(model);
     }
 
     @Override
@@ -172,7 +174,7 @@ public class BudgetCreateController extends DooitBotController {
                         break;
                     case BUDGET_EXPENSE:
                         if (budget != null)
-                            model.values.put(key, CurrencyHelper.format(budget.getExpense()));
+                            model.values.put(key, CurrencyHelper.format(budget.getExpenseTotal()));
                         break;
                     case BUDGET_DEFAULT_SAVINGS:
                         if (budget != null)
@@ -199,6 +201,9 @@ public class BudgetCreateController extends DooitBotController {
                 break;
             case CLEAR_EXPENSES:
                 clearExpenses();
+                break;
+            case BRANCH_BUDGET_FINAL:
+                branchBudgetFinal(answerLog);
                 break;
             default:
                 super.onCall(key, answerLog, model);
@@ -329,6 +334,33 @@ public class BudgetCreateController extends DooitBotController {
 
     private void clearExpenses() {
         new ExpenseCategoryBotDAO().clear(botType);
+    }
+
+    private void branchBudgetFinal(Map<String, Answer> answerLog) {
+        if (budget == null)
+            return;
+
+        double income = budget.getIncome();
+        double savings = budget.getSavings();
+        double expenses = budget.getExpenseTotal();
+
+        if (income >= savings + expenses) {
+            Node node = new Node();
+            node.setName("budget_create_budget_positive");
+            node.setType(BotMessageType.DUMMY);
+            node.setAutoNext("budget_create_q_final_positive");
+            node.finish();
+
+            botRunner.queueNode(node);
+        } else {
+            Node node = new Node();
+            node.setName("budget_create_budget_negative");
+            node.setType(BotMessageType.DUMMY);
+            node.setAutoNext("budget_create_q_final_negative_01");
+            node.finish();
+
+            botRunner.queueNode(node);
+        }
     }
 
     ////////////
