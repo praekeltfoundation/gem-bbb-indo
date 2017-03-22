@@ -21,6 +21,7 @@ import org.gem.indo.dooit.views.main.fragments.bot.viewholders.AnswerTextCurrenc
 import org.gem.indo.dooit.views.main.fragments.bot.viewholders.AnswerViewHolder;
 import org.gem.indo.dooit.views.main.fragments.bot.viewholders.BadgeViewHolder;
 import org.gem.indo.dooit.views.main.fragments.bot.viewholders.BaseBotViewHolder;
+import org.gem.indo.dooit.views.main.fragments.bot.viewholders.BudgetInfoViewHolder;
 import org.gem.indo.dooit.views.main.fragments.bot.viewholders.ChallengeBotViewHolder;
 import org.gem.indo.dooit.views.main.fragments.bot.viewholders.DummyViewHolder;
 import org.gem.indo.dooit.views.main.fragments.bot.viewholders.ExpenseCategoryGalleryViewHolder;
@@ -97,6 +98,8 @@ public class BotAdapter extends RecyclerView.Adapter<BaseBotViewHolder> {
                 return new DummyViewHolder(LayoutInflater.from(context).inflate(R.layout.item_view_bot_text, parent, false), this);
             case EXPENSECATEGORYGALLERY:
                 return new ExpenseCategoryGalleryViewHolder(LayoutInflater.from(context).inflate(R.layout.item_view_bot_carousel, parent, false), this);
+            case BUDGETINFO:
+                return new BudgetInfoViewHolder(LayoutInflater.from(context).inflate(R.layout.item_view_bot_budget_info, parent, false), this);
             case UNDEFINED:
             default:
                 return new TextViewHolder(LayoutInflater.from(context).inflate(R.layout.item_view_bot_text, parent, false), this);

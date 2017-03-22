@@ -93,6 +93,11 @@ public class ValueMap {
         return (Double) map.get(key);
     }
 
+    public double getDouble(String key, double defValue) {
+        Double value = (Double) map.get(key);
+        return value != null ? value : defValue;
+    }
+
     /****************
      * String array *
      ****************/

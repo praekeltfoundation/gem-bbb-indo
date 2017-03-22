@@ -919,6 +919,14 @@
     <string name="survey_baseline_title">Baseline Survey</string>
     <string name="survey_eatool_title">EA Tool</string>
 
+    <!-- Budget -->
+
+    <string name="budget_heading_income_per_month">"Income per month"</string>
+    <string name="budget_heading_savings_per_month">"Savings per month"</string>
+    <string name="budget_heading_expenses_per_month">"Expenses per month"</string>
+    <string name="budget_heading_left_over">Left over</string>
+    <string name="budget_line_of_income">"%d%% of income"</string>
+
     <!-- Dev only -->
     <string name="placeholder_label_short">Placeholder</string>
     <string name="placeholder_label_long"><![CDATA[Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce at justo tortor. Curabitur in leo suscipit, molestie augue ut, gravida quam. Donec scelerisque nulla id finibus porttitor. In et ultrices augue. Donec ut odio elit. Maecenas ut sagittis libero. Integer ut ultricies felis, in porttitor dolor. Cras turpis magna, lobortis quis leo sed, tempus elementum massa. Ut blandit vitae sapien pretium facilisis. ]]></string>

@@ -68,6 +68,7 @@ public class GoalGalleryViewHolder extends BaseBotViewHolder<Node> {
     }
 
     @Override
+    @SuppressWarnings("unchecked")
     public void populate(Node model) {
         super.populate(model);
         galleryAdapter.setDataModel(model);

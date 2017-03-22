@@ -188,6 +188,11 @@
     "name": "budget_create_q_summary",
     "type": "text",
     "text": "$(budget_create_q_summary)",
+    "autoNext": "budget_create_info"
+  },
+  {
+    "name": "budget_create_info",
+    "type": "budgetInfo",
     "autoNext": "budget_create_q_branch"
   },
   {

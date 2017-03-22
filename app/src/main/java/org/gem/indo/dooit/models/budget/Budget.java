@@ -97,4 +97,15 @@ public class Budget extends RealmObject {
             expense += e.getValue();
         return expense;
     }
+
+    ///////////////
+    // Left over //
+    ///////////////
+
+    /**
+     * @return The income remaining after savings and total expenses are subtracted.
+     */
+    public double getLeftOver() {
+        return income - (savings + getExpenseTotal());
+    }
 }

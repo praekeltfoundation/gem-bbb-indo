@@ -15,7 +15,8 @@ public enum BotObjectType {
     GOAL_PROTOTYPES(500),
     TIP(600),
     SURVEY(700),
-    EXPENSE_CATEGORIES(800);
+    EXPENSE_CATEGORIES(800),
+    BUDGET(900);
 
     private static Map<Integer, BotObjectType> map = new LinkedHashMap<>();
 
