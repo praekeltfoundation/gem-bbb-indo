@@ -21,10 +21,10 @@ import org.gem.indo.dooit.views.main.fragments.bot.viewholders.AnswerTextCurrenc
 import org.gem.indo.dooit.views.main.fragments.bot.viewholders.AnswerViewHolder;
 import org.gem.indo.dooit.views.main.fragments.bot.viewholders.BadgeViewHolder;
 import org.gem.indo.dooit.views.main.fragments.bot.viewholders.BaseBotViewHolder;
-import org.gem.indo.dooit.views.main.fragments.bot.viewholders.BudgetInfoViewHolder;
+import org.gem.indo.dooit.views.main.fragments.bot.viewholders.budget.BudgetInfoViewHolder;
 import org.gem.indo.dooit.views.main.fragments.bot.viewholders.ChallengeBotViewHolder;
 import org.gem.indo.dooit.views.main.fragments.bot.viewholders.DummyViewHolder;
-import org.gem.indo.dooit.views.main.fragments.bot.viewholders.ExpenseCategoryGalleryViewHolder;
+import org.gem.indo.dooit.views.main.fragments.bot.viewholders.budget.ExpenseCategoryGalleryViewHolder;
 import org.gem.indo.dooit.views.main.fragments.bot.viewholders.GoalGalleryViewHolder;
 import org.gem.indo.dooit.views.main.fragments.bot.viewholders.GoalInfoViewHolder;
 import org.gem.indo.dooit.views.main.fragments.bot.viewholders.GoalInformationGalleryViewHolder;
