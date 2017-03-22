@@ -10,3 +10,4 @@
 1.0.2
 
 - Fixed apostrophes in strings
+- Replaced animations with static images for lower API levels
