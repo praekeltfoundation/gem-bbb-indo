@@ -11,3 +11,4 @@
 
 - Fixed apostrophes in strings
 - Replaced animations with static images for lower API levels
+- Tweaked Challenge popup for smaller screens
