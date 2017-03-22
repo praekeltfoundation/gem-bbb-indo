@@ -6,3 +6,8 @@
 - Added logging for infinite float error
 - Implemented User Goal carousel for returning user conversation
 - Implemented initial Budget create conversation
+
+1.0.2
+
+- Fixed apostrophes in strings
+- Replaced animations with static images for lower API levels
