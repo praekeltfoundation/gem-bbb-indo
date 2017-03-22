@@ -74,7 +74,9 @@ public class Budget extends RealmObject {
     }
 
     public static double calcDefaultSavings(double income) {
-        return (income / 100.0) * DEFAULT_SAVING_PERCENT;
+        double defaultSavings = (income / 100.0) * DEFAULT_SAVING_PERCENT;
+        // The default savings is rounded to the first two decimal places
+        return Math.round(defaultSavings * 100.0) / 100.0;
     }
 
     //////////////
