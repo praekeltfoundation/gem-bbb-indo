@@ -54,7 +54,7 @@
     <string name="label_change_password">"Change Password"</string>
     <string name="label_change_email">"Change Email"</string>
     <string name="label_settings">"Settings"</string>
-    <string name="label_build_info">"@string/title_activity_build_info"</string>
+    <string name="label_build_info">@string/title_activity_build_info</string>
     <string name="label_share">"Share"</string>
     <string name="label_skip">"Skip"</string>
     <string name="label_start">"Start"</string> <!-- Used on the unused card_challenge_start layout -->
@@ -89,13 +89,13 @@
 
     <!-- Registration -->
     <string name="reg_t_c">"By clicking register, you are agreeing\n to our *Terms &amp; Condition*"</string>
-    <string name="reg_example_name">"@string/login_example_name"</string>
+    <string name="reg_example_name">@string/login_example_name</string>
     <string name="reg_example_name_error_1">"Name can't be blank"</string>
     <string name="reg_example_name_error_2">"Name can't contain spaces"</string>
     <string name="reg_example_name_error_3">"Name can only contain letters and numbers"</string>
     <string name="reg_example_name_error_4">"Name can't be longer than 150 characters"</string>
     <string name="reg_options">"Please provide us with either your phone number or email address, or both"</string>
-    <string name="reg_example_email">"@string/login_example_email"</string>
+    <string name="reg_example_email">@string/login_example_email</string>
     <string name="reg_example_email_error_1">"Email can't be blank"</string>
     <string name="reg_example_email_error_2">"Email can't contain spaces"</string>
     <string name="reg_example_email_error_3">"Not a valid email address"</string>
@@ -121,10 +121,10 @@
     <string name="reg_duplicate_username_error">"A user with the username already exists"</string>
 
     <!--LOGIN-->
-    <string name="login_title">"@string/label_log_in"</string>
+    <string name="login_title">@string/label_log_in</string>
     <string name="invalid_credentials">"Unable to log in with provided credentials."</string>
-    <string name="login_name">"@string/label_name"</string>
-    <string name="login_password">"@string/label_password"</string>
+    <string name="login_name">@string/label_name</string>
+    <string name="login_password">@string/label_password</string>
     <string name="login_example_name">"Example: Bina124"</string>
     <string name="login_example_name_error_1">"Name can't be blank"</string>
     <string name="login_example_email">"Example: aulia@gmail.com"</string>
@@ -292,7 +292,7 @@
     <string name="goal_edit_delete_difficult">"I can help you work out another savings plan that will be easier to afford."</string>
     <string name="goal_edit_delete_done">"Sure, no problem. You can get back on track with your savings at any time. Take a look at our tips or take this week's challenge."</string>
     <string name="goal_edit_end_come_back">"Come back to track your savings weekly and watch as your goal becomes a reality!"</string>
-    <string name="goal_edit_delete_cancel">"@string/goal_edit_delete_done"</string>
+    <string name="goal_edit_delete_cancel">@string/goal_edit_delete_done</string>
 
     <!-- Answers -->
     <string name="goal_edit_choice_date">"Date"</string>
@@ -300,14 +300,14 @@
     <string name="goal_edit_choice_weekly_target">"Weekly Savings"</string>
     <string name="goal_edit_choice_image">"Photo"</string>
     <string name="goal_edit_choice_delete">"Delete Goal"</string>
-    <string name="goal_edit_target_accept">"@string/label_accept"</string>
-    <string name="goal_edit_target_cancel">"@string/label_cancel"</string>
+    <string name="goal_edit_target_accept">@string/label_accept</string>
+    <string name="goal_edit_target_cancel">@string/label_cancel</string>
     <string name="goal_edit_tip">"Thanks! I want to check out savings tips."</string>
     <string name="goal_edit_challenge">"Cool! Let's take a challenge."</string>
     <string name="goal_edit_no_thanks">"No thanks, I'm done for now. Let's exit."</string>
     <string name="goal_edit_camera">"Upload my own picture."</string>
     <string name="goal_edit_gallery">"Select a picture from the gallery."</string>
-    <string name="goal_edit_image_cancel">"@string/label_cancel"</string>
+    <string name="goal_edit_image_cancel">@string/label_cancel</string>
     <string name="goal_edit_delete_reason_reached">"I've already achieved this goal."</string>
     <string name="goal_edit_delete_reason_difficult">"It's too difficult to save!"</string>
     <string name="goal_edit_delete_reason_do_not_want">"I don't want $(goal.name) anymore."</string>
@@ -935,9 +935,9 @@
     <string name="hasSavedN">"No"</string>
 
     <string name="heading_registration">"Registration"</string>
-    <string name="heading_change_name">"@string/label_change_name"</string>
-    <string name="heading_change_password">"@string/label_change_password"</string>
-    <string name="heading_change_email">"@string/label_change_email"</string>
+    <string name="heading_change_name">@string/label_change_name</string>
+    <string name="heading_change_password">@string/label_change_password</string>
+    <string name="heading_change_email">@string/label_change_email</string>
 
     <string name="target_prefix_saved">"saved"</string>
     <string name="heading_current_saving_streak">"Current Saving Streak"</string>

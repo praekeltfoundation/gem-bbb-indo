@@ -19,7 +19,7 @@
     <string name="title_activity_privacy_policy">"Kebijakan"</string>
     <string name="action_settings">"Pengaturan"</string>
     <string name="action_share">"Bagikan"</string>
-    <string name="action_favourite">"@string/tips_tab_favourites"</string>
+    <string name="action_favourite">string/tips_tab_favourites</string>
 
     <!-- Bottom Navigation -->
     <string name="main_tab_text_0">"BINA"</string>
@@ -54,7 +54,7 @@
     <string name="label_change_password">"Ubah Kata Sandi"</string>
     <string name="label_change_email">"Ubah alamat email"</string>
     <string name="label_settings">"Pengaturan"</string>
-    <string name="label_build_info">"@string/title_activity_build_info"</string>
+    <string name="label_build_info">@string/title_activity_build_info</string>
     <string name="label_share">"Bagikan"</string>
     <string name="label_skip">"Lewati"</string>
     <string name="label_start">"Mulai"</string>
@@ -89,13 +89,13 @@
 
     <!-- Registration -->
     <string name="reg_t_c">"Dengan meng-klik 'Daftar', kamu telah menyetujui *Syarat &amp; Ketentuan* yang berlaku."</string>
-    <string name="reg_example_name">"@string/login_example_name"</string>
+    <string name="reg_example_name">@string/login_example_name</string>
     <string name="reg_example_name_error_1">"Maaf, kolom nama harus terisi."</string>
     <string name="reg_example_name_error_2">"Nama tidak boleh ada spasi"</string>
     <string name="reg_example_name_error_3">"Nama hanya boleh ada huruf dan angka"</string>
     <string name="reg_example_name_error_4">"Nama tidak boleh lebih panjang dari 150 karakter"</string>
     <string name="reg_options">"Sediakan nomer HP-mu, alamat email, ata keduanya"</string>
-    <string name="reg_example_email">"@string/login_example_email"</string>
+    <string name="reg_example_email">@string/login_example_email</string>
     <string name="reg_example_email_error_1">"Email tidak boleh kosonh"</string>
     <string name="reg_example_email_error_2">"Email tidak boleh mengandung spasi"</string>
     <string name="reg_example_email_error_3">"Alamat email tidak tersedia"</string>
@@ -123,8 +123,8 @@
     <!--LOGIN-->
     <string name="login_title">"Log In"</string>
     <string name="invalid_credentials">"Ups. Nama pengguna dan kata sandi yang kamu masukkan salah."</string>
-    <string name="login_name">"@string/label_name"</string>
-    <string name="login_password">"@string/label_password"</string>
+    <string name="login_name">@string/label_name</string>
+    <string name="login_password">@string/label_password</string>
     <string name="login_example_name">"Contoh: Aulia Dharmanigtyas"</string>
     <string name="login_example_name_error_1">"Maaf, kolom nama harus terisi."</string>
     <string name="login_example_email">"Contoh: aulia@gmail.com"</string>
@@ -295,7 +295,7 @@
     <string name="goal_edit_delete_difficult">"Aku bisa membantu kamu membuat rencana menabung baru yang lebih mudah dijalani."</string>
     <string name="goal_edit_delete_done">"Tentu, gak masalah. Kamu bisa kembali memantau tabunganmu kapanpun. Lihatlah tips berikut ini atau ikuti tantangan minggu ini."</string>
     <string name="goal_edit_end_come_back">"Jangan lupa untuk kembali setiap minggunya untuk memantau tabungan kamu dan lihat target kamu menjadi kenyataan!"</string>
-    <string name="goal_edit_delete_cancel">"@string/goal_edit_delete_done"</string>
+    <string name="goal_edit_delete_cancel">@string/goal_edit_delete_done</string>
 
     <!-- Answers -->
     <string name="goal_edit_choice_date">"Tanggal"</string>
@@ -303,14 +303,14 @@
     <string name="goal_edit_choice_weekly_target">"Tabungan Mingguan"</string>
     <string name="goal_edit_choice_image">"Foto"</string>
     <string name="goal_edit_choice_delete">"Hapus target"</string>
-    <string name="goal_edit_target_accept">"@string/label_accept"</string>
-    <string name="goal_edit_target_cancel">"@string/label_cancel"</string>
+    <string name="goal_edit_target_accept">@string/label_accept</string>
+    <string name="goal_edit_target_cancel">@string/label_cancel</string>
     <string name="goal_edit_tip">"Terima kasih! Aku ingin lihat tips."</string>
     <string name="goal_edit_challenge">"Keren! Aku ingin ikutan tantangan."</string>
     <string name="goal_edit_no_thanks">"Oke, aku sudah selesai. Bisa diakhiri?"</string>
     <string name="goal_edit_camera">"Aku ingin mengunggah foto."</string>
     <string name="goal_edit_gallery">"Aku ingin memilih foto dari galeri."</string>
-    <string name="goal_edit_image_cancel">"@string/label_cancel"</string>
+    <string name="goal_edit_image_cancel">@string/label_cancel</string>
     <string name="goal_edit_delete_reason_reached">"Aku sudah mencapai target ini."</string>
     <string name="goal_edit_delete_reason_difficult">"Susah nabung untuk target ini!"</string>
     <string name="goal_edit_delete_reason_do_not_want">"Aku tidak mau $(goal.name) lagi."</string>
@@ -827,11 +827,11 @@
     <!-- Profile -->
     <string name="profile_week_streak_singular">"%s minggu"</string>
     <string name="profile_week_streak_plural">"%s minggu"</string>
-    <string name="profile_settings_title">"@string/title_activity_settings"</string>
+    <string name="profile_settings_title">@string/title_activity_settings</string>
     <string name="profile_section_account">"Akunmu"</string>
     <string name="profile_account_change_name">"Ubah nama"</string>
     <string name="profile_account_change_password">"Ubah kata sandi"</string>
-    <string name="profile_account_change_email">"@string/label_change_email"</string>
+    <string name="profile_account_change_email">@string/label_change_email</string>
     <string name="profile_account_sign_out">"Keluar"</string>
     <string name="profile_section_notifications">"Notifikasi"</string>
     <string name="profile_section_help">"Tentang Dooit"</string>
@@ -933,10 +933,10 @@
     <string name="hasSavedY">"Yes"</string>
     <string name="hasSavedN">"No"</string>
 
-    <string name="heading_registration">"@string/title_activity_registration"</string>
-    <string name="heading_change_name">"@string/label_change_name"</string>
-    <string name="heading_change_password">"@string/label_change_password"</string>
-    <string name="heading_change_email">"@string/label_change_email"</string>
+    <string name="heading_registration">@string/title_activity_registration</string>
+    <string name="heading_change_name">@string/label_change_name</string>
+    <string name="heading_change_password">@string/label_change_password</string>
+    <string name="heading_change_email">@string/label_change_email</string>
 
     <string name="target_prefix_saved">"sudah tersimpan"</string>
     <string name="heading_current_saving_streak">"Rekor menabung sekarang"</string>
