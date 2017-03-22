@@ -214,11 +214,13 @@
       },
       {
         "name": "budget_create_a_track_savings",
-        "text": "$(budget_create_a_track_savings)"
+        "text": "$(budget_create_a_track_savings)",
+        "next": "budget_create_end_show_target"
       },
       {
         "name": "budget_create_a_learn_more",
-        "text": "$(budget_create_a_learn_more)"
+        "text": "$(budget_create_a_learn_more)",
+        "next": "budget_create_end_show_tips"
       }
     ]
   },
@@ -238,6 +240,15 @@
         "text": "$(budget_create_a_yes)"
       }
     ]
+  },
+
+
+
+  {
+    "name": "budget_create_end_show_target",
+    "type": "end",
+    "call": "#clear_expenses",
+    "autoNextScreen": "TARGET"
   },
 
 

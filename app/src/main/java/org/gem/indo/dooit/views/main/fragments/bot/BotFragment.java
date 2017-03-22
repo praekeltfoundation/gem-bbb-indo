@@ -742,7 +742,10 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
             }
         } else if (node.hasAutoNextNode()) {
             // Auto next set from Java code
-            addNode(node.getAutoNextNode(), false);
+            addNode(node.getAutoNextNode(),
+                    // Auto nodes following a hidden node will show their icon
+                    !(node.getType().toUpperCase().equals(BotMessageType.BLANK.name())
+                            || node.getType().toUpperCase().equals(BotMessageType.DUMMY.name())));
         } else {
 
             // End of recursion
