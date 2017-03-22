@@ -947,7 +947,7 @@
     <string name="budget_heading_savings_per_month">"Savings per month"</string>
     <string name="budget_heading_expenses_per_month">"Expenses per month"</string>
     <string name="budget_heading_left_over">Left over</string>
-    <string name="budget_line_of_income">"%d%% of income"</string>
+    <string name="budget_line_of_income">"of income"</string>
 
     <!-- Dev only -->
     <string name="placeholder_label_short">Placeholder</string>

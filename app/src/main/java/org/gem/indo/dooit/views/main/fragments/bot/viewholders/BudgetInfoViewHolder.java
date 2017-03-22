@@ -13,6 +13,7 @@ import org.gem.indo.dooit.models.enums.BotObjectType;
 import org.gem.indo.dooit.models.enums.BotParamType;
 import org.gem.indo.dooit.views.main.fragments.bot.adapters.BotAdapter;
 
+import butterknife.BindString;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -33,6 +34,9 @@ public class BudgetInfoViewHolder extends BaseBotViewHolder<Node> {
 
     @BindView(R.id.item_view_bot_budget_info_progress_left_over)
     ProgressBar leftOverProgress;
+
+    @BindString(R.string.budget_line_of_income)
+    String ofIncome;
 
     private BotAdapter botAdapter;
 
