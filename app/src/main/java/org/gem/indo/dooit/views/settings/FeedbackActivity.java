@@ -19,7 +19,9 @@ import org.gem.indo.dooit.api.DooitErrorHandler;
 import org.gem.indo.dooit.api.managers.FeedbackManager;
 import org.gem.indo.dooit.helpers.Connectivity.NetworkChangeReceiver;
 import org.gem.indo.dooit.helpers.DooitSharedPreferences;
+import org.gem.indo.dooit.helpers.Persisted;
 import org.gem.indo.dooit.helpers.SquiggleBackgroundHelper;
+import org.gem.indo.dooit.models.User;
 import org.gem.indo.dooit.models.UserFeedback;
 import org.gem.indo.dooit.models.enums.FeedbackType;
 import org.gem.indo.dooit.views.DooitActivity;
@@ -58,6 +60,9 @@ public class FeedbackActivity extends DooitActivity {
 
     @Inject
     DooitSharedPreferences dooitSharedPreferences;
+
+    @Inject
+    Persisted persisted;
 
     @Inject
     FeedbackManager feedbackManager;
@@ -177,7 +182,11 @@ public class FeedbackActivity extends DooitActivity {
             return;
         }
 
-        UserFeedback feedback = new UserFeedback(msg, type);
+        User user = persisted.getCurrentUser();
+        if (user == null)
+            return;
+
+        UserFeedback feedback = new UserFeedback(msg, type, user.getId());
         feedbackSubscription = feedbackManager.sendFeedback(feedback, new DooitErrorHandler() {
             @Override
             public void onError(DooitAPIError error) {

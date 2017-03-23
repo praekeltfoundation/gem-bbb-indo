@@ -89,7 +89,12 @@ public class ChallengeLightboxFragment extends DialogFragment {
                     Uri.parse(imgUrl)
             );
         }
-        challengeSubtitle.setText(challenge.getSubtitle());
+        if(challenge.getSubtitle() != null && !challenge.getSubtitle().equals("")) {
+            challengeSubtitle.setText(challenge.getSubtitle());
+        }else{
+            challengeSubtitle.setVisibility(View.GONE);
+        }
+
         challengeTitle.setText(challenge.getName());
         challengeDate.setText(deadlineMessage + " " + Utils.formatDateToLocal(challenge.getDeactivationDate().toDate()) +
                 " " + challenge.getDeactivationDate().toLocalTime().toString("HH:mm"));

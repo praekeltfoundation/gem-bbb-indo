@@ -32,8 +32,10 @@ public class DraweeHelper {
     public static void cacheImage(Uri uri) {
         ImagePipeline imagePipeline = Fresco.getImagePipeline();
 
-        if (!imagePipeline.isInBitmapMemoryCache(uri) &&
-                !(imagePipeline.isInDiskCache(uri).getResult() != null && !imagePipeline.isInDiskCache(uri).getResult().equals(true))) {
+        Boolean isInDiskCache = imagePipeline.isInDiskCache(uri).getResult();
+
+        if(!imagePipeline.isInBitmapMemoryCache(uri) &&
+                !(isInDiskCache != null && isInDiskCache.equals(true))) {
             ImageRequest request = ImageRequestBuilder.newBuilderWithSource(uri)
                     .build();
             imagePipeline.prefetchToBitmapCache(request, null);
