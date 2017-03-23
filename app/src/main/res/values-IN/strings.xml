@@ -721,8 +721,27 @@
     <string name="budget_create_a_savings_default_accept">Yes</string>
     <string name="budget_create_a_savings_default_deny">No, I want to save a different amount</string>
 
+    <string name="budget_create_q_expense_01">Great! That means you need to save $(budget.savings) per month to reach your monthly savings.</string>
+    <string name="budget_create_q_expense_02">If we subtract your savings, $(budget.savings) from your income, $(budget.income), you have $(budget.remaining_expenses) expenses left.</string>
+    <string name="budget_create_q_expense_03">Okay, now tell me about what you spend your money on. Select all of the categories that you spend your money on during the month.</string>
+    <string name="budget_create_a_expense_continue">"OK, I've selected my expenses"</string>
+
+    <string name="budget_create_q_expense_value">"How much do you spend on $(budget.next_expense_name) each month?"</string>
+
+    <string name="budget_create_q_expense_summary">"In total, you spend $(budget.total_expenses) on expenses in a month, you have $(budget.total_expenses_remainder) left."</string>
+    <string name="budget_create_a_accept">Yes, that looks correct</string>
+    <string name="budget_create_a_retry">No, let me redo my expenses</string>
+
     <string name="budget_create_q_summary">Your monthly income is $(budget.income). Of this amount, you save $(budget.savings) each month and spend $(budget.expense).</string>
-    <string name="budget_create_q_final">You can access and update your budget in your profile at any time.</string>
+
+    <string name="budget_create_q_final_negative_01">"You seem to be spending more money than you make. this is a problem because it means you might go into debt."</string>
+    <string name="budget_create_q_final_negative_02">"I suggest that you edit your budget to make sure you only spend as much as you make. Try to prioritize your purchases so that you don't spend your money on unnecessary purchases."</string>
+    <string name="budget_create_a_edit_budget">Edit budget</string>
+    <string name="budget_create_a_track_savings">Track savings plan</string>
+    <string name="budget_create_a_learn_more">Learn more about budgeting</string>
+
+    <string name="budget_create_q_final_positive">You can access and update your budget in your profile at any time.</string>
+    <string name="budget_create_a_yes">Yes!</string>
 
     <string name="budget_create_qry_tip_income">income</string>
 
@@ -734,7 +753,9 @@
     <string name="budget_create_err_savings__empty">Savings cannot be empty</string>
     <string name="budget_create_err_savings__zero">Savings cannot be Rp0</string>
     <string name="budget_create_err_savings__gt_income">Your monthly savings cannot be more than your monthly income</string>
-
+    <string name="budget_create_err_expense__empty">Expense cannot be empty</string>
+    <string name="budget_create_err_expense__zero">Expense cannot be Rp0</string>
+    
     <!-- END: BOT -->
 
     <!--Buttons-->
@@ -925,7 +946,7 @@
     <string name="budget_heading_savings_per_month">"Savings per month"</string>
     <string name="budget_heading_expenses_per_month">"Expenses per month"</string>
     <string name="budget_heading_left_over">Left over</string>
-    <string name="budget_line_of_income">"%d%% of income"</string>
+    <string name="budget_line_of_income">"of income"</string>
 
     <!-- Dev only -->
     <string name="placeholder_label_short">Placeholder</string>
