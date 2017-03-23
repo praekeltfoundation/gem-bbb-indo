@@ -20,6 +20,7 @@ import butterknife.ButterKnife;
 
 public class WelcomeFragment extends Fragment {
     private static final String ANIM_URI = "anim_uri";
+    private static final String STATIC_URI = "static_uri";
     private static final String IMAGE_RESOURCE = "image_resource";
     private static final String TEXT_RESOURCE = "text_resource";
 
@@ -33,6 +34,7 @@ public class WelcomeFragment extends Fragment {
     TextView textView;
 
     private String animUri;
+    private String staticUri;
 
     @DrawableRes
     private int resource;
@@ -49,12 +51,13 @@ public class WelcomeFragment extends Fragment {
      *
      * @return A new instance of fragment WelcomeFragment.
      */
-    public static WelcomeFragment newInstance(String animUri, @DrawableRes int imageRes, int textRes) {
+    public static WelcomeFragment newInstance(String animUri, @DrawableRes int imageRes, int textRes, String staticUri) {
         WelcomeFragment fragment = new WelcomeFragment();
         Bundle args = new Bundle();
         args.putString(ANIM_URI, animUri);
         args.putInt(IMAGE_RESOURCE, imageRes);
         args.putInt(TEXT_RESOURCE, textRes);
+        args.putString(STATIC_URI, staticUri);
         fragment.setArguments(args);
         return fragment;
     }
@@ -66,6 +69,7 @@ public class WelcomeFragment extends Fragment {
             animUri = getArguments().getString(ANIM_URI);
             resource = getArguments().getInt(IMAGE_RESOURCE);
             textResource = getArguments().getInt(TEXT_RESOURCE);
+            staticUri = getArguments().getString(STATIC_URI);
         }
     }
 
@@ -75,11 +79,21 @@ public class WelcomeFragment extends Fragment {
         View view = inflater.inflate(org.gem.indo.dooit.R.layout.fragment_welcome, container, false);
         ButterKnife.bind(this, view);
 
-        DraweeController controller = Fresco.newDraweeControllerBuilder()
-                .setUri(animUri)
-                .setAutoPlayAnimations(true)
-                .build();
-        animView.setController(controller);
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
+            // Do something for lollipop and above versions
+            DraweeController controller = Fresco.newDraweeControllerBuilder()
+                    .setUri(animUri)
+                    .setAutoPlayAnimations(true)
+                    .build();
+            animView.setController(controller);
+        } else {
+            // Do something for versions lower than lollipop
+            DraweeController controller = Fresco.newDraweeControllerBuilder()
+                    .setUri(staticUri)
+                    .setAutoPlayAnimations(true)
+                    .build();
+            animView.setController(controller);
+        }
 
         imageView.setImageResource(resource);
         imageView.setVisibility(View.GONE);

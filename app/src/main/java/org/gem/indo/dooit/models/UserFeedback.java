@@ -13,9 +13,9 @@ public class UserFeedback implements Serializable {
      * Variables *
      *************/
 
-    String text = null;
-    FeedbackType type;
-    Long user = null;
+    private String text = null;
+    private FeedbackType type;
+    private Long user = null;
 
 
     /****************
