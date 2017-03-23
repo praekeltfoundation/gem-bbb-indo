@@ -1,17 +1,19 @@
 package org.gem.indo.dooit.dao.budget;
 
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 
-import org.gem.indo.dooit.models.bot.ConversationContent;
+import org.gem.indo.dooit.helpers.crashlytics.CrashlyticsHelper;
 import org.gem.indo.dooit.models.budget.ExpenseCategory;
 import org.gem.indo.dooit.models.enums.BotObjectType;
 import org.gem.indo.dooit.models.enums.BotType;
 
-import java.util.ArrayList;
 import java.util.List;
 
+import io.realm.OrderedRealmCollection;
 import io.realm.Realm;
 import io.realm.RealmResults;
+import io.realm.Sort;
 
 /**
  * Created by Wimpie Victor on 2017/03/06.
@@ -21,7 +23,7 @@ public class ExpenseCategoryBotDAO {
 
     private static BotObjectType contentType = BotObjectType.EXPENSE_CATEGORIES;
 
-    public void update(BotType botType, @NonNull List<ExpenseCategory> expenses) {
+    public void insert(@NonNull BotType botType, @NonNull List<ExpenseCategory> categories) {
         Realm realm = null;
 
         try {
@@ -29,20 +31,18 @@ public class ExpenseCategoryBotDAO {
 
             realm.beginTransaction();
 
-            realm.where(ConversationContent.class)
-                    .equalTo("botType", botType.getId())
-                    .equalTo("contentType", contentType.getId())
-                    .findAll()
-                    .deleteAllFromRealm();
+            Number lastId = realm.where(ExpenseCategory.class)
+                    .equalTo(ExpenseCategory.FIELD_BOT_TYPE, botType.getId())
+                    .max(ExpenseCategory.FIELD_ID);
+            long nextId = 1;
+            if (lastId != null)
+                nextId = lastId.longValue() + 1;
 
-            realm.copyToRealmOrUpdate(expenses);
+            for (ExpenseCategory category : categories)
+                if (category.getLocalId() == 0)
+                    category.setLocalId(nextId++);
 
-            for (ExpenseCategory expense : expenses) {
-                ConversationContent content = realm.createObject(ConversationContent.class);
-                content.setBotType(botType);
-                content.setContentType(contentType);
-                content.setContentId(expense.getId());
-            }
+            realm.copyToRealm(categories);
 
             realm.commitTransaction();
         } catch (Throwable e) {
@@ -61,22 +61,194 @@ public class ExpenseCategoryBotDAO {
         try {
             realm = Realm.getDefaultInstance();
 
-            RealmResults<ConversationContent> contents = realm.where(ConversationContent.class)
-                    .equalTo("botType", botType.getId())
-                    .equalTo("contentType", contentType.getId())
-                    .findAll();
-            contents.load();
+            return realm.copyFromRealm(realm.where(ExpenseCategory.class)
+                    .equalTo(ExpenseCategory.FIELD_BOT_TYPE, botType.getId())
+                    .findAllSorted(
+                            ExpenseCategory.FIELD_ORDER, Sort.ASCENDING,
+                            ExpenseCategory.FIELD_ID, Sort.ASCENDING
+                    ));
+        } finally {
+            if (realm != null)
+                realm.close();
+        }
+    }
 
-            if (contents.isEmpty())
-                return new ArrayList<>();
+    /**
+     * Returns the selected {@link ExpenseCategory}s for the given bot conversation type.
+     */
+    @NonNull
+    public List<ExpenseCategory> findSelected(BotType botType) {
+        Realm realm = null;
 
-            Long[] ids = new Long[contents.size()];
-            for (int i = 0; i < contents.size(); i++)
-                ids[i] = contents.get(i).getContentId();
+        try {
+            realm = Realm.getDefaultInstance();
+
+            return realm.copyFromRealm(realm.where(ExpenseCategory.class)
+                    .equalTo(ExpenseCategory.FIELD_BOT_TYPE, botType.getId())
+                    .equalTo(ExpenseCategory.FIELD_SELECTED, true)
+                    .findAllSorted(
+                            ExpenseCategory.FIELD_ORDER, Sort.ASCENDING,
+                            ExpenseCategory.FIELD_ID, Sort.ASCENDING
+                    ));
+        } finally {
+            if (realm != null)
+                realm.close();
+        }
+    }
+
+    @Nullable
+    public ExpenseCategory findNext(BotType botType) {
+        Realm realm = null;
+
+        try {
+            realm = Realm.getDefaultInstance();
+
+            RealmResults<ExpenseCategory> categories = realm.where(ExpenseCategory.class)
+                    .equalTo(ExpenseCategory.FIELD_BOT_TYPE, botType.getId())
+                    .equalTo(ExpenseCategory.FIELD_SELECTED, true)
+                    .equalTo(ExpenseCategory.FIELD_ENTERED, false)
+                    .findAllSorted(
+                            ExpenseCategory.FIELD_ORDER, Sort.ASCENDING,
+                            ExpenseCategory.FIELD_ID, Sort.ASCENDING
+                    );
+
+            if (categories.isEmpty())
+                return null;
+            else
+                return realm.copyFromRealm(categories.first());
+        } finally {
+            if (realm != null)
+                realm.close();
+        }
+    }
+
+    public boolean hasNext(BotType botType) {
+        Realm realm = null;
+
+        try {
+            realm = Realm.getDefaultInstance();
 
             return realm.where(ExpenseCategory.class)
-                    .in("id", ids)
+                    .equalTo(ExpenseCategory.FIELD_BOT_TYPE, botType.getId())
+                    .equalTo(ExpenseCategory.FIELD_SELECTED, true)
+                    .equalTo(ExpenseCategory.FIELD_ENTERED, false)
+                    .findAll()
+                    .isEmpty();
+        } finally {
+            if (realm != null)
+                realm.close();
+        }
+    }
+
+    /**
+     * Clears the selected and entered flags on {@link ExpenseCategory} instances for a given
+     * conversation.
+     *
+     * @param botType The type of the current conversation
+     */
+    public void clearAllState(BotType botType) {
+        Realm realm = null;
+
+        try {
+            realm = Realm.getDefaultInstance();
+
+            OrderedRealmCollection<ExpenseCategory> categories = realm.where(ExpenseCategory.class)
+                    .equalTo(ExpenseCategory.FIELD_BOT_TYPE, botType.getId())
                     .findAll();
+
+            realm.beginTransaction();
+            for (ExpenseCategory category : categories) {
+                category.setSelected(false);
+                category.setEntered(false);
+            }
+            // FIXME: Realm exception. Can't commit non-existing write
+            realm.commitTransaction();
+        } catch (Throwable e) {
+            if (realm != null && realm.isInTransaction())
+                realm.cancelTransaction();
+        } finally {
+            if (realm != null)
+                realm.close();
+        }
+    }
+
+    public boolean exists(@NonNull BotType botType) {
+        Realm realm = null;
+
+        try {
+            realm = Realm.getDefaultInstance();
+
+            return !realm.where(ExpenseCategory.class)
+                    .equalTo(ExpenseCategory.FIELD_BOT_TYPE, botType.getId())
+                    .findAll()
+                    .isEmpty();
+        } catch (Throwable e) {
+            return false;
+        } finally {
+            if (realm != null)
+                realm.close();
+        }
+    }
+
+    public void setSelected(long localId, boolean checked) {
+        Realm realm = null;
+
+        try {
+            realm = Realm.getDefaultInstance();
+
+            ExpenseCategory category = realm.where(ExpenseCategory.class)
+                    .equalTo(ExpenseCategory.FIELD_LOCAL_ID, localId)
+                    .findFirst();
+            realm.beginTransaction();
+            category.setSelected(checked);
+            realm.commitTransaction();
+        } catch (Throwable e) {
+            if (realm != null && realm.isInTransaction())
+                realm.cancelTransaction();
+        } finally {
+            if (realm != null)
+                realm.close();
+        }
+    }
+
+    public void setEntered(BotType botType, long categoryId, boolean entered) {
+        Realm realm = null;
+
+        try {
+            realm = Realm.getDefaultInstance();
+
+            ExpenseCategory category = realm.where(ExpenseCategory.class)
+                    .equalTo(ExpenseCategory.FIELD_BOT_TYPE, botType.getId())
+                    .equalTo(ExpenseCategory.FIELD_ID, categoryId)
+                    .findFirst();
+            realm.beginTransaction();
+            category.setEntered(entered);
+            realm.commitTransaction();
+        } catch (Exception e) {
+            CrashlyticsHelper.logException(e);
+            if (realm != null && realm.isInTransaction())
+                realm.cancelTransaction();
+        } finally {
+            if (realm != null)
+                realm.close();
+        }
+    }
+
+    public void clear(@NonNull BotType botType) {
+        Realm realm = null;
+
+        try {
+            realm = Realm.getDefaultInstance();
+
+            realm.beginTransaction();
+            realm.where(ExpenseCategory.class)
+                    .equalTo(ExpenseCategory.FIELD_BOT_TYPE, botType.getId())
+                    .findAll()
+                    .deleteAllFromRealm();
+            realm.commitTransaction();
+        } catch (Throwable e) {
+            if (realm != null && realm.isInTransaction())
+                realm.cancelTransaction();
         } finally {
             if (realm != null)
                 realm.close();

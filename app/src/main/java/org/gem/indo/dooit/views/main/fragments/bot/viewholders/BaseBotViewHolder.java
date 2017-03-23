@@ -33,7 +33,8 @@ import org.gem.indo.dooit.views.DooitActivity;
  */
 
 public abstract class BaseBotViewHolder<T extends BaseBotModel> extends RecyclerView.ViewHolder {
-    T dataModel;
+
+    protected T dataModel;
 
     public BaseBotViewHolder(View itemView) {
         super(itemView);

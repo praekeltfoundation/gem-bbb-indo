@@ -82,7 +82,7 @@
       {
         "name": "budget_create_a_savings_default_accept",
         "text": "$(budget_create_a_savings_default_accept)",
-        "next": "budget_create_do_create"
+        "next": "budget_create_clear_expense_state"
       },
       {
         "name": "budget_create_a_savings_default_deny",
@@ -104,7 +104,74 @@
         "type": "inlineCurrency",
         "typeOnFinish": "textCurrency",
         "inlineEditHint": "$(type_currency_hint)",
-        "nextOnFinish": "budget_create_do_create"
+        "nextOnFinish": "budget_create_clear_expense_state"
+      }
+    ]
+  },
+
+
+
+  {
+    "name": "budget_create_clear_expense_state",
+    "type": "blank",
+    "call": "#clear_expenses_state",
+    "autoNext": "budget_create_q_expense_01"
+  },
+  {
+    "name": "budget_create_q_expense_01",
+    "type": "text",
+    "text": "$(budget_create_q_expense_01)",
+    "autoNext": "budget_create_q_expense_02"
+  },
+  {
+    "name": "budget_create_q_expense_02",
+    "type": "text",
+    "text": "$(budget_create_q_expense_02)",
+    "autoNext": "budget_create_q_expense_03"
+  },
+  {
+    "name": "budget_create_q_expense_03",
+    "type": "text",
+    "text": "$(budget_create_q_expense_03)",
+    "autoNext": "budget_create_q_expense_gallery"
+  },
+  {
+    "name": "budget_create_q_expense_gallery",
+    "type": "expenseCategoryGallery",
+    "answers": [
+      {
+        "name": "budget_create_a_expense_continue",
+        "text": "$(budget_create_a_expense_continue)",
+        "next": "budget_create_add_expense",
+        "removeOnSelect": "budget_create_q_expense_gallery"
+      }
+    ]
+  },
+
+
+
+  {
+    "name": "budget_create_add_expense",
+    "type": "dummy",
+    "call": "#add_expense"
+  },
+
+
+
+  {
+    "name": "budget_create_q_expense_summary",
+    "type": "text",
+    "text": "$(budget_create_q_expense_summary)",
+    "answers": [
+      {
+        "name": "budget_create_a_accept",
+        "text": "$(budget_create_a_accept)",
+        "next": "budget_create_do_create"
+      },
+      {
+        "name": "budget_create_a_retry",
+        "text": "$(budget_create_a_retry)",
+        "next": "budget_create_clear_expense_state"
       }
     ]
   },
@@ -121,17 +188,83 @@
     "name": "budget_create_q_summary",
     "type": "text",
     "text": "$(budget_create_q_summary)",
-    "autoNext": "budget_create_q_final"
+    "autoNext": "budget_create_info"
   },
   {
-    "name": "budget_create_q_final",
-    "type": "text",
-    "text": "$(budget_create_q_final)",
-    "autoNext": "budget_create_end"
+    "name": "budget_create_info",
+    "type": "budgetInfo",
+    "autoNext": "budget_create_q_branch"
+  },
+  {
+    "name": "budget_create_q_branch",
+    "type": "blank",
+    "call": "#branch_budget_final"
   },
 
 
 
+  {
+    "name": "budget_create_q_final_negative_01",
+    "type": "text",
+    "text": "$(budget_create_q_final_negative_01)",
+    "autoNext": "budget_create_q_final_negative_02"
+  },
+  {
+    "name": "budget_create_q_final_negative_02",
+    "type": "text",
+    "text": "$(budget_create_q_final_negative_02)",
+    "answers": [
+      {
+        "name": "budget_create_a_edit_budget",
+        "text": "$(budget_create_a_edit_budget)"
+      },
+      {
+        "name": "budget_create_a_track_savings",
+        "text": "$(budget_create_a_track_savings)",
+        "next": "budget_create_end_show_target"
+      },
+      {
+        "name": "budget_create_a_learn_more",
+        "text": "$(budget_create_a_learn_more)",
+        "next": "budget_create_end_show_tips"
+      }
+    ]
+  },
+
+
+  {
+    "name": "budget_create_q_final_positive",
+    "type": "text",
+    "text": "$(budget_create_q_final_positive)",
+    "answers": [
+      {
+        "name": "budget_create_a_edit_budget",
+        "text": "$(budget_create_a_edit_budget)"
+      },
+      {
+        "name": "budget_create_a_yes",
+        "text": "$(budget_create_a_yes)"
+      }
+    ]
+  },
+
+
+
+  {
+    "name": "budget_create_end_show_target",
+    "type": "end",
+    "call": "#clear_expenses",
+    "autoNextScreen": "TARGET"
+  },
+
+
+
+  {
+    "name": "budget_create_clear_expenses",
+    "type": "blank",
+    "call": "#clear_expenses",
+    "autoNext": "budget_create_end"
+  },
   {
     "name": "budget_create_end",
     "type": "end"

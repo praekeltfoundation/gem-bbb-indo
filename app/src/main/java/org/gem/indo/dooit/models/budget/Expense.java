@@ -17,10 +17,17 @@ public class Expense extends RealmObject {
     private long id;
 
     /**
-     * The name of the Expense if its different from its {@link ExpenseCategory}. Null means it's
+     * The name of the Expense, as provided by the server.
      */
     @Nullable
     private String name;
+
+    /**
+     * The URL to the image, as provided by the server.
+     */
+    @SerializedName("image_url")
+    @Nullable
+    private String imageUrl;
 
     private double value;
 
@@ -28,7 +35,7 @@ public class Expense extends RealmObject {
      * The ID of the {@link ExpenseCategory}. Null means the Expense is custom.
      */
     @Nullable
-    @SerializedName("expense_category_id")
+    @SerializedName("category_id")
     private Long expenseCategoryId;
 
     public Expense() {
@@ -37,6 +44,11 @@ public class Expense extends RealmObject {
 
     public Expense(String name, double value) {
         this.name = name;
+        this.value = value;
+    }
+
+    public Expense(ExpenseCategory category, double value) {
+        this.expenseCategoryId = category.getId();
         this.value = value;
     }
 

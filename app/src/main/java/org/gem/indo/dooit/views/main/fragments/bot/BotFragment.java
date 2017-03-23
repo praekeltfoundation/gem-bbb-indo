@@ -39,7 +39,6 @@ import org.gem.indo.dooit.controllers.goal.GoalWithdrawController;
 import org.gem.indo.dooit.controllers.misc.ReturningUserController;
 import org.gem.indo.dooit.controllers.survey.BaselineSurveyController;
 import org.gem.indo.dooit.controllers.survey.EAToolSurveyController;
-import org.gem.indo.dooit.dao.budget.BudgetDAO;
 import org.gem.indo.dooit.helpers.Persisted;
 import org.gem.indo.dooit.helpers.SquiggleBackgroundHelper;
 import org.gem.indo.dooit.helpers.bot.BotFeed;
@@ -62,11 +61,12 @@ import org.gem.indo.dooit.views.main.fragments.MainFragment;
 import org.gem.indo.dooit.views.main.fragments.bot.adapters.BotAdapter;
 import org.gem.indo.dooit.views.main.fragments.bot.adapters.QuickAnswerAdapter;
 
+import java.util.ArrayDeque;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Queue;
 
 import javax.inject.Inject;
 
@@ -80,6 +80,8 @@ import butterknife.ButterKnife;
  */
 public class BotFragment extends MainFragment implements HashtagView.TagsClickListener,
         QuickAnswerAdapter.OnBotInputListener, BotRunner {
+
+    private static final String TAG = BotFragment.class.getName();
 
     private static final int ANSWER_SPAN_SINGLE = 1;
     private static final int ANSWER_SPAN_NARROW = 2;
@@ -120,6 +122,12 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
     private BotFeed<Node> feed;
     private Node currentNode;
     boolean clearState = false;
+
+    /**
+     * Nodes scheduled ot be programatically added
+     */
+    private Queue<Node> nextNodes = new ArrayDeque<>();
+    private boolean processing = false;
 
     /**
      * The number of pixels that the quick answers should peek to the right.
@@ -470,7 +478,7 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
                         persisted.loadParticipantBadge(botType),
                         persisted.loadParticipantChallenge(botType));
             case BUDGET_CREATE:
-                return new BudgetCreateController(getActivity(), this, null);
+                return new BudgetCreateController(getActivity(), this);
             default:
                 return null;
         }
@@ -574,7 +582,7 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
             model = feed.getItem(name);
 
         if (model == null) {
-            // TODO: Log to Crashlytics
+            CrashlyticsHelper.log(TAG, "getAndAddNode", "Bot feed unexpectedly returned null node");
             return;
         }
 
@@ -588,12 +596,27 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
         addNode(currentNode, iconHidden);
     }
 
+    /**
+     * Strictly to be used by external classes.
+     */
+    @Override
+    public void queueNode(Node node) {
+        if (processing) {
+            nextNodes.add(node);
+            return;
+        }
+
+        addNode(node, false);
+    }
+
     @Override
     public void addNode(Node node) {
         addNode(node, false);
     }
 
-    public void addNode(final Node node, boolean iconHidden) {
+    private void addNode(final Node node, boolean iconHidden) {
+        processing = true;
+
         node.setIconHidden(iconHidden);
 
         // Nodes can be skipped completely. They will not be added to the adapter, and thus not
@@ -605,7 +628,7 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
             else if (node.hasAutoNext())
                 getAndAddNode(node.getAutoNext());
             else if (node.hasAutoNextNode())
-                addNode(node.getAutoNextNode());
+                addNode(node.getAutoNextNode(), false);
             return;
         }
 
@@ -619,8 +642,8 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
         conversationRecyclerView.scrollToPosition(getBotAdapter().getItemCount() - 1);
         persisted.saveConversationState(type, getBotAdapter().getDataSet());
 
-        // Reached a Node with an async attribute
         if (node.hasAsyncCall() && controller != null) {
+            // Reached a Node with an async attribute
             // Show loader
             clearAnswerView();
             controller.onAsyncCall(
@@ -637,6 +660,14 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
         } else {
             // Continue synchronously
             checkEndOrAddAnswers(node);
+        }
+
+        // Nodes that are added in the middle of recursion are queued
+        processing = false;
+        while (!nextNodes.isEmpty()) {
+            Node nextNode = nextNodes.poll();
+            if (nextNode != null)
+                addNode(nextNode, false);
         }
     }
 
@@ -691,11 +722,11 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
                 // Auto load next conversation
                 BotType botType = BotType.valueOf(node.getAutoNext().toUpperCase());
                 Goal goal = null;
-                if(botType == BotType.GOAL_DEPOSIT) {
+                if (botType == BotType.GOAL_DEPOSIT) {
                     goal = persisted.loadConvoGoal(BotType.GOAL_DEPOSIT);
                 }
                 finishConversation();
-                if(botType == BotType.GOAL_DEPOSIT) {
+                if (botType == BotType.GOAL_DEPOSIT) {
                     persisted.saveConvoGoal(BotType.GOAL_DEPOSIT, goal);
                     clearState = true;
                 }
@@ -704,11 +735,17 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
                 createFeed();
             } else {
                 // Auto load next node in current conversation
-                getAndAddNode(node.getAutoNext(), true);
+                getAndAddNode(node.getAutoNext(),
+                        // Auto nodes following a hidden node will show their icon
+                        !(node.getType().toUpperCase().equals(BotMessageType.BLANK.name())
+                                || node.getType().toUpperCase().equals(BotMessageType.DUMMY.name())));
             }
         } else if (node.hasAutoNextNode()) {
             // Auto next set from Java code
-            addNode(node.getAutoNextNode());
+            addNode(node.getAutoNextNode(),
+                    // Auto nodes following a hidden node will show their icon
+                    !(node.getType().toUpperCase().equals(BotMessageType.BLANK.name())
+                            || node.getType().toUpperCase().equals(BotMessageType.DUMMY.name())));
         } else {
 
             // End of recursion

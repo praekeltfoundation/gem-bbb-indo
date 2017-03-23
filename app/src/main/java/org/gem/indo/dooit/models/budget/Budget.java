@@ -53,17 +53,6 @@ public class Budget extends RealmObject {
         this.income = income;
     }
 
-    /**
-     * Given an income per week, return the calculated income per month.
-     */
-    public static double incomeFromPerWeek(double weeklyIncome) {
-        return weeklyIncome * 4;
-    }
-
-    public static double incomeFromPerDay(double dailyIncome) {
-        return dailyIncome * 7 * 4;
-    }
-
     /////////////
     // Savings //
     /////////////
@@ -85,7 +74,9 @@ public class Budget extends RealmObject {
     }
 
     public static double calcDefaultSavings(double income) {
-        return (income / 100.0) * DEFAULT_SAVING_PERCENT;
+        double defaultSavings = (income / 100.0) * DEFAULT_SAVING_PERCENT;
+        // The default savings is rounded to the first two decimal places
+        return Math.round(defaultSavings * 100.0) / 100.0;
     }
 
     //////////////
@@ -100,10 +91,21 @@ public class Budget extends RealmObject {
         expenses.add(expense);
     }
 
-    public double getExpense() {
+    public double getExpenseTotal() {
         double expense = 0.0;
         for (Expense e : expenses)
             expense += e.getValue();
         return expense;
+    }
+
+    ///////////////
+    // Left over //
+    ///////////////
+
+    /**
+     * @return The income remaining after savings and total expenses are subtracted.
+     */
+    public double getLeftOver() {
+        return income - (savings + getExpenseTotal());
     }
 }

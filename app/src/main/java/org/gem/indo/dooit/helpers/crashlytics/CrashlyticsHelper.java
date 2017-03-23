@@ -17,7 +17,7 @@ public class CrashlyticsHelper{
             Crashlytics.log(Log.DEBUG, TAG + '.' + methodName, message);
     }
 
-    public static void logException(Exception e){
+    public static void logException(Throwable e){
         if(!BuildConfig.DEBUG)
             Crashlytics.logException(e);
     }

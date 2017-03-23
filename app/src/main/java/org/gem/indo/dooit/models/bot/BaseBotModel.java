@@ -116,7 +116,9 @@ public abstract class BaseBotModel {
         return !TextUtils.isEmpty(next);
     }
 
-    // Call keys
+    //////////////////////
+    // Synchronous Call //
+    //////////////////////
 
     public BotCallType getCall() {
         return call;
@@ -125,6 +127,10 @@ public abstract class BaseBotModel {
     public boolean hasCall() {
         return call != null;
     }
+
+    ///////////////////////
+    // Asynchronous Call //
+    ///////////////////////
 
     public BotCallType getAsyncCall() {
         return asyncCall;

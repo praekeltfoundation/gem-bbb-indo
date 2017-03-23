@@ -13,7 +13,6 @@ import org.gem.indo.dooit.api.managers.ChallengeManager;
 import org.gem.indo.dooit.api.managers.GoalManager;
 import org.gem.indo.dooit.api.managers.SurveyManager;
 import org.gem.indo.dooit.api.managers.TipManager;
-import org.gem.indo.dooit.dao.budget.BudgetDAO;
 import org.gem.indo.dooit.dao.budget.ExpenseCategoryBotDAO;
 import org.gem.indo.dooit.helpers.Persisted;
 import org.gem.indo.dooit.helpers.images.DraweeHelper;
@@ -31,8 +30,6 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-import io.realm.Realm;
-import io.realm.RealmResults;
 import rx.Observable;
 import rx.functions.Action0;
 import rx.functions.Action1;
@@ -134,7 +131,11 @@ public class RequirementResolver {
                             // Survey was retrieved by bot type
                             persisted.saveConvoSurvey(botType, ((List<CoachSurvey>) o).get(0));
                         else if (((List) o).get(0) instanceof ExpenseCategory) {
-                            new ExpenseCategoryBotDAO().update(botType, (List<ExpenseCategory>) o);
+                            List<ExpenseCategory> categories = (List<ExpenseCategory>) o;
+                            // Bot Conversation is frontend specific.
+                            for (ExpenseCategory category : categories)
+                                category.setBotType(botType);
+                            new ExpenseCategoryBotDAO().insert(botType, (List<ExpenseCategory>) o);
                         }
                     } else if (o instanceof BaseChallenge) {
                         persisted.saveConvoChallenge(botType, (BaseChallenge) o);
@@ -197,7 +198,7 @@ public class RequirementResolver {
 
             }
         });
-        if (persisted.hasConvoGoals(botType))
+        if (persisted.hasGoalProtos())
             protos.subscribe(new Action1<List<GoalPrototype>>() {
                 @Override
                 public void call(List<GoalPrototype> goalPrototypes) {
@@ -309,19 +310,9 @@ public class RequirementResolver {
             }
         });
 
-        RealmResults<ExpenseCategory> results = Realm.getDefaultInstance()
-                .where(ExpenseCategory.class)
-                .findAll();
-
-        if (!results.isEmpty())
-            // Continue with stale Expense Categories. Download new ones in the background
-            observable.subscribe(new Action1<List<ExpenseCategory>>() {
-                @Override
-                public void call(final List<ExpenseCategory> expenseCategories) {
-                    new ExpenseCategoryBotDAO().update(botType, expenseCategories);
-                }
-            });
-        else
+        // If the conversation has any categories, we don't download new ones. They will be cleared
+        // at the end of the conversation.
+        if (!new ExpenseCategoryBotDAO().exists(botType))
             sync.add(observable);
     }
 

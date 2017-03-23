@@ -1,6 +1,5 @@
 package org.gem.indo.dooit.views.main.fragments.bot.viewholders;
 
-import android.support.v4.content.ContextCompat;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -17,10 +16,18 @@ import butterknife.ButterKnife;
  */
 
 public class DummyViewHolder extends BaseBotViewHolder<Node> {
+
+    @BindView(R.id.item_view_bot_text_container)
+    View container;
+
     @BindView(R.id.item_view_bot_text)
     TextView textView;
+
     @BindView(R.id.item_view_bot_icon)
     ImageView botIcon;
+
+    @BindView(R.id.item_view_bot_text_tail)
+    View tailView;
 
     BotAdapter botAdapter;
 
@@ -28,8 +35,10 @@ public class DummyViewHolder extends BaseBotViewHolder<Node> {
         super(itemView);
         this.botAdapter = botAdapter;
         ButterKnife.bind(this, itemView);
+        container.setVisibility(View.GONE);
         textView.setVisibility(View.GONE);
         botIcon.setVisibility(View.GONE);
+        tailView.setVisibility(View.GONE);
     }
 
     @Override
@@ -38,5 +47,6 @@ public class DummyViewHolder extends BaseBotViewHolder<Node> {
     }
 
     @Override
-    protected void populateModel() {    }
+    protected void populateModel() {
+    }
 }

@@ -13,3 +13,5 @@
 - Replaced animations with static images for lower API levels
 - Tweaked Challenge popup for smaller screens
 - Added Facebook Analytics
+- Implemented Budget Expense carousel
+- Implemented Budget info conversation widget

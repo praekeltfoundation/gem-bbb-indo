@@ -138,4 +138,13 @@
         <item name="android:background">?android:attr/listDivider</item>
     </style>
 
+    <!-- Budget -->
+
+    <style name="BudgetProgressBar" parent="AppTheme.HorizontalProgress">
+        <item name="android:progressBackgroundTint">@null</item>
+        <item name="android:progressDrawable">@drawable/budget_progress_bar</item>
+        <item name="android:minHeight">@dimen/bot_budget_progress_bar_min_height</item>
+        <item name="android:maxHeight">@dimen/bot_budget_progress_bar_max_height</item>
+    </style>
+
 </resources>

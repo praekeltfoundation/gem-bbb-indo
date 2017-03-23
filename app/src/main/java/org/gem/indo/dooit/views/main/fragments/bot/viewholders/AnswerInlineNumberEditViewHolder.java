@@ -87,11 +87,12 @@ public class AnswerInlineNumberEditViewHolder extends BaseBotViewHolder<Answer> 
                     dismissKeyboard(editText);
 
                     Answer inputAnswer = new Answer();
-                    inputAnswer.setValue(!TextUtils.isEmpty(input) ? input : DEFAULT);
                     inputAnswer.setName(dataModel.getName());
+                    inputAnswer.setValue(!TextUtils.isEmpty(input) ? input : DEFAULT);
                     inputAnswer.setRemoveOnSelect(dataModel.getName());
                     inputAnswer.setNext(dataModel.getNextOnFinish());
                     inputAnswer.setType(BotMessageType.getValueOf(dataModel.getTypeOnFinish()));
+                    inputAnswer.setInputKey(dataModel.getInputKey());
                     tagsClickListener.onItemClicked(inputAnswer);
                     CrashlyticsHelper.log(this.getClass().getSimpleName(), "populate (numberedit): ", "number: " + inputAnswer.getValue());
                     return true;

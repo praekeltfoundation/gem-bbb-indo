@@ -18,7 +18,7 @@ public enum BotMessageType {
     GALLERYUPLOAD(5),
     CAMERAUPLOAD(6),
     IMAGE(7),
-    BLANK(8),
+    BLANK(8), // Not added to conversation history at all
     INLINENUMBER(9),
     INLINECURRENCY(10),
     INLINEDATE(11),
@@ -34,8 +34,10 @@ public enum BotMessageType {
     GOALLISTSUMMARY(21),
     CHALLENGE(22),
     CHALLENGEPARTICIPANT(23),
-    DUMMY(24),
-    GOALINFORMATIONGALLERY(25);
+    DUMMY(24), // Added to conversation history, but doesn't display
+    GOALINFORMATIONGALLERY(25),
+    EXPENSECATEGORYGALLERY(26),
+    BUDGETINFO(27);
 
     private static Map<Integer, BotMessageType> map = new HashMap<>();
 
