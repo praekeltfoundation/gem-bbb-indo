@@ -50,8 +50,8 @@ before_install:
   - echo "$GOOGLE_SERVICES_JSON" > app/google-services.json
 
   # Facebook SDK config
-  - touch app/src/staging/res/values/facebook.xml
-  - echo "$FACEBOOK" > app/src/staging/res/values/facebook.xml
+  - touch app/src/main/res/values/facebook.xml
+  - echo "$FACEBOOK" > app/src/main/res/values/facebook.xml
 
 before_script:
   - chmod +x gradlew
