@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/item_view_bot_budget_info_expense"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:baselineAligned="false">
+
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="5">
+
+            <ProgressBar
+                android:id="@+id/item_view_bot_budget_info_progress_expense"
+                style="@style/BudgetProgressBar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:layout_marginTop="@dimen/bot_budget_vertical_padding"
+                tools:progress="30" />
+
+            <TextView
+                android:id="@+id/item_view_bot_budget_info_value_expense"
+                style="@style/AppTheme.TextView.Bold.Small"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:maxLines="1"
+                android:textAlignment="center"
+                android:textColor="@color/black"
+                tools:text="Rp60.000" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="2">
+
+            <TextView
+                android:id="@+id/item_view_bot_budget_info_percent_expense"
+                style="@style/AppTheme.TextView.Bold.Medium"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"
+                android:textColor="@color/light_blue"
+                android:textStyle="bold"
+                tools:text="30%" />
+
+            <TextView
+                android:id="@+id/item_view_bot_budget_info_of_expense"
+                style="@style/AppTheme.TextView.Regular.Small"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/item_view_bot_budget_info_percent_expense"
+                android:layout_centerHorizontal="true"
+                android:textColor="@color/grey"
+                android:text="@string/budget_line_of_income" />
+
+        </RelativeLayout>
+
+</LinearLayout>

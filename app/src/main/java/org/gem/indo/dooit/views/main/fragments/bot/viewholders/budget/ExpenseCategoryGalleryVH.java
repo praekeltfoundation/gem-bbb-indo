@@ -19,14 +19,14 @@ import butterknife.ButterKnife;
  * Created by Wimpie Victor on 2017/03/14.
  */
 
-public class ExpenseCategoryGalleryViewHolder extends BaseBotViewHolder<Node> {
+public class ExpenseCategoryGalleryVH extends BaseBotViewHolder<Node> {
 
     @BindView(R.id.item_view_bot_carousel_recycler_view)
     RecyclerView recycler;
 
     private BotAdapter botAdapter;
 
-    public ExpenseCategoryGalleryViewHolder(View itemView, BotAdapter botAdapter) {
+    public ExpenseCategoryGalleryVH(View itemView, BotAdapter botAdapter) {
         super(itemView);
         ButterKnife.bind(this, itemView);
         this.botAdapter = botAdapter;

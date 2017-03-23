@@ -25,7 +25,7 @@ import butterknife.OnClick;
  * Created by Wimpie Victor on 2017/03/14.
  */
 
-public class ExpenseCategoryGalleryItemViewHolder extends RecyclerView.ViewHolder {
+public class ExpenseCategoryGalleryItemVH extends RecyclerView.ViewHolder {
 
     @BindView(R.id.item_view_bot_expense_category_card)
     View backgroundView;
@@ -46,7 +46,7 @@ public class ExpenseCategoryGalleryItemViewHolder extends RecyclerView.ViewHolde
     private boolean checked;
     private OnCheckListener listener;
 
-    public ExpenseCategoryGalleryItemViewHolder(View itemView) {
+    public ExpenseCategoryGalleryItemVH(View itemView) {
         super(itemView);
         ButterKnife.bind(this, itemView);
 

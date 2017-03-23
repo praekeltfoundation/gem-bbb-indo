@@ -27,6 +27,7 @@ import org.gem.indo.dooit.models.budget.Expense;
 import org.gem.indo.dooit.models.budget.ExpenseCategory;
 import org.gem.indo.dooit.models.enums.BotCallType;
 import org.gem.indo.dooit.models.enums.BotMessageType;
+import org.gem.indo.dooit.models.enums.BotObjectType;
 import org.gem.indo.dooit.models.enums.BotParamType;
 import org.gem.indo.dooit.models.enums.BotType;
 import org.gem.indo.dooit.views.helpers.activity.CurrencyHelper;
@@ -184,6 +185,16 @@ public class BudgetCreateController extends DooitBotController {
                         super.resolveParam(model, paramType);
                 }
                 break;
+        }
+    }
+
+    @Override
+    public Object getObject(BotObjectType objType) {
+        switch (objType) {
+            case BUDGET:
+                return budget;
+            default:
+                return super.getObject(objType);
         }
     }
 

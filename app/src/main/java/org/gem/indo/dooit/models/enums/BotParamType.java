@@ -80,6 +80,7 @@ public enum BotParamType {
     BUDGET_INCOME("budget.income"),
     BUDGET_SAVINGS("budget.savings"),
     BUDGET_EXPENSE("budget.expense"),
+    BUDGET_EXPENSES("budget.expenses"),
     BUDGET_REMAINING_EXPENSES("budget.remaining_expenses"), // Savings subtracted from income
     BUDGET_DEFAULT_SAVINGS("budget.default_savings"),
     BUDGET_DEFAULT_SAVING_PERCENT("budget.default_savings_percentage"),

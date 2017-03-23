@@ -10,7 +10,7 @@ import org.gem.indo.dooit.R;
 import org.gem.indo.dooit.dao.budget.ExpenseCategoryBotDAO;
 import org.gem.indo.dooit.models.budget.ExpenseCategory;
 import org.gem.indo.dooit.models.enums.BotType;
-import org.gem.indo.dooit.views.main.fragments.bot.viewholders.budget.ExpenseCategoryGalleryItemViewHolder;
+import org.gem.indo.dooit.views.main.fragments.bot.viewholders.budget.ExpenseCategoryGalleryItemVH;
 
 import java.util.List;
 
@@ -18,8 +18,8 @@ import java.util.List;
  * Created by Wimpie Victor on 2017/03/14.
  */
 
-public class ExpenseCategoryGalleryAdapter extends RecyclerView.Adapter<ExpenseCategoryGalleryItemViewHolder>
-        implements ExpenseCategoryGalleryItemViewHolder.OnCheckListener {
+public class ExpenseCategoryGalleryAdapter extends RecyclerView.Adapter<ExpenseCategoryGalleryItemVH>
+        implements ExpenseCategoryGalleryItemVH.OnCheckListener {
 
     private List<ExpenseCategory> data;
     private BotType botType;
@@ -37,14 +37,14 @@ public class ExpenseCategoryGalleryAdapter extends RecyclerView.Adapter<ExpenseC
     //////////////////////////
 
     @Override
-    public ExpenseCategoryGalleryItemViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public ExpenseCategoryGalleryItemVH onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.item_view_bot_expense_category_card, parent, false);
-        return new ExpenseCategoryGalleryItemViewHolder(view);
+        return new ExpenseCategoryGalleryItemVH(view);
     }
 
     @Override
-    public void onBindViewHolder(ExpenseCategoryGalleryItemViewHolder holder, int position) {
+    public void onBindViewHolder(ExpenseCategoryGalleryItemVH holder, int position) {
         holder.populate(data.get(position), this);
     }
 
