@@ -2,6 +2,7 @@ buildscript {
     repositories {
         maven { url 'https://maven.fabric.io/public' }
         maven { url 'https://jitpack.io' }
+        mavenCentral()
     }
 
     dependencies {
@@ -134,6 +135,7 @@ dependencies {
     compile 'com.google.android.gms:play-services-analytics:10.2.0'
     compile 'com.android.support:multidex:1.0.1'
     compile 'io.realm:android-adapters:2.0.0'
+    compile 'com.facebook.android:facebook-android-sdk:[4.19,5)'
 }
 
 // Analytics plugin has to be applied last, else a version conflict error is thrown
