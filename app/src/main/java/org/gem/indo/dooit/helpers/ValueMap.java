@@ -66,7 +66,13 @@ public class ValueMap {
     }
 
     public Long getLong(String key) {
-        return (Long) map.get(key);
+        // Crash occurred when casting a double to a long
+        // Long inherits from Number, so hopefully this casting will work
+        try {
+            return (Long) map.get(key);
+        } catch (ClassCastException e) {
+            return ((Number) map.get(key)).longValue();
+        }
     }
 
     /*********
