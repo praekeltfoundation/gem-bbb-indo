@@ -7,3 +7,7 @@
 - Added Facebook Analytics
 - Implemented Budget Expense carousel
 - Implemented Budget info conversation widget
+
+1.0.3
+
+- Fix Challenge Popup crash
