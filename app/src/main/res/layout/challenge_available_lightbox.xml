@@ -138,15 +138,17 @@
 
                 <ImageButton
                     android:id="@+id/challenge_available_dialog_close"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
+                    android:layout_width="26dp"
+                    android:layout_height="25dp"
                     android:layout_centerHorizontal="true"
                     android:layout_marginBottom="16dp"
                     android:layout_marginEnd="16dp"
                     android:layout_marginStart="16dp"
                     android:layout_marginTop="8dp"
+                    android:scaleType="fitCenter"
+                    android:background="@null"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    android:background="@drawable/dialog_close" />
+                    app:srcCompat="@drawable/dialog_close"/>
 
             </RelativeLayout>
 

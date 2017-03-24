@@ -1,17 +1,4 @@
 
-1.0.1
+1.0.3
 
-- Fixed Bot Image handling bugs
-- Fix crash on App open after changing device language
-- Added logging for infinite float error
-- Implemented User Goal carousel for returning user conversation
-- Implemented initial Budget create conversation
-
-1.0.2
-
-- Fixed apostrophes in strings
-- Replaced animations with static images for lower API levels
-- Tweaked Challenge popup for smaller screens
-- Added Facebook Analytics
-- Implemented Budget Expense carousel
-- Implemented Budget info conversation widget
+- Fix Challenge Popup crash
