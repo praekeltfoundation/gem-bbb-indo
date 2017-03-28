@@ -247,6 +247,25 @@
       }
     ]
   },
+  {
+    "name": "budget_create_q_branch_goals",
+    "type": "blank",
+    "call": "#branch_budget_goals"
+  },
+
+
+
+  {
+    "name": "budget_create_q_final_positive_has_goals",
+    "type": "text",
+    "text": "$(budget_create_q_final_positive_has_goals)",
+    "call": "#list_goals"
+  },
+  {
+    "name": "budget_create_q_final_positive_no_goals",
+    "type": "text",
+    "text": "$(budget_create_q_final_positive_no_goals)"
+  },
 
 
 

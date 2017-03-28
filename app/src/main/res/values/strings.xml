@@ -739,6 +739,11 @@
     <string name="budget_create_q_final_positive">You can access and update your budget in your profile at any time.</string>
     <string name="budget_create_a_yes">Yes!</string>
 
+    <string name="budget_create_q_final_positive_has_goals">"Do you want to edit your savings goals to match your savings set aside in your budget?"</string>
+    <string name="budget_create_q_final_positive_goal_summary">"Your weekly target for goal is currently:"</string>
+    <string name="budget_create_q_final_positive_no_goals">"Do you want to add a savings goal to match your savings set aside in your budget?"</string>
+
+
     <string name="budget_create_qry_tip_income">income</string>
 
     <!-- budget_create validation -->
