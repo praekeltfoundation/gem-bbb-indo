@@ -861,6 +861,9 @@
     <string name="profile_help_feedback">"Masukan"</string>
     <string name="profile_help_terms_conditions">"Syarat &amp; Ketentuan"</string>
     <string name="profile_help_privacy_policy">"Kebijakan Privasi"</string>
+    <string name="profile_tab_achievements">Achievements</string>
+    <string name="profile_tab_budget">Budget</string>
+    <string name="profile_error_retrieve_achievements">Error retrieving achievements</string>
 
     <!-- Profile image -->
     <string name="profile_image_camera">"Ambil Foto dengan Kamera"</string>

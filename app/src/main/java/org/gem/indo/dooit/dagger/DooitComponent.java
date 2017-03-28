@@ -58,6 +58,8 @@ import org.gem.indo.dooit.views.onboarding.RegistrationActivity;
 import org.gem.indo.dooit.views.onboarding.fragments.PasswordResetPasswordFragment;
 import org.gem.indo.dooit.views.onboarding.fragments.PasswordResetUsernameFragment;
 import org.gem.indo.dooit.views.profile.ProfileActivity;
+import org.gem.indo.dooit.views.profile.fragments.AchievementFragment;
+import org.gem.indo.dooit.views.profile.fragments.BudgetFragment;
 import org.gem.indo.dooit.views.settings.FeedbackActivity;
 import org.gem.indo.dooit.views.settings.SettingsActivity;
 import org.gem.indo.dooit.views.web.MinimalWebViewActivity;
@@ -74,6 +76,8 @@ import dagger.Component;
 @Component(modules = DooitModule.class)
 public interface DooitComponent {
 
+    void inject(AchievementFragment o);
+
     void inject(AnswerImageSelectViewHolder o);
 
     void inject(GoalGalleryViewHolder o);
@@ -83,6 +87,8 @@ public interface DooitComponent {
     void inject(BadgeViewHolder o);
 
     void inject(BudgetCreateController o);
+
+    void inject(BudgetFragment o);
 
     void inject(ChallengeActivity o);
 

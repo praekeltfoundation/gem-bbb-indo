@@ -867,6 +867,9 @@
     <string name="profile_help_feedback">"Feedback"</string>
     <string name="profile_help_terms_conditions">"<![CDATA[Terms & Conditions]]>"</string>
     <string name="profile_help_privacy_policy">"Privacy Policy"</string>
+    <string name="profile_tab_achievements">Achievements</string>
+    <string name="profile_tab_budget">Budget</string>
+    <string name="profile_error_retrieve_achievements">Error retrieving achievements</string>
 
     <!-- Profile image -->
     <string name="profile_image_camera">"Take Photo using Camera"</string>
