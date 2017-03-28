@@ -11,7 +11,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -39,19 +38,19 @@ import rx.functions.Action1;
 
 public class AchievementFragment extends Fragment {
 
-    @BindView(R.id.profile_current_streak_value)
+    @BindView(R.id.fragment_profile_current_streak_value)
     TextView streakView;
 
-    @BindView(R.id.activity_profile_achievement_recycler_view)
+    @BindView(R.id.fragment_profile_achievement_badge_recycler_view)
     RecyclerView achievementRecyclerView;
 
-    @BindView(R.id.achievements_progress_container)
+    @BindView(R.id.fragment_achievements_progress_container)
     View progressView;
 
-    @BindString(R.string.profile_week_streak_singular)
+    @BindString(R.string.profile_achievements_week_streak_singular)
     String streakSingular;
 
-    @BindString(R.string.profile_week_streak_plural)
+    @BindString(R.string.profile_achievements_week_streak_plural)
     String streakPlural;
 
     @BindString(R.string.profile_error_retrieve_achievements)

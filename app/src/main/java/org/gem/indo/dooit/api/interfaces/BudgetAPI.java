@@ -21,4 +21,7 @@ public interface BudgetAPI {
 
     @POST("/api/budgets/")
     Observable<BudgetCreateResponse> upsertBudget(@Body Budget budget);
+
+    @GET("/api/budgets/")
+    Observable<List<Budget>> getBudgets();
 }

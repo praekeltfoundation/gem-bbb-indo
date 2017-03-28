@@ -846,8 +846,8 @@
     <string name="error_retrieve_goals">"Error retrieving goals."</string>
 
     <!-- Profile -->
-    <string name="profile_week_streak_singular">"%s minggu"</string>
-    <string name="profile_week_streak_plural">"%s minggu"</string>
+    <string name="profile_achievements_week_streak_singular">"%s minggu"</string>
+    <string name="profile_achievements_week_streak_plural">"%s minggu"</string>
     <string name="profile_settings_title">@string/title_activity_settings</string>
     <string name="profile_section_account">"Akunmu"</string>
     <string name="profile_account_change_name">"Ubah nama"</string>
@@ -971,8 +971,8 @@
     <string name="heading_change_email">@string/label_change_email</string>
 
     <string name="target_prefix_saved">"sudah tersimpan"</string>
-    <string name="heading_current_saving_streak">"Rekor menabung sekarang"</string>
-    <string name="heading_achievements">"Pencapaian"</string>
+    <string name="profile_achievements_heading_current_saving_streak">"Rekor menabung sekarang"</string>
+    <string name="profile_achievements_heading_achievements">"Pencapaian"</string>
 
     <!-- Feedback -->
     <string name="feedback_pick_subject">"Pick subject"</string>

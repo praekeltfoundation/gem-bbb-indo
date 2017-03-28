@@ -33,4 +33,8 @@ public class BudgetManager extends DooitManager {
     public Observable<BudgetCreateResponse> upsertBudget(Budget budget, DooitErrorHandler errorHandler) {
         return useNetwork(budgetAPI.upsertBudget(budget), errorHandler);
     }
+
+    public Observable<List<Budget>> retrieveBudgets(DooitErrorHandler errorHandler) {
+        return useNetwork(budgetAPI.getBudgets(), errorHandler);
+    }
 }
