@@ -39,6 +39,7 @@ import org.gem.indo.dooit.controllers.goal.GoalWithdrawController;
 import org.gem.indo.dooit.controllers.misc.ReturningUserController;
 import org.gem.indo.dooit.controllers.survey.BaselineSurveyController;
 import org.gem.indo.dooit.controllers.survey.EAToolSurveyController;
+import org.gem.indo.dooit.dao.budget.ExpenseCategoryBotDAO;
 import org.gem.indo.dooit.helpers.Persisted;
 import org.gem.indo.dooit.helpers.SquiggleBackgroundHelper;
 import org.gem.indo.dooit.helpers.bot.BotFeed;
@@ -263,6 +264,8 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
         if (clearState) {
             persisted.clearConversation();
             getBotAdapter().clear();
+            // Clear Expense categories
+            new ExpenseCategoryBotDAO().clearAll();
             // Don't clear Goals or Tips as they are the current argument passing mechanism
             clearState = false;
         }
@@ -362,6 +365,13 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
                 break;
             case BUDGET_CREATE:
                 feed.parse(R.raw.budget_create, Node.class);
+                new RequirementResolver.Builder(getContext(), BotType.BUDGET_CREATE)
+                        .require(BotObjectType.EXPENSE_CATEGORIES)
+                        .build()
+                        .resolve(reqCallback);
+                break;
+            case BUDGET_EDIT:
+                feed.parse(R.raw.budget_edit, Node.class);
                 new RequirementResolver.Builder(getContext(), BotType.BUDGET_CREATE)
                         .require(BotObjectType.EXPENSE_CATEGORIES)
                         .build()
