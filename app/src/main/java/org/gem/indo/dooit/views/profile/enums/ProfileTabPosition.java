@@ -45,7 +45,7 @@ public enum ProfileTabPosition {
     // Title Text //
     ////////////////
 
-    public int getTextRes() {
+    public int getTitleTextRes() {
         return textRes;
     }
 }

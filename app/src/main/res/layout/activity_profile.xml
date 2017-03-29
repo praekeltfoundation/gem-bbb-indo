@@ -33,6 +33,7 @@
                 android:layout_height="@dimen/profile_activity_profile_image_size"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="74dp"
+                android:layout_marginBottom="26dp"
                 android:background="@color/transparent"
                 app:layout_collapseMode="parallax"
                 app:layout_scrollFlags="scroll|enterAlways|enterAlwaysCollapsed"
@@ -73,7 +74,14 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom"
-            app:layout_collapseMode="pin">
+            app:tabBackground="@drawable/tab_profile_bkg"
+            app:tabIndicatorColor="@color/transparent"
+            app:tabIndicatorHeight="@dimen/tip_tab_indicator_height"
+            app:tabPaddingBottom="0dp"
+            app:tabPaddingEnd="0dp"
+            app:tabPaddingStart="0dp"
+            app:tabPaddingTop="0dp"
+            app:tabTextAppearance="@style/AppTheme.TextView.Regular.ExtraLarge">
 
             <android.support.design.widget.TabItem
                 android:layout_width="wrap_content"

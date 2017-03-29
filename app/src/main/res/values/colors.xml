@@ -16,6 +16,7 @@
     <color name="black_transparent">#42000000</color>
     <color name="purple">#391563</color>
     <color name="purple_light">#45236c</color>
+    <color name="purple_dull">#61597C</color>
     <color name="pink">#E93988</color>
     <color name="light_grey">#ccc</color>
     <color name="light_grey_alpha">#82cccccc</color>

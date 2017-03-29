@@ -142,6 +142,12 @@ public class ProfileActivity extends ImageActivity {
         viewPager.setAdapter(tabsAdapter);
         tabLayout.setupWithViewPager(viewPager);
 
+        for (int i = 0; i < tabLayout.getTabCount(); i++) {
+            TabLayout.Tab tab = tabLayout.getTabAt(i);
+            if (tab != null)
+                tab.setCustomView(tabsAdapter.createTabView(tabLayout, i));
+        }
+
         // Default Tab
         viewPager.setCurrentItem(ProfileTabPosition.ACHIEVEMENTS.getId());
 
