@@ -17,18 +17,42 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        tools:visibility="gone">
+        tools:visibility="visible">
 
-        <TextView
-            android:id="@+id/fragment_profile_budget_heading_budget"
-            style="@style/AppTheme.TextView.Bold.Medium"
+        <!-- Header -->
+
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ellipsize="end"
-            android:maxLines="1"
-            android:textAllCaps="true"
-            android:text="@string/profile_budget_heading_budget"
-            android:textColor="@color/divider" />
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/fragment_profile_budget_heading_budget"
+                style="@style/AppTheme.TextView.Bold.Medium"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:textStyle="bold"
+                android:textAllCaps="true"
+                android:text="@string/profile_budget_heading_budget"
+                android:textColor="@color/divider" />
+
+            <TextView
+                android:id="@+id/fragment_profile_budget_edit_btn"
+                style="@style/AppTheme.TextView.Bold.Medium"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:textStyle="bold"
+                android:textAllCaps="true"
+                android:text="@string/profile_budget_edit_budget"
+                android:textColor="@color/light_blue"
+                />
+
+        </RelativeLayout>
 
         <!-- Income -->
 
@@ -257,7 +281,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        tools:visibility="visible">
+        tools:visibility="gone">
 
         <TextView
             android:id="@+id/fragment_profile_budget_heading_budget_2"

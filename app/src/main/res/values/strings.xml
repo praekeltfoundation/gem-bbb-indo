@@ -858,6 +858,7 @@
     <string name="profile_budget_heading_budget">Budget</string>
     <string name="profile_budget_no_budget">"A budget is an estimate of your income, savings, expenses and balance for a set period of time."</string>
     <string name="profile_budget_create_budget">Create Budget</string>
+    <string name="profile_budget_edit_budget">Edit</string>
     <string name="profile_tab_achievements">Achievements</string>
     <string name="profile_tab_budget">Budget</string>
     <string name="profile_error_retrieve_achievements">Error retrieving achievements</string>

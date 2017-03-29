@@ -204,6 +204,13 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
     }
 
     @Override
+    public void onStop() {
+        super.onStop();
+
+        persisted.saveCurrentBotType(type);
+    }
+
+    @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
         menu.clear();
@@ -247,6 +254,9 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
         if (getActivity() == null)
             // onActive called while fragment not completely initialised
             return;
+
+        if (clearState)
+            createFeed();
     }
 
     private void createFeed() {

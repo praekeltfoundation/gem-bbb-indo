@@ -253,6 +253,11 @@ public class BudgetFragment extends Fragment {
         returnResult(RequestCodes.RESPONSE_BUDGET_CREATE);
     }
 
+    @OnClick(R.id.fragment_profile_budget_edit_btn)
+    void onEditBudgetClick(View view) {
+        returnResult(RequestCodes.RESPONSE_BUDGET_EDIT);
+    }
+
     private void returnResult(int resultCode) {
         Activity activity = getActivity();
         if (activity == null)
