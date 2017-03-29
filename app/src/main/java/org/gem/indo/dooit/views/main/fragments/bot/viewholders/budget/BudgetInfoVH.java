@@ -37,29 +37,17 @@ public class BudgetInfoVH extends BaseBotViewHolder<Node> {
     @BindView(R.id.item_view_bot_budget_info)
     View backgroundView;
 
-    @BindView(R.id.item_view_bot_budget_info_value_income)
-    TextView incomeValueView;
-
-    @BindView(R.id.item_view_bot_budget_info_progress_income)
-    ProgressBar incomeProgressView;
-
     @BindView(R.id.item_view_bot_budget_info_value_savings)
     TextView savingsValueView;
 
     @BindView(R.id.item_view_bot_budget_info_progress_savings)
     ProgressBar savingsProgressView;
 
-    @BindView(R.id.item_view_bot_budget_info_percent_savings)
-    TextView savingsPercentView;
-
     @BindView(R.id.item_view_bot_budget_info_value_left_over)
     TextView leftOverValueView;
 
     @BindView(R.id.item_view_bot_budget_info_progress_left_over)
     ProgressBar leftOverProgressView;
-
-    @BindView(R.id.item_view_bot_budget_info_percent_left_over)
-    TextView leftOverPercentView;
 
     @BindView(R.id.item_view_bot_budget_info_recycler_view_expenses)
     RecyclerView expenseRecycler;
@@ -97,9 +85,9 @@ public class BudgetInfoVH extends BaseBotViewHolder<Node> {
             String[] expenseData = dataModel.values.getStringArray(BotParamType.BUDGET_EXPENSES.getKey());
 
             // Income
-            // Income bar is always full
-            incomeProgressView.setProgress(100);
-            incomeValueView.setText(CurrencyHelper.format(income));
+            // Income is no longer shown in
+//            incomeProgressView.setProgress(100);
+//            incomeValueView.setText(CurrencyHelper.format(income));
 
             // Savings
             // Div by zero
@@ -108,7 +96,7 @@ public class BudgetInfoVH extends BaseBotViewHolder<Node> {
                     : 0;
             savingsProgressView.setProgress(savingsPercent);
             savingsValueView.setText(CurrencyHelper.format(savings));
-            savingsPercentView.setText(String.format(Locale.US, "%d%%", savingsPercent));
+//            savingsPercentView.setText(String.format(Locale.US, "%d%%", savingsPercent));
 
             // Expenses
             if (expenseData != null) {
@@ -136,7 +124,7 @@ public class BudgetInfoVH extends BaseBotViewHolder<Node> {
             // Prevent progress bar from wrapping
             leftOverProgressView.setProgress(Math.max(leftOverPercentage, 0));
             leftOverValueView.setText(CurrencyHelper.format(leftOver));
-            leftOverPercentView.setText(String.format(Locale.US, "%d%%", leftOverPercentage));
+//            leftOverPercentView.setText(String.format(Locale.US, "%d%%", leftOverPercentage));
         } catch (NullPointerException | ClassCastException e) {
             CrashlyticsHelper.logException(e);
         }
@@ -144,7 +132,7 @@ public class BudgetInfoVH extends BaseBotViewHolder<Node> {
 
     @Override
     public void reset() {
-        incomeProgressView.setProgress(0);
+//        incomeProgressView.setProgress(0);
         savingsProgressView.setProgress(0);
         leftOverProgressView.setProgress(0);
     }

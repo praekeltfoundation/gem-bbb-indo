@@ -69,7 +69,7 @@
     <dimen name="bot_badge_card_vertical_margin">6dp</dimen>
 
     <dimen name="bot_budget_vertical_padding">4dp</dimen>
-    <dimen name="bot_budget_card_padding">4dp</dimen>
+    <dimen name="bot_budget_card_padding">20dp</dimen>
     <dimen name="bot_budget_progress_bar_min_height">24dp</dimen>
     <dimen name="bot_budget_progress_bar_max_height">36dp</dimen>
     <dimen name="bot_budget_card_width">250dp</dimen>

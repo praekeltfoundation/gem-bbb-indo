@@ -193,6 +193,12 @@
   {
     "name": "budget_create_info",
     "type": "budgetInfo",
+    "autoNext": "budget_create_clear_after_success"
+  },
+  {
+    "name": "budget_create_clear_after_success",
+    "type": "blank",
+    "call": "#clear_expenses",
     "autoNext": "budget_create_q_branch"
   },
   {

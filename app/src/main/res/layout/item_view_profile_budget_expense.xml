@@ -31,7 +31,7 @@
                 android:textStyle="bold"
                 android:textAlignment="center"
                 android:textColor="@color/divider"
-                tools:text="Rp60.000" />
+                tools:text="Food - Rp60.000" />
 
         </LinearLayout>
 

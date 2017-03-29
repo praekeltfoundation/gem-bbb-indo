@@ -10,56 +10,19 @@
     tools:background="@drawable/bkg_carousel_card"
     tools:context=".views.main.MainActivity">
 
-    <!-- Income -->
-
-    <TextView
-        android:id="@+id/item_view_bot_budget_info_heading_income_per_month"
-        style="@style/AppTheme.TextView.Bold.Medium"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:ellipsize="end"
-        android:maxLines="1"
-        android:text="@string/budget_heading_income_per_month"
-        android:textColor="@color/divider" />
-
-    <RelativeLayout
-        android:id="@+id/item_view_bot_budget_info_container_income"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/bot_budget_vertical_padding">
-
-        <ProgressBar
-            android:id="@+id/item_view_bot_budget_info_progress_income"
-            style="@style/BudgetProgressBar"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            tools:progress="100" />
-
-        <TextView
-            android:id="@+id/item_view_bot_budget_info_value_income"
-            style="@style/AppTheme.TextView.Bold.Small"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:maxLines="1"
-            android:textAlignment="center"
-            android:textColor="@color/black"
-            tools:text="Rp180.000" />
-
-    </RelativeLayout>
-
     <!-- Savings -->
 
     <TextView
         android:id="@+id/item_view_bot_budget_info_heading_savings_per_month"
-        style="@style/AppTheme.TextView.Bold.Medium"
+        style="@style/AppTheme.TextView.Bold.ExtraLarge"
+        fontPath="fonts/LondrinaSolid-Regular.ttf"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/bot_budget_vertical_padding"
         android:ellipsize="end"
         android:maxLines="1"
+        android:textStyle="bold"
         android:text="@string/budget_heading_savings_per_month"
-        android:textColor="@color/divider" />
+        android:textColor="@color/purple" />
 
     <LinearLayout
         android:id="@+id/item_view_bot_budget_info_container_savings"
@@ -69,9 +32,10 @@
         android:baselineAligned="false"
         android:orientation="horizontal">
 
-        <RelativeLayout
+        <LinearLayout
             android:layout_width="0dp"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
             android:layout_weight="5">
 
             <ProgressBar
@@ -79,50 +43,21 @@
                 style="@style/BudgetProgressBar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
                 android:layout_marginTop="@dimen/bot_budget_vertical_padding"
                 tools:progress="30" />
 
             <TextView
                 android:id="@+id/item_view_bot_budget_info_value_savings"
-                style="@style/AppTheme.TextView.Bold.Small"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
-                android:maxLines="1"
-                android:textAlignment="center"
-                android:textColor="@color/black"
-                tools:text="Rp60.000" />
-
-        </RelativeLayout>
-
-        <RelativeLayout
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="2">
-
-            <TextView
-                android:id="@+id/item_view_bot_budget_info_percent_savings"
                 style="@style/AppTheme.TextView.Bold.Medium"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentTop="true"
-                android:layout_centerHorizontal="true"
-                android:textColor="@color/light_blue"
+                android:maxLines="1"
                 android:textStyle="bold"
-                tools:text="30%" />
+                android:textAlignment="center"
+                android:textColor="@color/divider"
+                tools:text="Rp60.000"/>
 
-            <TextView
-                android:id="@+id/item_view_bot_budget_info_of_savings"
-                style="@style/AppTheme.TextView.Regular.Small"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/item_view_bot_budget_info_percent_savings"
-                android:layout_centerHorizontal="true"
-                android:textColor="@color/grey"
-                android:text="@string/budget_line_of_income" />
-
-        </RelativeLayout>
+        </LinearLayout>
 
     </LinearLayout>
 
@@ -130,33 +65,39 @@
 
     <TextView
         android:id="@+id/item_view_bot_budget_info_heading_expenses_per_month"
-        style="@style/AppTheme.TextView.Bold.Medium"
+        style="@style/AppTheme.TextView.Bold.ExtraLarge"
+        fontPath="fonts/LondrinaSolid-Regular.ttf"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/bot_budget_vertical_padding"
+        android:layout_marginTop="@dimen/profile_budget_vertical_padding"
         android:ellipsize="end"
         android:maxLines="1"
+        android:textStyle="bold"
         android:text="@string/budget_heading_expenses_per_month"
-        android:textColor="@color/divider" />
+        android:textColor="@color/purple" />
 
     <org.gem.indo.dooit.views.custom.DesignSafeRecyclerView
         android:id="@+id/item_view_bot_budget_info_recycler_view_expenses"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/bot_budget_vertical_padding" />
+        android:layout_marginTop="@dimen/bot_budget_vertical_padding"
+        tools:listitem="@layout/item_view_bot_budget_info_expense"
+        />
 
     <!-- Left Over -->
 
     <TextView
         android:id="@+id/item_view_bot_budget_info_heading_left_over"
-        style="@style/AppTheme.TextView.Bold.Medium"
+        style="@style/AppTheme.TextView.Bold.ExtraLarge"
+        fontPath="fonts/LondrinaSolid-Regular.ttf"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/bot_budget_vertical_padding"
+        android:layout_marginTop="@dimen/profile_budget_vertical_padding"
         android:ellipsize="end"
         android:maxLines="1"
+        android:textStyle="bold"
         android:text="@string/budget_heading_left_over"
-        android:textColor="@color/divider" />
+        android:textColor="@color/purple" />
 
     <LinearLayout
         android:id="@+id/item_view_bot_budget_info_container_left_over"
@@ -166,59 +107,32 @@
         android:baselineAligned="false"
         android:orientation="horizontal">
 
-        <RelativeLayout
+        <LinearLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="5">
+            android:layout_weight="5"
+            android:orientation="vertical">
 
             <ProgressBar
                 android:id="@+id/item_view_bot_budget_info_progress_left_over"
                 style="@style/BudgetProgressBar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
                 android:layout_marginTop="@dimen/bot_budget_vertical_padding"
                 tools:progress="70" />
 
             <TextView
                 android:id="@+id/item_view_bot_budget_info_value_left_over"
-                style="@style/AppTheme.TextView.Bold.Small"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
-                android:maxLines="1"
-                android:textAlignment="center"
-                android:textColor="@color/black"
-                tools:text="Rp120.000" />
-
-        </RelativeLayout>
-
-        <RelativeLayout
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="2">
-
-            <TextView
-                android:id="@+id/item_view_bot_budget_info_percent_left_over"
                 style="@style/AppTheme.TextView.Bold.Medium"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentTop="true"
-                android:layout_centerHorizontal="true"
-                android:textColor="@color/light_blue"
+                android:maxLines="1"
                 android:textStyle="bold"
-                tools:text="70%" />
+                android:textAlignment="center"
+                android:textColor="@color/divider"
+                tools:text="Rp120.000" />
 
-            <TextView
-                style="@style/AppTheme.TextView.Regular.Small"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/item_view_bot_budget_info_percent_left_over"
-                android:layout_centerHorizontal="true"
-                android:textColor="@color/grey"
-                android:text="@string/budget_line_of_income" />
-
-        </RelativeLayout>
+        </LinearLayout>
 
     </LinearLayout>
 
