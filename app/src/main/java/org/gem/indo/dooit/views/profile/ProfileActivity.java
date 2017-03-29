@@ -10,6 +10,7 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -117,18 +118,17 @@ public class ProfileActivity extends ImageActivity {
             DraweeHelper.setProgressiveUri(profileImage, Uri.parse(user.getProfile().getProfileImageUrl()));
 
         appBarLayout.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
-            boolean isShow = false;
             int scrollRange = -1;
 
             @Override
             public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
                 if (Math.abs(verticalOffset) > appBarLayout.getHeight() * 0.4) {
-                    isShow = true;
+//                    Log.d("OFFSET", String.format("verticleOffset: %d ; height: %f ; show: false", verticalOffset, appBarLayout.getHeight() * 0.4));
                     if (profileImage.getVisibility() == View.VISIBLE)
-                        profileImage.setVisibility(View.GONE);
+                        profileImage.setVisibility(View.INVISIBLE);
                 } else if (Math.abs(verticalOffset) < appBarLayout.getHeight() * 0.4) {
-                    isShow = false;
-                    if (profileImage.getVisibility() == View.GONE)
+//                    Log.d("OFFSET", String.format("verticleOffset: %d ; height: %f ; show: true", verticalOffset, appBarLayout.getHeight() * 0.4));
+                    if (profileImage.getVisibility() == View.INVISIBLE)
                         profileImage.setVisibility(View.VISIBLE);
                     float scale = 1 - ((float) Math.abs(verticalOffset) / (appBarLayout.getHeight() * 0.4f));
                     profileImage.setScaleX(Math.max(scale, MIN_PROFILE_IMAGE_SCALE));

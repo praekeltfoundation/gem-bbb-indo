@@ -6,34 +6,34 @@
     android:orientation="horizontal"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:layout_marginBottom="@dimen/profile_budget_item_vertical_padding"
     android:baselineAligned="false">
 
-        <RelativeLayout
+        <LinearLayout
             android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="5">
+            android:layout_height="wrap_content"
+            android:layout_weight="5"
+            android:orientation="vertical">
 
             <ProgressBar
                 android:id="@+id/item_view_profile_budget_info_progress_expense"
                 style="@style/BudgetProgressBar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
-                android:layout_marginTop="@dimen/profile_budget_vertical_padding"
                 tools:progress="30" />
 
             <TextView
                 android:id="@+id/item_view_profile_budget_info_value_expense"
-                style="@style/AppTheme.TextView.Bold.Small"
+                style="@style/AppTheme.TextView.Bold.Medium"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
                 android:maxLines="1"
+                android:textStyle="bold"
                 android:textAlignment="center"
-                android:textColor="@color/black"
+                android:textColor="@color/divider"
                 tools:text="Rp60.000" />
 
-        </RelativeLayout>
+        </LinearLayout>
 
         <RelativeLayout
             android:layout_width="0dp"
@@ -42,22 +42,24 @@
 
             <TextView
                 android:id="@+id/item_view_profile_budget_info_percent_expense"
-                style="@style/AppTheme.TextView.Bold.Medium"
+                style="@style/AppTheme.TextView.Bold.ExtraLarge"
+                fontPath="fonts/LondrinaSolid-Regular.ttf"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentTop="true"
                 android:layout_centerHorizontal="true"
-                android:textColor="@color/light_blue"
+                android:textColor="@color/pink"
                 android:textStyle="bold"
                 tools:text="30%" />
 
             <TextView
                 android:id="@+id/item_view_profile_budget_info_of_expense"
-                style="@style/AppTheme.TextView.Regular.Small"
+                style="@style/AppTheme.TextView.Bold.Medium"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/item_view_profile_budget_info_percent_expense"
                 android:layout_centerHorizontal="true"
+                android:textStyle="bold"
                 android:textColor="@color/grey"
                 android:text="@string/budget_line_of_income" />
 

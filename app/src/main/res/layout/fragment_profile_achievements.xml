@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/fragment_profile_achievement_scroll_view"
@@ -11,89 +11,115 @@
     android:paddingRight="@dimen/profile_activity_horizontal_margin"
     android:paddingStart="@dimen/profile_activity_horizontal_margin"
     android:paddingTop="@dimen/profile_activity_vertical_margin"
-    tools:context=".views.profile.ProfileActivity">
+    android:clipToPadding="false"
+    tools:context=".views.profile.ProfileActivity"
+    >
 
-    <RelativeLayout
-        android:id="@+id/fragment_profile_achievement_container"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+    <FrameLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
 
-        <TextView
-            android:id="@+id/fragment_profile_current_streak_title"
-            style="@style/AppTheme.TextView.Bold.Medium"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ellipsize="end"
-            android:maxLines="1"
-            android:text="@string/profile_achievements_heading_current_saving_streak"
-            android:textAllCaps="true"
-            android:textColor="@color/grey"
-            android:textStyle="bold" />
-
-        <TextView
-            android:id="@+id/fragment_profile_current_streak_value"
-            style="@style/AppTheme.TextView.Regular.XXXLargeHeading"
-            fontPath="fonts/LondrinaSolid-Regular.ttf"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/fragment_profile_current_streak_title"
-            android:layout_marginBottom="@dimen/activity_vertical_margin"
-            android:ellipsize="end"
-            android:maxLines="1"
-            android:textColor="@color/purple"
-            android:textStyle="bold"
-            tools:text="2 weeks" />
-
-        <TextView
-            android:id="@+id/fragment_profile_current_achievement_title"
-            style="@style/AppTheme.TextView.Bold.Medium"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/fragment_profile_current_streak_value"
-            android:layout_marginTop="@dimen/activity_vertical_margin"
-            android:ellipsize="end"
-            android:maxLines="1"
-            android:text="@string/profile_achievements_heading_achievements"
-            android:textAllCaps="true"
-            android:textColor="@color/grey"
-            android:textStyle="bold" />
-
-        <org.gem.indo.dooit.views.custom.DesignSafeRecyclerView
-            android:id="@+id/fragment_profile_achievement_badge_recycler_view"
+        <RelativeLayout
+            android:id="@+id/fragment_profile_achievement_container"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_below="@+id/fragment_profile_current_achievement_title"
-            android:divider="@color/divider"
-            android:dividerHeight="1dp"
-            tools:listitem="@layout/item_view_profile_achievement" />
+            android:layout_gravity="center">
 
-    </RelativeLayout>
+            <TextView
+                android:id="@+id/fragment_profile_current_streak_title"
+                style="@style/AppTheme.TextView.Bold.Medium"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:text="@string/profile_achievements_heading_current_saving_streak"
+                android:textAllCaps="true"
+                android:textColor="@color/grey"
+                android:textStyle="bold" />
 
-    <RelativeLayout
-        android:id="@+id/fragment_achievements_progress_container"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:visibility="visible"
-        >
+            <TextView
+                android:id="@+id/fragment_profile_current_streak_value"
+                style="@style/AppTheme.TextView.Regular.XXXLargeHeading"
+                fontPath="fonts/LondrinaSolid-Regular.ttf"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/fragment_profile_current_streak_title"
+                android:layout_marginBottom="@dimen/activity_vertical_margin"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:textColor="@color/purple"
+                android:textStyle="bold"
+                tools:text="2 weeks" />
 
-        <ProgressBar
-            android:id="@+id/fragment_achievements_loadingprogress"
-            style="?android:attr/progressBarStyleLarge"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="bottom"
-            android:layout_centerInParent="true"
-            android:indeterminate="true" />
+            <TextView
+                android:id="@+id/fragment_profile_current_achievement_title"
+                style="@style/AppTheme.TextView.Bold.Medium"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/fragment_profile_current_streak_value"
+                android:layout_marginTop="@dimen/activity_vertical_margin"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:text="@string/profile_achievements_heading_achievements"
+                android:textAllCaps="true"
+                android:textColor="@color/grey"
+                android:textStyle="bold" />
 
+            <org.gem.indo.dooit.views.custom.DesignSafeRecyclerView
+                android:id="@+id/fragment_profile_achievement_badge_recycler_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/fragment_profile_current_achievement_title"
+                android:divider="@color/divider"
+                android:dividerHeight="1dp"
+                tools:listitem="@layout/item_view_profile_achievement" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/fragment_achievements_progress_container"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="visible"
+            android:layout_gravity="center"
+            >
+
+            <ProgressBar
+                android:id="@+id/fragment_achievements_loadingprogress"
+                style="?android:attr/progressBarStyleLarge"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="bottom"
+                android:layout_centerInParent="true"
+                android:indeterminate="true" />
+
+
+            <TextView
+                android:id="@+id/fragment_achievements_loadingtext"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/fragment_achievements_loadingprogress"
+                android:layout_marginTop="18dp"
+                android:layout_centerHorizontal="true"
+                android:text="@string/label_loading" />
+        </RelativeLayout>
 
         <TextView
-            android:id="@+id/fragment_achievements_loadingtext"
+            android:id="@+id/fragment_profile_achievements_error"
+            fontPath="fonts/LondrinaSolid-Regular.ttf"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/fragment_achievements_loadingprogress"
-            android:layout_marginTop="18dp"
-            android:layout_centerHorizontal="true"
-            android:text="@string/label_loading" />
-    </RelativeLayout>
+            android:layout_gravity="center"
+            android:layout_marginLeft="40dp"
+            android:layout_marginRight="40dp"
+            android:textAllCaps="true"
+            android:textStyle="bold"
+            android:textColor="#828282"
+            android:text="@string/profile_error_retrieve_budget"
+            android:textAlignment="center"
+            android:textAppearance="@style/AppTheme.TextView.Quiz.Title"
+            tools:visibility="visible" />
 
-</FrameLayout>
+    </FrameLayout>
+
+</android.support.v4.widget.NestedScrollView>

@@ -63,9 +63,6 @@ public class BudgetFragment extends Fragment {
 
     // Income
 
-    @BindView(R.id.fragment_profile_budget_progress_income)
-    ProgressBar incomeProgressView;
-
     @BindView(R.id.fragment_profile_budget_value_income)
     TextView incomeValueView;
 
@@ -183,8 +180,6 @@ public class BudgetFragment extends Fragment {
         double leftOver = budget.getLeftOver();
 
         // Income
-        // Income progress bar is always full
-        incomeProgressView.setProgress(100);
         incomeValueView.setText(CurrencyHelper.format(income));
 
         // Savings
@@ -254,7 +249,7 @@ public class BudgetFragment extends Fragment {
     }
 
     @OnClick(R.id.fragment_profile_budget_edit_btn)
-    void onEditBudgetClick(View view) {
+    void onEditBudgetClick(Button button) {
         returnResult(RequestCodes.RESPONSE_BUDGET_EDIT);
     }
 

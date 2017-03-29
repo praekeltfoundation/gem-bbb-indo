@@ -41,6 +41,12 @@ public class AchievementFragment extends Fragment {
     @BindView(R.id.fragment_profile_current_streak_value)
     TextView streakView;
 
+    @BindView(R.id.fragment_profile_achievement_container)
+    View containerView;
+
+    @BindView(R.id.fragment_profile_achievements_error)
+    TextView errorView;
+
     @BindView(R.id.fragment_profile_achievement_badge_recycler_view)
     RecyclerView achievementRecyclerView;
 
@@ -102,26 +108,12 @@ public class AchievementFragment extends Fragment {
         }
 
         User user = persisted.getCurrentUser();
-
         if (user != null) {
+            showProgress();
             achievementManager.retrieveAchievement(user.getId(), new DooitErrorHandler() {
                 @Override
                 public void onError(DooitAPIError error) {
-                    Context context = getContext();
-                    if (context != null)
-                        Toast.makeText(context, errorRetrieveMsg, Toast.LENGTH_SHORT).show();
-                }
-            }).doAfterTerminate(new Action0() {
-                @Override
-                public void call() {
-                    Activity activity = getActivity();
-                    if (activity != null)
-                        activity.runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                hideProgress();
-                            }
-                        });
+                    showError();
                 }
             }).subscribe(new Action1<AchievementResponse>() {
                 @Override
@@ -133,14 +125,21 @@ public class AchievementFragment extends Fragment {
                             public void run() {
                                 setStreak(response.getWeeklyStreak());
                                 adapter.addAll(response.getBadges());
+                                showContainer();
                             }
                         });
                 }
             });
+        } else {
+            showError();
         }
 
         return view;
     }
+
+    ////////
+    // UI //
+    ////////
 
     protected void setStreak(int streak) {
         if (streak == 1)
@@ -149,7 +148,26 @@ public class AchievementFragment extends Fragment {
             streakView.setText(String.format(streakPlural, streak));
     }
 
-    protected void hideProgress() {
+    protected void showContainer() {
         progressView.setVisibility(View.GONE);
+        containerView.setVisibility(View.VISIBLE);
+        errorView.setVisibility(View.GONE);
+    }
+
+    protected void showProgress() {
+        progressView.setVisibility(View.VISIBLE);
+        containerView.setVisibility(View.GONE);
+        errorView.setVisibility(View.GONE);
+    }
+
+    protected void showError() {
+        progressView.setVisibility(View.GONE);
+        containerView.setVisibility(View.GONE);
+        errorView.setVisibility(View.VISIBLE);
+        errorView.setText(errorRetrieveMsg);
+
+        Context context = getContext();
+        if (context != null)
+            Toast.makeText(context, errorRetrieveMsg, Toast.LENGTH_SHORT).show();
     }
 }

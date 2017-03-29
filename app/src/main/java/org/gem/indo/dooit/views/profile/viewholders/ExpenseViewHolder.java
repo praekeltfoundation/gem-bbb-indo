@@ -2,6 +2,7 @@ package org.gem.indo.dooit.views.profile.viewholders;
 
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -38,7 +39,10 @@ public class ExpenseViewHolder extends RecyclerView.ViewHolder {
     public void populate(double income, @NonNull Expense expense) {
         reset();
 
-        valueView.setText(CurrencyHelper.format(expense.getValue()));
+        String name = expense.getName();
+        valueView.setText(!TextUtils.isEmpty(name)
+                ? String.format("%s - %s", name.toUpperCase(), CurrencyHelper.format(expense.getValue()))
+                : CurrencyHelper.format(expense.getValue()));
 
         int progress = (int) Math.max(income != 0.0 ? (expense.getValue() / income) * 100.0 : 0.0, 0.0);
         progressView.setProgress(progress);

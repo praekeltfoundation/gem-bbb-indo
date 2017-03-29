@@ -41,7 +41,8 @@
     <dimen name="profile_activity_profile_image_top_margin">74dp</dimen>
     <dimen name="profile_activity_toolbar_height">60dp</dimen>
 
-    <dimen name="profile_budget_vertical_padding">4dp</dimen>
+    <dimen name="profile_budget_vertical_padding">20dp</dimen>
+    <dimen name="profile_budget_item_vertical_padding">8dp</dimen>
 
     <!-- Bot -->
     <dimen name="bot_left_margin">64dp</dimen>
