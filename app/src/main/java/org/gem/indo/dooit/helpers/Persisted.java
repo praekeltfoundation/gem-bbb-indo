@@ -1,6 +1,7 @@
 package org.gem.indo.dooit.helpers;
 
 import android.app.Application;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.util.LongSparseArray;
 import android.text.TextUtils;
@@ -42,6 +43,7 @@ import javax.inject.Inject;
  * Created by chris on 9/8/2016.
  */
 public class Persisted {
+    private static final String CURRENT_BOT = "current_bot_type";
     private static final String TOKEN = "token";
     private static final String UserUUID = "user_uuid";
     private static final String USER = "user";
@@ -80,6 +82,15 @@ public class Persisted {
     /*******
      * Bot *
      *******/
+
+    public void saveCurrentBotType(BotType type) {
+        dooitSharedPreferences.setInteger(CURRENT_BOT, type.getId());
+    }
+
+    @NonNull
+    public BotType loadBotType() {
+        return BotType.byId(dooitSharedPreferences.getInteger(CURRENT_BOT, BotType.DEFAULT.getId()));
+    }
 
     public ArrayList<BaseBotModel> loadConversationState(BotType type) {
         String conv = dooitSharedPreferences.getString(BOT + type.name(), "");

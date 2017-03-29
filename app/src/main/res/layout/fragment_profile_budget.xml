@@ -16,7 +16,8 @@
         android:id="@+id/fragment_profile_budget_edit_container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        tools:visibility="gone">
 
         <TextView
             android:id="@+id/fragment_profile_budget_heading_budget"
@@ -255,7 +256,8 @@
         android:id="@+id/fragment_profile_budget_create_container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        tools:visibility="visible">
 
         <TextView
             android:id="@+id/fragment_profile_budget_heading_budget_2"
@@ -271,13 +273,17 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/profile_budget_no_budget"/>
+            style="@style/AppTheme.TextView.Bold.Medium"
+            android:layout_marginTop="@dimen/bot_budget_vertical_padding"
+            android:text="@string/profile_budget_no_budget"
+            android:textColor="@color/divider"/>
 
         <Button
             android:id="@+id/fragment_profile_budget_create_btn"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             style="@style/AppTheme.Button.Big.LightBlue"
+            android:layout_marginTop="@dimen/bot_budget_vertical_padding"
             android:text="@string/profile_budget_create_budget"/>
 
     </LinearLayout>
@@ -286,7 +292,7 @@
         android:id="@+id/fragment_profile_budget_progress_container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:visibility="visible"
+        android:visibility="gone"
         >
 
         <ProgressBar
@@ -322,6 +328,7 @@
         android:textColor="#828282"
         android:text="@string/profile_error_retrieve_budget"
         android:textAlignment="center"
-        android:textAppearance="@style/AppTheme.TextView.Quiz.Title" />
+        android:textAppearance="@style/AppTheme.TextView.Quiz.Title"
+        tools:visibility="gone" />
 
 </FrameLayout>

@@ -2,6 +2,7 @@ package org.gem.indo.dooit.views.profile.fragments;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -20,6 +21,7 @@ import org.gem.indo.dooit.R;
 import org.gem.indo.dooit.api.DooitAPIError;
 import org.gem.indo.dooit.api.DooitErrorHandler;
 import org.gem.indo.dooit.api.managers.BudgetManager;
+import org.gem.indo.dooit.helpers.RequestCodes;
 import org.gem.indo.dooit.models.budget.Budget;
 import org.gem.indo.dooit.views.helpers.activity.CurrencyHelper;
 import org.gem.indo.dooit.views.profile.adapters.ExpenseAdapter;
@@ -32,6 +34,7 @@ import javax.inject.Inject;
 import butterknife.BindString;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import rx.functions.Action1;
 
 /**
@@ -243,5 +246,22 @@ public class BudgetFragment extends Fragment {
         editContainerView.setVisibility(View.GONE);
         createContainerView.setVisibility(View.VISIBLE);
         errorView.setVisibility(View.GONE);
+    }
+
+    @OnClick(R.id.fragment_profile_budget_create_btn)
+    void onCreateBudgetClick(Button button) {
+        returnResult(RequestCodes.RESPONSE_BUDGET_CREATE);
+    }
+
+    private void returnResult(int resultCode) {
+        Activity activity = getActivity();
+        if (activity == null)
+            return;
+        Activity parent = activity.getParent();
+        if (parent != null)
+            parent.setResult(resultCode);
+        else
+            activity.setResult(resultCode);
+        activity.finish();
     }
 }

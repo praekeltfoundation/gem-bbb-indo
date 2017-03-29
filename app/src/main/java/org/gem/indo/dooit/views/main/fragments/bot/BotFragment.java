@@ -117,7 +117,7 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
     @Inject
     TipManager tipManager;
 
-    private BotType type = BotType.DEFAULT;
+    private BotType type = null;
     private BotController controller;
     private BotFeed<Node> feed;
     private Node currentNode;
@@ -161,6 +161,10 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
                              Bundle savedInstanceState) {
         ((DooitApplication) getActivity().getApplication()).component.inject(this);
 
+        // The bot type was not set. Load from persisted
+        if (type == null)
+            type = persisted.loadBotType();
+
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_bot, container, false);
         ButterKnife.bind(this, view);
@@ -191,6 +195,12 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
     @Override
     public void onStart() {
         super.onStart();
+
+        // Choose a default conversation for returning users
+        if (!persisted.isNewBotUser() && type == BotType.DEFAULT)
+            setBotType(BotType.RETURNING_USER);
+
+        createFeed();
     }
 
     @Override
@@ -237,17 +247,6 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
         if (getActivity() == null)
             // onActive called while fragment not completely initialised
             return;
-
-        // Choose a default conversation for returning users
-        if (!persisted.isNewBotUser() && type == BotType.DEFAULT)
-            setBotType(BotType.RETURNING_USER);
-
-        createFeed();
-    }
-
-    @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
     }
 
     private void createFeed() {

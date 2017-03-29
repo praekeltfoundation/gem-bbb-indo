@@ -295,7 +295,7 @@ public class MainActivity extends ImageActivity {
 
     @OnClick(R.id.activity_main_profile_image)
     void openProfile() {
-        ProfileActivity.Builder.create(this).startActivity();
+        ProfileActivity.Builder.create(this).startActivityForResult(0);
     }
 
     @Override
@@ -322,6 +322,7 @@ public class MainActivity extends ImageActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (!activityForResultHelper.onActivityResult(requestCode, resultCode, data))
             super.onActivityResult(requestCode, resultCode, data);
+
         if (data != null) {
             switch (requestCode) {
                 case RequestCodes.CHALLENGE_PARTICIPANT_BADGE:
@@ -329,6 +330,11 @@ public class MainActivity extends ImageActivity {
                         startBot(BotType.CHALLENGE_PARTICIPANT_BADGE);
             }
         }
+
+        if (resultCode == RequestCodes.RESPONSE_BUDGET_CREATE)
+            startBot(BotType.BUDGET_CREATE);
+        else if (resultCode == RequestCodes.RESPONSE_BUDGET_EDIT)
+            startBot(BotType.BUDGET_EDIT);
     }
 
     @Override
@@ -351,22 +357,6 @@ public class MainActivity extends ImageActivity {
     @Override
     public String getScreenName() {
         return super.getScreenName() + " " + MainViewPagerPositions.getValueOf(viewPager.getCurrentItem()).name();
-    }
-
-    public static class Builder extends DooitActivityBuilder<Builder> {
-        protected Builder(Context context) {
-            super(context);
-        }
-
-        public static MainActivity.Builder create(Context context) {
-            MainActivity.Builder builder = new MainActivity.Builder(context);
-            return builder;
-        }
-
-        @Override
-        protected Intent createIntent(Context context) {
-            return new Intent(context, MainActivity.class);
-        }
     }
 
     /**
@@ -448,5 +438,21 @@ public class MainActivity extends ImageActivity {
 
     public void clearImageSelectedListener(){
         imageSelectedListener = null;
+    }
+
+    public static class Builder extends DooitActivityBuilder<Builder> {
+        protected Builder(Context context) {
+            super(context);
+        }
+
+        public static MainActivity.Builder create(Context context) {
+            MainActivity.Builder builder = new MainActivity.Builder(context);
+            return builder;
+        }
+
+        @Override
+        protected Intent createIntent(Context context) {
+            return new Intent(context, MainActivity.class);
+        }
     }
 }

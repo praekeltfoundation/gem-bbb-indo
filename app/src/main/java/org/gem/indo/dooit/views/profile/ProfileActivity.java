@@ -263,7 +263,8 @@ public class ProfileActivity extends ImageActivity {
 
         @Override
         protected Intent createIntent(Context context) {
-            return new Intent(context, ProfileActivity.class);
+            intent = new Intent(context, ProfileActivity.class);
+            return intent;
         }
     }
 }
