@@ -5,6 +5,7 @@ import android.app.Application;
 import org.gem.indo.dooit.api.DooitErrorHandler;
 import org.gem.indo.dooit.api.interfaces.BudgetAPI;
 import org.gem.indo.dooit.api.requests.budget.ChangeBudgetIncome;
+import org.gem.indo.dooit.api.requests.budget.ChangeBudgetSavings;
 import org.gem.indo.dooit.api.responses.BudgetCreateResponse;
 import org.gem.indo.dooit.models.budget.Budget;
 import org.gem.indo.dooit.models.budget.ExpenseCategory;
@@ -39,7 +40,11 @@ public class BudgetManager extends DooitManager {
         return useNetwork(budgetAPI.getBudgets(), errorHandler);
     }
 
-    public Observable<Budget> updateBudget(long budgetId, double income, DooitErrorHandler errorHandler) {
+    public Observable<Budget> updateBudgetIncome(long budgetId, double income, DooitErrorHandler errorHandler) {
         return useNetwork(budgetAPI.updateBudget(budgetId, new ChangeBudgetIncome(income)), errorHandler);
+    }
+
+    public Observable<Budget> updateBudgetSavings(long budgetId, double savings, DooitErrorHandler errorHandler) {
+        return useNetwork(budgetAPI.updateBudget(budgetId, new ChangeBudgetSavings(savings)), errorHandler);
     }
 }

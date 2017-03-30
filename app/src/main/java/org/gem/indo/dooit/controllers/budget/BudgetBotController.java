@@ -25,6 +25,7 @@ import java.util.Map;
 public abstract class BudgetBotController extends DooitBotController {
 
     protected static String INCOME_INPUT = "income_amount";
+    protected static String SAVINGS_INPUT = "savings_amount";
 
     protected BotRunner botRunner;
     protected MainActivity activity;

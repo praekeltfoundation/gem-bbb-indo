@@ -774,12 +774,19 @@
     <string name="budget_edit_a_no_income_show_tips">@string/budget_create_a_no_income_show_tips</string>
     <string name="budget_edit_a_no_income_exit">@string/budget_create_a_no_income_exit</string>
 
+    <string name="budget_edit_q_savings_default">@string/budget_create_q_savings_default</string>
+    <string name="budget_edit_a_savings_default_accept">@string/budget_create_a_savings_default_accept</string>
+    <string name="budget_edit_a_savings_default_deny">@string/budget_create_a_savings_default_deny</string>
+
     <string name="budget_edit_q_summary">@string/budget_create_q_summary</string>
     <string name="budget_edit_q_final_positive">@string/budget_create_q_final_positive</string>
+    <string name="budget_edit_a_edit_budget">@string/budget_create_a_edit_budget</string>
+    <string name="budget_edit_a_yes">@string/budget_create_a_yes</string>
 
     <!-- budget_edit validation -->
 
     <string name="budget_edit_err_income__not_found">Income input was not found</string>
+    <string name="budget_edit_err_savings__not_found">Savings input was not found</string>
 
     <!-- END: BOT: budget_edit -->
 

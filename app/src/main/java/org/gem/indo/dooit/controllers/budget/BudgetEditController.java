@@ -17,7 +17,9 @@ import org.gem.indo.dooit.models.bot.Answer;
 import org.gem.indo.dooit.models.bot.BaseBotModel;
 import org.gem.indo.dooit.models.budget.Budget;
 import org.gem.indo.dooit.models.enums.BotCallType;
+import org.gem.indo.dooit.models.enums.BotParamType;
 import org.gem.indo.dooit.models.enums.BotType;
+import org.gem.indo.dooit.views.helpers.activity.CurrencyHelper;
 
 import java.util.Map;
 
@@ -34,6 +36,8 @@ public class BudgetEditController extends BudgetBotController {
 
     private static final String TAG = BudgetEditController.class.getName();
 
+    private static String SAVING_DEFAULT_ACCEPT = "budget_edit_a_savings_default_accept";
+
     @Inject
     BudgetManager budgetManager;
 
@@ -42,6 +46,34 @@ public class BudgetEditController extends BudgetBotController {
         ((DooitApplication) activity.getApplication()).component.inject(this);
 
         this.budget = budget;
+    }
+
+    @Override
+    public void resolveParam(BaseBotModel model, BotParamType paramType) {
+        String key = paramType.getKey();
+        switch (paramType) {
+            case BUDGET_DEFAULT_SAVING_PERCENT:
+                model.values.put(key, Budget.DEFAULT_SAVING_PERCENT);
+                break;
+            case BUDGET_INCOME:
+                if (budget != null)
+                    model.values.put(key, CurrencyHelper.format(budget.getIncome()));
+                break;
+            case BUDGET_SAVINGS:
+                if (budget != null)
+                    model.values.put(key, CurrencyHelper.format(budget.getSavings()));
+                break;
+            case BUDGET_EXPENSE:
+                if (budget != null)
+                    model.values.put(key, CurrencyHelper.format(budget.getExpenseTotal()));
+                break;
+            case BUDGET_DEFAULT_SAVINGS:
+                if (budget != null)
+                    model.values.put(key, CurrencyHelper.format(budget.getDefaultSavings()));
+                break;
+            default:
+                super.resolveParam(model, paramType);
+        }
     }
 
     @Override
@@ -58,6 +90,9 @@ public class BudgetEditController extends BudgetBotController {
             case UPDATE_BUDGET_INCOME:
                 updateIncome(answerLog, listener);
                 break;
+            case UPDATE_BUDGET_SAVINGS:
+                updateSavings(answerLog, listener);
+                break;
             default:
                 super.onAsyncCall(key, answerLog, model, listener);
         }
@@ -67,7 +102,7 @@ public class BudgetEditController extends BudgetBotController {
         if (answerLog.containsKey(INCOME_INPUT)) {
             try {
                 double income = Double.parseDouble(answerLog.get(INCOME_INPUT).getValue());
-                budgetManager.updateBudget(budget.getId(), income, new DooitErrorHandler() {
+                budgetManager.updateBudgetIncome(budget.getId(), income, new DooitErrorHandler() {
                     @Override
                     public void onError(DooitAPIError error) {
 
@@ -93,11 +128,43 @@ public class BudgetEditController extends BudgetBotController {
             Context context = getContext();
             if (context != null)
                 Toast.makeText(context, R.string.budget_edit_err_income__not_found, Toast.LENGTH_SHORT).show();
-            listener.onDone();
+            notifyDone(listener);
         }
     }
 
     private void updateSavings(Map<String, Answer> answerLog, final OnAsyncListener listener) {
+        if (answerLog.containsKey(SAVINGS_INPUT) || answerLog.containsKey(SAVING_DEFAULT_ACCEPT)) {
+            try {
+                double savings = answerLog.containsKey(SAVING_DEFAULT_ACCEPT)
+                        ? budget.getDefaultSavings()
+                        : Double.parseDouble(answerLog.get(SAVINGS_INPUT).getValue());
+                budgetManager.updateBudgetSavings(budget.getId(), savings, new DooitErrorHandler() {
+                    @Override
+                    public void onError(DooitAPIError error) {
 
+                    }
+                }).doAfterTerminate(new Action0() {
+                    @Override
+                    public void call() {
+                        notifyDone(listener);
+                    }
+                }).subscribe(new Action1<Budget>() {
+                    @Override
+                    public void call(Budget budget) {
+                        new BudgetDAO().update(budget);
+                        BudgetEditController.this.budget = budget;
+                    }
+                });
+            } catch (NumberFormatException e) {
+                CrashlyticsHelper.log(TAG, "updateSavings",
+                        "Could not parse savings from conversation");
+                CrashlyticsHelper.logException(e);
+            }
+        } else {
+            Context context = getContext();
+            if (context != null)
+                Toast.makeText(context, R.string.budget_edit_err_savings__not_found, Toast.LENGTH_SHORT).show();
+            notifyDone(listener);
+        }
     }
 }

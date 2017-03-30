@@ -1,6 +1,7 @@
 package org.gem.indo.dooit.api.interfaces;
 
 import org.gem.indo.dooit.api.requests.budget.ChangeBudgetIncome;
+import org.gem.indo.dooit.api.requests.budget.ChangeBudgetSavings;
 import org.gem.indo.dooit.api.responses.BudgetCreateResponse;
 import org.gem.indo.dooit.models.budget.Budget;
 import org.gem.indo.dooit.models.budget.ExpenseCategory;
@@ -30,4 +31,7 @@ public interface BudgetAPI {
 
     @PATCH("/api/budgets/{id}/")
     Observable<Budget> updateBudget(@Path("id") long id, @Body ChangeBudgetIncome income);
+
+    @PATCH("/api/budgets/{id}/")
+    Observable<Budget> updateBudget(@Path("id") long id, @Body ChangeBudgetSavings savings);
 }

@@ -15,7 +15,8 @@
       },
       {
         "name": "budget_edit_a_savings",
-        "text": "$(budget_edit_a_savings)"
+        "text": "$(budget_edit_a_savings)",
+        "next": "budget_edit_q_savings_default"
       }
     ]
   },
@@ -76,13 +77,56 @@
       }
     ]
   },
-
-
-
   {
     "name": "budget_edit_update_income",
     "type": "blank",
     "asyncCall": "#update_budget_income",
+    "autoNext": "budget_edit_q_summary"
+  },
+
+
+
+  {
+    "name": "budget_edit_q_savings_default",
+    "type": "text",
+    "text": "$(budget_edit_q_savings_default)",
+    "answers": [
+      {
+        "name": "budget_edit_a_savings_default_accept",
+        "text": "$(budget_edit_a_savings_default_accept)",
+        "next": "budget_edit_update_savings"
+      },
+      {
+        "name": "budget_edit_a_savings_default_deny",
+        "text": "$(budget_edit_a_savings_default_deny)",
+        "next": "budget_edit_q_savings_custom"
+      }
+    ]
+  },
+
+
+
+  {
+    "name": "budget_edit_q_savings_custom",
+    "type": "blank",
+    "autoAnswer": "savings_amount",
+    "answers": [
+      {
+        "name": "savings_amount",
+        "type": "inlineCurrency",
+        "typeOnFinish": "textCurrency",
+        "inlineEditHint": "$(type_currency_hint)",
+        "nextOnFinish": "budget_edit_update_savings"
+      }
+    ]
+  },
+
+
+
+  {
+    "name": "budget_edit_update_savings",
+    "type": "blank",
+    "asyncCall": "#update_budget_savings",
     "autoNext": "budget_edit_q_summary"
   },
 

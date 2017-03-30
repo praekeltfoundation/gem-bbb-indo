@@ -26,7 +26,6 @@ import org.gem.indo.dooit.models.budget.Expense;
 import org.gem.indo.dooit.models.budget.ExpenseCategory;
 import org.gem.indo.dooit.models.enums.BotCallType;
 import org.gem.indo.dooit.models.enums.BotMessageType;
-import org.gem.indo.dooit.models.enums.BotObjectType;
 import org.gem.indo.dooit.models.enums.BotParamType;
 import org.gem.indo.dooit.models.enums.BotType;
 import org.gem.indo.dooit.views.helpers.activity.CurrencyHelper;
@@ -47,7 +46,6 @@ public class BudgetCreateController extends BudgetBotController {
     private static String TAG = BudgetCreateController.class.getName();
 
     private static String SAVING_DEFAULT_ACCEPT = "budget_create_a_savings_default_accept";
-    private static String SAVINGS = "savings_amount";
     private static String EXPENSE_QUESTION_PREFIX = "budget_create_q_expense_value_";
     private static String EXPENSE_ANSWER_PREFIX = "budget_create_a_expense_value_";
     private static String EXPENSE_STOP = "budget_create_q_expense_stop";
@@ -381,9 +379,9 @@ public class BudgetCreateController extends BudgetBotController {
                     return Budget.calcDefaultSavings(Double.parseDouble(answerLog.get(INCOME_INPUT).getValue()));
                 else
                     return 0.0;
-            else if (answerLog.containsKey(SAVINGS))
+            else if (answerLog.containsKey(SAVINGS_INPUT))
                 // User entered their own savings amount
-                return Double.parseDouble(answerLog.get(SAVINGS).getValue());
+                return Double.parseDouble(answerLog.get(SAVINGS_INPUT).getValue());
             else
                 return 0.0;
         } catch (NumberFormatException e) {
