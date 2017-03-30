@@ -739,6 +739,11 @@
     <string name="budget_create_q_final_positive">You can access and update your budget in your profile at any time.</string>
     <string name="budget_create_a_yes">Yes!</string>
 
+    <string name="budget_create_q_final_positive_has_goals">"Do you want to edit your savings goals to match your savings set aside in your budget?"</string>
+    <string name="budget_create_q_final_positive_goal_summary">"Your weekly target for goal is currently:"</string>
+    <string name="budget_create_q_final_positive_no_goals">"Do you want to add a savings goal to match your savings set aside in your budget?"</string>
+
+
     <string name="budget_create_qry_tip_income">income</string>
 
     <!-- budget_create validation -->
@@ -846,8 +851,19 @@
     <string name="error_retrieve_goals">" Error retrieving goals."</string>
 
     <!-- Profile -->
-    <string name="profile_week_streak_singular">"%s week"</string>
-    <string name="profile_week_streak_plural">"%s weeks"</string>
+    <string name="profile_achievements_heading_current_saving_streak">"Current Saving Streak"</string>
+    <string name="profile_achievements_heading_achievements">"Achievements"</string>
+    <string name="profile_achievements_week_streak_singular">"%s week"</string>
+    <string name="profile_achievements_week_streak_plural">"%s weeks"</string>
+    <string name="profile_budget_heading_budget">Budget</string>
+    <string name="profile_budget_no_budget">"A budget is an estimate of your income, savings, expenses and balance for a set period of time."</string>
+    <string name="profile_budget_create_budget">Create Budget</string>
+    <string name="profile_budget_edit_budget">Edit Budget</string>
+    <string name="profile_tab_achievements">Achievements</string>
+    <string name="profile_tab_budget">Budget</string>
+    <string name="profile_error_retrieve_achievements">Error retrieving achievements</string>
+    <string name="profile_error_retrieve_budget">Error retrieving budget</string>
+
     <string name="profile_settings_title">"Settings"</string>
     <string name="profile_section_account">"Your account"</string>
     <string name="profile_account_change_name">"Change name"</string>
@@ -969,8 +985,6 @@
     <string name="heading_change_email">@string/label_change_email</string>
 
     <string name="target_prefix_saved">"saved"</string>
-    <string name="heading_current_saving_streak">"Current Saving Streak"</string>
-    <string name="heading_achievements">"Achievements"</string>
     <string name="challenge_done">"Challenge done!"</string>
 
     <string name="hello_blank_fragment">"Hello blank fragment"</string>

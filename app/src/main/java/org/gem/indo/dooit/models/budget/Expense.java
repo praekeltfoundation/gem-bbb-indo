@@ -4,6 +4,8 @@ import android.support.annotation.Nullable;
 
 import com.google.gson.annotations.SerializedName;
 
+import org.gem.indo.dooit.helpers.strings.StringHelper;
+
 import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
 
@@ -72,6 +74,10 @@ public class Expense extends RealmObject {
 
     public void setName(@Nullable String name) {
         this.name = name;
+    }
+
+    public boolean hasName() {
+        return !StringHelper.isEmpty(name);
     }
 
     ///////////

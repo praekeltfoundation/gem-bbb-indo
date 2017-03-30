@@ -25,8 +25,9 @@ public class BudgetInfoExpenseVH extends RecyclerView.ViewHolder {
     @BindView(R.id.item_view_bot_budget_info_value_expense)
     TextView expenseValue;
 
-    @BindView(R.id.item_view_bot_budget_info_percent_expense)
-    TextView expensePercentage;
+    // Bot Budget does not show percentage
+//    @BindView(R.id.item_view_bot_budget_info_percent_expense)
+//    TextView expensePercentage;
 
     public BudgetInfoExpenseVH(View itemView) {
         super(itemView);
@@ -39,8 +40,8 @@ public class BudgetInfoExpenseVH extends RecyclerView.ViewHolder {
 
         expenseProgress.setProgress(expense.getPercentage());
 
-        expensePercentage.setText(String.format(Locale.US, "%d%%",
-                expense.getPercentage()));
+//        expensePercentage.setText(String.format(Locale.US, "%d%%",
+//                expense.getPercentage()));
     }
 
     public static class ExpenseViewModel {

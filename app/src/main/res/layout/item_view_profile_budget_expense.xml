@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/item_view_profile_budget_info_expense"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="@dimen/profile_budget_item_vertical_padding"
+    android:baselineAligned="false">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="5"
+            android:orientation="vertical">
+
+            <ProgressBar
+                android:id="@+id/item_view_profile_budget_info_progress_expense"
+                style="@style/BudgetProgressBar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                tools:progress="30" />
+
+            <TextView
+                android:id="@+id/item_view_profile_budget_info_value_expense"
+                style="@style/AppTheme.TextView.Bold.Medium"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:maxLines="1"
+                android:textStyle="bold"
+                android:textAlignment="center"
+                android:textColor="@color/divider"
+                tools:text="Food - Rp60.000" />
+
+        </LinearLayout>
+
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="2">
+
+            <TextView
+                android:id="@+id/item_view_profile_budget_info_percent_expense"
+                style="@style/AppTheme.TextView.Bold.ExtraLarge"
+                fontPath="fonts/LondrinaSolid-Regular.ttf"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"
+                android:textColor="@color/pink"
+                android:textStyle="bold"
+                tools:text="30%" />
+
+            <TextView
+                android:id="@+id/item_view_profile_budget_info_of_expense"
+                style="@style/AppTheme.TextView.Bold.Medium"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/item_view_profile_budget_info_percent_expense"
+                android:layout_centerHorizontal="true"
+                android:textStyle="bold"
+                android:textColor="@color/grey"
+                android:text="@string/budget_line_of_income" />
+
+        </RelativeLayout>
+
+</LinearLayout>

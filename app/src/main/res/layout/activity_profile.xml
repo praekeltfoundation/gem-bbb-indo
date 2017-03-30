@@ -13,7 +13,7 @@
     <android.support.design.widget.AppBarLayout
         android:id="@+id/app_bar"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/app_bar_height"
+        android:layout_height="wrap_content"
         android:background="@color/purple"
         android:fitsSystemWindows="false"
         android:theme="@style/AppTheme.AppBarOverlay"
@@ -24,7 +24,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             app:contentScrim="@color/transparent"
-            app:layout_scrollFlags="scroll|exitUntilCollapsed|snap"
+            app:layout_scrollFlags="scroll|snap"
             app:titleEnabled="false">
 
             <com.facebook.drawee.view.SimpleDraweeView
@@ -32,13 +32,22 @@
                 android:layout_width="@dimen/profile_activity_profile_image_size"
                 android:layout_height="@dimen/profile_activity_profile_image_size"
                 android:layout_gravity="center_horizontal"
-                android:layout_marginTop="@dimen/profile_activity_profile_image_top_margin"
+                android:layout_marginTop="74dp"
+                android:layout_marginBottom="26dp"
                 android:background="@color/transparent"
                 app:layout_collapseMode="parallax"
                 app:layout_scrollFlags="scroll|enterAlways|enterAlwaysCollapsed"
                 fresco:placeholderImage="@drawable/ic_empty_profile_image"
                 fresco:roundAsCircle="true"
                 tools:background="@color/transparent" />
+
+            <android.support.v7.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:background="@color/transparent"
+                app:layout_collapseMode="pin"
+                app:popupTheme="@style/AppTheme.PopupOverlay"/>
 
             <TextView
                 android:id="@+id/toolbar_title"
@@ -58,113 +67,40 @@
                 app:layout_collapseMode="pin"
                 tools:text="Aida" />
 
-            <android.support.v7.widget.Toolbar
-                android:id="@+id/toolbar"
-                android:layout_width="match_parent"
-                android:layout_height="?attr/actionBarSize"
-                android:background="@color/transparent"
-                app:layout_collapseMode="pin"
-                app:popupTheme="@style/AppTheme.PopupOverlay"/>
-
         </android.support.design.widget.CollapsingToolbarLayout>
+
+        <android.support.design.widget.TabLayout
+            android:id="@+id/activity_profile_tab_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            app:tabBackground="@drawable/tab_profile_bkg"
+            app:tabIndicatorColor="@color/transparent"
+            app:tabIndicatorHeight="@dimen/tip_tab_indicator_height"
+            app:tabPaddingBottom="0dp"
+            app:tabPaddingEnd="0dp"
+            app:tabPaddingStart="0dp"
+            app:tabPaddingTop="0dp"
+            app:tabTextAppearance="@style/AppTheme.TextView.Regular.ExtraLarge">
+
+            <android.support.design.widget.TabItem
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:text="Achievements"/>
+
+            <android.support.design.widget.TabItem
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:text="Budget"/>
+
+        </android.support.design.widget.TabLayout>
 
     </android.support.design.widget.AppBarLayout>
 
-
-    <android.support.v4.widget.NestedScrollView
-        android:id="@+id/activity_profile_scroll_view"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:paddingBottom="@dimen/profile_activity_vertical_margin"
-        android:paddingEnd="@dimen/profile_activity_horizontal_margin"
-        android:paddingLeft="@dimen/profile_activity_horizontal_margin"
-        android:paddingRight="@dimen/profile_activity_horizontal_margin"
-        android:paddingStart="@dimen/profile_activity_horizontal_margin"
-        android:paddingTop="@dimen/profile_activity_vertical_margin"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior">
-
-        <RelativeLayout
+        <android.support.v4.view.ViewPager
+            android:id="@+id/activity_profile_view_pager"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
 
-            <TextView
-                android:id="@+id/profile_current_streak_title"
-                style="@style/AppTheme.TextView.Bold.Medium"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:ellipsize="end"
-                android:maxLines="1"
-                android:text="@string/heading_current_saving_streak"
-                android:textAllCaps="true"
-                android:textColor="@color/grey"
-                android:textStyle="bold" />
-
-            <TextView
-                android:id="@+id/profile_current_streak_value"
-                style="@style/AppTheme.TextView.Regular.XXXLargeHeading"
-                fontPath="fonts/LondrinaSolid-Regular.ttf"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/profile_current_streak_title"
-                android:layout_marginBottom="@dimen/activity_vertical_margin"
-                android:ellipsize="end"
-                android:maxLines="1"
-                android:textColor="@color/purple"
-                android:textStyle="bold"
-                tools:text="2 weeks" />
-
-            <TextView
-                android:id="@+id/profile_current_achievement_title"
-                style="@style/AppTheme.TextView.Bold.Medium"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/profile_current_streak_value"
-                android:layout_marginTop="@dimen/activity_vertical_margin"
-                android:ellipsize="end"
-                android:maxLines="1"
-                android:text="@string/heading_achievements"
-                android:textAllCaps="true"
-                android:textColor="@color/grey"
-                android:textStyle="bold" />
-
-            <org.gem.indo.dooit.views.custom.DesignSafeRecyclerView
-                android:id="@+id/activity_profile_achievement_recycler_view"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_below="@+id/profile_current_achievement_title"
-                android:divider="@color/divider"
-                android:dividerHeight="1dp"
-                tools:listitem="@layout/item_view_profile_achievement" />
-
-            <RelativeLayout
-                android:id="@+id/achievements_progress_container"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginTop="130dp"
-                android:visibility="visible"
-                >
-
-                <ProgressBar
-                    android:id="@+id/fragment_achievement_loadingprogress"
-                    style="?android:attr/progressBarStyleLarge"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:gravity="bottom"
-                    android:layout_centerInParent="true"
-                    android:indeterminate="true" />
-
-
-                <TextView
-                    android:id="@+id/fragment_acheivement_loadingtext"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/fragment_achievement_loadingprogress"
-                    android:layout_marginTop="18dp"
-                    android:layout_centerHorizontal="true"
-                    android:text="@string/label_loading" />
-            </RelativeLayout>
-
-        </RelativeLayout>
-
-    </android.support.v4.widget.NestedScrollView>
 </android.support.design.widget.CoordinatorLayout>

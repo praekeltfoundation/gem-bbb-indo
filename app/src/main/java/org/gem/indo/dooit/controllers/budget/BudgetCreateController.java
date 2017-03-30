@@ -216,6 +216,9 @@ public class BudgetCreateController extends DooitBotController {
             case BRANCH_BUDGET_FINAL:
                 branchBudgetFinal(answerLog);
                 break;
+            case BRANCH_BUDGET_GOALS:
+                branchBudgetGoals(answerLog);
+                break;
             default:
                 super.onCall(key, answerLog, model);
         }
@@ -372,6 +375,10 @@ public class BudgetCreateController extends DooitBotController {
 
             botRunner.queueNode(node);
         }
+    }
+
+    private void branchBudgetGoals(Map<String, Answer> answerLog) {
+
     }
 
     ////////////

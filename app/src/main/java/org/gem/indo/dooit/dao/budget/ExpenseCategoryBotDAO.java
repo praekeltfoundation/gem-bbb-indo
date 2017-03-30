@@ -254,4 +254,25 @@ public class ExpenseCategoryBotDAO {
                 realm.close();
         }
     }
+
+    public void clearAll() {
+        Realm realm = null;
+
+        try {
+            realm = Realm.getDefaultInstance();
+
+            RealmResults<ExpenseCategory> results = realm.where(ExpenseCategory.class)
+                    .findAll();
+
+            realm.beginTransaction();
+            results.deleteAllFromRealm();
+            realm.commitTransaction();
+        } catch (Throwable e) {
+            if (realm != null && realm.isInTransaction())
+                realm.cancelTransaction();
+        } finally {
+            if (realm != null)
+                realm.close();
+        }
+    }
 }

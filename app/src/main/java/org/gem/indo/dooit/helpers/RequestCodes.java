@@ -10,4 +10,6 @@ public class RequestCodes {
     public static final int RESPONSE_GALLERY_REQUEST_CHALLENGE_IMAGE = 2001;
     public static final int RESPONSE_CHALLENGE_REQUEST_RUN = 3000;
     public static final int CHALLENGE_PARTICIPANT_BADGE = 4000;
+    public static final int RESPONSE_BUDGET_CREATE = 5000;
+    public static final int RESPONSE_BUDGET_EDIT = 5001;
 }

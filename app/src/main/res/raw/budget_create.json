@@ -193,6 +193,12 @@
   {
     "name": "budget_create_info",
     "type": "budgetInfo",
+    "autoNext": "budget_create_clear_after_success"
+  },
+  {
+    "name": "budget_create_clear_after_success",
+    "type": "blank",
+    "call": "#clear_expenses",
     "autoNext": "budget_create_q_branch"
   },
   {
@@ -246,6 +252,25 @@
         "text": "$(budget_create_a_yes)"
       }
     ]
+  },
+  {
+    "name": "budget_create_q_branch_goals",
+    "type": "blank",
+    "call": "#branch_budget_goals"
+  },
+
+
+
+  {
+    "name": "budget_create_q_final_positive_has_goals",
+    "type": "text",
+    "text": "$(budget_create_q_final_positive_has_goals)",
+    "call": "#list_goals"
+  },
+  {
+    "name": "budget_create_q_final_positive_no_goals",
+    "type": "text",
+    "text": "$(budget_create_q_final_positive_no_goals)"
   },
 
 
