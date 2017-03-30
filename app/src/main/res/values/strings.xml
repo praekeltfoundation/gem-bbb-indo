@@ -757,6 +757,29 @@
     <string name="budget_create_err_expense__empty">Expense cannot be empty</string>
     <string name="budget_create_err_expense__zero">Expense cannot be Rp0</string>
 
+    <!-- END: BOT: budget_create -->
+
+    <!-- BOT: budget_edit -->
+
+    <string name="budget_edit_q_intro">"What would you like to edit?"</string>
+    <string name="budget_edit_a_income">Income</string>
+    <string name="budget_edit_a_expense">Expenses</string>
+    <string name="budget_edit_a_savings">Savings</string>
+
+    <string name="budget_edit_q_income">"How much do you get each month?"</string>
+    <string name="budget_edit_a_income_amount">@string/budget_create_a_income_amount</string>
+    <string name="budget_edit_a_no_income">@string/budget_create_a_no_income</string>
+
+    <string name="budget_edit_q_no_income">@string/budget_create_q_no_income</string>
+    <string name="budget_edit_a_no_income_show_tips">@string/budget_create_a_no_income_show_tips</string>
+    <string name="budget_edit_a_no_income_exit">@string/budget_create_a_no_income_exit</string>
+
+    <!-- budget_edit validation -->
+
+    <string name="budget_edit_err_income__not_found">Income input was not found</string>
+
+    <!-- END: BOT: budget_edit -->
+
     <!-- END: BOT -->
 
     <!--Buttons-->

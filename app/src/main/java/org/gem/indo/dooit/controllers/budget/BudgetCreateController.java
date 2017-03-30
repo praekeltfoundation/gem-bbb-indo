@@ -11,7 +11,6 @@ import org.gem.indo.dooit.api.DooitAPIError;
 import org.gem.indo.dooit.api.DooitErrorHandler;
 import org.gem.indo.dooit.api.managers.BudgetManager;
 import org.gem.indo.dooit.api.responses.BudgetCreateResponse;
-import org.gem.indo.dooit.controllers.DooitBotController;
 import org.gem.indo.dooit.dao.budget.BudgetDAO;
 import org.gem.indo.dooit.dao.budget.ExpenseCategoryBotDAO;
 import org.gem.indo.dooit.helpers.bot.BotRunner;
@@ -31,7 +30,6 @@ import org.gem.indo.dooit.models.enums.BotObjectType;
 import org.gem.indo.dooit.models.enums.BotParamType;
 import org.gem.indo.dooit.models.enums.BotType;
 import org.gem.indo.dooit.views.helpers.activity.CurrencyHelper;
-import org.gem.indo.dooit.views.main.MainActivity;
 
 import java.util.Map;
 
@@ -44,11 +42,10 @@ import rx.functions.Action1;
  * Created by Wimpie Victor on 2017/03/01.
  */
 
-public class BudgetCreateController extends DooitBotController {
+public class BudgetCreateController extends BudgetBotController {
 
     private static String TAG = BudgetCreateController.class.getName();
 
-    private static String INCOME = "income_amount";
     private static String SAVING_DEFAULT_ACCEPT = "budget_create_a_savings_default_accept";
     private static String SAVINGS = "savings_amount";
     private static String EXPENSE_QUESTION_PREFIX = "budget_create_q_expense_value_";
@@ -58,16 +55,9 @@ public class BudgetCreateController extends DooitBotController {
     @Inject
     BudgetManager budgetManager;
 
-    private MainActivity activity;
-    private Budget budget;
-    private BotRunner botRunner;
-
     public BudgetCreateController(Activity activity, @NonNull BotRunner botRunner) {
-        super(activity, BotType.BUDGET_CREATE);
+        super(activity, BotType.BUDGET_CREATE, activity, botRunner);
         ((DooitApplication) activity.getApplication()).component.inject(this);
-
-        this.activity = (MainActivity) activity;
-        this.botRunner = botRunner;
 
         // A new Budget can be persisted if the conversation is reloaded.
         budget = new BudgetDAO().findFirst();
@@ -201,9 +191,6 @@ public class BudgetCreateController extends DooitBotController {
     @Override
     public void onCall(BotCallType key, Map<String, Answer> answerLog, BaseBotModel model) {
         switch (key) {
-            case SET_TIP_QUERY:
-                tipQuery();
-                break;
             case ADD_EXPENSE:
                 addNextExpense();
                 break;
@@ -222,13 +209,6 @@ public class BudgetCreateController extends DooitBotController {
             default:
                 super.onCall(key, answerLog, model);
         }
-    }
-
-    private void tipQuery() {
-        if (activity == null)
-            return;
-
-        activity.setTipQuery(activity.getString(R.string.budget_create_qry_tip_income));
     }
 
     @Override
@@ -390,8 +370,8 @@ public class BudgetCreateController extends DooitBotController {
      * @return The calculated monthly income. Will be 0.0 if no income input was provided.
      */
     private double monthlyIncome(@NonNull Map<String, Answer> answerLog) {
-        if (answerLog.containsKey(INCOME))
-            return Double.parseDouble(answerLog.get(INCOME).getValue());
+        if (answerLog.containsKey(INCOME_INPUT))
+            return Double.parseDouble(answerLog.get(INCOME_INPUT).getValue());
         else {
             CrashlyticsHelper.log(TAG, "monthlyIncome",
                     "Unexpected attempt te get monthly income with no income input in conversation");
@@ -407,8 +387,8 @@ public class BudgetCreateController extends DooitBotController {
         try {
             if (answerLog.containsKey(SAVING_DEFAULT_ACCEPT))
                 // User accepts the default suggested savings
-                if (answerLog.containsKey(INCOME))
-                    return Budget.calcDefaultSavings(Double.parseDouble(answerLog.get(INCOME).getValue()));
+                if (answerLog.containsKey(INCOME_INPUT))
+                    return Budget.calcDefaultSavings(Double.parseDouble(answerLog.get(INCOME_INPUT).getValue()));
                 else
                     return 0.0;
             else if (answerLog.containsKey(SAVINGS))
@@ -444,79 +424,7 @@ public class BudgetCreateController extends DooitBotController {
     public boolean validate(String name, String input) {
         if (name.startsWith(EXPENSE_ANSWER_PREFIX))
             return validateExpense(input);
-
-        switch (name) {
-            case "income_amount":
-                return validateIncome(input);
-            case "savings_amount":
-                return validateSavings(input);
-            default:
-                return super.validate(name, input);
-        }
+        return super.validate(name, input);
     }
 
-    private boolean validateIncome(String input) {
-        if (TextUtils.isEmpty(input)) {
-            toast(R.string.budget_create_err_income__empty);
-            return false;
-        }
-        try {
-            double income = Double.parseDouble(input);
-            if (income <= 0.0) {
-                toast(R.string.budget_create_err_income__zero);
-                return false;
-            }
-            return true;
-        } catch (NumberFormatException e) {
-            toast("Invalid number");
-            return false;
-        }
-    }
-
-    private boolean validateSavings(String input) {
-        if (TextUtils.isEmpty(input)) {
-            toast(R.string.budget_create_err_savings__empty);
-            return false;
-        }
-        try {
-            double value = Double.parseDouble(input);
-
-            // Find income defined earlier
-            Map<String, Answer> answerLog = botRunner.getAnswerLog();
-            Double income = null;
-            if (answerLog.containsKey(INCOME))
-                income = Double.parseDouble(answerLog.get(INCOME).getValue());
-
-            if (value <= 0.0) {
-                toast(R.string.budget_create_err_savings__zero);
-                return false;
-            } else if (income != null && value > income) {
-                toast(R.string.budget_create_err_savings__gt_income);
-                return false;
-            }
-            return true;
-        } catch (NumberFormatException e) {
-            toast(R.string.budget_create_err__invalid_number);
-            return false;
-        }
-    }
-
-    private boolean validateExpense(String input) {
-        if (TextUtils.isEmpty(input)) {
-            toast(R.string.budget_create_err_expense__empty);
-            return false;
-        }
-        try {
-            double expense = Double.parseDouble(input);
-
-            if (expense <= 0) {
-                toast(R.string.budget_create_err_expense__zero);
-                return false;
-            }
-            return true;
-        } catch (NumberFormatException e) {
-            toast(R.string.budget_create_err__invalid_number);
-            return false;
-        }
-    }
 }

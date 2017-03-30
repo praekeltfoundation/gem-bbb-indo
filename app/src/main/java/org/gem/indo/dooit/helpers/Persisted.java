@@ -88,8 +88,13 @@ public class Persisted {
     }
 
     @NonNull
-    public BotType loadBotType() {
+    public BotType loadCurrentBotType() {
         return BotType.byId(dooitSharedPreferences.getInteger(CURRENT_BOT, BotType.DEFAULT.getId()));
+    }
+
+    public void clearCurrentBotType() {
+        if (dooitSharedPreferences.containsKey(CURRENT_BOT))
+            dooitSharedPreferences.remove(CURRENT_BOT);
     }
 
     public ArrayList<BaseBotModel> loadConversationState(BotType type) {
@@ -288,20 +293,20 @@ public class Persisted {
         dooitSharedPreferences.remove(BOT + "_" + WINNING_BADGE + "_" + BotType.CHALLENGE_WINNER);
     }
 
-    public void clearConvoWinnerChallenge(){
+    public void clearConvoWinnerChallenge() {
         dooitSharedPreferences.remove(BOT + "_" + WINNING_CHALLENGE + "_" + BotType.CHALLENGE_WINNER);
     }
 
-    public boolean hasConvoWinnerChallenge(BotType botType){
+    public boolean hasConvoWinnerChallenge(BotType botType) {
         return dooitSharedPreferences.containsKey(BOT + "_" + WINNING_CHALLENGE + "_" + botType.name());
     }
 
-    public void saveConvoParticipant(BotType botType, Badge badge,BaseChallenge challenge){
+    public void saveConvoParticipant(BotType botType, Badge badge, BaseChallenge challenge) {
         dooitSharedPreferences.setComplex(BOT + "_" + CHALLENGE_PARTICIPANT_BADGE + "_" + botType.name(), badge);
-        dooitSharedPreferences.setComplex(BOT + "_" + PARTICIPANT_CHALLENGE + "_" + botType.name(),challenge);
+        dooitSharedPreferences.setComplex(BOT + "_" + PARTICIPANT_CHALLENGE + "_" + botType.name(), challenge);
     }
 
-    public Badge loadParticipantBadge(BotType botType){
+    public Badge loadParticipantBadge(BotType botType) {
         return dooitSharedPreferences.getComplex(BOT + "_" + CHALLENGE_PARTICIPANT_BADGE + "_" + botType.name(), Badge.class);
     }
 
@@ -309,11 +314,11 @@ public class Persisted {
         return dooitSharedPreferences.getComplex(BOT + "_" + PARTICIPANT_CHALLENGE + "_" + botType.name(), BaseChallenge.class);
     }
 
-    public boolean hasConvoParticipant(BotType botType){
+    public boolean hasConvoParticipant(BotType botType) {
         return dooitSharedPreferences.containsKey(BOT + "_" + CHALLENGE_PARTICIPANT_BADGE + "_" + botType.name());
     }
 
-    public void clearConvoParticipant(){
+    public void clearConvoParticipant() {
         dooitSharedPreferences.remove(BOT + "_" + CHALLENGE_PARTICIPANT_BADGE + "_" + BotType.CHALLENGE_PARTICIPANT_BADGE);
         dooitSharedPreferences.remove(BOT + "_" + PARTICIPANT_CHALLENGE + "_" + BotType.CHALLENGE_PARTICIPANT_BADGE);
     }
@@ -383,7 +388,7 @@ public class Persisted {
         dooitSharedPreferences.remove(TOKEN);
     }
 
-    public void clearUserUUID(){
+    public void clearUserUUID() {
         dooitSharedPreferences.remove(UserUUID);
     }
 

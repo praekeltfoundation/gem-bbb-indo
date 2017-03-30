@@ -1,3 +1,103 @@
 [
+  {
+    "name": "budget_edit_q_intro",
+    "type": "text",
+    "text": "$(budget_edit_q_intro)",
+    "answers": [
+      {
+        "name": "budget_edit_a_income",
+        "text": "$(budget_edit_a_income)",
+        "next": "budget_edit_q_income"
+      },
+      {
+        "name": "budget_edit_a_expense",
+        "text": "$(budget_edit_a_expense)"
+      },
+      {
+        "name": "budget_edit_a_savings",
+        "text": "$(budget_edit_a_savings)"
+      }
+    ]
+  },
 
+
+
+  {
+    "name": "budget_edit_q_income",
+    "type": "text",
+    "text": "$(budget_edit_q_income)",
+    "answers": [
+      {
+        "name": "budget_edit_a_income_amount",
+        "text": "$(budget_edit_a_income_amount)",
+        "next": "budget_edit_a_income_amount"
+      },
+      {
+        "name": "budget_edit_a_no_income",
+        "text": "$(budget_edit_a_no_income)",
+        "next": "budget_edit_q_no_income"
+      }
+    ]
+  },
+
+
+
+  {
+    "name": "budget_edit_a_income_amount",
+    "type": "blank",
+    "autoAnswer": "income_amount",
+    "answers": [
+      {
+        "name": "income_amount",
+        "type": "inlineCurrency",
+        "nextOnFinish": "budget_edit_update_income",
+        "typeOnFinish": "textCurrency",
+        "inlineEditHint": "$(type_currency_hint)"
+      }
+    ]
+  },
+
+
+
+  {
+    "name": "budget_edit_q_no_income",
+    "type": "text",
+    "text": "$(budget_edit_q_no_income)",
+    "answers": [
+      {
+        "name": "budget_edit_a_no_income_show_tips",
+        "text": "$(budget_edit_a_no_income_show_tips)",
+        "next": "budget_edit_end_show_tips"
+      },
+      {
+        "name": "budget_edit_a_no_income_exit",
+        "text": "$(budget_edit_a_no_income_exit)",
+        "next": "budget_edit_end"
+      }
+    ]
+  },
+
+
+
+  {
+    "name": "budget_edit_update_income",
+    "type": "blank",
+    "call": "#update_budget_income"
+  },
+
+
+
+  {
+    "name": "budget_edit_end_show_tips",
+    "type": "end",
+    "call": "#set_tip_query",
+    "autoNextScreen": "TIPS"
+  },
+
+
+
+  {
+    "name": "budget_edit_end",
+    "type": "end"
+  }
 ]
