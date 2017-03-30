@@ -12,6 +12,7 @@ import org.gem.indo.dooit.models.bot.Answer;
 import org.gem.indo.dooit.models.bot.BaseBotModel;
 import org.gem.indo.dooit.models.budget.Budget;
 import org.gem.indo.dooit.models.enums.BotCallType;
+import org.gem.indo.dooit.models.enums.BotObjectType;
 import org.gem.indo.dooit.models.enums.BotType;
 import org.gem.indo.dooit.views.main.MainActivity;
 
@@ -35,6 +36,16 @@ public abstract class BudgetBotController extends DooitBotController {
 
         this.activity = (MainActivity) activity;
         this.botRunner = botRunner;
+    }
+
+    @Override
+    public Object getObject(BotObjectType objType) {
+        switch (objType) {
+            case BUDGET:
+                return budget;
+            default:
+                return super.getObject(objType);
+        }
     }
 
     @Override

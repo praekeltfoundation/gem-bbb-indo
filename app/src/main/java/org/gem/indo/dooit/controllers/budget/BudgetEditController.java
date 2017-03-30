@@ -75,7 +75,7 @@ public class BudgetEditController extends BudgetBotController {
                 }).doAfterTerminate(new Action0() {
                     @Override
                     public void call() {
-                        listener.onDone();
+                        notifyDone(listener);
                     }
                 }).subscribe(new Action1<Budget>() {
                     @Override
@@ -98,6 +98,6 @@ public class BudgetEditController extends BudgetBotController {
     }
 
     private void updateSavings(Map<String, Answer> answerLog, final OnAsyncListener listener) {
-        
+
     }
 }

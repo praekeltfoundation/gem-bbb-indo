@@ -82,7 +82,44 @@
   {
     "name": "budget_edit_update_income",
     "type": "blank",
-    "call": "#update_budget_income"
+    "asyncCall": "#update_budget_income",
+    "autoNext": "budget_edit_q_summary"
+  },
+
+
+
+  {
+    "name": "budget_edit_q_summary",
+    "type": "text",
+    "text": "$(budget_edit_q_summary)",
+    "autoNext": "budget_edit_info"
+  },
+  {
+    "name": "budget_edit_info",
+    "type": "budgetInfo",
+    "autoNext": "budget_edit_clear_after_success"
+  },
+  {
+    "name": "budget_edit_clear_after_success",
+    "type": "blank",
+    "call": "#clear_expenses_state",
+    "autoNext": "budget_edit_q_final_positive"
+  },
+  {
+    "name": "budget_edit_q_final_positive",
+    "type": "text",
+    "text": "$(budget_edit_q_final_positive)",
+    "answers": [
+      {
+        "name": "budget_edit_a_edit_budget",
+        "text": "$(budget_edit_a_edit_budget)",
+        "next": "budget_edit_start_edit"
+      },
+      {
+        "name": "budget_edit_a_yes",
+        "text": "$(budget_edit_a_yes)"
+      }
+    ]
   },
 
 
@@ -92,6 +129,14 @@
     "type": "end",
     "call": "#set_tip_query",
     "autoNextScreen": "TIPS"
+  },
+
+
+
+  {
+    "name": "budget_edit_start_edit",
+    "type": "startConvo",
+    "autoNext": "BUDGET_EDIT"
   },
 
 

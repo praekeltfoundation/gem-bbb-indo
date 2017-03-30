@@ -179,16 +179,6 @@ public class BudgetCreateController extends BudgetBotController {
     }
 
     @Override
-    public Object getObject(BotObjectType objType) {
-        switch (objType) {
-            case BUDGET:
-                return budget;
-            default:
-                return super.getObject(objType);
-        }
-    }
-
-    @Override
     public void onCall(BotCallType key, Map<String, Answer> answerLog, BaseBotModel model) {
         switch (key) {
             case ADD_EXPENSE:
