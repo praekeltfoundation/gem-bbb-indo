@@ -739,18 +739,9 @@
     <string name="budget_create_q_final_positive">You can access and update your budget in your profile at any time.</string>
     <string name="budget_create_a_yes">Yes!</string>
 
-    <string name="budget_edit_q_expense_options">What would you like to do to your expenses?</string>
-    <string name="budget_edit_a_expense_option_edit">Edit current expenses</string>
-    <string name="budget_edit_a_expense_option_add">Add a new expense</string>
-    <string name="budget_edit_a_expense_option_delete">Delete all and start over</string>
-    <string name="budget_edit_a_expense_option_done">"I'm done"</string>
-
-    <string name="budget_edit_q_expense_option_edit">Which expense would you like to edit?</string>
-
     <string name="budget_create_q_final_positive_has_goals">"Do you want to edit your savings goals to match your savings set aside in your budget?"</string>
     <string name="budget_create_q_final_positive_goal_summary">"Your weekly target for goal is currently:"</string>
     <string name="budget_create_q_final_positive_no_goals">"Do you want to add a savings goal to match your savings set aside in your budget?"</string>
-
 
     <string name="budget_create_qry_tip_income">income</string>
 
@@ -785,6 +776,14 @@
     <string name="budget_edit_q_savings_default">@string/budget_create_q_savings_default</string>
     <string name="budget_edit_a_savings_default_accept">@string/budget_create_a_savings_default_accept</string>
     <string name="budget_edit_a_savings_default_deny">@string/budget_create_a_savings_default_deny</string>
+
+    <string name="budget_edit_q_expense_options">What would you like to do to your expenses?</string>
+    <string name="budget_edit_a_expense_option_edit">Edit current expenses</string>
+    <string name="budget_edit_a_expense_option_add">Add a new expense</string>
+    <string name="budget_edit_a_expense_option_delete">Delete all and start over</string>
+    <string name="budget_edit_a_expense_option_done">"I'm done"</string>
+
+    <string name="budget_edit_q_expense_option_edit">Which expense would you like to edit?</string>
 
     <string name="budget_edit_q_summary">@string/budget_create_q_summary</string>
     <string name="budget_edit_q_final_positive">@string/budget_create_q_final_positive</string>
