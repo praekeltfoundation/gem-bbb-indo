@@ -43,6 +43,9 @@ import javax.inject.Inject;
  * Created by chris on 9/8/2016.
  */
 public class Persisted {
+
+    private static final String TAG = Persisted.class.getName();
+
     private static final String CURRENT_BOT = "current_bot_type";
     private static final String TOKEN = "token";
     private static final String UserUUID = "user_uuid";
@@ -61,7 +64,6 @@ public class Persisted {
     private static final String TIPS = "tips";
     private static final String FAVOURITES = "favourites";
     private static final String NOTIFICATION = "notification";
-    private static final String TAG = Persisted.class.getName();
     private static final String SURVEY_ID = "survey_id";
     private static final String SURVEY = "survey";
     private static final String CHALLENGE_PARTICIPANT_BADGE = "challenge_participant_badge";
@@ -70,6 +72,7 @@ public class Persisted {
     private static final String WINNING_CHALLENGE = "winning_challenge";
     private static final String PARTICIPANT = "participant";
     private static final String TEMPORARY = "temporary";
+    private static final String EXPENSE_TO_EDIT = "expense_to_edit";
 
     @Inject
     DooitSharedPreferences dooitSharedPreferences;
@@ -321,6 +324,21 @@ public class Persisted {
     public void clearConvoParticipant() {
         dooitSharedPreferences.remove(BOT + "_" + CHALLENGE_PARTICIPANT_BADGE + "_" + BotType.CHALLENGE_PARTICIPANT_BADGE);
         dooitSharedPreferences.remove(BOT + "_" + PARTICIPANT_CHALLENGE + "_" + BotType.CHALLENGE_PARTICIPANT_BADGE);
+    }
+
+    /**
+     * Stores the current expense that is being edited
+     */
+    public void saveExpenseToEdit(BotType botType, long expenseId) {
+        dooitSharedPreferences.setLong(botType.name() + EXPENSE_TO_EDIT, expenseId);
+    }
+
+    public long loadExpenseToEdit(BotType botType) {
+        return dooitSharedPreferences.getLong(botType.name() + EXPENSE_TO_EDIT, -1L);
+    }
+
+    public boolean hasExpenseToEdit(BotType botType) {
+        return dooitSharedPreferences.containsKey(botType.name() + EXPENSE_TO_EDIT);
     }
 
     /********

@@ -11,7 +11,8 @@
       },
       {
         "name": "budget_edit_a_expense",
-        "text": "$(budget_edit_a_expense)"
+        "text": "$(budget_edit_a_expense)",
+        "next": "budget_edit_q_expense_options"
       },
       {
         "name": "budget_edit_a_savings",
@@ -128,6 +129,43 @@
     "type": "blank",
     "asyncCall": "#update_budget_savings",
     "autoNext": "budget_edit_q_summary"
+  },
+
+
+
+  {
+    "name": "budget_edit_q_expense_options",
+    "type": "text",
+    "text": "$(budget_edit_q_expense_options)",
+    "answers": [
+      {
+        "name": "budget_edit_a_expense_option_edit",
+        "text": "$(budget_edit_a_expense_option_edit)",
+        "next": "budget_edit_q_expense_option_edit"
+      },
+      {
+        "name": "budget_edit_a_expense_option_add",
+        "text": "$(budget_edit_a_expense_option_add)"
+      },
+      {
+        "name": "budget_edit_a_expense_option_delete",
+        "text": "$(budget_edit_a_expense_option_delete)"
+      },
+      {
+        "name": "budget_edit_a_expense_option_done",
+        "text": "$(budget_edit_a_expense_option_done)",
+        "next": "budget_edit_q_summary"
+      }
+    ]
+  },
+
+
+
+  {
+    "name": "budget_edit_q_expense_option_edit",
+    "type": "text",
+    "text": "$(budget_edit_q_expense_option_edit)",
+    "call": "#list_expense_quick_answers"
   },
 
 

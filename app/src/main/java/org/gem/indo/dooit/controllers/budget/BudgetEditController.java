@@ -15,12 +15,16 @@ import org.gem.indo.dooit.helpers.bot.BotRunner;
 import org.gem.indo.dooit.helpers.crashlytics.CrashlyticsHelper;
 import org.gem.indo.dooit.models.bot.Answer;
 import org.gem.indo.dooit.models.bot.BaseBotModel;
+import org.gem.indo.dooit.models.bot.Node;
 import org.gem.indo.dooit.models.budget.Budget;
+import org.gem.indo.dooit.models.budget.Expense;
 import org.gem.indo.dooit.models.enums.BotCallType;
+import org.gem.indo.dooit.models.enums.BotMessageType;
 import org.gem.indo.dooit.models.enums.BotParamType;
 import org.gem.indo.dooit.models.enums.BotType;
 import org.gem.indo.dooit.views.helpers.activity.CurrencyHelper;
 
+import java.util.Locale;
 import java.util.Map;
 
 import javax.inject.Inject;
@@ -79,6 +83,9 @@ public class BudgetEditController extends BudgetBotController {
     @Override
     public void onCall(BotCallType key, Map<String, Answer> answerLog, BaseBotModel model) {
         switch (key) {
+            case LIST_EXPENSE_QUICK_ANSWERS:
+                listExpenseQuickAnswers();
+                break;
             default:
                 super.onCall(key, answerLog, model);
         }
@@ -166,5 +173,28 @@ public class BudgetEditController extends BudgetBotController {
                 Toast.makeText(context, R.string.budget_edit_err_savings__not_found, Toast.LENGTH_SHORT).show();
             notifyDone(listener);
         }
+    }
+
+    /**
+     * Builds a dummy node which lists all of the user's current expenses, to be edited.
+     */
+    private void listExpenseQuickAnswers() {
+        Node node = new Node();
+        node.setName("budget_edit_q_user_expenses");
+        node.setType(BotMessageType.DUMMY); // Keep the node in the conversation on reload
+
+        for (Expense expense : budget.getExpenses()) {
+            Answer answer = new Answer();
+            answer.setName("budget_edit_a_user_expense_" + Long.toString(expense.getId()));
+            answer.setProcessedText(String.format(Locale.US, "%s - %s",
+                    expense.getName(), CurrencyHelper.format(expense.getValue())));
+            answer.setValue(Long.toString(expense.getId()));
+
+            node.addAnswer(answer);
+        }
+
+        node.finish();
+
+        botRunner.queueNode(node);
     }
 }
