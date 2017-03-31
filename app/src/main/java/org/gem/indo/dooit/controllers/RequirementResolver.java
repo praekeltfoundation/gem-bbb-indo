@@ -13,10 +13,12 @@ import org.gem.indo.dooit.api.managers.ChallengeManager;
 import org.gem.indo.dooit.api.managers.GoalManager;
 import org.gem.indo.dooit.api.managers.SurveyManager;
 import org.gem.indo.dooit.api.managers.TipManager;
+import org.gem.indo.dooit.dao.budget.BudgetDAO;
 import org.gem.indo.dooit.dao.budget.ExpenseCategoryBotDAO;
 import org.gem.indo.dooit.helpers.Persisted;
 import org.gem.indo.dooit.helpers.images.DraweeHelper;
 import org.gem.indo.dooit.models.Tip;
+import org.gem.indo.dooit.models.budget.Budget;
 import org.gem.indo.dooit.models.budget.ExpenseCategory;
 import org.gem.indo.dooit.models.challenge.BaseChallenge;
 import org.gem.indo.dooit.models.enums.BotObjectType;
@@ -99,6 +101,9 @@ public class RequirementResolver {
                 case EXPENSE_CATEGORIES:
                     retrieveExpenseCategories();
                     break;
+                case BUDGET:
+                    retrieveBudget();
+                    break;
             }
 
         if (sync.size() > 0) {
@@ -136,6 +141,8 @@ public class RequirementResolver {
                             for (ExpenseCategory category : categories)
                                 category.setBotType(botType);
                             new ExpenseCategoryBotDAO().insert(botType, (List<ExpenseCategory>) o);
+                        } else if (((List) o).get(0) instanceof Budget) {
+                            new BudgetDAO().update((Budget) ((List) o).get(0));
                         }
                     } else if (o instanceof BaseChallenge) {
                         persisted.saveConvoChallenge(botType, (BaseChallenge) o);
@@ -314,6 +321,26 @@ public class RequirementResolver {
         // at the end of the conversation.
         if (!new ExpenseCategoryBotDAO().exists(botType))
             sync.add(observable);
+    }
+
+    public void retrieveBudget() {
+        Observable<List<Budget>> ob = budgetManager.retrieveBudgets(new DooitErrorHandler() {
+            @Override
+            public void onError(DooitAPIError error) {
+
+            }
+        });
+
+        if (new BudgetDAO().hasBudget()) {
+            ob.subscribe(new Action1<List<Budget>>() {
+                @Override
+                public void call(List<Budget> budgets) {
+                    if (budgets != null && !budgets.isEmpty())
+                        new BudgetDAO().update(budgets.get(0));
+                }
+            });
+        } else
+            sync.add(ob);
     }
 
     public void setSurveyId(long surveyId) {

@@ -166,6 +166,7 @@ public class MainActivity extends ImageActivity {
         }
 
         // Clear bot state
+        persisted.clearCurrentBotType();
         persisted.clearConversation();
         persisted.clearConvoGoals();
         persisted.clearConvoTip();
@@ -312,6 +313,11 @@ public class MainActivity extends ImageActivity {
     }
 
     @Override
+    protected void onDestroy() {
+        super.onDestroy();
+    }
+
+    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(org.gem.indo.dooit.R.menu.menu_main, menu);
@@ -427,7 +433,7 @@ public class MainActivity extends ImageActivity {
     @Override
     protected void onImageResult(String mediaType, Uri imageUri, String imagePath) {
         CrashlyticsHelper.log(this.getClass().getSimpleName(), "OnImageResult : ", "successful image result (settings)");
-        if(imageSelectedListener != null){
+        if (imageSelectedListener != null) {
             imageSelectedListener.handleSelectedImage(mediaType, imageUri, imagePath);
         }
     }
@@ -436,7 +442,7 @@ public class MainActivity extends ImageActivity {
         this.imageSelectedListener = imageSelectedListener;
     }
 
-    public void clearImageSelectedListener(){
+    public void clearImageSelectedListener() {
         imageSelectedListener = null;
     }
 

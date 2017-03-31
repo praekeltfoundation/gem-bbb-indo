@@ -743,6 +743,10 @@
     <string name="budget_create_q_final_positive">You can access and update your budget in your profile at any time.</string>
     <string name="budget_create_a_yes">Yes!</string>
 
+    <string name="budget_create_q_final_positive_has_goals">"Do you want to edit your savings goals to match your savings set aside in your budget?"</string>
+    <string name="budget_create_q_final_positive_goal_summary">"Your weekly target for goal is currently:"</string>
+    <string name="budget_create_q_final_positive_no_goals">"Do you want to add a savings goal to match your savings set aside in your budget?"</string>
+
     <string name="budget_create_qry_tip_income">income</string>
 
     <!-- budget_create validation -->
@@ -755,7 +759,46 @@
     <string name="budget_create_err_savings__gt_income">Your monthly savings cannot be more than your monthly income</string>
     <string name="budget_create_err_expense__empty">Expense cannot be empty</string>
     <string name="budget_create_err_expense__zero">Expense cannot be Rp0</string>
-    
+
+    <!-- BOT: budget_edit -->
+
+    <string name="budget_edit_q_intro">"What would you like to edit?"</string>
+    <string name="budget_edit_a_income">Income</string>
+    <string name="budget_edit_a_expense">Expenses</string>
+    <string name="budget_edit_a_savings">Savings</string>
+
+    <string name="budget_edit_q_income">"How much do you get each month?"</string>
+    <string name="budget_edit_a_income_amount">@string/budget_create_a_income_amount</string>
+    <string name="budget_edit_a_no_income">@string/budget_create_a_no_income</string>
+
+    <string name="budget_edit_q_no_income">@string/budget_create_q_no_income</string>
+    <string name="budget_edit_a_no_income_show_tips">@string/budget_create_a_no_income_show_tips</string>
+    <string name="budget_edit_a_no_income_exit">@string/budget_create_a_no_income_exit</string>
+
+    <string name="budget_edit_q_savings_default">@string/budget_create_q_savings_default</string>
+    <string name="budget_edit_a_savings_default_accept">@string/budget_create_a_savings_default_accept</string>
+    <string name="budget_edit_a_savings_default_deny">@string/budget_create_a_savings_default_deny</string>
+
+    <string name="budget_edit_q_expense_options">What would you like to do to your expenses?</string>
+    <string name="budget_edit_a_expense_option_edit">Edit current expenses</string>
+    <string name="budget_edit_a_expense_option_add">Add a new expense</string>
+    <string name="budget_edit_a_expense_option_delete">Delete all and start over</string>
+    <string name="budget_edit_a_expense_option_done">"I'm done"</string>
+
+    <string name="budget_edit_q_expense_option_edit">Which expense would you like to edit?</string>
+
+    <string name="budget_edit_q_summary">@string/budget_create_q_summary</string>
+    <string name="budget_edit_q_final_positive">@string/budget_create_q_final_positive</string>
+    <string name="budget_edit_a_edit_budget">@string/budget_create_a_edit_budget</string>
+    <string name="budget_edit_a_yes">@string/budget_create_a_yes</string>
+
+    <!-- budget_edit validation -->
+
+    <string name="budget_edit_err_income__not_found">Income input was not found</string>
+    <string name="budget_edit_err_savings__not_found">Savings input was not found</string>
+
+    <!-- END: BOT: budget_edit -->
+
     <!-- END: BOT -->
 
     <!--Buttons-->
@@ -848,6 +891,12 @@
     <!-- Profile -->
     <string name="profile_achievements_week_streak_singular">"%s minggu"</string>
     <string name="profile_achievements_week_streak_plural">"%s minggu"</string>
+    <string name="profile_budget_heading_budget">Budget</string>
+    <string name="profile_budget_no_budget">"A budget is an estimate of your income, savings, expenses and balance for a set period of time."</string>
+    <string name="profile_budget_create_budget">Create Budget</string>
+    <string name="profile_budget_edit_budget">Edit Budget</string>
+    <string name="profile_error_retrieve_budget">Error retrieving budget</string>
+
     <string name="profile_settings_title">@string/title_activity_settings</string>
     <string name="profile_section_account">"Akunmu"</string>
     <string name="profile_account_change_name">"Ubah nama"</string>
