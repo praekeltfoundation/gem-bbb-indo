@@ -30,6 +30,7 @@ import org.gem.indo.dooit.api.managers.TipManager;
 import org.gem.indo.dooit.controllers.BotController;
 import org.gem.indo.dooit.controllers.RequirementResolver;
 import org.gem.indo.dooit.controllers.budget.BudgetCreateController;
+import org.gem.indo.dooit.controllers.budget.BudgetEditController;
 import org.gem.indo.dooit.controllers.challenge.ChallengeParticipantController;
 import org.gem.indo.dooit.controllers.challenge.ChallengeWinnerController;
 import org.gem.indo.dooit.controllers.goal.GoalAddController;
@@ -39,6 +40,7 @@ import org.gem.indo.dooit.controllers.goal.GoalWithdrawController;
 import org.gem.indo.dooit.controllers.misc.ReturningUserController;
 import org.gem.indo.dooit.controllers.survey.BaselineSurveyController;
 import org.gem.indo.dooit.controllers.survey.EAToolSurveyController;
+import org.gem.indo.dooit.dao.budget.BudgetDAO;
 import org.gem.indo.dooit.dao.budget.ExpenseCategoryBotDAO;
 import org.gem.indo.dooit.helpers.Persisted;
 import org.gem.indo.dooit.helpers.SquiggleBackgroundHelper;
@@ -51,6 +53,7 @@ import org.gem.indo.dooit.helpers.crashlytics.CrashlyticsHelper;
 import org.gem.indo.dooit.models.bot.Answer;
 import org.gem.indo.dooit.models.bot.BaseBotModel;
 import org.gem.indo.dooit.models.bot.Node;
+import org.gem.indo.dooit.models.budget.Budget;
 import org.gem.indo.dooit.models.enums.BotMessageType;
 import org.gem.indo.dooit.models.enums.BotObjectType;
 import org.gem.indo.dooit.models.enums.BotParamType;
@@ -164,7 +167,7 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
 
         // The bot type was not set. Load from persisted
         if (type == null)
-            type = persisted.loadBotType();
+            type = persisted.loadCurrentBotType();
 
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_bot, container, false);
@@ -373,6 +376,7 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
             case BUDGET_EDIT:
                 feed.parse(R.raw.budget_edit, Node.class);
                 new RequirementResolver.Builder(getContext(), BotType.BUDGET_CREATE)
+                        .require(BotObjectType.BUDGET)
                         .require(BotObjectType.EXPENSE_CATEGORIES)
                         .build()
                         .resolve(reqCallback);
@@ -445,6 +449,9 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
             case BUDGET_CREATE:
                 getAndAddNode(null);
                 break;
+            case BUDGET_EDIT:
+                getAndAddNode(null);
+                break;
         }
     }
 
@@ -498,6 +505,12 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
                         persisted.loadParticipantChallenge(botType));
             case BUDGET_CREATE:
                 return new BudgetCreateController(getActivity(), this);
+            case BUDGET_EDIT: {
+                Budget budget = new BudgetDAO().findFirst();
+                if (budget == null)
+                    throw new NullPointerException("Budget Edit conversation started with no budget in db");
+                return new BudgetEditController(getActivity(), this, budget);
+            }
             default:
                 return null;
         }
@@ -772,9 +785,13 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
         }
     }
 
-    private void processText(Answer answer) {
+    private void processText(@NonNull Answer answer) {
         // When answers are added after an async call, the activity may no longer be valid.
         if (getContext() == null)
+            return;
+
+        // The Answer's text has been processed by something else
+        if (answer.hasProcessedText())
             return;
 
         ParamMatch args = ParamParser.parse(answer.getText(getContext()));

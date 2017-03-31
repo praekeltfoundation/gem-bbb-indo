@@ -222,7 +222,8 @@
     "answers": [
       {
         "name": "budget_create_a_edit_budget",
-        "text": "$(budget_create_a_edit_budget)"
+        "text": "$(budget_create_a_edit_budget)",
+        "next": "budget_create_start_edit"
       },
       {
         "name": "budget_create_a_track_savings",
@@ -245,7 +246,8 @@
     "answers": [
       {
         "name": "budget_create_a_edit_budget",
-        "text": "$(budget_create_a_edit_budget)"
+        "text": "$(budget_create_a_edit_budget)",
+        "next": "budget_create_start_edit"
       },
       {
         "name": "budget_create_a_yes",
@@ -293,5 +295,13 @@
   {
     "name": "budget_create_end",
     "type": "end"
+  },
+
+
+
+  {
+    "name": "budget_create_start_edit",
+    "type": "startConvo",
+    "autoNext": "BUDGET_EDIT"
   }
 ]

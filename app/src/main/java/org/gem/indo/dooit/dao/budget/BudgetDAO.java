@@ -4,8 +4,6 @@ import android.support.annotation.Nullable;
 
 import org.gem.indo.dooit.models.budget.Budget;
 
-import java.util.List;
-
 import io.realm.Realm;
 import io.realm.RealmResults;
 
@@ -45,6 +43,20 @@ public class BudgetDAO {
             if (!budgets.isEmpty())
                 return realm.copyFromRealm(budgets.first());
             return null;
+        } finally {
+            if (realm != null)
+                realm.close();
+        }
+    }
+
+    public boolean hasBudget() {
+        Realm realm = null;
+
+        try {
+            realm = Realm.getDefaultInstance();
+            return !realm.where(Budget.class)
+                    .findAll()
+                    .isEmpty();
         } finally {
             if (realm != null)
                 realm.close();
