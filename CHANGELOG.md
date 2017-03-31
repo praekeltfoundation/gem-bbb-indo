@@ -1,4 +1,9 @@
 
+1.0.4
+
+- Implemented Budget view on Profile screen
+- Implemented Budget Income and Savings edit
+
 1.0.3
 
 - Fix Challenge Popup crash
