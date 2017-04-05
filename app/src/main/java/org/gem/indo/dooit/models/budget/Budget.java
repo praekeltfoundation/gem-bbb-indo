@@ -108,4 +108,16 @@ public class Budget extends RealmObject {
     public double getLeftOver() {
         return income - (savings + getExpenseTotal());
     }
+
+    //////////////////////////////
+    // Update A Certain Expense //
+    /////////////////////////////
+
+    public void updateExpense(long expenseId, double amount){
+        for(Expense e : this.expenses){
+            if(e.getId() == expenseId){
+                e.setValue(amount);
+            }
+        }
+    }
 }
