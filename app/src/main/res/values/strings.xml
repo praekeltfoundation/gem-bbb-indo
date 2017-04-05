@@ -776,6 +776,7 @@
     <string name="budget_edit_q_savings_default">@string/budget_create_q_savings_default</string>
     <string name="budget_edit_a_savings_default_accept">@string/budget_create_a_savings_default_accept</string>
     <string name="budget_edit_a_savings_default_deny">@string/budget_create_a_savings_default_deny</string>
+    <string name="budget_edit_q_savings_invalid_amount">"Whoops. You won’t be able to save more than you earn. Try to save an amount equal to or less than your monthly income of $(budget.income)."</string>
 
     <string name="budget_edit_q_expense_options">What would you like to do to your expenses?</string>
     <string name="budget_edit_a_expense_option_edit">Edit current expenses</string>

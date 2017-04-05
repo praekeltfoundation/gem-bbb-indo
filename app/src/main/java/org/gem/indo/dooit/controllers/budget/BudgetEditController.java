@@ -86,6 +86,9 @@ public class BudgetEditController extends BudgetBotController {
             case LIST_EXPENSE_QUICK_ANSWERS:
                 listExpenseQuickAnswers();
                 break;
+            case VALIDATE_BUDGET_SAVINGS:
+                validateSavingsAmount(answerLog, model);
+                break;
             default:
                 super.onCall(key, answerLog, model);
         }
@@ -172,6 +175,28 @@ public class BudgetEditController extends BudgetBotController {
             if (context != null)
                 Toast.makeText(context, R.string.budget_edit_err_savings__not_found, Toast.LENGTH_SHORT).show();
             notifyDone(listener);
+        }
+    }
+
+    private void validateSavingsAmount(Map<String, Answer> answerLog, BaseBotModel model){
+        Answer answer = answerLog.get("savings_amount");
+        if(answer != null){
+            double amount = Double.parseDouble(answer.getValue());
+            //TODO calculations
+
+            Node node = new Node();
+            node.setName("budget_edit_savings_amount_intermediate");
+            node.setType(BotMessageType.DUMMY); // Keep the node in the conversation on reload
+
+            if(budget.getIncome() >= amount){
+                //isValid
+                node.setAutoNext("budget_edit_update_savings");
+            }else{
+                //isNotValid
+                node.setAutoNext("budget_edit_savings_amount_invalid");
+            }
+            node.finish();
+            botRunner.queueNode(node);
         }
     }
 

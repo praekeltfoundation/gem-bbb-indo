@@ -117,9 +117,22 @@
         "type": "inlineCurrency",
         "typeOnFinish": "textCurrency",
         "inlineEditHint": "$(type_currency_hint)",
-        "nextOnFinish": "budget_edit_update_savings"
+        "nextOnFinish": "budget_edit_validate_savings"
       }
     ]
+  },
+
+  {
+    "name": "budget_edit_validate_savings",
+    "type": "blank",
+    "call": "#validate_budget_savings"
+  },
+
+  {
+    "name": "budget_edit_savings_amount_invalid",
+    "type": "text",
+    "text" : "$(budget_edit_q_savings_invalid_amount)",
+    "autoNext": "budget_edit_q_savings_custom"
   },
 
 

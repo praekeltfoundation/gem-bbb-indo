@@ -140,17 +140,18 @@ public class ProfileActivity extends ImageActivity {
         // Tabbed view pager
         tabsAdapter = new ProfileTabAdapter(getSupportFragmentManager(), this);
         viewPager.setAdapter(tabsAdapter);
-//        tabLayout.setupWithViewPager(viewPager);
+        tabLayout.setupWithViewPager(viewPager);
 
-//        TabLayout.Tab tab = tabLayout.getTabAt(0);
-//        if (tab != null)
-//            tab.setCustomView(tabsAdapter.createTabView(tabLayout, 0));
+        TabLayout.Tab tab = tabLayout.getTabAt(0);
+        if (tab != null)
+            tab.setCustomView(tabsAdapter.createTabView(tabLayout, 0));
 
-//        for (int i = 0; i < tabLayout.getTabCount(); i++) {
+        for (int i = 0; i < tabLayout.getTabCount(); i++) {
 //            TabLayout.Tab tab = tabLayout.getTabAt(i);
-//            if (tab != null)
-//                tab.setCustomView(tabsAdapter.createTabView(tabLayout, i));
-//        }
+            tab = tabLayout.getTabAt(i);
+            if (tab != null)
+                tab.setCustomView(tabsAdapter.createTabView(tabLayout, i));
+        }
 
         // Default Tab
         viewPager.setCurrentItem(ProfileTabPosition.ACHIEVEMENTS.getId());
