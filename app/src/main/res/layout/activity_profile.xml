@@ -103,10 +103,10 @@
             android:layout_height="wrap_content"
             app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
 
-    <!--<android.support.v4.view.ViewPager-->
-        <!--android:id="@+id/activity_profile_view_pager"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--app:layout_behavior="@string/appbar_scrolling_view_behavior"/>-->
+    <android.support.v4.view.ViewPager
+        android:id="@+id/activity_profile_view_pager"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
 
 </android.support.design.widget.CoordinatorLayout>

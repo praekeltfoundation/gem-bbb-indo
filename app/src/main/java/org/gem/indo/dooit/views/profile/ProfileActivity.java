@@ -147,7 +147,7 @@ public class ProfileActivity extends ImageActivity {
             tab.setCustomView(tabsAdapter.createTabView(tabLayout, 0));
 
         for (int i = 0; i < tabLayout.getTabCount(); i++) {
-//            TabLayout.Tab tab = tabLayout.getTabAt(i);
+            tab = tabLayout.getTabAt(i);
             if (tab != null)
                 tab.setCustomView(tabsAdapter.createTabView(tabLayout, i));
         }
