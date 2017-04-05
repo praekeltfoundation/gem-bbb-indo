@@ -785,6 +785,9 @@
     <string name="budget_edit_a_expense_option_done">"I'm done"</string>
 
     <string name="budget_edit_q_expense_option_edit">Which expense would you like to edit?</string>
+    <string name="budget_edit_q_expense_option_edit_selected">Would you like to edit the amount or delete $(budget.expense.name)?</string>
+    <string name="budget_edit_a_expense_selected_delete">Delete</string>
+    <string name="budget_edit_a_expense_selected_edit_amount">Edit amount</string>
 
     <string name="budget_edit_q_summary">@string/budget_create_q_summary</string>
     <string name="budget_edit_q_final_positive">@string/budget_create_q_final_positive</string>
