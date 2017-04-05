@@ -45,12 +45,9 @@ import rx.functions.Action1;
 
 public class BudgetEditController extends BudgetBotController {
 
-    protected Expense expense = null;
-
     private static final String TAG = BudgetEditController.class.getName();
-
     private static String SAVING_DEFAULT_ACCEPT = "budget_edit_a_savings_default_accept";
-
+    protected Expense expense = null;
     @Inject
     BudgetManager budgetManager;
 
@@ -122,6 +119,8 @@ public class BudgetEditController extends BudgetBotController {
             case UPDATE_BUDGET_SAVINGS:
                 updateSavings(answerLog, listener);
                 break;
+            case UPDATE_SINGLE_EXPENSE:
+                updateCurrentExpense(answerLog, listener);
             case DELETE_BUDGET_EXPENSE:
                 deleteExpense(answerLog, listener);
                 break;
@@ -134,7 +133,7 @@ public class BudgetEditController extends BudgetBotController {
     public void onAnswer(Answer answer) {
         if ("budget_edit_q_user_expenses".equals(answer.getParentName())) {
             long id = Long.parseLong(answer.getValue());
-            for (Expense e: budget.getExpenses()) {
+            for (Expense e : budget.getExpenses()) {
                 if (e.getId() == id) {
                     this.expense = e;
                     break;
@@ -213,25 +212,75 @@ public class BudgetEditController extends BudgetBotController {
         }
     }
 
-    private void validateSavingsAmount(Map<String, Answer> answerLog, BaseBotModel model){
-        Answer answer = answerLog.get("savings_amount");
-        if(answer != null){
-            double amount = Double.parseDouble(answer.getValue());
-            //TODO calculations
+    private void updateCurrentExpense(Map<String, Answer> answerLog, final OnAsyncListener listener) {
+        if (answerLog.containsKey("expense_amount")) {
+            try {
+                double expenseAmount = Double.parseDouble(answerLog.get("expense_amount").getValue());
+                budget.updateExpense(this.expense.getId(), expenseAmount);
+                budgetManager.upsertBudget(budget, new DooitErrorHandler() {
+                    @Override
+                    public void onError(DooitAPIError error) {
 
-            Node node = new Node();
-            node.setName("budget_edit_savings_amount_intermediate");
-            node.setType(BotMessageType.DUMMY); // Keep the node in the conversation on reload
+                    }
+                }).doAfterTerminate(new Action0() {
+                    @Override
+                    public void call() {
+                        notifyDone(listener);
+                    }
+                }).subscribe(new Action1<BudgetCreateResponse>() {
+                    @Override
+                    public void call(BudgetCreateResponse budgetCreateResponse) {
+                        new BudgetDAO().update(budget);
+                        BudgetEditController.this.budget = budget;
+                    }
+                });
 
-            if(budget.getIncome() >= amount){
-                //isValid
-                node.setAutoNext("budget_edit_update_savings");
-            }else{
-                //isNotValid
-                node.setAutoNext("budget_edit_savings_amount_invalid");
+            } catch (NumberFormatException e) {
+                CrashlyticsHelper.log(TAG, "updateCurrentExpense",
+                        "Could not parse expense amount from conversation");
+                CrashlyticsHelper.logException(e);
             }
-            node.finish();
-            botRunner.queueNode(node);
+        } else {
+            Context context = getContext();
+            if (context != null)
+                Toast.makeText(context, R.string.budget_edit_err_expense__not_found, Toast.LENGTH_SHORT).show();
+            notifyDone(listener);
+        }
+    }
+
+    private void validateSavingsAmount(Map<String, Answer> answerLog, BaseBotModel model) {
+        Answer answer = answerLog.get("savings_amount");
+        if (answer != null) {
+            try {
+                double amount = Double.parseDouble(answer.getValue());
+
+
+                Node node = new Node();
+                node.setName("budget_edit_savings_amount_intermediate");
+                node.setType(BotMessageType.DUMMY); // Keep the node in the conversation on reload
+
+                if (budget.getIncome() >= amount) {
+                    //isValid
+                    node.setAutoNext("budget_edit_update_savings");
+                } else {
+                    //isNotValid
+                    node.setAutoNext("budget_edit_savings_amount_invalid");
+                }
+                node.finish();
+                botRunner.queueNode(node);
+            } catch (NumberFormatException e) {
+                CrashlyticsHelper.log(TAG, "validateSavingsAmount",
+                        "Could not amount from conversation");
+                CrashlyticsHelper.logException(e);
+
+                //make sure the conversation continues
+                Node node = new Node();
+                node.setName("budget_edit_savings_amount_intermediate");
+                node.setType(BotMessageType.DUMMY); // Keep the node in the conversation on reload
+                node.setAutoNext("budget_edit_savings_amount_invalid");
+                node.finish();
+                botRunner.queueNode(node);
+            }
         }
     }
 

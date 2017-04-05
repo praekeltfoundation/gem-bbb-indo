@@ -68,6 +68,9 @@ public enum BotCallType {
     @SerializedName("#update_budget_income")
     UPDATE_BUDGET_INCOME,
 
+    @SerializedName("#update_single_expense")
+    UPDATE_SINGLE_EXPENSE,
+
     @SerializedName("#validate_budget_savings")
     VALIDATE_BUDGET_SAVINGS,
 

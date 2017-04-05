@@ -193,7 +193,7 @@
       {
         "name": "budget_edit_a_expense_selected_edit_amount",
         "text": "$(budget_edit_a_expense_selected_edit_amount)",
-        "next": "budget_edit_info"
+        "next": "budget_edit_q_current_expense_amount"
       }
     ]
   },
@@ -204,7 +204,28 @@
     "autoNext": "budget_edit_info"
   },
 
+  {
+    "name": "budget_edit_q_current_expense_amount",
+    "type": "text",
+    "text": "$(budget_edit_q_single_expense_amount)",
+    "autoAnswer": "expense_amount",
+    "answers": [
+      {
+        "name": "expense_amount",
+        "type": "inlineCurrency",
+        "nextOnFinish": "budget_edit_q_current_expense_amount_update",
+        "typeOnFinish": "textCurrency",
+        "inlineEditHint": "$(type_currency_hint)"
+      }
+    ]
+  },
 
+  {
+    "name": "budget_edit_q_current_expense_amount_update",
+    "type": "blank",
+    "asyncCall": "#update_single_expense",
+    "autoNext": "budget_edit_q_expense_options"
+  },
 
   {
     "name": "budget_edit_q_summary",
