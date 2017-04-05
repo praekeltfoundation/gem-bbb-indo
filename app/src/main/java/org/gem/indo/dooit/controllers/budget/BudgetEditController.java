@@ -11,6 +11,7 @@ import org.gem.indo.dooit.api.DooitAPIError;
 import org.gem.indo.dooit.api.DooitErrorHandler;
 import org.gem.indo.dooit.api.managers.BudgetManager;
 import org.gem.indo.dooit.api.responses.BudgetCreateResponse;
+import org.gem.indo.dooit.api.responses.EmptyResponse;
 import org.gem.indo.dooit.dao.budget.BudgetDAO;
 import org.gem.indo.dooit.helpers.bot.BotRunner;
 import org.gem.indo.dooit.helpers.crashlytics.CrashlyticsHelper;
@@ -25,11 +26,16 @@ import org.gem.indo.dooit.models.enums.BotParamType;
 import org.gem.indo.dooit.models.enums.BotType;
 import org.gem.indo.dooit.views.helpers.activity.CurrencyHelper;
 
+import java.net.ConnectException;
+import java.net.UnknownHostException;
 import java.util.Locale;
 import java.util.Map;
 
 import javax.inject.Inject;
 
+import io.realm.Realm;
+import io.realm.RealmResults;
+import retrofit2.adapter.rxjava.HttpException;
 import rx.functions.Action0;
 import rx.functions.Action1;
 
@@ -115,6 +121,8 @@ public class BudgetEditController extends BudgetBotController {
                 break;
             case UPDATE_SINGLE_EXPENSE:
                 updateCurrentExpense(answerLog, listener);
+            case DELETE_BUDGET_EXPENSE:
+                deleteExpense(answerLog, listener);
                 break;
             default:
                 super.onAsyncCall(key, answerLog, model, listener);
@@ -298,5 +306,34 @@ public class BudgetEditController extends BudgetBotController {
         node.finish();
 
         botRunner.queueNode(node);
+    }
+
+    private void deleteExpense(Map<String, Answer> answerLog, final OnAsyncListener listener) {
+        if (budget != null && expense != null) {
+            budgetManager.deleteExpense(expense.getId(), new DooitErrorHandler() {
+                @Override
+                public void onError(DooitAPIError error) {
+                }
+            }).doOnTerminate(new Action0() {
+                @Override
+                public void call() {
+                    notifyDone(listener);
+                }
+            }).subscribe(new Action1<EmptyResponse>() {
+                @Override
+                public void call(EmptyResponse response) {
+                    Realm realm = Realm.getDefaultInstance();
+                    realm.executeTransaction(new Realm.Transaction() {
+                        @Override
+                        public void execute(Realm realm) {
+                            realm.where(Expense.class)
+                                    .equalTo("id", expense.getId())
+                                    .findAll()
+                                    .deleteAllFromRealm();
+                        }
+                    });
+                }
+            });
+        }
     }
 }

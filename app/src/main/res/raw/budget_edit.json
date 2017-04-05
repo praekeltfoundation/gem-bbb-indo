@@ -188,7 +188,7 @@
       {
         "name": "budget_edit_a_expense_selected_delete",
         "text": "$(budget_edit_a_expense_selected_delete)",
-        "next": "budget_edit_info"
+        "next": "budget_edit_q_expense_delete"
       },
       {
         "name": "budget_edit_a_expense_selected_edit_amount",
@@ -196,6 +196,12 @@
         "next": "budget_edit_q_current_expense_amount"
       }
     ]
+  },
+  {
+    "name": "budget_edit_q_expense_delete",
+    "type": "blank",
+    "asyncCall": "#delete_expense",
+    "autoNext": "budget_edit_info"
   },
 
   {
