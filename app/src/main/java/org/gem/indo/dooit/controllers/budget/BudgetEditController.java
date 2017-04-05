@@ -38,6 +38,8 @@ import rx.functions.Action1;
 
 public class BudgetEditController extends BudgetBotController {
 
+    protected Expense expense = null;
+
     private static final String TAG = BudgetEditController.class.getName();
 
     private static String SAVING_DEFAULT_ACCEPT = "budget_edit_a_savings_default_accept";
@@ -71,6 +73,16 @@ public class BudgetEditController extends BudgetBotController {
                 if (budget != null)
                     model.values.put(key, CurrencyHelper.format(budget.getExpenseTotal()));
                 break;
+            case BUDGET_EXPENSE_NAME:
+                if (budget != null && expense != null) {
+                    model.values.put(key, expense.getName());
+                }
+                break;
+            case BUDGET_EXPENSE_VALUE:
+                if (budget != null && expense != null) {
+                    model.values.put(key, expense.getValue());
+                }
+                break;
             case BUDGET_DEFAULT_SAVINGS:
                 if (budget != null)
                     model.values.put(key, CurrencyHelper.format(budget.getDefaultSavings()));
@@ -102,6 +114,19 @@ public class BudgetEditController extends BudgetBotController {
                 break;
             default:
                 super.onAsyncCall(key, answerLog, model, listener);
+        }
+    }
+
+    @Override
+    public void onAnswer(Answer answer) {
+        if ("budget_edit_q_user_expenses".equals(answer.getParentName())) {
+            long id = Long.parseLong(answer.getValue());
+            for (Expense e: budget.getExpenses()) {
+                if (e.getId() == id) {
+                    this.expense = e;
+                    break;
+                }
+            }
         }
     }
 
@@ -189,6 +214,7 @@ public class BudgetEditController extends BudgetBotController {
             answer.setProcessedText(String.format(Locale.US, "%s - %s",
                     expense.getName(), CurrencyHelper.format(expense.getValue())));
             answer.setValue(Long.toString(expense.getId()));
+            answer.setNext("budget_edit_q_expense_option_edit_selected");
 
             node.addAnswer(answer);
         }
