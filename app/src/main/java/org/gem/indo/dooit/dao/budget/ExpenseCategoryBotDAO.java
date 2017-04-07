@@ -96,6 +96,49 @@ public class ExpenseCategoryBotDAO {
         }
     }
 
+    /**
+     * Returns the {@link ExpenseCategory} for the given bot conversation type with a specific ID.
+     */
+    @NonNull
+    public ExpenseCategory findById(BotType botType, long id) {
+        Realm realm = null;
+
+        try {
+            realm = Realm.getDefaultInstance();
+
+            return realm.copyFromRealm(realm.where(ExpenseCategory.class)
+                    .equalTo(ExpenseCategory.FIELD_BOT_TYPE, botType.getId())
+                    .equalTo(ExpenseCategory.FIELD_ID, id)
+                    .findFirst());
+        } finally {
+            if (realm != null)
+                realm.close();
+        }
+    }
+
+    /**
+     * Returns the unselected {@link ExpenseCategory}s for the given bot conversation type.
+     */
+    @NonNull
+    public List<ExpenseCategory> findUnselected(BotType botType) {
+        Realm realm = null;
+
+        try {
+            realm = Realm.getDefaultInstance();
+
+            return realm.copyFromRealm(realm.where(ExpenseCategory.class)
+                    .equalTo(ExpenseCategory.FIELD_BOT_TYPE, botType.getId())
+                    .equalTo(ExpenseCategory.FIELD_SELECTED, false)
+                    .findAllSorted(
+                            ExpenseCategory.FIELD_ORDER, Sort.ASCENDING,
+                            ExpenseCategory.FIELD_ID, Sort.ASCENDING
+                    ));
+        } finally {
+            if (realm != null)
+                realm.close();
+        }
+    }
+
     @Nullable
     public ExpenseCategory findNext(BotType botType) {
         Realm realm = null;
