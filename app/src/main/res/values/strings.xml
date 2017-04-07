@@ -703,8 +703,6 @@
 
     <!-- BOT: budget_create -->
 
-    <string name="budget_create_intro">Budget Create</string>
-
     <string name="budget_create_q_income">"Let's get started! How much money do you get each month?"</string>
     <string name="budget_create_a_income_amount">Add amount</string>
     <string name="budget_create_a_no_income">"I don't get a regular income"</string>
