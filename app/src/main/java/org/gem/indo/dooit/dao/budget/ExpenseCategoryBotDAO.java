@@ -254,6 +254,27 @@ public class ExpenseCategoryBotDAO {
         }
     }
 
+    public void setSelectedByRemoteId(long remoteId, boolean checked) {
+        Realm realm = null;
+
+        try {
+            realm = Realm.getDefaultInstance();
+
+            ExpenseCategory category = realm.where(ExpenseCategory.class)
+                    .equalTo(ExpenseCategory.FIELD_ID, remoteId)
+                    .findFirst();
+            realm.beginTransaction();
+            category.setSelected(checked);
+            realm.commitTransaction();
+        } catch (Throwable e) {
+            if (realm != null && realm.isInTransaction())
+                realm.cancelTransaction();
+        } finally {
+            if (realm != null)
+                realm.close();
+        }
+    }
+
     public void setEntered(BotType botType, long categoryId, boolean entered) {
         Realm realm = null;
 
