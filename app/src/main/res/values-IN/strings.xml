@@ -786,6 +786,8 @@
     <string name="budget_edit_a_expense_option_delete">Delete all and start over</string>
     <string name="budget_edit_a_expense_option_done">"I'm done"</string>
 
+    <string name="budget_edit_q_expense_option_add">Which expense category would you like to add?</string>
+
     <string name="budget_edit_q_expense_option_edit">Which expense would you like to edit?</string>
     <string name="budget_edit_q_expense_option_edit_selected">Would you like to edit the amount or delete $(budget.expense.name)?</string>
     <string name="budget_edit_a_expense_selected_delete">Delete</string>
