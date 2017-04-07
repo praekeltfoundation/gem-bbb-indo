@@ -13,6 +13,7 @@ import org.gem.indo.dooit.api.managers.BudgetManager;
 import org.gem.indo.dooit.api.responses.BudgetCreateResponse;
 import org.gem.indo.dooit.api.responses.EmptyResponse;
 import org.gem.indo.dooit.dao.budget.BudgetDAO;
+import org.gem.indo.dooit.dao.budget.ExpenseCategoryBotDAO;
 import org.gem.indo.dooit.helpers.bot.BotRunner;
 import org.gem.indo.dooit.helpers.crashlytics.CrashlyticsHelper;
 import org.gem.indo.dooit.models.bot.Answer;
@@ -20,6 +21,7 @@ import org.gem.indo.dooit.models.bot.BaseBotModel;
 import org.gem.indo.dooit.models.bot.Node;
 import org.gem.indo.dooit.models.budget.Budget;
 import org.gem.indo.dooit.models.budget.Expense;
+import org.gem.indo.dooit.models.budget.ExpenseCategory;
 import org.gem.indo.dooit.models.enums.BotCallType;
 import org.gem.indo.dooit.models.enums.BotMessageType;
 import org.gem.indo.dooit.models.enums.BotParamType;
@@ -28,6 +30,7 @@ import org.gem.indo.dooit.views.helpers.activity.CurrencyHelper;
 
 import java.net.ConnectException;
 import java.net.UnknownHostException;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
@@ -48,6 +51,7 @@ public class BudgetEditController extends BudgetBotController {
     private static final String TAG = BudgetEditController.class.getName();
     private static String SAVING_DEFAULT_ACCEPT = "budget_edit_a_savings_default_accept";
     protected Expense expense = null;
+    protected ExpenseCategory expenseCategory = null;
     @Inject
     BudgetManager budgetManager;
 
@@ -91,6 +95,22 @@ public class BudgetEditController extends BudgetBotController {
                 if (budget != null)
                     model.values.put(key, CurrencyHelper.format(budget.getDefaultSavings()));
                 break;
+            case BUDGET_NEXT_EXPENSE_NAME:
+                if (expenseCategory != null) {
+                    model.values.put(key, expenseCategory.getName());
+                }
+                break;
+            case BUDGET_TOTAL_EXPENSES:
+                if (expenseCategory != null && expense != null) {
+                    model.values.put(key, CurrencyHelper.format(totalExpensesAddSingle()));
+                }
+                break;
+            case BUDGET_TOTAL_EXPENSES_REMAINDER:
+                if (expenseCategory != null && expense != null) {
+                    model.values.put(key, CurrencyHelper.format(
+                            budget.getIncome() - budget.getSavings() - totalExpensesAddSingle()));
+                }
+                break;
             default:
                 super.resolveParam(model, paramType);
         }
@@ -101,6 +121,9 @@ public class BudgetEditController extends BudgetBotController {
         switch (key) {
             case LIST_EXPENSE_QUICK_ANSWERS:
                 listExpenseQuickAnswers();
+                break;
+            case LIST_EXPENSE_CATEGORIES_UNSELECTED:
+                listExpenseCategoriesUnselected();
                 break;
             case VALIDATE_BUDGET_SAVINGS:
                 validateSavingsAmount(answerLog, model);
@@ -121,6 +144,9 @@ public class BudgetEditController extends BudgetBotController {
                 break;
             case UPDATE_SINGLE_EXPENSE:
                 updateCurrentExpense(answerLog, listener);
+            case UPDATE_BUDGET_SINGLE_EXPENSE:
+                addAndUploadSingleExpense(answerLog, listener);
+                break;
             case DELETE_BUDGET_EXPENSE:
                 deleteExpense(answerLog, listener);
                 break;
@@ -139,6 +165,19 @@ public class BudgetEditController extends BudgetBotController {
                     break;
                 }
             }
+        } else if ("budget_edit_q_unselected_expenses".equals(answer.getParentName())) {
+            long id = Long.parseLong(answer.getValue());
+            expenseCategory = new ExpenseCategoryBotDAO().findById(botType, id);
+        } else if ("single_expense_amount".equals(answer.getName()) && answer.hasValue()) {
+            expense = new Expense(expenseCategory, Double.parseDouble(answer.getValue()));
+        }
+    }
+
+    @Override
+    public void onAnswerInput(BotParamType inputType, Answer answer) {
+        switch (inputType) {
+            case BUDGET_EXPENSE_VALUE:
+                break;
         }
     }
 
@@ -284,6 +323,53 @@ public class BudgetEditController extends BudgetBotController {
         }
     }
 
+    private void addAndUploadSingleExpense(@NonNull Map<String, Answer> answerLog,
+                                           @NonNull final OnAsyncListener listener) {
+        budget.addExpense(expense);
+        doUpload(answerLog, listener);
+    }
+
+    private void doUpload(@NonNull Map<String, Answer> answerLog,
+                          @NonNull final OnAsyncListener listener) {
+
+        // Upload Budget to server
+        budgetManager.upsertBudget(budget, new DooitErrorHandler() {
+            @Override
+            public void onError(DooitAPIError error) {
+
+            }
+        }).doOnTerminate(new Action0() {
+            @Override
+            public void call() {
+                notifyDone(listener);
+            }
+        }).subscribe(new Action1<BudgetCreateResponse>() {
+            @Override
+            public void call(BudgetCreateResponse response) {
+                // Budget Primary Key is from server
+                new BudgetDAO().update(response.getBudget());
+
+                // Store a reference to the Budget as it was received
+                BudgetEditController.this.budget = response.getBudget();
+
+                // TODO: Badges from budget create
+            }
+        });
+    }
+
+    private double totalExpensesAddSingle() {
+        double total = 0;
+        for (Expense e: budget.getExpenses()) {
+            if (e.getCategoryId() != expenseCategory.getId()) {
+                total += e.getValue();
+            }
+        }
+        if (expense != null) {
+            total += expense.getValue();
+        }
+        return total;
+    }
+
     /**
      * Builds a dummy node which lists all of the user's current expenses, to be edited.
      */
@@ -299,6 +385,38 @@ public class BudgetEditController extends BudgetBotController {
                     expense.getName(), CurrencyHelper.format(expense.getValue())));
             answer.setValue(Long.toString(expense.getId()));
             answer.setNext("budget_edit_q_expense_option_edit_selected");
+
+            node.addAnswer(answer);
+        }
+
+        node.finish();
+
+        botRunner.queueNode(node);
+    }
+
+    /**
+     * Builds a dummy node which lists all expense categories not yet added.
+     */
+    private void listExpenseCategoriesUnselected() {
+        ExpenseCategoryBotDAO categoryDAO = new ExpenseCategoryBotDAO();
+        for (Expense e: budget.getExpenses()) {
+            long catId = e.getCategoryId();
+            if (catId >= 0) {
+                categoryDAO.setSelectedByRemoteId(catId, true);
+            }
+        }
+        List<ExpenseCategory> expenseCategories = new ExpenseCategoryBotDAO().findUnselected(botType);
+        Node node = new Node();
+        node.setName("budget_edit_q_unselected_expenses");
+        node.setType(BotMessageType.DUMMY); // Keep the node in the conversation on reload
+
+        for (ExpenseCategory category : expenseCategories) {
+            Answer answer = new Answer();
+            answer.setName("budget_edit_a_unselected_expenses_" + Long.toString(category.getId()));
+            answer.setProcessedText(String.format(Locale.US, "%s",
+                    category.getName()));
+            answer.setValue(Long.toString(category.getId()));
+            answer.setNext("budget_edit_q_expense_option_add_selected");
 
             node.addAnswer(answer);
         }
