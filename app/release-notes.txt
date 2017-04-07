@@ -1,5 +1,6 @@
 
-1.0.4
+1.0.5
 
-- Implemented Budget view on Profile screen
-- Implemented Budget Income and Savings edit
+- Hidden Work In Progress budget feature
+- Bug fix when uploading image during registration
+- Bug fix on deserialised type

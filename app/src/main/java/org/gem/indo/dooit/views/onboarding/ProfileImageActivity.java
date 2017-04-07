@@ -34,6 +34,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import retrofit2.Response;
+import rx.functions.Action0;
 import rx.functions.Action1;
 
 public class ProfileImageActivity extends ImageActivity {
@@ -59,6 +60,7 @@ public class ProfileImageActivity extends ImageActivity {
     // Image upload is only performed on button pressed, not activity result return
     private String mediaType;
     private String imagePath;
+    private Uri imageUri;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -85,6 +87,7 @@ public class ProfileImageActivity extends ImageActivity {
         simpleDraweeView.setImageURI(imageUri);
         this.mediaType = mediaType;
         this.imagePath = imagePath;
+        this.imageUri = imageUri;
         CrashlyticsHelper.log(this.getClass().getSimpleName(), "onImageResult", "a successful image result (onboarding)");
     }
 
@@ -92,30 +95,41 @@ public class ProfileImageActivity extends ImageActivity {
     public void uploadProfileImage() {
         CrashlyticsHelper.log(this.getClass().getSimpleName(), "uploadProfileImage", "attempting to upload image (onboarding)");
 
+        final Uri localImageUri = this.imageUri;
+        final String localImagePath = this.imagePath;
+        final String localMediaType = this.mediaType;
+
         // Image must be set
-        if (TextUtils.isEmpty(mediaType) || TextUtils.isEmpty(imagePath)) {
+        if (TextUtils.isEmpty(localMediaType) || TextUtils.isEmpty(localImagePath)) {
             Snackbar.make(nextButton, getString(R.string.profile_image_empty_error), Snackbar.LENGTH_LONG).show();
             return;
         }
 
         User user = persisted.getCurrentUser();
 
-        fileUploadManager.uploadProfileImage(user.getId(), mediaType,
-                new File(imagePath), new DooitErrorHandler() {
+        showProgressDialog(R.string.label_uploading);
+
+        fileUploadManager.uploadProfileImage(user.getId(), localMediaType,
+                new File(localImagePath), new DooitErrorHandler() {
                     @Override
                     public void onError(DooitAPIError error) {
                         for (String msg : error.getErrorMessages())
                             Snackbar.make(nextButton, msg, Snackbar.LENGTH_SHORT).show();
                     }
-                }).subscribe(new Action1<Response<EmptyResponse>>() {
+                }).doAfterTerminate(new Action0() {
+            @Override
+            public void call() {
+                dismissDialog();
+            }
+        }).subscribe(new Action1<Response<EmptyResponse>>() {
             @Override
             public void call(Response<EmptyResponse> response) {
                 User user = persisted.getCurrentUser();
 
                 try {
-                    user.getProfile().setProfileImageUrl(getImageUri().toString());
                     CrashlyticsHelper.log(this.getClass().getSimpleName(), "uploadProfileImage :", String.format("User id %s: ",
-                            user.getId()) + " Uri :" + getImageUri() + " mediaType: " + mediaType);
+                            user.getId()) + " Uri :" + localImageUri + " mediaType: " + localMediaType);
+                    user.getProfile().setProfileImageUrl(getImageUri().toString());
                 } catch (NullPointerException nullException) {
                     CrashlyticsHelper.logException(nullException);
                 }
