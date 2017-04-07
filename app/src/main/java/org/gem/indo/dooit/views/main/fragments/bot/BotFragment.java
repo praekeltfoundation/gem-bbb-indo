@@ -375,7 +375,7 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
                 break;
             case BUDGET_EDIT:
                 feed.parse(R.raw.budget_edit, Node.class);
-                new RequirementResolver.Builder(getContext(), BotType.BUDGET_CREATE)
+                new RequirementResolver.Builder(getContext(), BotType.BUDGET_EDIT)
                         .require(BotObjectType.BUDGET)
                         .require(BotObjectType.EXPENSE_CATEGORIES)
                         .build()

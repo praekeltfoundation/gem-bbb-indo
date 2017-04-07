@@ -80,6 +80,12 @@ public enum BotCallType {
     @SerializedName("#list_expense_quick_answers")
     LIST_EXPENSE_QUICK_ANSWERS,
 
+    @SerializedName("#list_expense_categories_unselected")
+    LIST_EXPENSE_CATEGORIES_UNSELECTED,
+
+    @SerializedName("#update_budget_single_expense")
+    UPDATE_BUDGET_SINGLE_EXPENSE,
+
     @SerializedName("#delete_expense")
     DELETE_BUDGET_EXPENSE,
 

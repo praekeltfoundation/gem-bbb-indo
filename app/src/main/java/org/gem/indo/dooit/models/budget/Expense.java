@@ -62,6 +62,16 @@ public class Expense extends RealmObject {
         return id;
     }
 
+
+    /////////////////
+    // Category ID //
+    /////////////////
+
+    public long getCategoryId() {
+        return (expenseCategoryId != null) ? expenseCategoryId : -1;
+    }
+
+
     //////////
     // Name //
     //////////

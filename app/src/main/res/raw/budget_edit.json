@@ -158,7 +158,8 @@
       },
       {
         "name": "budget_edit_a_expense_option_add",
-        "text": "$(budget_edit_a_expense_option_add)"
+        "text": "$(budget_edit_a_expense_option_add)",
+        "next": "budget_edit_q_expense_option_add"
       },
       {
         "name": "budget_edit_a_expense_option_delete",
@@ -203,6 +204,59 @@
     "asyncCall": "#delete_expense",
     "autoNext": "budget_edit_info"
   },
+
+
+
+  {
+    "name": "budget_edit_q_expense_option_add",
+    "type": "text",
+    "text": "$(budget_edit_q_expense_option_add)",
+    "call": "#list_expense_categories_unselected"
+  },
+  {
+    "name": "budget_edit_q_expense_option_add_selected",
+    "type": "text",
+    "text": "$(budget_create_q_expense_value)",
+    "autoNext": "budget_edit_q_single_add_amount"
+  },
+  {
+    "name": "budget_edit_q_single_add_amount",
+    "type": "blank",
+    "autoAnswer": "single_expense_amount",
+    "answers": [
+      {
+        "name": "single_expense_amount",
+        "type": "inlineCurrency",
+        "nextOnFinish": "budget_edit_q_expense_add_summary",
+        "typeOnFinish": "textCurrency",
+        "inlineEditHint": "$(type_currency_hint)"
+      }
+    ]
+  },
+  {
+    "name": "budget_edit_q_expense_add_summary",
+    "type": "text",
+    "text": "$(budget_create_q_expense_summary)",
+    "answers": [
+      {
+        "name": "budget_edit_a_expense_add_summary_accept",
+        "text": "$(budget_create_a_accept)",
+        "next": "budget_edit_q_expense_add_upload"
+      },
+      {
+        "name": "budget_edit_a_expense_add_summary_retry",
+        "text": "$(budget_create_a_retry)",
+        "next": "budget_edit_q_expense_option_add_selected"
+      }
+    ]
+  },
+  {
+    "name": "budget_edit_q_expense_add_upload",
+    "type": "blank",
+    "asyncCall": "#update_budget_single_expense",
+    "autoNext": "budget_edit_q_summary"
+  },
+
 
   {
     "name": "budget_edit_q_current_expense_amount",
