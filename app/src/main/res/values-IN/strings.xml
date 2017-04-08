@@ -355,6 +355,15 @@
     <string name="survey_common_q_outro_cancel_a2_exit">"Tidak, makasih"</string>
 
     <!-- BOT: survey_baseline -->
+    <!-- User Type Question -->
+    <string name="survey_baseline_q_user_type">"How did you find out about Dooit?"</string>
+    <string name="survey_baseline_q_user_type_a_01_facebook">Facebook</string>
+    <string name="survey_baseline_q_user_type_a_02_instagram">Instagram</string>
+    <string name="survey_baseline_q_user_type_a_03_friend">A friend told me about it</string>
+    <string name="survey_baseline_q_user_type_a_04_play_store">I searched the Google Play store</string>
+    <string name="survey_baseline_q_user_type_a_05_teacher">A teacher at school told me</string>
+    <string name="survey_baseline_q_user_type_a_06_sts">The Skills To Succeed programme at school</string>
+
     <!-- Q1 -->
     <string name="survey_baseline_q01_occupation">"Apakah pekerjaan utamamu?"</string>
 

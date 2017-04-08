@@ -32,6 +32,7 @@ public class BaselineSurveyController extends SurveyController {
             BASELINE_CONSENT_1,
             BASELINE_CONSENT_2,
 
+            "survey_baseline_q_user_type",
             "survey_baseline_q01_occupation",
             "survey_baseline_q02_grade",
             "survey_baseline_q03_school_name", // Inline text
