@@ -255,7 +255,7 @@ public class BudgetCreateController extends BudgetBotController {
                 // Store a reference to the Budget as it was received
                 BudgetCreateController.this.budget = response.getBudget();
 
-                // TODO: Badges from budget create
+                persisted.saveNewBudgetBadges(response.getBadges());
             }
         });
     }

@@ -242,10 +242,29 @@
       },
       {
         "name": "budget_create_a_yes",
-        "text": "$(budget_create_a_yes)"
+        "text": "$(budget_create_a_yes)",
+        "next" : "budget_create_q_badge"
       }
     ]
   },
+
+  {
+    "name": "budget_create_q_badge",
+    "type": "dummy",
+    "call": "#add_badge"
+  },
+  {
+    "name": "budget_create_a_yay",
+    "type": "blank",
+    "answers": [
+      {
+        "name": "budget_create_a_yay",
+        "text": "$(yay_me)",
+        "next": "budget_create_q_final_positive_has_goals"
+      }
+    ]
+  },
+
   {
     "name": "budget_create_q_branch_goals",
     "type": "blank",
