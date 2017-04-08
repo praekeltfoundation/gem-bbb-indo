@@ -7,6 +7,7 @@ import org.gem.indo.dooit.helpers.bot.BotRunner;
 import org.gem.indo.dooit.models.Tip;
 import org.gem.indo.dooit.models.bot.Answer;
 import org.gem.indo.dooit.models.bot.BaseBotModel;
+import org.gem.indo.dooit.models.budget.Budget;
 import org.gem.indo.dooit.models.challenge.BaseChallenge;
 import org.gem.indo.dooit.models.enums.BotCallType;
 import org.gem.indo.dooit.models.enums.BotObjectType;
@@ -24,16 +25,19 @@ import java.util.Map;
 public class ReturningUserController extends DooitBotController {
 
     private BotRunner botRunner;
+    private Budget budget;
     private BaseChallenge challenge;
     private List<Goal> goals;
     private Tip tip;
 
     public ReturningUserController(Context context, BotRunner botRunner,
-                                   List<Goal> goals, BaseChallenge challenge, Tip tip) {
+                                   List<Goal> goals, BaseChallenge challenge, Tip tip,
+                                   Budget budget) {
         super(context, BotType.RETURNING_USER);
         this.botRunner = botRunner;
-        this.goals = goals;
+        this.budget = budget;
         this.challenge = challenge;
+        this.goals = goals;
         this.tip = tip;
     }
 
