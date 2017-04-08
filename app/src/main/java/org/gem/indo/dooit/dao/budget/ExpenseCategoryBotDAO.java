@@ -96,6 +96,28 @@ public class ExpenseCategoryBotDAO {
         }
     }
 
+    @NonNull
+    public static List<ExpenseCategory> findEntered(BotType botType) {
+        Realm realm = null;
+
+        try {
+            realm = Realm.getDefaultInstance();
+
+            return realm.copyFromRealm(realm.where(ExpenseCategory.class)
+                    .equalTo(ExpenseCategory.FIELD_BOT_TYPE, botType.getId())
+                    .equalTo(ExpenseCategory.FIELD_SELECTED, true)
+                    .equalTo(ExpenseCategory.FIELD_ENTERED, true)
+                    .equalTo(ExpenseCategory.FIELD_ENABLED, true)
+                    .findAllSorted(
+                            ExpenseCategory.FIELD_ORDER, Sort.ASCENDING,
+                            ExpenseCategory.FIELD_ID, Sort.ASCENDING
+                    ));
+        } finally {
+            if (realm != null)
+                realm.close();
+        }
+    }
+
     /**
      * Returns the {@link ExpenseCategory} for the given bot conversation type with a specific ID.
      */

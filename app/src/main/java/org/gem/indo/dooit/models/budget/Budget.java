@@ -91,6 +91,10 @@ public class Budget extends RealmObject {
         expenses.add(expense);
     }
 
+    public boolean hasExpenses() {
+        return !expenses.isEmpty();
+    }
+
     public double getExpenseTotal() {
         double expense = 0.0;
         for (Expense e : expenses)

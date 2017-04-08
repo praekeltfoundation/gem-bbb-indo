@@ -49,6 +49,10 @@ public class BudgetEditController extends BudgetBotController {
 
     private static final String TAG = BudgetEditController.class.getName();
     private static String SAVING_DEFAULT_ACCEPT = "budget_edit_a_savings_default_accept";
+    private static String EXPENSE_QUESTION_PREFIX = "budget_edit_q_expense_value_";
+    private static String EXPENSE_ANSWER_PREFIX = "budget_edit_a_expense_value_";
+    private static String EXPENSE_STOP = "budget_create_q_expense_stop";
+
     protected ExpenseCategory expenseCategory = null;
 
     @Inject
@@ -62,63 +66,94 @@ public class BudgetEditController extends BudgetBotController {
     }
 
     @Override
+    public boolean filterQuickAnswer(Answer answer) {
+        if (answer.getName().equals("budget_edit_a_expense_option_edit")) {
+            // User can't edit expenses when there are none
+            return budget.hasExpenses();
+        } else {
+            return super.filterQuickAnswer(answer);
+        }
+    }
+
+    @Override
     public void resolveParam(BaseBotModel model, BotParamType paramType) {
         String key = paramType.getKey();
         Expense expense = persisted.loadExpenseToEdit(botType);
-        switch (paramType) {
-            case BUDGET_DEFAULT_SAVING_PERCENT:
-                model.values.put(key, Budget.DEFAULT_SAVING_PERCENT);
-                break;
-            case BUDGET_INCOME:
-                if (budget != null)
-                    model.values.put(key, CurrencyHelper.format(budget.getIncome()));
-                break;
-            case BUDGET_SAVINGS:
-                if (budget != null)
-                    model.values.put(key, CurrencyHelper.format(budget.getSavings()));
-                break;
-            case BUDGET_EXPENSE:
-                if (budget != null)
-                    model.values.put(key, CurrencyHelper.format(budget.getExpenseTotal()));
-                break;
-            case BUDGET_EXPENSE_NAME:
-                if (budget != null && expense != null) {
-                    model.values.put(key, expense.getName());
-                }
-                break;
-            case BUDGET_EXPENSE_VALUE:
-                if (budget != null && expense != null) {
-                    model.values.put(key, expense.getValue());
-                }
-                break;
-            case BUDGET_DEFAULT_SAVINGS:
-                if (budget != null)
-                    model.values.put(key, CurrencyHelper.format(budget.getDefaultSavings()));
-                break;
-            case BUDGET_NEXT_EXPENSE_NAME:
-                if (expenseCategory != null) {
-                    model.values.put(key, expenseCategory.getName());
-                }
-                break;
-            case BUDGET_TOTAL_EXPENSES:
-                if (expenseCategory != null && expense != null) {
-                    model.values.put(key, CurrencyHelper.format(totalExpensesAddSingle()));
-                }
-                break;
-            case BUDGET_TOTAL_EXPENSES_REMAINDER:
-                if (expenseCategory != null && expense != null) {
-                    model.values.put(key, CurrencyHelper.format(
-                            budget.getIncome() - budget.getSavings() - totalExpensesAddSingle()));
-                }
-                break;
-            default:
-                super.resolveParam(model, paramType);
+
+        if (model.getName().equals("budget_edit_q_expense_add_summary")) {
+            // Adding new expenses
+            switch (paramType) {
+                case BUDGET_TOTAL_EXPENSES:
+                    if (budget != null) {
+                        model.values.put(key, CurrencyHelper.format(budget.getExpenseTotal() + totalEnteredExpenses(botRunner.getAnswerLog())));
+                    }
+                    break;
+                case BUDGET_TOTAL_EXPENSES_REMAINDER:
+                    if (budget != null) {
+                        model.values.put(key, CurrencyHelper.format(budget.getLeftOver() - totalEnteredExpenses(botRunner.getAnswerLog())));
+                    }
+                    break;
+            }
+        } else {
+            switch (paramType) {
+                case BUDGET_DEFAULT_SAVING_PERCENT:
+                    model.values.put(key, Budget.DEFAULT_SAVING_PERCENT);
+                    break;
+                case BUDGET_INCOME:
+                    if (budget != null)
+                        model.values.put(key, CurrencyHelper.format(budget.getIncome()));
+                    break;
+                case BUDGET_SAVINGS:
+                    if (budget != null)
+                        model.values.put(key, CurrencyHelper.format(budget.getSavings()));
+                    break;
+                case BUDGET_EXPENSE:
+                    if (budget != null)
+                        model.values.put(key, CurrencyHelper.format(budget.getExpenseTotal()));
+                    break;
+                case BUDGET_EXPENSE_NAME:
+                    if (budget != null && expense != null) {
+                        model.values.put(key, expense.getName());
+                    }
+                    break;
+                case BUDGET_EXPENSE_VALUE:
+                    if (budget != null && expense != null) {
+                        model.values.put(key, expense.getValue());
+                    }
+                    break;
+                case BUDGET_DEFAULT_SAVINGS:
+                    if (budget != null)
+                        model.values.put(key, CurrencyHelper.format(budget.getDefaultSavings()));
+                    break;
+                case BUDGET_NEXT_EXPENSE_NAME:
+                    if (expenseCategory != null) {
+                        model.values.put(key, expenseCategory.getName());
+                    }
+                    break;
+                case BUDGET_TOTAL_EXPENSES:
+                    if (expenseCategory != null && expense != null) {
+                        model.values.put(key, CurrencyHelper.format(totalExpensesAddSingle()));
+                    }
+                    break;
+                case BUDGET_TOTAL_EXPENSES_REMAINDER:
+                    if (expenseCategory != null && expense != null) {
+                        model.values.put(key, CurrencyHelper.format(
+                                budget.getIncome() - budget.getSavings() - totalExpensesAddSingle()));
+                    }
+                    break;
+                default:
+                    super.resolveParam(model, paramType);
+            }
         }
     }
 
     @Override
     public void onCall(BotCallType key, Map<String, Answer> answerLog, BaseBotModel model) {
         switch (key) {
+            case ADD_EXPENSE:
+                addNextExpense(EXPENSE_QUESTION_PREFIX, EXPENSE_ANSWER_PREFIX,
+                        "budget_edit_add_expense", EXPENSE_STOP, "budget_edit_q_expense_add_summary");
+                break;
             case LIST_EXPENSE_QUICK_ANSWERS:
                 listExpenseQuickAnswers();
                 break;
@@ -150,6 +185,9 @@ public class BudgetEditController extends BudgetBotController {
             case UPDATE_BUDGET_SINGLE_EXPENSE:
                 addAndUploadSingleExpense(answerLog, listener);
                 break;
+            case UPLOAD_NEW_EXPENSES:
+                uploadNewExpenses(answerLog, listener);
+                break;
             case DELETE_BUDGET_EXPENSE:
                 deleteExpense(answerLog, listener);
                 break;
@@ -170,16 +208,19 @@ public class BudgetEditController extends BudgetBotController {
             }
         } else if ("budget_edit_q_unselected_expenses".equals(answer.getParentName())) {
             long id = Long.parseLong(answer.getValue());
-            expenseCategory = new ExpenseCategoryBotDAO().findById(botType, id);
+            expenseCategory = ExpenseCategoryBotDAO.findById(botType, id);
         } else if ("single_expense_amount".equals(answer.getName()) && answer.hasValue()) {
             persisted.saveExpenseToEdit(botType, new Expense(expenseCategory, Double.parseDouble(answer.getValue())));
+        } else {
+            super.onAnswer(answer);
         }
     }
 
     @Override
     public void onAnswerInput(BotParamType inputType, Answer answer) {
         switch (inputType) {
-            case BUDGET_EXPENSE_VALUE:
+            case BUDGET_EXPENSE:
+                setExpenseEnteredOnAnswer(answer.getName(), answer.getValue(), EXPENSE_ANSWER_PREFIX);
                 break;
         }
     }
@@ -291,6 +332,13 @@ public class BudgetEditController extends BudgetBotController {
         }
     }
 
+    /**
+     * Notifies the user that their savings amount isn't valid by adding an error node to the
+     * conversation.
+     *
+     * @param answerLog
+     * @param model
+     */
     private void validateSavingsAmount(Map<String, Answer> answerLog, BaseBotModel model) {
         Answer answer = answerLog.get("savings_amount");
         if (answer != null) {
@@ -346,13 +394,13 @@ public class BudgetEditController extends BudgetBotController {
             HashSet<Long> existing = new HashSet<>();
             for (Expense expense : budget.getExpenses())
                 if (expense.hasCategoryId())
-                    existing.add(expense.getId());
+                    existing.add(expense.getCategoryId());
 
             realm.beginTransaction();
             for (ExpenseCategory category : categories) {
                 category.setSelected(false);
                 category.setEntered(false);
-                category.setEnabled(existing.contains(category.getId()));
+                category.setEnabled(!existing.contains(category.getId()));
             }
             realm.commitTransaction();
         } catch (Throwable e) {
@@ -367,6 +415,26 @@ public class BudgetEditController extends BudgetBotController {
     private void addAndUploadSingleExpense(@NonNull Map<String, Answer> answerLog,
                                            @NonNull final OnAsyncListener listener) {
         budget.addExpense(persisted.loadExpenseToEdit(botType));
+        doUpload(answerLog, listener);
+    }
+
+    private void uploadNewExpenses(@NonNull Map<String, Answer> answerLog,
+                                   @NonNull final OnAsyncListener listener) {
+        if (budget == null) {
+            notifyDone(listener);
+            return;
+        }
+
+        for (ExpenseCategory category : ExpenseCategoryBotDAO.findEntered(botType)) {
+            String key = EXPENSE_ANSWER_PREFIX + Long.toString(category.getId());
+            double expense = 0.0;
+            if (answerLog.containsKey(key))
+                expense = Double.parseDouble(answerLog.get(key).getValue());
+
+            budget.addExpense(new Expense(category, expense));
+        }
+        new BudgetDAO().update(budget);
+
         doUpload(answerLog, listener);
     }
 
@@ -411,6 +479,24 @@ public class BudgetEditController extends BudgetBotController {
             total += expense.getValue();
 
         return total;
+    }
+
+    /**
+     * Sums the total of the selected and entered expenses.
+     */
+    private double totalEnteredExpenses(Map<String, Answer> answerLog) {
+        double expense = 0.0;
+        List<ExpenseCategory> categories = ExpenseCategoryBotDAO.findEntered(botType);
+        try {
+            for (ExpenseCategory category : categories) {
+                if (answerLog.containsKey(EXPENSE_ANSWER_PREFIX + Long.toString(category.getId()))) {
+                    expense += Double.parseDouble(answerLog.get(EXPENSE_ANSWER_PREFIX + Long.toString(category.getId())).getValue());
+                }
+            }
+        } catch (NumberFormatException e) {
+            CrashlyticsHelper.logException(e);
+        }
+        return expense;
     }
 
     /**
@@ -489,5 +575,16 @@ public class BudgetEditController extends BudgetBotController {
                 }
             });
         }
+    }
+
+    ////////////////
+    // Validation //
+    ////////////////
+
+    @Override
+    public boolean validate(String name, String input) {
+        if (name.startsWith(EXPENSE_ANSWER_PREFIX))
+            return validateExpense(input);
+        return super.validate(name, input);
     }
 }

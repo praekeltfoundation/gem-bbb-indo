@@ -1,12 +1,9 @@
 package org.gem.indo.dooit.controllers.budget;
 
 import android.app.Activity;
-import android.content.Context;
 import android.support.annotation.NonNull;
-import android.text.TextUtils;
 
 import org.gem.indo.dooit.DooitApplication;
-import org.gem.indo.dooit.R;
 import org.gem.indo.dooit.api.DooitAPIError;
 import org.gem.indo.dooit.api.DooitErrorHandler;
 import org.gem.indo.dooit.api.managers.BudgetManager;
@@ -14,9 +11,6 @@ import org.gem.indo.dooit.api.responses.BudgetCreateResponse;
 import org.gem.indo.dooit.dao.budget.BudgetDAO;
 import org.gem.indo.dooit.dao.budget.ExpenseCategoryBotDAO;
 import org.gem.indo.dooit.helpers.bot.BotRunner;
-import org.gem.indo.dooit.helpers.bot.param.ParamArg;
-import org.gem.indo.dooit.helpers.bot.param.ParamMatch;
-import org.gem.indo.dooit.helpers.bot.param.ParamParser;
 import org.gem.indo.dooit.helpers.crashlytics.CrashlyticsHelper;
 import org.gem.indo.dooit.models.bot.Answer;
 import org.gem.indo.dooit.models.bot.BaseBotModel;
@@ -66,7 +60,7 @@ public class BudgetCreateController extends BudgetBotController {
         String name = model.getName();
         switch (name) {
             case "budget_create_add_expense":
-                return new ExpenseCategoryBotDAO().hasNext(botType);
+                return ExpenseCategoryBotDAO.hasNext(botType);
             default:
                 return super.shouldSkip(model);
         }
@@ -76,22 +70,7 @@ public class BudgetCreateController extends BudgetBotController {
     public void onAnswerInput(BotParamType inputType, Answer answer) {
         switch (inputType) {
             case BUDGET_EXPENSE: {
-                String name = answer.getName();
-                if (name.startsWith(EXPENSE_ANSWER_PREFIX)) {
-                    if (TextUtils.isEmpty(answer.getValue()))
-                        // This was the auto answer for the inline answer type, not the text entry
-                        return;
-
-                    try {
-                        long id = Long.parseLong(name.substring(EXPENSE_ANSWER_PREFIX.length(),
-                                name.length()));
-                        new ExpenseCategoryBotDAO().setEntered(botType, id, true);
-                    } catch (NumberFormatException e) {
-                        CrashlyticsHelper.log(TAG, "onAnswerInput",
-                                "Attempt to parse Expense Category ID from answer name failed");
-                        CrashlyticsHelper.logException(e);
-                    }
-                }
+                setExpenseEnteredOnAnswer(answer.getName(), answer.getValue(), EXPENSE_ANSWER_PREFIX);
                 break;
             }
             default:
@@ -106,7 +85,7 @@ public class BudgetCreateController extends BudgetBotController {
 
         // Expense Loop
         if (paramType == BotParamType.BUDGET_NEXT_EXPENSE_NAME) {
-            ExpenseCategory category = new ExpenseCategoryBotDAO().findNext(botType);
+            ExpenseCategory category = ExpenseCategoryBotDAO.findNext(botType);
             if (category != null)
                 model.values.put(key, category.getName());
         }
@@ -180,7 +159,8 @@ public class BudgetCreateController extends BudgetBotController {
     public void onCall(BotCallType key, Map<String, Answer> answerLog, BaseBotModel model) {
         switch (key) {
             case ADD_EXPENSE:
-                addNextExpense();
+                addNextExpense(EXPENSE_QUESTION_PREFIX, EXPENSE_ANSWER_PREFIX,
+                        "budget_create_add_expense", EXPENSE_STOP, "budget_create_q_expense_summary");
                 break;
             case CLEAR_EXPENSES_STATE:
                 clearExpenseState();
@@ -260,58 +240,8 @@ public class BudgetCreateController extends BudgetBotController {
         });
     }
 
-    private void addNextExpense() {
-
-        ExpenseCategory category = new ExpenseCategoryBotDAO().findNext(botType);
-
-        // Stop Expense loop
-        if (category == null) {
-            // Special Node to stop the Expense loop and continue with the conversation
-            Node node = new Node();
-            node.setName(EXPENSE_STOP);
-            node.setType(BotMessageType.DUMMY);
-            node.setAutoNext("budget_create_q_expense_summary");
-
-            botRunner.queueNode(node);
-            return;
-        }
-
-        Context context = getContext();
-        if (context == null)
-            return;
-
-        Node node = new Node();
-        node.setName(EXPENSE_QUESTION_PREFIX + Long.toString(category.getId()));
-        node.setType(BotMessageType.TEXT);
-
-        ParamMatch match = ParamParser.parse(context.getString(R.string.budget_create_q_expense_value));
-        String key = BotParamType.BUDGET_NEXT_EXPENSE_NAME.getKey();
-        for (ParamArg arg : match.getArgs())
-            if (arg.getKey().equals(key))
-                node.values.put(key, category.getName());
-            else
-                resolveParam(node, BotParamType.byKey(arg.getKey()));
-        node.setProcessedText(match.process(node.values.getRawMap()));
-
-        Answer answer = new Answer();
-        answer.setName(EXPENSE_ANSWER_PREFIX + Long.toString(category.getId()));
-        answer.setType(BotMessageType.INLINECURRENCY);
-        answer.setTypeOnFinish("textCurrency");
-        answer.setInlineEditHint("$(type_currency_hint)");
-        answer.setInputKey(BotParamType.BUDGET_EXPENSE);
-
-        // Loop back to this call
-        answer.setNextOnFinish("budget_create_add_expense");
-
-        node.setAutoAnswer(answer.getName());
-        node.addAnswer(answer);
-
-        node.finish();
-        botRunner.queueNode(node);
-    }
-
     private void clearExpenseState() {
-        new ExpenseCategoryBotDAO().clearAllState(botType);
+        ExpenseCategoryBotDAO.clearAllState(botType);
     }
 
     private void clearExpenses() {

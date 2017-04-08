@@ -211,7 +211,7 @@
   {
     "name": "budget_edit_clear_expense_state",
     "type": "blank",
-    "call": "#clear_expenses_state",
+    "call": "#clear_and_filter_expenses_state",
     "autoNext": "budget_edit_q_expense_add_intro"
   },
   {
@@ -231,6 +231,34 @@
         "removeOnSelect": "budget_edit_q_expense_gallery"
       }
     ]
+  },
+  {
+    "name": "budget_edit_add_expense",
+    "type": "dummy",
+    "call": "#add_expense"
+  },
+  {
+    "name": "budget_edit_q_expense_add_summary",
+    "type": "text",
+    "text": "$(budget_create_q_expense_summary)",
+    "answers": [
+      {
+        "name": "budget_edit_a_expense_add_summary_accept",
+        "text": "$(budget_create_a_accept)",
+        "next": "budget_edit_add_expense_do_upload"
+      },
+      {
+        "name": "budget_edit_a_expense_add_summary_retry",
+        "text": "$(budget_create_a_retry)",
+        "next": "budget_edit_clear_expense_state"
+      }
+    ]
+  },
+  {
+    "name": "budget_edit_add_expense_do_upload",
+    "type": "blank",
+    "asyncCall": "#upload_new_expenses",
+    "autoNext": "budget_edit_q_expense_options"
   },
 
 
@@ -258,23 +286,6 @@
         "nextOnFinish": "budget_edit_q_expense_add_summary",
         "typeOnFinish": "textCurrency",
         "inlineEditHint": "$(type_currency_hint)"
-      }
-    ]
-  },
-  {
-    "name": "budget_edit_q_expense_add_summary",
-    "type": "text",
-    "text": "$(budget_create_q_expense_summary)",
-    "answers": [
-      {
-        "name": "budget_edit_a_expense_add_summary_accept",
-        "text": "$(budget_create_a_accept)",
-        "next": "budget_edit_q_expense_add_upload"
-      },
-      {
-        "name": "budget_edit_a_expense_add_summary_retry",
-        "text": "$(budget_create_a_retry)",
-        "next": "budget_edit_q_expense_option_add_selected"
       }
     ]
   },
