@@ -63,6 +63,9 @@ public abstract class BudgetBotController extends DooitBotController {
             case SET_TIP_QUERY:
                 tipQuery();
                 break;
+            case SET_TIP_QUERY_BUDGET:
+                tipQueryBudget();
+                break;
             case ADD_BADGE:
                 doAddBadge();
                 break;
@@ -75,6 +78,12 @@ public abstract class BudgetBotController extends DooitBotController {
         if (activity == null)
             return;
         activity.setTipQuery(activity.getString(R.string.budget_create_qry_tip_income));
+    }
+
+    private void tipQueryBudget(){
+        if (activity == null)
+            return;
+        activity.setTipQuery(activity.getString(R.string.budget_create_qry_tip_budget));
     }
 
     ////////////////

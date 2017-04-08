@@ -333,6 +333,7 @@
   {
     "name": "budget_create_direct_to_tips",
     "type": "end",
+    "call": "#set_tip_query_budget",
     "autoNextScreen": "TIPS"
   },
 
