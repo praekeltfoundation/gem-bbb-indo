@@ -199,6 +199,7 @@ public class BudgetEditController extends BudgetBotController {
                 break;
             case UPDATE_SINGLE_EXPENSE:
                 updateCurrentExpense(answerLog, listener);
+                break;
             case UPDATE_BUDGET_SINGLE_EXPENSE:
                 addAndUploadSingleExpense(answerLog, listener);
                 break;
