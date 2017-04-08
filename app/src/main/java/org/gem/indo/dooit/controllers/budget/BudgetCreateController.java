@@ -241,7 +241,7 @@ public class BudgetCreateController extends BudgetBotController {
     }
 
     private void clearExpenseState() {
-        ExpenseCategoryBotDAO.clearAllState(botType);
+        ExpenseCategoryBotDAO.cleatState(botType);
     }
 
     private void clearExpenses() {

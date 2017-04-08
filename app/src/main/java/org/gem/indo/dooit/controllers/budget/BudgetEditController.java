@@ -67,7 +67,8 @@ public class BudgetEditController extends BudgetBotController {
 
     @Override
     public boolean filterQuickAnswer(Answer answer) {
-        if (answer.getName().equals("budget_edit_a_expense_option_edit")) {
+        if (answer.getName().equals("budget_edit_a_expense_option_edit")
+                || answer.getName().equals("budget_edit_a_expense_option_replace")) {
             // User can't edit expenses when there are none
             return budget.hasExpenses();
         } else {
@@ -80,7 +81,7 @@ public class BudgetEditController extends BudgetBotController {
         String key = paramType.getKey();
         Expense expense = persisted.loadExpenseToEdit(botType);
 
-        if (model.getName().equals("budget_edit_q_expense_add_summary")) {
+        if (model.getName().equals("budget_edit_add_expense_summary")) {
             // Adding new expenses
             switch (paramType) {
                 case BUDGET_TOTAL_EXPENSES:
@@ -93,6 +94,15 @@ public class BudgetEditController extends BudgetBotController {
                         model.values.put(key, CurrencyHelper.format(budget.getLeftOver() - totalEnteredExpenses(botRunner.getAnswerLog())));
                     }
                     break;
+            }
+        } else if (model.getName().equals("budget_edit_replace_add_expense_summary")) {
+            switch (paramType) {
+                case BUDGET_TOTAL_EXPENSES:
+                    if (budget != null)
+                        model.values.put(key, CurrencyHelper.format(totalEnteredExpenses(botRunner.getAnswerLog())) );
+                case BUDGET_TOTAL_EXPENSES_REMAINDER:
+                    if (budget != null)
+                        model.values.put(key, CurrencyHelper.format(budget.getIncome() - budget.getSavings() - totalEnteredExpenses(botRunner.getAnswerLog())));
             }
         } else {
             switch (paramType) {
@@ -152,7 +162,9 @@ public class BudgetEditController extends BudgetBotController {
         switch (key) {
             case ADD_EXPENSE:
                 addNextExpense(EXPENSE_QUESTION_PREFIX, EXPENSE_ANSWER_PREFIX,
-                        "budget_edit_add_expense", EXPENSE_STOP, "budget_edit_q_expense_add_summary");
+                        model.getName(), // Loop back to this model
+                        EXPENSE_STOP,
+                        model.getName() + "_summary");
                 break;
             case LIST_EXPENSE_QUICK_ANSWERS:
                 listExpenseQuickAnswers();
@@ -162,6 +174,9 @@ public class BudgetEditController extends BudgetBotController {
                 break;
             case VALIDATE_BUDGET_SAVINGS:
                 validateSavingsAmount(answerLog, model);
+                break;
+            case CLEAR_EXPENSES_STATE:
+                clearExpenseState();
                 break;
             case CLEAR_AND_FILTER_EXPENSES_STATE:
                 clearAndFilterExpenseState();
@@ -187,6 +202,9 @@ public class BudgetEditController extends BudgetBotController {
                 break;
             case UPLOAD_NEW_EXPENSES:
                 uploadNewExpenses(answerLog, listener);
+                break;
+            case UPLOAD_EXPENSE_REPLACEMENTS:
+                uploadExpenseReplacements(answerLog, listener);
                 break;
             case DELETE_BUDGET_EXPENSE:
                 deleteExpense(answerLog, listener);
@@ -374,6 +392,10 @@ public class BudgetEditController extends BudgetBotController {
         }
     }
 
+    private void clearExpenseState() {
+        ExpenseCategoryBotDAO.cleatState(botType);
+    }
+
     /**
      * Clears the state of expense categories in preparation for the carousel.
      */
@@ -433,6 +455,36 @@ public class BudgetEditController extends BudgetBotController {
 
             budget.addExpense(new Expense(category, expense));
         }
+        new BudgetDAO().update(budget);
+
+        doUpload(answerLog, listener);
+    }
+
+    private void uploadExpenseReplacements(@NonNull Map<String, Answer> answerLog,
+                                           @NonNull final OnAsyncListener listener) {
+
+        // Clear all existing expenses from budget
+        if (budget == null) {
+            notifyDone(listener);
+            return;
+        }
+        budget = BudgetDAO.clearExpenses(budget.getId());
+        if (budget == null) {
+            notifyDone(listener);
+            // Update failed
+            return;
+        }
+
+        // Add new expenses to budget
+        for (ExpenseCategory category : ExpenseCategoryBotDAO.findEntered(botType)) {
+            String key = EXPENSE_ANSWER_PREFIX + Long.toString(category.getId());
+            double expense = 0.0;
+            if (answerLog.containsKey(key))
+                expense = Double.parseDouble(answerLog.get(key).getValue());
+
+            budget.addExpense(new Expense(category, expense));
+        }
+
         new BudgetDAO().update(budget);
 
         doUpload(answerLog, listener);

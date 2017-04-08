@@ -62,4 +62,37 @@ public class BudgetDAO {
                 realm.close();
         }
     }
+
+    /**
+     * @param budgetId ID of Budget to clear expenses from
+     * @return The updated Budget. Returns null if budget wasn't found
+     */
+    @Nullable
+    public static Budget clearExpenses(long budgetId) {
+        Realm realm = null;
+        Budget budget = null;
+
+        try {
+            realm = Realm.getDefaultInstance();
+
+            budget = realm.where(Budget.class)
+                    .equalTo(Budget.FIELD_ID, budgetId)
+                    .findFirst();
+
+            if (budget == null)
+                return null;
+
+            realm.beginTransaction();
+            budget.clearExpenses();
+            budget = realm.copyFromRealm(budget);
+            realm.commitTransaction();
+        } catch (Throwable e) {
+            if (realm != null && realm.isInTransaction())
+                realm.cancelTransaction();
+        } finally {
+            if (realm != null)
+                realm.close();
+        }
+        return budget;
+    }
 }

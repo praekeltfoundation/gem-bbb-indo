@@ -211,7 +211,7 @@ public class ExpenseCategoryBotDAO {
      *
      * @param botType The type of the current conversation
      */
-    public static void clearAllState(BotType botType) {
+    public static void cleatState(BotType botType) {
         Realm realm = null;
 
         try {
@@ -225,6 +225,7 @@ public class ExpenseCategoryBotDAO {
             for (ExpenseCategory category : categories) {
                 category.setSelected(false);
                 category.setEntered(false);
+                category.setEnabled(true);
             }
             realm.commitTransaction();
         } catch (Throwable e) {

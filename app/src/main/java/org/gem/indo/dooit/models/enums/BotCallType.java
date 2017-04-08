@@ -92,6 +92,9 @@ public enum BotCallType {
     @SerializedName("#upload_new_expenses")
     UPLOAD_NEW_EXPENSES,
 
+    @SerializedName("#upload_expense_replacements")
+    UPLOAD_EXPENSE_REPLACEMENTS,
+
     @SerializedName("#delete_expense")
     DELETE_BUDGET_EXPENSE,
 

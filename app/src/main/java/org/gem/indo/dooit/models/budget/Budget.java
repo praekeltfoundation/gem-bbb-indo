@@ -12,6 +12,8 @@ import io.realm.annotations.PrimaryKey;
 
 public class Budget extends RealmObject {
 
+    public static final String FIELD_ID = "id";
+
     public static double DEFAULT_SAVING_PERCENT = 10.0;
 
     @PrimaryKey
@@ -119,6 +121,10 @@ public class Budget extends RealmObject {
             }
         if (index != -1)
             expenses.remove(index);
+    }
+
+    public void clearExpenses() {
+        expenses.clear();
     }
 
     ///////////////
