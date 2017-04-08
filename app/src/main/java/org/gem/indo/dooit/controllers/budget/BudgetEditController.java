@@ -29,12 +29,15 @@ import org.gem.indo.dooit.models.enums.BotParamType;
 import org.gem.indo.dooit.models.enums.BotType;
 import org.gem.indo.dooit.views.helpers.activity.CurrencyHelper;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
 import javax.inject.Inject;
 
+import io.realm.Realm;
+import io.realm.RealmResults;
 import rx.functions.Action0;
 import rx.functions.Action1;
 
@@ -124,6 +127,9 @@ public class BudgetEditController extends BudgetBotController {
                 break;
             case VALIDATE_BUDGET_SAVINGS:
                 validateSavingsAmount(answerLog, model);
+                break;
+            case CLEAR_AND_FILTER_EXPENSES_STATE:
+                clearAndFilterExpenseState();
                 break;
             default:
                 super.onCall(key, answerLog, model);
@@ -317,6 +323,44 @@ public class BudgetEditController extends BudgetBotController {
                 node.finish();
                 botRunner.queueNode(node);
             }
+        }
+    }
+
+    /**
+     * Clears the state of expense categories in preparation for the carousel.
+     */
+    private void clearAndFilterExpenseState() {
+        if (budget == null)
+            return;
+
+        Realm realm = null;
+        try {
+            realm = Realm.getDefaultInstance();
+
+            RealmResults<ExpenseCategory> categories = realm.where(ExpenseCategory.class)
+                    .equalTo(ExpenseCategory.FIELD_BOT_TYPE, botType.getId())
+                    .findAll();
+
+            // Keep a set of the budget expense ids so we can know which categories have been added
+            // before.
+            HashSet<Long> existing = new HashSet<>();
+            for (Expense expense : budget.getExpenses())
+                if (expense.hasCategoryId())
+                    existing.add(expense.getId());
+
+            realm.beginTransaction();
+            for (ExpenseCategory category : categories) {
+                category.setSelected(false);
+                category.setEntered(false);
+                category.setEnabled(existing.contains(category.getId()));
+            }
+            realm.commitTransaction();
+        } catch (Throwable e) {
+            if (realm != null && realm.isInTransaction())
+                realm.cancelTransaction();
+        } finally {
+            if (realm != null)
+                realm.close();
         }
     }
 
