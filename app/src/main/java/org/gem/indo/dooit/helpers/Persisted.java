@@ -24,6 +24,7 @@ import org.gem.indo.dooit.models.UserUUID;
 import org.gem.indo.dooit.models.bot.Answer;
 import org.gem.indo.dooit.models.bot.BaseBotModel;
 import org.gem.indo.dooit.models.bot.Node;
+import org.gem.indo.dooit.models.budget.Expense;
 import org.gem.indo.dooit.models.challenge.BaseChallenge;
 import org.gem.indo.dooit.models.challenge.Participant;
 import org.gem.indo.dooit.models.challenge.ParticipantAnswer;
@@ -329,12 +330,15 @@ public class Persisted {
     /**
      * Stores the current expense that is being edited
      */
-    public void saveExpenseToEdit(BotType botType, long expenseId) {
-        dooitSharedPreferences.setLong(botType.name() + EXPENSE_TO_EDIT, expenseId);
+    public void saveExpenseToEdit(BotType botType, Expense expense) {
+        dooitSharedPreferences.setComplex(botType.name() + EXPENSE_TO_EDIT, expense);
     }
 
-    public long loadExpenseToEdit(BotType botType) {
-        return dooitSharedPreferences.getLong(botType.name() + EXPENSE_TO_EDIT, -1L);
+    @Nullable
+    public Expense loadExpenseToEdit(BotType botType) {
+        if (hasExpenseToEdit(botType))
+            return dooitSharedPreferences.getComplex(botType.name() + EXPENSE_TO_EDIT, Expense.class);
+        return null;
     }
 
     public boolean hasExpenseToEdit(BotType botType) {

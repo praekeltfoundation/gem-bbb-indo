@@ -14,6 +14,7 @@ import org.gem.indo.dooit.api.responses.BudgetCreateResponse;
 import org.gem.indo.dooit.api.responses.EmptyResponse;
 import org.gem.indo.dooit.dao.budget.BudgetDAO;
 import org.gem.indo.dooit.dao.budget.ExpenseCategoryBotDAO;
+import org.gem.indo.dooit.dao.budget.ExpenseDAO;
 import org.gem.indo.dooit.helpers.bot.BotRunner;
 import org.gem.indo.dooit.helpers.crashlytics.CrashlyticsHelper;
 import org.gem.indo.dooit.models.bot.Answer;
@@ -28,17 +29,12 @@ import org.gem.indo.dooit.models.enums.BotParamType;
 import org.gem.indo.dooit.models.enums.BotType;
 import org.gem.indo.dooit.views.helpers.activity.CurrencyHelper;
 
-import java.net.ConnectException;
-import java.net.UnknownHostException;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
 import javax.inject.Inject;
 
-import io.realm.Realm;
-import io.realm.RealmResults;
-import retrofit2.adapter.rxjava.HttpException;
 import rx.functions.Action0;
 import rx.functions.Action1;
 
@@ -50,8 +46,8 @@ public class BudgetEditController extends BudgetBotController {
 
     private static final String TAG = BudgetEditController.class.getName();
     private static String SAVING_DEFAULT_ACCEPT = "budget_edit_a_savings_default_accept";
-    protected Expense expense = null;
     protected ExpenseCategory expenseCategory = null;
+
     @Inject
     BudgetManager budgetManager;
 
@@ -65,6 +61,7 @@ public class BudgetEditController extends BudgetBotController {
     @Override
     public void resolveParam(BaseBotModel model, BotParamType paramType) {
         String key = paramType.getKey();
+        Expense expense = persisted.loadExpenseToEdit(botType);
         switch (paramType) {
             case BUDGET_DEFAULT_SAVING_PERCENT:
                 model.values.put(key, Budget.DEFAULT_SAVING_PERCENT);
@@ -161,7 +158,7 @@ public class BudgetEditController extends BudgetBotController {
             long id = Long.parseLong(answer.getValue());
             for (Expense e : budget.getExpenses()) {
                 if (e.getId() == id) {
-                    this.expense = e;
+                    persisted.saveExpenseToEdit(botType, e);
                     break;
                 }
             }
@@ -169,7 +166,7 @@ public class BudgetEditController extends BudgetBotController {
             long id = Long.parseLong(answer.getValue());
             expenseCategory = new ExpenseCategoryBotDAO().findById(botType, id);
         } else if ("single_expense_amount".equals(answer.getName()) && answer.hasValue()) {
-            expense = new Expense(expenseCategory, Double.parseDouble(answer.getValue()));
+            persisted.saveExpenseToEdit(botType, new Expense(expenseCategory, Double.parseDouble(answer.getValue())));
         }
     }
 
@@ -254,8 +251,9 @@ public class BudgetEditController extends BudgetBotController {
     private void updateCurrentExpense(Map<String, Answer> answerLog, final OnAsyncListener listener) {
         if (answerLog.containsKey("expense_amount")) {
             try {
+                Expense expense = persisted.loadExpenseToEdit(botType);
                 double expenseAmount = Double.parseDouble(answerLog.get("expense_amount").getValue());
-                budget.updateExpense(this.expense.getId(), expenseAmount);
+                budget.updateExpense(expense.getId(), expenseAmount);
                 budgetManager.upsertBudget(budget, new DooitErrorHandler() {
                     @Override
                     public void onError(DooitAPIError error) {
@@ -293,7 +291,6 @@ public class BudgetEditController extends BudgetBotController {
             try {
                 double amount = Double.parseDouble(answer.getValue());
 
-
                 Node node = new Node();
                 node.setName("budget_edit_savings_amount_intermediate");
                 node.setType(BotMessageType.DUMMY); // Keep the node in the conversation on reload
@@ -325,7 +322,7 @@ public class BudgetEditController extends BudgetBotController {
 
     private void addAndUploadSingleExpense(@NonNull Map<String, Answer> answerLog,
                                            @NonNull final OnAsyncListener listener) {
-        budget.addExpense(expense);
+        budget.addExpense(persisted.loadExpenseToEdit(botType));
         doUpload(answerLog, listener);
     }
 
@@ -359,14 +356,16 @@ public class BudgetEditController extends BudgetBotController {
 
     private double totalExpensesAddSingle() {
         double total = 0;
-        for (Expense e: budget.getExpenses()) {
+        for (Expense e : budget.getExpenses()) {
             if (e.getCategoryId() != expenseCategory.getId()) {
                 total += e.getValue();
             }
         }
-        if (expense != null) {
+
+        Expense expense = persisted.loadExpenseToEdit(botType);
+        if (expense != null)
             total += expense.getValue();
-        }
+
         return total;
     }
 
@@ -399,7 +398,7 @@ public class BudgetEditController extends BudgetBotController {
      */
     private void listExpenseCategoriesUnselected() {
         ExpenseCategoryBotDAO categoryDAO = new ExpenseCategoryBotDAO();
-        for (Expense e: budget.getExpenses()) {
+        for (Expense e : budget.getExpenses()) {
             long catId = e.getCategoryId();
             if (catId >= 0) {
                 categoryDAO.setSelectedByRemoteId(catId, true);
@@ -427,6 +426,7 @@ public class BudgetEditController extends BudgetBotController {
     }
 
     private void deleteExpense(Map<String, Answer> answerLog, final OnAsyncListener listener) {
+        final Expense expense = persisted.loadExpenseToEdit(botType);
         if (budget != null && expense != null) {
             budgetManager.deleteExpense(expense.getId(), new DooitErrorHandler() {
                 @Override
@@ -439,17 +439,9 @@ public class BudgetEditController extends BudgetBotController {
                 }
             }).subscribe(new Action1<EmptyResponse>() {
                 @Override
-                public void call(EmptyResponse response) {
-                    Realm realm = Realm.getDefaultInstance();
-                    realm.executeTransaction(new Realm.Transaction() {
-                        @Override
-                        public void execute(Realm realm) {
-                            realm.where(Expense.class)
-                                    .equalTo("id", expense.getId())
-                                    .findAll()
-                                    .deleteAllFromRealm();
-                        }
-                    });
+                public void call(EmptyResponse emptyResponse) {
+                    ExpenseDAO.delete(expense.getId());
+                    budget.removeExpense(expense.getId());
                 }
             });
         }

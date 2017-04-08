@@ -98,6 +98,25 @@ public class Budget extends RealmObject {
         return expense;
     }
 
+    public void updateExpense(long expenseId, double amount){
+        for(Expense e : this.expenses){
+            if(e.getId() == expenseId){
+                e.setValue(amount);
+            }
+        }
+    }
+
+    public void removeExpense(long expenseId) {
+        int index = -1;
+        for (int i = 0; i < expenses.size(); i++)
+            if (expenseId == expenses.get(i).getId()) {
+                index = i;
+                break;
+            }
+        if (index != -1)
+            expenses.remove(index);
+    }
+
     ///////////////
     // Left over //
     ///////////////
@@ -107,17 +126,5 @@ public class Budget extends RealmObject {
      */
     public double getLeftOver() {
         return income - (savings + getExpenseTotal());
-    }
-
-    //////////////////////////////
-    // Update A Certain Expense //
-    /////////////////////////////
-
-    public void updateExpense(long expenseId, double amount){
-        for(Expense e : this.expenses){
-            if(e.getId() == expenseId){
-                e.setValue(amount);
-            }
-        }
     }
 }
