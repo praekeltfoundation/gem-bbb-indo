@@ -99,10 +99,12 @@ public class BudgetEditController extends BudgetBotController {
             switch (paramType) {
                 case BUDGET_TOTAL_EXPENSES:
                     if (budget != null)
-                        model.values.put(key, CurrencyHelper.format(totalEnteredExpenses(botRunner.getAnswerLog())) );
+                        model.values.put(key, CurrencyHelper.format(totalEnteredExpenses(botRunner.getAnswerLog())));
+                    break;
                 case BUDGET_TOTAL_EXPENSES_REMAINDER:
                     if (budget != null)
                         model.values.put(key, CurrencyHelper.format(budget.getIncome() - budget.getSavings() - totalEnteredExpenses(botRunner.getAnswerLog())));
+                    break;
             }
         } else {
             switch (paramType) {
