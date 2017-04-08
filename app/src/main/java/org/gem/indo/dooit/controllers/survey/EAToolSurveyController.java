@@ -27,6 +27,8 @@ public class EAToolSurveyController extends SurveyController {
     private static final String EATOOL_CONSENT_2 = "survey_eatool_q2_consent";
 
     private static final String[] QUESTIONS = new String[]{
+            "survey_eatool_intro",
+
             EATOOL_CONSENT_1,
             EATOOL_CONSENT_2,
 
