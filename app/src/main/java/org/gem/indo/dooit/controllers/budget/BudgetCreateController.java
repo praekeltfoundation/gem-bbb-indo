@@ -10,9 +10,11 @@ import org.gem.indo.dooit.R;
 import org.gem.indo.dooit.api.DooitAPIError;
 import org.gem.indo.dooit.api.DooitErrorHandler;
 import org.gem.indo.dooit.api.managers.BudgetManager;
+import org.gem.indo.dooit.api.managers.GoalManager;
 import org.gem.indo.dooit.api.responses.BudgetCreateResponse;
 import org.gem.indo.dooit.dao.budget.BudgetDAO;
 import org.gem.indo.dooit.dao.budget.ExpenseCategoryBotDAO;
+import org.gem.indo.dooit.helpers.Persisted;
 import org.gem.indo.dooit.helpers.bot.BotRunner;
 import org.gem.indo.dooit.helpers.bot.param.ParamArg;
 import org.gem.indo.dooit.helpers.bot.param.ParamMatch;
@@ -28,8 +30,10 @@ import org.gem.indo.dooit.models.enums.BotCallType;
 import org.gem.indo.dooit.models.enums.BotMessageType;
 import org.gem.indo.dooit.models.enums.BotParamType;
 import org.gem.indo.dooit.models.enums.BotType;
+import org.gem.indo.dooit.models.goal.Goal;
 import org.gem.indo.dooit.views.helpers.activity.CurrencyHelper;
 
+import java.util.List;
 import java.util.Map;
 
 import javax.inject.Inject;
@@ -52,6 +56,9 @@ public class BudgetCreateController extends BudgetBotController {
 
     @Inject
     BudgetManager budgetManager;
+
+    @Inject
+    Persisted persisted;
 
     public BudgetCreateController(Activity activity, @NonNull BotRunner botRunner) {
         super(activity, BotType.BUDGET_CREATE, activity, botRunner);
@@ -346,7 +353,17 @@ public class BudgetCreateController extends BudgetBotController {
     }
 
     private void branchBudgetGoals(Map<String, Answer> answerLog) {
+        Node node = new Node();
+        node.setName("Hand_over_Node");
+        node.setType(BotMessageType.DUMMY);
 
+        List<Goal> goals = persisted.loadConvoGoals(botType);
+        if(goals.size() > 0){
+            node.setAutoNext("budget_create_q_final_positive_has_goals");
+        }else{
+            node.setAutoNext("budget_create_q_final_positive_no_goals");
+        }
+        botRunner.queueNode(node);
     }
 
     ////////////

@@ -370,6 +370,7 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
                 feed.parse(R.raw.budget_create, Node.class);
                 new RequirementResolver.Builder(getContext(), BotType.BUDGET_CREATE)
                         .require(BotObjectType.EXPENSE_CATEGORIES)
+                        .require(BotObjectType.GOALS)
                         .build()
                         .resolve(reqCallback);
                 break;

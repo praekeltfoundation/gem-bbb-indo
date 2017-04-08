@@ -743,6 +743,15 @@
 
     <string name="budget_create_qry_tip_income">income</string>
 
+    <string name="budget_create_q_final_positive_has_goals_list_intro">"Your weekly target for each goal is currently:"</string>
+    <string name="budget_create_a_no_i_want_tips">"No, I want to read tips on budgeting"</string>
+    <string name="budget_create_a_nothanks">"No thanks, I’m done"</string>
+    <string name="budget_create_a_edit_savings_plan">"Edit savings plan"</string>
+
+    <string name="budget_create_a_add_a_goal">"Add a goal"</string>
+
+    <string name="budget_create_end_message">"See you later! Don’t forget to come back every week to track your savings."</string>
+
     <!-- budget_create validation -->
 
     <string name="budget_create_err__invalid_number">Invalid number</string>

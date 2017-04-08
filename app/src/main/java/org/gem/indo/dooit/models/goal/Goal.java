@@ -231,6 +231,10 @@ public class Goal {
         return weeklyTarget;
     }
 
+    public String getWeeklyTargetFormatted() {
+        return CurrencyHelper.format(weeklyTarget);
+    }
+
     /**
      * @param weeklyTarget New weekly target
      * @param recalc       When true, dependant fields such as the end date will be recalculated
