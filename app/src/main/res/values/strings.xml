@@ -703,8 +703,6 @@
 
     <!-- BOT: budget_create -->
 
-    <string name="budget_create_intro">Budget Create</string>
-
     <string name="budget_create_q_income">"Let's get started! How much money do you get each month?"</string>
     <string name="budget_create_a_income_amount">Add amount</string>
     <string name="budget_create_a_no_income">"I don't get a regular income"</string>
@@ -776,14 +774,22 @@
     <string name="budget_edit_q_savings_default">@string/budget_create_q_savings_default</string>
     <string name="budget_edit_a_savings_default_accept">@string/budget_create_a_savings_default_accept</string>
     <string name="budget_edit_a_savings_default_deny">@string/budget_create_a_savings_default_deny</string>
+    <string name="budget_edit_q_savings_invalid_amount">"Whoops. You won’t be able to save more than you earn. Try to save an amount equal to or less than your monthly income of $(budget.income)."</string>
 
     <string name="budget_edit_q_expense_options">What would you like to do to your expenses?</string>
     <string name="budget_edit_a_expense_option_edit">Edit current expenses</string>
     <string name="budget_edit_a_expense_option_add">Add a new expense</string>
-    <string name="budget_edit_a_expense_option_delete">Delete all and start over</string>
+    <string name="budget_edit_a_expense_option_replace">Delete all and start over</string>
     <string name="budget_edit_a_expense_option_done">"I'm done"</string>
 
+    <string name="budget_edit_q_expense_option_add">Which expense category would you like to add?</string>
+    <string name="budget_edit_a_expense_continue">"OK, I've selected my expenses"</string>
+
     <string name="budget_edit_q_expense_option_edit">Which expense would you like to edit?</string>
+    <string name="budget_edit_q_expense_option_edit_selected">Would you like to edit the amount or delete $(budget.expense.name)?</string>
+    <string name="budget_edit_a_expense_selected_delete">Delete</string>
+    <string name="budget_edit_a_expense_selected_edit_amount">Edit amount</string>
+    <string name="budget_edit_q_single_expense_amount">"How much do you spend on $(budget.expense.name) each month?</string>
 
     <string name="budget_edit_q_summary">@string/budget_create_q_summary</string>
     <string name="budget_edit_q_final_positive">@string/budget_create_q_final_positive</string>
@@ -794,6 +800,7 @@
 
     <string name="budget_edit_err_income__not_found">Income input was not found</string>
     <string name="budget_edit_err_savings__not_found">Savings input was not found</string>
+    <string name="budget_edit_err_expense__not_found">Expense input was not found</string>
 
     <!-- END: BOT: budget_edit -->
 

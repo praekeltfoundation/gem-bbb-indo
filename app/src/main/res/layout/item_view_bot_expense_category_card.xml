@@ -16,7 +16,14 @@
         android:layout_height="@dimen/bot_carousel_card_image_height"
         android:background="@color/purple"
         android:scaleType="centerCrop"
-        app:placeholderImage="@drawable/empty_image" />
+        app:placeholderImage="@drawable/empty_image"/>
+
+    <View
+        android:id="@+id/item_view_bot_expense_category_card_overlay"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/bot_carousel_card_image_height"
+        android:background="@color/light_grey_alpha"
+        />
 
     <TextView
         android:id="@+id/item_view_bot_expense_category_card_title"

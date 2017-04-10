@@ -23,7 +23,7 @@ public class ExpenseCategoryBotDAO {
 
     private static BotObjectType contentType = BotObjectType.EXPENSE_CATEGORIES;
 
-    public void insert(@NonNull BotType botType, @NonNull List<ExpenseCategory> categories) {
+    public static void insert(@NonNull BotType botType, @NonNull List<ExpenseCategory> categories) {
         Realm realm = null;
 
         try {
@@ -55,7 +55,7 @@ public class ExpenseCategoryBotDAO {
     }
 
     @NonNull
-    public List<ExpenseCategory> findAll(BotType botType) {
+    public static List<ExpenseCategory> findAll(BotType botType) {
         Realm realm = null;
 
         try {
@@ -77,7 +77,7 @@ public class ExpenseCategoryBotDAO {
      * Returns the selected {@link ExpenseCategory}s for the given bot conversation type.
      */
     @NonNull
-    public List<ExpenseCategory> findSelected(BotType botType) {
+    public static List<ExpenseCategory> findSelected(BotType botType) {
         Realm realm = null;
 
         try {
@@ -96,8 +96,73 @@ public class ExpenseCategoryBotDAO {
         }
     }
 
+    @NonNull
+    public static List<ExpenseCategory> findEntered(BotType botType) {
+        Realm realm = null;
+
+        try {
+            realm = Realm.getDefaultInstance();
+
+            return realm.copyFromRealm(realm.where(ExpenseCategory.class)
+                    .equalTo(ExpenseCategory.FIELD_BOT_TYPE, botType.getId())
+                    .equalTo(ExpenseCategory.FIELD_SELECTED, true)
+                    .equalTo(ExpenseCategory.FIELD_ENTERED, true)
+                    .equalTo(ExpenseCategory.FIELD_ENABLED, true)
+                    .findAllSorted(
+                            ExpenseCategory.FIELD_ORDER, Sort.ASCENDING,
+                            ExpenseCategory.FIELD_ID, Sort.ASCENDING
+                    ));
+        } finally {
+            if (realm != null)
+                realm.close();
+        }
+    }
+
+    /**
+     * Returns the {@link ExpenseCategory} for the given bot conversation type with a specific ID.
+     */
+    @NonNull
+    public static ExpenseCategory findById(BotType botType, long id) {
+        Realm realm = null;
+
+        try {
+            realm = Realm.getDefaultInstance();
+
+            return realm.copyFromRealm(realm.where(ExpenseCategory.class)
+                    .equalTo(ExpenseCategory.FIELD_BOT_TYPE, botType.getId())
+                    .equalTo(ExpenseCategory.FIELD_ID, id)
+                    .findFirst());
+        } finally {
+            if (realm != null)
+                realm.close();
+        }
+    }
+
+    /**
+     * Returns the unselected {@link ExpenseCategory}s for the given bot conversation type.
+     */
+    @NonNull
+    public static List<ExpenseCategory> findUnselected(BotType botType) {
+        Realm realm = null;
+
+        try {
+            realm = Realm.getDefaultInstance();
+
+            return realm.copyFromRealm(realm.where(ExpenseCategory.class)
+                    .equalTo(ExpenseCategory.FIELD_BOT_TYPE, botType.getId())
+                    .equalTo(ExpenseCategory.FIELD_SELECTED, false)
+                    .findAllSorted(
+                            ExpenseCategory.FIELD_ORDER, Sort.ASCENDING,
+                            ExpenseCategory.FIELD_ID, Sort.ASCENDING
+                    ));
+        } finally {
+            if (realm != null)
+                realm.close();
+        }
+    }
+
     @Nullable
-    public ExpenseCategory findNext(BotType botType) {
+    public static ExpenseCategory findNext(BotType botType) {
         Realm realm = null;
 
         try {
@@ -122,7 +187,7 @@ public class ExpenseCategoryBotDAO {
         }
     }
 
-    public boolean hasNext(BotType botType) {
+    public static boolean hasNext(BotType botType) {
         Realm realm = null;
 
         try {
@@ -146,7 +211,7 @@ public class ExpenseCategoryBotDAO {
      *
      * @param botType The type of the current conversation
      */
-    public void clearAllState(BotType botType) {
+    public static void cleatState(BotType botType) {
         Realm realm = null;
 
         try {
@@ -160,8 +225,8 @@ public class ExpenseCategoryBotDAO {
             for (ExpenseCategory category : categories) {
                 category.setSelected(false);
                 category.setEntered(false);
+                category.setEnabled(true);
             }
-            // FIXME: Realm exception. Can't commit non-existing write
             realm.commitTransaction();
         } catch (Throwable e) {
             if (realm != null && realm.isInTransaction())
@@ -172,7 +237,7 @@ public class ExpenseCategoryBotDAO {
         }
     }
 
-    public boolean exists(@NonNull BotType botType) {
+    public static boolean exists(@NonNull BotType botType) {
         Realm realm = null;
 
         try {
@@ -190,7 +255,7 @@ public class ExpenseCategoryBotDAO {
         }
     }
 
-    public void setSelected(long localId, boolean checked) {
+    public static void setSelected(long localId, boolean checked) {
         Realm realm = null;
 
         try {
@@ -211,7 +276,28 @@ public class ExpenseCategoryBotDAO {
         }
     }
 
-    public void setEntered(BotType botType, long categoryId, boolean entered) {
+    public static void setSelectedByRemoteId(long remoteId, boolean checked) {
+        Realm realm = null;
+
+        try {
+            realm = Realm.getDefaultInstance();
+
+            ExpenseCategory category = realm.where(ExpenseCategory.class)
+                    .equalTo(ExpenseCategory.FIELD_ID, remoteId)
+                    .findFirst();
+            realm.beginTransaction();
+            category.setSelected(checked);
+            realm.commitTransaction();
+        } catch (Throwable e) {
+            if (realm != null && realm.isInTransaction())
+                realm.cancelTransaction();
+        } finally {
+            if (realm != null)
+                realm.close();
+        }
+    }
+
+    public static void setEntered(BotType botType, long categoryId, boolean entered) {
         Realm realm = null;
 
         try {
@@ -234,7 +320,12 @@ public class ExpenseCategoryBotDAO {
         }
     }
 
-    public void clear(@NonNull BotType botType) {
+    /**
+     * Removes all expense categories from the db associated with a bot conversation
+     *
+     * @param botType The current bot conversation
+     */
+    public static void clear(@NonNull BotType botType) {
         Realm realm = null;
 
         try {
@@ -255,7 +346,10 @@ public class ExpenseCategoryBotDAO {
         }
     }
 
-    public void clearAll() {
+    /**
+     * Removes all expense categories from the db
+     */
+    public static void clearAll() {
         Realm realm = null;
 
         try {
