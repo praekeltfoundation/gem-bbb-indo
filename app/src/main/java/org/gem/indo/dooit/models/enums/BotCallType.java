@@ -99,5 +99,8 @@ public enum BotCallType {
     DELETE_BUDGET_EXPENSE,
 
     @SerializedName("#list_goals")
-    LIST_GOALS
+    LIST_GOALS,
+
+    @SerializedName("#set_tip_query_budget")
+    SET_TIP_QUERY_BUDGET
 }

@@ -34,6 +34,7 @@ import org.gem.indo.dooit.models.goal.Goal;
 import org.gem.indo.dooit.models.goal.GoalPrototype;
 import org.gem.indo.dooit.models.survey.CoachSurvey;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -74,6 +75,7 @@ public class Persisted {
     private static final String PARTICIPANT = "participant";
     private static final String TEMPORARY = "temporary";
     private static final String EXPENSE_TO_EDIT = "expense_to_edit";
+    private static final String NEW_BUDGET_BADGES = "new_budget_badges";
 
     @Inject
     DooitSharedPreferences dooitSharedPreferences;
@@ -545,6 +547,25 @@ public class Persisted {
 
     public void setNotify(NotificationType notifyType, boolean value) {
         dooitSharedPreferences.setBoolean(NOTIFICATION + notifyType.name(), value);
+    }
+
+
+    /**
+     * New budget badges
+     */
+
+    public void saveNewBudgetBadges(List<Badge> newBages) {
+        dooitSharedPreferences.setComplex(NEW_BUDGET_BADGES, newBages.toArray());
+    }
+
+    public List<Badge> loadNewBudgetBadges() {
+        Badge [] arrayBadges = dooitSharedPreferences.getComplex(NEW_BUDGET_BADGES, Badge[].class);
+        if(arrayBadges != null){
+            return new ArrayList<Badge>(Arrays.asList(arrayBadges));
+        }else {
+            return new ArrayList<Badge>();
+        }
+
     }
 }
 
