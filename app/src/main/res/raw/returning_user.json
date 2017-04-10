@@ -89,6 +89,33 @@
   },
 
   {
+    "name": "convo_default_q_behind_budget",
+    "text": "$(convo_default_q_behind_budget)"
+  },
+
+  {
+    "name": "convo_default_q_behind_no_budget",
+    "text": "$(convo_default_q_behind_no_budget)",
+    "answers": [
+      {
+        "name": "convo_default_a_behind_no_budget_want_one",
+        "text": "$(convo_default_a_behind_no_budget_want_one)",
+        "next": "start_budget_create_conversation"
+      },
+      {
+        "name": "convo_default_a_behind_no_budget_not_now",
+        "text": "$(convo_default_a_behind_no_budget_not_now)"
+      }
+    ]
+  },
+
+  {
+    "name": "start_budget_create_conversation",
+    "type": "startConvo",
+    "autoNext": "CREATE_BUDGET"
+  },
+
+  {
     "name": "start_deposit_conversation",
     "type": "startConvo",
     "autoNext": "GOAL_DEPOSIT"

@@ -159,7 +159,11 @@ public class ReturningUserController extends DooitBotController {
         if (problemGoals.isEmpty()) {
             node.setAutoNext("convo_default_return_q_options");
         } else {
-            node.setAutoNext("convo_default_return_q_options");
+            if (budget == null) {
+                node.setAutoNext("convo_default_q_behind_no_budget");
+            } else {
+                node.setAutoNext("convo_default_q_behind_budget");
+            }
         }
 
         node.finish();
