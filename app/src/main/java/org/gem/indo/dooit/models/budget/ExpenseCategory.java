@@ -23,6 +23,7 @@ public class ExpenseCategory extends RealmObject {
     public static final String FIELD_LOCAL_ID = "localId";
     public static final String FIELD_ORDER = "order";
     public static final String FIELD_BOT_TYPE = "botType";
+    public static final String FIELD_ENABLED = "enabled";
     public static final String FIELD_SELECTED = "selected";
     public static final String FIELD_ENTERED = "entered";
 
@@ -56,7 +57,15 @@ public class ExpenseCategory extends RealmObject {
     /////////////////////
 
     /**
-     * A local field for use in the Expense carousel.
+     * Indicates whether the user can interact with this category. If categories should be
+     * displayed, but not intractable (the user has an existing expense in this category), then this
+     * field should be set to false.
+     */
+    private boolean enabled = true;
+
+    /**
+     * A local field for use in the Expense carousel. Indicates the user has selected this category
+     * and the checkbox should be checked.
      */
     private boolean selected;
 
@@ -131,6 +140,18 @@ public class ExpenseCategory extends RealmObject {
 
     public void setOrder(int order) {
         this.order = order;
+    }
+
+    /////////////
+    // Enabled //
+    /////////////
+
+    public boolean isEnabled() {
+        return enabled;
+    }
+
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
     }
 
     //////////////

@@ -56,6 +56,9 @@ public enum BotCallType {
     @SerializedName("#clear_expenses_state")
     CLEAR_EXPENSES_STATE,
 
+    @SerializedName("#clear_and_filter_expenses_state")
+    CLEAR_AND_FILTER_EXPENSES_STATE,
+
     @SerializedName("#clear_expenses")
     CLEAR_EXPENSES,
 
@@ -85,6 +88,12 @@ public enum BotCallType {
 
     @SerializedName("#update_budget_single_expense")
     UPDATE_BUDGET_SINGLE_EXPENSE,
+
+    @SerializedName("#upload_new_expenses")
+    UPLOAD_NEW_EXPENSES,
+
+    @SerializedName("#upload_expense_replacements")
+    UPLOAD_EXPENSE_REPLACEMENTS,
 
     @SerializedName("#delete_expense")
     DELETE_BUDGET_EXPENSE,

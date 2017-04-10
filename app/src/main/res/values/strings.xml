@@ -789,10 +789,11 @@
     <string name="budget_edit_q_expense_options">What would you like to do to your expenses?</string>
     <string name="budget_edit_a_expense_option_edit">Edit current expenses</string>
     <string name="budget_edit_a_expense_option_add">Add a new expense</string>
-    <string name="budget_edit_a_expense_option_delete">Delete all and start over</string>
+    <string name="budget_edit_a_expense_option_replace">Delete all and start over</string>
     <string name="budget_edit_a_expense_option_done">"I'm done"</string>
 
     <string name="budget_edit_q_expense_option_add">Which expense category would you like to add?</string>
+    <string name="budget_edit_a_expense_continue">"OK, I've selected my expenses"</string>
 
     <string name="budget_edit_q_expense_option_edit">Which expense would you like to edit?</string>
     <string name="budget_edit_q_expense_option_edit_selected">Would you like to edit the amount or delete $(budget.expense.name)?</string>

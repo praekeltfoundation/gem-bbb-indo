@@ -28,7 +28,7 @@ public class ExpenseCategoryGalleryAdapter extends RecyclerView.Adapter<ExpenseC
      * @param botType Required to manage conversation specific DB entities.
      */
     public ExpenseCategoryGalleryAdapter(@NonNull BotType botType) {
-        this.data = new ExpenseCategoryBotDAO().findAll(botType);
+        this.data = ExpenseCategoryBotDAO.findAll(botType);
         this.botType = botType;
     }
 
@@ -55,6 +55,6 @@ public class ExpenseCategoryGalleryAdapter extends RecyclerView.Adapter<ExpenseC
 
     @Override
     public void onCheck(long localId, boolean checked) {
-        new ExpenseCategoryBotDAO().setSelected(localId, checked);
+        ExpenseCategoryBotDAO.setSelected(localId, checked);
     }
 }

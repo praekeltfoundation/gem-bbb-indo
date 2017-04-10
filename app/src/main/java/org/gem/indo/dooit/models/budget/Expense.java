@@ -71,6 +71,9 @@ public class Expense extends RealmObject {
         return (expenseCategoryId != null) ? expenseCategoryId : -1;
     }
 
+    public boolean hasCategoryId() {
+        return expenseCategoryId != null;
+    }
 
     //////////
     // Name //
