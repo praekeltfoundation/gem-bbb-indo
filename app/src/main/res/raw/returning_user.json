@@ -27,8 +27,9 @@
   {
     "name": "convo_default_return_q_summary",
     "type": "goalListSummary",
-    "autoNext": "convo_default_return_q_options"
+    "call": "#check_budget"
   },
+
   {
     "name": "convo_default_return_q_options",
     "type": "blank",

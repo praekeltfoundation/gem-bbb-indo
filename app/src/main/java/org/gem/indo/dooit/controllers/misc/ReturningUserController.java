@@ -7,15 +7,22 @@ import org.gem.indo.dooit.helpers.bot.BotRunner;
 import org.gem.indo.dooit.models.Tip;
 import org.gem.indo.dooit.models.bot.Answer;
 import org.gem.indo.dooit.models.bot.BaseBotModel;
+import org.gem.indo.dooit.models.bot.Node;
 import org.gem.indo.dooit.models.budget.Budget;
+import org.gem.indo.dooit.models.budget.Expense;
 import org.gem.indo.dooit.models.challenge.BaseChallenge;
+import org.gem.indo.dooit.models.date.WeekCalc;
 import org.gem.indo.dooit.models.enums.BotCallType;
+import org.gem.indo.dooit.models.enums.BotMessageType;
 import org.gem.indo.dooit.models.enums.BotObjectType;
 import org.gem.indo.dooit.models.enums.BotParamType;
 import org.gem.indo.dooit.models.enums.BotType;
 import org.gem.indo.dooit.models.goal.Goal;
+import org.gem.indo.dooit.views.helpers.activity.CurrencyHelper;
 
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 /**
@@ -53,7 +60,13 @@ public class ReturningUserController extends DooitBotController {
 
     @Override
     public void onCall(BotCallType key, Map<String, Answer> answerLog, BaseBotModel model) {
-
+        switch (key) {
+            case CHECK_BUDGET:
+                checkBudget();
+                break;
+            default:
+                super.onCall(key, answerLog, model);
+        }
     }
 
     @Override
@@ -107,5 +120,50 @@ public class ReturningUserController extends DooitBotController {
             default:
                 return super.getObject(objType);
         }
+    }
+
+    private List<Goal> getProblemGoals() {
+        List<Goal> problemGoals = new LinkedList<>();
+
+        if (goals != null) {
+            for (Goal goal : goals) {
+                double weeklyTarget = goal.getWeeklyTarget();
+                int numWeeks = (int)goal.getWeeksToNow(WeekCalc.Rounding.DOWN);
+                if (numWeeks > 4) {
+                    boolean savedEnough = false;
+                    Map<String, Float> weeklyTotals = goal.getWeeklyTotals();
+
+                    for (int i = numWeeks - 4; i < numWeeks; i++) {
+                        if (weeklyTotals.get(Integer.toString(i)) >= weeklyTarget) {
+                            savedEnough = true;
+                            break;
+                        }
+                    }
+
+                    if (!savedEnough) {
+                        problemGoals.add(goal);
+                    }
+                }
+            }
+        }
+
+        return problemGoals;
+    }
+
+    private void checkBudget() {
+        Node node = new Node();
+        node.setName("budget_edit_q_user_expenses");
+        node.setType(BotMessageType.DUMMY); // Keep the node in the conversation on reload
+        List<Goal> problemGoals = getProblemGoals();
+
+        if (problemGoals.isEmpty()) {
+            node.setAutoNext("convo_default_return_q_options");
+        } else {
+            node.setAutoNext("convo_default_return_q_options");
+        }
+
+        node.finish();
+
+        botRunner.queueNode(node);
     }
 }

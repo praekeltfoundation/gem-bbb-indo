@@ -75,5 +75,8 @@ public enum BotCallType {
     LIST_EXPENSE_QUICK_ANSWERS,
 
     @SerializedName("#list_goals")
-    LIST_GOALS
+    LIST_GOALS,
+
+    @SerializedName("#check_budget")
+    CHECK_BUDGET
 }
