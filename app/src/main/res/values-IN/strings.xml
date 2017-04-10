@@ -177,6 +177,11 @@
     <string name="convo_default_return_a_progress_intro_tip">"Tolong berikan aku tips."</string>
     <string name="convo_default_return_a_progress_intro_challenge">"Tunjukkan tantangan minggu ini."</string>
     <string name="convo_default_return_a_progress_intro_target">"Tambahkan tabungan kamu."</string>
+    <string name="convo_default_q_behind_budget">"You seem to be behind your savings for [goal]. Would you like to create a budget to help you manage your money better?"</string>
+    <string name="convo_default_a_behind_no_budget_want_one">"Great! I want one!"</string>
+    <string name="convo_default_a_behind_no_budget_not_now">"Hmm, I don't want one now."</string>
+    <string name="convo_default_q_behind_no_budget">"You seem to be behind your savings for [goal]. Do you want to edit your savings goals or budget to match your current financial life?"</string>
+
 
     <!-- BOT: goal_add -->
     <!-- Questions -->

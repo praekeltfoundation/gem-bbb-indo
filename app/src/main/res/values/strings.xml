@@ -177,6 +177,11 @@
     <string name="convo_default_return_a_progress_intro_tip">"Take me to the tips, please."</string>
     <string name="convo_default_return_a_progress_intro_challenge">"Take me to this week's challenge."</string>
     <string name="convo_default_return_a_progress_intro_target">"Add Savings"</string>
+    <string name="convo_default_q_behind_budget">"You seem to be behind your savings for [goal]. Would you like to create a budget to help you manage your money better?"</string>
+    <string name="convo_default_a_behind_no_budget_want_one">"Great! I want one!"</string>
+    <string name="convo_default_a_behind_no_budget_not_now">"Hmm, I don't want one now."</string>
+    <string name="convo_default_q_behind_no_budget">"You seem to be behind your savings for [goal]. Do you want to edit your savings goals or budget to match your current financial life?"</string>
+
 
     <!-- BOT: goal_add -->
     <string name="goal_add_q_greeting_username">"Hi, $(user.preferred_name)! My name is Bina. I'm your personal money coach and I'm here to help you save."</string>
