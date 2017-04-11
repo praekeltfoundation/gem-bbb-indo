@@ -296,11 +296,11 @@ public class BudgetEditController extends BudgetBotController {
                     public void call() {
                         notifyDone(listener);
                     }
-                }).subscribe(new Action1<Budget>() {
+                }).subscribe(new Action1<BudgetCreateResponse>() {
                     @Override
-                    public void call(Budget budget) {
-                        new BudgetDAO().update(budget);
-                        BudgetEditController.this.budget = budget;
+                    public void call(BudgetCreateResponse budget) {
+                        new BudgetDAO().update(budget.getBudget());
+                        BudgetEditController.this.budget = budget.getBudget();
                     }
                 });
             } catch (NumberFormatException e) {
@@ -517,6 +517,7 @@ public class BudgetEditController extends BudgetBotController {
                 BudgetEditController.this.budget = response.getBudget();
 
                 // TODO: Badges from budget create
+                persisted.saveNewBudgetBadges(response.getBadges());
             }
         });
     }

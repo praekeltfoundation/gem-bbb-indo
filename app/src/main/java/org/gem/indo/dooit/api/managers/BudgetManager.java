@@ -45,7 +45,7 @@ public class BudgetManager extends DooitManager {
         return useNetwork(budgetAPI.updateBudget(budgetId, new ChangeBudgetIncome(income)), errorHandler);
     }
 
-    public Observable<Budget> updateBudgetSavings(long budgetId, double savings, DooitErrorHandler errorHandler) {
+    public Observable<BudgetCreateResponse> updateBudgetSavings(long budgetId, double savings, DooitErrorHandler errorHandler) {
         return useNetwork(budgetAPI.updateBudget(budgetId, new ChangeBudgetSavings(savings)), errorHandler);
     }
 
