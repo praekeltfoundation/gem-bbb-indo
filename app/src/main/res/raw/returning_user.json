@@ -90,7 +90,26 @@
 
   {
     "name": "convo_default_q_behind_budget",
-    "text": "$(convo_default_q_behind_budget)"
+    "text": "$(convo_default_q_behind_budget)",
+    "answers": [
+      {
+        "name": "convo_default_a_behind_budget_savings",
+        "text": "$(convo_default_a_behind_budget_savings)"
+      },
+      {
+        "name": "convo_default_a_behind_budget_budget",
+        "text": "$(convo_default_a_behind_budget_budget)",
+        "next": "start_budget_edit_conversation"
+      },
+      {
+        "name": "convo_default_a_behind_budget_track_savings",
+        "text": "$(convo_default_a_behind_budget_track_savings)"
+      },
+      {
+        "name": "convo_default_a_behind_budget_challenge",
+        "text": "$(convo_default_a_behind_budget_challenge)"
+      }
+    ]
   },
 
   {
@@ -137,6 +156,12 @@
     "name": "start_budget_create_conversation",
     "type": "startConvo",
     "autoNext": "BUDGET_CREATE"
+  },
+
+  {
+    "name": "start_budget_edit_conversation",
+    "type": "startConvo",
+    "autoNext": "BUDGET_EDIT"
   },
 
   {
