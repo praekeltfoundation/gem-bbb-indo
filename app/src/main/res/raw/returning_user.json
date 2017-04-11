@@ -112,7 +112,7 @@
   {
     "name": "start_budget_create_conversation",
     "type": "startConvo",
-    "autoNext": "CREATE_BUDGET"
+    "autoNext": "BUDGET_CREATE"
   },
 
   {
