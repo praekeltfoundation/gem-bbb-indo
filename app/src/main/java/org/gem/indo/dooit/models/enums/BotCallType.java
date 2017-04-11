@@ -102,5 +102,8 @@ public enum BotCallType {
     LIST_GOALS,
 
     @SerializedName("#check_budget")
-    CHECK_BUDGET
+    CHECK_BUDGET,
+
+    @SerializedName("#set_tip_query_budget")
+    SET_TIP_QUERY_BUDGET
 }

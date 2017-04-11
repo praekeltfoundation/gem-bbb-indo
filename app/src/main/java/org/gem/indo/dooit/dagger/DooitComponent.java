@@ -32,6 +32,7 @@ import org.gem.indo.dooit.views.main.fragments.bot.viewholders.GoalInfoViewHolde
 import org.gem.indo.dooit.views.main.fragments.bot.viewholders.GoalInformationGalleryItemViewHolder;
 import org.gem.indo.dooit.views.main.fragments.bot.viewholders.GoalInformationGalleryViewHolder;
 import org.gem.indo.dooit.views.main.fragments.bot.viewholders.GoalVerificationViewHolder;
+import org.gem.indo.dooit.views.main.fragments.bot.viewholders.GoalWeeklyTargetListSummaryViewholder;
 import org.gem.indo.dooit.views.main.fragments.bot.viewholders.TextViewHolder;
 import org.gem.indo.dooit.views.main.fragments.bot.viewholders.TipBotViewHolder;
 import org.gem.indo.dooit.views.main.fragments.challenge.ChallengeActivity;
@@ -204,4 +205,6 @@ public interface DooitComponent {
     void inject(GoalInformationGalleryViewHolder o);
 
     void inject(GoalInformationGalleryItemViewHolder o);
+
+    void inject(GoalWeeklyTargetListSummaryViewholder o);
 }

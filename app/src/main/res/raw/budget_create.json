@@ -242,10 +242,29 @@
       },
       {
         "name": "budget_create_a_yes",
-        "text": "$(budget_create_a_yes)"
+        "text": "$(budget_create_a_yes)",
+        "next" : "budget_create_q_badge"
       }
     ]
   },
+
+  {
+    "name": "budget_create_q_badge",
+    "type": "dummy",
+    "call": "#add_badge"
+  },
+  {
+    "name": "budget_create_a_yay",
+    "type": "blank",
+    "answers": [
+      {
+        "name": "budget_create_a_yay",
+        "text": "$(yay_me)",
+        "next": "budget_create_q_branch_goals"
+      }
+    ]
+  },
+
   {
     "name": "budget_create_q_branch_goals",
     "type": "blank",
@@ -258,14 +277,78 @@
     "name": "budget_create_q_final_positive_has_goals",
     "type": "text",
     "text": "$(budget_create_q_final_positive_has_goals)",
-    "call": "#list_goals"
+    "autoNext" : "budget_create_q_final_positive_has_goals_list_intro"
   },
+  {
+    "name": "budget_create_q_final_positive_has_goals_list_intro",
+    "type": "text",
+    "text": "$(budget_create_q_final_positive_has_goals_list_intro)",
+    "autoNext" : "budget_create_q_final_positive_has_goals_list_goals"
+  },
+  {
+    "name": "budget_create_q_final_positive_has_goals_list_goals",
+    "type": "goalWeeklyTargetListSummary",
+    "answers": [
+      {
+        "name": "budget_create_a_no_i_want_tips",
+        "text": "$(budget_create_a_no_i_want_tips)",
+        "next": "budget_create_direct_to_tips"
+      },
+      {
+        "name": "budget_create_a_nothanks",
+        "text": "$(budget_create_a_nothanks)",
+        "next": "budget_create_end_message"
+      },
+      {
+        "name": "budget_create_a_edit_savings_plan",
+        "text": "$(budget_create_a_edit_savings_plan)",
+        "next": "budget_create_direct_to_target"
+      }
+    ]
+  },
+
   {
     "name": "budget_create_q_final_positive_no_goals",
     "type": "text",
-    "text": "$(budget_create_q_final_positive_no_goals)"
+    "text": "$(budget_create_q_final_positive_no_goals)",
+    "answers": [
+      {
+        "name": "budget_create_a_no_i_want_tips",
+        "text": "$(budget_create_a_no_i_want_tips)",
+        "next": "budget_create_direct_to_tips"
+      },
+      {
+        "name": "budget_create_a_nothanks",
+        "text": "$(budget_create_a_nothanks)",
+        "next": "budget_create_end_message"
+      },
+      {
+        "name": "budget_create_a_add_a_goal",
+        "text": "$(budget_create_a_add_a_goal)",
+        "next": "budget_create_direct_to_target"
+      }
+    ]
   },
 
+  {
+    "name": "budget_create_direct_to_tips",
+    "type": "end",
+    "call": "#set_tip_query_budget",
+    "autoNextScreen": "TIPS"
+  },
+
+  {
+    "name": "budget_create_direct_to_target",
+    "type": "end",
+    "autoNextScreen": "TARGET"
+  },
+
+  {
+    "name": "budget_create_end_message",
+    "type": "text",
+    "text" : "$(budget_create_end_message)",
+    "autoNext": "budget_create_end"
+  },
 
 
   {

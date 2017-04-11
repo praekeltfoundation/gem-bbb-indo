@@ -13,6 +13,7 @@ import org.gem.indo.dooit.helpers.bot.BotRunner;
 import org.gem.indo.dooit.helpers.bot.param.ParamArg;
 import org.gem.indo.dooit.helpers.bot.param.ParamMatch;
 import org.gem.indo.dooit.helpers.bot.param.ParamParser;
+import org.gem.indo.dooit.models.Badge;
 import org.gem.indo.dooit.helpers.crashlytics.CrashlyticsHelper;
 import org.gem.indo.dooit.models.bot.Answer;
 import org.gem.indo.dooit.models.bot.BaseBotModel;
@@ -26,6 +27,7 @@ import org.gem.indo.dooit.models.enums.BotParamType;
 import org.gem.indo.dooit.models.enums.BotType;
 import org.gem.indo.dooit.views.main.MainActivity;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -65,6 +67,12 @@ public abstract class BudgetBotController extends DooitBotController {
             case SET_TIP_QUERY:
                 tipQuery();
                 break;
+            case SET_TIP_QUERY_BUDGET:
+                tipQueryBudget();
+                break;
+            case ADD_BADGE:
+                doAddBadge();
+                break;
             default:
                 super.onCall(key, answerLog, model);
         }
@@ -74,6 +82,12 @@ public abstract class BudgetBotController extends DooitBotController {
         if (activity == null)
             return;
         activity.setTipQuery(activity.getString(R.string.budget_create_qry_tip_income));
+    }
+
+    private void tipQueryBudget(){
+        if (activity == null)
+            return;
+        activity.setTipQuery(activity.getString(R.string.budget_create_qry_tip_budget));
     }
 
     ////////////////
@@ -155,6 +169,58 @@ public abstract class BudgetBotController extends DooitBotController {
         } catch (NumberFormatException e) {
             toast(R.string.budget_create_err__invalid_number);
             return false;
+        }
+    }
+
+    private void doAddBadge() {
+        List<Badge> badges = persisted.loadNewBudgetBadges();
+        if(badges.size() > 0) {
+            for (Badge badge : badges)
+                botRunner.queueNode(nodeFromBadge(badge));
+        }else{
+            Node node = new Node();
+            node.setName("save_Conversation_Node");
+            node.setType(BotMessageType.DUMMY);
+            node.setAutoNext("budget_create_q_final_positive_has_goals");
+            botRunner.queueNode(node);
+        }
+    }
+
+    private Node nodeFromBadge(Badge badge) {
+        // TODO: Think of a unified way to construct Nodes programmatically. Should it be done in the view holders? Factories?
+
+        String badgeName = botType.name().toLowerCase() + "_" + badge.getGraphName();
+
+        // Badge Graphic Display
+        Node node = new Node();
+        node.setName(badgeName);
+        node.setType(BotMessageType.BADGE);
+        node.setText(null);
+        node.setAutoNext("budget_create_a_yay");
+
+        node.values.put(BotParamType.BADGE_NAME.getKey(), badge.getName());
+        node.values.put(BotParamType.BADGE_IMAGE_URL.getKey(), badge.getImageUrl());
+        node.values.put(BotParamType.BADGE_SOCIAL_URL.getKey(), badge.getSocialUrl());
+        node.finish();
+
+        if (badge.hasIntro()) {
+            // Badge Intro Text
+            Node introNode = new Node();
+            introNode.setName(badgeName + "_intro");
+            introNode.setType(BotMessageType.TEXT);
+            introNode.setAutoNext(node);
+
+            // TODO: Refactor Param parsing and populating into DooitBotController
+            // TODO: Text is processed here because Nodes currently don't support having text sourced from somewhere that's not the strings.xml files
+            ParamMatch args = ParamParser.parse(badge.getIntro());
+            if (!args.isEmpty())
+                for (ParamArg arg : args.getArgs())
+                    resolveParam(introNode, BotParamType.byKey(arg.getKey()));
+            introNode.setProcessedText(args.process(introNode.values.getRawMap()));
+
+            return introNode;
+        } else {
+            return node;
         }
     }
 

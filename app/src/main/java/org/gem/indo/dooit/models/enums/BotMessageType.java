@@ -37,7 +37,8 @@ public enum BotMessageType {
     DUMMY(24), // Added to conversation history, but doesn't display
     GOALINFORMATIONGALLERY(25),
     EXPENSECATEGORYGALLERY(26),
-    BUDGETINFO(27);
+    BUDGETINFO(27),
+    GOALWEEKLYTARGETLISTSUMMARY(28);
 
     private static Map<Integer, BotMessageType> map = new HashMap<>();
 
