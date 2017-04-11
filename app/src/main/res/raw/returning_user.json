@@ -104,9 +104,33 @@
       },
       {
         "name": "convo_default_a_behind_no_budget_not_now",
-        "text": "$(convo_default_a_behind_no_budget_not_now)"
+        "text": "$(convo_default_a_behind_no_budget_not_now)",
+        "next": "convo_default_q_behind_no_budget_options"
       }
     ]
+  },
+
+  {
+    "name": "convo_default_q_behind_no_budget_options",
+    "text": "$(convo_default_q_behind_no_budget_options)",
+    "answers": [
+      {
+        "name": "convo_default_a_behind_no_budget_options_tips",
+        "text": "$(convo_default_a_behind_no_budget_options_tips)",
+        "next": "convo_default_end_show_tips"
+      },
+      {
+        "name": "convo_default_a_behind_no_budget_options_challenge",
+        "text": "$(convo_default_a_behind_no_budget_options_challenge)"
+      }
+    ]
+  },
+
+  {
+    "name": "convo_default_end_show_tips",
+    "type": "end",
+    "call": "#set_tip_query",
+    "autoNextScreen": "TIPS"
   },
 
   {

@@ -2,6 +2,7 @@ package org.gem.indo.dooit.controllers.misc;
 
 import android.content.Context;
 
+import org.gem.indo.dooit.R;
 import org.gem.indo.dooit.controllers.DooitBotController;
 import org.gem.indo.dooit.helpers.bot.BotRunner;
 import org.gem.indo.dooit.models.Tip;
@@ -19,6 +20,7 @@ import org.gem.indo.dooit.models.enums.BotParamType;
 import org.gem.indo.dooit.models.enums.BotType;
 import org.gem.indo.dooit.models.goal.Goal;
 import org.gem.indo.dooit.views.helpers.activity.CurrencyHelper;
+import org.gem.indo.dooit.views.main.MainActivity;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -31,6 +33,7 @@ import java.util.Map;
 
 public class ReturningUserController extends DooitBotController {
 
+    protected MainActivity activity;
     private BotRunner botRunner;
     private Budget budget;
     private BaseChallenge challenge;
@@ -41,6 +44,7 @@ public class ReturningUserController extends DooitBotController {
                                    List<Goal> goals, BaseChallenge challenge, Tip tip,
                                    Budget budget) {
         super(context, BotType.RETURNING_USER);
+        this.activity = ((MainActivity) context);
         this.botRunner = botRunner;
         this.budget = budget;
         this.challenge = challenge;
@@ -63,6 +67,9 @@ public class ReturningUserController extends DooitBotController {
         switch (key) {
             case CHECK_BUDGET:
                 checkBudget();
+                break;
+            case SET_TIP_QUERY_BUDGET:
+                tipQueryBudget();
                 break;
             default:
                 super.onCall(key, answerLog, model);
@@ -123,6 +130,13 @@ public class ReturningUserController extends DooitBotController {
             default:
                 return super.getObject(objType);
         }
+    }
+
+
+    private void tipQueryBudget(){
+        if (activity == null)
+            return;
+        activity.setTipQuery(activity.getString(R.string.budget_create_qry_tip_budget));
     }
 
     private List<Goal> getProblemGoals() {
