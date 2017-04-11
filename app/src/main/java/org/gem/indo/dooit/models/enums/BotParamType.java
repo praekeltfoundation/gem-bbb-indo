@@ -39,6 +39,7 @@ public enum BotParamType {
     GOAL_IMAGE_URL("goal.image_url"),
     GOAL_LOCAL_IMAGE_URI("goal.local_image_uri"),
     GOAL_HAS_LOCAL_IMAGE_URI("goal.has_local_image_uri"),
+    GOAL_PROBLEM_GOALS("problem_goals"),
 
     // Goal Prototype
     GOAL_PROTO("goal_proto"),

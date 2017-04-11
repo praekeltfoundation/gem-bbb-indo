@@ -82,6 +82,9 @@ public class ReturningUserController extends DooitBotController {
             case TIP_INTRO:
                 model.values.put(key, tip.getIntro());
                 break;
+            case GOAL_PROBLEM_GOALS:
+                model.values.put(key, getProblemGoalStr());
+                break;
             default:
                 super.resolveParam(model, paramType);
                 break;
@@ -148,6 +151,20 @@ public class ReturningUserController extends DooitBotController {
         }
 
         return problemGoals;
+    }
+
+    private String getProblemGoalStr() {
+        List<Goal> problemGoals = getProblemGoals();
+        StringBuilder builder = new StringBuilder();
+        String delim = "";
+
+        for (Goal goal : problemGoals) {
+            builder.append(delim);
+            builder.append(goal.getName());
+            delim = ", ";
+        }
+
+        return builder.toString();
     }
 
     private void checkBudget() {
