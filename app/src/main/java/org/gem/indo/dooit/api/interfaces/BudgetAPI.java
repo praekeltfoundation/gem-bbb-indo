@@ -32,7 +32,7 @@ public interface BudgetAPI {
     Observable<List<Budget>> getBudgets();
 
     @PATCH("/api/budgets/{id}/")
-    Observable<Budget> updateBudget(@Path("id") long id, @Body ChangeBudgetIncome income);
+    Observable<BudgetCreateResponse> updateBudget(@Path("id") long id, @Body ChangeBudgetIncome income);
 
     @PATCH("/api/budgets/{id}/")
     Observable<BudgetCreateResponse> updateBudget(@Path("id") long id, @Body ChangeBudgetSavings savings);
