@@ -1,14 +1,5 @@
 [
   {
-    "name": "budget_create_intro",
-    "type": "text",
-    "text": "$(budget_create_intro)",
-    "autoNext": "budget_create_q_income"
-  },
-
-
-
-  {
     "name": "budget_create_q_income",
     "type": "text",
     "text": "$(budget_create_q_income)",

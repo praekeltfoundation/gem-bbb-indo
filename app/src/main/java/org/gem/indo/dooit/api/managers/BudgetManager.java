@@ -7,6 +7,7 @@ import org.gem.indo.dooit.api.interfaces.BudgetAPI;
 import org.gem.indo.dooit.api.requests.budget.ChangeBudgetIncome;
 import org.gem.indo.dooit.api.requests.budget.ChangeBudgetSavings;
 import org.gem.indo.dooit.api.responses.BudgetCreateResponse;
+import org.gem.indo.dooit.api.responses.EmptyResponse;
 import org.gem.indo.dooit.models.budget.Budget;
 import org.gem.indo.dooit.models.budget.ExpenseCategory;
 
@@ -46,5 +47,9 @@ public class BudgetManager extends DooitManager {
 
     public Observable<Budget> updateBudgetSavings(long budgetId, double savings, DooitErrorHandler errorHandler) {
         return useNetwork(budgetAPI.updateBudget(budgetId, new ChangeBudgetSavings(savings)), errorHandler);
+    }
+
+    public Observable<EmptyResponse> deleteExpense(long expenseId, DooitErrorHandler errorHandler) {
+        return useNetwork(budgetAPI.deleteExpense(expenseId), errorHandler);
     }
 }
