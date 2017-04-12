@@ -141,6 +141,13 @@
     <string name="bot_challenge_outro">"$(challenge.outro)"</string>
     <string name="of_target_amount">"dari %s"</string>
 
+    <!-- General end -->
+    <string name="bot_general_end_done">"Thanks! I'm done for now."</string>
+    <string name="bot_general_end_tips">"Take me to the tips, please."</string>
+    <string name="bot_general_end_challenge">"Let’s take a challenge."</string>
+    <string name="bot_general_end_budget_create">"Create my budget."</string>
+    <string name="bot_general_end_budget_edit">"Edit my budget."</string>
+
     <!--JSON GOALS-->
     <string name="greeting">"Hola!"</string>
     <string name="goalIntroduction">"My Name is Bina. I'm gonna help  you save!"</string>
