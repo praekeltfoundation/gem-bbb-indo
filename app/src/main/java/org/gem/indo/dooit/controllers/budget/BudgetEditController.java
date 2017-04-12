@@ -16,7 +16,11 @@ import org.gem.indo.dooit.dao.budget.BudgetDAO;
 import org.gem.indo.dooit.dao.budget.ExpenseCategoryBotDAO;
 import org.gem.indo.dooit.dao.budget.ExpenseDAO;
 import org.gem.indo.dooit.helpers.bot.BotRunner;
+import org.gem.indo.dooit.helpers.bot.param.ParamArg;
+import org.gem.indo.dooit.helpers.bot.param.ParamMatch;
+import org.gem.indo.dooit.helpers.bot.param.ParamParser;
 import org.gem.indo.dooit.helpers.crashlytics.CrashlyticsHelper;
+import org.gem.indo.dooit.models.Badge;
 import org.gem.indo.dooit.models.bot.Answer;
 import org.gem.indo.dooit.models.bot.BaseBotModel;
 import org.gem.indo.dooit.models.bot.Node;
@@ -29,6 +33,7 @@ import org.gem.indo.dooit.models.enums.BotParamType;
 import org.gem.indo.dooit.models.enums.BotType;
 import org.gem.indo.dooit.views.helpers.activity.CurrencyHelper;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
@@ -52,6 +57,8 @@ public class BudgetEditController extends BudgetBotController {
     private static String EXPENSE_QUESTION_PREFIX = "budget_edit_q_expense_value_";
     private static String EXPENSE_ANSWER_PREFIX = "budget_edit_a_expense_value_";
     private static String EXPENSE_STOP = "budget_create_q_expense_stop";
+
+    private List<Badge> newBadges = null;
 
     protected ExpenseCategory expenseCategory = null;
 
@@ -183,6 +190,9 @@ public class BudgetEditController extends BudgetBotController {
             case CLEAR_AND_FILTER_EXPENSES_STATE:
                 clearAndFilterExpenseState();
                 break;
+            case ADD_BADGE:
+                doAddBadge(newBadges);
+                break;
             default:
                 super.onCall(key, answerLog, model);
         }
@@ -260,11 +270,12 @@ public class BudgetEditController extends BudgetBotController {
                     public void call() {
                         notifyDone(listener);
                     }
-                }).subscribe(new Action1<Budget>() {
+                }).subscribe(new Action1<BudgetCreateResponse>() {
                     @Override
-                    public void call(Budget budget) {
-                        new BudgetDAO().update(budget);
-                        BudgetEditController.this.budget = budget;
+                    public void call(BudgetCreateResponse budget) {
+                        new BudgetDAO().update(budget.getBudget());
+                        BudgetEditController.this.budget = budget.getBudget();
+                        newBadges = budget.getBadges();
                     }
                 });
             } catch (NumberFormatException e) {
@@ -296,11 +307,12 @@ public class BudgetEditController extends BudgetBotController {
                     public void call() {
                         notifyDone(listener);
                     }
-                }).subscribe(new Action1<Budget>() {
+                }).subscribe(new Action1<BudgetCreateResponse>() {
                     @Override
-                    public void call(Budget budget) {
-                        new BudgetDAO().update(budget);
-                        BudgetEditController.this.budget = budget;
+                    public void call(BudgetCreateResponse budget) {
+                        new BudgetDAO().update(budget.getBudget());
+                        BudgetEditController.this.budget = budget.getBudget();
+                        newBadges = budget.getBadges();
                     }
                 });
             } catch (NumberFormatException e) {
@@ -337,6 +349,7 @@ public class BudgetEditController extends BudgetBotController {
                     public void call(BudgetCreateResponse budgetCreateResponse) {
                         new BudgetDAO().update(budget);
                         BudgetEditController.this.budget = budget;
+                        newBadges = budgetCreateResponse.getBadges();
                     }
                 });
 
@@ -350,6 +363,58 @@ public class BudgetEditController extends BudgetBotController {
             if (context != null)
                 Toast.makeText(context, R.string.budget_edit_err_expense__not_found, Toast.LENGTH_SHORT).show();
             notifyDone(listener);
+        }
+    }
+
+    private void doAddBadge(List<Badge> badges) {
+        if (badges != null && !badges.isEmpty()) {
+            persisted.saveNewBudgetBadges(badges);
+            for (Badge badge : badges)
+                botRunner.queueNode(nodeFromBadge(badge));
+        } else {
+            Node node = new Node();
+            node.setName("save_Conversation_Node");
+            node.setType(BotMessageType.DUMMY);
+            node.setAutoNext("budget_edit_q_final_positive");
+            botRunner.queueNode(node);
+        }
+    }
+
+    private Node nodeFromBadge(Badge badge) {
+        // TODO: Think of a unified way to construct Nodes programmatically. Should it be done in the view holders? Factories?
+
+        String badgeName = botType.name().toLowerCase() + "_" + badge.getGraphName();
+
+        // Badge Graphic Display
+        Node node = new Node();
+        node.setName(badgeName);
+        node.setType(BotMessageType.BADGE);
+        node.setText(null);
+        node.setAutoNext("budget_edit_a_yay");
+
+        node.values.put(BotParamType.BADGE_NAME.getKey(), badge.getName());
+        node.values.put(BotParamType.BADGE_IMAGE_URL.getKey(), badge.getImageUrl());
+        node.values.put(BotParamType.BADGE_SOCIAL_URL.getKey(), badge.getSocialUrl());
+        node.finish();
+
+        if (badge.hasIntro()) {
+            // Badge Intro Text
+            Node introNode = new Node();
+            introNode.setName(badgeName + "_intro");
+            introNode.setType(BotMessageType.TEXT);
+            introNode.setAutoNext(node);
+
+            // TODO: Refactor Param parsing and populating into DooitBotController
+            // TODO: Text is processed here because Nodes currently don't support having text sourced from somewhere that's not the strings.xml files
+            ParamMatch args = ParamParser.parse(badge.getIntro());
+            if (!args.isEmpty())
+                for (ParamArg arg : args.getArgs())
+                    resolveParam(introNode, BotParamType.byKey(arg.getKey()));
+            introNode.setProcessedText(args.process(introNode.values.getRawMap()));
+
+            return introNode;
+        } else {
+            return node;
         }
     }
 
@@ -517,6 +582,7 @@ public class BudgetEditController extends BudgetBotController {
                 BudgetEditController.this.budget = response.getBudget();
 
                 // TODO: Badges from budget create
+//                persisted.saveNewBudgetBadges(response.getBadges());
             }
         });
     }

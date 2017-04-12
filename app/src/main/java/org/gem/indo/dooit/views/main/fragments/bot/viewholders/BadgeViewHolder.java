@@ -70,16 +70,47 @@ public class BadgeViewHolder extends BaseBotViewHolder<Node> {
         separator.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.bkg_carousel_separator));
         background.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.bkg_carousel_card));
 
-        // TODO: This needs to move to the controller
-        if (persisted.hasConvoWinnerChallenge(BotType.CHALLENGE_WINNER)) {
-            challengeTitle.setText(persisted.loadWinningChallenge(BotType.CHALLENGE_WINNER).getName() + " " + challenge);
-            challengeTitle.setVisibility(View.VISIBLE);
-            separator.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.bkg_carousel_separator));
-            persisted.clearConvoWinnerChallenge();
-        } else {
-            challengeTitle.setVisibility(View.GONE);
-            separator.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.bkg_carousel_separator));
+        if (botAdapter.getController() != null) {
+            switch (botAdapter.getController().getBotType()) {
+                case BUDGET_EDIT:
+                case BUDGET_CREATE:
+                    if (persisted.loadNewBudgetBadges().size() > 0) {
+                        challengeTitle.setText(persisted.loadNewBudgetBadges().get(0).getName());
+                        challengeTitle.setVisibility(View.VISIBLE);
+                        separator.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.bkg_carousel_separator));
+                        persisted.clearNewBudgetBadges();
+                    }
+                    break;
+                case CHALLENGE_WINNER:
+                case CHALLENGE_PARTICIPANT_BADGE:
+                    if (persisted.hasConvoWinnerChallenge(BotType.CHALLENGE_WINNER)) {
+                        challengeTitle.setText(persisted.loadWinningChallenge(BotType.CHALLENGE_WINNER).getName() + " " + challenge);
+                        challengeTitle.setVisibility(View.VISIBLE);
+                        separator.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.bkg_carousel_separator));
+                        persisted.clearConvoWinnerChallenge();
+                    } else {
+                        challengeTitle.setVisibility(View.GONE);
+                        separator.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.bkg_carousel_separator));
+                    }
+                    break;
+                default:
+                    challengeTitle.setVisibility(View.GONE);
+                    separator.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.bkg_carousel_separator));
+                    break;
+            }
         }
+
+
+        // TODO: This needs to move to the controller
+//        if (persisted.hasConvoWinnerChallenge(BotType.CHALLENGE_WINNER)) {
+//            challengeTitle.setText(persisted.loadWinningChallenge(BotType.CHALLENGE_WINNER).getName() + " " + challenge);
+//            challengeTitle.setVisibility(View.VISIBLE);
+//            separator.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.bkg_carousel_separator));
+//            persisted.clearConvoWinnerChallenge();
+//        } else {
+//            challengeTitle.setVisibility(View.GONE);
+//            separator.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.bkg_carousel_separator));
+//        }
     }
 
     @Override

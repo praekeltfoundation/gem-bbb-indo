@@ -410,7 +410,27 @@
       },
       {
         "name": "budget_edit_a_yes",
-        "text": "$(budget_edit_a_yes)"
+        "text": "$(budget_edit_a_yes)",
+        "next": "budget_edit_q_badge"
+      }
+    ]
+  },
+
+
+
+  {
+    "name": "budget_edit_q_badge",
+    "type": "dummy",
+    "call": "#add_badge"
+  },
+  {
+    "name": "budget_edit_a_yay",
+    "type": "blank",
+    "answers": [
+      {
+        "name": "budget_edit_a_yay",
+        "text": "$(yay_me)",
+        "next": "budget_edit_end"
       }
     ]
   },
