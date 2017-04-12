@@ -506,6 +506,7 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
                         persisted.loadWinningChallenge(botType));
             case CHALLENGE_PARTICIPANT_BADGE:
                 return new ChallengeParticipantController(getActivity(),
+                        this,
                         persisted.loadParticipantBadge(botType),
                         persisted.loadParticipantChallenge(botType));
             case BUDGET_CREATE:

@@ -1,0 +1,44 @@
+[
+  {
+    "name": "challenge_participant_intro",
+    "type": "text",
+    "text": "$(challenge_participant_intro)",
+    "call": "#participant_badge",
+    "autoNext": "challenge_participant_badge"
+  },
+  {
+    "name": "challenge_participant_badge",
+    "type": "badge",
+    "call": "#get_end_options"
+  },
+
+  {
+    "name": "challenge_participant_end_show_tips",
+    "type": "end",
+    "call": "#set_tip_query",
+    "autoNextScreen": "TIPS"
+  },
+
+  {
+    "name": "challenge_participant_end_challenge",
+    "type": "end",
+    "autoNextScreen": "CHALLENGE"
+  },
+
+  {
+    "name": "challenge_participant_start_create",
+    "type": "startConvo",
+    "autoNext": "BUDGET_CREATE"
+  },
+
+  {
+    "name": "challenge_participant_start_edit",
+    "type": "startConvo",
+    "autoNext": "BUDGET_EDIT"
+  },
+
+  {
+    "name": "challenge_participant_end",
+    "type": "end"
+  }
+]

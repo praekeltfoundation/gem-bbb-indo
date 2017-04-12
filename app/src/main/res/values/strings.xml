@@ -141,6 +141,13 @@
     <string name="bot_challenge_outro">"$(challenge.outro)"</string>
     <string name="of_target_amount">"of %s"</string>
 
+    <!-- General end -->
+    <string name="bot_general_end_done">"Thanks! I'm done for now."</string>
+    <string name="bot_general_end_tips">"Take me to the tips, please."</string>
+    <string name="bot_general_end_challenge">"Let’s take a challenge."</string>
+    <string name="bot_general_end_budget_create">"Create my budget."</string>
+    <string name="bot_general_end_budget_edit">"Edit my budget."</string>
+
     <!--JSON GOALS-->
     <string name="greeting">"Hola!"</string>
     <string name="goalIntroduction">"My Name is Bina. I'm gonna help  you save!"</string>
@@ -269,7 +276,7 @@
 
     <string name="goal_deposit_challenge">"Awesome! Take me to this week's challenge."</string>
     <string name="goal_deposit_tip">"Show me tips to grow my savings."</string>
-    <string name="goal_deposit_close">"Thanks! I'm done for now."</string>
+    <string name="goal_deposit_close">@string/bot_general_end_done</string>
 
     <string name="goal_deposit_end_keep_up">"Great job. Remember to come back often to track your savings, and keep up the good work!"</string>
 
