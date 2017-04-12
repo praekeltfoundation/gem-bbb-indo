@@ -9,8 +9,56 @@
   {
     "name": "challenge_participant_badge",
     "type": "badge",
-    "autoNext": "challenge_participant_end"
+    "autoNext": "challenge_participant_q_badge_continue"
   },
+  {
+    "name": "challenge_participant_q_badge_continue",
+    "type": "text",
+    "text": "$(label_continue)",
+    "answers": [
+      {
+        "name": "challenge_participant_a_badge_done",
+        "text": "$(bot_general_end_done)",
+        "next": "challenge_participant_end"
+      },
+      {
+        "name": "challenge_participant_a_badge_tips",
+        "text": "$(bot_general_end_tips)",
+        "next": "challenge_participant_end_show_tips"
+      },
+      {
+        "name": "challenge_participant_a_badge_challenge",
+        "text": "$(bot_general_end_challenge)",
+        "next": "challenge_participant_end_challenge"
+      }
+    ]
+  },
+
+  {
+    "name": "challenge_participant_end_show_tips",
+    "type": "end",
+    "call": "#set_tip_query",
+    "autoNextScreen": "TIPS"
+  },
+
+  {
+    "name": "challenge_participant_end_challenge",
+    "type": "end",
+    "autoNextScreen": "CHALLENGE"
+  },
+
+  {
+    "name": "challenge_participant_start_create",
+    "type": "startConvo",
+    "autoNext": "BUDGET_CREATE"
+  },
+
+  {
+    "name": "challenge_participant_start_edit",
+    "type": "startConvo",
+    "autoNext": "BUDGET_EDIT"
+  },
+
   {
     "name": "challenge_participant_end",
     "type": "end"

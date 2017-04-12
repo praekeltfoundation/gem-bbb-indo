@@ -60,6 +60,9 @@ public class ChallengeParticipantController extends DooitBotController {
             case PARTICIPANT_BADGE:
                 showConfetti();
                 break;
+            case SET_TIP_QUERY:
+                tipQuery();
+                break;
         }
     }
 
@@ -91,5 +94,13 @@ public class ChallengeParticipantController extends DooitBotController {
             default:
                 return super.getObject(objType);
         }
+    }
+
+    private void tipQuery() {
+        if (context == null)
+            return;
+
+        MainActivity activity = (MainActivity) context;
+        activity.setTipQuery(activity.getString(R.string.budget_create_qry_tip_income));
     }
 }
