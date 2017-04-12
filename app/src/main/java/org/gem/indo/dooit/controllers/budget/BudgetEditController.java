@@ -368,6 +368,7 @@ public class BudgetEditController extends BudgetBotController {
 
     private void doAddBadge(List<Badge> badges) {
         if (badges != null && !badges.isEmpty()) {
+            persisted.saveNewBudgetBadges(badges);
             for (Badge badge : badges)
                 botRunner.queueNode(nodeFromBadge(badge));
         } else {
@@ -581,7 +582,7 @@ public class BudgetEditController extends BudgetBotController {
                 BudgetEditController.this.budget = response.getBudget();
 
                 // TODO: Badges from budget create
-                persisted.saveNewBudgetBadges(response.getBadges());
+//                persisted.saveNewBudgetBadges(response.getBadges());
             }
         });
     }

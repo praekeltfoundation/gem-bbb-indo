@@ -555,7 +555,11 @@ public class Persisted {
      */
 
     public void saveNewBudgetBadges(List<Badge> newBages) {
-        dooitSharedPreferences.setComplex(NEW_BUDGET_BADGES, newBages.toArray());
+            dooitSharedPreferences.setComplex(NEW_BUDGET_BADGES, newBages.toArray());
+    }
+
+    public void clearNewBudgetBadges() {
+        dooitSharedPreferences.remove(NEW_BUDGET_BADGES);
     }
 
     public List<Badge> loadNewBudgetBadges() {
