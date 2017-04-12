@@ -27,8 +27,9 @@
   {
     "name": "convo_default_return_q_summary",
     "type": "goalListSummary",
-    "autoNext": "convo_default_return_q_options"
+    "call": "#check_budget"
   },
+
   {
     "name": "convo_default_return_q_options",
     "type": "blank",
@@ -85,6 +86,92 @@
   {
     "name": "convo_default_return_end",
     "type": "end"
+  },
+
+  {
+    "name": "convo_default_q_behind_budget",
+    "text": "$(convo_default_q_behind_budget)",
+    "answers": [
+      {
+        "name": "convo_default_a_behind_budget_savings",
+        "text": "$(convo_default_a_behind_budget_savings)",
+        "next": "convo_default_end_show_target"
+      },
+      {
+        "name": "convo_default_a_behind_budget_budget",
+        "text": "$(convo_default_a_behind_budget_budget)",
+        "next": "start_budget_edit_conversation"
+      },
+      {
+        "name": "convo_default_a_behind_budget_track_savings",
+        "text": "$(convo_default_a_behind_budget_track_savings)",
+        "next": "convo_default_end_show_target"
+      },
+      {
+        "name": "convo_default_a_behind_budget_challenge",
+        "text": "$(convo_default_a_behind_budget_challenge)",
+        "next": "convo_default_return_q_challenge_show"
+      }
+    ]
+  },
+
+  {
+    "name": "convo_default_q_behind_no_budget",
+    "text": "$(convo_default_q_behind_no_budget)",
+    "answers": [
+      {
+        "name": "convo_default_a_behind_no_budget_want_one",
+        "text": "$(convo_default_a_behind_no_budget_want_one)",
+        "next": "start_budget_create_conversation"
+      },
+      {
+        "name": "convo_default_a_behind_no_budget_not_now",
+        "text": "$(convo_default_a_behind_no_budget_not_now)",
+        "next": "convo_default_q_behind_no_budget_options"
+      }
+    ]
+  },
+
+  {
+    "name": "convo_default_q_behind_no_budget_options",
+    "text": "$(convo_default_q_behind_no_budget_options)",
+    "answers": [
+      {
+        "name": "convo_default_a_behind_no_budget_options_tips",
+        "text": "$(convo_default_a_behind_no_budget_options_tips)",
+        "next": "convo_default_end_show_tips"
+      },
+      {
+        "name": "convo_default_a_behind_no_budget_options_challenge",
+        "text": "$(convo_default_a_behind_no_budget_options_challenge)",
+        "next": "convo_default_return_q_challenge_show"
+      }
+    ]
+  },
+
+  {
+    "name": "convo_default_end_show_tips",
+    "type": "end",
+    "call": "#set_tip_query",
+    "autoNextScreen": "TIPS"
+  },
+
+  {
+    "name": "convo_default_end_show_target",
+    "type": "end",
+    "autoNextScreen": "TARGET"
+  },
+
+  {
+    "name": "start_budget_create_conversation",
+    "type": "startConvo",
+    "autoNext": "BUDGET_CREATE"
+  },
+
+  {
+    "name": "start_budget_edit_conversation",
+    "type": "startConvo",
+    "autoNext": "BUDGET_EDIT"
   },
 
   {

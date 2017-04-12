@@ -169,6 +169,7 @@
     <string name="infoGoalAddedCongratulations">"Kerja yang bagus! Kamu telah membuat target tabungan pertamamu!"</string>
 
     <!-- BOT: returning_user -->
+    <string name="convo_default_qry_tip_budget">@string/budget_create_qry_tip_budget</string>
     <string name="convo_default_return_q_greeting_1">"Halo, $(user.preferred_name)!"</string>
     <string name="convo_default_return_q_greeting_2">"Senang bertemu denganmu lagi!"</string>
     <string name="convo_default_return_q_progress_intro">"Mari kita lihat perkembangan tabunganmu&#8230;"</string>
@@ -177,6 +178,18 @@
     <string name="convo_default_return_a_progress_intro_tip">"Tolong berikan aku tips."</string>
     <string name="convo_default_return_a_progress_intro_challenge">"Tunjukkan tantangan minggu ini."</string>
     <string name="convo_default_return_a_progress_intro_target">"Tambahkan tabungan kamu."</string>
+    <string name="convo_default_q_behind_budget">"You seem to be behind your savings for $(problem_goals). Do you want to edit your savings goals or budget to match your current financial life?"</string>
+    <string name="convo_default_a_behind_budget_savings">Edit savings plans</string>
+    <string name="convo_default_a_behind_budget_budget">Edit budget</string>
+    <string name="convo_default_a_behind_budget_track_savings">Track savings</string>
+    <string name="convo_default_a_behind_budget_challenge">No, take me to this week’s challenge</string>
+    <string name="convo_default_q_behind_no_budget">"You seem to be behind your savings for $(problem_goals). Would you like to create a budget to help you manage your money better?"</string>
+    <string name="convo_default_a_behind_no_budget_want_one">"Great! I want one!"</string>
+    <string name="convo_default_a_behind_no_budget_not_now">"Hmm, I don't want one now."</string>
+    <string name="convo_default_q_behind_no_budget_options">"That’s okay. You can create your budget at any time on your profile page."</string>
+    <string name="convo_default_a_behind_no_budget_options_tips">"I want to read tips on budgeting"</string>
+    <string name="convo_default_a_behind_no_budget_options_challenge">"Take me to this week’s challenge"</string>
+
 
     <!-- BOT: goal_add -->
     <!-- Questions -->

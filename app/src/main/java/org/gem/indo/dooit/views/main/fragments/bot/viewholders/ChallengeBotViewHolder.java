@@ -16,6 +16,7 @@ import com.greenfrvr.hashtagview.HashtagView;
 import org.gem.indo.dooit.R;
 import org.gem.indo.dooit.models.bot.Answer;
 import org.gem.indo.dooit.models.bot.Node;
+import org.gem.indo.dooit.models.budget.ExpenseCategory;
 import org.gem.indo.dooit.models.challenge.BaseChallenge;
 import org.gem.indo.dooit.models.enums.BotMessageType;
 import org.gem.indo.dooit.models.enums.BotObjectType;
@@ -62,11 +63,14 @@ public class ChallengeBotViewHolder extends BaseBotViewHolder<Node> {
         super.populate(model);
 
         final long id = dataModel.values.getLong(BotParamType.CHALLENGE_ID.getKey());
-        Uri imageUri = Uri.parse(dataModel.values.getString(BotParamType.CHALLENGE_IMAGE_URL.getKey()));
         String title = dataModel.values.getString(BotParamType.CHALLENGE_TITLE.getKey());
         String subtitle = dataModel.values.getString(BotParamType.CHALLENGE_SUBTITLE.getKey());
 
-        setImageUri(imageView, imageUri);
+        try {
+            Uri imageUri = Uri.parse(dataModel.values.getString(BotParamType.CHALLENGE_IMAGE_URL.getKey()));
+            setImageUri(imageView, imageUri);
+        } catch (Exception e) {
+        }
 
         titleView.setText(title);
         if (TextUtils.isEmpty(subtitle))

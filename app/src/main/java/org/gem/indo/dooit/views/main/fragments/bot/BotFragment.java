@@ -291,8 +291,9 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
             case RETURNING_USER:
                 feed.parse(R.raw.returning_user, Node.class);
                 new RequirementResolver.Builder(getContext(), BotType.RETURNING_USER)
-                        .require(BotObjectType.GOALS)
+                        .require(BotObjectType.BUDGET)
                         .require(BotObjectType.CHALLENGE)
+                        .require(BotObjectType.GOALS)
                         .require(BotObjectType.TIP)
                         .build()
                         .resolve(reqCallback);
@@ -461,12 +462,15 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
     }
 
     private BotController createBotController(BotType botType) {
+        Budget budget = null;
         switch (botType) {
             case RETURNING_USER:
+                budget = new BudgetDAO().findFirst();
                 return new ReturningUserController(getActivity(), this,
                         persisted.loadConvoGoals(botType),
                         persisted.loadConvoChallenge(botType),
-                        persisted.loadConvoTip());
+                        persisted.loadConvoTip(),
+                        budget);
             case DEFAULT:
             case GOAL_ADD:
                 return new GoalAddController(getActivity(), this,
@@ -507,7 +511,7 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
             case BUDGET_CREATE:
                 return new BudgetCreateController(getActivity(), this);
             case BUDGET_EDIT: {
-                Budget budget = new BudgetDAO().findFirst();
+                budget = new BudgetDAO().findFirst();
                 if (budget == null)
                     throw new NullPointerException("Budget Edit conversation started with no budget in db");
                 return new BudgetEditController(getActivity(), this, budget);
