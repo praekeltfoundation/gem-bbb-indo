@@ -105,5 +105,8 @@ public enum BotCallType {
     CHECK_BUDGET,
 
     @SerializedName("#set_tip_query_budget")
-    SET_TIP_QUERY_BUDGET
+    SET_TIP_QUERY_BUDGET,
+
+    @SerializedName("#get_end_options")
+    GET_END_OPTIONS
 }

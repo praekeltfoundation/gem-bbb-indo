@@ -9,29 +9,7 @@
   {
     "name": "challenge_participant_badge",
     "type": "badge",
-    "autoNext": "challenge_participant_q_badge_continue"
-  },
-  {
-    "name": "challenge_participant_q_badge_continue",
-    "type": "text",
-    "text": "$(label_continue)",
-    "answers": [
-      {
-        "name": "challenge_participant_a_badge_done",
-        "text": "$(bot_general_end_done)",
-        "next": "challenge_participant_end"
-      },
-      {
-        "name": "challenge_participant_a_badge_tips",
-        "text": "$(bot_general_end_tips)",
-        "next": "challenge_participant_end_show_tips"
-      },
-      {
-        "name": "challenge_participant_a_badge_challenge",
-        "text": "$(bot_general_end_challenge)",
-        "next": "challenge_participant_end_challenge"
-      }
-    ]
+    "call": "#get_end_options"
   },
 
   {
