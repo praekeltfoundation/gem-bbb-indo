@@ -14,7 +14,7 @@
         "name": "survey_eatool_q_intro_a_no",
         "text": "$(survey_common_q_intro_a_no)",
         "value": "0",
-        "next": "survey_eatool_q_outro_cancel"
+        "next": "survey_eatool_submit_cancel"
       }
     ]
   },

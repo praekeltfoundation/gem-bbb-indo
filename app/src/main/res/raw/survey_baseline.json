@@ -14,7 +14,7 @@
         "name": "survey_baseline_q_intro_a_no",
         "text": "$(survey_common_q_intro_a_no)",
         "value": "0",
-        "next": "survey_baseline_outro_cancel"
+        "next": "survey_baseline_submit_cancel"
       }
     ]
   },
@@ -36,7 +36,7 @@
         "name": "survey_baseline_q1_consent_a_no",
         "text": "$(survey_common_q_consent_a_no)",
         "value": "0",
-        "next": "survey_baseline_q01_occupation"
+        "next": "survey_baseline_q_user_type"
       }
     ]
   },
@@ -52,13 +52,65 @@
         "name": "survey_baseline_q2_consent_a_yes",
         "text": "$(survey_common_q_consent_a_yes)",
         "value": "1",
-        "next": "survey_baseline_q01_occupation"
+        "next": "survey_baseline_q_user_type"
       },
       {
         "name": "survey_baseline_q2_consent_a_no",
         "text": "$(survey_common_q_consent_a_no)",
         "value": "0",
         "next": "survey_baseline_submit_cancel"
+      }
+    ]
+  },
+
+
+
+  {
+    "name": "survey_baseline_q_user_type",
+    "type": "text",
+    "text": "$(survey_baseline_q_user_type)",
+    "answers": [
+      {
+        "name": "survey_baseline_q_user_type_a_01_facebook",
+        "text": "$(survey_baseline_q_user_type_a_01_facebook)",
+        "value": "1",
+        "next": "survey_baseline_q01_occupation"
+      },
+      {
+        "name": "survey_baseline_q_user_type_a_02_instagram",
+        "text": "$(survey_baseline_q_user_type_a_02_instagram)",
+        "value": "2",
+        "next": "survey_baseline_q01_occupation"
+      },
+      {
+        "name": "survey_baseline_q_user_type_a_03_friend",
+        "text": "$(survey_baseline_q_user_type_a_03_friend)",
+        "value": "3",
+        "next": "survey_baseline_q01_occupation"
+      },
+      {
+        "name": "survey_baseline_q_user_type_a_04_play_store",
+        "text": "$(survey_baseline_q_user_type_a_04_play_store)",
+        "value": "4",
+        "next": "survey_baseline_q01_occupation"
+      },
+      {
+        "name": "survey_baseline_q_user_type_a_05_teacher",
+        "text": "$(survey_baseline_q_user_type_a_05_teacher)",
+        "value": "5",
+        "next": "survey_baseline_q01_occupation"
+      },
+      {
+        "name": "survey_baseline_q_user_type_a_06_sts",
+        "text": "$(survey_baseline_q_user_type_a_06_sts)",
+        "value": "6",
+        "next": "survey_baseline_q01_occupation"
+      },
+      {
+        "name": "survey_baseline_q_user_type_a_skip",
+        "text": "$(survey_common_skip)",
+        "value": "999",
+        "next": "survey_baseline_q01_occupation"
       }
     ]
   },

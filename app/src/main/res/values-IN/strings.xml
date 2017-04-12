@@ -368,6 +368,15 @@
     <string name="survey_common_q_outro_cancel_a2_exit">"Tidak, makasih"</string>
 
     <!-- BOT: survey_baseline -->
+    <!-- User Type Question -->
+    <string name="survey_baseline_q_user_type">"Dari mana kamu mengetahui tentang Dooit?"</string>
+    <string name="survey_baseline_q_user_type_a_01_facebook">Dari Facebook</string>
+    <string name="survey_baseline_q_user_type_a_02_instagram">Dari Instagram</string>
+    <string name="survey_baseline_q_user_type_a_03_friend">Teman yang memberi tau</string>
+    <string name="survey_baseline_q_user_type_a_04_play_store">Aku mencarinya di Google Play store</string>
+    <string name="survey_baseline_q_user_type_a_05_teacher">Guru di sekolah yang memberi tau</string>
+    <string name="survey_baseline_q_user_type_a_06_sts">Dari program The Skills To Succeed di sekolah</string>
+
     <!-- Q1 -->
     <string name="survey_baseline_q01_occupation">"Apakah pekerjaan utamamu?"</string>
 

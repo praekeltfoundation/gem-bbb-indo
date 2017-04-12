@@ -27,9 +27,12 @@ public class BaselineSurveyController extends SurveyController {
     private static final String BASELINE_CONSENT_2 = "survey_baseline_q2_consent";
 
     private static final String[] QUESTIONS = new String[]{
+            "survey_baseline_intro",
+
             BASELINE_CONSENT_1,
             BASELINE_CONSENT_2,
 
+            "survey_baseline_q_user_type",
             "survey_baseline_q01_occupation",
             "survey_baseline_q02_grade",
             "survey_baseline_q03_school_name", // Inline text
