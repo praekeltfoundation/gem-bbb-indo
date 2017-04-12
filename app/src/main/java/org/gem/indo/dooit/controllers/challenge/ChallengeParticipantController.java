@@ -3,9 +3,11 @@ package org.gem.indo.dooit.controllers.challenge;
 import android.content.Context;
 
 import org.gem.indo.dooit.DooitApplication;
+import org.gem.indo.dooit.R;
 import org.gem.indo.dooit.api.managers.ChallengeManager;
 import org.gem.indo.dooit.controllers.DooitBotController;
 import org.gem.indo.dooit.helpers.Persisted;
+import org.gem.indo.dooit.helpers.bot.BotRunner;
 import org.gem.indo.dooit.models.Badge;
 import org.gem.indo.dooit.models.bot.Answer;
 import org.gem.indo.dooit.models.bot.BaseBotModel;
@@ -34,12 +36,14 @@ public class ChallengeParticipantController extends DooitBotController {
 
     private Badge badge;
     private BaseChallenge challenge;
+    protected BotRunner botRunner;
     private Context context;
 
-
-    public ChallengeParticipantController(Context context, Badge badge, BaseChallenge challenge) {
+    public ChallengeParticipantController(Context context, BotRunner botRunner,
+                                          Badge badge, BaseChallenge challenge) {
         super(context, BotType.CHALLENGE_PARTICIPANT_BADGE);
         this.badge = badge;
+        this.botRunner = botRunner;
         this.challenge = challenge;
         this.context = context;
         ((DooitApplication) context.getApplicationContext()).component.inject(this);
