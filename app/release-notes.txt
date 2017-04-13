@@ -1,6 +1,5 @@
 
-1.0.5
+1.0.6
 
-- Hidden Work In Progress budget feature
-- Bug fix when uploading image during registration
-- Bug fix on deserialised type
+- Implemented budgeting feature
+- Bug fix where a node type is null
