@@ -252,6 +252,7 @@
   },
   {
     "name": "goal_edit_come_back",
+    "type": "text",
     "text": "$(goal_edit_come_back)",
     "autoNext": "goal_edit_end"
   },

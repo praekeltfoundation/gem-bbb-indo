@@ -6,6 +6,7 @@ import android.text.TextUtils;
 import android.util.Log;
 
 import org.gem.indo.dooit.helpers.ValueMap;
+import org.gem.indo.dooit.helpers.crashlytics.CrashlyticsHelper;
 import org.gem.indo.dooit.models.enums.BotCallType;
 import org.gem.indo.dooit.models.enums.BotMessageType;
 
@@ -75,6 +76,7 @@ public abstract class BaseBotModel {
     }
 
     public String getType() {
+        CrashlyticsHelper.log(TAG, "getType", "Type is null.");
         return type;
     }
 
