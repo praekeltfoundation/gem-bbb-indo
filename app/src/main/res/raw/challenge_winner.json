@@ -20,6 +20,7 @@
   },
   {
     "name": "challenge_winner_end",
+    "type": "blank",
     "asyncCall": "#confirm_notify",
     "answers": [
       {
