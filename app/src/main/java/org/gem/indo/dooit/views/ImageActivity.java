@@ -192,8 +192,22 @@ public abstract class ImageActivity extends DooitActivity {
 
     private void processImage(int requestCodes) {
         FileOutputStream outStream = null;
+
         BitmapFactory.Options options = new BitmapFactory.Options();
         options.inPreferredConfig = Bitmap.Config.ARGB_8888;
+
+        // Don't load every pixel if image is too large
+        BitmapFactory.Options boundsOptions = new BitmapFactory.Options();
+        boundsOptions.inJustDecodeBounds = true;
+        Bitmap bounds = BitmapFactory.decodeFile(imagePath, boundsOptions);
+        if (bounds != null) {
+            float widthRatio = bounds.getWidth() / maxImageWidth;
+            float heightRatio = bounds.getHeight() / maxImageWidth;
+            float largestDimRatio = (widthRatio >= heightRatio) ? widthRatio : heightRatio;
+            if (largestDimRatio >= 1) {
+                options.inSampleSize = (int) largestDimRatio;
+            }
+        }
 
         try {
             File downscaledFile = createImageFile();
