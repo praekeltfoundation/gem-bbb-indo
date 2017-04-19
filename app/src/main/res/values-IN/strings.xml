@@ -85,7 +85,7 @@
     <string name="tips_article_remove_fav">"Menghapus '%s' dari favorit"</string>
     <string name="tips_list_filter">"Menyaring '%s'"</string>
     <string name="tips_no_tips_on_filter">"Tidak ada tips yang tersedia untuk pencarian ini"</string>
-    <string name="error_retrieve_tips">"Error retrieving tips."</string>
+    <string name="error_retrieve_tips">Gagal membuka tips</string>
 
     <!-- Registration -->
     <string name="reg_t_c">"Dengan meng-klik 'Daftar', kamu telah menyetujui *Syarat &amp; Ketentuan* yang berlaku."</string>
@@ -187,8 +187,8 @@
     <string name="convo_default_return_a_progress_intro_target">"Tambahkan tabungan kamu."</string>
     <string name="convo_default_q_behind_budget">"You seem to be behind your savings for $(problem_goals). Do you want to edit your savings goals or budget to match your current financial life?"</string>
     <string name="convo_default_a_behind_budget_savings">Edit savings plans</string>
-    <string name="convo_default_a_behind_budget_budget">Edit budget</string>
-    <string name="convo_default_a_behind_budget_track_savings">Track savings</string>
+    <string name="convo_default_a_behind_budget_budget">\@string/budget_create_a_edit_budget</string>
+    <string name="convo_default_a_behind_budget_track_savings">Ikuti rencana tabungan</string>
     <string name="convo_default_a_behind_budget_challenge">No, take me to this week’s challenge</string>
     <string name="convo_default_q_behind_no_budget">"You seem to be behind your savings for $(problem_goals). Would you like to create a budget to help you manage your money better?"</string>
     <string name="convo_default_a_behind_no_budget_want_one">"Great! I want one!"</string>
@@ -736,43 +736,43 @@
 
     <!-- BOT: budget_create -->
 
-    <string name="budget_create_q_income">"Let's get started! How much money do you get each week?"</string>
-    <string name="budget_create_a_income_amount">Add amount</string>
+    <string name="budget_create_q_income">Mari kita mulai! Berapa banyak uang yang kamu dapatkan setiap minggu?</string>
+    <string name="budget_create_a_income_amount">Tambahkan jumlah</string>
     <string name="budget_create_a_no_income">"I don't get a regular income"</string>
 
-    <string name="budget_create_q_no_income">"That's OK! It's important to set a savings goal to your earning ability. There are plenty of ways you can increase your income."</string>
-    <string name="budget_create_a_no_income_show_tips">Show me tips to grow my income</string>
-    <string name="budget_create_a_no_income_exit">"Okay, I'm done for now. Can we exit."</string>
+    <string name="budget_create_q_no_income">Tidak apa-apa! Sangat penting untuk menetapkan tujuan tabungan sesuai kemampuan penghasilan kamu. Ada banyak cara yang kamu bisa lakukan untuk meningkatkan penghasilan kamu.</string>
+    <string name="budget_create_a_no_income_show_tips">Tunjukkan tips untuk meningkatkan pendapatanku</string>
+    <string name="budget_create_a_no_income_exit">Oke, aku sudah selesai untuk saat ini. Bisakah kita keluar</string>
 
-    <string name="budget_create_q_savings_default">"Try saving at least $(budget.default_savings_percentage)% of your income as soon as you receive it. This would be $(budget.default_savings) per week. Do you want to save this much each week?"</string>
-    <string name="budget_create_a_savings_default_accept">Yes</string>
-    <string name="budget_create_a_savings_default_deny">No, I want to save a different amount</string>
+    <string name="budget_create_q_savings_default">Cobalah simpan setidaknya $ (budget.default_savings_percentage)% dari penghasilanmu segera setelah kamu menerimanya. Ini akan menjadi $ (budget.default_savings) per minggu. Apakah kamu mau menyimpan sebanyak ini setiap minggu?</string>
+    <string name="budget_create_a_savings_default_accept">Iya</string>
+    <string name="budget_create_a_savings_default_deny">Tidak, aku mau menyimpan jumlah yang berbeda</string>
 
-    <string name="budget_create_q_expense_01">Great! That means you need to save $(budget.savings) per month to reach your monthly savings.</string>
-    <string name="budget_create_q_expense_02">If we subtract your savings, $(budget.savings) from your income, $(budget.income), you have $(budget.remaining_expenses) expenses left.</string>
-    <string name="budget_create_q_expense_03">Okay, now tell me about what you spend your money on. Select all of the categories that you spend your money on during the month.</string>
-    <string name="budget_create_a_expense_continue">"OK, I've selected my expenses"</string>
+    <string name="budget_create_q_expense_01">Bagus! Berarti kamu harus simpan $ (budget.savings) per bulan untuk mencapai tabungan bulananmu.</string>
+    <string name="budget_create_q_expense_02">Jika kita kurangi tabunganmu, $ (budget.savings) dari penghasilanmu, $ (budget.income), kamu memiliki $ (budget.remaining_expenses) sisa biaya.</string>
+    <string name="budget_create_q_expense_03">Oke, sekarang ceritakan pengeluaranmu. Pilih semua kategori yang kamu biasa menghabiskan uang selama sebulan.</string>
+    <string name="budget_create_a_expense_continue">Oke, aku sudah memilih pengeluaranku</string>
 
-    <string name="budget_create_q_expense_value">"How much do you spend on $(budget.next_expense_name) each month?"</string>
+    <string name="budget_create_q_expense_value">Berapa banyak yang kamu habiskan untuk $ (budget.next_expense_name) setiap bulan?</string>
 
-    <string name="budget_create_q_expense_summary">"In total, you spend $(budget.total_expenses) on expenses in a month, you have $(budget.total_expenses_remainder) left."</string>
-    <string name="budget_create_a_accept">Yes, that looks correct</string>
-    <string name="budget_create_a_retry">No, let me redo my expenses</string>
+    <string name="budget_create_q_expense_summary">Secara total, kamu habiskan $ (budget.total_expenses) dalam sebulan, kamu memiliki $ (budget.total_expenses_remainder) tersisa.</string>
+    <string name="budget_create_a_accept">Iya, sepertinya benar</string>
+    <string name="budget_create_a_retry">Tidak, aku ingin ganti pengeluaranku</string>
 
-    <string name="budget_create_q_summary">Your monthly income is $(budget.income). Of this amount, you save $(budget.savings) each month and spend $(budget.expense).</string>
+    <string name="budget_create_q_summary">Penghasilan bulananmu adalah $ (budget.income). Dari jumlah ini, kamu hemat $ (budget.savings) setiap bulan dan menghabiskan $ (budget.expense).</string>
 
-    <string name="budget_create_q_final_negative_01">"You seem to be spending more money than you make. this is a problem because it means you might go into debt."</string>
-    <string name="budget_create_q_final_negative_02">"I suggest that you edit your budget to make sure you only spend as much as you make. Try to prioritize your purchases so that you don't spend your money on unnecessary purchases."</string>
-    <string name="budget_create_a_edit_budget">Edit budget</string>
-    <string name="budget_create_a_track_savings">Track savings plan</string>
-    <string name="budget_create_a_learn_more">Learn more about budgeting</string>
+    <string name="budget_create_q_final_negative_01">Kamu sepertinya akan habiskan lebih banyak uang daripada penghasilanmu. Ini menjadi masalah karena berarti kamu berhutang.</string>
+    <string name="budget_create_q_final_negative_02">Aku sarankan kamu edit anggaranmu untuk memastikan kamu hanya menghabiskan sebanyak penghasilanmu. Cobalah prioritaskan pembelianmu sehingga kamu gak menghabiskan uang terhadap pembelian yang gak perlu.</string>
+    <string name="budget_create_a_edit_budget">Edit anggaran</string>
+    <string name="budget_create_a_track_savings">Ikuti rencana tabungan</string>
+    <string name="budget_create_a_learn_more">Pelajari lebih lanjut tentang anggaran</string>
 
-    <string name="budget_create_q_final_positive">You can access and update your budget in your profile at any time.</string>
-    <string name="budget_create_a_yes">Yes!</string>
+    <string name="budget_create_q_final_positive">Kamu bisa mengakses dan memperbarui anggaranmu dalam profilmu setiap saat.</string>
+    <string name="budget_create_a_yes">Iya!</string>
 
-    <string name="budget_create_q_final_positive_has_goals">"Do you want to edit your savings goals to match your savings set aside in your budget?"</string>
-    <string name="budget_create_q_final_positive_goal_summary">"Your weekly target for goal is currently:"</string>
-    <string name="budget_create_q_final_positive_no_goals">"Do you want to add a savings goal to match your savings set aside in your budget?"</string>
+    <string name="budget_create_q_final_positive_has_goals">Apakah kamu mau edit tujuan tabunganmu untuk mencocokkan tabungan yang telah kamu sisihkan dalam anggaranmu?</string>
+    <string name="budget_create_q_final_positive_goal_summary">Target mingguan kamu untuk tujuan saat ini:</string>
+    <string name="budget_create_q_final_positive_no_goals">Apakah kamu mau tambahkan tujuan tabungan untuk mencocokkan tabungan yang telah kamu sisihkan dalam anggaranmu?</string>
 
     <string name="budget_create_qry_tip_income">income</string>
     <string name="budget_create_qry_tip_budget">budget</string>
@@ -788,23 +788,23 @@
 
     <!-- budget_create validation -->
 
-    <string name="budget_create_err__invalid_number">Invalid number</string>
-    <string name="budget_create_err_income__empty">Income cannot be empty</string>
-    <string name="budget_create_err_income__zero">Income cannot be Rp0</string>
-    <string name="budget_create_err_savings__empty">Savings cannot be empty</string>
-    <string name="budget_create_err_savings__zero">Savings cannot be Rp0</string>
-    <string name="budget_create_err_savings__gt_income">Your monthly savings cannot be more than your monthly income</string>
+    <string name="budget_create_err__invalid_number">Jumlah tidak valid</string>
+    <string name="budget_create_err_income__empty">Penghasilan tidak bisa kosong</string>
+    <string name="budget_create_err_income__zero">Penghasilan tidak bisa Rp0</string>
+    <string name="budget_create_err_savings__empty">Tabungan tidak bisa kosong</string>
+    <string name="budget_create_err_savings__zero">Tabungan tidak bisa Rp0</string>
+    <string name="budget_create_err_savings__gt_income">Tabungan bulanan tidak bisa lebih dari pendapatan bulanan</string>
     <string name="budget_create_err_expense__empty">Expense cannot be empty</string>
     <string name="budget_create_err_expense__zero">Expense cannot be Rp0</string>
 
     <!-- BOT: budget_edit -->
 
-    <string name="budget_edit_q_intro">"What would you like to edit?"</string>
-    <string name="budget_edit_a_income">Income</string>
-    <string name="budget_edit_a_expense">Expenses</string>
-    <string name="budget_edit_a_savings">Savings</string>
+    <string name="budget_edit_q_intro">Apa yang ingin kamu edit?</string>
+    <string name="budget_edit_a_income">Pendapatan</string>
+    <string name="budget_edit_a_expense">Pengeluaran</string>
+    <string name="budget_edit_a_savings">Tabungan</string>
 
-    <string name="budget_edit_q_income">"How much do you get each month?"</string>
+    <string name="budget_edit_q_income">Berapa banyak yang kamu dapatkan setiap bulan?</string>
     <string name="budget_edit_a_income_amount">@string/budget_create_a_income_amount</string>
     <string name="budget_edit_a_no_income">@string/budget_create_a_no_income</string>
 
@@ -815,22 +815,22 @@
     <string name="budget_edit_q_savings_default">@string/budget_create_q_savings_default</string>
     <string name="budget_edit_a_savings_default_accept">@string/budget_create_a_savings_default_accept</string>
     <string name="budget_edit_a_savings_default_deny">@string/budget_create_a_savings_default_deny</string>
-    <string name="budget_edit_q_savings_invalid_amount">"Whoops. You won’t be able to save more than you earn. Try to save an amount equal to or less than your monthly income of $(budget.income)."</string>
+    <string name="budget_edit_q_savings_invalid_amount">Ups. Kamu gak akan bisa simpan lebih dari yang kamu peroleh. Coba untuk simpan jumlah yang sama dengan atau kurang dari pendapatan bulananmu dari $ (budget.income).</string>
 
-    <string name="budget_edit_q_expense_options">What would you like to do to your expenses?</string>
-    <string name="budget_edit_a_expense_option_edit">Edit current expenses</string>
-    <string name="budget_edit_a_expense_option_add">Add a new expense</string>
+    <string name="budget_edit_q_expense_options">Apa yang kamu mau lakukan kepada pengeluaranmu?</string>
+    <string name="budget_edit_a_expense_option_edit">Edit pengeluaran saat ini</string>
+    <string name="budget_edit_a_expense_option_add">Tambahkan pengeluaran baru</string>
     <string name="budget_edit_a_expense_option_replace">Delete all and start over</string>
-    <string name="budget_edit_a_expense_option_done">"I'm done"</string>
+    <string name="budget_edit_a_expense_option_done">Aku selesai</string>
 
-    <string name="budget_edit_q_expense_option_add">Which expense category would you like to add?</string>
+    <string name="budget_edit_q_expense_option_add">Kategori anggaran mana yang mau kamu tambahkan?</string>
     <string name="budget_edit_a_expense_continue">"OK, I've selected my expenses"</string>
 
-    <string name="budget_edit_q_expense_option_edit">Which expense would you like to edit?</string>
-    <string name="budget_edit_q_expense_option_edit_selected">Would you like to edit the amount or delete $(budget.expense.name)?</string>
-    <string name="budget_edit_a_expense_selected_delete">Delete</string>
-    <string name="budget_edit_a_expense_selected_edit_amount">Edit amount</string>
-    <string name="budget_edit_q_single_expense_amount">"How much do you spend on $(budget.expense.name) each month?</string>
+    <string name="budget_edit_q_expense_option_edit">Anggaran yang akan kamu edit?</string>
+    <string name="budget_edit_q_expense_option_edit_selected">Apakah kamu mau edit jumlah atau menghapus $ (budget.expense.name)?</string>
+    <string name="budget_edit_a_expense_selected_delete">Hapus</string>
+    <string name="budget_edit_a_expense_selected_edit_amount">Edit jumlah</string>
+    <string name="budget_edit_q_single_expense_amount">Berapa banyak yang kamu habiskan untuk $ (budget.expense.name) setiap bulan?</string>
 
     <string name="budget_edit_q_summary">@string/budget_create_q_summary</string>
     <string name="budget_edit_q_final_positive">@string/budget_create_q_final_positive</string>
@@ -839,9 +839,9 @@
 
     <!-- budget_edit validation -->
 
-    <string name="budget_edit_err_income__not_found">Income input was not found</string>
-    <string name="budget_edit_err_savings__not_found">Savings input was not found</string>
-    <string name="budget_edit_err_expense__not_found">Expense input was not found</string>
+    <string name="budget_edit_err_income__not_found">Pemasukan pendapatan tidak ditemukan</string>
+    <string name="budget_edit_err_savings__not_found">Pemasukan tabungan tidak ditemukan</string>
+    <string name="budget_edit_err_expense__not_found">budget_edit_err_expense__not_found</string>
 
     <!-- END: BOT: budget_edit -->
 
@@ -895,7 +895,7 @@
     <string name="challenge_all_questions_complete">"Hore! Kamu telah menjawab semua pertanyaannya."</string>
     <string name="challenge_none_available">"Wah. Belum ada tantagan yang \n tersedia.Coba lagi nanti ya!"</string>
     <string name="challenge_quiz_select_option_required">"Kamu harus memilih jawaban untuk pertanyaan ini."</string>
-    <string name="challenge_quiz_no_questions">"No questions available"</string>
+    <string name="challenge_quiz_no_questions">Tidak ada pertanyaa yang tersedia</string>
     <string name="challenge_quiz_congratulate_correct">"Yay! Jawabanmu benar. "</string>
     <string name="challenge_quiz_sorry_incorrect">"Uh-oh. Coba lagi!"</string>
     <string name="challenge_quiz_empty_option">"Pertanyaan kuis punya pilihan tanpa teks."</string>
@@ -905,12 +905,12 @@
     <string name="challenge_quiz_counter_fmt">"Pertanyaan %1$d/%2$d"</string>
     <string name="challenge_hint_template">"Petunjuk: %1$s"</string>
     <string name="challenge_hint_none">"Maaf, Aku tidak punya petunjuk untuk kamu"</string>
-    <string name="challenge_could_not_connect_to_server">"Could not make a connection to the server"</string>
-    <string name="challenge_could_not_confirm_registration">"Could not confirm registration"</string>
-    <string name="challenge_persisted_challenge_thrown_out">"The persisted challenge is no longer valid and will be replaced by one from the server"</string>
-    <string name="challenge_done">"Challenge done!"</string>
-    <string name="challenge_completed">"Challenge complete"</string>
-    <string name="challenge_deadline_message">"Deadline: "</string>
+    <string name="challenge_could_not_connect_to_server">Tidak bisa menyambungkan ke server</string>
+    <string name="challenge_could_not_confirm_registration">Tidak bisa mengkonfirmasi pendaftaran</string>
+    <string name="challenge_persisted_challenge_thrown_out">Tantangan sudah tidak tersedia dan akan digantikan oleh server</string>
+    <string name="challenge_done">Tantangan selesai!</string>
+    <string name="challenge_completed">Tantangan sudah selesai</string>
+    <string name="challenge_deadline_message">Batas waktu:</string>
     <string name="challenge_picture_caption">"Image Caption"</string>
 
 
@@ -932,7 +932,7 @@
     <string name="target_no_goal">"Tidak ada target tambahan"</string>
     <string name="saved">"sudah tersimpan"</string>
     <string name="target_of">"of"</string>
-    <string name="error_retrieve_goals">"Error retrieving goals."</string>
+    <string name="error_retrieve_goals">"Error dalam mengumpulkan data "</string>
 
     <!-- Profile -->
     <string name="profile_achievements_week_streak_singular">"%s minggu"</string>
@@ -1040,11 +1040,11 @@
 
     <!-- Budget -->
 
-    <string name="budget_heading_income_per_month">"Income per month"</string>
-    <string name="budget_heading_savings_per_month">"Savings per month"</string>
-    <string name="budget_heading_expenses_per_month">"Expenses per month"</string>
-    <string name="budget_heading_left_over">Left over</string>
-    <string name="budget_line_of_income">"of income"</string>
+    <string name="budget_heading_income_per_month">Pendapatan per bulan</string>
+    <string name="budget_heading_savings_per_month">Tabungan per bulan</string>
+    <string name="budget_heading_expenses_per_month">Pengeluaran per bulan</string>
+    <string name="budget_heading_left_over">Sisa</string>
+    <string name="budget_line_of_income">dari pendapatan</string>
 
     <!-- Dev only -->
     <string name="placeholder_label_short">"Placeholder"</string>
