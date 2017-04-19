@@ -28,6 +28,8 @@ public class ImageScaler {
             height = maxHeight;
         }
 
-        return Bitmap.createScaledBitmap(bitmap, width, height, true);
+        Bitmap out = Bitmap.createScaledBitmap(bitmap, width, height, true);
+        bitmap.recycle();
+        return out;
     }
 }
