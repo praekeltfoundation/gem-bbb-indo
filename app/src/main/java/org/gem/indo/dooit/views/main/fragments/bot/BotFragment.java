@@ -772,18 +772,32 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
                 setBotType(botType);
                 createFeed();
             } else {
+                String messageType;
+                if (node.getType() == null) {
+                    messageType = "";
+                } else {
+                    messageType = node.getType().toUpperCase();
+                }
+
                 // Auto load next node in current conversation
                 getAndAddNode(node.getAutoNext(),
                         // Auto nodes following a hidden node will show their icon
-                        !(node.getType().toUpperCase().equals(BotMessageType.BLANK.name())
-                                || node.getType().toUpperCase().equals(BotMessageType.DUMMY.name())));
+                        !(messageType.equals(BotMessageType.BLANK.name())
+                                || messageType.equals(BotMessageType.DUMMY.name())));
             }
         } else if (node.hasAutoNextNode()) {
+            String messageType;
+            if (node.getType() == null) {
+                messageType = "";
+            } else {
+                messageType = node.getType().toUpperCase();
+            }
+
             // Auto next set from Java code
             addNode(node.getAutoNextNode(),
                     // Auto nodes following a hidden node will show their icon
-                    !(node.getType().toUpperCase().equals(BotMessageType.BLANK.name())
-                            || node.getType().toUpperCase().equals(BotMessageType.DUMMY.name())));
+                    !(messageType.equals(BotMessageType.BLANK.name())
+                            || messageType.equals(BotMessageType.DUMMY.name())));
         } else {
 
             // End of recursion
