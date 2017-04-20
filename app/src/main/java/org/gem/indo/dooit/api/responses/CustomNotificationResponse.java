@@ -16,8 +16,10 @@ import java.util.List;
 
 public class CustomNotificationResponse {
 
+    @SerializedName("notifications")
     private List<CustomNotification> notifications = new ArrayList<>();
 
+    @SerializedName("available")
     private boolean available;
 
     public List<CustomNotification> getNotifcations() {
