@@ -269,6 +269,8 @@ public abstract class ImageActivity extends DooitActivity {
                 default:
                     break;
             }
+        } catch (IllegalArgumentException ia) {
+            // If image path is null, IllegalArgumentException is thrown
         } catch (IOException io) {
 
         }
