@@ -138,8 +138,11 @@ public class PasswordResetUsernameFragment extends Fragment {
                         @Override
                         public void run() {
                             Map<String, List<String>> errorMap = error.getErrorResponse().getFieldErrors();
-                            List<String> msgs = errorMap.get("username");
-                            usernameBox.setMessageText(TextUtils.join("\n", msgs));
+                            if (errorMap.containsKey("username") && errorMap.get("username") != null) {
+                                usernameBox.setMessageText(TextUtils.join("\n", errorMap.get("username")));
+                            } else {
+                                usernameBox.setMessageText("");
+                            }
                         }
                     });
                 }
