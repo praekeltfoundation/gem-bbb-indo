@@ -133,7 +133,7 @@ public class ReturningUserController extends DooitBotController {
     }
 
 
-    private void tipQueryBudget(){
+    private void tipQueryBudget() {
         if (activity == null)
             return;
         activity.setTipQuery(activity.getString(R.string.budget_create_qry_tip_budget));
@@ -144,16 +144,22 @@ public class ReturningUserController extends DooitBotController {
 
         if (goals != null) {
             for (Goal goal : goals) {
+                if (goal.isReached()){
+                    continue;
+                }
+
                 double weeklyTarget = goal.getWeeklyTarget();
-                int numWeeks = (int)goal.getWeeksToNow(WeekCalc.Rounding.DOWN);
+                int numWeeks = (int) goal.getWeeksToNow(WeekCalc.Rounding.DOWN);
                 if (numWeeks > 4) {
                     boolean savedEnough = false;
                     Map<String, Float> weeklyTotals = goal.getWeeklyTotals();
 
                     for (int i = numWeeks - 4; i < numWeeks; i++) {
-                        if (weeklyTotals.get(Integer.toString(i)) >= weeklyTarget) {
-                            savedEnough = true;
-                            break;
+                        if (weeklyTotals.containsKey(Integer.toString(i))) {
+                            if (weeklyTotals.get(Integer.toString(i)) >= weeklyTarget) {
+                                savedEnough = true;
+                                break;
+                            }
                         }
                     }
 
