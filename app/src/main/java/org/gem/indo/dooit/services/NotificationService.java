@@ -158,14 +158,14 @@ public class NotificationService extends IntentService {
                 }
             }));
 
-        if (persisted.shouldNotify(NotificationType.AD_HOC))
+        if (persisted.shouldNotify(NotificationType.AD_HOC)) {
             requests.add(customNotificationManager.fetchCustomNotification(new DooitErrorHandler() {
                 @Override
                 public void onError(DooitAPIError error) {
 
                 }
             }));
-
+        }
 
         if (requests.size() > 0)
             // Using flatmap to perform requests serially
