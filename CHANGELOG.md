@@ -1,4 +1,8 @@
 
+1.0.8
+
+- Added more Indonesian translations for budget feature
+
 1.0.7
 
 - Lowered memory consumption when uploading images
