@@ -1,8 +1,4 @@
 
-1.0.7
+1.0.8
 
-- Lowered memory consumption when uploading images
-- Fixed Ad-Hoc notifications being deserialised wrong
-- Fixed a crash when a user returns after not saving for a while
-- Prevented a crash for devices that rotate camera images
-- Fixed bug in conversation when deleting a goal
+Added more Indonesian translations for budget feature
