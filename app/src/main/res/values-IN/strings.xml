@@ -824,7 +824,7 @@
     <string name="budget_edit_a_expense_option_done">Aku selesai</string>
 
     <string name="budget_edit_q_expense_option_add">Kategori anggaran mana yang mau kamu tambahkan?</string>
-    <string name="budget_edit_a_expense_continue">"OK, I've selected my expenses"</string>
+    <string name="budget_edit_a_expense_continue">@string/budget_create_a_expense_continue</string>
 
     <string name="budget_edit_q_expense_option_edit">Anggaran yang akan kamu edit?</string>
     <string name="budget_edit_q_expense_option_edit_selected">Apakah kamu mau edit jumlah atau menghapus $(budget.expense.name)?</string>
