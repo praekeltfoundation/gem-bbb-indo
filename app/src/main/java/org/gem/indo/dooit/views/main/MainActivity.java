@@ -417,7 +417,7 @@ public class MainActivity extends ImageActivity {
                 @Override
                 public void onGlobalLayout() {
                     container.getViewTreeObserver().removeOnGlobalLayoutListener(this);
-                    CommonConfetti.rainingConfetti(container, new int[]{Color.rgb(57, 21, 99), Color.rgb(185, 209, 84), Color.rgb(1, 191, 227)}).oneShot();
+                    CommonConfetti.rainingConfetti(container, new int[]{Color.rgb(57, 21, 99), Color.rgb(255, 62, 141), Color.rgb(253, 223, 91)}).oneShot();
                 }
             });
     }
