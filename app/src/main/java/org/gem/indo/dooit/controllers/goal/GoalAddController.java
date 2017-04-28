@@ -18,8 +18,12 @@ import org.gem.indo.dooit.helpers.images.MediaUriHelper;
 import org.gem.indo.dooit.models.Tip;
 import org.gem.indo.dooit.models.bot.Answer;
 import org.gem.indo.dooit.models.bot.BaseBotModel;
+import org.gem.indo.dooit.models.bot.Node;
+import org.gem.indo.dooit.models.budget.Budget;
 import org.gem.indo.dooit.models.challenge.BaseChallenge;
 import org.gem.indo.dooit.models.enums.BotCallType;
+import org.gem.indo.dooit.models.enums.BotMessageType;
+import org.gem.indo.dooit.models.enums.BotObjectType;
 import org.gem.indo.dooit.models.enums.BotParamType;
 import org.gem.indo.dooit.models.enums.BotType;
 import org.gem.indo.dooit.models.goal.Goal;
@@ -46,6 +50,8 @@ public class GoalAddController extends GoalBotController {
 
     private static final String TAG = GoalAddController.class.getName();
 
+    protected Budget budget;
+
     @Inject
     GoalManager goalManager;
 
@@ -55,12 +61,13 @@ public class GoalAddController extends GoalBotController {
     @Inject
     Persisted persisted;
 
-    public GoalAddController(Activity activity, BotRunner botRunner, List<GoalPrototype> prototypes,
+    public GoalAddController(Activity activity, BotRunner botRunner, Budget budget, List<GoalPrototype> prototypes,
                              Goal goal, BaseChallenge challenge, Tip tip) {
         super(activity, botRunner, BotType.GOAL_ADD, prototypes, goal, challenge, tip);
         ((DooitApplication) activity.getApplication()).component.inject(this);
         if (this.goal == null)
             this.goal = new Goal();
+        this.budget = budget;
     }
 
     @Override
