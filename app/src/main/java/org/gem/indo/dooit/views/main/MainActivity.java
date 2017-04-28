@@ -30,6 +30,7 @@ import org.gem.indo.dooit.R;
 import org.gem.indo.dooit.api.DooitAPIError;
 import org.gem.indo.dooit.api.DooitErrorHandler;
 import org.gem.indo.dooit.api.managers.ChallengeManager;
+import org.gem.indo.dooit.api.responses.ChallengeParticipatedResponse;
 import org.gem.indo.dooit.helpers.Persisted;
 import org.gem.indo.dooit.helpers.RequestCodes;
 import org.gem.indo.dooit.helpers.activity.result.ActivityForResultHelper;
@@ -75,6 +76,7 @@ public class MainActivity extends ImageActivity {
     private ImageSelectedListener imageSelectedListener = null;
 
     private Subscription challengeSubscription;
+    private Subscription participantSubscription;
 
 
     @BindView(R.id.activity_main)
@@ -131,6 +133,7 @@ public class MainActivity extends ImageActivity {
 
     static boolean prefetchAlarmHasBeenSet = false;
 
+    private BaseChallenge activeChallenge = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -139,17 +142,37 @@ public class MainActivity extends ImageActivity {
         ((DooitApplication) getApplication()).component.inject(this);
         ButterKnife.bind(this);
 
-        challengeSubscription = challengeManager.retrieveCurrentChallenge(true, new DooitErrorHandler() {
+
+
+//        challengeSubscription = challengeManager.retrieveCurrentChallenge(true, new DooitErrorHandler() {
+//            @Override
+//            public void onError(final DooitAPIError error) {
+//                //The challenge could not be retried so do nothing
+//            }
+//        }).subscribe(new Action1<BaseChallenge>() {
+//            @Override
+//            public void call(BaseChallenge challenge) {
+//                if (challenge != null) {
+//                    if (challenge.isActive()) {
+//                        activeChallenge = challenge;
+//                        ChallengeLightboxFragment challengeLightboxFragment = ChallengeLightboxFragment.newInstance(challenge);
+//                        challengeLightboxFragment.show(getFragmentManager(), "challenge_available_lightbox");
+//                    }
+//                }
+//            }
+//        });
+
+        participantSubscription = challengeManager.checkChallengeParticipation(new DooitErrorHandler() {
             @Override
             public void onError(final DooitAPIError error) {
                 //The challenge could not be retried so do nothing
             }
-        }).subscribe(new Action1<BaseChallenge>() {
+        }).subscribe(new Action1<ChallengeParticipatedResponse>() {
             @Override
-            public void call(BaseChallenge challenge) {
-                if (challenge != null) {
-                    if (challenge.isActive()) {
-                        ChallengeLightboxFragment challengeLightboxFragment = ChallengeLightboxFragment.newInstance(challenge);
+            public void call(ChallengeParticipatedResponse response) {
+                if (response.getChallenge() != null) {
+                    if (!response.hasParticipatedInChallenge()) {
+                        ChallengeLightboxFragment challengeLightboxFragment = ChallengeLightboxFragment.newInstance(response.getChallenge());
                         challengeLightboxFragment.show(getFragmentManager(), "challenge_available_lightbox");
                     }
                 }
