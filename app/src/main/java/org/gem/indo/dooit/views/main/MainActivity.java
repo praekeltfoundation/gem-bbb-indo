@@ -142,26 +142,6 @@ public class MainActivity extends ImageActivity {
         ((DooitApplication) getApplication()).component.inject(this);
         ButterKnife.bind(this);
 
-
-
-//        challengeSubscription = challengeManager.retrieveCurrentChallenge(true, new DooitErrorHandler() {
-//            @Override
-//            public void onError(final DooitAPIError error) {
-//                //The challenge could not be retried so do nothing
-//            }
-//        }).subscribe(new Action1<BaseChallenge>() {
-//            @Override
-//            public void call(BaseChallenge challenge) {
-//                if (challenge != null) {
-//                    if (challenge.isActive()) {
-//                        activeChallenge = challenge;
-//                        ChallengeLightboxFragment challengeLightboxFragment = ChallengeLightboxFragment.newInstance(challenge);
-//                        challengeLightboxFragment.show(getFragmentManager(), "challenge_available_lightbox");
-//                    }
-//                }
-//            }
-//        });
-
         participantSubscription = challengeManager.checkChallengeParticipation(new DooitErrorHandler() {
             @Override
             public void onError(final DooitAPIError error) {
