@@ -374,9 +374,19 @@
       {
         "name": "goal_add_a_budget_intro",
         "text": "$(goal_add_a_budget_intro)",
-        "next": "goal_add_q_budget_intro_01"
+        "next": "showBudgetDiagram"
       }
     ]
+  },
+  {
+    "name": "showBudgetDiagram",
+    "type": "dummy",
+    "call": "#checkShowBudget"
+  },
+  {
+    "name": "budgetDiagram",
+    "type": "budgetInfo",
+    "autoNext": "askGoalWeeklySaveAmount"
   },
   {
     "name": "askGoalSaveAmountOther",
