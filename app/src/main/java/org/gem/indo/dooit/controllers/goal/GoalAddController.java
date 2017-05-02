@@ -18,8 +18,12 @@ import org.gem.indo.dooit.helpers.images.MediaUriHelper;
 import org.gem.indo.dooit.models.Tip;
 import org.gem.indo.dooit.models.bot.Answer;
 import org.gem.indo.dooit.models.bot.BaseBotModel;
+import org.gem.indo.dooit.models.bot.Node;
+import org.gem.indo.dooit.models.budget.Budget;
 import org.gem.indo.dooit.models.challenge.BaseChallenge;
 import org.gem.indo.dooit.models.enums.BotCallType;
+import org.gem.indo.dooit.models.enums.BotMessageType;
+import org.gem.indo.dooit.models.enums.BotObjectType;
 import org.gem.indo.dooit.models.enums.BotParamType;
 import org.gem.indo.dooit.models.enums.BotType;
 import org.gem.indo.dooit.models.goal.Goal;
@@ -46,6 +50,8 @@ public class GoalAddController extends GoalBotController {
 
     private static final String TAG = GoalAddController.class.getName();
 
+    protected Budget budget;
+
     @Inject
     GoalManager goalManager;
 
@@ -55,12 +61,13 @@ public class GoalAddController extends GoalBotController {
     @Inject
     Persisted persisted;
 
-    public GoalAddController(Activity activity, BotRunner botRunner, List<GoalPrototype> prototypes,
+    public GoalAddController(Activity activity, BotRunner botRunner, Budget budget, List<GoalPrototype> prototypes,
                              Goal goal, BaseChallenge challenge, Tip tip) {
         super(activity, botRunner, BotType.GOAL_ADD, prototypes, goal, challenge, tip);
         ((DooitApplication) activity.getApplication()).component.inject(this);
         if (this.goal == null)
             this.goal = new Goal();
+        this.budget = budget;
     }
 
     @Override
@@ -72,6 +79,8 @@ public class GoalAddController extends GoalBotController {
             case SET_TARGET_TO_DEFAULT:
                 setTargetAsDefault();
                 break;
+            case SHOW_BUDGET_DIAGRAM:
+                checkShowBudget();
             default:
                 super.onCall(key, answerLog, model);
         }
@@ -92,6 +101,16 @@ public class GoalAddController extends GoalBotController {
         return super.shouldSkip(model);
     }
 
+
+    @Override
+    public Object getObject(BotObjectType objType) {
+        switch (objType) {
+            case BUDGET:
+                return budget;
+            default:
+                return super.getObject(objType);
+        }
+    }
     @Override
     public void onDone(Map<String, Answer> answerLog) {
 
@@ -103,8 +122,16 @@ public class GoalAddController extends GoalBotController {
         Answer protoAnswer = answerLog.get("goal_add_ask_goal_gallery");
 
         // Prototype ID
-        if (protoAnswer != null)
+        if (protoAnswer != null) {
             goal.setPrototypeId(protoAnswer.values.getLong(BotParamType.GOAL_PROTO_ID.getKey()));
+            for (GoalPrototype proto : prototypes) {
+                if (proto.getId() == goal.getPrototypeId()) {
+                    goal.setPrototype(proto);
+                    goal.setTarget(proto.getDefaultPrice());
+                    break;
+                }
+            }
+        }
 
         // Goal Name
         String name = answerLog.get("goal_name").getValue();
@@ -273,6 +300,23 @@ public class GoalAddController extends GoalBotController {
         } else {
             goal.setTarget(0);
         }
+    }
+
+    private void checkShowBudget() {
+        Node node = new Node();
+
+        if (budget == null) {
+            node.setName("goal_add_q_budget_intro_00");
+            node.setType(BotMessageType.DUMMY); // Keep the node in the conversation on reload
+            node.setAutoNext("goal_add_q_budget_intro_01");
+        } else {
+            node.setName("goal_add_show_budget_diagram");
+            node.setType(BotMessageType.DUMMY);
+            node.setAutoNext("budgetDiagram");
+        }
+
+        node.finish();
+        botRunner.queueNode(node);
     }
 
     ////////////////

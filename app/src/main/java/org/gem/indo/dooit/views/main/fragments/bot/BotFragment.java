@@ -473,7 +473,9 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
                         budget);
             case DEFAULT:
             case GOAL_ADD:
+                budget = new BudgetDAO().findFirst();
                 return new GoalAddController(getActivity(), this,
+                        budget,
                         persisted.loadGoalProtos(),
                         persisted.loadConvoGoal(botType),
                         persisted.loadConvoChallenge(botType),

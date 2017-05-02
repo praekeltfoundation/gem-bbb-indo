@@ -47,6 +47,9 @@ public enum BotCallType {
     @SerializedName("#set_target_to_default")
     SET_TARGET_TO_DEFAULT,
 
+    @SerializedName("#checkShowBudget")
+    SHOW_BUDGET_DIAGRAM,
+
     @SerializedName("#set_tip_query")
     SET_TIP_QUERY,
 

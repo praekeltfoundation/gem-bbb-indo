@@ -80,7 +80,6 @@ public class Goal {
     private boolean imageFromProto = false;
 
     // Server does not allow prototype object in Goal
-    // TODO: Ensure that Goal Add Controller still works when a Goal is loaded from persistence during the conversation
     transient private GoalPrototype prototype;
 
     //////////////////
