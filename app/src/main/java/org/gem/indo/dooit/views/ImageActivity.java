@@ -64,7 +64,9 @@ public abstract class ImageActivity extends DooitActivity {
         matrix.postRotate(angle);
         Bitmap out = Bitmap.createBitmap(source, 0, 0, source.getWidth(), source.getHeight(),
                 matrix, true);
-        source.recycle();
+        if (!source.isRecycled() && !out.sameAs(source)) {
+            source.recycle();
+        }
         return out;
     }
 

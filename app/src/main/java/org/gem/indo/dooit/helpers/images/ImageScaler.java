@@ -29,7 +29,9 @@ public class ImageScaler {
         }
 
         Bitmap out = Bitmap.createScaledBitmap(bitmap, width, height, true);
-        bitmap.recycle();
+        if (!bitmap.isRecycled() && !out.sameAs(bitmap)) {
+            bitmap.recycle();
+        }
         return out;
     }
 }
