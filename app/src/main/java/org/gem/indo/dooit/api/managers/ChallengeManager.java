@@ -7,6 +7,7 @@ import org.gem.indo.dooit.api.interfaces.ChallengeAPI;
 import org.gem.indo.dooit.api.requests.AddCaptionRequest;
 import org.gem.indo.dooit.api.responses.ChallengeAvailableReminderResponse;
 import org.gem.indo.dooit.api.responses.ChallengeCompletionReminderResponse;
+import org.gem.indo.dooit.api.responses.ChallengeParticipatedResponse;
 import org.gem.indo.dooit.api.responses.WinnerResponse;
 import org.gem.indo.dooit.models.challenge.BaseChallenge;
 import org.gem.indo.dooit.models.challenge.Participant;
@@ -60,6 +61,10 @@ public class ChallengeManager extends DooitManager {
 
     public Observable<Participant> registerParticipant(Participant participant, DooitErrorHandler errorHandler) {
         return useNetwork(challengeAPI.registerParticipant(participant), errorHandler);
+    }
+
+    public Observable<ChallengeParticipatedResponse> checkChallengeParticipation(DooitErrorHandler errorHandler) {
+        return useNetwork(challengeAPI.checkChallengeParticipation(), errorHandler);
     }
 
     public Observable<WinnerResponse> fetchChallengeWinner(DooitErrorHandler errorHandler){

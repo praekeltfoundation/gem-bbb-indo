@@ -3,6 +3,7 @@ package org.gem.indo.dooit.api.interfaces;
 import org.gem.indo.dooit.api.requests.AddCaptionRequest;
 import org.gem.indo.dooit.api.responses.ChallengeAvailableReminderResponse;
 import org.gem.indo.dooit.api.responses.ChallengeCompletionReminderResponse;
+import org.gem.indo.dooit.api.responses.ChallengeParticipatedResponse;
 import org.gem.indo.dooit.api.responses.WinnerResponse;
 import org.gem.indo.dooit.models.challenge.BaseChallenge;
 import org.gem.indo.dooit.models.challenge.Participant;
@@ -45,6 +46,9 @@ public interface ChallengeAPI {
 
     @POST("/api/participants/register/")
     Observable<Participant> registerParticipant(@Body Participant participant);
+
+    @GET("/api/participants/check_participation/")
+    Observable<ChallengeParticipatedResponse> checkChallengeParticipation();
 
     @GET("/api/challenges/winning/")
     Observable<WinnerResponse> checkChallengeWinner();
