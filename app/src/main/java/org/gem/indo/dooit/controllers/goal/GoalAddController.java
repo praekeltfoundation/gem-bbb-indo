@@ -122,8 +122,16 @@ public class GoalAddController extends GoalBotController {
         Answer protoAnswer = answerLog.get("goal_add_ask_goal_gallery");
 
         // Prototype ID
-        if (protoAnswer != null)
+        if (protoAnswer != null) {
             goal.setPrototypeId(protoAnswer.values.getLong(BotParamType.GOAL_PROTO_ID.getKey()));
+            for (GoalPrototype proto : prototypes) {
+                if (proto.getId() == goal.getPrototypeId()) {
+                    goal.setPrototype(proto);
+                    goal.setTarget(proto.getDefaultPrice());
+                    break;
+                }
+            }
+        }
 
         // Goal Name
         String name = answerLog.get("goal_name").getValue();
