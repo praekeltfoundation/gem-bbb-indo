@@ -1,4 +1,12 @@
 
+1.1.0
+
+- Stop challenged popups from showing if you've already participated in the challenge
+- Option to view your budget while adding a savings  goal
+- Changed confetti colors to match brand colors
+- Added a bot conversation to remind users they can a budget at a later stage
+- Prevented a crash when adding a image during goal creation
+
 1.0.8
 
 - Added more Indonesian translations for budget feature
