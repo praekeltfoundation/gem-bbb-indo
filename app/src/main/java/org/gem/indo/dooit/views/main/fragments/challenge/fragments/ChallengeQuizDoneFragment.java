@@ -148,7 +148,7 @@ public class ChallengeQuizDoneFragment extends Fragment {
     private void letItRainConfetti() {
         final boolean isLollipop = Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP;
         if (isLollipop)
-            CommonConfetti.rainingConfetti(((ViewGroup) this.getView().getParent()), new int[]{Color.RED, Color.YELLOW}).oneShot();
+            CommonConfetti.rainingConfetti(((ViewGroup) this.getView().getParent()), new int[]{Color.rgb(57, 21, 99), Color.rgb(255, 62, 141), Color.rgb(253, 223, 91)}).oneShot();
     }
 
     @OnClick(R.id.card_challenge_share)
