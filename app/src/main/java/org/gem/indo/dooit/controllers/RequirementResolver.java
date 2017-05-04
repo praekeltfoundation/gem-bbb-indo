@@ -144,7 +144,19 @@ public class RequirementResolver {
                                 category.setBotType(botType);
                             new ExpenseCategoryBotDAO().insert(botType, (List<ExpenseCategory>) o);
                         } else if (((List) o).get(0) instanceof Budget) {
-                            new BudgetDAO().update((Budget) ((List) o).get(0));
+                            final Budget upstreamBudget = (Budget) ((List) o).get(0);
+                            Realm mainRealm = Realm.getDefaultInstance();
+                            mainRealm.executeTransaction(new Realm.Transaction() {
+                                @Override
+                                public void execute(Realm realm) {
+                                    RealmResults<Budget> existingBudgets = realm
+                                            .where(Budget.class)
+                                            .notEqualTo("id", upstreamBudget.getId())
+                                            .findAll();
+                                    existingBudgets.deleteAllFromRealm();
+                                }
+                            });
+                            new BudgetDAO().update(upstreamBudget);
                         }
                     } else if (o instanceof BaseChallenge) {
                         persisted.saveConvoChallenge(botType, (BaseChallenge) o);
@@ -337,20 +349,33 @@ public class RequirementResolver {
             ob.subscribe(new Action1<List<Budget>>() {
                 @Override
                 public void call(List<Budget> budgets) {
-                    if (budgets != null && !budgets.isEmpty()) {
-                        final Budget newBudget = budgets.get(0);
-                        Realm mainRealm = Realm.getDefaultInstance();
-                        mainRealm.executeTransaction(new Realm.Transaction() {
-                            @Override
-                            public void execute(Realm realm) {
-                                RealmResults<Budget> existingBudgets = realm
-                                        .where(Budget.class)
-                                        .notEqualTo("id", newBudget.getId())
-                                        .findAll();
-                                existingBudgets.deleteAllFromRealm();
-                            }
-                        });
-                        new BudgetDAO().update(newBudget);
+                    if (budgets != null) {
+                        if (budgets.isEmpty()) {
+                            Realm mainRealm = Realm.getDefaultInstance();
+                            mainRealm.executeTransaction(new Realm.Transaction() {
+                                @Override
+                                public void execute(Realm realm) {
+                                    RealmResults<Budget> existingBudgets = realm
+                                            .where(Budget.class)
+                                            .findAll();
+                                    existingBudgets.deleteAllFromRealm();
+                                }
+                            });
+                        } else {
+                            final Budget newBudget = budgets.get(0);
+                            Realm mainRealm = Realm.getDefaultInstance();
+                            mainRealm.executeTransaction(new Realm.Transaction() {
+                                @Override
+                                public void execute(Realm realm) {
+                                    RealmResults<Budget> existingBudgets = realm
+                                            .where(Budget.class)
+                                            .notEqualTo("id", newBudget.getId())
+                                            .findAll();
+                                    existingBudgets.deleteAllFromRealm();
+                                }
+                            });
+                            new BudgetDAO().update(newBudget);
+                        }
                     }
                 }
             });
