@@ -7,6 +7,8 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.facebook.drawee.view.SimpleDraweeView;
+
 import org.gem.indo.dooit.R;
 import org.gem.indo.dooit.helpers.social.SocialSharer;
 import org.gem.indo.dooit.models.Badge;
@@ -26,6 +28,9 @@ public class BadgeViewHolder extends RecyclerView.ViewHolder {
     @BindView(R.id.activity_profile_achievement_item_share)
     ImageView shareView;
 
+    @BindView(R.id.activity_profile_achievement_icon_image_view)
+    SimpleDraweeView badgeView;
+
     public BadgeViewHolder(View itemView) {
         super(itemView);
         ButterKnife.bind(this, itemView);
@@ -36,6 +41,13 @@ public class BadgeViewHolder extends RecyclerView.ViewHolder {
 
         // Text
         textView.setText(badge.getName());
+
+        if (badge.getImageUrl() != null) {
+            badgeView.setImageURI(badge.getImageUrl());
+        } else {
+            badgeView.setImageResource(R.drawable.ic_d_badge);
+            badgeView.setScaleType(SimpleDraweeView.ScaleType.CENTER_INSIDE);
+        }
 
         // Share
         if (badge.hasSocialUrl()) {
