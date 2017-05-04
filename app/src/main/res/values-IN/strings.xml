@@ -339,7 +339,7 @@
     <string name="goal_edit_info_exit">"Ok, aku sudah selesai. Bisa diakhiri?"</string>
     <string name="goal_edit_delete_difficult_help">"Ok! Bantu buat rencana nabung baru."</string>
     <string name="goal_edit_delete_difficult_do_delete">"Oke, sudah beres. Bisa diakhiri?"</string>
-    <string name="goal_change_target">"I want to change the Target value"</string>
+    <string name="goal_change_target">"Aku ingin mengganti jumlah target"</string>
 
     <!-- BOT: tip_intro -->
     <string name="tip_intro_inline_link">"TODO: Show Tip"</string>
@@ -854,7 +854,7 @@
     <string name="Accept">"Aku suka foto ini!"</string>
     <string name="Gallery">"Select from gallery"</string>
     <string name="addDate">"Masukkan tanggal."</string>
-    <string name="unknownDate">"I don't know"</string>
+    <string name="unknownDate">"Aku tidak tau"</string>
     <string name="addAmount">"Add amount"</string>
     <string name="nope">"Nope"</string>
     <string name="otherSaveAmount">"Other"</string>
@@ -956,7 +956,7 @@
     <string name="profile_help_feedback">"Masukan"</string>
     <string name="profile_help_terms_conditions">"Syarat &amp; Ketentuan"</string>
     <string name="profile_help_privacy_policy">"Kebijakan Privasi"</string>
-    <string name="profile_tab_achievements">Achievements</string>
+    <string name="profile_tab_achievements">Pencapaian</string>
     <string name="profile_tab_budget">Anggaran</string>
     <string name="profile_error_retrieve_achievements">Error retrieving achievements</string>
 
@@ -1010,9 +1010,9 @@
     <!-- Push Notifications -->
     <string name="notification_title_challenge_available">"Tantangan yang tersedia"</string>
     <string name="notification_title_challenge_reminder">"Pengingat tantangan"</string>
-    <string name="notification_title_challenge_completion_reminder">"Challenge Answer Reminder"</string>
+    <string name="notification_title_challenge_completion_reminder">"Peringatan Partisipasi Tantangan"</string>
     <string name="notification_title_challenge_winner">Pemenang tantangan</string>
-    <string name="notification_title_custom_notification">"Ad Hoc"</string>
+    <string name="notification_title_custom_notification">"Notifikasi Lainnya"</string>
     <string name="notification_title_goal_deadline_missed">"Target yang lewat"</string>
     <string name="notification_title_survey_available">"Survey yang tersedia"</string>
     <string name="notification_title_survey_reminder">Pengingat Survey</string>
@@ -1070,8 +1070,8 @@
     <string name="profile_achievements_heading_achievements">"Pencapaian"</string>
 
     <!-- Feedback -->
-    <string name="feedback_pick_subject">"Pick subject"</string>
-    <string name="feedback_your_message">"Your message"</string>
+    <string name="feedback_pick_subject">"Pilih Topik"</string>
+    <string name="feedback_your_message">"Pesanmu"</string>
     <string name="feedback_option_ask">Bertanya</string>
     <string name="title_activity_feedback">"Kontak Dooit"</string>
     <string name="feedback_option_general">"<![CDATA[Saran & Komentar]]>"</string>
@@ -1080,13 +1080,13 @@
     <string name="prompt_relogin">"Could not authenticate. Please log out and back in."</string>
 
     <!-- Security -->
-    <string name="security_question_answer_label">"Answer"</string>
+    <string name="security_question_answer_label">"Jawaban"</string>
     <string name="security_question_change_successful">"Security question changed."</string>
     <string name="security_question_could_not_send">"Could not send new question."</string>
-    <string name="security_question_label">"Question"</string>
+    <string name="security_question_label">"Pertanyaan"</string>
     <string name="title_activity_change_security_question">"ChangeSecurityQuestionActivity"</string>
-    <string name="title_change_security_question">"Change Security Question"</string>
-    <string name="profile_account_change_security_question">"Change security question"</string>
+    <string name="title_change_security_question">"Ganti Pertanyaan Keamanan"</string>
+    <string name="profile_account_change_security_question">"Ganti pertanyaan keamanan"</string>
     <string name="fragment_reset_could_not_fetch_security_q">"Could not fetch security question."</string>
     <string name="msg_fix_indicated_fields">"Please fix indicated fields."</string>
     <string name="label_required">"Required"</string>
