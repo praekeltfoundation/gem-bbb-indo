@@ -26,6 +26,7 @@ import org.gem.indo.dooit.api.managers.SurveyManager;
 import org.gem.indo.dooit.api.responses.AchievementResponse;
 import org.gem.indo.dooit.api.responses.ChallengeAvailableReminderResponse;
 import org.gem.indo.dooit.api.responses.ChallengeCompletionReminderResponse;
+import org.gem.indo.dooit.api.responses.ChallengeParticipatedResponse;
 import org.gem.indo.dooit.api.responses.CustomNotificationResponse;
 import org.gem.indo.dooit.api.responses.GoalOverdueResponse;
 import org.gem.indo.dooit.api.responses.SurveyResponse;
@@ -37,7 +38,6 @@ import org.gem.indo.dooit.helpers.bot.param.ParamParser;
 import org.gem.indo.dooit.helpers.notifications.NotificationType;
 import org.gem.indo.dooit.helpers.notifications.Notifier;
 import org.gem.indo.dooit.models.User;
-import org.gem.indo.dooit.models.challenge.BaseChallenge;
 import org.gem.indo.dooit.models.enums.BotType;
 import org.gem.indo.dooit.models.survey.CoachSurvey;
 import org.gem.indo.dooit.views.main.MainActivity;
@@ -96,7 +96,7 @@ public class NotificationService extends IntentService {
 
         if (persisted.shouldNotify(NotificationType.CHALLENGE_AVAILABLE) ||
                 persisted.shouldNotify(NotificationType.CHALLENGE_REMINDER))
-            requests.add(challengeManager.retrieveCurrentChallenge(true, new DooitErrorHandler() {
+            requests.add(challengeManager.checkChallengeParticipation(new DooitErrorHandler() {
                 @Override
                 public void onError(DooitAPIError error) {
 
@@ -182,8 +182,8 @@ public class NotificationService extends IntentService {
             }).subscribe(new Action1<Object>() {
                 @Override
                 public void call(Object o) {
-                    if (o instanceof BaseChallenge)
-                        currentChallengeRetrieved((BaseChallenge) o);
+                    if (o instanceof ChallengeParticipatedResponse)
+                        currentChallengeRetrieved((ChallengeParticipatedResponse) o);
                     else if (o instanceof ChallengeAvailableReminderResponse)
                         challengeAvailableReminderReceived((ChallengeAvailableReminderResponse) o);
                     else if (o instanceof ChallengeCompletionReminderResponse)
@@ -205,9 +205,10 @@ public class NotificationService extends IntentService {
             complete(intent);
     }
 
-    protected void currentChallengeRetrieved(BaseChallenge challenge) {
+    protected void currentChallengeRetrieved(ChallengeParticipatedResponse challenge) {
         if (persisted.shouldNotify(NotificationType.CHALLENGE_AVAILABLE)
-                && persisted.getCurrentUser() != null) {
+                && persisted.getCurrentUser() != null
+                && !challenge.hasParticipatedInChallenge()) {
 
             Map<String, Object> params = DooitParamBuilder.create(this)
                     .setUser(persisted.getCurrentUser())
