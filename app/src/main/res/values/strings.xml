@@ -239,7 +239,7 @@
 
     <string name="goal_add_a_add_amount">"Add Amount"</string>
     <string name="goal_add_a_not_sure">"I'm not sure."</string>
-    <string name="goal_add_q_recommend_target_amount">"Typically, $(goal.name) costs Rp. $(goal_proto.default_price). Is that the price of yours?"</string>
+    <string name="goal_add_q_recommend_target_amount">"Typically, $(goal.name) costs $(goal_proto.default_price). Is that the price of yours?"</string>
     <string name="goal_add_a_too_expencive">"No, that\’s too expensive."</string>
     <string name="goal_add_a_too_cheap">"No, that's not enough."</string>
     <string name="goal_add_a_price_correct">"Yes, that's the price. What's next?"</string>
