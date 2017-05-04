@@ -14,7 +14,7 @@
         android:layout_height="36dp"
         android:layout_alignParentStart="true"
         android:layout_marginRight="8dp"
-        android:scaleType="fitCenter"
+        android:scaleType="centerInside"
         app:roundAsCircle="true"
         app:srcCompat="@drawable/ic_d_badge"
         tools:src="@drawable/ic_d_badge"/>
