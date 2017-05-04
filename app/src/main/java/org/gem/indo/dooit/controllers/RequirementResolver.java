@@ -32,6 +32,8 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import io.realm.Realm;
+import io.realm.RealmResults;
 import rx.Observable;
 import rx.functions.Action0;
 import rx.functions.Action1;
@@ -335,12 +337,26 @@ public class RequirementResolver {
             ob.subscribe(new Action1<List<Budget>>() {
                 @Override
                 public void call(List<Budget> budgets) {
-                    if (budgets != null && !budgets.isEmpty())
-                        new BudgetDAO().update(budgets.get(0));
+                    if (budgets != null && !budgets.isEmpty()) {
+                        final Budget newBudget = budgets.get(0);
+                        Realm mainRealm = Realm.getDefaultInstance();
+                        mainRealm.executeTransaction(new Realm.Transaction() {
+                            @Override
+                            public void execute(Realm realm) {
+                                RealmResults<Budget> existingBudgets = realm
+                                        .where(Budget.class)
+                                        .notEqualTo("id", newBudget.getId())
+                                        .findAll();
+                                existingBudgets.deleteAllFromRealm();
+                            }
+                        });
+                        new BudgetDAO().update(newBudget);
+                    }
                 }
             });
-        } else
+        } else {
             sync.add(ob);
+        }
     }
 
     public void setSurveyId(long surveyId) {
