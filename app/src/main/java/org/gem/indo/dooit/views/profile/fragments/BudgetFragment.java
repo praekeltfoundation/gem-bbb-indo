@@ -21,6 +21,7 @@ import org.gem.indo.dooit.R;
 import org.gem.indo.dooit.api.DooitAPIError;
 import org.gem.indo.dooit.api.DooitErrorHandler;
 import org.gem.indo.dooit.api.managers.BudgetManager;
+import org.gem.indo.dooit.dao.budget.BudgetDAO;
 import org.gem.indo.dooit.helpers.RequestCodes;
 import org.gem.indo.dooit.models.budget.Budget;
 import org.gem.indo.dooit.views.helpers.activity.CurrencyHelper;
@@ -35,6 +36,8 @@ import butterknife.BindString;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import io.realm.Realm;
+import io.realm.RealmResults;
 import rx.functions.Action1;
 
 /**
@@ -150,6 +153,18 @@ public class BudgetFragment extends Fragment {
                             @Override
                             public void run() {
                                 // Users are expected to only have one budget
+                                final Budget newBudget = budgets.get(0);
+                                Realm mainRealm = Realm.getDefaultInstance();
+                                mainRealm.executeTransaction(new Realm.Transaction() {
+                                    @Override
+                                    public void execute(Realm realm) {
+                                        RealmResults<Budget> existingBudgets = realm
+                                                .where(Budget.class)
+                                                .notEqualTo("id", newBudget.getId())
+                                                .findAll();
+                                        existingBudgets.deleteAllFromRealm();
+                                    }
+                                });
                                 populateBudget(budgets.get(0));
                                 showBudgetEdit();
                             }
