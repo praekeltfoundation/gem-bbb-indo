@@ -1,4 +1,16 @@
 
+1.2.0
+
+- Force language to Indonesian
+- Added missing translations
+- Challenge notifications no longer show if you have completed the active challenge
+- Bina no longer forgets the goal name during the goal add conversation
+- Fix to prevent authentication problems when users budgets get deleted on the server
+- Superfluous 'Rp.' in goal edit conversation removed
+- When the user doesn't know how much they can save per week, and they don't have a budget, they are given the option to create a budget
+- Change confetti colors to match brand colors
+- Show individual badge images in profile achievement instead of default badge images
+
 1.1.0
 
 - Stop challenged popups from showing if you've already participated in the challenge
