@@ -111,9 +111,27 @@ public class GoalAddController extends GoalBotController {
                 return super.getObject(objType);
         }
     }
+
     @Override
     public void onDone(Map<String, Answer> answerLog) {
 
+    }
+
+    @Override
+    public void onAnswerInput(BotParamType inputType, Answer answer) {
+        super.onAnswerInput(inputType, answer);
+
+        try {
+            // Goal is stored in case the view is destroyed during the conversation
+            persisted.saveConvoGoal(botType, goal);
+        } catch (IllegalArgumentException e) {
+            // Logging for infinite double error
+            CrashlyticsHelper.log(TAG, "on Answer Input (addGoal): ", "goal start date: " + goal.getStartDate() +
+                    " Target amount: " + goal.getTarget() + " Goal name: " + goal.getName() +
+                    " Goal Weekly Target: " + goal.getWeeklyTarget());
+
+            CrashlyticsHelper.logException(e);
+        }
     }
 
     private void doPopulate(Map<String, Answer> answerLog) {
@@ -345,7 +363,7 @@ public class GoalAddController extends GoalBotController {
     }
 
     private boolean validateName(String input) {
-        if (TextUtils.isEmpty(input)) {
+        if (TextUtils.isEmpty(input) || TextUtils.isEmpty(input.trim())) {
             toast(R.string.goal_add_err_user_firstname__empty);
             return false;
         }
