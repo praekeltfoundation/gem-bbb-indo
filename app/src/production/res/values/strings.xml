@@ -240,7 +240,7 @@
 
     <string name="goal_add_a_add_amount">"Masukkan jumlah."</string>
     <string name="goal_add_a_not_sure">"Aku kurang tau."</string>
-    <string name="goal_add_q_recommend_target_amount">"Umumnya, $(goal.name) senilai Rp. $(goal_proto.default_price). Apakah itu sesuai dengan target kamu?"</string>
+    <string name="goal_add_q_recommend_target_amount">"Umumnya, $(goal.name) senilai $(goal_proto.default_price). Apakah itu sesuai dengan target kamu?"</string>
     <string name="goal_add_a_too_expencive">"Gak, itu terlalu mahal."</string>
     <string name="goal_add_a_too_cheap">"Gak, itu belum mencukupi."</string>
     <string name="goal_add_a_price_correct">"Iya, tepat sekali. Selanjutnya?"</string>
@@ -307,7 +307,7 @@
     <string name="goal_edit_ask_options">"Apa yang ingin kamu ubah?"</string>
     <string name="goal_edit_updated">"Target kamu telah diperbarui!"</string>
     <string name="goal_edit_target">"Menurut kamu berapa uang yang bisa ditabung per minggu?"</string>
-    <string name="goal_edit_target_confirm">"Bila kamu menabung Rp. $(goal.weekly_target_currency) per minggu, kamu akan mencapai $(goal.name) dalam $(goal.weeks_down) minggu, $(goal.remainder_days) hari."</string>
+    <string name="goal_edit_target_confirm">"Bila kamu menabung $(goal.weekly_target_currency) per minggu, kamu akan mencapai $(goal.name) dalam $(goal.weeks_down) minggu, $(goal.remainder_days) hari."</string>
     <!--<string name="goal_edit_target_confirm">"If you save $(goal.weekly_target_currency) per week, you\’ll have enough money to get your $(goal.name) in only $(goal.weeks_left_up) weeks."</string>-->
     <string name="goal_edit_come_back">"Jangan lupa untuk kembali setiap minggunya untuk memantau tabungan kamu dan lihat target kamu menjadi kenyataan!"</string>
     <string name="goal_edit_delete_confirm">"Oh? Kenapa kamu ingin menghapus target ini?"</string>
