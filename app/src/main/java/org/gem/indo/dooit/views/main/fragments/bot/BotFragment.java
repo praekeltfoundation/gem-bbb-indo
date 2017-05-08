@@ -136,7 +136,7 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
     /**
      * The number of pixels that the quick answers should peek to the right.
      */
-    private int answerPeekDistance = 0;
+    private int answerPeekDistance = 20;
 
     public BotFragment() {
         // Required empty public constructor
