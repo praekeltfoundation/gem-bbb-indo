@@ -172,7 +172,7 @@ public class RegistrationActivity extends DooitActivity {
 
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-                // TODO Auto-generated method stub
+
             }
 
             @Override
@@ -181,15 +181,6 @@ public class RegistrationActivity extends DooitActivity {
             }
         });
     }
-
-//    @OnTextChanged({R.id.activity_registration_name_text_edit,})
-//    public void continuousUsernameValidation(Editable editable) {
-//        name.removeTextChangedListener(this);
-//        String result = editable.toString().replaceAll("[^a-zA-Z0-9@.=-_]", "");
-//        name.setText(result);
-//        name.setSelection(result.length());
-//        name.addTextChangedListener(this);
-//    }
 
     @OnClick({R.id.activity_registration_gender_girl, R.id.activity_registration_gender_boy,})
     public void genderClick() {
