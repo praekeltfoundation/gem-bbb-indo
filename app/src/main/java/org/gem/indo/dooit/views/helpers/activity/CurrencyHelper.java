@@ -18,13 +18,13 @@ public class CurrencyHelper {
     public static String format(Object o) {
         try {
             // Lock currency symbols to Indonesian Rupiah
-            return NumberFormat.getCurrencyInstance(indonesia).format(Double.valueOf(String.valueOf(o)));
+            return NumberFormat.getCurrencyInstance(indonesia).format(Double.valueOf(String.valueOf(o))) + ",-";
             //return NumberFormat.getCurrencyInstance().format(Double.valueOf((String.valueOf(o))));
         } catch (Exception e) {
             Crashlytics.log("Error converting number to currency [" + String.valueOf(o) + "]");
             Crashlytics.logException(e);
         }
-        return NumberFormat.getCurrencyInstance().format(DEFAULT_VALUE);
+        return NumberFormat.getCurrencyInstance().format(DEFAULT_VALUE) + ",-";
     }
 
     public static String getCurrencySymbol() {
