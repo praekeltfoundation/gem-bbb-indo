@@ -5,7 +5,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v4.content.res.ResourcesCompat;
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
@@ -49,6 +51,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.OnEditorAction;
+import butterknife.OnTextChanged;
 import rx.functions.Action0;
 import rx.functions.Action1;
 
@@ -156,7 +159,37 @@ public class RegistrationActivity extends DooitActivity {
                 return true;
             }
         });
+
+        name.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                name.removeTextChangedListener(this);
+                String result = name.getText().toString().replaceAll("[^a-zA-Z0-9@.=-_]", "");
+                name.setText(result);
+                name.setSelection(result.length());
+                name.addTextChangedListener(this);
+            }
+
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                // TODO Auto-generated method stub
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
     }
+
+//    @OnTextChanged({R.id.activity_registration_name_text_edit,})
+//    public void continuousUsernameValidation(Editable editable) {
+//        name.removeTextChangedListener(this);
+//        String result = editable.toString().replaceAll("[^a-zA-Z0-9@.=-_]", "");
+//        name.setText(result);
+//        name.setSelection(result.length());
+//        name.addTextChangedListener(this);
+//    }
 
     @OnClick({R.id.activity_registration_gender_girl, R.id.activity_registration_gender_boy,})
     public void genderClick() {
