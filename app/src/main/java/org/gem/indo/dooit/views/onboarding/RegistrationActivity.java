@@ -8,6 +8,7 @@ import android.support.v4.content.res.ResourcesCompat;
 import android.support.v4.util.Pair;
 import android.text.TextUtils;
 import android.view.KeyEvent;
+import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -117,6 +118,8 @@ public class RegistrationActivity extends DooitActivity {
     @Inject
     Persisted persisted;
 
+    private Snackbar currentSnackbar;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -185,6 +188,8 @@ public class RegistrationActivity extends DooitActivity {
 
     @OnClick(R.id.activity_registration_register_button)
     public void register() {
+        dismissSnackbar();
+
         Pair<Boolean, Integer> validationResult = detailsValid();
 
         if (validationResult.first == null || !validationResult.first) {
@@ -192,7 +197,7 @@ public class RegistrationActivity extends DooitActivity {
 
             background.smoothScrollTo(0, validationResult.second != null
                     ? validationResult.second : 0);
-            Snackbar.make(registerButton, R.string.reg_error_invalid, Snackbar.LENGTH_LONG).show();
+            showSnackbar(R.string.reg_error_invalid);
             return;
         }
 
@@ -206,17 +211,17 @@ public class RegistrationActivity extends DooitActivity {
                     public void run() {
                         if (error != null && error.getErrorResponse() != null) {
                             if (error.getErrorResponse().getFieldErrors().containsKey("username")) {
-                                Snackbar.make(registerButton, R.string.reg_duplicate_username_error, Snackbar.LENGTH_INDEFINITE).show();
+                                showSnackbar(R.string.reg_duplicate_username_error);
                                 nameHint.setText(R.string.reg_duplicate_username_error);
                                 nameHint.setTextColor(ResourcesCompat.getColor(getResources(), android.R.color.holo_red_light, getTheme()));
                                 background.smoothScrollTo(0, Math.round(name.getY()));
                             } else {
-                                Snackbar.make(registerButton, R.string.general_error, Snackbar.LENGTH_INDEFINITE).show();
+                                showSnackbar(R.string.general_error);
                             }
                         } else if (error.getCause() instanceof SocketTimeoutException) {
-                            Snackbar.make(registerButton, R.string.connection_timed_out, Snackbar.LENGTH_INDEFINITE).show();
+                            showSnackbar(R.string.connection_timed_out);
                         } else if (error.getCause() instanceof UnknownHostException) {
-                            Snackbar.make(registerButton, R.string.connection_error, Snackbar.LENGTH_INDEFINITE).show();
+                            showSnackbar(R.string.connection_error);
                         }
                         dismissDialog();
                     }
@@ -229,7 +234,7 @@ public class RegistrationActivity extends DooitActivity {
                     @Override
                     public void onError(DooitAPIError error) {
                         for (String msg : error.getErrorMessages())
-                            Snackbar.make(registerButton, msg, Snackbar.LENGTH_INDEFINITE).show();
+                            showSnackbar(msg);
                         dismissDialog();
                     }
                 }).doAfterTerminate(new Action0() {
@@ -387,5 +392,30 @@ public class RegistrationActivity extends DooitActivity {
         }
     }
 
+    private void showSnackbar(String string) {
+        currentSnackbar = Snackbar.make(registerButton, string, Snackbar.LENGTH_INDEFINITE)
+                .setAction(R.string.snackbar_dismiss, new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        // Intentionally empty
+                    }
+                });
+        currentSnackbar.show();
+    }
 
+    private void showSnackbar(int stringRes) {
+        currentSnackbar = Snackbar.make(registerButton, stringRes, Snackbar.LENGTH_INDEFINITE)
+            .setAction(R.string.snackbar_dismiss, new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    // Intentionally empty
+                }
+            });
+        currentSnackbar.show();
+    }
+
+    private void dismissSnackbar() {
+        if (currentSnackbar != null && currentSnackbar.isShown())
+            currentSnackbar.dismiss();
+    }
 }

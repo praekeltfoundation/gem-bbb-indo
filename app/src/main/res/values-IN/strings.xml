@@ -62,6 +62,8 @@
     <string name="label_try_again">"Coba lagi"</string>
     <string name="label_uploading">"Sedang Mengupload"</string>
 
+    <string name="snackbar_dismiss">DISMISS</string>
+
     <!-- Permissions -->
     <string name="label_camera_permission_denied">"Izin untuk mengambil foto melalui kamera"</string>
     <string name="label_gallery_permission_denied">"Izin untuk mengakses penyimpanan telepon"</string>
