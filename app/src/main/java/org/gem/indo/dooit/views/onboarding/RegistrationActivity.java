@@ -5,14 +5,15 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v4.content.res.ResourcesCompat;
+import android.support.v4.util.Pair;
 import android.text.TextUtils;
 import android.view.KeyEvent;
-import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioGroup;
+import android.widget.ScrollView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -60,7 +61,7 @@ public class RegistrationActivity extends DooitActivity {
     private static final String SCREEN_NAME_TERMS = "Terms & Conditions";
 
     @BindView(R.id.activity_registration)
-    View background;
+    ScrollView background;
 
     @BindView(org.gem.indo.dooit.R.id.activity_registration_t_c_text_view)
     TextView textViewTC;
@@ -184,8 +185,14 @@ public class RegistrationActivity extends DooitActivity {
 
     @OnClick(R.id.activity_registration_register_button)
     public void register() {
-        if (!detailsValid()) {
+        Pair<Boolean, Integer> validationResult = detailsValid();
+
+        if (validationResult.first == null || !validationResult.first) {
             hideKeyboard();
+
+            background.smoothScrollTo(0, validationResult.second != null
+                    ? validationResult.second : 0);
+            Snackbar.make(registerButton, R.string.reg_error_invalid, Snackbar.LENGTH_LONG).show();
             return;
         }
 
@@ -199,16 +206,17 @@ public class RegistrationActivity extends DooitActivity {
                     public void run() {
                         if (error != null && error.getErrorResponse() != null) {
                             if (error.getErrorResponse().getFieldErrors().containsKey("username")) {
-                                Snackbar.make(registerButton, R.string.reg_duplicate_username_error, Snackbar.LENGTH_LONG).show();
+                                Snackbar.make(registerButton, R.string.reg_duplicate_username_error, Snackbar.LENGTH_INDEFINITE).show();
                                 nameHint.setText(R.string.reg_duplicate_username_error);
                                 nameHint.setTextColor(ResourcesCompat.getColor(getResources(), android.R.color.holo_red_light, getTheme()));
+                                background.smoothScrollTo(0, Math.round(name.getY()));
                             } else {
-                                Snackbar.make(registerButton, R.string.general_error, Snackbar.LENGTH_LONG).show();
+                                Snackbar.make(registerButton, R.string.general_error, Snackbar.LENGTH_INDEFINITE).show();
                             }
                         } else if (error.getCause() instanceof SocketTimeoutException) {
-                            Snackbar.make(registerButton, R.string.connection_timed_out, Snackbar.LENGTH_LONG).show();
+                            Snackbar.make(registerButton, R.string.connection_timed_out, Snackbar.LENGTH_INDEFINITE).show();
                         } else if (error.getCause() instanceof UnknownHostException) {
-                            Snackbar.make(registerButton, R.string.connection_error, Snackbar.LENGTH_LONG).show();
+                            Snackbar.make(registerButton, R.string.connection_error, Snackbar.LENGTH_INDEFINITE).show();
                         }
                         dismissDialog();
                     }
@@ -221,7 +229,7 @@ public class RegistrationActivity extends DooitActivity {
                     @Override
                     public void onError(DooitAPIError error) {
                         for (String msg : error.getErrorMessages())
-                            Snackbar.make(registerButton, msg, Snackbar.LENGTH_LONG).show();
+                            Snackbar.make(registerButton, msg, Snackbar.LENGTH_INDEFINITE).show();
                         dismissDialog();
                     }
                 }).doAfterTerminate(new Action0() {
@@ -251,15 +259,18 @@ public class RegistrationActivity extends DooitActivity {
         });
     }
 
-    private boolean detailsValid() {
+    private Pair<Boolean, Integer> detailsValid() {
         boolean detailsValid = true;
+        int scrollToView = 0;
         ProfileValidator pValidator = new ProfileValidator();
         UserValidator uValidator = new UserValidator();
+
 
         if (!uValidator.isNameValid(name.getText().toString())) {
             nameHint.setText(uValidator.getResponseText());
             nameHint.setTextColor(ResourcesCompat.getColor(getResources(), android.R.color.holo_red_light, getTheme()));
             detailsValid = false;
+            scrollToView = Math.round(name.getY());
         } else {
             nameHint.setText(R.string.reg_example_name);
             nameHint.setTextColor(ResourcesCompat.getColor(getResources(), android.R.color.white, getTheme()));
@@ -269,6 +280,9 @@ public class RegistrationActivity extends DooitActivity {
             emailHint.setText(uValidator.getResponseText());
             emailHint.setTextColor(ResourcesCompat.getColor(getResources(), android.R.color.holo_red_light, getTheme()));
             detailsValid = false;
+
+            // Scroll to first invalid
+            scrollToView = scrollToView == 0 ? Math.round(email.getY()) : scrollToView;
         } else {
             emailHint.setText(R.string.reg_example_email);
             emailHint.setTextColor(ResourcesCompat.getColor(getResources(), android.R.color.white, getTheme()));
@@ -278,6 +292,9 @@ public class RegistrationActivity extends DooitActivity {
             passwordHint.setText(uValidator.getResponseText());
             passwordHint.setTextColor(ResourcesCompat.getColor(getResources(), android.R.color.holo_red_light, getTheme()));
             detailsValid = false;
+
+            // Scroll to first invalid
+            scrollToView = scrollToView == 0 ? Math.round(password.getY()) : scrollToView;
         } else {
             passwordHint.setText(R.string.reg_example_password);
             passwordHint.setTextColor(ResourcesCompat.getColor(getResources(), android.R.color.white, getTheme()));
@@ -287,6 +304,9 @@ public class RegistrationActivity extends DooitActivity {
             ageHint.setText(pValidator.getResponseText());
             ageHint.setTextColor(ResourcesCompat.getColor(getResources(), android.R.color.holo_red_light, getTheme()));
             detailsValid = false;
+
+            // Scroll to first invalid
+            scrollToView = scrollToView == 0 ? Math.round(age.getY()) : scrollToView;
         } else {
             ageHint.setTextColor(ResourcesCompat.getColor(getResources(), android.R.color.white, getTheme()));
         }
@@ -295,6 +315,9 @@ public class RegistrationActivity extends DooitActivity {
             numberHint.setText(pValidator.getResponseText());
             numberHint.setTextColor(ResourcesCompat.getColor(getResources(), android.R.color.holo_red_light, getTheme()));
             detailsValid = false;
+
+            // Scroll to first invalid
+            scrollToView = scrollToView == 0 ? Math.round(number.getY()) : scrollToView;
         } else {
             numberHint.setText(R.string.reg_example_number);
             numberHint.setTextColor(ResourcesCompat.getColor(getResources(), android.R.color.white, getTheme()));
@@ -309,7 +332,7 @@ public class RegistrationActivity extends DooitActivity {
             registrationOptionsLabel.setTextColor(ResourcesCompat.getColor(getResources(), android.R.color.white, getTheme()));
         }
 
-        return detailsValid;
+        return new Pair<>(detailsValid, scrollToView);
     }
 
     @OnClick(R.id.activity_registration_login_text_view)

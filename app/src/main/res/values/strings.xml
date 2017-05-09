@@ -89,6 +89,7 @@
 
     <!-- Registration -->
     <string name="reg_t_c">"By clicking register, you are agreeing\n to our *Terms &amp; Condition*"</string>
+    <string name="reg_error_invalid">"Please review the invalid fields"</string>
     <string name="reg_example_name">@string/login_example_name</string>
     <string name="reg_example_name_error_1">"Name can't be blank"</string>
     <string name="reg_example_name_error_2">"Name can't contain spaces"</string>
