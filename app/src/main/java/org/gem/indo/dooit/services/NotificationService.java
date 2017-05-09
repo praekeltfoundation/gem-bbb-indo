@@ -208,7 +208,7 @@ public class NotificationService extends IntentService {
     protected void currentChallengeRetrieved(ChallengeParticipatedResponse challenge) {
         if (persisted.shouldNotify(NotificationType.CHALLENGE_AVAILABLE)
                 && persisted.getCurrentUser() != null
-                && !challenge.hasParticipatedInChallenge()) {
+                && challenge.showChallengePopup()) {
 
             Map<String, Object> params = DooitParamBuilder.create(this)
                     .setUser(persisted.getCurrentUser())

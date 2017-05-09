@@ -151,9 +151,13 @@ public class MainActivity extends ImageActivity {
             @Override
             public void call(ChallengeParticipatedResponse response) {
                 if (response.getChallenge() != null) {
-                    if (!response.hasParticipatedInChallenge()) {
+                    if (response.showChallengePopup()) {
                         ChallengeLightboxFragment challengeLightboxFragment = ChallengeLightboxFragment.newInstance(response.getChallenge());
-                        challengeLightboxFragment.show(getFragmentManager(), "challenge_available_lightbox");
+                        try {
+                            challengeLightboxFragment.show(getFragmentManager(), "challenge_available_lightbox");
+                        } catch (IllegalStateException e) {
+                            // Fragment manager is unavailable so do nothing
+                        }
                     }
                 }
             }
