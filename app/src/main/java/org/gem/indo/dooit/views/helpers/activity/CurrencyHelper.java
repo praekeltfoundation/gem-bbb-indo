@@ -6,6 +6,7 @@ import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.Currency;
 import java.util.Locale;
+import java.util.regex.Pattern;
 
 /**
  * Created by wsche on 2016/11/23.
@@ -17,8 +18,16 @@ public class CurrencyHelper {
 
     public static String format(Object o) {
         try {
-            // Lock currency symbols to Indonesian Rupiah
-            return NumberFormat.getCurrencyInstance(indonesia).format(Double.valueOf(String.valueOf(o)));
+            // Requested currency format is 'Rp. XX.XXX,-'
+            // Number formatter for Indonesian locale returns 'RpXX.XXX'
+            // Regex formats currency as requested
+
+            String indonesianFormat = NumberFormat.getCurrencyInstance(indonesia).format(Double.valueOf(String.valueOf(o)));
+            indonesianFormat = indonesianFormat.replaceFirst("^Rp[.]?\\s*(.+)(,-)?$", "Rp. $1,-");
+            return indonesianFormat;
+
+            // Old number formats that return Indonesian format and device format
+            //return NumberFormat.getCurrencyInstance(indonesia).format(Double.valueOf(String.valueOf(o)));
             //return NumberFormat.getCurrencyInstance().format(Double.valueOf((String.valueOf(o))));
         } catch (Exception e) {
             Crashlytics.log("Error converting number to currency [" + String.valueOf(o) + "]");
@@ -34,7 +43,7 @@ public class CurrencyHelper {
     }
 
     public static char getSeperator() {
-        return ((DecimalFormat) NumberFormat.getCurrencyInstance(new Locale("in", "ID"))).getDecimalFormatSymbols().getGroupingSeparator();
+        return ((DecimalFormat) NumberFormat.getCurrencyInstance(indonesia)).getDecimalFormatSymbols().getGroupingSeparator();
         //return ((DecimalFormat) NumberFormat.getCurrencyInstance()).getDecimalFormatSymbols().getGroupingSeparator();
     }
 }
