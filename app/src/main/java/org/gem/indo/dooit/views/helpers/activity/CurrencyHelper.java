@@ -16,8 +16,6 @@ public class CurrencyHelper {
     public static double DEFAULT_VALUE = 0.0f;
     private static Locale indonesia = new Locale("in", "ID");
 
-    private static Pattern currencyFormat = Pattern.compile("^Rp[.]?\\s*(.+)$");
-
     public static String format(Object o) {
         try {
             // Requested currency format is 'Rp. XX.XXX,-'
@@ -28,8 +26,9 @@ public class CurrencyHelper {
             indonesianFormat = indonesianFormat.replaceFirst("^Rp[.]?\\s*(.+)(,-)?$", "Rp. $1,-");
             return indonesianFormat;
 
-//            return NumberFormat.getCurrencyInstance(indonesia).format(Double.valueOf(String.valueOf(o)));
-//            return NumberFormat.getCurrencyInstance().format(Double.valueOf((String.valueOf(o))));
+            // Old number formats that return Indonesian format and device format
+            //return NumberFormat.getCurrencyInstance(indonesia).format(Double.valueOf(String.valueOf(o)));
+            //return NumberFormat.getCurrencyInstance().format(Double.valueOf((String.valueOf(o))));
         } catch (Exception e) {
             Crashlytics.log("Error converting number to currency [" + String.valueOf(o) + "]");
             Crashlytics.logException(e);
@@ -44,7 +43,7 @@ public class CurrencyHelper {
     }
 
     public static char getSeperator() {
-        return ((DecimalFormat) NumberFormat.getCurrencyInstance(new Locale("in", "ID"))).getDecimalFormatSymbols().getGroupingSeparator();
+        return ((DecimalFormat) NumberFormat.getCurrencyInstance(indonesia)).getDecimalFormatSymbols().getGroupingSeparator();
         //return ((DecimalFormat) NumberFormat.getCurrencyInstance()).getDecimalFormatSymbols().getGroupingSeparator();
     }
 }
