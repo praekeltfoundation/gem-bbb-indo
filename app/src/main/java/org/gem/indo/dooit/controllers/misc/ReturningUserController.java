@@ -65,8 +65,11 @@ public class ReturningUserController extends DooitBotController {
     @Override
     public void onCall(BotCallType key, Map<String, Answer> answerLog, BaseBotModel model) {
         switch (key) {
+            case CHECK_GOALS:
+                checkGoals();
+                break;
             case CHECK_BUDGET:
-                checkBudget();
+                hasGoalCheckBudget();
                 break;
             case SET_TIP_QUERY_BUDGET:
                 tipQueryBudget();
@@ -187,7 +190,23 @@ public class ReturningUserController extends DooitBotController {
         return builder.toString();
     }
 
-    private void checkBudget() {
+    private void checkGoals() {
+        Node node = new Node();
+        node.setName("budget_edit_q_user_expenses");
+        node.setType(BotMessageType.DUMMY); // Keep the node in the conversation on reload
+
+        if (goals == null || goals.isEmpty()) {
+            node.setAutoNext("convo_default_return_q_no_goal");
+        } else {
+            node.setAutoNext("convo_default_return_q_progress_intro");
+        }
+
+        node.finish();
+
+        botRunner.queueNode(node);
+    }
+
+    private void hasGoalCheckBudget() {
         Node node = new Node();
         node.setName("budget_edit_q_user_expenses");
         node.setType(BotMessageType.DUMMY); // Keep the node in the conversation on reload
