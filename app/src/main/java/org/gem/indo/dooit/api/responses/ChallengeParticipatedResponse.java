@@ -9,13 +9,13 @@ import org.gem.indo.dooit.models.challenge.BaseChallenge;
  */
 
 public class ChallengeParticipatedResponse {
-    @SerializedName("participated")
-    private boolean participated;
+    @SerializedName("available")
+    private boolean available;
 
     @SerializedName("challenge")
     private BaseChallenge challenge;
 
-    public boolean hasParticipatedInChallenge() { return participated; }
+    public boolean showChallengePopup() { return available; }
 
     public BaseChallenge getChallenge() { return challenge; }
 }
