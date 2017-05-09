@@ -62,6 +62,8 @@
     <string name="label_try_again">"Try again"</string>
     <string name="label_uploading">"Uploading"</string>
 
+    <string name="snackbar_dismiss">DISMISS</string>
+
     <!-- Permissions -->
     <string name="label_camera_permission_denied">"Permission required to take camera using camera"</string>
     <string name="label_gallery_permission_denied">"Permission required to access phone storage"</string>
@@ -89,6 +91,7 @@
 
     <!-- Registration -->
     <string name="reg_t_c">"By clicking register, you are agreeing\n to our *Terms &amp; Condition*"</string>
+    <string name="reg_error_invalid">"Please review the invalid fields"</string>
     <string name="reg_example_name">@string/login_example_name</string>
     <string name="reg_example_name_error_1">"Name can't be blank"</string>
     <string name="reg_example_name_error_2">"Name can't contain spaces"</string>

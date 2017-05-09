@@ -32,7 +32,7 @@ public class DooitAPIError extends Throwable {
     public List<String> getErrorMessages() {
         if (hasError())
             return getErrorResponse().getErrors();
-        return new ArrayList();
+        return new ArrayList<>();
     }
 
     @Override
