@@ -214,6 +214,7 @@ public class RegistrationActivity extends DooitActivity {
                                 showSnackbar(R.string.reg_duplicate_username_error);
                                 nameHint.setText(R.string.reg_duplicate_username_error);
                                 nameHint.setTextColor(ResourcesCompat.getColor(getResources(), android.R.color.holo_red_light, getTheme()));
+                                name.requestFocus();
                                 background.smoothScrollTo(0, Math.round(name.getY()));
                             } else {
                                 showSnackbar(R.string.general_error);
