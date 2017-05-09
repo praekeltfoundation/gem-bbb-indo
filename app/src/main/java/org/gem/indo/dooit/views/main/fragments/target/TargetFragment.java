@@ -68,17 +68,8 @@ public class TargetFragment extends MainFragment {
     @BindView(R.id.fragment_target_total_text_view)
     TextView total;
 
-    @BindView(R.id.fragment_target_history_date)
-    TextView endDate;
-
-    @BindView(R.id.fragment_target_history_date_container)
-    FrameLayout historyDateContainer;
-
     @BindView(R.id.fragment_target_savings_plan_message)
     TextView goalMessage;
-
-    @BindView(R.id.fragment_target_week_graph_view)
-    WeekGraph bars;
 
     @BindView(R.id.fragment_target_left_image_button)
     ImageButton leftTarget;
@@ -94,9 +85,6 @@ public class TargetFragment extends MainFragment {
 
     @BindView(R.id.fragment_target_withdraw_button)
     Button withdrawButton;
-
-    @BindView(R.id.fragment_target_history_date_missed)
-    TextView missedMessage;
 
     @BindString(R.string.target_savings_message)
     String savingsMessage;
@@ -148,7 +136,6 @@ public class TargetFragment extends MainFragment {
         super.onStart();
         Point size = new Point();
         getActivity().getWindowManager().getDefaultDisplay().getSize(size);
-        historyDateContainer.getLayoutParams().width = size.x;
 
         adapter = new TargetPagerAdapter(new ArrayList<Goal>());
         viewPager.setAdapter(adapter);
@@ -231,16 +218,8 @@ public class TargetFragment extends MainFragment {
                 WeekCalc.Rounding.DOWN
         );
         int days = WeekCalc.remainder(goal.getStartDate().toDate(), goal.getEndDate().toDate());
-        bars.setGoal(goal);
-        bars.requestLayout();
         goalMessage.setText(String.format(savingsMessage,
                 CurrencyHelper.format(goal.getWeeklyTarget()), CurrencyHelper.format(goal.getTarget()), weeks, days));
-        endDate.setText(Utils.formatDateToLocal(goal.getEndDate().toDate()));
-
-        if (goal.isMissed())
-            missedMessage.setVisibility(View.VISIBLE);
-        else
-            missedMessage.setVisibility(View.INVISIBLE);
 
         // Goals can't go into overdraught
         withdrawButton.setEnabled(goal.canWithdraw());
