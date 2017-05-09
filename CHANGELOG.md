@@ -1,4 +1,15 @@
 
+1.2.1
+
+- Changed currency format to 'Rp. XX.XXX,-'
+- Removed goal progress graph in target screen
+- Prevented typing spaces in username when registering
+- Changed no goal text in target screen to be white
+- Increased peeking distance of quick answers animation
+- Challenge notifications only trigger if there is a goal set
+- Fixed crash when trying to show challenge lightbox pop-up
+- Made validation on registration screen more clear
+
 1.2.0
 
 - Force language to Indonesian
