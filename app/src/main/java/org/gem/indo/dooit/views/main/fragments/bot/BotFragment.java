@@ -95,7 +95,7 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
      * The number of `dp` to the right that the quick answer view should peek when it has to
      * scroll horizontally.
      */
-    private static final int ANSWER_PEEK_DISTANCE = 48;
+    private static final int ANSWER_PEEK_DISTANCE = 60;
 
     @BindView(R.id.fragment_bot)
     View background;
@@ -136,7 +136,7 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
     /**
      * The number of pixels that the quick answers should peek to the right.
      */
-    private int answerPeekDistance = 20;
+    private int answerPeekDistance = 60;
 
     public BotFragment() {
         // Required empty public constructor
