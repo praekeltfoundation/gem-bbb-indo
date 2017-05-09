@@ -153,7 +153,9 @@ public class MainActivity extends ImageActivity {
                 if (response.getChallenge() != null) {
                     if (!response.hasParticipatedInChallenge()) {
                         ChallengeLightboxFragment challengeLightboxFragment = ChallengeLightboxFragment.newInstance(response.getChallenge());
-                        challengeLightboxFragment.show(getFragmentManager(), "challenge_available_lightbox");
+                        if (getFragmentManager() != null) {
+                            challengeLightboxFragment.show(getFragmentManager(), "challenge_available_lightbox");
+                        }
                     }
                 }
             }
