@@ -14,7 +14,6 @@ import org.gem.indo.dooit.api.responses.EmptyResponse;
 import org.gem.indo.dooit.helpers.Persisted;
 import org.gem.indo.dooit.helpers.bot.BotRunner;
 import org.gem.indo.dooit.helpers.crashlytics.CrashlyticsHelper;
-import org.gem.indo.dooit.helpers.images.MediaUriHelper;
 import org.gem.indo.dooit.models.Tip;
 import org.gem.indo.dooit.models.bot.Answer;
 import org.gem.indo.dooit.models.bot.BaseBotModel;
@@ -185,7 +184,8 @@ public class GoalAddController extends GoalBotController {
         // to avoid creating duplicates. This conversation only creates one transaction.
         goal.clearTransactions();
         if (answerLog.containsKey("hasSavedY")) {
-            goal.createTransaction(Double.parseDouble(answerLog.get("priorSaveAmount").getValue()));
+            goal.setInitialAmount(Double.parseDouble(answerLog.get("priorSaveAmount").getValue()));
+            goal.calculateValue();
             goal.calculateWeeklyTarget();
         }
 
