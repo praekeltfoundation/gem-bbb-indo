@@ -95,6 +95,7 @@ public class GoalInfoViewHolder extends BaseBotViewHolder<Node> {
         Goal goal = (Goal) botAdapter.getController().getObject();
         dataModel.values.put(BotParamType.GOAL_NAME.getKey(), goal.getName());
         dataModel.values.put(BotParamType.GOAL_VALUE.getKey(), goal.getValue());
+        dataModel.values.put(BotParamType.GOAL_INITIAL_AMOUNT.getKey(), goal.getInitialAmount());
         dataModel.values.put(BotParamType.GOAL_TARGET.getKey(), goal.getTarget());
         dataModel.values.put(BotParamType.GOAL_IMAGE_URL.getKey(), goal.getImageUrl());
         dataModel.values.put(BotParamType.GOAL_LOCAL_IMAGE_URI.getKey(), goal.getLocalImageUri());
