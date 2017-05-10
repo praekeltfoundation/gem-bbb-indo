@@ -62,6 +62,8 @@
     <string name="label_try_again">"Coba lagi"</string>
     <string name="label_uploading">"Sedang Mengupload"</string>
 
+    <string name="snackbar_dismiss">ABAIKAN</string>
+
     <!-- Permissions -->
     <string name="label_camera_permission_denied">"Izin untuk mengambil foto melalui kamera"</string>
     <string name="label_gallery_permission_denied">"Izin untuk mengakses penyimpanan telepon"</string>
@@ -89,6 +91,7 @@
 
     <!-- Registration -->
     <string name="reg_t_c">"Dengan meng-klik 'Daftar', kamu telah menyetujui *Syarat &amp; Ketentuan* yang berlaku."</string>
+    <string name="reg_error_invalid">"Cek ulang format yang salah"</string>
     <string name="reg_example_name">@string/login_example_name</string>
     <string name="reg_example_name_error_1">"Maaf, kolom nama harus terisi."</string>
     <string name="reg_example_name_error_2">"Nama tidak boleh ada spasi"</string>
