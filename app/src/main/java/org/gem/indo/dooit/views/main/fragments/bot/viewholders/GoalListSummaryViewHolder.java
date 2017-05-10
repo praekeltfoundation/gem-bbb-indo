@@ -51,7 +51,9 @@ public class GoalListSummaryViewHolder extends BaseBotViewHolder<Node> {
         List<String> values = new ArrayList<>();
         for (int i = 0; i < goals.size(); i++) {
             if(!goals.get(i).isReached()) {
-                values.add(String.format("%s – %s", goals.get(i).getName(), goals.get(i).getValueFormatted()));
+                Goal goal = goals.get(i);
+                goal.calculateValue();
+                values.add(String.format("%s – %s", goal.getName(), goal.getValueFormatted()));
             }
         }
         dataModel.values.put(BotParamType.USER_GOALS.getKey(), TextUtils.join("\n", values));

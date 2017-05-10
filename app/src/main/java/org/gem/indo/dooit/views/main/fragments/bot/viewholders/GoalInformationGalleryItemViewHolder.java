@@ -79,6 +79,7 @@ public class GoalInformationGalleryItemViewHolder extends RecyclerView.ViewHolde
         dataModel = model;
 
         String name = goal.getName();
+        goal.calculateValue();
         double value = goal.getValue();
         double target = goal.getTarget();
         String imageUrl = goal.getImageUrl();

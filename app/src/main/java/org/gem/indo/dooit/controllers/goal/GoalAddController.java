@@ -184,8 +184,10 @@ public class GoalAddController extends GoalBotController {
         // Populate can be called multiple times in the conversation. We clear the transactions
         // to avoid creating duplicates. This conversation only creates one transaction.
         goal.clearTransactions();
-        if (answerLog.containsKey("hasSavedY"))
+        if (answerLog.containsKey("hasSavedY")) {
             goal.createTransaction(Double.parseDouble(answerLog.get("priorSaveAmount").getValue()));
+            goal.calculateWeeklyTarget();
+        }
 
         // Goal Image
         if (answerLog.containsKey("goal_add_a_goal_image")) {
