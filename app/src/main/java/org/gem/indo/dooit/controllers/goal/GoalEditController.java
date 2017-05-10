@@ -127,9 +127,9 @@ public class GoalEditController extends GoalBotController {
         if (answerLog.containsKey("goal_edit_target_cancel") ||
                 answerLog.containsKey("goal_edit_weekly_target_cancel")
                 ) {
+            goal = oldGoal;
             oldGoal = goal.copy();
         } else {
-            goal = oldGoal;
             oldGoal = goal.copy();
         }
 
