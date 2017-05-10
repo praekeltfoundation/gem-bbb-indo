@@ -32,6 +32,8 @@ public class Goal {
     private String name;
     private double value;
     private double target;
+    @SerializedName("initial_savings")
+    private double initialAmount;
     @SerializedName("image_url")
     private String imageUrl;
     @SerializedName("start_date")
@@ -134,8 +136,8 @@ public class Goal {
         this.value = value;
     }
 
-    private void calculateValue() {
-        value = 0;
+    public void calculateValue() {
+        value = initialAmount;
         for (GoalTransaction trans : transactions)
             value += trans.getValue();
     }
@@ -165,6 +167,18 @@ public class Goal {
     public double getSavingRemainder() {
         double targetSavings = weeklyTarget * getWeeks(WeekCalc.Rounding.NONE);
         return targetSavings > target ? currency.floor(targetSavings - target) : 0.0;
+    }
+
+    ///////////////////
+    // Already Saved //
+    ///////////////////
+
+    public double getInitialAmount() {
+        return initialAmount;
+    }
+
+    public void setInitialAmount(double amount) {
+        this.initialAmount = amount;
     }
 
     ///////////
@@ -253,9 +267,14 @@ public class Goal {
     /**
      * Calculates and updates the {@link Goal#weeklyTarget} field
      */
-    private void calculateWeeklyTarget() {
+    public void calculateWeeklyTarget() {
         double weeks = getWeeks();
-        double weeklyTarget = weeks == 0.0 ? target : target / weeks;
+
+        if (initialAmount >= target) {
+            this.weeklyTarget = 0;
+        }
+
+        double weeklyTarget = weeks == 0.0 ? target : (target - initialAmount) / weeks;
         // Round weekly target to the upper Rp100
         this.weeklyTarget = currency.ceil(weeklyTarget);
     }
