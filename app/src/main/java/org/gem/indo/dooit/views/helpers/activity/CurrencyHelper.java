@@ -23,7 +23,7 @@ public class CurrencyHelper {
             // Regex formats currency as requested
 
             String indonesianFormat = NumberFormat.getCurrencyInstance(indonesia).format(Double.valueOf(String.valueOf(o)));
-            indonesianFormat = indonesianFormat.replaceFirst("^Rp[.]?\\s*(.+)(,-)?$", "Rp. $1,-");
+            indonesianFormat = indonesianFormat.replaceFirst("^Rp[.]?[\\p{Z}\\s]*(.+)(,-)?$", "Rp.\u00A0$1,-");
             return indonesianFormat;
 
             // Old number formats that return Indonesian format and device format
