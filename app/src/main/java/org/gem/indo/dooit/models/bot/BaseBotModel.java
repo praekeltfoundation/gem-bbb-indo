@@ -76,7 +76,9 @@ public abstract class BaseBotModel {
     }
 
     public String getType() {
-        CrashlyticsHelper.log(TAG, "getType", "Type is null.");
+        if (type == null) {
+            CrashlyticsHelper.log(TAG, "getType", "Type is null.");
+        }
         return type;
     }
 
