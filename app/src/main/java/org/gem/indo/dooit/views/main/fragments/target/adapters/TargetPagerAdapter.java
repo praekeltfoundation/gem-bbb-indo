@@ -33,7 +33,6 @@ public class TargetPagerAdapter extends PagerAdapter {
 
         int progress = 0;
         if (goals.size() > position) {
-            goals.get(position).calculateValue();
             progress = (int) ((goals.get(position).getValue() / goals.get(position).getTarget()) * 100);
         }
 

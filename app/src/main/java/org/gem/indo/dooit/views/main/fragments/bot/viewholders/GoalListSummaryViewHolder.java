@@ -52,7 +52,6 @@ public class GoalListSummaryViewHolder extends BaseBotViewHolder<Node> {
         for (int i = 0; i < goals.size(); i++) {
             if(!goals.get(i).isReached()) {
                 Goal goal = goals.get(i);
-                goal.calculateValue();
                 values.add(String.format("%s – %s", goal.getName(), goal.getValueFormatted()));
             }
         }

@@ -30,6 +30,8 @@ public class Goal {
     // Remote Fields //
     private long id;
     private String name;
+    private boolean valueInvalidated = true;
+    private boolean weeklyTargetInvalidated = true;
     private double value;
     private double target;
     @SerializedName("initial_savings")
@@ -128,12 +130,21 @@ public class Goal {
     // Current Value //
     ///////////////////
 
-    public double getValue() {
+    private double validatedValue() {
+        if (valueInvalidated) {
+            calculateValue();
+            valueInvalidated = false;
+        }
         return value;
+    }
+
+    public double getValue() {
+        return validatedValue();
     }
 
     public void setValue(double value) {
         this.value = value;
+        valueInvalidated = false;
     }
 
     public void calculateValue() {
@@ -143,7 +154,7 @@ public class Goal {
     }
 
     public String getValueFormatted() {
-        return CurrencyHelper.format(value);
+        return CurrencyHelper.format(validatedValue());
     }
 
     //////////////////
@@ -156,6 +167,8 @@ public class Goal {
 
     public void setTarget(double target) {
         this.target = target;
+        valueInvalidated = true;
+        weeklyTargetInvalidated = true;
     }
 
     /**
@@ -165,7 +178,7 @@ public class Goal {
      * @return The remaining savings, rounded down
      */
     public double getSavingRemainder() {
-        double targetSavings = weeklyTarget * getWeeks(WeekCalc.Rounding.NONE);
+        double targetSavings = getWeeklyTarget() * getWeeks(WeekCalc.Rounding.NONE);
         return targetSavings > target ? currency.floor(targetSavings - target) : 0.0;
     }
 
@@ -179,6 +192,7 @@ public class Goal {
 
     public void setInitialAmount(double amount) {
         this.initialAmount = amount;
+        valueInvalidated = true;
     }
 
     ///////////
@@ -208,8 +222,9 @@ public class Goal {
     public void setEndDate(LocalDate endDate, boolean recalc) {
         this.endDate = endDate;
 
-        if (recalc)
-            calculateWeeklyTarget();
+        if (recalc) {
+            valueInvalidated = true;
+        }
     }
 
     public void setEndDate(LocalDate endDate) {
@@ -241,6 +256,10 @@ public class Goal {
     ///////////////////
 
     public double getWeeklyTarget() {
+        if (weeklyTargetInvalidated) {
+            calculateWeeklyTarget();
+            weeklyTargetInvalidated = false;
+        }
         return weeklyTarget;
     }
 
@@ -321,7 +340,7 @@ public class Goal {
 
     public double getWeeklyAverage() {
         double weeksPast = getWeeksToNow(WeekCalc.Rounding.NONE);
-        return weeksPast == 0 ? getValue() : getValue() / weeksPast;
+        return weeksPast == 0 ? validatedValue() : validatedValue() / weeksPast;
     }
 
     //////////
@@ -378,7 +397,7 @@ public class Goal {
 
     public void addTransaction(GoalTransaction transaction) {
         this.transactions.add(transaction);
-        calculateValue();
+        valueInvalidated = true;
     }
 
     /**
@@ -414,15 +433,15 @@ public class Goal {
     }
 
     public boolean canDeposit() {
-        return value < target;
+        return validatedValue() < target;
     }
 
     public boolean canWithdraw() {
-        return value > 0;
+        return validatedValue() > 0;
     }
 
     public boolean isReached() {
-        return value >= target;
+        return validatedValue() >= target;
     }
 
     ///////////////
@@ -505,7 +524,7 @@ public class Goal {
 
         goal.setId(this.id);
         goal.setName(StringHelper.newString(this.name));
-        goal.setValue(this.value);
+        goal.setValue(validatedValue());
         goal.setTarget(this.target);
         goal.setWeeklyTarget(this.weeklyTarget, false);
         goal.setImageUrl(StringHelper.newString(this.imageUrl));

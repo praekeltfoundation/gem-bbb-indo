@@ -210,7 +210,6 @@ public class TargetFragment extends MainFragment {
 
     private void populateGoal(Goal goal) {
         goalName.setText(goal.getName());
-        goal.calculateValue();
         saved.setText(CurrencyHelper.format(goal.getValue()));
         total.setText(String.format(of_goal_total + " %s", CurrencyHelper.format(goal.getTarget())));
         int weeks = (int) WeekCalc.weekDiff(

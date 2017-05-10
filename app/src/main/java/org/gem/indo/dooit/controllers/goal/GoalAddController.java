@@ -185,8 +185,6 @@ public class GoalAddController extends GoalBotController {
         goal.clearTransactions();
         if (answerLog.containsKey("hasSavedY")) {
             goal.setInitialAmount(Double.parseDouble(answerLog.get("priorSaveAmount").getValue()));
-            goal.calculateValue();
-            goal.calculateWeeklyTarget();
         }
 
         // Goal Image
