@@ -1,11 +1,10 @@
 
-1.2.1
+1.2.2
 
-- Changed currency format to 'Rp. XX.XXX,-'
-- Removed goal progress graph in target screen
-- Prevented typing spaces in username when registering
-- Changed no goal text in target screen to be white
-- Increased peeking distance of quick answers animation
-- Challenge notifications only trigger if there is a goal set
-- Fixed crash when trying to show challenge lightbox pop-up
-- Made validation on registration screen more clear
+- Removed conversation loop at end of editing expenses
+- Changed weekly savings amounts
+- Changed currency format in error messages
+- Changed budget income saving message from 'weekly' to 'monthly'
+- Fixed spacing issue in budget screen in profile
+- Initial savings amounts are now factored in goal calculations
+- Translated registration error messages
