@@ -9,8 +9,37 @@
     "name": "convo_default_return_q_greeting_2",
     "type": "text",
     "text": "$(convo_default_return_q_greeting_2)",
-    "autoNext": "convo_default_return_q_progress_intro"
+    "autoNext": "convo_default_return_check_goals"
   },
+  {
+    "name": "convo_default_return_check_goals",
+    "type": "blank",
+    "call": "#check_goals"
+  },
+
+  {
+    "name": "convo_default_return_q_no_goal",
+    "type": "text",
+    "text": "$(convo_default_return_q_no_goal)",
+    "answers": [
+      {
+        "name": "convo_default_return_a_progress_intro_tip",
+        "text": "$(convo_default_return_a_progress_intro_tip)",
+        "next": "convo_default_return_q_tip_intro"
+      },
+      {
+        "name": "convo_default_return_a_progress_intro_challenge",
+        "text": "$(convo_default_return_a_progress_intro_challenge)",
+        "next": "convo_default_return_q_challenge_intro"
+      },
+      {
+        "name": "convo_default_return_a_add_goal",
+        "text": "$(convo_default_return_a_add_goal)",
+        "next": "start_goal_add_conversation"
+      }
+    ]
+  },
+
   {
     "name": "convo_default_return_q_progress_intro",
     "type": "text",
@@ -27,6 +56,12 @@
   {
     "name": "convo_default_return_q_summary",
     "type": "goalListSummary",
+    "autoNext": "convo_default_return_has_goals_check_budget"
+  },
+
+  {
+    "name": "convo_default_return_has_goals_check_budget",
+    "type": "blank",
     "call": "#check_budget"
   },
 
@@ -178,5 +213,11 @@
     "name": "start_deposit_conversation",
     "type": "startConvo",
     "autoNext": "GOAL_DEPOSIT"
+  },
+
+  {
+    "name": "start_goal_add_conversation",
+    "type": "startConvo",
+    "autoNext": "GOAL_ADD"
   }
 ]

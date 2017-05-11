@@ -182,11 +182,13 @@
     <string name="convo_default_qry_tip_budget">@string/budget_create_qry_tip_budget</string>
     <string name="convo_default_return_q_greeting_1">"Halo, $(user.preferred_name)!"</string>
     <string name="convo_default_return_q_greeting_2">"Senang bertemu denganmu lagi!"</string>
+    <string name="convo_default_return_q_no_goal">"Kamu belum punya target. Yakin gak mau bikin?"</string>
     <string name="convo_default_return_q_progress_intro">"Mari kita lihat perkembangan tabunganmu&#8230;"</string>
     <string name="convo_default_return_q_you_have_saved_words">"Tabungan kamu:"</string>
     <string name="convo_default_return_q_which_goal">"Kamu ingin menambah jumlah tabungan ke target yang mana?"</string>
     <string name="convo_default_return_a_progress_intro_tip">"Tolong berikan aku tips."</string>
     <string name="convo_default_return_a_progress_intro_challenge">"Tunjukkan tantangan minggu ini."</string>
+    <string name="convo_default_return_a_add_goal">"Ya, aku mau!"</string>
     <string name="convo_default_return_a_progress_intro_target">"Tambahkan tabungan kamu."</string>
     <string name="convo_default_q_behind_budget">Kamu sepertinya kekurangan $(problem_goals) dari tabungan. Apakah kamu ingin edit tujuan tabungan atau anggaran tabungan kamu agar sesuai dengan situasi keuanganmu saat ini?</string>
     <string name="convo_default_a_behind_budget_savings">Edit rencana tabungan</string>

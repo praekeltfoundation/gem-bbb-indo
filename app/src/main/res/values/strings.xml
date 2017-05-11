@@ -182,12 +182,14 @@
     <string name="convo_default_qry_tip_budget">@string/budget_create_qry_tip_budget</string>
     <string name="convo_default_return_q_greeting_1">"Hello, $(user.preferred_name)!"</string>
     <string name="convo_default_return_q_greeting_2">"Nice to see you again!"</string>
+    <string name="convo_default_return_q_no_goal">"You don't seem to have a goal. Would you like to create one?"</string>
     <string name="convo_default_return_q_progress_intro">"Let's have a look at your progress&#8230;"</string>
     <string name="convo_default_return_q_you_have_saved_words">"You have saved:"</string>
     <string name="convo_default_return_q_which_goal">"Which goal do you want to add savings to?"</string>
     <string name="convo_default_return_a_progress_intro_tip">"Take me to the tips, please."</string>
     <string name="convo_default_return_a_progress_intro_challenge">"Take me to this week's challenge."</string>
     <string name="convo_default_return_a_progress_intro_target">"Add Savings"</string>
+    <string name="convo_default_return_a_add_goal">"Yes, please!"</string>
     <string name="convo_default_q_behind_budget">"You seem to be behind your savings for $(problem_goals). Do you want to edit your savings goals or budget to match your current financial life?"</string>
     <string name="convo_default_a_behind_budget_savings">Edit savings plans</string>
     <string name="convo_default_a_behind_budget_budget">Edit budget</string>
