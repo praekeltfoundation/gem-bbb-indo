@@ -260,11 +260,11 @@
     <string name="goal_add_err__invalid_number">Nomor tidak valid</string>
     <string name="goal_add_err_user_firstname__empty">Nama tidak boleh kosong</string>
     <string name="goal_add_err_goal_target__empty">Target tujuan tidak boleh kosong</string>
-    <string name="goal_add_err_goal_target__zero">Target tujuan tidak bisa Rp0</string>
+    <string name="goal_add_err_goal_target__zero">Target tujuan tidak bisa Rp. 0,-</string>
     <string name="goal_add_err_transaction__empty">Tabungan tidak boleh kosong</string>
-    <string name="goal_add_err_transaction__zero">Tabungan tidak bisa Rp0</string>
+    <string name="goal_add_err_transaction__zero">Tabungan tidak bisa Rp. 0,-</string>
     <string name="goal_add_err_weekly_target__empty">Target mingguan tidak boleh kosong</string>
-    <string name="goal_add_err_weekly_target__zero">Target mingguan tidak bisa Rp0</string>
+    <string name="goal_add_err_weekly_target__zero">Target mingguan tidak bisa Rp. 0,-</string>
     <string name="goal_add_err_weekly_target__goal_target">Target mingguan tidak boleh lebih dari total target tujuan</string>
 
     <!-- END BOT: goal_add -->
@@ -793,12 +793,12 @@
 
     <string name="budget_create_err__invalid_number">Jumlah tidak valid</string>
     <string name="budget_create_err_income__empty">Penghasilan tidak bisa kosong</string>
-    <string name="budget_create_err_income__zero">Penghasilan tidak bisa Rp0</string>
+    <string name="budget_create_err_income__zero">Penghasilan tidak bisa Rp. 0,-</string>
     <string name="budget_create_err_savings__empty">Tabungan tidak bisa kosong</string>
-    <string name="budget_create_err_savings__zero">Tabungan tidak bisa Rp0</string>
+    <string name="budget_create_err_savings__zero">Tabungan tidak bisa Rp. 0,-</string>
     <string name="budget_create_err_savings__gt_income">Tabungan bulanan tidak bisa lebih dari pendapatan bulanan</string>
     <string name="budget_create_err_expense__empty">Biaya tidak boleh kosong</string>
-    <string name="budget_create_err_expense__zero">Biaya tidak bisa Rp0</string>
+    <string name="budget_create_err_expense__zero">Biaya tidak bisa Rp. 0,-</string>
 
     <!-- BOT: budget_edit -->
 
