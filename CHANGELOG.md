@@ -1,4 +1,14 @@
 
+1.2.2
+
+- Removed conversation loop at end of editing expenses
+- Changed weekly savings amounts
+- Changed currency format in error messages
+- Changed budget income saving message from 'weekly' to 'monthly'
+- Fixed spacing issue in budget screen in profile
+- Initial savings amounts are now factored in goal calculations
+- Translated registration error messages
+
 1.2.1
 
 - Changed currency format to 'Rp. XX.XXX,-'
