@@ -744,7 +744,7 @@
     <string name="budget_create_a_no_income_show_tips">Tunjukkan tips untuk meningkatkan pendapatanku</string>
     <string name="budget_create_a_no_income_exit">Oke, aku sudah selesai untuk saat ini. Bisakah kita keluar</string>
 
-    <string name="budget_create_q_savings_default">Cobalah simpan setidaknya $(budget.default_savings_percentage)% dari penghasilanmu segera setelah kamu menerimanya. Ini akan menjadi $(budget.default_savings) per minggu. Apakah kamu mau menyimpan sebanyak ini setiap minggu?</string>
+    <string name="budget_create_q_savings_default">Cobalah untuk menabung minimal $(budget.default_savings_percentage)% dari pemasukanmu. Ini berarti kamu akan menabung sebanyak $(budget.default_savings) per bulan. Apakah kamu setuju untuk menabung sebanyak ini setiap bulan?</string>
     <string name="budget_create_a_savings_default_accept">Iya</string>
     <string name="budget_create_a_savings_default_deny">Tidak, aku mau menyimpan jumlah yang berbeda</string>
 
