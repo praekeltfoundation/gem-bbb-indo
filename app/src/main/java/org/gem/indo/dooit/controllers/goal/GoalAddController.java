@@ -14,7 +14,6 @@ import org.gem.indo.dooit.api.responses.EmptyResponse;
 import org.gem.indo.dooit.helpers.Persisted;
 import org.gem.indo.dooit.helpers.bot.BotRunner;
 import org.gem.indo.dooit.helpers.crashlytics.CrashlyticsHelper;
-import org.gem.indo.dooit.helpers.images.MediaUriHelper;
 import org.gem.indo.dooit.models.Tip;
 import org.gem.indo.dooit.models.bot.Answer;
 import org.gem.indo.dooit.models.bot.BaseBotModel;
@@ -184,8 +183,9 @@ public class GoalAddController extends GoalBotController {
         // Populate can be called multiple times in the conversation. We clear the transactions
         // to avoid creating duplicates. This conversation only creates one transaction.
         goal.clearTransactions();
-        if (answerLog.containsKey("hasSavedY"))
-            goal.createTransaction(Double.parseDouble(answerLog.get("priorSaveAmount").getValue()));
+        if (answerLog.containsKey("hasSavedY")) {
+            goal.setInitialAmount(Double.parseDouble(answerLog.get("priorSaveAmount").getValue()));
+        }
 
         // Goal Image
         if (answerLog.containsKey("goal_add_a_goal_image")) {

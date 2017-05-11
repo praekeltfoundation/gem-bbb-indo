@@ -178,6 +178,9 @@ public abstract class GoalBotController extends DooitBotController {
             case GOAL_VALUE:
                 goal.setValue(Double.parseDouble(answer.getValue()));
                 break;
+            case GOAL_INITIAL_AMOUNT:
+                goal.setInitialAmount(Double.parseDouble(answer.getValue()));
+                break;
             case GOAL_WEEKLY_TARGET: {
                 LocalDate startDate = goal.hasStartDate() ? goal.getStartDate() : LocalDate.now();
                 goal.setEndDate(new LocalDate(Goal.endDateFromTarget(
