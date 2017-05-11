@@ -375,7 +375,7 @@ public class BudgetEditController extends BudgetBotController {
             Node node = new Node();
             node.setName("save_Conversation_Node");
             node.setType(BotMessageType.DUMMY);
-            node.setAutoNext("budget_edit_q_final_positive");
+            node.setAutoNext("budget_edit_end");
             botRunner.queueNode(node);
         }
     }
