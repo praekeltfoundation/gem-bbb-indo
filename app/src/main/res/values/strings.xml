@@ -743,7 +743,7 @@
     <string name="budget_create_a_no_income_show_tips">Show me tips to grow my income</string>
     <string name="budget_create_a_no_income_exit">"Okay, I'm done for now. Can we exit."</string>
 
-    <string name="budget_create_q_savings_default">"Try saving at least $(budget.default_savings_percentage)% of your income as soon as you receive it. This would be $(budget.default_savings) per week. Do you want to save this much each week?"</string>
+    <string name="budget_create_q_savings_default">"Try saving at least $(budget.default_savings_percentage)% of your income as soon as you receive it. This would be $(budget.default_savings) per month. Do you want to save this much each month?"</string>
     <string name="budget_create_a_savings_default_accept">Yes</string>
     <string name="budget_create_a_savings_default_deny">No, I want to save a different amount</string>
 
