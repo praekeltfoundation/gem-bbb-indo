@@ -338,29 +338,29 @@
     "answers": [
       {
         "name": "weeklySaveAmount",
-        "value": "500",
-        "text": "$(five)",
+        "value": "10000",
+        "text": "$(tenThousand)",
         "next": "askGoalPriorSaveFromWeeklySaveAmount",
         "type": "textCurrency"
       },
       {
         "name": "weeklySaveAmount",
-        "value": "1000",
-        "text": "$(thousand)",
+        "value": "20000",
+        "text": "$(twentyThousand)",
         "next": "askGoalPriorSaveFromWeeklySaveAmount",
         "type": "textCurrency"
       },
       {
         "name": "weeklySaveAmount",
-        "value": "1500",
-        "text": "$(thousandFive)",
+        "value": "30000",
+        "text": "$(thirtyThousand)",
         "next": "askGoalPriorSaveFromWeeklySaveAmount",
         "type": "textCurrency"
       },
       {
         "name": "weeklySaveAmount",
-        "value": "2000",
-        "text": "$(twoThousand)",
+        "value": "40000",
+        "text": "$(fortyThousand)",
         "next": "askGoalPriorSaveFromWeeklySaveAmount",
         "type": "textCurrency"
       },
