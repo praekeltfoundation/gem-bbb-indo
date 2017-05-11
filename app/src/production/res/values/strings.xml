@@ -861,10 +861,10 @@
     <string name="goalCheckRT">"Reduce Time"</string>
     <string name="goalCheckRA">"Reduce Amount"</string>
     <string name="goalCheckOk">"OK"</string>
-    <string name="five">"$(currency.symbol) 500"</string>
-    <string name="thousand">"$(currency.symbol) 1000"</string>
-    <string name="thousandFive">"$(currency.symbol) 1500"</string>
-    <string name="twoThousand">"$(currency.symbol) 2000"</string>
+    <string name="tenThousand">"$(currency.symbol) 10.000,-"</string>
+    <string name="twentyThousand">"$(currency.symbol) 20.000,-"</string>
+    <string name="thirtyThousand">"$(currency.symbol) 30,000,-"</string>
+    <string name="fortyThousand">"$(currency.symbol) 40.000,-"</string>
     <string name="Save">"Save"</string>
     <string name="WithdrawButton">"Withdraw"</string>
     <string name="addOwnGoal">"Add own goal"</string>
