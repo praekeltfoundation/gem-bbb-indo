@@ -38,11 +38,12 @@ public class ExpenseCategoryBotDAO {
             if (lastId != null)
                 nextId = lastId.longValue() + 1;
 
-            for (ExpenseCategory category : categories)
+            for (ExpenseCategory category : categories) {
                 if (category.getLocalId() == 0)
                     category.setLocalId(nextId++);
+            }
 
-            realm.copyToRealm(categories);
+            realm.copyToRealmOrUpdate(categories);
 
             realm.commitTransaction();
         } catch (Throwable e) {
