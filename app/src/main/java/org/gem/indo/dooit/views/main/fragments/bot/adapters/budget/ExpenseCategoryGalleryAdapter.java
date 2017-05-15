@@ -8,11 +8,15 @@ import android.view.ViewGroup;
 
 import org.gem.indo.dooit.R;
 import org.gem.indo.dooit.dao.budget.ExpenseCategoryBotDAO;
+import org.gem.indo.dooit.helpers.crashlytics.CrashlyticsHelper;
 import org.gem.indo.dooit.models.budget.ExpenseCategory;
 import org.gem.indo.dooit.models.enums.BotType;
 import org.gem.indo.dooit.views.main.fragments.bot.viewholders.budget.ExpenseCategoryGalleryItemVH;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
+import java.util.TreeSet;
 
 /**
  * Created by Wimpie Victor on 2017/03/14.
@@ -21,6 +25,8 @@ import java.util.List;
 public class ExpenseCategoryGalleryAdapter extends RecyclerView.Adapter<ExpenseCategoryGalleryItemVH>
         implements ExpenseCategoryGalleryItemVH.OnCheckListener {
 
+    public static String TAG = "ExpenseCategoryGalleryAdapter";
+
     private List<ExpenseCategory> data;
     private BotType botType;
 
@@ -28,7 +34,21 @@ public class ExpenseCategoryGalleryAdapter extends RecyclerView.Adapter<ExpenseC
      * @param botType Required to manage conversation specific DB entities.
      */
     public ExpenseCategoryGalleryAdapter(@NonNull BotType botType) {
-        this.data = ExpenseCategoryBotDAO.findAll(botType);
+        Set<Long> categoryIds = new TreeSet<>();
+        List<ExpenseCategory> categories = ExpenseCategoryBotDAO.findAll(botType);
+        this.data = new ArrayList<>();
+        for (ExpenseCategory category : categories) {
+            if (!categoryIds.contains(category.getId())) {
+                this.data.add(category);
+                categoryIds.add(category.getId());
+            } else {
+                CrashlyticsHelper.log(
+                        TAG,
+                        "constructor",
+                        String.format("%s appearead multiple times.", category.getName())
+                );
+            }
+        }
         this.botType = botType;
     }
 
