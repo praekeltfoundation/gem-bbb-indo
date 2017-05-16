@@ -107,6 +107,9 @@ public enum BotCallType {
     @SerializedName("#check_goals")
     CHECK_GOALS,
 
+    @SerializedName("#goal_clear_initial")
+    GOAL_CLEAR_INITIAL,
+
     @SerializedName("#check_budget")
     CHECK_BUDGET,
 
