@@ -348,8 +348,6 @@ public class GoalAddController extends GoalBotController {
         }
 
         goal.setInitialAmount(0);
-//        goal.calculateValue();
-//        goal.calculateWeeklyTarget();
     }
 
     ////////////////
