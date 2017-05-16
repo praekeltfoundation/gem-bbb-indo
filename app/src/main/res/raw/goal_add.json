@@ -215,7 +215,8 @@
       {
         "name": "UnknownDate",
         "text": "$(unknownDate)",
-        "next": "askGoalWeeklySaveAmount"
+        "next": "askGoalWeeklySaveAmount",
+        "removeOnSelect": "goalDate"
       }
     ]
   },
