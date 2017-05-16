@@ -80,6 +80,10 @@ public class GoalAddController extends GoalBotController {
                 break;
             case SHOW_BUDGET_DIAGRAM:
                 checkShowBudget();
+                break;
+            case GOAL_CLEAR_INITIAL:
+                clearInitialSavings(answerLog);
+                break;
             default:
                 super.onCall(key, answerLog, model);
         }
@@ -335,6 +339,17 @@ public class GoalAddController extends GoalBotController {
 
         node.finish();
         botRunner.queueNode(node);
+    }
+
+    private void clearInitialSavings(Map<String, Answer> answerLog) {
+        if (answerLog.containsKey("priorSaveAmount")) {
+            Answer a = answerLog.get("priorSaveAmount");
+            a.setValue("0");
+        }
+
+        goal.setInitialAmount(0);
+//        goal.calculateValue();
+//        goal.calculateWeeklyTarget();
     }
 
     ////////////////
