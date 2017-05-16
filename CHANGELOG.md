@@ -1,4 +1,9 @@
 
+1.2.3
+
+- Fixed duplicate expense items appearing in budget carousel
+- Fixed calculation issue with old goal creation data persisting
+
 1.2.2
 
 - Removed conversation loop at end of editing expenses
