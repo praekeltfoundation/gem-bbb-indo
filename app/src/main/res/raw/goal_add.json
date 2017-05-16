@@ -215,7 +215,8 @@
       {
         "name": "UnknownDate",
         "text": "$(unknownDate)",
-        "next": "askGoalWeeklySaveAmount"
+        "next": "askGoalWeeklySaveAmount",
+        "removeOnSelect": "goalDate"
       }
     ]
   },
@@ -474,7 +475,7 @@
       {
         "name": "hasSavedN",
         "text": "$(goal_add_a_has_saved_n)",
-        "next": "goal_add_q_verifyFromWeeklySaveAmount"
+        "next": "has_saved_n_clear_from_weekly_save_amount"
       }
     ]
   },
@@ -492,6 +493,14 @@
       }
     ]
   },
+
+  {
+    "name": "has_saved_n_clear_from_weekly_save_amount",
+    "type": "blank",
+    "call": "#goal_clear_initial",
+    "autoNext": "goal_add_q_verifyFromWeeklySaveAmount"
+  },
+
   {
     "name": "goal_add_q_verifyFromWeeklySaveAmount",
     "type": "text",
