@@ -245,7 +245,7 @@
       {
         "name": "hasSavedN",
         "text": "$(goal_add_a_has_saved_n)",
-        "next": "goal_add_q_verify"
+        "next": "has_saved_n_clear"
       }
     ]
   },
@@ -262,6 +262,13 @@
         "inlineEditHint": "$(type_currency_hint)"
       }
     ]
+  },
+
+  {
+    "name": "has_saved_n_clear",
+    "type": "blank",
+    "call": "#goal_clear_initial",
+    "autoNext": "goal_add_q_verify"
   },
 
 
