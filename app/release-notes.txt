@@ -1,5 +1,6 @@
 
-1.2.3
+1.2.4
 
-- Fixed duplicate expense items appearing in budget carousel
-- Fixed calculation issue with old goal creation data persisting
+- Weekly calculations correctly round down
+- Fixed typos in Indonesian strings
+- Added logging to registration to trace potential issues

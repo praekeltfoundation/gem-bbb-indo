@@ -1,4 +1,10 @@
 
+1.2.4
+
+- Weekly calculations correctly round down
+- Fixed typos in Indonesian strings
+- Added logging to registration to trace potential issues
+
 1.2.3
 
 - Fixed duplicate expense items appearing in budget carousel
