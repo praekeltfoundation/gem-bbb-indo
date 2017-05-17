@@ -24,7 +24,7 @@
     <!-- Bottom Navigation -->
     <string name="main_tab_text_0">"BINA"</string>
     <string name="main_tab_text_1">"TARGET"</string> <!-- The provided translation -->
-    <string name="main_tab_text_2">"TANTAGAN"</string>
+    <string name="main_tab_text_2">"TANTANGAN"</string>
     <string name="main_tab_text_3">"TIPS"</string> <!-- The provided translation -->
 
     <!-- Common labels -->
@@ -41,7 +41,7 @@
     <string name="label_loading">"Loading"</string> <!-- The provided translation -->
     <string name="label_log_in">"Masuk"</string>
     <string name="label_mobile_number">"Nomer telepon"</string>
-    <string name="label_name">"Nama"</string>
+    <string name="label_name">"USERNAME"</string>
     <string name="label_email">"Alamat email"</string>
     <string name="label_next">"Selanjutnya"</string>
     <string name="label_new_password">"Kata Sandi Baru"</string>
@@ -97,7 +97,7 @@
     <string name="reg_example_name_error_2">"Nama tidak boleh ada spasi"</string>
     <string name="reg_example_name_error_3">"Nama hanya boleh ada huruf dan angka"</string>
     <string name="reg_example_name_error_4">"Nama tidak boleh lebih panjang dari 150 karakter"</string>
-    <string name="reg_options">"Sediakan nomer HP-mu, alamat email, ata keduanya"</string>
+    <string name="reg_options">"Kamu harus sertakan nomorHP atau alamat email atau bisa juga keduanya"</string>
     <string name="reg_example_email">@string/login_example_email</string>
     <string name="reg_example_email_error_1">"Email tidak boleh kosonh"</string>
     <string name="reg_example_email_error_2">"Email tidak boleh mengandung spasi"</string>
@@ -128,7 +128,7 @@
     <string name="invalid_credentials">"Ups. Nama pengguna dan kata sandi yang kamu masukkan salah."</string>
     <string name="login_name">@string/label_name</string>
     <string name="login_password">@string/label_password</string>
-    <string name="login_example_name">"Contoh: Aulia Dharmanigtyas"</string>
+    <string name="login_example_name">"Contoh: Bina124"</string>
     <string name="login_example_name_error_1">"Maaf, kolom nama harus terisi."</string>
     <string name="login_example_email">"Contoh: aulia@gmail.com"</string>
     <string name="login_example_password">"Kata sandi harus terdiri dari 6 karakter."</string>
