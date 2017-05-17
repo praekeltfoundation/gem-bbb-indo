@@ -270,7 +270,6 @@ public class RegistrationActivity extends DooitActivity {
                     public void onError(DooitAPIError error) {
                         for (String msg : error.getErrorMessages())
                             showSnackbar(msg);
-                        dismissDialog();
                     }
                 }).doAfterTerminate(new Action0() {
                     @Override
