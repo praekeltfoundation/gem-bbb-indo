@@ -41,7 +41,7 @@
     <string name="label_loading">"Loading"</string> <!-- The provided translation -->
     <string name="label_log_in">"Masuk"</string>
     <string name="label_mobile_number">"Nomer telepon"</string>
-    <string name="label_name">"USERNAME"</string>
+    <string name="label_name">"Username"</string>
     <string name="label_email">"Alamat email"</string>
     <string name="label_next">"Selanjutnya"</string>
     <string name="label_new_password">"Kata Sandi Baru"</string>
