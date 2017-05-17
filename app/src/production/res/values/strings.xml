@@ -233,7 +233,7 @@
     <string name="goal_add_q_budget_return_01">Tidak apa-apa. Kamu bisa membuat anggaran setelah membuat tujuan tabungan.</string>
     <string name="goal_add_q_budget_return_02">Aku sarankan kamu mulai dengan menabung Rpxxxx per minggu. Gimana menurutmu?</string>
 
-    <string name="goal_add_q_verify">"Jika kamu tabung $(goal.weekly_target_currency) per minggu, kamu akan mencapai targetmu $(goal.name) dalam $(goal.weeks_up) minggu, $(goal.remainder_days). Jika kamu ikuti rencana ini, targetmu akan tercapai pada tanggal $(goal.end_date)."</string>
+    <string name="goal_add_q_verify">"Jika kamu tabung $(goal.weekly_target_currency) per minggu, kamu akan mencapai targetmu $(goal.name) dalam $(goal.weeks_down) minggu, $(goal.remainder_days). Jika kamu ikuti rencana ini, targetmu akan tercapai pada tanggal $(goal.end_date)."</string>
 
     <string name="goal_add_a_has_saved_y">"Ya! Aku sudah nabung sebanyak"</string>
     <string name="goal_add_a_has_saved_n">"Belum"</string>
