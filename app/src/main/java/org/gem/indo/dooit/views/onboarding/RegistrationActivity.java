@@ -35,6 +35,7 @@ import org.gem.indo.dooit.api.responses.OnboardingResponse;
 import org.gem.indo.dooit.helpers.Persisted;
 import org.gem.indo.dooit.helpers.SquiggleBackgroundHelper;
 import org.gem.indo.dooit.helpers.TextSpannableHelper;
+import org.gem.indo.dooit.helpers.crashlytics.CrashlyticsHelper;
 import org.gem.indo.dooit.models.Profile;
 import org.gem.indo.dooit.models.User;
 import org.gem.indo.dooit.services.NotificationAlarm;
@@ -59,6 +60,7 @@ import rx.functions.Action1;
 
 public class RegistrationActivity extends DooitActivity {
 
+    private static final String TAG = "RegistrationActivity";
     private static final int DEFAULT_AGE = 16;
     private static final int MIN_AGE = 12;
     private static final int MAX_AGE = 80;
@@ -233,7 +235,10 @@ public class RegistrationActivity extends DooitActivity {
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        if (error != null && error.getErrorResponse() != null) {
+                        if (error == null) {
+                            CrashlyticsHelper.log(TAG, "register", "User has encountered a null error during registration.");
+                            showSnackbar(R.string.general_error);
+                        } else if (error.getErrorResponse() != null) {
                             if (error.getErrorResponse().getFieldErrors().containsKey("username")) {
                                 showSnackbar(R.string.reg_duplicate_username_error);
                                 nameHint.setText(R.string.reg_duplicate_username_error);
@@ -243,10 +248,15 @@ public class RegistrationActivity extends DooitActivity {
                             } else {
                                 showSnackbar(R.string.general_error);
                             }
-                        } else if (error.getCause() instanceof SocketTimeoutException) {
-                            showSnackbar(R.string.connection_timed_out);
-                        } else if (error.getCause() instanceof UnknownHostException) {
-                            showSnackbar(R.string.connection_error);
+                        } else {
+                            if (error.getCause() instanceof SocketTimeoutException) {
+                                showSnackbar(R.string.connection_timed_out);
+                            } else if (error.getCause() instanceof UnknownHostException) {
+                                showSnackbar(R.string.connection_error);
+                            } else {
+                                CrashlyticsHelper.logException(error);
+                                showSnackbar(R.string.general_error);
+                            }
                         }
                         dismissDialog();
                     }
