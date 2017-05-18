@@ -119,6 +119,10 @@ public class ProfileImageActivity extends ImageActivity {
                 }).doAfterTerminate(new Action0() {
             @Override
             public void call() {
+            }
+        }).doAfterTerminate(new Action0() {
+            @Override
+            public void call() {
                 dismissDialog();
             }
         }).subscribe(new Action1<Response<EmptyResponse>>() {
