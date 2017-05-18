@@ -188,6 +188,28 @@ public abstract class ImageActivity extends DooitActivity {
     }
 
     /**
+     * Bitmap and returns the downscaling factor (only sampling every nth pixel) to fit into
+     * max width/height.
+     *
+     * Does not require full bitmap -- decoding just the bounds is sufficient.
+     *
+     * @param bmp  The bitmap to measure
+     * @return int Sample factor.
+     */
+    private int calcSampleSize(Bitmap bmp) {
+        if (bmp != null) {
+            float widthRatio = bmp.getWidth() / maxImageWidth;
+            float heightRatio = bmp.getHeight() / maxImageWidth;
+            float largestDimRatio = (widthRatio >= heightRatio) ? widthRatio : heightRatio;
+            if (largestDimRatio >= 1) {
+                return (int) largestDimRatio;
+            }
+        }
+
+        return 1;
+    }
+
+    /**
      * Loads the image file stored in imagePath, saves a new downscaled version, and resets imageUri
      * and imagePath.
      */
@@ -202,14 +224,7 @@ public abstract class ImageActivity extends DooitActivity {
         BitmapFactory.Options boundsOptions = new BitmapFactory.Options();
         boundsOptions.inJustDecodeBounds = true;
         Bitmap bounds = BitmapFactory.decodeFile(imagePath, boundsOptions);
-        if (bounds != null) {
-            float widthRatio = bounds.getWidth() / maxImageWidth;
-            float heightRatio = bounds.getHeight() / maxImageWidth;
-            float largestDimRatio = (widthRatio >= heightRatio) ? widthRatio : heightRatio;
-            if (largestDimRatio >= 1) {
-                options.inSampleSize = (int) largestDimRatio;
-            }
-        }
+        options.inSampleSize = calcSampleSize(bounds);
 
         try {
             File downscaledFile = createImageFile();
