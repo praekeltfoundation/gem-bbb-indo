@@ -70,6 +70,7 @@ public abstract class ImageActivity extends DooitActivity {
             }
             return out;
         } catch (OutOfMemoryError e) {
+            Log.d(TAG, "Rotation failed - out of memory.");
             return source;
         }
     }
