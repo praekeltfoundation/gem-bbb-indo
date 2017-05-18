@@ -62,12 +62,16 @@ public abstract class ImageActivity extends DooitActivity {
     public static Bitmap rotateImage(Bitmap source, float angle) {
         Matrix matrix = new Matrix();
         matrix.postRotate(angle);
-        Bitmap out = Bitmap.createBitmap(source, 0, 0, source.getWidth(), source.getHeight(),
-                matrix, true);
-        if (!source.isRecycled() && !out.sameAs(source)) {
-            source.recycle();
+        try {
+            Bitmap out = Bitmap.createBitmap(source, 0, 0, source.getWidth(), source.getHeight(),
+                    matrix, true);
+            if (!source.isRecycled() && !out.sameAs(source)) {
+                source.recycle();
+            }
+            return out;
+        } catch (OutOfMemoryError e) {
+            return source;
         }
-        return out;
     }
 
     private void resetImageState() {
