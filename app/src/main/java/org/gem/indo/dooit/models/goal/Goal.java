@@ -53,6 +53,11 @@ public class Goal {
     @SerializedName("weekly_target")
     private double weeklyTarget;
 
+    /*
+    This value is only used for internal calculations and does not need to be saved with the goal
+     */
+    private double dailySavings;
+
     private List<GoalTransaction> transactions = new ArrayList<>();
 
     /**
@@ -289,11 +294,19 @@ public class Goal {
     public void calculateWeeklyTarget() {
         double weeks = getWeeks();
 
+        // There is no validation when setting the initial value, so it can be greater than
+        // the goal amount. If this case happens, there doesn't need to be a weekly target
         if (initialAmount >= target) {
             this.weeklyTarget = 0;
+            return;
         }
 
-        double weeklyTarget = weeks == 0.0 ? target : (target - initialAmount) / weeks;
+        // Calculate how much needs to be saved per day
+        // Divide actual goal amount by number of days.
+        double dailySavings = (target - initialAmount) / (weeks * 7);
+        setDailySavings(dailySavings);
+        double weeklyTarget = weeks == 0.0 ? target : (dailySavings * 7);
+
         // Round weekly target to the upper Rp100
         this.weeklyTarget = currency.ceil(weeklyTarget);
     }
@@ -301,6 +314,14 @@ public class Goal {
     public static double weeksFromWeeklyTarget(double target, double weeklyTarget) {
         return weeklyTarget != 0.0 ? target / weeklyTarget : target;
     }
+
+    //////////////////
+    // Daiy savings //
+    //////////////////
+
+    private void setDailySavings(double dailySavings){ this.dailySavings = dailySavings; }
+
+    public double getDailySavings() { return this.dailySavings; }
 
     ///////////////////////////////////////////////
     // Weekly Period from Start Date to End Date //
@@ -310,8 +331,8 @@ public class Goal {
         if (startDate == null || endDate == null)
             return 0.0;
         double weeks = WeekCalc.weekDiff(startDate.toDate(), endDate.toDate(), weekRounding);
-        // Weeks are rounded down to the first decimal
-        return weeks == 0.0 ? 1.0 : Math.floor(weeks * 10.0) / 10.0;
+        // Weeks are *not* rounded down to the first decimal
+        return weeks == 0.0 ? 1.0 : weeks;
     }
 
     public double getWeeks() {
@@ -527,6 +548,7 @@ public class Goal {
         goal.setValue(validatedValue());
         goal.setTarget(this.target);
         goal.setWeeklyTarget(this.weeklyTarget, false);
+        goal.setDailySavings(this.dailySavings);
         goal.setImageUrl(StringHelper.newString(this.imageUrl));
         goal.setStartDate(new LocalDate(this.startDate));
         goal.setEndDate(new LocalDate(this.endDate), false);
