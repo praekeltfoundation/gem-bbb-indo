@@ -94,7 +94,7 @@ public abstract class GoalBotController extends DooitBotController {
                 model.values.put(key, goal.getValue());
                 break;
             case GOAL_TARGET:
-                model.values.put(key, goal.getTarget());
+                model.values.put(key, CurrencyHelper.format(goal.getTarget()));
                 break;
             case GOAL_TARGET_CURRENCY:
                 model.values.put(key, CurrencyHelper.format(goal.getTarget()));
@@ -103,7 +103,7 @@ public abstract class GoalBotController extends DooitBotController {
                 model.values.put(key, Utils.formatDate(goal.getEndDate().toDate()));
                 break;
             case GOAL_WEEKLY_TARGET:
-                model.values.put(key, goal.getWeeklyTarget());
+                model.values.put(key, CurrencyHelper.format(goal.getWeeklyTarget()));
                 break;
             case GOAL_DAILY_SAVINGS:
                 model.values.put(key, CurrencyHelper.format(goal.getDailySavings()));
