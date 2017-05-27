@@ -178,7 +178,7 @@ public class Goal {
     //////////////////
 
     public double getTarget() {
-        return target;
+        return target - initialAmount;
     }
 
     public void setTarget(double target) {
@@ -335,12 +335,16 @@ public class Goal {
         if (this.hasDailySavingsBeenRounded) {
             int daysToCompleteGoal = 0;
             int tempGoalValue = 0;
-            while (tempGoalValue < target) {
+            while (tempGoalValue < getTarget()) {
                 tempGoalValue += dailySavings;
                 daysToCompleteGoal++;
             }
 
-            this.goalCompletionPriorDays = this.getDays(weeks) - daysToCompleteGoal;
+            if (daysToCompleteGoal == this.getDays(weeks)) {
+                this.hasDailySavingsBeenRounded = false;
+            } else {
+                this.goalCompletionPriorDays = this.getDays(weeks) - daysToCompleteGoal;
+            }
         }
     }
 
