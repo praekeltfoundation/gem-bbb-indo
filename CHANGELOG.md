@@ -1,4 +1,9 @@
 
+1.2.5
+
+- Goal target calculation revision
+- Prevent app crash when trying to rotate images
+
 1.2.4
 
 - Weekly calculations correctly round down

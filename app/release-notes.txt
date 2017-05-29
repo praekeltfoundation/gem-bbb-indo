@@ -1,6 +1,5 @@
 
-1.2.4
+1.2.5
 
-- Weekly calculations correctly round down
-- Fixed typos in Indonesian strings
-- Added logging to registration to trace potential issues
+- Goal target calculation revision
+- Prevent app crash when trying to rotate images
