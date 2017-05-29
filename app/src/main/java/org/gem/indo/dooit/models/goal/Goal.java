@@ -379,7 +379,7 @@ public class Goal {
     }
 
     public int getEarlyCompleteDays() {
-        if (hasDailySavingsBeenRounded) {
+        if (hasDailySavingsBeenRounded || goalCompletionPriorDays == 0) {
             LocalDate earlyCompleteDate = endDate.minusDays(goalCompletionPriorDays);
             return WeekCalc.remainder(startDate.toDate(), earlyCompleteDate.toDate());
         } else {
