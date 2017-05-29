@@ -364,6 +364,10 @@ public class GoalAddController extends GoalBotController {
             node.setName("goal_add_early_completion");
             node.setType(BotMessageType.DUMMY); // Keep the node in the conversation on reload
             node.setAutoNext("goal_add_q_verify_early_completion");
+        } else if (goal.getEarlyCompleteDays() == 0) {
+            node.setName("goal_add_rounded_no_early_completion");
+            node.setType(BotMessageType.DUMMY); // Keep the node in the conversation on reload
+            node.setAutoNext("goal_add_q_verify_rounded_no_early");
         } else {
             node.setName("goal_add_no_early_completion");
             node.setType(BotMessageType.DUMMY); // Keep the node in the conversation on reload

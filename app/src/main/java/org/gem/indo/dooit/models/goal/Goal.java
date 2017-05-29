@@ -342,6 +342,7 @@ public class Goal {
 
             if (daysToCompleteGoal == this.getDays(weeks)) {
                 this.hasDailySavingsBeenRounded = false;
+                this.goalCompletionPriorDays = 0;
             } else {
                 this.goalCompletionPriorDays = this.getDays(weeks) - daysToCompleteGoal;
             }
