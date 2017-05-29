@@ -375,6 +375,36 @@
 
 
 
+  {
+    "name": "goal_add_q_verify_early_completion_no_remainder_days",
+    "type": "text",
+    "call": "#populate_goal",
+    "text": "$(goal_add_q_verify_early_completion_no_remainder_days)",
+    "answers": [
+      {
+        "name": "acceptGoal",
+        "text": "$(acceptGoal)",
+        "next": "goal_add_do_create"
+      },
+      {
+        "name": "changeDate",
+        "text": "$(changeDate)",
+        "next": "goal_add_q_change_date"
+      },
+      {
+        "name": "changeTarget",
+        "text": "$(goal_change_target)",
+        "next": "goal_add_q_change_target"
+      },
+      {
+        "name": "startOver",
+        "text": "$(startOver)",
+        "next": "goal_add_q_ask_goal"
+      }
+    ]
+  },
+
+
 
   {
     "name": "goal_add_q_change_date",

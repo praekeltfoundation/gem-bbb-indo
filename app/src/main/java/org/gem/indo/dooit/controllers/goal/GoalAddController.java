@@ -360,7 +360,11 @@ public class GoalAddController extends GoalBotController {
 
         Node node = new Node();
 
-        if (goal.willReachGoalEarly()) {
+        if (goal.willReachGoalEarly() && goal.getEarlyCompleteDays() % 7 == 0) {
+            node.setName("goal_add_early_completion_no_remainder_days");
+            node.setType(BotMessageType.DUMMY); // Keep the node in the conversation on reload
+            node.setAutoNext("goal_add_q_verify_early_completion_no_remainder_days");
+        } else if (goal.willReachGoalEarly()) {
             node.setName("goal_add_early_completion");
             node.setType(BotMessageType.DUMMY); // Keep the node in the conversation on reload
             node.setAutoNext("goal_add_q_verify_early_completion");
