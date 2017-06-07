@@ -187,6 +187,14 @@ public class Goal {
         weeklyTargetInvalidated = true;
     }
 
+    public double getActualTarget() {
+        if (willReachGoalEarly()) {
+            return this.dailySavings * (getEarlyCompleteWeeks() * 7.0) + this.dailySavings * getEarlyCompleteDays();
+        } else {
+            return getTarget();
+        }
+    }
+
     /**
      * Because the weekly target is rounded, the total of each week's savings might exceed the Goal
      * target. The user will be informed of this.

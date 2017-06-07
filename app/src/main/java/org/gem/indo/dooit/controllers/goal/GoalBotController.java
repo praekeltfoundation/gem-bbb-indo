@@ -96,6 +96,9 @@ public abstract class GoalBotController extends DooitBotController {
             case GOAL_TARGET:
                 model.values.put(key, CurrencyHelper.format(goal.getTarget()));
                 break;
+            case GOAL_ACTUAL_TARGET:
+                model.values.put(key, CurrencyHelper.format(goal.getActualTarget()));
+                break;
             case GOAL_TARGET_CURRENCY:
                 model.values.put(key, CurrencyHelper.format(goal.getTarget()));
                 break;

@@ -27,6 +27,7 @@ public enum BotParamType {
     GOAL_VALUE("goal.value"),
     GOAL_INITIAL_AMOUNT("goal.initial_amount"),
     GOAL_TARGET("goal.target"),
+    GOAL_ACTUAL_TARGET("goal.actual_target"),
     GOAL_TARGET_CURRENCY("goal.target_currency"),
     GOAL_END_DATE("goal.end_date"),
     GOAL_WEEKLY_TARGET("goal.weekly_target"),
