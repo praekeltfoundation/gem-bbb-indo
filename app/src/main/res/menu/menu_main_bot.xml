@@ -11,6 +11,10 @@
             android:id="@+id/menu_main_bot_eatool_survey"
             android:title="@string/survey_eatool_title"
             app:showAsAction="never"/>
+        <item
+            android:id="@+id/menu_main_bot_endline_survey"
+            android:title="@string/survey_endline_title"
+            app:showAsAction="never"/>
     </group>
     <item
         android:id="@+id/menu_main_bot_clear"
