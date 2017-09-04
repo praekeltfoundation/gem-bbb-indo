@@ -287,10 +287,8 @@ public abstract class ImageActivity extends DooitActivity {
                 default:
                     break;
             }
-        } catch (IllegalArgumentException ia) {
+        } catch (IllegalArgumentException | IOException ia) {
             // If image path is null, IllegalArgumentException is thrown
-        } catch (IOException io) {
-
         }
         return bitmap;
     }
@@ -334,10 +332,6 @@ public abstract class ImageActivity extends DooitActivity {
         if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.KITKAT)
             revokeUriPermission(imageUri,
                     Intent.FLAG_GRANT_WRITE_URI_PERMISSION | Intent.FLAG_GRANT_READ_URI_PERMISSION);
-    }
-
-    protected Uri getImageUri() {
-        return imageUri;
     }
 
     /**

@@ -125,11 +125,13 @@ public class ProfileImageActivity extends ImageActivity {
             @Override
             public void call(Response<EmptyResponse> response) {
                 User user = persisted.getCurrentUser();
+                if (user == null)
+                    return;
 
                 try {
                     CrashlyticsHelper.log(this.getClass().getSimpleName(), "uploadProfileImage :", String.format("User id %s: ",
                             user.getId()) + " Uri :" + localImageUri + " mediaType: " + localMediaType);
-                    user.getProfile().setProfileImageUrl(getImageUri().toString());
+                    user.getProfile().setProfileImageUrl(localImageUri.toString());
                 } catch (NullPointerException nullException) {
                     CrashlyticsHelper.logException(nullException);
                 }

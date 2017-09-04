@@ -210,6 +210,9 @@ public class ProfileActivity extends ImageActivity {
     @Override
     protected void onImageResult(String mediaType, Uri imageUri, String imagePath) {
         CrashlyticsHelper.log(this.getClass().getSimpleName(), "OnImageResult : ", "successful image result (settings)");
+
+        final Uri localImageUri = imageUri;
+
         // Upload image to server
         User user = persisted.getCurrentUser();
         if (user == null) {
@@ -254,7 +257,7 @@ public class ProfileActivity extends ImageActivity {
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        profileImage.setImageURI(getImageUri());
+                        profileImage.setImageURI(localImageUri);
                     }
                 });
             }
