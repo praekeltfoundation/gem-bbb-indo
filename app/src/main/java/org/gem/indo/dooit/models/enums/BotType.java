@@ -25,6 +25,7 @@ public enum BotType {
     SURVEY_ADHOC(300),
     SURVEY_BASELINE(301),
     SURVEY_EATOOL(302),
+    SURVEY_ENDLINE(303),
 
     // Budget
     BUDGET_CREATE(400),
