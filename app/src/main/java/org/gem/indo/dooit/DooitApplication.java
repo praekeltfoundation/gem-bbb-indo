@@ -92,7 +92,7 @@ public class DooitApplication extends MultiDexApplication {
 
                 Request request = requestBuilder.build();
 
-                Response response = chain.proceed(request);
+                /*Response response = chain.proceed(request);
                 if (response != null) {
                     Handshake handshake = response.handshake();
                     if (handshake != null) {
@@ -100,8 +100,8 @@ public class DooitApplication extends MultiDexApplication {
                         final TlsVersion tlsVersion = handshake.tlsVersion();
                         Log.v("DooitApplication", "TLS: " + tlsVersion + ", CipherSuite: " + cipherSuite);
                     }
-                }
-                return response;
+                }*/
+                return chain.proceed(request);
             }
         });
 
