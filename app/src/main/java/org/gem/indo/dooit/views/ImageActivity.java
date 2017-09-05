@@ -322,6 +322,7 @@ public abstract class ImageActivity extends DooitActivity {
                     outStream.close();
             } catch (IOException e) {
                 Log.e(TAG, "Failed to close outstream", e);
+                CrashlyticsHelper.logException(e);
             }
         }
 
