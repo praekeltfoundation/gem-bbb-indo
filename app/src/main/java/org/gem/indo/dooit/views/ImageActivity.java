@@ -241,6 +241,7 @@ public abstract class ImageActivity extends DooitActivity {
 
             //Here the image is scaled to an acceptable size
             bitmap = ImageScaler.scale(bitmap, maxImageWidth, maxImageHeight);
+            System.gc();
             //file is written out
             bitmap.compress(Bitmap.CompressFormat.JPEG, 80, outStream);
 
@@ -382,9 +383,8 @@ public abstract class ImageActivity extends DooitActivity {
                         ContentResolver cR = ImageActivity.this.getContentResolver();
                         Bitmap bitmap = (Bitmap) data.getExtras().get("data");
 
-                        System.gc();
-
                         bitmap = checkScreenOrientation(imagePath, bitmap, requestCodes);
+                        System.gc();
 
                         Log.d("IMAGE_TESTS", "Bitmap size : " + bitmap.getByteCount());
                         imageUri = Uri.parse(MediaStore.Images.Media.insertImage(cR, bitmap, "", ""));
