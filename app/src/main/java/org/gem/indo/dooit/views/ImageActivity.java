@@ -1,6 +1,7 @@
 package org.gem.indo.dooit.views;
 
 import android.app.Activity;
+import android.app.ActivityManager;
 import android.content.ContentResolver;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -14,7 +15,6 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Environment;
-import android.os.Looper;
 import android.provider.MediaStore;
 import android.support.v4.content.FileProvider;
 import android.support.v7.app.AlertDialog;
@@ -39,7 +39,7 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
-import java.util.concurrent.ExecutionException;
+import java.util.Locale;
 
 /**
  * Created by Wimpie Victor on 2016/12/19.
@@ -50,14 +50,33 @@ public abstract class ImageActivity extends DooitActivity {
     private static final String TAG = ImageActivity.class.getName();
     private static final int maxImageWidth = 1024;
     private static final int maxImageHeight = 1024;
-    final Runtime runtime = Runtime.getRuntime();
     final int SCALE_FACTOR_FOR_BITMAP_SIZE = 3;
-    long usedMemInMB = (runtime.totalMemory() - runtime.freeMemory()) / 1048576L;
-    long maxHeapSizeInMB = runtime.maxMemory() / 1048576L;
-    long availHeapSizeInMB = maxHeapSizeInMB - usedMemInMB;
     private AlertDialog imageChooser;
     private Uri imageUri;
     private String imagePath;
+
+    private void logMemory() {
+        try {
+            String tag = this.getClass().getName();
+
+            final Runtime runtime = Runtime.getRuntime();
+            long usedMemInMB = (runtime.totalMemory() - runtime.freeMemory()) / 1048576L;
+            long maxHeapSizeInMB = runtime.maxMemory() / 1048576L;
+            long availHeapSizeInMB = maxHeapSizeInMB - usedMemInMB;
+
+            ActivityManager am = (ActivityManager) getSystemService(ACTIVITY_SERVICE);
+            int memoryClass = am.getMemoryClass();
+
+            String msg = String.format(Locale.US,
+                    "Memory Class: %d, Max Memory: %dMB",
+                    memoryClass, maxHeapSizeInMB);
+
+            CrashlyticsHelper.log(tag, "logMemory", msg);
+            Log.d(tag, msg);
+        } catch (Throwable ex) {
+            CrashlyticsHelper.logException(ex);
+        }
+    }
 
     public static Bitmap rotateImage(Bitmap source, float angle) {
         CrashlyticsHelper.log(TAG, "rotateImage", "Rotating: " + Float.toString(angle));
@@ -189,6 +208,8 @@ public abstract class ImageActivity extends DooitActivity {
     }
 
     private void handleImageResult(Intent data, int requestCodes) {
+        logMemory();
+
         Object[] params = new Object[2];
         params[0] = data;
         params[1] = requestCodes;
