@@ -86,7 +86,7 @@ public class AnswerInlineDateEditViewHolder extends BaseBotViewHolder<Answer> {
                         inputAnswer.setNext(dataModel.getNextOnFinish());
                         inputAnswer.setType(BotMessageType.getValueOf(dataModel.getTypeOnFinish()));
                         tagsClickListener.onItemClicked(inputAnswer);
-                        CrashlyticsHelper.log(this.getClass().getSimpleName(), "populate (dateEdit): ", "New date: " + inputAnswer.getValue());
+                        CrashlyticsHelper.log(this.getClass().getSimpleName(), "populate", "(dateEdit) New date: " + inputAnswer.getValue());
                     }
                 });
             }

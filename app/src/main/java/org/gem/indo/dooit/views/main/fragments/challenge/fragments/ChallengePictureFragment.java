@@ -300,7 +300,7 @@ public class ChallengePictureFragment extends Fragment {
                         if (image != null) {
                             image.setImageURI(imageUri);
                         }
-                        CrashlyticsHelper.log(this.getClass().getSimpleName(), "onActivityResult :",
+                        CrashlyticsHelper.log(this.getClass().getSimpleName(), "onActivityResult",
                                 "imagePath : " + imagePath + " imageUri : " + imageUri);
                     }
                 } catch (NullPointerException nullException) {

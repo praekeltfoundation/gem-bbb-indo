@@ -439,7 +439,7 @@ public class MainActivity extends ImageActivity {
      */
     @Override
     protected void onImageResult(String mediaType, Uri imageUri, String imagePath) {
-        CrashlyticsHelper.log(this.getClass().getSimpleName(), "OnImageResult : ", "successful image result (settings)");
+        CrashlyticsHelper.log(this.getClass().getSimpleName(), "OnImageResult", "successful image result (settings)");
         if (imageSelectedListener != null) {
             imageSelectedListener.handleSelectedImage(mediaType, imageUri, imagePath);
         }

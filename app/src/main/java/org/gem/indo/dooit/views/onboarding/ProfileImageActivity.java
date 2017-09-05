@@ -78,7 +78,7 @@ public class ProfileImageActivity extends ImageActivity {
 
     @OnClick(R.id.activity_profile_image_profile_image)
     public void selectImage() {
-        CrashlyticsHelper.log(this.getClass().getSimpleName(), "OnClick select image : ", "Tap to change profile image (onboarding)");
+        CrashlyticsHelper.log(this.getClass().getSimpleName(), "OnClick selectImage", "Tap to change profile image (onboarding)");
         showImageChooser();
     }
 
@@ -129,7 +129,7 @@ public class ProfileImageActivity extends ImageActivity {
                     return;
 
                 try {
-                    CrashlyticsHelper.log(this.getClass().getSimpleName(), "uploadProfileImage :", String.format("User id %s: ",
+                    CrashlyticsHelper.log(this.getClass().getSimpleName(), "uploadProfileImage", String.format("User id %s: ",
                             user.getId()) + " Uri :" + localImageUri + " mediaType: " + localMediaType);
                     user.getProfile().setProfileImageUrl(localImageUri.toString());
                 } catch (NullPointerException nullException) {

@@ -87,7 +87,7 @@ public class BotAdapter extends RecyclerView.Adapter<BaseBotViewHolder> {
             case TIP:
                 return new TipBotViewHolder(LayoutInflater.from(context).inflate(R.layout.item_view_bot_tip, parent, false), this, tagsClickListener);
             case GOALINFO:
-                CrashlyticsHelper.log(this.getClass().getSimpleName(), "onCreateViewHolder: ", "from(context) : " + context + "case: " + GOALINFO);
+                CrashlyticsHelper.log(this.getClass().getSimpleName(), "onCreateViewHolder", "from(context) : " + context + "case: " + GOALINFO);
                 return new GoalInfoViewHolder(LayoutInflater.from(context).inflate(R.layout.item_view_bot_goal_info, parent, false), this);
             case BADGE:
                 return new BadgeViewHolder(LayoutInflater.from(context).inflate(R.layout.item_view_bot_badge, parent, false), this);

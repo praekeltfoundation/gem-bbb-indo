@@ -74,7 +74,7 @@ public class AnswerInlineTextEditViewHolder extends BaseBotViewHolder<Answer> {
                     inputAnswer.setType(BotMessageType.getValueOf(dataModel.getTypeOnFinish()));
                     inputAnswer.setParentName(dataModel.getParentName());
                     tagsClickListener.onItemClicked(inputAnswer);
-                    CrashlyticsHelper.log(this.getClass().getSimpleName(), "populate (textedit): ", "text: " + inputAnswer.getValue());
+                    CrashlyticsHelper.log(this.getClass().getSimpleName(), "populate", "(textedit) text: " + inputAnswer.getValue());
                     return true;
                 }
                 return false;

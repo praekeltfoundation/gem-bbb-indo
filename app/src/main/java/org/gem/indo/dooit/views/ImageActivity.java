@@ -257,7 +257,7 @@ public abstract class ImageActivity extends DooitActivity {
         } catch (IOException e) {
             Toast.makeText(ImageActivity.this, "Unable to do image rotation", Toast.LENGTH_LONG).show();
             Log.e(TAG, "Unable to create temporary downscaled image file", e);
-            CrashlyticsHelper.log(this.getClass().getSimpleName(), " processImage : ", "an IOException");
+            CrashlyticsHelper.log(this.getClass().getSimpleName(), "processImage", "an IOException");
         } finally {
             try {
                 if (outStream != null)
@@ -400,7 +400,7 @@ public abstract class ImageActivity extends DooitActivity {
                 // MediaUriHelper does not work when uri points to temp image file
                 try {
                     imagePath = MediaUriHelper.getPath(ImageActivity.this, imageUri);
-                    CrashlyticsHelper.log(this.getClass().getSimpleName(), "handleImageResult : ",
+                    CrashlyticsHelper.log(this.getClass().getSimpleName(), "handleImageResult",
                             "Context: " + this + " imageUri :" + imageUri);
                 } catch (NullPointerException nullException) {
                     CrashlyticsHelper.logException(nullException);
