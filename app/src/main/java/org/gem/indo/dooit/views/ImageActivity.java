@@ -344,6 +344,8 @@ public abstract class ImageActivity extends DooitActivity {
      * URI Permissions must be revoked, or they will persisted until the device is restarted.
      */
     private void revokeCameraPermissions() {
+        if (imageUri == null)
+            return;
         if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.KITKAT)
             revokeUriPermission(imageUri,
                     Intent.FLAG_GRANT_WRITE_URI_PERMISSION | Intent.FLAG_GRANT_READ_URI_PERMISSION);
