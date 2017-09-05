@@ -421,6 +421,10 @@ public abstract class ImageActivity extends DooitActivity {
      */
     protected abstract void onImageResult(String mediaType, Uri imageUri, String imagePath);
 
+    /**
+     * Image processing is run on a background thread to allow the garbage collector to run. When
+     * done on the UI thread, the garbage collector waits for the UI thread to yield.
+     */
     private class HandleImage extends AsyncTask<Object, Integer, ImageActivityAsyncTaskResult> {
 
         /**
