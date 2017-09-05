@@ -182,7 +182,14 @@ public class TipsListFragment extends Fragment implements TipsListFilter.OnFilte
         tipProvider.retrieveTips(new DooitErrorHandler() {
             @Override
             public void onError(DooitAPIError error) {
-                Toast.makeText(getContext(), error_retrieving_tips, Toast.LENGTH_SHORT);
+                final Activity activity = getActivity();
+                if (activity != null)
+                    activity.runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            Toast.makeText(activity, error_retrieving_tips, Toast.LENGTH_LONG).show();
+                        }
+                    });
             }
         }).doAfterTerminate(new Action0() {
             @Override
