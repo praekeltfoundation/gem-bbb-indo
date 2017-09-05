@@ -103,6 +103,7 @@
         <activity
             android:name=".views.onboarding.ChangeSecurityQuestionActivity"
             android:label="@string/title_activity_change_security_question"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
 
         <provider

@@ -8,8 +8,8 @@ import android.net.Uri;
 
 public class ImageActivityAsyncTaskResult {
 
-    Uri imageUri;
-    String imagePath;
+    final private Uri imageUri;
+    final private String imagePath;
 
     public ImageActivityAsyncTaskResult(Uri imageUri, String imagePath) {
         this.imageUri = imageUri;

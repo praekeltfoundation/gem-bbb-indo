@@ -129,7 +129,7 @@ public class GoalAddController extends GoalBotController {
             persisted.saveConvoGoal(botType, goal);
         } catch (IllegalArgumentException e) {
             // Logging for infinite double error
-            CrashlyticsHelper.log(TAG, "on Answer Input (addGoal): ", "goal start date: " + goal.getStartDate() +
+            CrashlyticsHelper.log(TAG, "onAnswerInput", "(addGoal) goal start date: " + goal.getStartDate() +
                     " Target amount: " + goal.getTarget() + " Goal name: " + goal.getName() +
                     " Goal Weekly Target: " + goal.getWeeklyTarget());
 
@@ -180,7 +180,7 @@ public class GoalAddController extends GoalBotController {
             CrashlyticsHelper.log(TAG, "doPopulate", "User inputted a weekly target");
             goal.setWeeklyTarget(Double.parseDouble(answerLog.get("weeklySaveAmount").getValue()));
         }
-        CrashlyticsHelper.log(TAG, "do Populate (addGoal): ", "goal start date: " + goal.getStartDate() +
+        CrashlyticsHelper.log(TAG, "doPopulate", "(addGoal) goal start date: " + goal.getStartDate() +
                 " Target amount: " + goal.getTarget() + " Goal name: " + goal.getName());
 
         // User has existing savings
@@ -266,8 +266,8 @@ public class GoalAddController extends GoalBotController {
                     }
                 });
 
-                CrashlyticsHelper.log(this.getClass().getSimpleName(), "doCreate (BOT) : ",
-                        "MediaURI.getPath : context: " + context + " uri: " + uri + "MimeType: " + mimetype);
+                CrashlyticsHelper.log(this.getClass().getSimpleName(), "doCreate",
+                        "(BOT) MediaURI.getPath : context: " + context + " uri: " + uri + "MimeType: " + mimetype);
             } catch (NullPointerException nullException) {
                 CrashlyticsHelper.logException(nullException);
             }

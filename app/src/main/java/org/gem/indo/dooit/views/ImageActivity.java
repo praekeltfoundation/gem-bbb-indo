@@ -1,7 +1,9 @@
 package org.gem.indo.dooit.views;
 
 import android.app.Activity;
+import android.app.ActivityManager;
 import android.content.ContentResolver;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -14,8 +16,9 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Environment;
-import android.os.Looper;
 import android.provider.MediaStore;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.content.FileProvider;
 import android.support.v7.app.AlertDialog;
 import android.text.TextUtils;
@@ -39,7 +42,7 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
-import java.util.concurrent.ExecutionException;
+import java.util.Locale;
 
 /**
  * Created by Wimpie Victor on 2016/12/19.
@@ -48,18 +51,39 @@ import java.util.concurrent.ExecutionException;
 public abstract class ImageActivity extends DooitActivity {
 
     private static final String TAG = ImageActivity.class.getName();
-    private static final int maxImageWidth = 1024;
-    private static final int maxImageHeight = 1024;
-    final Runtime runtime = Runtime.getRuntime();
+    private static final int MAX_IMAGE_WIDTH = 1024;
+    private static final int MAX_IMAGE_HEIGHT = 1024;
     final int SCALE_FACTOR_FOR_BITMAP_SIZE = 3;
-    long usedMemInMB = (runtime.totalMemory() - runtime.freeMemory()) / 1048576L;
-    long maxHeapSizeInMB = runtime.maxMemory() / 1048576L;
-    long availHeapSizeInMB = maxHeapSizeInMB - usedMemInMB;
     private AlertDialog imageChooser;
     private Uri imageUri;
     private String imagePath;
 
+    private void logMemory() {
+        try {
+            String tag = this.getClass().getName();
+
+            final Runtime runtime = Runtime.getRuntime();
+            long usedMemInMB = (runtime.totalMemory() - runtime.freeMemory()) / 1048576L;
+            long maxHeapSizeInMB = runtime.maxMemory() / 1048576L;
+            long availHeapSizeInMB = maxHeapSizeInMB - usedMemInMB;
+
+            ActivityManager am = (ActivityManager) getSystemService(ACTIVITY_SERVICE);
+            int memoryClass = am.getMemoryClass();
+
+            String msg = String.format(Locale.US,
+                    "Memory Class: %d, Max Memory: %dMB, Used Heap: %dMB, Available Heap: %dMB",
+                    memoryClass, maxHeapSizeInMB, usedMemInMB, availHeapSizeInMB);
+
+            CrashlyticsHelper.log(tag, "logMemory", msg);
+            Log.d(tag, msg);
+        } catch (Throwable ex) {
+            CrashlyticsHelper.logException(ex);
+        }
+    }
+
     public static Bitmap rotateImage(Bitmap source, float angle) {
+        CrashlyticsHelper.log(TAG, "rotateImage", "Rotating: " + Float.toString(angle));
+
         Matrix matrix = new Matrix();
         matrix.postRotate(angle);
         try {
@@ -81,6 +105,8 @@ public abstract class ImageActivity extends DooitActivity {
     }
 
     protected void showImageChooser() {
+        CrashlyticsHelper.log(TAG, "showImageChooser", "Displaying Image Chooser");
+
         resetImageState();
         final CharSequence[] items = ImageChooserOptions.createMenuItems(this);
 
@@ -92,12 +118,15 @@ public abstract class ImageActivity extends DooitActivity {
             public void onClick(DialogInterface dialog, int which) {
                 switch (ImageChooserOptions.valueOf(which)) {
                     case CAMERA:
+                        CrashlyticsHelper.log(TAG, "showImageChooser", "Starting Camera");
                         startCamera();
                         break;
                     case GALLERY:
+                        CrashlyticsHelper.log(TAG, "showImageChooser", "Starting Gallery");
                         startGallery();
                         break;
                     case CANCEL:
+                        CrashlyticsHelper.log(TAG, "showImageChooser", "Cancelling Image Chooser");
                         dialog.dismiss();
                         break;
                 }
@@ -120,7 +149,7 @@ public abstract class ImageActivity extends DooitActivity {
                 File imageFile = null;
 
                 try {
-                    imageFile = createImageFile();
+                    imageFile = createImageFile(ImageActivity.this);
                     imagePath = imageFile.getAbsolutePath();
                 } catch (IOException e) {
                     Toast.makeText(ImageActivity.this, "Failed to create image file on phone storage", Toast.LENGTH_LONG).show();
@@ -169,7 +198,7 @@ public abstract class ImageActivity extends DooitActivity {
         if (resultCode == Activity.RESULT_CANCELED)
             return;
 
-        CrashlyticsHelper.log(this.getClass().getSimpleName(), "startCamera : ", "Request code from dialog: " + requestCode
+        CrashlyticsHelper.log(this.getClass().getSimpleName(), "onActivityResult", "Request code from dialog: " + requestCode
                 + " resultCode : " + requestCode + String.format(" Is intent null? : %s ", data == null));
         switch (requestCode) {
             case RequestCodes.RESPONSE_CAMERA_REQUEST_PROFILE_IMAGE:
@@ -186,9 +215,13 @@ public abstract class ImageActivity extends DooitActivity {
     }
 
     private void handleImageResult(Intent data, int requestCodes) {
-        Object[] params = new Object[2];
+        logMemory();
+
+        Object[] params = new Object[4];
         params[0] = data;
         params[1] = requestCodes;
+        params[2] = imageUri;
+        params[3] = imagePath;
         new HandleImage().execute(params);
     }
 
@@ -217,52 +250,71 @@ public abstract class ImageActivity extends DooitActivity {
     /**
      * Loads the image file stored in imagePath, saves a new downscaled version, and resets imageUri
      * and imagePath.
+     *
+     * @return Result containing a new imagePath and imageUri, pointing to a transformed image.
      */
+    @Nullable
+    static private ProcessResult processImage(@NonNull Context ctx, int requestCodes, String imagePath, Uri imageUri) {
+        if (imagePath == null || imageUri == null)
+            return null;
 
-    private void processImage(int requestCodes) {
         FileOutputStream outStream = null;
 
         BitmapFactory.Options options = new BitmapFactory.Options();
         options.inPreferredConfig = Bitmap.Config.ARGB_8888;
 
-        // Don't load every pixel if image is too large
-        BitmapFactory.Options boundsOptions = new BitmapFactory.Options();
-        boundsOptions.inJustDecodeBounds = true;
-        Bitmap bounds = BitmapFactory.decodeFile(imagePath, boundsOptions);
-        options.inSampleSize = calcSampleSize(bounds);
+      {
+            // Don't load every pixel if image is too large
+            BitmapFactory.Options boundsOptions = new BitmapFactory.Options();
+            boundsOptions.inJustDecodeBounds = true;
+            Bitmap bounds = BitmapFactory.decodeFile(imagePath, boundsOptions);
+            options.inSampleSize = calcSampleSize(bounds);
+            if (bounds != null)
+                if (!bounds.isRecycled()) {
+                    bounds.recycle();
+                    System.gc();
+                }
+           
+        }
 
         try {
-            File downscaledFile = createImageFile();
+            File downscaledFile = createImageFile(ctx);
             outStream = new FileOutputStream(downscaledFile);
             Bitmap bitmap = BitmapFactory.decodeFile(imagePath, options);
 
             if (bitmap == null) {
-                Log.e(TAG, "Failed to load existing bitmap during downscale");
-                return;
+                CrashlyticsHelper.log(TAG, "processImage", "Failed to load existing bitmap during downscale");
+                return null;
             }
-
-            System.gc();
 
             //Here the orientation is checked and corrected if needed
             bitmap = checkScreenOrientation(imagePath, bitmap, requestCodes);
-
             System.gc();
 
             //Here the image is scaled to an acceptable size
-            bitmap = ImageScaler.scale(bitmap, maxImageWidth, maxImageHeight);
+            bitmap = ImageScaler.scale(bitmap, MAX_IMAGE_WIDTH, MAX_IMAGE_HEIGHT);
+            System.gc();
             //file is written out
             bitmap.compress(Bitmap.CompressFormat.JPEG, 80, outStream);
 
             Log.d(TAG, String.format("Downscaled image dimensions: (%d, %d) %dKB",
                     bitmap.getWidth(), bitmap.getHeight(), bitmap.getByteCount() / 1024));
 
-            // Set uri and filepath to new downscaled image
-            imagePath = downscaledFile.getAbsolutePath();
-            imageUri = FileProvider.getUriForFile(ImageActivity.this, Constants.FILE_PROVIDER, downscaledFile);
-        } catch (IOException e) {
-            Toast.makeText(ImageActivity.this, "Unable to do image rotation", Toast.LENGTH_LONG).show();
-            Log.e(TAG, "Unable to create temporary downscaled image file", e);
-            CrashlyticsHelper.log(this.getClass().getSimpleName(), " processImage : ", "an IOException");
+            bitmap.recycle();
+            System.gc();
+
+            // New uri and filepath for new downscaled image
+            return new ProcessResult(
+                    FileProvider.getUriForFile(ctx, Constants.FILE_PROVIDER, downscaledFile),
+                    downscaledFile.getAbsolutePath()
+            );
+        } catch (IOException ex) {
+            Toast.makeText(ctx, "Unable to create temporary downscaled image file", Toast.LENGTH_LONG).show();
+            Log.e(TAG, "Unable to create temporary downscaled image file", ex);
+            CrashlyticsHelper.log(TAG, "processImage", "an IOException");
+            CrashlyticsHelper.logException(ex);
+        } catch (Throwable ex) {
+            CrashlyticsHelper.logException(ex);
         } finally {
             try {
                 if (outStream != null)
@@ -271,16 +323,19 @@ public abstract class ImageActivity extends DooitActivity {
                 Log.e(TAG, "Failed to close outstream", e);
             }
         }
+
+        // Exception was thrown
+        return null;
     }
 
-    private File createImageFile() throws IOException {
+    static private File createImageFile(@NonNull Context ctx) throws IOException {
         String timestamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
         String filename = "JPEG_" + timestamp + "_";
-        File storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
+        File storageDir = ctx.getExternalFilesDir(Environment.DIRECTORY_PICTURES);
         return File.createTempFile(filename, ".jpg", storageDir);
     }
 
-    private Bitmap checkScreenOrientation(String imageP, Bitmap bitmap, int requestCodes) {
+    static private Bitmap checkScreenOrientation(String imageP, Bitmap bitmap, int requestCodes) {
         try {
             ExifInterface ei = new ExifInterface(imageP);
             int orientation = ei.getAttributeInt(ExifInterface.TAG_ORIENTATION,
@@ -307,10 +362,8 @@ public abstract class ImageActivity extends DooitActivity {
                 default:
                     break;
             }
-        } catch (IllegalArgumentException ia) {
+        } catch (IllegalArgumentException | IOException ia) {
             // If image path is null, IllegalArgumentException is thrown
-        } catch (IOException io) {
-
         }
         return bitmap;
     }
@@ -351,13 +404,11 @@ public abstract class ImageActivity extends DooitActivity {
      * URI Permissions must be revoked, or they will persisted until the device is restarted.
      */
     private void revokeCameraPermissions() {
+        if (imageUri == null)
+            return;
         if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.KITKAT)
             revokeUriPermission(imageUri,
                     Intent.FLAG_GRANT_WRITE_URI_PERMISSION | Intent.FLAG_GRANT_READ_URI_PERMISSION);
-    }
-
-    protected Uri getImageUri() {
-        return imageUri;
     }
 
     /**
@@ -371,18 +422,36 @@ public abstract class ImageActivity extends DooitActivity {
 
     private class HandleImage extends AsyncTask<Object, Integer, ImageActivityAsyncTaskResult> {
 
+        /**
+         * Guaranteed to run on the UI thread
+         *
+         * @param result Will contain the new values of imageUri and imagePath
+         * @link https://developer.android.com/reference/android/os/AsyncTask.html#onPostExecute(Result)
+         */
         @Override
-        protected void onPostExecute(ImageActivityAsyncTaskResult imageActivityAsyncTaskResult) {
+        protected void onPostExecute(ImageActivityAsyncTaskResult result) {
             ContentResolver cR = ImageActivity.this.getContentResolver();
-            ImageActivity.this.onImageResult(cR.getType(imageActivityAsyncTaskResult.getImageUri()),
-                    imageActivityAsyncTaskResult.getImageUri(),
-                    imageActivityAsyncTaskResult.getImagePath());
+            if (cR != null && result != null) {
+                ImageActivity.this.imageUri = result.getImageUri();
+                ImageActivity.this.imagePath = result.getImagePath();
+                ImageActivity.this.onImageResult(
+                        cR.getType(result.getImageUri()),
+                        result.getImageUri(),
+                        result.getImagePath()
+                );
+            }
         }
 
         @Override
+        @Nullable
         protected ImageActivityAsyncTaskResult doInBackground(Object... params) {
+            Context ctx = ImageActivity.this;
+
             Intent data = (Intent) params[0];
             int requestCodes = (Integer) params[1];
+            Uri imageUri = (Uri) params[2];
+            String imagePath = (String) params[3];
+
             // When the camera is provided with an existing file beforehand, the intent is null. The
             // pre-created image can be found via `imageUri`.
             if (data != null) {
@@ -391,17 +460,16 @@ public abstract class ImageActivity extends DooitActivity {
                 if (imageUri == null) {
                     try {
                         // This is the case where the camera only returns a thumbnail
-                        ContentResolver cR = ImageActivity.this.getContentResolver();
+                        ContentResolver cR = ctx.getContentResolver();
                         Bitmap bitmap = (Bitmap) data.getExtras().get("data");
 
-                        System.gc();
-
                         bitmap = checkScreenOrientation(imagePath, bitmap, requestCodes);
+                        System.gc();
 
                         Log.d("IMAGE_TESTS", "Bitmap size : " + bitmap.getByteCount());
                         imageUri = Uri.parse(MediaStore.Images.Media.insertImage(cR, bitmap, "", ""));
                     } catch (Throwable ex) {
-
+                        CrashlyticsHelper.logException(ex);
                     }
                 }
             }
@@ -410,20 +478,34 @@ public abstract class ImageActivity extends DooitActivity {
                 // MediaUriHelper does not work when uri points to temp image file
                 try {
                     imagePath = MediaUriHelper.getPath(ImageActivity.this, imageUri);
-                    CrashlyticsHelper.log(this.getClass().getSimpleName(), "handleImageResult : ",
+                    CrashlyticsHelper.log(this.getClass().getSimpleName(), "handleImageResult",
                             "Context: " + this + " imageUri :" + imageUri);
                 } catch (NullPointerException nullException) {
                     CrashlyticsHelper.logException(nullException);
                 }
             }
 
-            processImage(requestCodes);
+            ProcessResult result = processImage(ImageActivity.this, requestCodes, imagePath, imageUri);
+            if (result != null) {
+                imagePath = result.imagePath;
+                imageUri = result.imageUri;
+            }
 
             return new ImageActivityAsyncTaskResult(imageUri, imagePath);
         }
 
         protected void onProgressUpdate(Integer... progress) {
 
+        }
+    }
+
+    private static class ProcessResult {
+        final Uri imageUri;
+        final String imagePath;
+
+        ProcessResult(Uri imageUri, String imagePath) {
+            this.imageUri = imageUri;
+            this.imagePath = imagePath;
         }
     }
 }

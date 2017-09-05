@@ -35,7 +35,7 @@ public class AnswerImageViewHolder extends BaseBotViewHolder<Answer> {
     public void populate(Answer model) {
         super.populate(model);
         simpleDraweeView.setImageURI(Uri.parse(model.getValue()));
-        CrashlyticsHelper.log(this.getClass().getSimpleName(), "populate (Image): ", "URI: " + dataModel.getValue());
+        CrashlyticsHelper.log(this.getClass().getSimpleName(), "populate", "(Image) URI: " + dataModel.getValue());
     }
 
     @Override
