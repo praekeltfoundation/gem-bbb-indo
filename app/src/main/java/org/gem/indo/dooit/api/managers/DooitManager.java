@@ -23,6 +23,7 @@ import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 
 import java.io.IOException;
+import java.util.concurrent.TimeUnit;
 
 import javax.inject.Inject;
 
@@ -110,6 +111,10 @@ public abstract class DooitManager {
             }
         });
         httpClient.addInterceptor(logging);
+
+        httpClient.connectTimeout(10, TimeUnit.SECONDS)
+                .writeTimeout(10, TimeUnit.SECONDS)
+                .readTimeout(30, TimeUnit.SECONDS);
 
         Tls12SocketFactory.forceTLS(httpClient);
 
