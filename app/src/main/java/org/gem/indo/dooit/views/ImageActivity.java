@@ -86,13 +86,17 @@ public abstract class ImageActivity extends DooitActivity {
 
         Matrix matrix = new Matrix();
         matrix.postRotate(angle);
-        Bitmap out = Bitmap.createBitmap(source, 0, 0, source.getWidth(), source.getHeight(),
-                matrix, true);
-        if (!source.isRecycled() && !out.sameAs(source)) {
-            CrashlyticsHelper.log(TAG, "rotateImage", "Recycling source Bitmap");
-            source.recycle();
+        try {
+            Bitmap out = Bitmap.createBitmap(source, 0, 0, source.getWidth(), source.getHeight(),
+                    matrix, true);
+            if (!source.isRecycled() && !out.sameAs(source)) {
+                source.recycle();
+            }
+            return out;
+        } catch (OutOfMemoryError e) {
+            Log.e(TAG, String.format("Rotation failed (dim=%dx%d).", source.getWidth(), source.getHeight()), e);
+            return source;
         }
-        return out;
     }
 
     private void resetImageState() {
@@ -222,6 +226,28 @@ public abstract class ImageActivity extends DooitActivity {
     }
 
     /**
+     * Bitmap and returns the downscaling factor (only sampling every nth pixel) to fit into
+     * max width/height.
+     *
+     * Does not require full bitmap -- decoding just the bounds is sufficient.
+     *
+     * @param bmp  The bitmap to measure
+     * @return int Sample factor.
+     */
+    private int calcSampleSize(Bitmap bmp) {
+        if (bmp != null) {
+            float widthRatio = bmp.getWidth() / maxImageWidth;
+            float heightRatio = bmp.getHeight() / maxImageWidth;
+            float largestDimRatio = (widthRatio >= heightRatio) ? widthRatio : heightRatio;
+            if (largestDimRatio >= 1) {
+                return (int) largestDimRatio;
+            }
+        }
+
+        return 1;
+    }
+
+    /**
      * Loads the image file stored in imagePath, saves a new downscaled version, and resets imageUri
      * and imagePath.
      *
@@ -237,23 +263,18 @@ public abstract class ImageActivity extends DooitActivity {
         BitmapFactory.Options options = new BitmapFactory.Options();
         options.inPreferredConfig = Bitmap.Config.ARGB_8888;
 
-        {
+      {
             // Don't load every pixel if image is too large
             BitmapFactory.Options boundsOptions = new BitmapFactory.Options();
             boundsOptions.inJustDecodeBounds = true;
             Bitmap bounds = BitmapFactory.decodeFile(imagePath, boundsOptions);
-            if (bounds != null) {
-                float widthRatio = bounds.getWidth() / MAX_IMAGE_WIDTH;
-                float heightRatio = bounds.getHeight() / MAX_IMAGE_WIDTH;
-                float largestDimRatio = (widthRatio >= heightRatio) ? widthRatio : heightRatio;
-                if (largestDimRatio >= 1) {
-                    options.inSampleSize = (int) largestDimRatio;
-                }
+            options.inSampleSize = calcSampleSize(bounds);
+            if (bounds != null)
                 if (!bounds.isRecycled()) {
                     bounds.recycle();
                     System.gc();
                 }
-            }
+           
         }
 
         try {
