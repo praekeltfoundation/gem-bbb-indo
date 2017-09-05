@@ -60,11 +60,14 @@ public abstract class ImageActivity extends DooitActivity {
     private String imagePath;
 
     public static Bitmap rotateImage(Bitmap source, float angle) {
+        CrashlyticsHelper.log(TAG, "rotateImage", "Rotating: " + Float.toString(angle));
+
         Matrix matrix = new Matrix();
         matrix.postRotate(angle);
         Bitmap out = Bitmap.createBitmap(source, 0, 0, source.getWidth(), source.getHeight(),
                 matrix, true);
         if (!source.isRecycled() && !out.sameAs(source)) {
+            CrashlyticsHelper.log(TAG, "rotateImage", "Recycling source Bitmap");
             source.recycle();
         }
         return out;
@@ -76,6 +79,8 @@ public abstract class ImageActivity extends DooitActivity {
     }
 
     protected void showImageChooser() {
+        CrashlyticsHelper.log(TAG, "showImageChooser", "Displaying Image Chooser");
+
         resetImageState();
         final CharSequence[] items = ImageChooserOptions.createMenuItems(this);
 
@@ -87,12 +92,15 @@ public abstract class ImageActivity extends DooitActivity {
             public void onClick(DialogInterface dialog, int which) {
                 switch (ImageChooserOptions.valueOf(which)) {
                     case CAMERA:
+                        CrashlyticsHelper.log(TAG, "showImageChooser", "Starting Camera");
                         startCamera();
                         break;
                     case GALLERY:
+                        CrashlyticsHelper.log(TAG, "showImageChooser", "Starting Gallery");
                         startGallery();
                         break;
                     case CANCEL:
+                        CrashlyticsHelper.log(TAG, "showImageChooser", "Cancelling Image Chooser");
                         dialog.dismiss();
                         break;
                 }
@@ -164,7 +172,7 @@ public abstract class ImageActivity extends DooitActivity {
         if (resultCode == Activity.RESULT_CANCELED)
             return;
 
-        CrashlyticsHelper.log(this.getClass().getSimpleName(), "startCamera : ", "Request code from dialog: " + requestCode
+        CrashlyticsHelper.log(this.getClass().getSimpleName(), "onActivityResult", "Request code from dialog: " + requestCode
                 + " resultCode : " + requestCode + String.format(" Is intent null? : %s ", data == null));
         switch (requestCode) {
             case RequestCodes.RESPONSE_CAMERA_REQUEST_PROFILE_IMAGE:
@@ -198,16 +206,22 @@ public abstract class ImageActivity extends DooitActivity {
         BitmapFactory.Options options = new BitmapFactory.Options();
         options.inPreferredConfig = Bitmap.Config.ARGB_8888;
 
-        // Don't load every pixel if image is too large
-        BitmapFactory.Options boundsOptions = new BitmapFactory.Options();
-        boundsOptions.inJustDecodeBounds = true;
-        Bitmap bounds = BitmapFactory.decodeFile(imagePath, boundsOptions);
-        if (bounds != null) {
-            float widthRatio = bounds.getWidth() / maxImageWidth;
-            float heightRatio = bounds.getHeight() / maxImageWidth;
-            float largestDimRatio = (widthRatio >= heightRatio) ? widthRatio : heightRatio;
-            if (largestDimRatio >= 1) {
-                options.inSampleSize = (int) largestDimRatio;
+        {
+            // Don't load every pixel if image is too large
+            BitmapFactory.Options boundsOptions = new BitmapFactory.Options();
+            boundsOptions.inJustDecodeBounds = true;
+            Bitmap bounds = BitmapFactory.decodeFile(imagePath, boundsOptions);
+            if (bounds != null) {
+                float widthRatio = bounds.getWidth() / maxImageWidth;
+                float heightRatio = bounds.getHeight() / maxImageWidth;
+                float largestDimRatio = (widthRatio >= heightRatio) ? widthRatio : heightRatio;
+                if (largestDimRatio >= 1) {
+                    options.inSampleSize = (int) largestDimRatio;
+                }
+                if (!bounds.isRecycled()) {
+                    bounds.recycle();
+                    System.gc();
+                }
             }
         }
 
@@ -217,15 +231,12 @@ public abstract class ImageActivity extends DooitActivity {
             Bitmap bitmap = BitmapFactory.decodeFile(imagePath, options);
 
             if (bitmap == null) {
-                Log.e(TAG, "Failed to load existing bitmap during downscale");
+                CrashlyticsHelper.log(TAG, "processImage", "Failed to load existing bitmap during downscale");
                 return;
             }
 
-            System.gc();
-
             //Here the orientation is checked and corrected if needed
             bitmap = checkScreenOrientation(imagePath, bitmap, requestCodes);
-
             System.gc();
 
             //Here the image is scaled to an acceptable size
@@ -235,6 +246,9 @@ public abstract class ImageActivity extends DooitActivity {
 
             Log.d(TAG, String.format("Downscaled image dimensions: (%d, %d) %dKB",
                     bitmap.getWidth(), bitmap.getHeight(), bitmap.getByteCount() / 1024));
+
+            bitmap.recycle();
+            System.gc();
 
             // Set uri and filepath to new downscaled image
             imagePath = downscaledFile.getAbsolutePath();
@@ -375,7 +389,7 @@ public abstract class ImageActivity extends DooitActivity {
                         Log.d("IMAGE_TESTS", "Bitmap size : " + bitmap.getByteCount());
                         imageUri = Uri.parse(MediaStore.Images.Media.insertImage(cR, bitmap, "", ""));
                     } catch (Throwable ex) {
-
+                        CrashlyticsHelper.logException(ex);
                     }
                 }
             }
