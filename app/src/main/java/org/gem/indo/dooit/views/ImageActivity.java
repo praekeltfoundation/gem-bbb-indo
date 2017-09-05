@@ -95,6 +95,7 @@ public abstract class ImageActivity extends DooitActivity {
             return out;
         } catch (OutOfMemoryError e) {
             Log.e(TAG, String.format("Rotation failed (dim=%dx%d).", source.getWidth(), source.getHeight()), e);
+            CrashlyticsHelper.logException(e);
             return source;
         }
     }
@@ -228,16 +229,16 @@ public abstract class ImageActivity extends DooitActivity {
     /**
      * Bitmap and returns the downscaling factor (only sampling every nth pixel) to fit into
      * max width/height.
-     *
+     * <p>
      * Does not require full bitmap -- decoding just the bounds is sufficient.
      *
-     * @param bmp  The bitmap to measure
+     * @param bmp The bitmap to measure
      * @return int Sample factor.
      */
-    private int calcSampleSize(Bitmap bmp) {
+    static private int calcSampleSize(Bitmap bmp) {
         if (bmp != null) {
-            float widthRatio = bmp.getWidth() / maxImageWidth;
-            float heightRatio = bmp.getHeight() / maxImageWidth;
+            float widthRatio = bmp.getWidth() / MAX_IMAGE_WIDTH;
+            float heightRatio = bmp.getHeight() / MAX_IMAGE_HEIGHT;
             float largestDimRatio = (widthRatio >= heightRatio) ? widthRatio : heightRatio;
             if (largestDimRatio >= 1) {
                 return (int) largestDimRatio;
@@ -263,7 +264,7 @@ public abstract class ImageActivity extends DooitActivity {
         BitmapFactory.Options options = new BitmapFactory.Options();
         options.inPreferredConfig = Bitmap.Config.ARGB_8888;
 
-      {
+        {
             // Don't load every pixel if image is too large
             BitmapFactory.Options boundsOptions = new BitmapFactory.Options();
             boundsOptions.inJustDecodeBounds = true;
@@ -274,7 +275,7 @@ public abstract class ImageActivity extends DooitActivity {
                     bounds.recycle();
                     System.gc();
                 }
-           
+
         }
 
         try {
