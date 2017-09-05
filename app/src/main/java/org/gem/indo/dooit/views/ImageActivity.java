@@ -3,6 +3,7 @@ package org.gem.indo.dooit.views;
 import android.app.Activity;
 import android.app.ActivityManager;
 import android.content.ContentResolver;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -16,6 +17,8 @@ import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.content.FileProvider;
 import android.support.v7.app.AlertDialog;
 import android.text.TextUtils;
@@ -48,8 +51,8 @@ import java.util.Locale;
 public abstract class ImageActivity extends DooitActivity {
 
     private static final String TAG = ImageActivity.class.getName();
-    private static final int maxImageWidth = 1024;
-    private static final int maxImageHeight = 1024;
+    private static final int MAX_IMAGE_WIDTH = 1024;
+    private static final int MAX_IMAGE_HEIGHT = 1024;
     final int SCALE_FACTOR_FOR_BITMAP_SIZE = 3;
     private AlertDialog imageChooser;
     private Uri imageUri;
@@ -68,8 +71,8 @@ public abstract class ImageActivity extends DooitActivity {
             int memoryClass = am.getMemoryClass();
 
             String msg = String.format(Locale.US,
-                    "Memory Class: %d, Max Memory: %dMB",
-                    memoryClass, maxHeapSizeInMB);
+                    "Memory Class: %d, Max Memory: %dMB, Used Heap: %dMB, Available Heap: %dMB",
+                    memoryClass, maxHeapSizeInMB, usedMemInMB, availHeapSizeInMB);
 
             CrashlyticsHelper.log(tag, "logMemory", msg);
             Log.d(tag, msg);
@@ -142,7 +145,7 @@ public abstract class ImageActivity extends DooitActivity {
                 File imageFile = null;
 
                 try {
-                    imageFile = createImageFile();
+                    imageFile = createImageFile(ImageActivity.this);
                     imagePath = imageFile.getAbsolutePath();
                 } catch (IOException e) {
                     Toast.makeText(ImageActivity.this, "Failed to create image file on phone storage", Toast.LENGTH_LONG).show();
@@ -210,18 +213,25 @@ public abstract class ImageActivity extends DooitActivity {
     private void handleImageResult(Intent data, int requestCodes) {
         logMemory();
 
-        Object[] params = new Object[2];
+        Object[] params = new Object[4];
         params[0] = data;
         params[1] = requestCodes;
+        params[2] = imageUri;
+        params[3] = imagePath;
         new HandleImage().execute(params);
     }
 
     /**
      * Loads the image file stored in imagePath, saves a new downscaled version, and resets imageUri
      * and imagePath.
+     *
+     * @return Result containing a new imagePath and imageUri, pointing to a transformed image.
      */
+    @Nullable
+    static private ProcessResult processImage(@NonNull Context ctx, int requestCodes, String imagePath, Uri imageUri) {
+        if (imagePath == null || imageUri == null)
+            return null;
 
-    private void processImage(int requestCodes) {
         FileOutputStream outStream = null;
 
         BitmapFactory.Options options = new BitmapFactory.Options();
@@ -233,8 +243,8 @@ public abstract class ImageActivity extends DooitActivity {
             boundsOptions.inJustDecodeBounds = true;
             Bitmap bounds = BitmapFactory.decodeFile(imagePath, boundsOptions);
             if (bounds != null) {
-                float widthRatio = bounds.getWidth() / maxImageWidth;
-                float heightRatio = bounds.getHeight() / maxImageWidth;
+                float widthRatio = bounds.getWidth() / MAX_IMAGE_WIDTH;
+                float heightRatio = bounds.getHeight() / MAX_IMAGE_WIDTH;
                 float largestDimRatio = (widthRatio >= heightRatio) ? widthRatio : heightRatio;
                 if (largestDimRatio >= 1) {
                     options.inSampleSize = (int) largestDimRatio;
@@ -247,13 +257,13 @@ public abstract class ImageActivity extends DooitActivity {
         }
 
         try {
-            File downscaledFile = createImageFile();
+            File downscaledFile = createImageFile(ctx);
             outStream = new FileOutputStream(downscaledFile);
             Bitmap bitmap = BitmapFactory.decodeFile(imagePath, options);
 
             if (bitmap == null) {
                 CrashlyticsHelper.log(TAG, "processImage", "Failed to load existing bitmap during downscale");
-                return;
+                return null;
             }
 
             //Here the orientation is checked and corrected if needed
@@ -261,7 +271,7 @@ public abstract class ImageActivity extends DooitActivity {
             System.gc();
 
             //Here the image is scaled to an acceptable size
-            bitmap = ImageScaler.scale(bitmap, maxImageWidth, maxImageHeight);
+            bitmap = ImageScaler.scale(bitmap, MAX_IMAGE_WIDTH, MAX_IMAGE_HEIGHT);
             System.gc();
             //file is written out
             bitmap.compress(Bitmap.CompressFormat.JPEG, 80, outStream);
@@ -272,13 +282,18 @@ public abstract class ImageActivity extends DooitActivity {
             bitmap.recycle();
             System.gc();
 
-            // Set uri and filepath to new downscaled image
-            imagePath = downscaledFile.getAbsolutePath();
-            imageUri = FileProvider.getUriForFile(ImageActivity.this, Constants.FILE_PROVIDER, downscaledFile);
-        } catch (IOException e) {
-            Toast.makeText(ImageActivity.this, "Unable to do image rotation", Toast.LENGTH_LONG).show();
-            Log.e(TAG, "Unable to create temporary downscaled image file", e);
-            CrashlyticsHelper.log(this.getClass().getSimpleName(), "processImage", "an IOException");
+            // New uri and filepath for new downscaled image
+            return new ProcessResult(
+                    FileProvider.getUriForFile(ctx, Constants.FILE_PROVIDER, downscaledFile),
+                    downscaledFile.getAbsolutePath()
+            );
+        } catch (IOException ex) {
+            Toast.makeText(ctx, "Unable to create temporary downscaled image file", Toast.LENGTH_LONG).show();
+            Log.e(TAG, "Unable to create temporary downscaled image file", ex);
+            CrashlyticsHelper.log(TAG, "processImage", "an IOException");
+            CrashlyticsHelper.logException(ex);
+        } catch (Throwable ex) {
+            CrashlyticsHelper.logException(ex);
         } finally {
             try {
                 if (outStream != null)
@@ -287,16 +302,19 @@ public abstract class ImageActivity extends DooitActivity {
                 Log.e(TAG, "Failed to close outstream", e);
             }
         }
+
+        // Exception was thrown
+        return null;
     }
 
-    private File createImageFile() throws IOException {
+    static private File createImageFile(@NonNull Context ctx) throws IOException {
         String timestamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
         String filename = "JPEG_" + timestamp + "_";
-        File storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
+        File storageDir = ctx.getExternalFilesDir(Environment.DIRECTORY_PICTURES);
         return File.createTempFile(filename, ".jpg", storageDir);
     }
 
-    private Bitmap checkScreenOrientation(String imageP, Bitmap bitmap, int requestCodes) {
+    static private Bitmap checkScreenOrientation(String imageP, Bitmap bitmap, int requestCodes) {
         try {
             ExifInterface ei = new ExifInterface(imageP);
             int orientation = ei.getAttributeInt(ExifInterface.TAG_ORIENTATION,
@@ -383,18 +401,36 @@ public abstract class ImageActivity extends DooitActivity {
 
     private class HandleImage extends AsyncTask<Object, Integer, ImageActivityAsyncTaskResult> {
 
+        /**
+         * Guaranteed to run on the UI thread
+         *
+         * @param result Will contain the new values of imageUri and imagePath
+         * @link https://developer.android.com/reference/android/os/AsyncTask.html#onPostExecute(Result)
+         */
         @Override
-        protected void onPostExecute(ImageActivityAsyncTaskResult imageActivityAsyncTaskResult) {
+        protected void onPostExecute(ImageActivityAsyncTaskResult result) {
             ContentResolver cR = ImageActivity.this.getContentResolver();
-            ImageActivity.this.onImageResult(cR.getType(imageActivityAsyncTaskResult.getImageUri()),
-                    imageActivityAsyncTaskResult.getImageUri(),
-                    imageActivityAsyncTaskResult.getImagePath());
+            if (cR != null && result != null) {
+                ImageActivity.this.imageUri = result.getImageUri();
+                ImageActivity.this.imagePath = result.getImagePath();
+                ImageActivity.this.onImageResult(
+                        cR.getType(result.getImageUri()),
+                        result.getImageUri(),
+                        result.getImagePath()
+                );
+            }
         }
 
         @Override
+        @Nullable
         protected ImageActivityAsyncTaskResult doInBackground(Object... params) {
+            Context ctx = ImageActivity.this;
+
             Intent data = (Intent) params[0];
             int requestCodes = (Integer) params[1];
+            Uri imageUri = (Uri) params[2];
+            String imagePath = (String) params[3];
+
             // When the camera is provided with an existing file beforehand, the intent is null. The
             // pre-created image can be found via `imageUri`.
             if (data != null) {
@@ -403,7 +439,7 @@ public abstract class ImageActivity extends DooitActivity {
                 if (imageUri == null) {
                     try {
                         // This is the case where the camera only returns a thumbnail
-                        ContentResolver cR = ImageActivity.this.getContentResolver();
+                        ContentResolver cR = ctx.getContentResolver();
                         Bitmap bitmap = (Bitmap) data.getExtras().get("data");
 
                         bitmap = checkScreenOrientation(imagePath, bitmap, requestCodes);
@@ -428,13 +464,27 @@ public abstract class ImageActivity extends DooitActivity {
                 }
             }
 
-            processImage(requestCodes);
+            ProcessResult result = processImage(ImageActivity.this, requestCodes, imagePath, imageUri);
+            if (result != null) {
+                imagePath = result.imagePath;
+                imageUri = result.imageUri;
+            }
 
             return new ImageActivityAsyncTaskResult(imageUri, imagePath);
         }
 
         protected void onProgressUpdate(Integer... progress) {
 
+        }
+    }
+
+    private static class ProcessResult {
+        final Uri imageUri;
+        final String imagePath;
+
+        ProcessResult(Uri imageUri, String imagePath) {
+            this.imageUri = imageUri;
+            this.imagePath = imagePath;
         }
     }
 }
