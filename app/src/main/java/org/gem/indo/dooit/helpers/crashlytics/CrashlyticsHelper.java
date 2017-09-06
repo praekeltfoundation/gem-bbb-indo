@@ -14,7 +14,7 @@ public class CrashlyticsHelper{
 
     public static void log(String TAG, String methodName, String message) {
         if (!BuildConfig.DEBUG)
-            Crashlytics.log(Log.DEBUG, TAG + '.' + methodName, message);
+            Crashlytics.log(Log.DEBUG, TAG + '.' + methodName + ":", message);
     }
 
     public static void logException(Throwable e){

@@ -16,19 +16,24 @@ import org.gem.indo.dooit.api.serializers.LocalDateSerializer;
 import org.gem.indo.dooit.helpers.DooitSharedPreferences;
 import org.gem.indo.dooit.helpers.LanguageCodeHelper;
 import org.gem.indo.dooit.helpers.Persisted;
+import org.gem.indo.dooit.helpers.Tls12SocketFactory;
 import org.gem.indo.dooit.helpers.auth.InvalidTokenHandler;
 import org.gem.indo.dooit.helpers.auth.InvalidTokenRedirectHelper;
 import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 
 import java.io.IOException;
+import java.util.concurrent.TimeUnit;
 
 import javax.inject.Inject;
 
+import okhttp3.CipherSuite;
+import okhttp3.Handshake;
 import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
+import okhttp3.TlsVersion;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava.HttpException;
@@ -92,10 +97,26 @@ public abstract class DooitManager {
                 if (response != null && response.code() == 403) {
                     invalidTokenRedirectHelper.redirectIfNeeded(invalidTokenHandler, context);
                 }
+
+                if (response != null) {
+                    Handshake handshake = response.handshake();
+                    if (handshake != null) {
+                        final CipherSuite cipherSuite = handshake.cipherSuite();
+                        final TlsVersion tlsVersion = handshake.tlsVersion();
+                        Log.v("DooitApplication", "TLS: " + tlsVersion + ", CipherSuite: " + cipherSuite);
+                    }
+                }
+
                 return response;
             }
         });
         httpClient.addInterceptor(logging);
+
+        httpClient.connectTimeout(10, TimeUnit.SECONDS)
+                .writeTimeout(10, TimeUnit.SECONDS)
+                .readTimeout(30, TimeUnit.SECONDS);
+
+        Tls12SocketFactory.forceTLS(httpClient);
 
         OkHttpClient client = httpClient.build();
 

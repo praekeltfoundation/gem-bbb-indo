@@ -1,6 +1,7 @@
 package org.gem.indo.dooit;
 
 import android.support.multidex.MultiDexApplication;
+import android.util.Log;
 
 import com.crashlytics.android.Crashlytics;
 import com.facebook.common.logging.FLog;
@@ -14,6 +15,7 @@ import org.gem.indo.dooit.dagger.DaggerDooitComponent;
 import org.gem.indo.dooit.dagger.DooitComponent;
 import org.gem.indo.dooit.dagger.DooitModule;
 import org.gem.indo.dooit.helpers.Persisted;
+import org.gem.indo.dooit.helpers.Tls12SocketFactory;
 
 import java.io.IOException;
 import java.util.HashSet;
@@ -25,10 +27,13 @@ import javax.inject.Inject;
 import io.fabric.sdk.android.Fabric;
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
+import okhttp3.CipherSuite;
+import okhttp3.Handshake;
 import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
+import okhttp3.TlsVersion;
 import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
 
 /**
@@ -76,9 +81,20 @@ public class DooitApplication extends MultiDexApplication {
                     requestBuilder.addHeader("Authorization", "Token " + persisted.getToken());
 
                 Request request = requestBuilder.build();
+                Response response = chain.proceed(request);
+                if (response != null) {
+                    Handshake handshake = response.handshake();
+                    if (handshake != null) {
+                        final CipherSuite cipherSuite = handshake.cipherSuite();
+                        final TlsVersion tlsVersion = handshake.tlsVersion();
+                        Log.v("DooitApplication", "TLS: " + tlsVersion + ", CipherSuite: " + cipherSuite);
+                    }
+                }
                 return chain.proceed(request);
             }
         });
+
+        Tls12SocketFactory.forceTLS(httpClient);
 
         httpClient.connectTimeout(10, TimeUnit.SECONDS)
                 .writeTimeout(10, TimeUnit.SECONDS)
@@ -104,5 +120,5 @@ public class DooitApplication extends MultiDexApplication {
         );
     }
 
-    
+
 }

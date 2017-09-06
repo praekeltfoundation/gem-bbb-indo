@@ -117,7 +117,7 @@ public class AnswerImageSelectViewHolder extends BaseBotViewHolder<Answer>
             tagsClickListener.onItemClicked(answer);
         }
 
-        CrashlyticsHelper.log(this.getClass().getSimpleName(), "uploadImage: ", "upload an image from bot");
+        CrashlyticsHelper.log(this.getClass().getSimpleName(), "uploadImage", "upload an image from bot");
     }
 
     public Context getContext() {

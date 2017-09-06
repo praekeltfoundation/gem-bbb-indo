@@ -94,7 +94,7 @@ public class AnswerInlineNumberEditViewHolder extends BaseBotViewHolder<Answer> 
                     inputAnswer.setType(BotMessageType.getValueOf(dataModel.getTypeOnFinish()));
                     inputAnswer.setInputKey(dataModel.getInputKey());
                     tagsClickListener.onItemClicked(inputAnswer);
-                    CrashlyticsHelper.log(this.getClass().getSimpleName(), "populate (numberedit): ", "number: " + inputAnswer.getValue());
+                    CrashlyticsHelper.log(this.getClass().getSimpleName(), "populate", "(numberedit) number: " + inputAnswer.getValue());
                     return true;
                 }
                 return false;

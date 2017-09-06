@@ -203,13 +203,16 @@ public class ProfileActivity extends ImageActivity {
 
     @OnClick(R.id.activity_profile_image)
     public void selectImage() {
-        CrashlyticsHelper.log(this.getClass().getSimpleName(), "OnClick select image : ", "Tap to change profile image (Settings)");
+        CrashlyticsHelper.log(this.getClass().getSimpleName(), "OnClick selectImage", "Tap to change profile image (Settings)");
         showImageChooser();
     }
 
     @Override
     protected void onImageResult(String mediaType, Uri imageUri, String imagePath) {
-        CrashlyticsHelper.log(this.getClass().getSimpleName(), "OnImageResult : ", "successful image result (settings)");
+        CrashlyticsHelper.log(this.getClass().getSimpleName(), "OnImageResult", "successful image result (settings)");
+
+        final Uri localImageUri = imageUri;
+
         // Upload image to server
         User user = persisted.getCurrentUser();
         if (user == null) {
@@ -254,7 +257,7 @@ public class ProfileActivity extends ImageActivity {
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        profileImage.setImageURI(getImageUri());
+                        profileImage.setImageURI(localImageUri);
                     }
                 });
             }
