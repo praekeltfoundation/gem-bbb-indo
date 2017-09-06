@@ -60,9 +60,15 @@ public class GoalAddController extends GoalBotController {
     @Inject
     Persisted persisted;
 
-    public GoalAddController(Activity activity, BotRunner botRunner, Budget budget, List<GoalPrototype> prototypes,
-                             Goal goal, BaseChallenge challenge, Tip tip) {
-        super(activity, botRunner, BotType.GOAL_ADD, prototypes, goal, challenge, tip);
+    public GoalAddController(Activity activity,
+                             BotRunner botRunner,
+                             BotType botType, // This controller can be either DEFAULT or GOAL_ADD
+                             Budget budget,
+                             List<GoalPrototype> prototypes,
+                             Goal goal,
+                             BaseChallenge challenge,
+                             Tip tip) {
+        super(activity, botRunner, botType, prototypes, goal, challenge, tip);
         ((DooitApplication) activity.getApplication()).component.inject(this);
         if (this.goal == null)
             this.goal = new Goal();
