@@ -1,6 +1,7 @@
 
-1.2.5
+1.2.6
 
 - Forcing HTTPS connections to use TLSv1.2
 - Fixed Null Pointer Exception when cancelling camera or gallery
 - More aggressively recycling Bitmaps to help alleviate memory issues around manipulating images
+- Added Endline Survey
