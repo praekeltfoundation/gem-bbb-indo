@@ -40,6 +40,7 @@ import org.gem.indo.dooit.controllers.goal.GoalWithdrawController;
 import org.gem.indo.dooit.controllers.misc.ReturningUserController;
 import org.gem.indo.dooit.controllers.survey.BaselineSurveyController;
 import org.gem.indo.dooit.controllers.survey.EAToolSurveyController;
+import org.gem.indo.dooit.controllers.survey.EndlineSurveyController;
 import org.gem.indo.dooit.dao.budget.BudgetDAO;
 import org.gem.indo.dooit.dao.budget.ExpenseCategoryBotDAO;
 import org.gem.indo.dooit.helpers.Persisted;
@@ -239,6 +240,12 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
                 setBotType(BotType.SURVEY_EATOOL);
                 createFeed();
                 return true;
+            case R.id.menu_main_bot_endline_survey:
+                setClearState(true);
+                finishConversation();
+                setBotType(BotType.SURVEY_ENDLINE);
+                createFeed();
+                return true;
             case R.id.menu_main_bot_clear:
                 persisted.clearConversation();
                 persisted.clearConvoGoals();
@@ -359,6 +366,19 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
                         .resolve(reqCallback);
             }
             break;
+            case SURVEY_ENDLINE: {
+                feed.parse(R.raw.survey_endline, Node.class);
+                RequirementResolver.Builder builder = new RequirementResolver.Builder(
+                        getContext(), BotType.SURVEY_ENDLINE)
+                        .require(BotObjectType.SURVEY);
+
+                if (persisted.hasConvoSurvey(type))
+                    builder.setSurveyId(persisted.loadConvoSurvey(type).getId());
+
+                builder.build()
+                        .resolve(reqCallback);
+            }
+            break;
             case CHALLENGE_WINNER:
                 feed.parse(R.raw.challenge_winner, Node.class);
                 initializeBot();
@@ -442,6 +462,9 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
             case SURVEY_EATOOL:
                 getAndAddNode(null);
                 break;
+            case SURVEY_ENDLINE:
+                getAndAddNode(null);
+                break;
             case CHALLENGE_WINNER:
                 getAndAddNode(null);
                 break;
@@ -501,6 +524,9 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
                         persisted.loadConvoSurvey(botType));
             case SURVEY_EATOOL:
                 return new EAToolSurveyController(getActivity(),
+                        persisted.loadConvoSurvey(botType));
+            case SURVEY_ENDLINE:
+                return new EndlineSurveyController(getActivity(),
                         persisted.loadConvoSurvey(botType));
             case CHALLENGE_WINNER:
                 return new ChallengeWinnerController(getActivity(),

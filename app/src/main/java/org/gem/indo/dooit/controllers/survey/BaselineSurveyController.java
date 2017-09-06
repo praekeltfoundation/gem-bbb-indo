@@ -4,6 +4,8 @@ import android.content.Context;
 
 import org.gem.indo.dooit.api.DooitAPIError;
 import org.gem.indo.dooit.api.DooitErrorHandler;
+import org.gem.indo.dooit.helpers.notifications.NotificationType;
+import org.gem.indo.dooit.helpers.notifications.Notifier;
 import org.gem.indo.dooit.models.bot.Answer;
 import org.gem.indo.dooit.models.bot.BaseBotModel;
 import org.gem.indo.dooit.models.enums.BotCallType;
@@ -141,9 +143,7 @@ public class BaselineSurveyController extends SurveyController {
             }).subscribe(new Action1<Response<Void>>() {
                 @Override
                 public void call(Response<Void> voidResponse) {
-                    // TODO: Remove push notification if it's still in the phone's notification drawer
-                    // After user has successfully submitted, they should not be able to take the
-                    // survey again. The server endpoint should prevent further notifications.
+                    clearNotifications();
                     persisted.clearConvoSurvey(botType);
                 }
             });

@@ -86,6 +86,19 @@ public class Notifier {
         notify(notifyType, cls, contentText, null, getLauncherIconBitmap());
     }
 
+    public void cancel(NotificationType notifyType) {
+        NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+        if (notificationManager != null)
+            notificationManager.cancel(notifyType.getMessageId());
+    }
+
+    public void cancel(NotificationType[] notifyTypes) {
+        NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+        if (notificationManager != null)
+            for (NotificationType notifyType : notifyTypes)
+                notificationManager.cancel(notifyType.getMessageId());
+    }
+
     private Bitmap getLauncherIconBitmap() {
         return ((BitmapDrawable) ContextCompat.getDrawable(context, R.mipmap.ic_launcher)).getBitmap();
     }
