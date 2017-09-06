@@ -11,6 +11,8 @@ import org.gem.indo.dooit.api.DooitErrorHandler;
 import org.gem.indo.dooit.api.managers.SurveyManager;
 import org.gem.indo.dooit.controllers.DooitBotController;
 import org.gem.indo.dooit.helpers.Persisted;
+import org.gem.indo.dooit.helpers.notifications.NotificationType;
+import org.gem.indo.dooit.helpers.notifications.Notifier;
 import org.gem.indo.dooit.models.bot.Answer;
 import org.gem.indo.dooit.models.bot.BaseBotModel;
 import org.gem.indo.dooit.models.enums.BotCallType;
@@ -170,5 +172,24 @@ abstract public class SurveyController extends DooitBotController {
         else
             // Use parent's consent when users are below age 17
             submission.put(CONSENT_KEY, parentVal);
+    }
+
+    /**
+     * Remove push notification if it's still in the phone's notification drawer.
+     * <p>
+     * After user has successfully submitted, they should not be able to take the
+     * survey again. The server endpoint should prevent further notifications.
+     */
+    protected void clearNotifications() {
+        //
+        Context ctx = getContext();
+        if (ctx != null) {
+            Notifier notifier = new Notifier(ctx);
+            notifier.cancel(new NotificationType[]{
+                    NotificationType.SURVEY_AVAILABLE,
+                    NotificationType.SURVEY_REMINDER_1,
+                    NotificationType.SURVEY_REMINDER_2
+            });
+        }
     }
 }
