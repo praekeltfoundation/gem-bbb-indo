@@ -261,10 +261,10 @@ public class GoalAddController extends GoalBotController {
 
                         //the path is now extracted form the Answer.values map as explained int the comment above "final String path = MediaUriHelper.getPath(context, uri);"
                         String path = null;
-                        if(answerLogTemp.containsKey("goal_add_a_goal_image")){
+                        if (answerLogTemp.containsKey("goal_add_a_goal_image")) {
                             Answer imageAnswer = answerLogTemp.get("goal_add_a_goal_image");
                             path = imageAnswer.values.getString(Answer.IMAGEPATH);
-                        }else{
+                        } else {
                             path = goal.getPrototype().getImageUrl();
                         }
 
