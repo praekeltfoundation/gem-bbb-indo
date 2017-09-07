@@ -232,7 +232,10 @@
     <string name="goal_add_q_budget_return_01">"That's okay. You can create the budget after you've created your savings goal."</string>
     <string name="goal_add_q_budget_return_02">"I suggest you start by saving Rpxxxx per week. What do you think?"</string>
 
-    <string name="goal_add_q_verify">"If you save $(goal.weekly_target_currency) each week you will save enough to get your $(goal.name) in $(goal.weeks_down) weeks, $(goal.remainder_days) days."</string>
+    <string name="goal_add_q_verify">"You need to save $(goal.daily_savings) per day for $(goal.weeks_down) weeks, $(goal.remainder_days) days and you'll reach $(goal.actual_target) on $(goal.end_date). That means you need to save $(goal.weekly_target) per week and $(goal.daily_savings) each day for the last $(goal.remainder_days) days."</string>
+    <string name="goal_add_q_verify_rounded_no_early">"You need to save $(goal.daily_savings) per day for $(goal.weeks_down) weeks, $(goal.remainder_days) days and you'll reach $(goal.actual_target) on $(goal.end_date). That means you need to save $(goal.weekly_target) per week.</string>
+    <string name="goal_add_q_verify_early_completion">"You need to save $(goal.daily_savings) per day for $(goal.weeks_down_early_complete) weeks and $(goal.remainder_days_early_complete) days and you'll reach $(goal.actual_target) goal $(goal.goalCompletionPriorDays) days earlier than $(goal.end_date). That means you need to save $(goal.weekly_target) per week and $(goal.daily_savings) each day for the last $(goal.remainder_days_early_complete) days."</string>
+    <string name="goal_add_q_verify_early_completion_no_remainder_days">"You need to save $(goal.daily_savings) per day for $(goal.weeks_down_early_complete) weeks and $(goal.remainder_days_early_complete) days and you'll reach $(goal.actual_target) goal $(goal.goalCompletionPriorDays) days earlier than $(goal.end_date). That means you need to save $(goal.weekly_target) per week."</string>
 
     <string name="goal_add_a_has_saved_y">"Yes! I already have this much money saved:"</string>
     <string name="goal_add_a_has_saved_n">"Not yet."</string>

@@ -53,6 +53,22 @@ public class Goal {
     @SerializedName("weekly_target")
     private double weeklyTarget;
 
+    /*
+    This value is only used for internal calculations and does not need to be saved with the goal
+     */
+    private double dailySavings;
+
+    /*
+    Flag to check if the goal daily savings has been rounded
+     */
+    private boolean hasDailySavingsBeenRounded = false;
+
+    /*
+    Number of days before the end date that the goal will be completed due to the rounding of
+    daily savings
+     */
+    private int goalCompletionPriorDays;
+
     private List<GoalTransaction> transactions = new ArrayList<>();
 
     /**
@@ -162,13 +178,21 @@ public class Goal {
     //////////////////
 
     public double getTarget() {
-        return target;
+        return target - initialAmount;
     }
 
     public void setTarget(double target) {
         this.target = target;
         valueInvalidated = true;
         weeklyTargetInvalidated = true;
+    }
+
+    public double getActualTarget() {
+        if (willReachGoalEarly()) {
+            return this.dailySavings * (getEarlyCompleteWeeks() * 7.0) + this.dailySavings * getEarlyCompleteDays();
+        } else {
+            return getTarget();
+        }
     }
 
     /**
@@ -231,6 +255,10 @@ public class Goal {
         setEndDate(endDate, true);
     }
 
+    public boolean willReachGoalEarly() { return goalCompletionPriorDays != 0; }
+
+    public int getGoalCompletionPriorDays() { return goalCompletionPriorDays; }
+
     /**
      * Given a starting date, target and weekly target, calculate the end date. Days are rounded up.
      */
@@ -289,17 +317,82 @@ public class Goal {
     public void calculateWeeklyTarget() {
         double weeks = getWeeks();
 
+        // There is no validation when setting the initial value, so it can be greater than
+        // the goal amount. If this case happens, there doesn't need to be a weekly target
         if (initialAmount >= target) {
             this.weeklyTarget = 0;
+            return;
         }
 
-        double weeklyTarget = weeks == 0.0 ? target : (target - initialAmount) / weeks;
-        // Round weekly target to the upper Rp100
+        // Calculate how much needs to be saved per day
+        // Divide actual goal amount by number of days.
+        double dailySavings = (target - initialAmount) / (weeks * 7);
+
+        // Is the daily savings going to be rounded to the nearest 100
+        if (dailySavings % 100 != 0) {
+            this.dailySavings = dailySavings = currency.ceil(dailySavings);
+            this.hasDailySavingsBeenRounded = true;
+        }
+
+        setDailySavings(dailySavings);
+        double weeklyTarget = weeks == 0.0 ? target : (dailySavings * 7);
         this.weeklyTarget = currency.ceil(weeklyTarget);
+
+        // If it's possible the user will reach their target before the end date they chose,
+        // inform them of this and calculate new end date
+        if (this.hasDailySavingsBeenRounded) {
+            int daysToCompleteGoal = 0;
+            int tempGoalValue = 0;
+            while (tempGoalValue < getTarget()) {
+                tempGoalValue += dailySavings;
+                daysToCompleteGoal++;
+            }
+
+            if (daysToCompleteGoal == this.getDays(weeks)) {
+                this.hasDailySavingsBeenRounded = false;
+                this.goalCompletionPriorDays = 0;
+            } else {
+                this.goalCompletionPriorDays = this.getDays(weeks) - daysToCompleteGoal;
+            }
+        }
     }
 
     public static double weeksFromWeeklyTarget(double target, double weeklyTarget) {
         return weeklyTarget != 0.0 ? target / weeklyTarget : target;
+    }
+
+    //////////////////
+    // Daily savings //
+    //////////////////
+
+    private void setDailySavings(double dailySavings){ this.dailySavings = dailySavings; }
+
+    public double getDailySavings() { return this.dailySavings; }
+
+    //////////////////////
+    // Early Completion //
+    //////////////////////
+
+    public double getEarlyCompleteWeeks() {
+        if (hasDailySavingsBeenRounded) {
+            if (startDate == null || endDate == null)
+                return 0;
+
+            LocalDate earlyCompleteDate = endDate.minusDays(goalCompletionPriorDays);
+            double weeks = WeekCalc.weekDiff(startDate.toDate(), earlyCompleteDate.toDate(), WeekCalc.Rounding.DOWN);
+            return weeks == 0.0 ? 1.0 : Math.floor(weeks * 10.0) / 10.0;
+        } else {
+            return 0;
+        }
+    }
+
+    public int getEarlyCompleteDays() {
+        if (hasDailySavingsBeenRounded || goalCompletionPriorDays == 0) {
+            LocalDate earlyCompleteDate = endDate.minusDays(goalCompletionPriorDays);
+            return WeekCalc.remainder(startDate.toDate(), earlyCompleteDate.toDate());
+        } else {
+            return 0;
+        }
     }
 
     ///////////////////////////////////////////////
@@ -310,12 +403,16 @@ public class Goal {
         if (startDate == null || endDate == null)
             return 0.0;
         double weeks = WeekCalc.weekDiff(startDate.toDate(), endDate.toDate(), weekRounding);
-        // Weeks are rounded down to the first decimal
-        return weeks == 0.0 ? 1.0 : Math.floor(weeks * 10.0) / 10.0;
+        // Weeks are *not* rounded down to the first decimal
+        return weeks == 0.0 ? 1.0 : weeks;
     }
 
     public double getWeeks() {
         return getWeeks(WeekCalc.Rounding.NONE);
+    }
+
+    public int getDays(double weeks) {
+        return (int) (weeks * 7);
     }
 
     public int getRemainderDays() {
@@ -527,6 +624,7 @@ public class Goal {
         goal.setValue(validatedValue());
         goal.setTarget(this.target);
         goal.setWeeklyTarget(this.weeklyTarget, false);
+        goal.setDailySavings(this.dailySavings);
         goal.setImageUrl(StringHelper.newString(this.imageUrl));
         goal.setStartDate(new LocalDate(this.startDate));
         goal.setEndDate(new LocalDate(this.endDate), false);

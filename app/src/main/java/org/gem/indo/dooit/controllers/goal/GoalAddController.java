@@ -84,6 +84,9 @@ public class GoalAddController extends GoalBotController {
             case GOAL_CLEAR_INITIAL:
                 clearInitialSavings(answerLog);
                 break;
+            case GOAL_EARLY_COMPLETION:
+                checkGoalEarlyCompletion(answerLog);
+                break;
             default:
                 super.onCall(key, answerLog, model);
         }
@@ -348,6 +351,35 @@ public class GoalAddController extends GoalBotController {
         }
 
         goal.setInitialAmount(0);
+    }
+
+    private void checkGoalEarlyCompletion(Map<String, Answer> answerLog) {
+        doPopulate(answerLog);
+
+        goal.calculateWeeklyTarget();
+
+        Node node = new Node();
+
+        if (goal.willReachGoalEarly() && goal.getEarlyCompleteDays() % 7 == 0) {
+            node.setName("goal_add_early_completion_no_remainder_days");
+            node.setType(BotMessageType.DUMMY); // Keep the node in the conversation on reload
+            node.setAutoNext("goal_add_q_verify_early_completion_no_remainder_days");
+        } else if (goal.willReachGoalEarly()) {
+            node.setName("goal_add_early_completion");
+            node.setType(BotMessageType.DUMMY); // Keep the node in the conversation on reload
+            node.setAutoNext("goal_add_q_verify_early_completion");
+        } else if (goal.getEarlyCompleteDays() == 0) {
+            node.setName("goal_add_rounded_no_early_completion");
+            node.setType(BotMessageType.DUMMY); // Keep the node in the conversation on reload
+            node.setAutoNext("goal_add_q_verify_rounded_no_early");
+        } else {
+            node.setName("goal_add_no_early_completion");
+            node.setType(BotMessageType.DUMMY); // Keep the node in the conversation on reload
+            node.setAutoNext("goal_add_q_verify");
+        }
+
+        node.finish();
+        botRunner.queueNode(node);
     }
 
     ////////////////
