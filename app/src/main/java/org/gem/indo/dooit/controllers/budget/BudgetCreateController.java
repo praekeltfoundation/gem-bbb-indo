@@ -7,7 +7,6 @@ import org.gem.indo.dooit.DooitApplication;
 import org.gem.indo.dooit.api.DooitAPIError;
 import org.gem.indo.dooit.api.DooitErrorHandler;
 import org.gem.indo.dooit.api.managers.BudgetManager;
-import org.gem.indo.dooit.api.managers.GoalManager;
 import org.gem.indo.dooit.api.responses.BudgetCreateResponse;
 import org.gem.indo.dooit.dao.budget.BudgetDAO;
 import org.gem.indo.dooit.dao.budget.ExpenseCategoryBotDAO;
@@ -288,9 +287,9 @@ public class BudgetCreateController extends BudgetBotController {
         node.setType(BotMessageType.DUMMY);
 
         List<Goal> goals = persisted.loadConvoGoals(botType);
-        if(goals.size() > 0){
+        if (goals.size() > 0) {
             node.setAutoNext("budget_create_q_final_positive_has_goals");
-        }else{
+        } else {
             node.setAutoNext("budget_create_q_final_positive_no_goals");
         }
         botRunner.queueNode(node);
