@@ -251,7 +251,7 @@ public class BudgetCreateController extends BudgetBotController {
     }
 
     private void clearExpenses() {
-        new ExpenseCategoryBotDAO().clear(botType);
+        ExpenseCategoryBotDAO.clear(botType);
     }
 
     private void branchBudgetFinal(Map<String, Answer> answerLog) {
