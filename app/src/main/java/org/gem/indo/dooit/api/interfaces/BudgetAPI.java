@@ -5,6 +5,7 @@ import org.gem.indo.dooit.api.requests.budget.ChangeBudgetSavings;
 import org.gem.indo.dooit.api.responses.BudgetCreateResponse;
 import org.gem.indo.dooit.api.responses.EmptyResponse;
 import org.gem.indo.dooit.models.budget.Budget;
+import org.gem.indo.dooit.models.budget.Expense;
 import org.gem.indo.dooit.models.budget.ExpenseCategory;
 
 import java.util.List;
@@ -36,6 +37,9 @@ public interface BudgetAPI {
 
     @PATCH("/api/budgets/{id}/")
     Observable<BudgetCreateResponse> updateBudget(@Path("id") long id, @Body ChangeBudgetSavings savings);
+
+    @POST("/api/budgets/{id}/expenses/")
+    Observable<BudgetCreateResponse> addExpenses(@Path("id") long id, @Body List<Expense> expenses);
 
     @DELETE("/api/expenses/{id}/")
     Observable<EmptyResponse> deleteExpense(@Path("id") long id);

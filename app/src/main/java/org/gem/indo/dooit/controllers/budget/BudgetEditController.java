@@ -34,6 +34,7 @@ import org.gem.indo.dooit.models.enums.BotType;
 import org.gem.indo.dooit.views.helpers.activity.CurrencyHelper;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
@@ -58,18 +59,20 @@ public class BudgetEditController extends BudgetBotController {
     private static String EXPENSE_ANSWER_PREFIX = "budget_edit_a_expense_value_";
     private static String EXPENSE_STOP = "budget_create_q_expense_stop";
 
-    private List<Badge> newBadges = null;
+    private List<Badge> newBadges = new ArrayList<>();
 
     protected ExpenseCategory expenseCategory = null;
 
     @Inject
     BudgetManager budgetManager;
 
-    public BudgetEditController(Activity activity, BotRunner botRunner, @NonNull Budget budget) {
+    public BudgetEditController(Activity activity, BotRunner botRunner, @NonNull Budget budget,
+                                List<Badge> badges) {
         super(activity, BotType.BUDGET_EDIT, activity, botRunner);
         ((DooitApplication) activity.getApplication()).component.inject(this);
 
         this.budget = budget;
+        newBadges.addAll(badges);
     }
 
     @Override
@@ -275,7 +278,7 @@ public class BudgetEditController extends BudgetBotController {
                     public void call(BudgetCreateResponse budget) {
                         new BudgetDAO().update(budget.getBudget());
                         BudgetEditController.this.budget = budget.getBudget();
-                        newBadges = budget.getBadges();
+                        addBadges(budget.getBadges());
                     }
                 });
             } catch (NumberFormatException e) {
@@ -312,7 +315,7 @@ public class BudgetEditController extends BudgetBotController {
                     public void call(BudgetCreateResponse budget) {
                         new BudgetDAO().update(budget.getBudget());
                         BudgetEditController.this.budget = budget.getBudget();
-                        newBadges = budget.getBadges();
+                        addBadges(budget.getBadges());
                     }
                 });
             } catch (NumberFormatException e) {
@@ -349,7 +352,7 @@ public class BudgetEditController extends BudgetBotController {
                     public void call(BudgetCreateResponse budgetCreateResponse) {
                         new BudgetDAO().update(budget);
                         BudgetEditController.this.budget = budget;
-                        newBadges = budgetCreateResponse.getBadges();
+                        addBadges(budgetCreateResponse.getBadges());
                     }
                 });
 
@@ -525,7 +528,31 @@ public class BudgetEditController extends BudgetBotController {
         }
         new BudgetDAO().update(budget);
 
-        doUpload(answerLog, listener);
+//        doUpload(answerLog, listener);
+        // Do Upload
+        budgetManager.addExpenses(budget.getId(), budget.getExpenses(), new DooitErrorHandler() {
+            @Override
+            public void onError(DooitAPIError error) {
+
+            }
+        }).doAfterTerminate(new Action0() {
+            @Override
+            public void call() {
+                notifyDone(listener);
+            }
+        }).subscribe(new Action1<BudgetCreateResponse>() {
+            @Override
+            public void call(BudgetCreateResponse response) {
+                // Budget Primary Key is from server
+                new BudgetDAO().update(response.getBudget());
+
+                // Store a reference to the Budget as it was received
+                BudgetEditController.this.budget = response.getBudget();
+
+                // Append Badges
+                addBadges(response.getBadges());
+            }
+        });
     }
 
     private void uploadExpenseReplacements(@NonNull Map<String, Answer> answerLog,
@@ -696,6 +723,11 @@ public class BudgetEditController extends BudgetBotController {
                 }
             });
         }
+    }
+
+    private void addBadges(Collection<Badge> badges) {
+        newBadges.addAll(badges);
+        persisted.saveNewBudgetBadges(newBadges);
     }
 
     ////////////////

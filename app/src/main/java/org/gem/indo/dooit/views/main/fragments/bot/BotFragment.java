@@ -544,7 +544,7 @@ public class BotFragment extends MainFragment implements HashtagView.TagsClickLi
                 budget = new BudgetDAO().findFirst();
                 if (budget == null)
                     throw new NullPointerException("Budget Edit conversation started with no budget in db");
-                return new BudgetEditController(getActivity(), this, budget);
+                return new BudgetEditController(getActivity(), this, budget, persisted.loadNewBudgetBadges());
             }
             default:
                 return null;

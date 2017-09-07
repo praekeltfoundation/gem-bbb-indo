@@ -13,8 +13,8 @@ import org.gem.indo.dooit.helpers.bot.BotRunner;
 import org.gem.indo.dooit.helpers.bot.param.ParamArg;
 import org.gem.indo.dooit.helpers.bot.param.ParamMatch;
 import org.gem.indo.dooit.helpers.bot.param.ParamParser;
-import org.gem.indo.dooit.models.Badge;
 import org.gem.indo.dooit.helpers.crashlytics.CrashlyticsHelper;
+import org.gem.indo.dooit.models.Badge;
 import org.gem.indo.dooit.models.bot.Answer;
 import org.gem.indo.dooit.models.bot.BaseBotModel;
 import org.gem.indo.dooit.models.bot.Node;
@@ -84,7 +84,7 @@ public abstract class BudgetBotController extends DooitBotController {
         activity.setTipQuery(activity.getString(R.string.budget_create_qry_tip_income));
     }
 
-    private void tipQueryBudget(){
+    private void tipQueryBudget() {
         if (activity == null)
             return;
         activity.setTipQuery(activity.getString(R.string.budget_create_qry_tip_budget));
@@ -174,10 +174,10 @@ public abstract class BudgetBotController extends DooitBotController {
 
     private void doAddBadge() {
         List<Badge> badges = persisted.loadNewBudgetBadges();
-        if(badges.size() > 0) {
+        if (badges.size() > 0) {
             for (Badge badge : badges)
                 botRunner.queueNode(nodeFromBadge(badge));
-        }else{
+        } else {
             Node node = new Node();
             node.setName("save_Conversation_Node");
             node.setType(BotMessageType.DUMMY);
