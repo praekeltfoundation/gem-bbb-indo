@@ -1,7 +1,7 @@
 
-1.2.6
+1.2.7
 
-- Forcing HTTPS connections to use TLSv1.2
-- Fixed Null Pointer Exception when cancelling camera or gallery
-- More aggressively recycling Bitmaps to help alleviate memory issues around manipulating images
-- Added Endline Survey
+- Fixed issue preventing goal picker from being reopened when closed during goal converstation.
+- Fixed crash where goal date can be empty at the end of a conversation
+- Fixed exception when navigating away from a budget badge
+- Fixed issue with Budget Edit Badge not appearing
