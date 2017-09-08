@@ -9,6 +9,7 @@ import org.gem.indo.dooit.api.requests.budget.ChangeBudgetSavings;
 import org.gem.indo.dooit.api.responses.BudgetCreateResponse;
 import org.gem.indo.dooit.api.responses.EmptyResponse;
 import org.gem.indo.dooit.models.budget.Budget;
+import org.gem.indo.dooit.models.budget.Expense;
 import org.gem.indo.dooit.models.budget.ExpenseCategory;
 
 import java.util.List;
@@ -47,6 +48,10 @@ public class BudgetManager extends DooitManager {
 
     public Observable<BudgetCreateResponse> updateBudgetSavings(long budgetId, double savings, DooitErrorHandler errorHandler) {
         return useNetwork(budgetAPI.updateBudget(budgetId, new ChangeBudgetSavings(savings)), errorHandler);
+    }
+
+    public Observable<BudgetCreateResponse> addExpenses(long budgetId, List<Expense> expenses, DooitErrorHandler errorHandler) {
+        return useNetwork(budgetAPI.addExpenses(budgetId, expenses), errorHandler);
     }
 
     public Observable<EmptyResponse> deleteExpense(long expenseId, DooitErrorHandler errorHandler) {

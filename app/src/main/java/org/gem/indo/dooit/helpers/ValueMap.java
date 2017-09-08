@@ -1,5 +1,6 @@
 package org.gem.indo.dooit.helpers;
 
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -113,7 +114,17 @@ public class ValueMap {
     }
 
     public String[] getStringArray(String key) {
-        return (String[]) map.get(key);
+        Object value = map.get(key);
+        // Deserialized as ArrayList after badge has been added. Avoids class cast exception
+        if (value instanceof ArrayList) {
+            ArrayList lst = (ArrayList) value;
+            String[] arr = new String[lst.size()];
+            return (String[]) lst.toArray(arr);
+        } else if (value instanceof String[]) {
+            return (String[]) value;
+        } else {
+            return new String[0];
+        }
     }
 
     /******************

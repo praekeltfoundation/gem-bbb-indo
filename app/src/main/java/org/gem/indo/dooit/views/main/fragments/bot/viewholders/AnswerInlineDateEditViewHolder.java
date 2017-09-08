@@ -1,5 +1,7 @@
 package org.gem.indo.dooit.views.main.fragments.bot.viewholders;
 
+import android.content.DialogInterface;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.text.InputType;
 import android.view.KeyEvent;
@@ -46,6 +48,8 @@ public class AnswerInlineDateEditViewHolder extends BaseBotViewHolder<Answer> {
         this.botAdapter = botAdapter;
         this.tagsClickListener = tagsClickListener;
         ButterKnife.bind(this, itemView);
+
+        editText.setBackground(ContextCompat.getDrawable(itemView.getContext(), R.drawable.ic_d_answer_dialogue_bkg_blue));
     }
 
     @Override
@@ -54,7 +58,10 @@ public class AnswerInlineDateEditViewHolder extends BaseBotViewHolder<Answer> {
         editText.setHint(dataModel.getInlineEditHint(getContext()));
         editText.setImeActionLabel("Done", KeyEvent.KEYCODE_ENTER);
         editText.setInputType(InputType.TYPE_DATETIME_VARIATION_DATE);
-        editText.setEnabled(false);
+        // The combination of these two flags will allow the edit text to be clicked, but not accept
+        // any kayboard input.
+        editText.setEnabled(true);
+        editText.setFocusable(false);
         editText.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -77,7 +84,7 @@ public class AnswerInlineDateEditViewHolder extends BaseBotViewHolder<Answer> {
                         inputAnswer.setValue(
                                 (DateFormat.getInstance().format(cal.getTime()))
                                         .substring(0, (DateFormat.getInstance().format(endDate)).indexOf(" "))
-                                + " - " + weekMsg);
+                                        + " - " + weekMsg);
                         //inputAnswer.setValue(DateFormat.getInstance().format(cal.getTime()) + " - " + Utils.weekDiff(cal.getTime().getTime(), Utils.ROUNDWEEK.UP) + " " + weeks);
                         inputAnswer.values.put("date", Utils.formatDate(cal.getTime()));
                         inputAnswer.setText(null);
@@ -87,6 +94,13 @@ public class AnswerInlineDateEditViewHolder extends BaseBotViewHolder<Answer> {
                         inputAnswer.setType(BotMessageType.getValueOf(dataModel.getTypeOnFinish()));
                         tagsClickListener.onItemClicked(inputAnswer);
                         CrashlyticsHelper.log(this.getClass().getSimpleName(), "populate", "(dateEdit) New date: " + inputAnswer.getValue());
+                    }
+                });
+                dateFragment.setOnDismissListener(new DialogInterface.OnDismissListener() {
+                    @Override
+                    public void onDismiss(DialogInterface dialog) {
+                        // Do nothing on dismiss
+                        CrashlyticsHelper.log(this.getClass().getSimpleName(), "populate", "Date Picker Dismissed");
                     }
                 });
             }

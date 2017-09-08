@@ -416,6 +416,8 @@ public class Goal {
     }
 
     public int getRemainderDays() {
+        if (startDate == null || endDate == null)
+            return 0;
         return WeekCalc.remainder(startDate.toDate(), endDate.toDate());
     }
 

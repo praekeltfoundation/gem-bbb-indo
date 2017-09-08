@@ -34,7 +34,6 @@ import org.gem.indo.dooit.models.goal.Goal;
 import org.gem.indo.dooit.models.goal.GoalPrototype;
 import org.gem.indo.dooit.models.survey.CoachSurvey;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -555,7 +554,7 @@ public class Persisted {
      */
 
     public void saveNewBudgetBadges(List<Badge> newBages) {
-            dooitSharedPreferences.setComplex(NEW_BUDGET_BADGES, newBages.toArray());
+        dooitSharedPreferences.setComplex(NEW_BUDGET_BADGES, newBages.toArray());
     }
 
     public void clearNewBudgetBadges() {
@@ -563,10 +562,10 @@ public class Persisted {
     }
 
     public List<Badge> loadNewBudgetBadges() {
-        Badge [] arrayBadges = dooitSharedPreferences.getComplex(NEW_BUDGET_BADGES, Badge[].class);
-        if(arrayBadges != null){
+        Badge[] arrayBadges = dooitSharedPreferences.getComplex(NEW_BUDGET_BADGES, Badge[].class);
+        if (arrayBadges != null) {
             return new ArrayList<Badge>(Arrays.asList(arrayBadges));
-        }else {
+        } else {
             return new ArrayList<Badge>();
         }
 
